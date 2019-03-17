@@ -61,6 +61,7 @@ function baseConfig(tsconfig) {
     external: [
       'a-iterable',
       'call-thru',
+      'cssesc',
       'tslib',
     ],
     output: {
@@ -70,6 +71,7 @@ function baseConfig(tsconfig) {
       globals: {
         'a-iterable': 'aIterable',
         'call-thru': 'callThru',
+        'cssesc': 'cssesc',
         'tslib': 'tslib',
       },
     },
