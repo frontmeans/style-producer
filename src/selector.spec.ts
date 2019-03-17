@@ -23,7 +23,7 @@ describe('stypSelector', () => {
     expect(stypSelector({ c: ['def', 'abc'] })).toEqual([{ c: ['abc', 'def'] }]);
   });
   it('handles attributes', () => {
-    expect(stypSelector({ e: 'span', x: '[abc]' })).toEqual([{ e: 'span', x: '[abc]' }]);
+    expect(stypSelector({ e: 'span', s: '[abc]' })).toEqual([{ e: 'span', s: '[abc]' }]);
   });
 });
 
@@ -44,9 +44,9 @@ describe('stypSelectorString', () => {
     expect(stypSelectorString({ c: ['foo', 'bar.baz'] })).toBe('.bar\\.baz.foo');
   });
   it('prints pseudo-items', () => {
-    expect(stypSelectorString({ e: 'a', x: ':hover' })).toBe('a:hover');
+    expect(stypSelectorString({ e: 'a', s: ':hover' })).toBe('a:hover');
   });
   it('prints combinations', () => {
-    expect(stypSelectorString([{ e: 'ul' }, '>', { e: 'a' }, '+', { e: 'span', x: ':after' }])).toBe('ul>a+span:after');
+    expect(stypSelectorString([{ e: 'ul' }, '>', { e: 'a' }, '+', { e: 'span', s: ':after' }])).toBe('ul>a+span:after');
   });
 });

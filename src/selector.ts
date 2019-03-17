@@ -1,47 +1,38 @@
 import cssesc from 'cssesc';
 
-export type StypSelector = StypSelector.Key | (StypSelector.Key | StypSelector.Combinator)[];
+export type StypSelector = string | StypSelector.Part | (string | StypSelector.Part | StypSelector.Combinator)[];
 
 export namespace StypSelector {
 
-  export type Normalized = (NormalizedKey | Combinator)[];
-
-  export type Key = string | Raw | Part;
+  export type Normalized = (NormalizedPart | Combinator)[];
 
   export type Combinator = '>' | '+' | '~';
 
   export type Part = NsPart | NoNsPart;
 
   export interface PartBase {
-    s?: string;
     ns?: string;
     e?: string;
     i?: string;
     c?: string | string[];
-    x?: string;
-  }
-
-  export interface Raw extends PartBase {
-    s: string;
-    ns?: undefined;
-    e?: undefined;
-    i?: undefined;
-    c?: undefined;
-    x?: undefined;
+    s?: string;
   }
 
   export interface NoNsPart extends PartBase {
-    s?: undefined;
     ns?: undefined;
   }
 
+  export interface Raw extends NoNsPart {
+    e?: undefined;
+    i?: undefined;
+    c?: undefined;
+    s: string;
+  }
+
   export interface NsPart extends PartBase {
-    s?: undefined;
     ns: string;
     e: string;
   }
-
-  export type NormalizedKey = Raw | NormalizedPart;
 
   export type NormalizedPart = NormalizedNsPart | NormalizedNoNsPart;
 
@@ -57,11 +48,11 @@ export namespace StypSelector {
 
 export function stypSelector(selector: string): [StypSelector.Raw];
 
-export function stypSelector(selector: StypSelector.NormalizedKey): [typeof selector];
-
-export function stypSelector(selector: StypSelector.Part): [StypSelector.NormalizedPart];
+export function stypSelector(selector: StypSelector.NormalizedPart): [typeof selector];
 
 export function stypSelector(selector: StypSelector.NsPart): [StypSelector.NormalizedNsPart];
+
+export function stypSelector(selector: StypSelector.NoNsPart): [StypSelector.NormalizedNoNsPart];
 
 export function stypSelector(selector: StypSelector): StypSelector.Normalized;
 
@@ -69,24 +60,21 @@ export function stypSelector(selector: StypSelector): StypSelector.Normalized {
   return Array.isArray(selector) ? selector.map(normalizeItem) : [normalizeKey(selector)];
 }
 
-function normalizeItem(item: StypSelector.Key | StypSelector.Combinator):
-    StypSelector.NormalizedKey | StypSelector.Combinator {
+function normalizeItem(item: string | StypSelector.Part | StypSelector.Combinator):
+    StypSelector.NormalizedPart | StypSelector.Combinator {
   if (isCombinator(item)) {
     return item;
   }
   return normalizeKey(item);
 }
 
-function isCombinator(item: StypSelector.Key | StypSelector.Combinator): item is StypSelector.Combinator {
+function isCombinator(item: string | StypSelector.Part | StypSelector.Combinator): item is StypSelector.Combinator {
   return item === '>' || item === '+' || item === '~';
 }
 
-function normalizeKey(key: StypSelector.Key): StypSelector.NormalizedKey {
+function normalizeKey(key: StypSelector.Part | string): StypSelector.NormalizedPart {
   if (typeof key === 'string') {
     return { s: key };
-  }
-  if (key.s != null) {
-    return key;
   }
   return normalizePart(key);
 }
@@ -109,17 +97,12 @@ export function stypSelectorString(selector: StypSelector): string {
   return stypSelector(selector).reduce((result, item) => result + itemString(item), '');
 }
 
-function itemString(item: StypSelector.NormalizedKey | StypSelector.Combinator): string {
+function itemString(item: StypSelector.NormalizedPart | StypSelector.Combinator): string {
   if (isCombinator(item)) {
     return item;
   }
 
-  const { s, ns, e, i, c, x } = item;
-
-  if (s != null) {
-    return s;
-  }
-
+  const { ns, e, i, c, s } = item;
   let string: string;
 
   if (ns != null) {
@@ -133,8 +116,8 @@ function itemString(item: StypSelector.NormalizedKey | StypSelector.Combinator):
   if (c) {
     string = c.reduce((result, className) => `${result}.${escapeId(className)}`, string);
   }
-  if (x) {
-    string += x;
+  if (s) {
+    string += s;
   }
 
   return string;
