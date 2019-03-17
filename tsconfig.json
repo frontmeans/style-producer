@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "module": "es2015",
+    "target": "es2015",
+    "strict": true,
+    "experimentalDecorators": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "forceConsistentCasingInFileNames": true,
+    "importHelpers": true,
+    "noEmitHelpers": true,
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "es2015",
+      "esnext.array"
+    ],
+    "outDir": "target/js",
+    "sourceMap": true,
+    "newLine": "LF"
+  },
+  "include": [
+    "src/**/*"
+  ]
+}

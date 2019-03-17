@@ -1,0 +1,53 @@
+{
+  "name": "style-producer",
+  "version": "1.0.0",
+  "description": "Produces and dynamically updates stylesheets",
+  "keywords": [
+    "css-in-js",
+    "typescript"
+  ],
+  "homepage": "https://github.com/surol/style-producer",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/surol/style-producer.git"
+  },
+  "license": "MIT",
+  "author": "Ruslan Lopatin <ruslan.lopatin@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/surol/style-producer/issues"
+  },
+  "main": "dist/style-producer.js",
+  "module": "dist/style-producer.mjs",
+  "esm5": "dist/style-producer.esm5.js",
+  "typings": "index.d.ts",
+  "dependencies": {
+    "tslib": "^1.9.3"
+  },
+  "peerDependencies": {
+    "fun-events": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.11",
+    "a-iterable": "^2.2.0",
+    "call-thru": "^2.2.0",
+    "codecov": "^3.2.0",
+    "fs-extra": "^7.0.1",
+    "fun-events": "^4.0.0",
+    "jest": "^24.5.0",
+    "jest-junit": "^6.3.0",
+    "rollup": "^1.6.0",
+    "rollup-plugin-commonjs": "^9.2.1",
+    "rollup-plugin-node-resolve": "^4.0.1",
+    "rollup-plugin-sourcemaps": "^0.4.2",
+    "rollup-plugin-typescript2": "^0.20.1",
+    "ts-jest": "^24.0.0",
+    "tslint": "^5.14.0",
+    "typescript": "^3.3.3333"
+  },
+  "scripts": {
+    "build": "rollup --config ./rollup.config.js",
+    "clean": "node ./build/clean",
+    "lint": "tslint --project .",
+    "test": "jest"
+  }
+}
