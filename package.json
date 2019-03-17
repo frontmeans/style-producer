@@ -31,6 +31,7 @@
     "a-iterable": "^2.2.0",
     "call-thru": "^2.2.0",
     "codecov": "^3.2.0",
+    "cssesc": "^3.0.0",
     "fs-extra": "^7.0.1",
     "fun-events": "^4.0.0",
     "jest": "^24.5.0",

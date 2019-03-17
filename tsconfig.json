@@ -12,7 +12,6 @@
     "noEmitHelpers": true,
     "lib": [
       "dom",
-      "dom.iterable",
       "es2015",
       "esnext.array"
     ],

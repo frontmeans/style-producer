@@ -1,3 +1,5 @@
+import cssesc from 'cssesc';
+
 export type StypSelector = StypSelector.Key | (StypSelector.Key | StypSelector.Combinator)[];
 
 export namespace StypSelector {
@@ -8,21 +10,33 @@ export namespace StypSelector {
 
   export type Combinator = '>' | '+' | '~';
 
-  export interface Raw {
-    s: string;
-  }
-
   export type Part = NsPart | NoNsPart;
 
-  export interface NoNsPart {
-    s?: undefined;
+  export interface PartBase {
+    s?: string;
+    ns?: string;
     e?: string;
     i?: string;
     c?: string | string[];
     x?: string;
   }
 
-  export interface NsPart extends NoNsPart {
+  export interface Raw extends PartBase {
+    s: string;
+    ns?: undefined;
+    e?: undefined;
+    i?: undefined;
+    c?: undefined;
+    x?: undefined;
+  }
+
+  export interface NoNsPart extends PartBase {
+    s?: undefined;
+    ns?: undefined;
+  }
+
+  export interface NsPart extends PartBase {
+    s?: undefined;
     ns: string;
     e: string;
   }
@@ -89,4 +103,43 @@ function normalizePart(part: StypSelector.Part): StypSelector.NormalizedPart {
   }
 
   return { ...rest, c: [...c].sort() };
+}
+
+export function stypSelectorString(selector: StypSelector): string {
+  return stypSelector(selector).reduce((result, item) => result + itemString(item), '');
+}
+
+function itemString(item: StypSelector.NormalizedKey | StypSelector.Combinator): string {
+  if (isCombinator(item)) {
+    return item;
+  }
+
+  const { s, ns, e, i, c, x } = item;
+
+  if (s != null) {
+    return s;
+  }
+
+  let string: string;
+
+  if (ns != null) {
+    string = `${ns}|${e}`;
+  } else {
+    string = e || '';
+  }
+  if (i) {
+    string += `#${escapeId(i)}`;
+  }
+  if (c) {
+    string = c.reduce((result, className) => `${result}.${escapeId(className)}`, string);
+  }
+  if (x) {
+    string += x;
+  }
+
+  return string;
+}
+
+function escapeId(id: string): string {
+  return cssesc(id, { isIdentifier: true });
 }
