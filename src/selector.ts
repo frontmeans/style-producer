@@ -111,10 +111,10 @@ function itemString(item: StypSelector.NormalizedPart | StypSelector.Combinator)
     string = e || '';
   }
   if (i) {
-    string += `#${escapeId(i)}`;
+    string += `#${cssescId(i)}`;
   }
   if (c) {
-    string = c.reduce((result, className) => `${result}.${escapeId(className)}`, string);
+    string = c.reduce((result, className) => `${result}.${cssescId(className)}`, string);
   }
   if (s) {
     string += s;
@@ -123,6 +123,6 @@ function itemString(item: StypSelector.NormalizedPart | StypSelector.Combinator)
   return string;
 }
 
-function escapeId(id: string): string {
+function cssescId(id: string): string {
   return cssesc(id, { isIdentifier: true });
 }
