@@ -1,10 +1,12 @@
 import { stypSelector, StypSelector } from './selector';
-import { AfterEvent__symbol, EventKeeper, onNever, trackValue, ValueTracker } from 'fun-events';
-import { StypDeclaration, StypProperties } from './declaration';
+import { AfterEvent, EventKeeper } from 'fun-events';
+import { StypDeclaration } from './declaration';
+import { StypProperties, StypPropertiesSpec } from './properties';
+import { isValueKeeper, keepValue } from './events';
 
 const rootSelector: StypSelector.Normalized = [];
 let rootDeclaration: StypDeclaration | undefined;
-const emptyProperties: ValueTracker<StypProperties> = /*#__PURE__*/ trackValue({});
+const emptyProperties: AfterEvent<[StypProperties]> = /*#__PURE__*/ keepValue({});
 
 class EmptyDeclaration extends StypDeclaration {
 
@@ -12,14 +14,6 @@ class EmptyDeclaration extends StypDeclaration {
       readonly root: StypDeclaration,
       readonly selector: StypSelector.Normalized) {
     super();
-  }
-
-  get onUpdate() {
-    return onNever;
-  }
-
-  get read() {
-    return emptyProperties.read;
   }
 
   select(selector: StypSelector): StypDeclaration {
@@ -33,19 +27,16 @@ class EmptyDeclaration extends StypDeclaration {
     return new EmptyDeclaration(this.root, [...this.selector, ..._selector]);
   }
 
+  build() {
+    return emptyProperties;
+  }
+
 }
 
-export function stypRoot(properties?: StypProperties | EventKeeper<[StypProperties]>): StypDeclaration {
+export function stypRoot(properties?: StypPropertiesSpec): StypDeclaration {
 
-  let tracker: ValueTracker<StypProperties>;
-
-  if (!properties) {
-    if (rootDeclaration) {
-       return rootDeclaration;
-    }
-    tracker = emptyProperties;
-  } else {
-    tracker = isKeeper(properties) ? trackValue({}).by(properties) : trackValue(properties);
+  if (!properties && rootDeclaration) {
+    return rootDeclaration;
   }
 
   class Root extends StypDeclaration {
@@ -56,14 +47,6 @@ export function stypRoot(properties?: StypProperties | EventKeeper<[StypProperti
 
     get selector() {
       return rootSelector;
-    }
-
-    get onUpdate() {
-      return tracker.on;
-    }
-
-    get read() {
-      return tracker.read;
     }
 
     select(selector: StypSelector): StypDeclaration {
@@ -77,6 +60,27 @@ export function stypRoot(properties?: StypProperties | EventKeeper<[StypProperti
       return new EmptyDeclaration(this, _selector);
     }
 
+    build(): EventKeeper<[StypProperties]> {
+      if (!properties) {
+        return emptyProperties;
+      }
+      if (isValueKeeper(properties)) {
+        return properties;
+      }
+      if (typeof properties === 'function') {
+
+        const keeperOrProperties = properties.call(this);
+
+        if (isValueKeeper(keeperOrProperties)) {
+          return keeperOrProperties;
+        }
+
+        return keepValue(keeperOrProperties);
+      }
+
+      return keepValue(properties);
+    }
+
   }
 
   const root = new Root();
@@ -86,8 +90,4 @@ export function stypRoot(properties?: StypProperties | EventKeeper<[StypProperti
   }
 
   return root;
-}
-
-function isKeeper<T>(value: StypProperties | EventKeeper<[T]>): value is EventKeeper<[T]> {
-  return AfterEvent__symbol in value;
 }

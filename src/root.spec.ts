@@ -1,5 +1,5 @@
 import { stypRoot } from './root';
-import { AfterEvent__symbol, OnEvent__symbol, onNever, trackValue } from 'fun-events';
+import { AfterEvent__symbol, trackValue } from 'fun-events';
 import { StypDeclaration } from './declaration';
 import { StypSelector } from './selector';
 
@@ -14,21 +14,12 @@ describe('stypRoot', () => {
     expect(stypRoot(props)).not.toBe(stypRoot(props));
   });
 
-  describe('[OnEvent__symbol]', () => {
-    it('is the same as `onUpdate`', () => {
-
-      const decl = stypRoot();
-
-      expect(decl[OnEvent__symbol]).toBe(decl.onUpdate);
-    });
-  });
-
   describe('[AfterEvent__symbol]', () => {
-    it('is the same as `read`', () => {
+    it('is the same as `properties`', () => {
 
       const decl = stypRoot();
 
-      expect(decl[AfterEvent__symbol]).toBe(decl.read);
+      expect(decl[AfterEvent__symbol]).toBe(decl.properties);
     });
   });
 
@@ -41,42 +32,48 @@ describe('stypRoot', () => {
     });
   });
 
-  describe('read', () => {
+  describe('properties', () => {
     it('sends initial properties', async () => {
 
       const initial = { fontSize: '12px' };
       const decl = stypRoot(initial);
 
-      expect(await new Promise(resolve => decl.read(resolve))).toEqual(initial);
+      expect(await new Promise(resolve => decl.properties(resolve))).toEqual(initial);
     });
-    it('sends tracked values', async () => {
+    it('sends tracked properties', async () => {
 
       const initial = { fontSize: '12px' };
       const tracker = trackValue(initial);
       const decl = stypRoot(tracker);
 
-      expect(await new Promise(resolve => decl.read(resolve))).toEqual(initial);
+      expect(await new Promise(resolve => decl.properties(resolve))).toEqual(initial);
 
       const updated = { fontSize: '13px' };
 
       tracker.it = updated;
 
-      expect(await new Promise(resolve => decl.read(resolve))).toEqual(updated);
+      expect(await new Promise(resolve => decl.properties(resolve))).toEqual(updated);
     });
-  });
+    it('sends constructed properties', async () => {
 
-  describe('onUpdate', () => {
-    it('sends updates', async () => {
+      const initial = { fontSize: '12px' };
+      const decl = stypRoot(() => initial);
+
+      expect(await new Promise(resolve => decl.properties(resolve))).toEqual(initial);
+    });
+    it('sends constructed tracked properties', async () => {
 
       const initial = { fontSize: '12px' };
       const tracker = trackValue(initial);
-      const decl = stypRoot(tracker);
-      const promise = new Promise(resolve => decl.onUpdate((n, o) => resolve([n, o])));
+      const decl = stypRoot(() => tracker);
+
+      expect(await new Promise(resolve => decl.properties(resolve))).toEqual(initial);
+
       const updated = { fontSize: '13px' };
 
       tracker.it = updated;
 
-      expect(await promise).toEqual([updated, initial]);
+      expect(await new Promise(resolve => decl.properties(resolve))).toEqual(updated);
     });
   });
 
@@ -110,13 +107,7 @@ describe('stypRoot', () => {
       expect(nested.selector).toEqual(selector);
     });
     it('returns empty declaration', async () => {
-      expect(await new Promise(resolve => nested.read(resolve))).toEqual({});
-    });
-
-    describe('empty declaration', () => {
-      it('is never updated', () => {
-        expect(nested.onUpdate).toBe(onNever);
-      });
+      expect(await new Promise(resolve => nested.properties(resolve))).toEqual({});
     });
 
     describe('select', () => {
