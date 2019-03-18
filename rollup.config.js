@@ -8,7 +8,7 @@ const mainConfig = makeConfig(
     baseConfig('tsconfig.main.json'),
     {
       output: {
-        format: 'umd',
+        format: 'cjs',
         file: pkg.main,
       },
     });
@@ -67,13 +67,6 @@ function baseConfig(tsconfig) {
     output: {
       format: 'esm',
       sourcemap: true,
-      name: 'styleProducer',
-      globals: {
-        'a-iterable': 'aIterable',
-        'call-thru': 'callThru',
-        'cssesc': 'cssesc',
-        'tslib': 'tslib',
-      },
     },
   };
 }
