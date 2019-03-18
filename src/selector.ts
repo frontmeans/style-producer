@@ -1,4 +1,5 @@
 import cssesc from 'cssesc';
+import { filterIt, mapIt, overArray } from 'a-iterable';
 
 export type StypSelector = string | StypSelector.Part | (string | StypSelector.Part | StypSelector.Combinator)[];
 
@@ -57,11 +58,28 @@ export function stypSelector(selector: StypSelector.NoNsPart): [StypSelector.Nor
 export function stypSelector(selector: StypSelector): StypSelector.Normalized;
 
 export function stypSelector(selector: StypSelector): StypSelector.Normalized {
-  return Array.isArray(selector) ? selector.map(normalizeItem) : [normalizeKey(selector)];
+  if (Array.isArray(selector)) {
+    return [
+      ...filterIt(
+          mapIt(
+              overArray(selector),
+              normalizeItem),
+          isPresent),
+    ] as StypSelector.Normalized;
+  } else {
+
+    const key = normalizeKey(selector);
+
+    return key ? [key] : [];
+  }
+}
+
+function isPresent<T>(value: T | undefined): value is T {
+  return value != null;
 }
 
 function normalizeItem(item: string | StypSelector.Part | StypSelector.Combinator):
-    StypSelector.NormalizedPart | StypSelector.Combinator {
+    StypSelector.NormalizedPart | StypSelector.Combinator | undefined {
   if (isCombinator(item)) {
     return item;
   }
@@ -72,25 +90,42 @@ function isCombinator(item: string | StypSelector.Part | StypSelector.Combinator
   return item === '>' || item === '+' || item === '~';
 }
 
-function normalizeKey(key: StypSelector.Part | string): StypSelector.NormalizedPart {
+function normalizeKey(key: StypSelector.Part | string): StypSelector.NormalizedPart | undefined {
   if (typeof key === 'string') {
+    if (!key) {
+      return undefined;
+    }
     return { s: key };
   }
   return normalizePart(key);
 }
 
-function normalizePart(part: StypSelector.Part): StypSelector.NormalizedPart {
+function normalizePart(part: StypSelector.Part): StypSelector.NormalizedPart | undefined {
 
-  const { c, ...rest } = part;
+  const ns = part.ns || undefined;
+  const e = part.e || undefined;
+  const i = part.i || undefined;
+  const s = part.s || undefined;
+  const c = normalizeClasses(part.c);
 
-  if (!c) {
-    return rest;
+  if (!e && !i && !s && !c) {
+    return undefined;
   }
-  if (!Array.isArray(c)) {
-    return { ...rest, c: [c] };
+
+  return { ns, e, i, s, c } as StypSelector.NormalizedPart;
+}
+
+function normalizeClasses(classes: string | string[] | undefined): string[] | undefined {
+  if (!classes) {
+    return;
+  }
+  if (!Array.isArray(classes)) {
+    return [classes];
   }
 
-  return { ...rest, c: [...c].sort() };
+  classes = classes.filter(c => !!c);
+
+  return classes.length ? classes.sort() : undefined;
 }
 
 export function stypSelectorString(selector: StypSelector): string {
