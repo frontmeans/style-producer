@@ -346,11 +346,12 @@
   resolved "https://registry.yarnpkg.com/@types/yargs/-/yargs-12.0.9.tgz#693e76a52f61a2f1e7fb48c0eef167b95ea4ffd0"
   integrity sha512-sCZy4SxP9rN2w30Hlmg5dtdRwgYQfYRiLo9usw8X9cxlf+H4FqM1xX7+sNH7NNKVdbXMJWqva7iyy+fxh/V7fA==
 
-a-iterable@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/a-iterable/-/a-iterable-2.2.0.tgz#1f901a5f51d875edc270c9ae855173e9d903d56c"
-  integrity sha512-Zdm7zR4hiBb8DmnHQhn15vP+gCYuEtTaIM8MoWJhYZTmA4Dj0VRybDsmQNNr3Cp5QjefeM58tEDPF/SGj9H2eg==
+a-iterable@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/a-iterable/-/a-iterable-2.2.1.tgz#8abad6f53f9f49c0a4a0697aaccb956e771658f0"
+  integrity sha512-164BnYSAkQv3V3PU+qvP+iUCuOmlkFR+CtCH2moh5fnvUzu56bvCBiGcbyw3889q4MXg1Bgy8Ab7351bVXTelg==
   dependencies:
+    call-thru "^2.2.1"
     tslib "^1.9.0"
 
 abab@^2.0.0:
@@ -692,10 +693,10 @@ cache-base@^1.0.1:
     union-value "^1.0.0"
     unset-value "^1.0.0"
 
-call-thru@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/call-thru/-/call-thru-2.2.0.tgz#032af8f79cfbcbc2e747d262e6e4817b1606c9fd"
-  integrity sha512-3MMnbCzEfv5tN9jLmw7REOovlxkl4kgRhDtZzd0O+XGmEIbzkzVDHo35j9W7cfb91aF+weGbUeJHVVEGVbkKzA==
+call-thru@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/call-thru/-/call-thru-2.2.1.tgz#90b019dca49c4b4a0a15646c2fb419a64f730ac2"
+  integrity sha512-xJvIaaHUe5+F6fzODC2pf6ldkYN3P1CeAp1xV4Go4Lm77uuT3VpJHaWmbm1gWZY5wLHflk3EBbqPUiOsnnYnzg==
   dependencies:
     tslib "^1.9.0"
 
@@ -1279,11 +1280,12 @@ fs.realpath@^1.0.0:
   resolved "https://registry.yarnpkg.com/fs.realpath/-/fs.realpath-1.0.0.tgz#1504ad2523158caa40db4a2787cb01411994ea4f"
   integrity sha1-FQStJSMVjKpA20onh8sBQRmU6k8=
 
-fun-events@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/fun-events/-/fun-events-4.0.0.tgz#2b0729db238cd3e461fa0a6a1a26b679e9649d14"
-  integrity sha512-gwfMPtn1Ugli5aEzmbG2cUkkXtRMzKc1tsMFr4DkZGwS8NcX2/ukRM83cy7V5GHlhO46jXcZJWYZRU659ULr2w==
+fun-events@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/fun-events/-/fun-events-4.0.1.tgz#bd1e15e5b15f6b38d3d7dad93509b4c1b18db532"
+  integrity sha512-EHTccZYIfUKxYIDo3P3LoB+V+ouzJ8/Pkmr2nnfYfxrndcD5D5e3mkm2ymXtGqeMZbSgi0IZdJHeQtsV3VFjIg==
   dependencies:
+    call-thru "^2.2.1"
     tslib "^1.9.0"
 
 function-bind@^1.1.1:

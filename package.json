@@ -21,19 +21,15 @@
   "esm5": "dist/style-producer.esm5.js",
   "typings": "index.d.ts",
   "dependencies": {
+    "a-iterable": "^2.2.1",
     "cssesc": "^3.0.0",
+    "fun-events": "^4.0.1",
     "tslib": "^1.9.3"
-  },
-  "peerDependencies": {
-    "fun-events": "^4.0.0"
   },
   "devDependencies": {
     "@types/jest": "^24.0.11",
-    "a-iterable": "^2.2.0",
-    "call-thru": "^2.2.0",
     "codecov": "^3.2.0",
     "fs-extra": "^7.0.1",
-    "fun-events": "^4.0.0",
     "jest": "^24.5.0",
     "jest-junit": "^6.3.0",
     "rollup": "^1.6.0",
