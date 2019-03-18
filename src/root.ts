@@ -1,12 +1,11 @@
 import { stypSelector, StypSelector } from './selector';
-import { AfterEvent, EventKeeper } from 'fun-events';
+import { EventKeeper } from 'fun-events';
 import { StypDeclaration } from './declaration';
 import { StypProperties, StypPropertiesSpec } from './properties';
-import { isValueKeeper, keepValue } from './events';
+import { noStypProperties, stypPropertiesBySpec } from './properties.impl';
 
 const rootSelector: StypSelector.Normalized = [];
 let rootDeclaration: StypDeclaration | undefined;
-const emptyProperties: AfterEvent<[StypProperties]> = /*#__PURE__*/ keepValue({});
 
 class EmptyDeclaration extends StypDeclaration {
 
@@ -28,7 +27,7 @@ class EmptyDeclaration extends StypDeclaration {
   }
 
   build() {
-    return emptyProperties;
+    return noStypProperties;
   }
 
 }
@@ -61,24 +60,7 @@ export function stypRoot(properties?: StypPropertiesSpec): StypDeclaration {
     }
 
     build(): EventKeeper<[StypProperties]> {
-      if (!properties) {
-        return emptyProperties;
-      }
-      if (isValueKeeper(properties)) {
-        return properties;
-      }
-      if (typeof properties === 'function') {
-
-        const keeperOrProperties = properties.call(this);
-
-        if (isValueKeeper(keeperOrProperties)) {
-          return keeperOrProperties;
-        }
-
-        return keepValue(keeperOrProperties);
-      }
-
-      return keepValue(properties);
+      return stypPropertiesBySpec(this, properties);
     }
 
   }
