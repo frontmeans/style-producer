@@ -14,7 +14,7 @@ const mainConfig = makeConfig(
     });
 
 const esmConfig = makeConfig(
-    baseConfig('tsconfig.esm.json'),
+    baseConfig('tsconfig.es6.json'),
     {
       output: {
         file: pkg.module,
@@ -22,7 +22,7 @@ const esmConfig = makeConfig(
     });
 
 const esm5Config = makeConfig(
-    baseConfig('tsconfig.umd.json'),
+    baseConfig('tsconfig.es5.json'),
     {
       output: {
         file: pkg.esm5,
