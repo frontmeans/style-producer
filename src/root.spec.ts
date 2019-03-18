@@ -71,7 +71,7 @@ describe('stypRoot', () => {
       const initial = { fontSize: '12px' };
       const tracker = trackValue(initial);
       const decl = stypRoot(tracker);
-      const promise = new Promise(resolve => decl.onUpdate((n, o) => resolve([n, o])))
+      const promise = new Promise(resolve => decl.onUpdate((n, o) => resolve([n, o])));
       const updated = { fontSize: '13px' };
 
       tracker.it = updated;
