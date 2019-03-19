@@ -1,9 +1,9 @@
-import { StypDeclaration } from './declaration';
 import { AfterEvent, afterEventFrom, EventKeeper, OnEvent } from 'fun-events';
-import { isValueKeeper, keepValue } from './events.impl';
+import { isValueKeeper, keepValue } from '../events.impl';
 import { StypProperties } from './properties';
 import { nextSkip } from 'call-thru';
 import { itsEvery, overEntries } from 'a-iterable';
+import { StypDeclaration } from './declaration';
 
 /**
  * @internal

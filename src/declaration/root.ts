@@ -1,7 +1,7 @@
-import { stypSelector, StypSelector } from './selector';
-import { StypDeclaration } from './declaration';
+import { stypSelector, StypSelector } from '../selector';
 import { StypProperties } from './properties';
 import { noStypProperties, stypPropertiesBySpec } from './properties.impl';
+import { StypDeclaration } from './declaration';
 
 const rootSelector: StypSelector.Normalized = [];
 let rootDeclaration: StypDeclaration | undefined;

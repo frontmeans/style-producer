@@ -1,7 +1,7 @@
 import { stypRoot } from './root';
 import { AfterEvent__symbol } from 'fun-events';
+import { StypSelector } from '../selector';
 import { StypDeclaration } from './declaration';
-import { StypSelector } from './selector';
 
 describe('stypRoot', () => {
   it('is cached when properties omitted', () => {

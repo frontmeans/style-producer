@@ -1,5 +1,5 @@
-import { StypDeclaration } from './declaration';
 import { EventKeeper } from 'fun-events';
+import { StypDeclaration } from './declaration';
 
 /**
  * CSS properties.
