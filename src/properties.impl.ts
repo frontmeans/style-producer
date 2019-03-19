@@ -1,7 +1,7 @@
 import { StypDeclaration } from './declaration';
 import { AfterEvent, EventKeeper } from 'fun-events';
 import { isValueKeeper, keepValue } from './events';
-import { StypProperties, StypPropertiesSpec } from './properties';
+import { StypProperties } from './properties';
 
 /**
  * @internal
@@ -13,7 +13,7 @@ export const noStypProperties: AfterEvent<[StypProperties]> = /*#__PURE__*/ keep
  */
 export function stypPropertiesBySpec(
     decl: StypDeclaration,
-    properties: StypPropertiesSpec | undefined):
+    properties: StypProperties.Spec | undefined):
     EventKeeper<[StypProperties]> {
   if (!properties) {
     return noStypProperties;

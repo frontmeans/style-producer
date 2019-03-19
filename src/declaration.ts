@@ -1,22 +1,22 @@
 import { AfterEvent, AfterEvent__symbol, afterEventFrom, EventKeeper } from 'fun-events';
 import { StypSelector } from './selector';
-import { StypProperties, StypPropertiesBuilder } from './properties';
+import { StypProperties } from './properties';
 
 export abstract class StypDeclaration implements EventKeeper<[StypProperties]> {
 
   /**
    * @internal
    */
-  private _properties?: AfterEvent<[StypProperties]>;
+  private _read?: AfterEvent<[StypProperties]>;
 
   abstract readonly root: StypDeclaration;
 
   abstract readonly selector: StypSelector.Normalized;
 
-  abstract readonly spec: StypPropertiesBuilder;
+  abstract readonly spec: StypProperties.Builder;
 
   get read(): AfterEvent<[StypProperties]> {
-    return this._properties || (this._properties = afterEventFrom(this.spec(this)));
+    return this._read || (this._read = afterEventFrom(this.spec(this)));
   }
 
   get [AfterEvent__symbol](): AfterEvent<[StypProperties]> {

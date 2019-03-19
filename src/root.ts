@@ -1,6 +1,6 @@
 import { stypSelector, StypSelector } from './selector';
 import { StypDeclaration } from './declaration';
-import { StypPropertiesSpec } from './properties';
+import { StypProperties } from './properties';
 import { noStypProperties, stypPropertiesBySpec } from './properties.impl';
 
 const rootSelector: StypSelector.Normalized = [];
@@ -31,7 +31,7 @@ class EmptyDeclaration extends StypDeclaration {
 
 }
 
-export function stypRoot(properties?: StypPropertiesSpec): StypDeclaration {
+export function stypRoot(properties?: StypProperties.Spec): StypDeclaration {
 
   if (!properties && rootDeclaration) {
     return rootDeclaration;
