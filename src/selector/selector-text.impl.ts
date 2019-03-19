@@ -1,5 +1,6 @@
-import { cssescId, isCombinator } from './selector.impl';
+import { isCombinator } from './selector.impl';
 import { StypSelector } from './selector';
+import { cssescId } from '../internal';
 
 /**
  * @internal

@@ -1,12 +1,4 @@
-import cssesc from 'cssesc';
 import { StypSelector } from './selector';
-
-/**
- * @internal
- */
-export function cssescId(id: string): string {
-  return cssesc(id, { isIdentifier: true });
-}
 
 /**
  * @internal
