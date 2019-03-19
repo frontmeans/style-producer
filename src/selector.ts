@@ -1,5 +1,5 @@
-import cssesc from 'cssesc';
 import { filterIt, mapIt, overArray } from 'a-iterable';
+import { cssescId } from './cssesc.impl';
 
 export type StypSelector = string | StypSelector.Part | (string | StypSelector.Part | StypSelector.Combinator)[];
 
@@ -156,8 +156,4 @@ function itemString(item: StypSelector.NormalizedPart | StypSelector.Combinator)
   }
 
   return string;
-}
-
-function cssescId(id: string): string {
-  return cssesc(id, { isIdentifier: true });
 }

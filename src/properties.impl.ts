@@ -50,15 +50,21 @@ function passNonDuplicate() {
   let stored: StypProperties | undefined;
 
   return (updated: StypProperties) => {
-    return stored && propertiesEqual(updated, stored) ? nextSkip() : (stored = { ...updated });
+    if (stored != null && propertiesEqual(updated, stored)) {
+      return nextSkip();
+    }
+    return stored = typeof updated === 'string' ? updated : { ...updated };
   };
 }
 
 function propertiesEqual(first: StypProperties, second: StypProperties): boolean {
+  if (typeof first === 'string' || typeof second === 'string') {
+    return first === second;
+  }
   return hasAllOf(first, second) && hasAllOf(second, first);
 }
 
-function hasAllOf(first: StypProperties, second: StypProperties): boolean {
+function hasAllOf(first: StypProperties.Map, second: StypProperties.Map): boolean {
   return itsEvery(
       overEntries(first),
       ([k, v]) => v === second[k]

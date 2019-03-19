@@ -55,6 +55,26 @@ describe('stypPropertiesBySpec', () => {
     expect(receiver).toHaveBeenCalledWith(updated);
     expect(receiver).toHaveBeenCalledTimes(2);
   });
+  it('handles raw properties', async () => {
+
+    const initial = { fontSize: '12px' };
+    const tracker = trackValue<StypProperties>(initial);
+    const after = afterEventFrom(stypPropertiesBySpec(decl, tracker));
+    const receiver = jest.fn();
+
+    after(receiver);
+    expect(receiver).toHaveBeenCalledWith(initial);
+
+    const raw = 'font-size: 13px';
+
+    tracker.it = raw;
+    expect(receiver).toHaveBeenCalledWith(raw);
+
+    const updated = { fontSize: '13px' };
+
+    tracker.it = updated;
+    expect(receiver).toHaveBeenCalledWith(updated);
+  });
   it('sends constructed properties', async () => {
 
     const initial = { fontSize: '12px' };
