@@ -35,8 +35,25 @@ describe('stypPropertiesBySpec', () => {
     const updated = { fontSize: '13px' };
 
     tracker.it = updated;
-
     expect(await new Promise(resolve => after(resolve))).toEqual(updated);
+  });
+  it('prevents tracked properties duplicates', () => {
+
+    const initial = { fontSize: '12px' };
+    const tracker = trackValue(initial);
+    const after = afterEventFrom(stypPropertiesBySpec(decl, tracker));
+    const receiver = jest.fn();
+
+    after(receiver);
+    expect(receiver).toHaveBeenCalledWith(initial);
+
+    const updated = { fontSize: '13px' };
+
+    tracker.it = initial;
+    tracker.it = { ...initial };
+    tracker.it = updated;
+    expect(receiver).toHaveBeenCalledWith(updated);
+    expect(receiver).toHaveBeenCalledTimes(2);
   });
   it('sends constructed properties', async () => {
 
@@ -56,7 +73,22 @@ describe('stypPropertiesBySpec', () => {
     const updated = { fontSize: '13px' };
 
     tracker.it = updated;
-
     expect(await new Promise(resolve => after(resolve))).toEqual(updated);
+  });
+  it('prevents constructed tracked properties duplicates', () => {
+
+    const initial = { fontSize: '12px' };
+    const tracker = trackValue(initial);
+    const after = afterEventFrom(stypPropertiesBySpec(decl, () => tracker));
+    const receiver = jest.fn();
+
+    after(receiver);
+
+    const updated = { fontSize: '13px' };
+
+    tracker.it = { ...initial };
+    tracker.it = updated;
+    expect(receiver).toHaveBeenCalledWith(updated);
+    expect(receiver).toHaveBeenCalledTimes(2);
   });
 });
