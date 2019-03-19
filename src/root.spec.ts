@@ -33,47 +33,12 @@ describe('stypRoot', () => {
   });
 
   describe('read', () => {
-    it('sends initial properties', async () => {
+    it('sends properties', async () => {
 
       const initial = { fontSize: '12px' };
       const decl = stypRoot(initial);
 
       expect(await new Promise(resolve => decl.read(resolve))).toEqual(initial);
-    });
-    it('sends tracked properties', async () => {
-
-      const initial = { fontSize: '12px' };
-      const tracker = trackValue(initial);
-      const decl = stypRoot(tracker);
-
-      expect(await new Promise(resolve => decl.read(resolve))).toEqual(initial);
-
-      const updated = { fontSize: '13px' };
-
-      tracker.it = updated;
-
-      expect(await new Promise(resolve => decl.read(resolve))).toEqual(updated);
-    });
-    it('sends constructed properties', async () => {
-
-      const initial = { fontSize: '12px' };
-      const decl = stypRoot(() => initial);
-
-      expect(await new Promise(resolve => decl.read(resolve))).toEqual(initial);
-    });
-    it('sends constructed tracked properties', async () => {
-
-      const initial = { fontSize: '12px' };
-      const tracker = trackValue(initial);
-      const decl = stypRoot(() => tracker);
-
-      expect(await new Promise(resolve => decl.read(resolve))).toEqual(initial);
-
-      const updated = { fontSize: '13px' };
-
-      tracker.it = updated;
-
-      expect(await new Promise(resolve => decl.read(resolve))).toEqual(updated);
     });
   });
 

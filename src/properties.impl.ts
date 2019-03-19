@@ -13,7 +13,7 @@ export const noStypProperties: AfterEvent<[StypProperties]> = /*#__PURE__*/ keep
  */
 export function stypPropertiesBySpec(
     decl: StypDeclaration,
-    properties: StypProperties.Spec | undefined):
+    properties?: StypProperties.Spec):
     EventKeeper<[StypProperties]> {
   if (!properties) {
     return noStypProperties;
