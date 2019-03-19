@@ -1,7 +1,9 @@
 import { stypRoot } from './root';
-import { afterEventFrom, trackValue } from 'fun-events';
+import { afterEventFrom, EventEmitter, trackValue } from 'fun-events';
 import { StypDeclaration } from './declaration';
 import { stypPropertiesBySpec } from './properties.impl';
+import { StypPropertiesSpec } from '../d.ts';
+import { StypProperties } from './properties';
 
 describe('stypPropertiesBySpec', () => {
 
@@ -78,16 +80,17 @@ describe('stypPropertiesBySpec', () => {
   it('prevents constructed tracked properties duplicates', () => {
 
     const initial = { fontSize: '12px' };
-    const tracker = trackValue(initial);
+    const updated = { fontSize: '13px' };
+    const properties = { ...initial };
+    const emitter = new EventEmitter<[StypProperties]>();
+    const tracker = afterEventFrom(emitter, [properties]);
     const after = afterEventFrom(stypPropertiesBySpec(decl, () => tracker));
     const receiver = jest.fn();
 
     after(receiver);
 
-    const updated = { fontSize: '13px' };
-
-    tracker.it = { ...initial };
-    tracker.it = updated;
+    properties.fontSize = updated.fontSize;
+    emitter.send(properties);
     expect(receiver).toHaveBeenCalledWith(updated);
     expect(receiver).toHaveBeenCalledTimes(2);
   });

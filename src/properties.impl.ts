@@ -50,12 +50,12 @@ function passNonDuplicate() {
   let stored: StypProperties | undefined;
 
   return (updated: StypProperties) => {
-    return stored && propertiesEqual(updated, stored) ? nextSkip() : (stored = updated);
+    return stored && propertiesEqual(updated, stored) ? nextSkip() : (stored = { ...updated });
   };
 }
 
 function propertiesEqual(first: StypProperties, second: StypProperties): boolean {
-  return first === second || hasAllOf(first, second) && hasAllOf(second, first);
+  return hasAllOf(first, second) && hasAllOf(second, first);
 }
 
 function hasAllOf(first: StypProperties, second: StypProperties): boolean {
