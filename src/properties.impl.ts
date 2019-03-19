@@ -1,6 +1,6 @@
 import { StypDeclaration } from './declaration';
 import { AfterEvent, EventKeeper } from 'fun-events';
-import { isValueKeeper, keepValue } from './events';
+import { isValueKeeper, keepValue } from './events.impl';
 import { StypProperties } from './properties';
 
 /**
