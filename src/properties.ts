@@ -12,4 +12,6 @@ export interface StypProperties {
 export type StypPropertiesSpec =
     StypProperties
     | EventKeeper<[StypProperties]>
-    | ((this: StypDeclaration) => StypProperties | EventKeeper<[StypProperties]>);
+    | ((decl: StypDeclaration) => StypProperties | EventKeeper<[StypProperties]>);
+
+export type StypPropertiesBuilder = (decl: StypDeclaration) => EventKeeper<[StypProperties]>;

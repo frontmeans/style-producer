@@ -23,7 +23,7 @@ export function stypPropertiesBySpec(
   }
   if (typeof properties === 'function') {
 
-    const keeperOrProperties = properties.call(decl);
+    const keeperOrProperties = properties(decl);
 
     if (isValueKeeper(keeperOrProperties)) {
       return keeperOrProperties;

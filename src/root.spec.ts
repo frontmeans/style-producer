@@ -15,11 +15,11 @@ describe('stypRoot', () => {
   });
 
   describe('[AfterEvent__symbol]', () => {
-    it('is the same as `properties`', () => {
+    it('is the same as `read`', () => {
 
       const decl = stypRoot();
 
-      expect(decl[AfterEvent__symbol]).toBe(decl.properties);
+      expect(decl[AfterEvent__symbol]).toBe(decl.read);
     });
   });
 
@@ -32,13 +32,13 @@ describe('stypRoot', () => {
     });
   });
 
-  describe('properties', () => {
+  describe('read', () => {
     it('sends initial properties', async () => {
 
       const initial = { fontSize: '12px' };
       const decl = stypRoot(initial);
 
-      expect(await new Promise(resolve => decl.properties(resolve))).toEqual(initial);
+      expect(await new Promise(resolve => decl.read(resolve))).toEqual(initial);
     });
     it('sends tracked properties', async () => {
 
@@ -46,20 +46,20 @@ describe('stypRoot', () => {
       const tracker = trackValue(initial);
       const decl = stypRoot(tracker);
 
-      expect(await new Promise(resolve => decl.properties(resolve))).toEqual(initial);
+      expect(await new Promise(resolve => decl.read(resolve))).toEqual(initial);
 
       const updated = { fontSize: '13px' };
 
       tracker.it = updated;
 
-      expect(await new Promise(resolve => decl.properties(resolve))).toEqual(updated);
+      expect(await new Promise(resolve => decl.read(resolve))).toEqual(updated);
     });
     it('sends constructed properties', async () => {
 
       const initial = { fontSize: '12px' };
       const decl = stypRoot(() => initial);
 
-      expect(await new Promise(resolve => decl.properties(resolve))).toEqual(initial);
+      expect(await new Promise(resolve => decl.read(resolve))).toEqual(initial);
     });
     it('sends constructed tracked properties', async () => {
 
@@ -67,13 +67,13 @@ describe('stypRoot', () => {
       const tracker = trackValue(initial);
       const decl = stypRoot(() => tracker);
 
-      expect(await new Promise(resolve => decl.properties(resolve))).toEqual(initial);
+      expect(await new Promise(resolve => decl.read(resolve))).toEqual(initial);
 
       const updated = { fontSize: '13px' };
 
       tracker.it = updated;
 
-      expect(await new Promise(resolve => decl.properties(resolve))).toEqual(updated);
+      expect(await new Promise(resolve => decl.read(resolve))).toEqual(updated);
     });
   });
 
@@ -107,7 +107,7 @@ describe('stypRoot', () => {
       expect(nested.selector).toEqual(selector);
     });
     it('returns empty declaration', async () => {
-      expect(await new Promise(resolve => nested.properties(resolve))).toEqual({});
+      expect(await new Promise(resolve => nested.read(resolve))).toEqual({});
     });
 
     describe('select', () => {

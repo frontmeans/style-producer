@@ -1,6 +1,6 @@
 import { AfterEvent, AfterEvent__symbol, afterEventFrom, EventKeeper } from 'fun-events';
 import { StypSelector } from './selector';
-import { StypProperties } from './properties';
+import { StypProperties, StypPropertiesBuilder } from './properties';
 
 export abstract class StypDeclaration implements EventKeeper<[StypProperties]> {
 
@@ -13,16 +13,16 @@ export abstract class StypDeclaration implements EventKeeper<[StypProperties]> {
 
   abstract readonly selector: StypSelector.Normalized;
 
-  get properties(): AfterEvent<[StypProperties]> {
-    return this._properties || (this._properties = afterEventFrom(this.build()));
+  abstract readonly spec: StypPropertiesBuilder;
+
+  get read(): AfterEvent<[StypProperties]> {
+    return this._properties || (this._properties = afterEventFrom(this.spec(this)));
   }
 
   get [AfterEvent__symbol](): AfterEvent<[StypProperties]> {
-    return this.properties;
+    return this.read;
   }
 
   abstract select(selector: StypSelector): StypDeclaration;
-
-  abstract build(): EventKeeper<[StypProperties]>;
 
 }

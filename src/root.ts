@@ -1,13 +1,16 @@
 import { stypSelector, StypSelector } from './selector';
-import { EventKeeper } from 'fun-events';
 import { StypDeclaration } from './declaration';
-import { StypProperties, StypPropertiesSpec } from './properties';
+import { StypPropertiesSpec } from './properties';
 import { noStypProperties, stypPropertiesBySpec } from './properties.impl';
 
 const rootSelector: StypSelector.Normalized = [];
 let rootDeclaration: StypDeclaration | undefined;
 
 class EmptyDeclaration extends StypDeclaration {
+
+  get spec() {
+    return emptySpec;
+  }
 
   constructor(
       readonly root: StypDeclaration,
@@ -26,10 +29,6 @@ class EmptyDeclaration extends StypDeclaration {
     return new EmptyDeclaration(this.root, [...this.selector, ..._selector]);
   }
 
-  build() {
-    return noStypProperties;
-  }
-
 }
 
 export function stypRoot(properties?: StypPropertiesSpec): StypDeclaration {
@@ -39,6 +38,8 @@ export function stypRoot(properties?: StypPropertiesSpec): StypDeclaration {
   }
 
   class Root extends StypDeclaration {
+
+    readonly spec = (decl: StypDeclaration) => stypPropertiesBySpec(decl, properties);
 
     get root() {
       return this;
@@ -59,10 +60,6 @@ export function stypRoot(properties?: StypPropertiesSpec): StypDeclaration {
       return new EmptyDeclaration(this, _selector);
     }
 
-    build(): EventKeeper<[StypProperties]> {
-      return stypPropertiesBySpec(this, properties);
-    }
-
   }
 
   const root = new Root();
@@ -72,4 +69,8 @@ export function stypRoot(properties?: StypPropertiesSpec): StypDeclaration {
   }
 
   return root;
+}
+
+function emptySpec() {
+  return noStypProperties;
 }
