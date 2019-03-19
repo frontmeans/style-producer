@@ -1,5 +1,5 @@
 import { AfterEvent, AfterEvent__symbol, afterEventFrom, EventKeeper } from 'fun-events';
-import { StypSelector } from './selector';
+import { StypSelector } from './selector/selector';
 import { StypProperties } from './properties';
 
 export abstract class StypDeclaration implements EventKeeper<[StypProperties]> {

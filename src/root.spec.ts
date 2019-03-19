@@ -1,5 +1,5 @@
 import { stypRoot } from './root';
-import { AfterEvent__symbol, trackValue } from 'fun-events';
+import { AfterEvent__symbol } from 'fun-events';
 import { StypDeclaration } from './declaration';
 import { StypSelector } from './selector';
 

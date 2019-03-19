@@ -1,4 +1,4 @@
-import { stypSelector, stypSelectorString } from './selector';
+import { stypSelector } from './selector';
 
 describe('stypSelector', () => {
   it('converts string to raw selector', () => {
@@ -51,29 +51,5 @@ describe('stypSelector', () => {
   });
   it('removes empty attributes', () => {
     expect(stypSelector({ e: 'span', s: '' })).toEqual([{ e: 'span' }]);
-  });
-});
-
-describe('stypSelectorString', () => {
-  it('prints raw selector', () => {
-    expect(stypSelectorString('.some')).toBe('.some');
-  });
-  it('prints element name', () => {
-    expect(stypSelectorString({ e: 'span' })).toBe('span');
-  });
-  it('prints namespace', () => {
-    expect(stypSelectorString({ ns: 'foo', e: 'bar' })).toBe('foo|bar');
-  });
-  it('prints identifier', () => {
-    expect(stypSelectorString({ i: 'foo:bar' })).toBe('#foo\\:bar');
-  });
-  it('prints classes', () => {
-    expect(stypSelectorString({ c: ['foo', 'bar.baz'] })).toBe('.bar\\.baz.foo');
-  });
-  it('prints pseudo-items', () => {
-    expect(stypSelectorString({ e: 'a', s: ':hover' })).toBe('a:hover');
-  });
-  it('prints combinations', () => {
-    expect(stypSelectorString([{ e: 'ul' }, '>', { e: 'a' }, '+', { e: 'span', s: ':after' }])).toBe('ul>a+span:after');
   });
 });
