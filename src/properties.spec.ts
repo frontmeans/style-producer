@@ -1,8 +1,6 @@
-import { stypRoot } from './root';
 import { afterEventFrom, EventEmitter, trackValue } from 'fun-events';
 import { StypDeclaration } from './declaration';
 import { stypPropertiesBySpec } from './properties.impl';
-import { StypPropertiesSpec } from '../d.ts';
 import { StypProperties } from './properties';
 
 describe('stypPropertiesBySpec', () => {
