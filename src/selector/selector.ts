@@ -78,18 +78,6 @@ export namespace StypSelector {
   }
 
   /**
-   * Raw CSS selector text representation.
-   *
-   * It contains only `s` property.
-   */
-  export interface Raw extends NonElement {
-    e?: undefined;
-    i?: undefined;
-    c?: undefined;
-    s: string;
-  }
-
-  /**
    * CSS selector part containing element selector.
    */
   export interface Element extends PartBase {
@@ -140,6 +128,17 @@ export namespace StypSelector {
      */
     c?: string[];
 
+  }
+
+  /**
+   * Raw CSS selector text representation.
+   *
+   * It contains only `s` property.
+   */
+  export interface Raw extends NormalizedNonElement {
+    i?: undefined;
+    c?: undefined;
+    s: string;
   }
 
 }
