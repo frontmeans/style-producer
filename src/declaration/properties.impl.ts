@@ -1,7 +1,7 @@
 import { AfterEvent, afterEventFrom, EventKeeper, OnEvent } from 'fun-events';
 import { isValueKeeper, keepValue } from '../internal';
 import { StypProperties } from './properties';
-import { nextSkip } from 'call-thru';
+import { nextSkip, NextSkip } from 'call-thru';
 import { itsEvery, overEntries } from 'a-iterable';
 import { StypDeclaration } from './declaration';
 
@@ -13,10 +13,7 @@ export const noStypProperties: AfterEvent<[StypProperties]> = /*#__PURE__*/ keep
 /**
  * @internal
  */
-export function stypPropertiesBySpec(
-    decl: StypDeclaration,
-    spec?: StypProperties.Spec):
-    AfterEvent<[StypProperties]> {
+export function stypPropertiesBySpec(decl: StypDeclaration, spec?: StypProperties.Spec): AfterEvent<[StypProperties]> {
   if (!spec) {
     return noStypProperties;
   }
@@ -31,40 +28,46 @@ export function stypPropertiesBySpec(
       return preventDuplicates(keeperOrProperties);
     }
 
-    return keepValue(keeperOrProperties);
+    return keepValue(propertiesMap(keeperOrProperties));
   }
 
-  return keepValue(spec);
+  return keepValue(propertiesMap(spec));
 }
 
-function preventDuplicates(properties: EventKeeper<[StypProperties]>): AfterEvent<[StypProperties]> {
+function preventDuplicates(properties: EventKeeper<[string | StypProperties]>): AfterEvent<[StypProperties]> {
 
-  const afterEvent = afterEventFrom(properties);
+  const afterEvent: AfterEvent<[string | StypProperties]> = afterEventFrom(properties);
   const onEvent: OnEvent<[StypProperties]> = afterEvent.thru(passNonDuplicate());
 
-  return afterEventFrom(onEvent, () => afterEvent.kept);
+  return afterEventFrom(onEvent, () => [propertiesMap(afterEvent.kept[0])] as [StypProperties]);
 }
 
-function passNonDuplicate() {
+function passNonDuplicate<NextArgs extends any[]>():
+    (update: string | StypProperties) => StypProperties | NextSkip<NextArgs, StypProperties> {
 
   let stored: StypProperties | undefined;
 
-  return (updated: StypProperties) => {
+  return update => {
+
+    const updated = propertiesMap(update);
+
     if (stored != null && propertiesEqual(updated, stored)) {
       return nextSkip();
     }
-    return stored = typeof updated === 'string' ? updated : { ...updated };
+
+    return stored = { ...updated };
   };
 }
 
-function propertiesEqual(first: StypProperties, second: StypProperties): boolean {
-  if (typeof first === 'string' || typeof second === 'string') {
-    return first === second;
-  }
-  return hasAllOf(first, second) && hasAllOf(second, first);
+function propertiesMap(properties: string | StypProperties): StypProperties {
+  return typeof properties === 'string' ? { $$css: properties } : properties;
 }
 
-function hasAllOf(first: StypProperties.Map, second: StypProperties.Map): boolean {
+function propertiesEqual(first: StypProperties, second: StypProperties): boolean {
+  return propertiesHaveAllOf(first, second) && propertiesHaveAllOf(second, first);
+}
+
+function propertiesHaveAllOf(first: StypProperties, second: StypProperties): boolean {
   return itsEvery(
       overEntries(first),
       ([k, v]) => v === second[k]

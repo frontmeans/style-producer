@@ -58,7 +58,7 @@ describe('stypPropertiesBySpec', () => {
   it('handles raw properties', async () => {
 
     const initial = { fontSize: '12px' };
-    const tracker = trackValue<StypProperties>(initial);
+    const tracker = trackValue<StypProperties | string>(initial);
     const after = afterEventFrom(stypPropertiesBySpec(decl, tracker));
     const receiver = jest.fn();
 
@@ -68,7 +68,7 @@ describe('stypPropertiesBySpec', () => {
     const raw = 'font-size: 13px';
 
     tracker.it = raw;
-    expect(receiver).toHaveBeenCalledWith(raw);
+    expect(receiver).toHaveBeenCalledWith({ $$css: raw });
 
     const updated = { fontSize: '13px' };
 

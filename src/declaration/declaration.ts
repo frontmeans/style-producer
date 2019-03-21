@@ -16,7 +16,7 @@ export abstract class StypDeclaration implements EventKeeper<[StypProperties]> {
   abstract readonly spec: StypProperties.Builder;
 
   get read(): AfterEvent<[StypProperties]> {
-    return this._read || (this._read = afterEventFrom(this.spec(this)));
+    return this._read || (this._read = this.spec(this));
   }
 
   get [AfterEvent__symbol](): AfterEvent<[StypProperties]> {
