@@ -1,7 +1,8 @@
-import { afterEventFrom, EventEmitter, trackValue } from 'fun-events';
-import { stypPropertiesBySpec } from './properties.impl';
+import { AfterEvent, afterEventFrom, EventEmitter, EventInterest, trackValue, ValueTracker } from 'fun-events';
+import { mergeStypProperties, stypPropertiesBySpec } from './properties.impl';
 import { StypProperties } from './properties';
 import { StypDeclaration } from './declaration';
+import Mock = jest.Mock;
 
 describe('stypPropertiesBySpec', () => {
 
@@ -15,14 +16,14 @@ describe('stypPropertiesBySpec', () => {
 
     const after = afterEventFrom(stypPropertiesBySpec(decl));
 
-    expect(await new Promise(resolve => after(resolve))).toEqual({});
+    expect(await receiveProperties(after)).toEqual({});
   });
   it('sends provided properties', async () => {
 
     const initial = { fontSize: '12px' };
     const after = afterEventFrom(stypPropertiesBySpec(decl, initial));
 
-    expect(await new Promise(resolve => after(resolve))).toEqual(initial);
+    expect(await receiveProperties(after)).toEqual(initial);
   });
   it('sends tracked properties', async () => {
 
@@ -30,12 +31,12 @@ describe('stypPropertiesBySpec', () => {
     const tracker = trackValue(initial);
     const after = afterEventFrom(stypPropertiesBySpec(decl, tracker));
 
-    expect(await new Promise(resolve => after(resolve))).toEqual(initial);
+    expect(await receiveProperties(after)).toEqual(initial);
 
     const updated = { fontSize: '13px' };
 
     tracker.it = updated;
-    expect(await new Promise(resolve => after(resolve))).toEqual(updated);
+    expect(await receiveProperties(after)).toEqual(updated);
   });
   it('prevents tracked properties duplicates', () => {
 
@@ -80,7 +81,7 @@ describe('stypPropertiesBySpec', () => {
     const initial = { fontSize: '12px' };
     const after = afterEventFrom(stypPropertiesBySpec(decl, () => initial));
 
-    expect(await new Promise(resolve => after(resolve))).toEqual(initial);
+    expect(await receiveProperties(after)).toEqual(initial);
   });
   it('sends constructed tracked properties', async () => {
 
@@ -88,12 +89,12 @@ describe('stypPropertiesBySpec', () => {
     const tracker = trackValue(initial);
     const after = afterEventFrom(stypPropertiesBySpec(decl, () => tracker));
 
-    expect(await new Promise(resolve => after(resolve))).toEqual(initial);
+    expect(await receiveProperties(after)).toEqual(initial);
 
     const updated = { fontSize: '13px' };
 
     tracker.it = updated;
-    expect(await new Promise(resolve => after(resolve))).toEqual(updated);
+    expect(await receiveProperties(after)).toEqual(updated);
   });
   it('prevents constructed tracked properties duplicates', () => {
 
@@ -113,3 +114,67 @@ describe('stypPropertiesBySpec', () => {
     expect(receiver).toHaveBeenCalledTimes(2);
   });
 });
+
+describe('mergeStypProperties', () => {
+
+  let baseProperties: StypProperties;
+  let base: ValueTracker<StypProperties>;
+  let addendumProperties: StypProperties;
+  let addendum: ValueTracker<StypProperties>;
+
+  beforeEach(() => {
+    baseProperties = { display: 'block', width: '100%' };
+    addendumProperties = { display: 'none' };
+    base = trackValue(baseProperties);
+    addendum = trackValue(addendumProperties);
+  });
+
+  let merged: AfterEvent<[StypProperties]>;
+
+  beforeEach(() => {
+    merged = mergeStypProperties(base.read, addendum.read);
+  });
+
+  it('keeps initial properties', () => {
+    expect(merged.kept).toEqual([{ ...baseProperties, ...addendumProperties }]);
+  });
+  it('merges initial properties', async () => {
+    expect(await receiveProperties(merged)).toEqual({ ...baseProperties, ...addendumProperties });
+  });
+
+  describe('merging', () => {
+
+    let mockReceiver: Mock<void, [StypProperties]>;
+    let interest: EventInterest;
+
+    beforeEach(() => {
+      mockReceiver = jest.fn();
+      interest = merged(mockReceiver);
+      mockReceiver.mockClear();
+    });
+
+    it('is aborted when interest lost', () => {
+      interest.off();
+      addendum.it = { ...addendumProperties, display: 'none !important' };
+      expect(mockReceiver).not.toHaveBeenCalled();
+    });
+    it('overrides property', () => {
+      base.it = { ...baseProperties, display: 'inline-block' };
+      expect(mockReceiver).toHaveBeenCalledWith(expect.objectContaining({ display: 'none' }));
+    });
+    it('does not override important property', () => {
+      base.it = { ...baseProperties, display: 'inline-block !important' };
+      expect(mockReceiver).toHaveBeenCalledWith(expect.objectContaining({ display: 'inline-block !important' }));
+    });
+    it('overrides important property', () => {
+      base.it = { ...baseProperties, display: 'inline-block !important' };
+      mockReceiver.mockClear();
+      addendum.it = { ...addendumProperties, display: 'none !important' };
+      expect(mockReceiver).toHaveBeenCalledWith(expect.objectContaining({ display: 'none !important' }));
+    });
+  });
+});
+
+async function receiveProperties(sender: AfterEvent<[StypProperties]>): Promise<StypProperties> {
+  return new Promise(resolve => sender(resolve));
+}

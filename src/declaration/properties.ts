@@ -56,4 +56,9 @@ export namespace StypProperties {
    */
   export type Builder = (decl: StypDeclaration) => AfterEvent<[StypProperties]>;
 
+  /**
+   * Mutable CSS properties map.
+   */
+  export type Mutable = { [key in keyof StypProperties]: StypProperties[key] };
+
 }
