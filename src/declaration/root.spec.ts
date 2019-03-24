@@ -21,15 +21,6 @@ describe('stypRoot', () => {
     expect(stypRoot(props)).not.toBe(stypRoot(props));
   });
 
-  describe('[AfterEvent__symbol]', () => {
-    it('is the same as `read`', () => {
-
-      const decl = stypRoot();
-
-      expect(decl[AfterEvent__symbol]).toBe(decl.read);
-    });
-  });
-
   describe('root', () => {
     it('points to itself', () => {
 
