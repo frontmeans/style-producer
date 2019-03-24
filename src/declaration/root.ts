@@ -28,7 +28,7 @@ export function stypRoot(properties?: StypProperties.Spec): StypDeclaration {
       return !properties;
     }
 
-    select(selector: StypSelector): StypDeclaration {
+    nested(selector: StypSelector): StypDeclaration {
 
       const _selector = stypSelector(selector);
 

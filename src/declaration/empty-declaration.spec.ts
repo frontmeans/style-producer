@@ -16,7 +16,7 @@ describe('EmptyStypDeclaration', () => {
 
   beforeEach(() => {
     selector = [{ c: ['nested'] }];
-    decl = root.select(selector);
+    decl = root.nested(selector);
   });
 
   it('is empty', () => {
@@ -29,21 +29,21 @@ describe('EmptyStypDeclaration', () => {
     });
   });
 
-  describe('select', () => {
+  describe('nested', () => {
 
     let subSelector: StypSelector.Normalized;
     let subNested: StypDeclaration;
 
     beforeEach(() => {
       subSelector = [{ c: ['sub-nested'] }];
-      subNested = decl.select(subSelector);
+      subNested = decl.nested(subSelector);
     });
 
     it('returns empty selector', () => {
       expect(subNested).toBeInstanceOf(EmptyStypDeclaration);
     });
     it('returns itself when selector is empty', () => {
-      expect(decl.select({})).toBe(decl);
+      expect(decl.nested({})).toBe(decl);
     });
     it('has the same root', () => {
       expect(subNested.root).toBe(root);

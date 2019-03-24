@@ -21,7 +21,7 @@ export class EmptyStypDeclaration extends StypDeclaration {
     super();
   }
 
-  select(selector: StypSelector): StypDeclaration {
+  nested(selector: StypSelector): StypDeclaration {
 
     const _selector = stypSelector(selector);
 

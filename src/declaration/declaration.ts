@@ -33,6 +33,6 @@ export abstract class StypDeclaration implements EventKeeper<[StypProperties]> {
     return this.read;
   }
 
-  abstract select(selector: StypSelector): StypDeclaration;
+  abstract nested(selector: StypSelector): StypDeclaration;
 
 }

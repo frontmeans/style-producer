@@ -55,7 +55,7 @@ describe('stypRoot', () => {
     });
   });
 
-  describe('select', () => {
+  describe('nested', () => {
 
     let root: StypDeclaration;
 
@@ -68,11 +68,11 @@ describe('stypRoot', () => {
 
     beforeEach(() => {
       selector = [{ c: ['nested'] }];
-      nested = root.select(selector);
+      nested = root.nested(selector);
     });
 
     it('returns itself when selector is empty', () => {
-      expect(root.select([])).toBe(root);
+      expect(root.nested([])).toBe(root);
     });
     it('returns nested declaration', () => {
       expect(nested.root).toBe(root);
