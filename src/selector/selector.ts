@@ -191,12 +191,14 @@ export function stypSelector(selector: StypSelector): StypSelector.Normalized;
 export function stypSelector(selector: StypSelector): StypSelector.Normalized {
   if (Array.isArray(selector)) {
     return [
-      ...filterIt(
+      ...filterIt<
+          StypSelector.NormalizedPart | StypSelector.Combinator | undefined,
+          StypSelector.NormalizedPart | StypSelector.Combinator>(
           mapIt(
               overArray(selector),
               normalizeItem),
           isPresent),
-    ] as StypSelector.Normalized;
+    ];
   } else {
 
     const key = normalizeKey(selector);

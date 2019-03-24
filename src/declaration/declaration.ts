@@ -1,4 +1,4 @@
-import { AfterEvent, AfterEvent__symbol, afterEventFrom, EventKeeper } from 'fun-events';
+import { AfterEvent, AfterEvent__symbol, EventKeeper } from 'fun-events';
 import { StypSelector } from '../selector';
 import { StypProperties } from './properties';
 

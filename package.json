@@ -21,7 +21,7 @@
   "esm5": "dist/style-producer.esm5.js",
   "typings": "index.d.ts",
   "dependencies": {
-    "a-iterable": "^2.2.1",
+    "a-iterable": "^2.2.3",
     "cssesc": "^3.0.0",
     "fun-events": "^4.0.1",
     "tslib": "^1.9.3"
