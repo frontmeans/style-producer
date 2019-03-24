@@ -25,7 +25,7 @@ describe('EmptyStypDeclaration', () => {
 
   describe('read', () => {
     it('sends empty properties', async () => {
-      expect(await new Promise(resolve => decl.read(resolve))).toEqual({})
+      expect(await new Promise(resolve => decl.read(resolve))).toEqual({});
     });
   });
 
