@@ -1,11 +1,10 @@
 import { StypDeclaration } from './declaration';
-import { StypSelector } from '../selector';
+import { StypSelector, stypSelector } from '../selector';
 import { stypRoot } from './root';
 import { keepValue } from '../internal';
-import { stypSelector } from '../selector';
-import { AfterEvent, AfterEvent__symbol, EventKeeper } from 'fun-events';
-import Mock = jest.Mock;
+import { AfterEvent, AfterEvent__symbol } from 'fun-events';
 import { StypProperties } from './properties';
+import Mock = jest.Mock;
 
 describe('StypDeclaration', () => {
 
