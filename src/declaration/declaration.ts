@@ -15,6 +15,16 @@ export abstract class StypDeclaration implements EventKeeper<[StypProperties]> {
 
   abstract readonly spec: StypProperties.Builder;
 
+  /**
+   * Whether this declaration is empty.
+   *
+   * This is `true` when declaration is guaranteed to be empty, or `false` if it is not empty, or it is not known for
+   * sure.
+   */
+  get empty(): boolean {
+    return false;
+  }
+
   get read(): AfterEvent<[StypProperties]> {
     return this._read || (this._read = this.spec(this));
   }

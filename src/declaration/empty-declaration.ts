@@ -11,6 +11,10 @@ export class EmptyStypDeclaration extends StypDeclaration {
     return emptySpec;
   }
 
+  get empty() {
+    return true;
+  }
+
   constructor(
       readonly root: StypDeclaration,
       readonly selector: StypSelector.Normalized) {

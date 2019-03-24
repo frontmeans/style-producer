@@ -2,12 +2,19 @@ import { stypRoot } from './root';
 import { AfterEvent__symbol } from 'fun-events';
 import { StypSelector } from '../selector';
 import { StypDeclaration } from './declaration';
+import { EmptyStypDeclaration } from './empty-declaration';
 
 describe('stypRoot', () => {
-  it('is cached when properties omitted', () => {
+  it('is empty without properties', () => {
+    expect(stypRoot().empty).toBe(true);
+  });
+  it('is not empty with properties', () => {
+    expect(stypRoot({ fontSize: '12px' }).empty).toBe(false);
+  });
+  it('is cached without properties', () => {
     expect(stypRoot()).toBe(stypRoot());
   });
-  it('is not cached when properties specified', () => {
+  it('is not cached with properties', () => {
 
     const props = { fontSize: '12px' };
 
@@ -71,32 +78,8 @@ describe('stypRoot', () => {
       expect(nested.root).toBe(root);
       expect(nested.selector).toEqual(selector);
     });
-    it('returns empty declaration', async () => {
-      expect(await new Promise(resolve => nested.read(resolve))).toEqual({});
-    });
-
-    describe('select', () => {
-
-      let subSelector: StypSelector.Normalized;
-      let subNested: StypDeclaration;
-
-      beforeEach(() => {
-        subSelector = [{ c: ['sub-nested'] }];
-        subNested = nested.select(subSelector);
-      });
-
-      it('returns empty selector', () => {
-        expect(subNested.constructor).toBe(nested.constructor);
-      });
-      it('returns itself when selector is empty', () => {
-        expect(nested.select({})).toBe(nested);
-      });
-      it('has the same root', () => {
-        expect(subNested.root).toBe(root);
-      });
-      it('has nested selector', () => {
-        expect(subNested.selector).toEqual([...selector, ...subSelector]);
-      });
+    it('returns empty declaration', () => {
+      expect(nested).toBeInstanceOf(EmptyStypDeclaration);
     });
   });
 });

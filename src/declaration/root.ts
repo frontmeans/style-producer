@@ -24,6 +24,10 @@ export function stypRoot(properties?: StypProperties.Spec): StypDeclaration {
       return rootSelector;
     }
 
+    get empty() {
+      return !properties;
+    }
+
     select(selector: StypSelector): StypDeclaration {
 
       const _selector = stypSelector(selector);
