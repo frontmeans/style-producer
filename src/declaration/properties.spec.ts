@@ -56,6 +56,22 @@ describe('stypPropertiesBySpec', () => {
     expect(receiver).toHaveBeenCalledWith(updated);
     expect(receiver).toHaveBeenCalledTimes(2);
   });
+  it('sends similar tracked properties with different properties order', () => {
+
+    const initial = { border: '1px solid white', borderWidth: '2px' };
+    const tracker = trackValue(initial);
+    const after = afterEventFrom(stypPropertiesBySpec(decl, tracker));
+    const receiver = jest.fn();
+
+    after(receiver);
+    expect(receiver).toHaveBeenCalledWith(initial);
+
+    const updated = { borderWidth: '2px', border: '1px solid white' };
+
+    tracker.it = updated;
+    expect(receiver).toHaveBeenCalledWith(updated);
+    expect(receiver).toHaveBeenCalledTimes(2);
+  });
   it('handles raw properties', async () => {
 
     const initial = { fontSize: '12px' };

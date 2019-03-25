@@ -2,7 +2,7 @@ import { AfterEvent, afterEventBy, afterEventFrom, eventInterest, EventKeeper, O
 import { isValueKeeper, keepValue } from '../internal';
 import { StypProperties } from './properties';
 import { nextSkip, NextSkip, noop } from 'call-thru';
-import { itsEvery, itsReduction, overEntries } from 'a-iterable';
+import { itsIterator, itsReduction, overEntries } from 'a-iterable';
 import { StypDeclaration } from './declaration';
 
 /**
@@ -63,14 +63,19 @@ function propertiesMap(properties: string | StypProperties): StypProperties {
 }
 
 function propertiesEqual(first: StypProperties, second: StypProperties): boolean {
-  return propertiesHaveAllOf(first, second) && propertiesHaveAllOf(second, first);
-}
 
-function propertiesHaveAllOf(first: StypProperties, second: StypProperties): boolean {
-  return itsEvery(
-      overEntries(first),
-      ([k, v]) => v === second[k]
-  );
+  const s = itsIterator(overEntries(second));
+
+  for (const [key, value] of overEntries(first)) {
+
+    const { value: svalue } = s.next();
+
+    if (!svalue || key !== svalue[0] || value !== svalue[1]) {
+      return false;
+    }
+  }
+
+  return !s.next().value;
 }
 
 /**
