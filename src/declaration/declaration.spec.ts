@@ -93,7 +93,7 @@ describe('StypDeclaration', () => {
     let decl2: StypDeclaration;
 
     beforeEach(() => {
-      decl2 = updated.root.nested([ { e: 'element-2' }]);
+      decl2 = updated.root.nested([ { e: 'element-1', $: 'biz' }]);
     });
 
     it('recreates hierarchy', () => {

@@ -52,4 +52,10 @@ describe('stypSelector', () => {
   it('removes empty attributes', () => {
     expect(stypSelector({ e: 'span', s: '' })).toEqual([{ e: 'span' }]);
   });
+  it('normalizes qualifiers', () => {
+    expect(stypSelector({ $: 'abc' })).toEqual([{ $: ['abc'] }]);
+  });
+  it('sorts qualifiers', () => {
+    expect(stypSelector({ $: ['def', 'abc'] })).toEqual([{ $: ['abc', 'def'] }]);
+  });
 });

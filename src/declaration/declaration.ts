@@ -234,5 +234,5 @@ function keySelectorAndTail(selector: StypSelector.Normalized):
 }
 
 function declarationKey(selector: StypSelector.Normalized): string {
-  return formatSelector(selector, s => `:${cssescId(s)}`);
+  return formatSelector(selector, s => `:${cssescId(s)}`, s => `@${cssescId(s)}`);
 }

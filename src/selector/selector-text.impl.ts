@@ -7,18 +7,20 @@ import { cssescId } from '../internal';
  */
 export function formatSelector(
     selector: StypSelector.Normalized,
-    formatRaw: (s: string) => string): string {
-  return selector.reduce((result, item) => result + formatItem(item, formatRaw), '');
+    formatRaw: (s: string) => string,
+    formatQualifier?: (s: string) => string): string {
+  return selector.reduce((result, item) => result + formatItem(item, formatRaw, formatQualifier), '');
 }
 
 function formatItem(
     item: StypSelector.NormalizedPart | StypSelector.Combinator,
-    formatRaw: (s: string) => string): string {
+    formatRaw: (s: string) => string,
+    formatQualifier?: (s: string) => string): string {
   if (isCombinator(item)) {
     return item;
   }
 
-  const { ns, e, i, c, s } = item;
+  const { ns, e, i, c, s, $ } = item;
   let string: string;
 
   if (ns != null) {
@@ -34,6 +36,9 @@ function formatItem(
   }
   if (s) {
     string += formatRaw(s);
+  }
+  if (formatQualifier && $) {
+    string = $.reduce((p, q) => p + formatQualifier(q), string);
   }
 
   return string;

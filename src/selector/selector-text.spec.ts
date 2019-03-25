@@ -1,4 +1,5 @@
 import { stypSelectorText } from './selector-text';
+import { formatSelector } from './selector-text.impl';
 
 describe('stypSelectorText', () => {
   it('prints raw selector', () => {
@@ -21,5 +22,14 @@ describe('stypSelectorText', () => {
   });
   it('prints combinations', () => {
     expect(stypSelectorText([{ e: 'ul' }, '>', { e: 'a' }, '+', { e: 'span', s: ':after' }])).toBe('ul>a+span:after');
+  });
+  it('ignores qualifiers', () => {
+    expect(stypSelectorText({ e: 'span', $: 'foo' })).toBe('span');
+  });
+});
+
+describe('formatSelector', () => {
+  it('prints qualifiers', () => {
+    expect(formatSelector([{ e: 'span', $: ['foo'] }], s => s, s => `@${s}`)).toBe('span@foo');
   });
 });

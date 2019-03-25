@@ -75,6 +75,16 @@ export namespace StypSelector {
      */
     s?: string;
 
+    /**
+     * Qualifier or qualifiers.
+     *
+     * Qualifiers are typically not rendered as CSS selector text, but rather used to distinguish between style
+     * declarations.
+     *
+     * Qualifier may have a `name=value` form.
+     */
+    $?: string | string[];
+
   }
 
   /**
@@ -112,9 +122,14 @@ export namespace StypSelector {
   export interface NormalizedElement extends Element {
 
     /**
-     * Array of classes. Either absent, or non-empty and containing non-empty sorted class names.
+     * Array of classes. Either absent, or non-empty and containing non-empty class names sorted alphabetically.
      */
     c?: string[];
+
+    /**
+     * Array of qualifiers. Either absent, or non-empty and containing non-empty qualifiers sorted alphabetically.
+     */
+    $?: string[];
 
   }
 
@@ -124,16 +139,21 @@ export namespace StypSelector {
   export interface NormalizedNonElement extends NonElement {
 
     /**
-     * Array of classes. Either absent, or non-empty and containing non-empty sorted class names.
+     * Array of classes. Either absent, or non-empty and containing non-empty class names sorted alphabetically.
      */
     c?: string[];
+
+    /**
+     * Array of qualifiers. Either absent, or non-empty and containing non-empty qualifiers sorted alphabetically.
+     */
+    $?: string[];
 
   }
 
   /**
    * Raw CSS selector text representation.
    *
-   * It contains only `s` property.
+   * It contains only `s` property and optionally qualifiers.
    */
   export interface Raw extends NormalizedNonElement {
     i?: undefined;
@@ -222,7 +242,7 @@ function normalizeItem(item: string | StypSelector.Part | StypSelector.Combinato
 function normalizeKey(key: StypSelector.Part | string): StypSelector.NormalizedPart | undefined {
   if (typeof key === 'string') {
     if (!key) {
-      return undefined;
+      return;
     }
     return { s: key };
   }
@@ -236,12 +256,13 @@ function normalizePart(part: StypSelector.Part): StypSelector.NormalizedPart | u
   const i = part.i || undefined;
   const s = part.s || undefined;
   const c = normalizeClasses(part.c);
+  const $ = normalizeClasses(part.$);
 
-  if (!e && !i && !s && !c) {
-    return undefined;
+  if (!e && !i && !s && !c && !$) {
+    return;
   }
 
-  return { ns, e, i, s, c } as StypSelector.NormalizedPart;
+  return { ns, e, i, s, c, $ } as StypSelector.NormalizedPart;
 }
 
 function normalizeClasses(classes: string | string[] | undefined): string[] | undefined {
