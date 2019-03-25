@@ -160,7 +160,7 @@ describe('mergeStypProperties', () => {
     });
     it('overrides property', () => {
       base.it = { ...baseProperties, display: 'inline-block' };
-      expect(mockReceiver).toHaveBeenCalledWith(expect.objectContaining({ display: 'none' }));
+      expect(mockReceiver).not.toHaveBeenCalled();
     });
     it('does not override important property', () => {
       base.it = { ...baseProperties, display: 'inline-block !important' };

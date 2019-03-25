@@ -37,25 +37,24 @@ export function stypPropertiesBySpec(decl: StypDeclaration, spec?: StypPropertie
 function preventDuplicates(properties: EventKeeper<[string | StypProperties]>): AfterEvent<[StypProperties]> {
 
   const afterEvent: AfterEvent<[string | StypProperties]> = afterEventFrom(properties);
-  const onEvent: OnEvent<[StypProperties]> = afterEvent.thru(passNonDuplicate());
+  const onEvent: OnEvent<[StypProperties]> = afterEvent.thru(
+      propertiesMap,
+      passNonDuplicate(),
+  );
 
   return afterEventFrom(onEvent, () => [propertiesMap(afterEvent.kept[0])] as [StypProperties]);
 }
 
 function passNonDuplicate<NextArgs extends any[]>():
-    (update: string | StypProperties) => StypProperties | NextSkip<NextArgs, StypProperties> {
+    (update: StypProperties) => StypProperties | NextSkip<NextArgs, StypProperties> {
 
   let stored: StypProperties | undefined;
 
   return update => {
-
-    const updated = propertiesMap(update);
-
-    if (stored != null && propertiesEqual(updated, stored)) {
+    if (stored && propertiesEqual(update, stored)) {
       return nextSkip();
     }
-
-    return stored = { ...updated };
+    return stored = { ...update };
   };
 }
 
@@ -81,34 +80,35 @@ export function mergeStypProperties(
     base: AfterEvent<[StypProperties]>,
     addendum: AfterEvent<[StypProperties]>):
     AfterEvent<[StypProperties]> {
-  return afterEventBy(
-      receiver => {
+  return preventDuplicates(
+      afterEventBy(
+          receiver => {
 
-        let send: () => void = noop;
-        let baseProperties: StypProperties = {};
-        let addendumProperties: StypProperties = {};
+            let send: () => void = noop;
+            let baseProperties: StypProperties = {};
+            let addendumProperties: StypProperties = {};
 
-        const baseInterest = base(properties => {
-          baseProperties = properties;
-          send();
-        });
-        const extensionInterest = addendum(properties => {
-          addendumProperties = properties;
-          send();
-        });
+            const baseInterest = base(properties => {
+              baseProperties = properties;
+              send();
+            });
+            const extensionInterest = addendum(properties => {
+              addendumProperties = properties;
+              send();
+            });
 
-        send = () => receiver(addValues(baseProperties, addendumProperties));
-        send();
+            send = () => receiver(addValues(baseProperties, addendumProperties));
+            send();
 
-        return eventInterest(
-            reason => {
-              baseInterest.off(reason);
-              extensionInterest.off(reason);
-            })
-            .needs(baseInterest)
-            .needs(extensionInterest);
-      },
-      () => [addValues(base.kept[0], addendum.kept[0])] as [StypProperties]);
+            return eventInterest(
+                reason => {
+                  baseInterest.off(reason);
+                  extensionInterest.off(reason);
+                })
+                .needs(baseInterest)
+                .needs(extensionInterest);
+          },
+          () => [addValues(base.kept[0], addendum.kept[0])] as [StypProperties]));
 }
 
 function addValues(base: StypProperties, addendum: StypProperties): StypProperties {
