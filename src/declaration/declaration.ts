@@ -215,10 +215,7 @@ function cloneAllNested(clone: StypDeclarationExt, prototype: StypDeclaration): 
 
 function keySelectorAndTail(selector: StypSelector.Normalized):
     [StypSelector.Normalized, StypSelector.Normalized?] {
-
-  const length = selector.length;
-
-  if (!length) {
+  if (!selector.length) {
     return [selector];
   }
 
