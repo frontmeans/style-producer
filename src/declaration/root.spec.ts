@@ -1,8 +1,7 @@
 import { stypRoot } from './root';
-import { AfterEvent__symbol } from 'fun-events';
 import { StypSelector } from '../selector';
-import { StypDeclaration } from './declaration';
-import { EmptyStypDeclaration } from './empty-declaration';
+import { EmptyStypDeclaration, StypDeclaration } from './declaration';
+import { StypProperties } from './properties';
 
 describe('stypRoot', () => {
   it('is empty without properties', () => {
@@ -36,13 +35,37 @@ describe('stypRoot', () => {
       const initial = { fontSize: '12px' };
       const decl = stypRoot(initial);
 
-      expect(await new Promise(resolve => decl.read(resolve))).toEqual(initial);
+      expect(await receiveProperties(decl)).toEqual(initial);
     });
   });
 
   describe('selector', () => {
     it('is empty', () => {
       expect(stypRoot().selector).toHaveLength(0);
+    });
+  });
+
+  describe('add', () => {
+
+    let extension = { fontSize: '13px' };
+    let extended: StypDeclaration;
+
+    beforeEach(() => {
+      extension = { fontSize: '13px' };
+      extended = stypRoot().add(extension);
+    });
+
+    it('creates new root', () => {
+      expect(extended).not.toBe(stypRoot());
+      expect(extended.root).toBe(extended);
+      expect(extended.selector).toHaveLength(0);
+    });
+    it('extends declaration', async () => {
+      expect(await receiveProperties(extended)).toEqual(extension);
+    });
+    it('does not add nested declarations', () => {
+      expect([...extended.allNested]).toHaveLength(0);
+      expect(extended.nested('some').empty).toBe(true);
     });
   });
 
@@ -74,3 +97,7 @@ describe('stypRoot', () => {
     });
   });
 });
+
+function receiveProperties(decl: StypDeclaration): Promise<StypProperties> {
+  return new Promise(resolve => decl.read(resolve));
+}
