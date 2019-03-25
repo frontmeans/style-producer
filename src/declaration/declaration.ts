@@ -119,19 +119,19 @@ class StypDeclarationExt extends StypDeclaration {
   nested(selector: StypSelector): StypDeclaration {
 
     const sel = stypSelector(selector);
-    const keyLength = targetKeySelectorLength(sel);
+    const [key, tail] = keySelectorAndTail(sel);
 
-    if (!keyLength) {
+    if (!tail) {
       return this;
     }
 
-    const found = this._nested.get(declarationKey(sel.slice(0, keyLength)));
+    const found = this._nested.get(declarationKey(key));
 
     if (!found) {
       return new EmptyStypDeclaration(this.root, [...this.selector, ...sel]);
     }
 
-    return found.nested(sel.slice(keyLength));
+    return found.nested(tail);
   }
 
 }
@@ -142,7 +142,7 @@ function extendDeclaration(
     spec: StypProperties.Spec,
     root?: StypDeclaration): StypDeclarationExt {
 
-  const tail = selectorTail(targetSelector);
+  const [dirSelector, tail] = keySelectorAndTail(targetSelector);
 
   if (!tail) {
     // Target declaration
@@ -150,7 +150,6 @@ function extendDeclaration(
   }
 
   const result = new StypDeclarationExt(root, source);
-  const dirSelector = targetKeySelector(targetSelector);
   const dirKey = declarationKey(dirSelector);
   let targetFound = false;
 
@@ -214,37 +213,26 @@ function cloneAllNested(clone: StypDeclarationExt, prototype: StypDeclaration): 
   return clone;
 }
 
-function selectorTail(selector: StypSelector.Normalized): StypSelector.Normalized | undefined {
-
-  const keyLength = targetKeySelectorLength(selector);
-
-  return keyLength ? selector.slice(keyLength) : undefined;
-}
-
-function targetKeySelector(tail: StypSelector.Normalized): StypSelector.Normalized {
-  return tail.slice(0, targetKeySelectorLength(tail));
-}
-
-function targetKeySelectorLength(selector: StypSelector.Normalized): number {
+function keySelectorAndTail(selector: StypSelector.Normalized):
+    [StypSelector.Normalized, StypSelector.Normalized?] {
 
   const length = selector.length;
 
   if (!length) {
-    return 0;
+    return [selector];
   }
 
   let i = 0;
 
   for (;;) {
 
-    const part = selector[i];
+    const part = selector[i++];
 
     if (isCombinator(part)) {
-      ++i;
       continue;
     }
 
-    return ++i;
+    return [selector.slice(0, i), selector.slice(i)];
   }
 }
 
