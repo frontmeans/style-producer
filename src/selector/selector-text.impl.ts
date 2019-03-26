@@ -5,7 +5,14 @@ import { cssescId } from '../internal';
 /**
  * @internal
  */
-export function formatSelector(
+export function stypDeclarationKey(selector: StypSelector.Normalized): string {
+  return formatStypSelector(selector, s => `:${cssescId(s)}`, s => `@${cssescId(s)}`);
+}
+
+/**
+ * @internal
+ */
+export function formatStypSelector(
     selector: StypSelector.Normalized,
     formatRaw: (s: string) => string,
     formatQualifier?: (s: string) => string): string {

@@ -3,8 +3,7 @@ import { StypSelector, stypSelector } from '../selector';
 import { StypProperties } from './properties';
 import { overNone } from 'a-iterable';
 import { isCombinator } from '../selector/selector.impl';
-import { formatSelector } from '../selector/selector-text.impl';
-import { cssescId } from '../internal';
+import { stypDeclarationKey } from '../selector/selector-text.impl';
 import { mergeStypProperties, noStypProperties, stypPropertiesBySpec } from './properties.impl';
 
 export abstract class StypDeclaration implements EventKeeper<[StypProperties]> {
@@ -125,7 +124,7 @@ class StypDeclarationExt extends StypDeclaration {
       return this;
     }
 
-    const found = this._nested.get(declarationKey(key));
+    const found = this._nested.get(stypDeclarationKey(key));
 
     if (!found) {
       return new EmptyStypDeclaration(this.root, [...this.selector, ...sel]);
@@ -150,12 +149,12 @@ function extendDeclaration(
   }
 
   const result = new StypDeclarationExt(root, source);
-  const dirKey = declarationKey(dirSelector);
+  const dirKey = stypDeclarationKey(dirSelector);
   let targetFound = false;
 
   for (const nestedProto of source.allNested) {
 
-    const key = declarationKey(nestedProto.selector.slice(source.selector.length));
+    const key = stypDeclarationKey(nestedProto.selector.slice(source.selector.length));
     let nested: StypDeclarationExt;
 
     if (key === dirKey) {
@@ -204,7 +203,7 @@ function cloneDeclaration(source: StypDeclaration, root: StypDeclaration): StypD
 function cloneAllNested(clone: StypDeclarationExt, prototype: StypDeclaration): StypDeclarationExt {
   for (const nestedProto of prototype.allNested) {
 
-    const key = declarationKey(nestedProto.selector.slice(prototype.selector.length));
+    const key = stypDeclarationKey(nestedProto.selector.slice(prototype.selector.length));
     const nested = cloneDeclaration(nestedProto, clone.root);
 
     clone._nested.set(key, nested);
@@ -231,8 +230,4 @@ function keySelectorAndTail(selector: StypSelector.Normalized):
 
     return [selector.slice(0, i), selector.slice(i)];
   }
-}
-
-function declarationKey(selector: StypSelector.Normalized): string {
-  return formatSelector(selector, s => `:${cssescId(s)}`, s => `@${cssescId(s)}`);
 }

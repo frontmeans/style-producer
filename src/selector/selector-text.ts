@@ -1,4 +1,4 @@
-import { formatSelector } from './selector-text.impl';
+import { formatStypSelector } from './selector-text.impl';
 import { stypSelector, StypSelector } from './selector';
 
 /**
@@ -9,7 +9,7 @@ import { stypSelector, StypSelector } from './selector';
  * @returns CSS selector string.
  */
 export function stypSelectorText(selector: StypSelector): string {
-  return formatSelector(stypSelector(selector), formatRawAsIs);
+  return formatStypSelector(stypSelector(selector), formatRawAsIs);
 }
 
 function formatRawAsIs(s: string) {
