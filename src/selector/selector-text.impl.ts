@@ -1,12 +1,13 @@
 import { isCombinator } from './selector.impl';
 import { StypSelector } from './selector';
 import { cssescId } from '../internal';
+import { asis } from 'call-thru';
 
 /**
  * @internal
  */
 export function stypDeclarationKey(selector: StypSelector.Normalized): string {
-  return formatStypSelector(selector, s => `:${cssescId(s)}`, s => `@${cssescId(s)}`);
+  return formatStypSelector(selector, asis, s => `@${cssescId(s)}`);
 }
 
 /**

@@ -1,5 +1,6 @@
 import { filterIt, mapIt, overArray } from 'a-iterable';
 import { isCombinator } from './selector.impl';
+import { isPresent } from 'call-thru';
 
 /**
  * Structured CSS selector.
@@ -225,10 +226,6 @@ export function stypSelector(selector: StypSelector): StypSelector.Normalized {
 
     return key ? [key] : [];
   }
-}
-
-function isPresent<T>(value: T | undefined): value is T {
-  return value != null;
 }
 
 function normalizeItem(item: string | StypSelector.Part | StypSelector.Combinator):
