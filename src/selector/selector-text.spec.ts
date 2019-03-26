@@ -26,10 +26,13 @@ describe('stypSelectorText', () => {
   it('ignores qualifiers', () => {
     expect(stypSelectorText({ e: 'span', $: 'foo' })).toBe('span');
   });
+  it('formats qualifiers by second argument', () => {
+    expect(stypSelectorText({ e: 'span', $: ['foo', 'bar'] }, q => `@${q}`)).toBe('span@bar@foo');
+  });
 });
 
 describe('stypDeclarationKey', () => {
-  it('prints qualifiers', () => {
-    expect(stypDeclarationKey([{ e: 'span', $: ['foo'] }])).toBe('span@foo');
+  it('formats qualifiers', () => {
+    expect(stypDeclarationKey([{ e: 'span', $: ['foo:bar'] }])).toBe('span@foo\\:bar');
   });
 });

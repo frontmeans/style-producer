@@ -1,13 +1,12 @@
 import { isCombinator } from './selector.impl';
 import { StypSelector } from './selector';
 import { cssescId } from '../internal';
-import { asis } from 'call-thru';
 
 /**
  * @internal
  */
 export function stypDeclarationKey(selector: StypSelector.Normalized): string {
-  return formatStypSelector(selector, asis, s => `@${cssescId(s)}`);
+  return formatStypSelector(selector, s => `@${cssescId(s)}`);
 }
 
 /**
@@ -15,14 +14,12 @@ export function stypDeclarationKey(selector: StypSelector.Normalized): string {
  */
 export function formatStypSelector(
     selector: StypSelector.Normalized,
-    formatRaw: (s: string) => string,
     formatQualifier?: (s: string) => string): string {
-  return selector.reduce((result, item) => result + formatItem(item, formatRaw, formatQualifier), '');
+  return selector.reduce((result, item) => result + formatItem(item, formatQualifier), '');
 }
 
 function formatItem(
     item: StypSelector.NormalizedPart | StypSelector.Combinator,
-    formatRaw: (s: string) => string,
     formatQualifier?: (s: string) => string): string {
   if (isCombinator(item)) {
     return item;
@@ -43,10 +40,10 @@ function formatItem(
     string = c.reduce((result, className) => `${result}.${cssescId(className)}`, string);
   }
   if (s) {
-    string += formatRaw(s);
+    string += s;
   }
   if (formatQualifier && $) {
-    string = $.reduce((p, q) => p + formatQualifier(q), string);
+    string = $.reduce((result, qualifier) => result + formatQualifier(qualifier), string);
   }
 
   return string;

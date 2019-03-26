@@ -82,7 +82,11 @@ export namespace StypSelector {
      * Qualifiers are typically not rendered as CSS selector text, but rather used to distinguish between style
      * declarations.
      *
-     * Qualifier may have a `name=value` form.
+     * Qualifier may have a `name=value` form. The `name` part may be qualified by selecting name parts with colons.
+     * The `StypSheet` would be able to grab declarations either by full qualifier, or the ones with partially matched
+     * qualifier names.
+     *
+     * Example: `foo:bar:baz=some value` matches `foo:bar:baz=some value`, `foo:bar:baz`, `foo:bar`, and `foo`.
      */
     $?: string | string[];
 
