@@ -1,9 +1,10 @@
-import { EmptyStypRule, StypRule } from './rule';
-import { StypSelector, stypSelector } from '../selector';
+import { StypRule } from './rule';
+import { StypSelector } from '../selector';
 import { stypRoot } from './root';
 import { keepValue } from '../internal';
 import { AfterEvent, AfterEvent__symbol, trackValue, ValueTracker } from 'fun-events';
 import { StypProperties } from './properties';
+import { itsEmpty } from 'a-iterable';
 import Mock = jest.Mock;
 
 describe('StypRule', () => {
@@ -14,39 +15,25 @@ describe('StypRule', () => {
     root = stypRoot();
   });
 
+  let selector: StypSelector.Normalized;
   let rule: StypRule;
   let mockSpec: Mock<AfterEvent<[StypProperties]>, [StypRule]>;
 
   beforeEach(() => {
-    mockSpec = jest.fn();
-
-    class TestRule extends StypRule {
-
-      readonly root = root;
-      readonly spec = mockSpec;
-
-      constructor(readonly selector: StypSelector.Normalized) {
-        super();
-      }
-
-      rule(selector: StypSelector): StypRule {
-        return new TestRule([...this.selector, ...stypSelector(selector)]);
-      }
-
-    }
-
-    rule = new TestRule([{ e: 'test-element' }]);
+    selector = [{ e: 'test-element' }];
+    mockSpec = jest.fn(r => keepValue({}));
+    rule = root.rule(selector).add(mockSpec);
   });
 
   describe('empty', () => {
-    it('is `false` by default', () => {
+    it('is `false`', () => {
       expect(rule.empty).toBe(false);
     });
   });
 
-  describe('allNested', () => {
-    it('is empty by default', () => {
-      expect([...rule.rules]).toHaveLength(0);
+  describe('rules', () => {
+    it('empty by default', () => {
+      expect(itsEmpty(rule.rules)).toBe(true);
     });
   });
 
@@ -78,7 +65,7 @@ describe('StypRule', () => {
   describe('add', () => {
 
     beforeEach(() => {
-      rule = root.rule([ { e: 'element-1' }, '>', { e: 'element-1-1' }]);
+      rule = root.rule([ { e: 'element-1' }, '>', { e: 'element-1-1' }]).add({});
     });
 
     let update: ValueTracker<StypProperties>;
@@ -92,45 +79,46 @@ describe('StypRule', () => {
     let rule2: StypRule;
 
     beforeEach(() => {
-      rule2 = updated.root.rule([ { e: 'element-1', $: 'biz' }]);
+      rule2 = root.rule([ { e: 'element-1', $: 'biz' }]);
     });
 
-    it('recreates hierarchy', () => {
-      expect(updated).not.toBe(rule);
-      expect(updated.selector).toEqual(rule.selector);
-      expect(updated.root).not.toBe(root);
+    it('updates existing rule', () => {
+      expect(updated).toBe(rule);
+    });
+    it('stores updated rule in hierarchy', () => {
+      expect(root.rule(rule.selector)).toBe(rule);
     });
     it('applies update', async () => {
-      expect(updated.empty).toBe(false);
       expect(await receiveProperties(updated)).toEqual(update.it);
     });
     it('merges updated properties', async () => {
 
       const update2: StypProperties = { width: '100%' };
-      const updated2 = updated.add(update2);
 
-      expect(await receiveProperties(updated2)).toEqual({ ...update.it, ...update2 });
+      rule.add(update2);
+
+      expect(await receiveProperties(rule)).toEqual({ ...update.it, ...update2 });
     });
     it('adds another rule', async () => {
 
       const update2: StypProperties = { width: '100%' };
       const updated2 = rule2.add(update2);
 
+      expect(root.rule(rule2.selector)).toEqual(updated2);
       expect(await receiveProperties(updated2)).toEqual(update2);
-      expect(await receiveProperties(updated2.root.rule(updated.selector))).toEqual(update.it);
     });
     it('adds nested rule', async () => {
 
       const update2: StypProperties = { width: '100%' };
-      const updated2 = updated.rule({ e: 'element-1-2' }).add(update2);
+      const updated2 = rule.rule({ e: 'element-1-2' }).add(update2);
 
+      expect(root.rule(updated2.selector)).toBe(updated2);
       expect(await receiveProperties(updated2)).toEqual(update2);
-      expect(await receiveProperties(updated2.root.rule(updated.selector))).toEqual(update.it);
     });
   });
 });
 
-describe('EmptyStypRule', () => {
+describe('empty rule', () => {
 
   let root: StypRule;
 
@@ -150,6 +138,12 @@ describe('EmptyStypRule', () => {
     expect(rule.empty).toBe(true);
   });
 
+  describe('rules', () => {
+    it('are empty', () => {
+      expect(itsEmpty(rule.rules)).toBe(true);
+    });
+  });
+
   describe('read', () => {
     it('sends empty properties', async () => {
       expect(await receiveProperties(rule)).toEqual({});
@@ -167,7 +161,7 @@ describe('EmptyStypRule', () => {
     });
 
     it('returns empty selector', () => {
-      expect(subNested).toBeInstanceOf(EmptyStypRule);
+      expect(subNested.empty).toBe(true);
     });
     it('returns itself when selector is empty', () => {
       expect(rule.rule({})).toBe(rule);

@@ -13,6 +13,13 @@ export const noStypProperties: AfterEvent<[StypProperties]> = /*#__PURE__*/ keep
 /**
  * @internal
  */
+export function noStypPropertiesSpec() {
+  return noStypProperties;
+}
+
+/**
+ * @internal
+ */
 export function stypPropertiesBySpec(rule: StypRule, spec?: StypProperties.Spec): AfterEvent<[StypProperties]> {
   if (!spec) {
     return noStypProperties;

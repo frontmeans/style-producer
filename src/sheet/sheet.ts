@@ -38,7 +38,7 @@ export abstract class StypSheet {
 
 export function stypSheet(rootProperties?: StypProperties.Spec): StypSheet {
 
-  let root = stypRoot(rootProperties);
+  const root = stypRoot(rootProperties);
 
   class Sheet extends StypSheet {
 
@@ -51,12 +51,7 @@ export function stypSheet(rootProperties?: StypProperties.Spec): StypSheet {
     }
 
     add(selector: StypSelector, properties: StypProperties.Spec) {
-
-      const rule = root.rule(selector).add(properties);
-
-      root = rule.root;
-
-      return rule;
+      return root.rule(selector).add(properties);
     }
 
   }

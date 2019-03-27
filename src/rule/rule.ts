@@ -1,11 +1,13 @@
 import { AfterEvent, AfterEvent__symbol, EventKeeper } from 'fun-events';
-import { StypSelector, stypSelector } from '../selector';
+import { StypSelector } from '../selector';
 import { StypProperties } from './properties';
 import { overNone } from 'a-iterable';
-import { isCombinator } from '../selector/selector.impl';
-import { stypRuleKey } from '../selector/selector-text.impl';
-import { mergeStypProperties, noStypProperties, stypPropertiesBySpec } from './properties.impl';
 
+/**
+ * CSS rule.
+ *
+ * Represents CSS selector and corresponding CSS properties.
+ */
 export abstract class StypRule implements EventKeeper<[StypProperties]> {
 
   /**
@@ -13,21 +15,35 @@ export abstract class StypRule implements EventKeeper<[StypProperties]> {
    */
   private _read?: AfterEvent<[StypProperties]>;
 
+  /**
+   * A reference to root CSS rule.
+   */
   abstract readonly root: StypRule;
 
+  /**
+   * CSS selector of this rule.
+   */
   abstract readonly selector: StypSelector.Normalized;
 
+  /**
+   * CSS properties specifier in most common form. I.e. CSS properties builder function.
+   *
+   * It is used once per rule instance to construct properties keeper.
+   */
   abstract readonly spec: StypProperties.Builder;
 
   /**
    * Whether this rule's properties are empty.
    *
-   * This is `true` when rule properties are always empty, or `false` if they are not empty or may become non-empty.
+   * This is `true` when the rule properties are constant an empty.
+   *
+   * Empty CSS rules returned from `rule()` method when there is no matching rule found.
    */
-  get empty(): boolean {
-    return false;
-  }
+  abstract readonly empty: boolean;
 
+  /**
+   * `AfterEvent` CSS properties receiver registrar.
+   */
   get read(): AfterEvent<[StypProperties]> {
     return this._read || (this._read = this.spec(this));
   }
@@ -36,197 +52,32 @@ export abstract class StypRule implements EventKeeper<[StypProperties]> {
     return this.read;
   }
 
+  /**
+   * An iterator of all nested CSS rules.
+   */
   get rules(): Iterable<StypRule> {
     return overNone();
   }
 
+  /**
+   * Returns nested CSS rule matching the given `selector`.
+   *
+   * @param selector Target rule selector.
+   *
+   * @returns Either matching CSS rule, or empty one.
+   */
   abstract rule(selector: StypSelector): StypRule;
 
-  add(spec: StypProperties.Spec): StypRule {
-    return extendRule(this.root, this.selector, spec).rule(this.selector);
-  }
+  /**
+   * Appends CSS properties to this rule.
+   *
+   * This method either modifies this rule, or constructs another one. The latter may happen only for empty CSS rules
+   * and never happens for the root one.
+   *
+   * @param properties CSS properties specifier.
+   *
+   * @returns Modified CSS rule.
+   */
+  abstract add(properties: StypProperties.Spec): StypRule;
 
-}
-
-/**
- * @internal
- */
-export class EmptyStypRule extends StypRule {
-
-  get spec() {
-    return emptySpec;
-  }
-
-  get empty() {
-    return true;
-  }
-
-  constructor(
-      readonly root: StypRule,
-      readonly selector: StypSelector.Normalized) {
-    super();
-  }
-
-  rule(selector: StypSelector): StypRule {
-
-    const _selector = stypSelector(selector);
-
-    if (!_selector.length) {
-      return this;
-    }
-
-    return new EmptyStypRule(this.root, [...this.selector, ..._selector]);
-  }
-
-}
-
-function emptySpec() {
-  return noStypProperties;
-}
-
-class StypRuleExt extends StypRule {
-
-  private readonly _root: StypRule;
-  private readonly _selector: StypSelector.Normalized;
-  _spec: StypProperties.Builder;
-  readonly _rules = new Map<string, StypRule>();
-
-  get root(): StypRule {
-    return this._root;
-  }
-
-  get selector(): StypSelector.Normalized {
-    return this._selector;
-  }
-
-  get spec(): StypProperties.Builder {
-    return this._spec;
-  }
-
-  get rules() {
-    return this._rules.values();
-  }
-
-  constructor(root: StypRule | undefined, prototype: StypRule) {
-    super();
-    this._root = root || this;
-    this._selector = prototype.selector;
-    this._spec = prototype.spec;
-  }
-
-  rule(selector: StypSelector): StypRule {
-
-    const sel = stypSelector(selector);
-    const [key, tail] = keySelectorAndTail(sel);
-
-    if (!tail) {
-      return this;
-    }
-
-    const found = this._rules.get(stypRuleKey(key));
-
-    if (!found) {
-      return new EmptyStypRule(this.root, [...this.selector, ...sel]);
-    }
-
-    return found.rule(tail);
-  }
-
-}
-
-function extendRule(
-    source: StypRule,
-    targetSelector: StypSelector.Normalized,
-    properties: StypProperties.Spec,
-    root?: StypRule): StypRuleExt {
-
-  const [dirSelector, tail] = keySelectorAndTail(targetSelector);
-
-  if (!tail) {
-    // Target rule
-    return extendSpec(source, properties, root);
-  }
-
-  const result = new StypRuleExt(root, source);
-  const dirKey = stypRuleKey(dirSelector);
-  let targetFound = false;
-
-  for (const nestedProto of source.rules) {
-
-    const key = stypRuleKey(nestedProto.selector.slice(source.selector.length));
-    let nested: StypRuleExt;
-
-    if (key === dirKey) {
-      // Nested rule contains target one.
-      nested = extendRule(nestedProto, tail, properties, result.root);
-      targetFound = true;
-    } else {
-      nested = cloneRule(nestedProto, result.root);
-    }
-
-    result._rules.set(key, nested);
-  }
-  if (!targetFound) {
-    // No target rule found in prototype. Create one.
-
-    const nested = extendRule(source.rule(dirSelector), tail, properties, result.root);
-
-    result._rules.set(dirKey, nested);
-  }
-
-  return result;
-}
-
-function extendSpec(
-    source: StypRule,
-    properties: StypProperties.Spec,
-    root: StypRule | undefined): StypRuleExt {
-
-  const result = new StypRuleExt(root, source);
-
-  if (source.empty) {
-    result._spec = rule => stypPropertiesBySpec(rule, properties);
-  } else {
-    result._spec = rule => mergeStypProperties(source.spec(rule), stypPropertiesBySpec(rule, properties));
-  }
-
-  cloneAllNested(result, source);
-
-  return result;
-}
-
-function cloneRule(source: StypRule, root: StypRule): StypRuleExt {
-  return cloneAllNested(new StypRuleExt(root, source), source);
-}
-
-function cloneAllNested(clone: StypRuleExt, prototype: StypRule): StypRuleExt {
-  for (const nestedProto of prototype.rules) {
-
-    const key = stypRuleKey(nestedProto.selector.slice(prototype.selector.length));
-    const nested = cloneRule(nestedProto, clone.root);
-
-    clone._rules.set(key, nested);
-  }
-
-  return clone;
-}
-
-function keySelectorAndTail(selector: StypSelector.Normalized):
-    [StypSelector.Normalized, StypSelector.Normalized?] {
-  if (!selector.length) {
-    return [selector];
-  }
-
-  let i = 0;
-
-  for (;;) {
-
-    const part = selector[i++];
-
-    if (isCombinator(part)) {
-      continue;
-    }
-
-    return [selector.slice(0, i), selector.slice(i)];
-  }
 }

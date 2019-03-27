@@ -11,9 +11,6 @@ describe('StypSheet', () => {
   });
 
   describe('root', () => {
-    it('is empty by default', () => {
-      expect(sheet.root.empty).toBe(true);
-    });
     it('contains initial properties', async () => {
 
       const properties = { borderWidth: '1px' };
