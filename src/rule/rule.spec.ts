@@ -1,4 +1,4 @@
-import { EmptyStypDeclaration, StypDeclaration } from './declaration';
+import { EmptyStypRule, StypRule } from './rule';
 import { StypSelector, stypSelector } from '../selector';
 import { stypRoot } from './root';
 import { keepValue } from '../internal';
@@ -6,21 +6,21 @@ import { AfterEvent, AfterEvent__symbol, trackValue, ValueTracker } from 'fun-ev
 import { StypProperties } from './properties';
 import Mock = jest.Mock;
 
-describe('StypDeclaration', () => {
+describe('StypRule', () => {
 
-  let root: StypDeclaration;
+  let root: StypRule;
 
   beforeEach(() => {
     root = stypRoot();
   });
 
-  let decl: StypDeclaration;
-  let mockSpec: Mock<AfterEvent<[StypProperties]>, [StypDeclaration]>;
+  let rule: StypRule;
+  let mockSpec: Mock<AfterEvent<[StypProperties]>, [StypRule]>;
 
   beforeEach(() => {
     mockSpec = jest.fn();
 
-    class TestDeclaration extends StypDeclaration {
+    class TestRule extends StypRule {
 
       readonly root = root;
       readonly spec = mockSpec;
@@ -29,24 +29,24 @@ describe('StypDeclaration', () => {
         super();
       }
 
-      nested(selector: StypSelector): StypDeclaration {
-        return new TestDeclaration([...this.selector, ...stypSelector(selector)]);
+      rule(selector: StypSelector): StypRule {
+        return new TestRule([...this.selector, ...stypSelector(selector)]);
       }
 
     }
 
-    decl = new TestDeclaration([{ e: 'test-element' }]);
+    rule = new TestRule([{ e: 'test-element' }]);
   });
 
   describe('empty', () => {
     it('is `false` by default', () => {
-      expect(decl.empty).toBe(false);
+      expect(rule.empty).toBe(false);
     });
   });
 
   describe('allNested', () => {
     it('is empty by default', () => {
-      expect([...decl.allNested]).toHaveLength(0);
+      expect([...rule.rules]).toHaveLength(0);
     });
   });
 
@@ -60,45 +60,44 @@ describe('StypDeclaration', () => {
     });
 
     it('reads the spec', () => {
-      expect(decl.read.kept).toEqual([properties]);
-      expect(mockSpec).toHaveBeenCalledWith(decl);
+      expect(rule.read.kept).toEqual([properties]);
+      expect(mockSpec).toHaveBeenCalledWith(rule);
     });
     it('caches the spec', () => {
-      expect(decl.read).toBe(decl.read);
+      expect(rule.read).toBe(rule.read);
       expect(mockSpec).toHaveBeenCalledTimes(1);
     });
   });
 
   describe('[AfterEvent__symbol]', () => {
     it('is the same as `read`', () => {
-      expect(decl[AfterEvent__symbol]).toBe(decl.read);
+      expect(rule[AfterEvent__symbol]).toBe(rule.read);
     });
   });
 
   describe('add', () => {
 
     beforeEach(() => {
-      decl = root.nested([ { e: 'element-1' }, '>', { e: 'element-1-1' }]);
-
+      rule = root.rule([ { e: 'element-1' }, '>', { e: 'element-1-1' }]);
     });
 
     let update: ValueTracker<StypProperties>;
-    let updated: StypDeclaration;
+    let updated: StypRule;
 
     beforeEach(() => {
       update = trackValue({ display: 'block' });
-      updated = decl.add(update.read);
+      updated = rule.add(update.read);
     });
 
-    let decl2: StypDeclaration;
+    let rule2: StypRule;
 
     beforeEach(() => {
-      decl2 = updated.root.nested([ { e: 'element-1', $: 'biz' }]);
+      rule2 = updated.root.rule([ { e: 'element-1', $: 'biz' }]);
     });
 
     it('recreates hierarchy', () => {
-      expect(updated).not.toBe(decl);
-      expect(updated.selector).toEqual(decl.selector);
+      expect(updated).not.toBe(rule);
+      expect(updated.selector).toEqual(rule.selector);
       expect(updated.root).not.toBe(root);
     });
     it('applies update', async () => {
@@ -112,66 +111,66 @@ describe('StypDeclaration', () => {
 
       expect(await receiveProperties(updated2)).toEqual({ ...update.it, ...update2 });
     });
-    it('adds another declaration', async () => {
+    it('adds another rule', async () => {
 
       const update2: StypProperties = { width: '100%' };
-      const updated2 = decl2.add(update2);
+      const updated2 = rule2.add(update2);
 
       expect(await receiveProperties(updated2)).toEqual(update2);
-      expect(await receiveProperties(updated2.root.nested(updated.selector))).toEqual(update.it);
+      expect(await receiveProperties(updated2.root.rule(updated.selector))).toEqual(update.it);
     });
-    it('adds nested declaration', async () => {
+    it('adds nested rule', async () => {
 
       const update2: StypProperties = { width: '100%' };
-      const updated2 = updated.nested({ e: 'element-1-2' }).add(update2);
+      const updated2 = updated.rule({ e: 'element-1-2' }).add(update2);
 
       expect(await receiveProperties(updated2)).toEqual(update2);
-      expect(await receiveProperties(updated2.root.nested(updated.selector))).toEqual(update.it);
+      expect(await receiveProperties(updated2.root.rule(updated.selector))).toEqual(update.it);
     });
   });
 });
 
-describe('EmptyStypDeclaration', () => {
+describe('EmptyStypRule', () => {
 
-  let root: StypDeclaration;
+  let root: StypRule;
 
   beforeEach(() => {
     root = stypRoot();
   });
 
   let selector: StypSelector.Normalized;
-  let decl: StypDeclaration;
+  let rule: StypRule;
 
   beforeEach(() => {
     selector = [{ c: ['nested'] }];
-    decl = root.nested(selector);
+    rule = root.rule(selector);
   });
 
   it('is empty', () => {
-    expect(decl.empty).toBe(true);
+    expect(rule.empty).toBe(true);
   });
 
   describe('read', () => {
     it('sends empty properties', async () => {
-      expect(await new Promise(resolve => decl.read(resolve))).toEqual({});
+      expect(await receiveProperties(rule)).toEqual({});
     });
   });
 
   describe('nested', () => {
 
     let subSelector: StypSelector.Normalized;
-    let subNested: StypDeclaration;
+    let subNested: StypRule;
 
     beforeEach(() => {
       subSelector = [{ c: ['sub-nested'] }];
-      subNested = decl.nested(subSelector);
+      subNested = rule.rule(subSelector);
     });
 
     it('returns empty selector', () => {
-      expect(subNested).toBeInstanceOf(EmptyStypDeclaration);
+      expect(subNested).toBeInstanceOf(EmptyStypRule);
     });
     it('returns itself when selector is empty', () => {
-      expect(decl.nested({})).toBe(decl);
+      expect(rule.rule({})).toBe(rule);
     });
     it('has the same root', () => {
       expect(subNested.root).toBe(root);
@@ -182,6 +181,6 @@ describe('EmptyStypDeclaration', () => {
   });
 });
 
-function receiveProperties(decl: StypDeclaration): Promise<StypProperties> {
-  return new Promise(resolve => decl.read(resolve));
+function receiveProperties(rule: StypRule): Promise<StypProperties> {
+  return new Promise(resolve => rule.read(resolve));
 }

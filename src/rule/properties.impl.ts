@@ -3,7 +3,7 @@ import { isValueKeeper, keepValue } from '../internal';
 import { StypProperties } from './properties';
 import { nextSkip, NextSkip, noop, valuesProvider } from 'call-thru';
 import { itsIterator, itsReduction, overEntries } from 'a-iterable';
-import { StypDeclaration } from './declaration';
+import { StypRule } from './rule';
 
 /**
  * @internal
@@ -13,7 +13,7 @@ export const noStypProperties: AfterEvent<[StypProperties]> = /*#__PURE__*/ keep
 /**
  * @internal
  */
-export function stypPropertiesBySpec(decl: StypDeclaration, spec?: StypProperties.Spec): AfterEvent<[StypProperties]> {
+export function stypPropertiesBySpec(rule: StypRule, spec?: StypProperties.Spec): AfterEvent<[StypProperties]> {
   if (!spec) {
     return noStypProperties;
   }
@@ -22,7 +22,7 @@ export function stypPropertiesBySpec(decl: StypDeclaration, spec?: StypPropertie
   }
   if (typeof spec === 'function') {
 
-    const keeperOrProperties = spec(decl);
+    const keeperOrProperties = spec(rule);
 
     if (isValueKeeper(keeperOrProperties)) {
       return preventDuplicates(keeperOrProperties);

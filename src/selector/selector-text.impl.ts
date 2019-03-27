@@ -5,7 +5,7 @@ import { cssescId } from '../internal';
 /**
  * @internal
  */
-export function stypDeclarationKey(selector: StypSelector.Normalized): string {
+export function stypRuleKey(selector: StypSelector.Normalized): string {
   return formatStypSelector(selector, s => `@${cssescId(s)}`);
 }
 

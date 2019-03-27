@@ -1,5 +1,5 @@
 import { stypSelectorText } from './selector-text';
-import { stypDeclarationKey } from './selector-text.impl';
+import { stypRuleKey } from './selector-text.impl';
 
 describe('stypSelectorText', () => {
   it('prints raw selector', () => {
@@ -31,8 +31,8 @@ describe('stypSelectorText', () => {
   });
 });
 
-describe('stypDeclarationKey', () => {
+describe('stypRuleKey', () => {
   it('formats qualifiers', () => {
-    expect(stypDeclarationKey([{ e: 'span', $: ['foo:bar'] }])).toBe('span@foo\\:bar');
+    expect(stypRuleKey([{ e: 'span', $: ['foo:bar'] }])).toBe('span@foo\\:bar');
   });
 });

@@ -1,5 +1,5 @@
 import { stypSheet, StypSheet } from './sheet';
-import { StypDeclaration, StypProperties } from '../declaration';
+import { StypProperties, StypRule } from '../rule';
 import { StypSelector } from '../selector';
 
 describe('StypSheet', () => {
@@ -36,6 +36,6 @@ describe('StypSheet', () => {
   });
 });
 
-function receiveProperties(decl: StypDeclaration): Promise<StypProperties> {
-  return new Promise(resolve => decl.read(resolve));
+function receiveProperties(rule: StypRule): Promise<StypProperties> {
+  return new Promise(resolve => rule.read(resolve));
 }

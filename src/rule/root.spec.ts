@@ -1,6 +1,6 @@
 import { stypRoot } from './root';
 import { StypSelector } from '../selector';
-import { EmptyStypDeclaration, StypDeclaration } from './declaration';
+import { EmptyStypRule, StypRule } from './rule';
 import { StypProperties } from './properties';
 
 describe('stypRoot', () => {
@@ -23,9 +23,9 @@ describe('stypRoot', () => {
   describe('root', () => {
     it('points to itself', () => {
 
-      const decl = stypRoot();
+      const root = stypRoot();
 
-      expect(decl.root).toBe(decl);
+      expect(root.root).toBe(root);
     });
   });
 
@@ -33,9 +33,9 @@ describe('stypRoot', () => {
     it('sends properties', async () => {
 
       const initial = { fontSize: '12px' };
-      const decl = stypRoot(initial);
+      const root = stypRoot(initial);
 
-      expect(await receiveProperties(decl)).toEqual(initial);
+      expect(await receiveProperties(root)).toEqual(initial);
     });
   });
 
@@ -48,7 +48,7 @@ describe('stypRoot', () => {
   describe('add', () => {
 
     let extension = { fontSize: '13px' };
-    let extended: StypDeclaration;
+    let extended: StypRule;
 
     beforeEach(() => {
       extension = { fontSize: '13px' };
@@ -60,44 +60,44 @@ describe('stypRoot', () => {
       expect(extended.root).toBe(extended);
       expect(extended.selector).toHaveLength(0);
     });
-    it('extends declaration', async () => {
+    it('extends rule', async () => {
       expect(await receiveProperties(extended)).toEqual(extension);
     });
-    it('does not add nested declarations', () => {
-      expect([...extended.allNested]).toHaveLength(0);
-      expect(extended.nested('some').empty).toBe(true);
+    it('does not add nested rules', () => {
+      expect([...extended.rules]).toHaveLength(0);
+      expect(extended.rule('some').empty).toBe(true);
     });
   });
 
-  describe('nested', () => {
+  describe('rules', () => {
 
-    let root: StypDeclaration;
+    let root: StypRule;
 
     beforeEach(() => {
       root = stypRoot();
     });
 
     let selector: StypSelector.Normalized;
-    let nested: StypDeclaration;
+    let nested: StypRule;
 
     beforeEach(() => {
       selector = [{ c: ['nested'] }];
-      nested = root.nested(selector);
+      nested = root.rule(selector);
     });
 
     it('returns itself when selector is empty', () => {
-      expect(root.nested([])).toBe(root);
+      expect(root.rule([])).toBe(root);
     });
-    it('returns nested declaration', () => {
+    it('returns nested rule', () => {
       expect(nested.root).toBe(root);
       expect(nested.selector).toEqual(selector);
     });
-    it('returns empty declaration', () => {
-      expect(nested).toBeInstanceOf(EmptyStypDeclaration);
+    it('returns empty rule', () => {
+      expect(nested).toBeInstanceOf(EmptyStypRule);
     });
   });
 });
 
-function receiveProperties(decl: StypDeclaration): Promise<StypProperties> {
-  return new Promise(resolve => decl.read(resolve));
+function receiveProperties(rule: StypRule): Promise<StypProperties> {
+  return new Promise(resolve => rule.read(resolve));
 }

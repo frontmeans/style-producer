@@ -1,27 +1,27 @@
 import { AfterEvent, afterEventFrom, EventEmitter, EventInterest, trackValue, ValueTracker } from 'fun-events';
 import { mergeStypProperties, stypPropertiesBySpec } from './properties.impl';
 import { StypProperties } from './properties';
-import { StypDeclaration } from './declaration';
+import { StypRule } from './rule';
 import Mock = jest.Mock;
 
 describe('stypPropertiesBySpec', () => {
 
-  let decl: StypDeclaration;
+  let rule: StypRule;
 
   beforeEach(() => {
-    decl = { name: 'style declaration' } as any;
+    rule = { name: 'style rule' } as any;
   });
 
   it('sends empty properties by default', async () => {
 
-    const after = afterEventFrom(stypPropertiesBySpec(decl));
+    const after = afterEventFrom(stypPropertiesBySpec(rule));
 
     expect(await receiveProperties(after)).toEqual({});
   });
   it('sends provided properties', async () => {
 
     const initial = { fontSize: '12px' };
-    const after = afterEventFrom(stypPropertiesBySpec(decl, initial));
+    const after = afterEventFrom(stypPropertiesBySpec(rule, initial));
 
     expect(await receiveProperties(after)).toEqual(initial);
   });
@@ -29,7 +29,7 @@ describe('stypPropertiesBySpec', () => {
 
     const initial = { fontSize: '12px' };
     const tracker = trackValue(initial);
-    const after = afterEventFrom(stypPropertiesBySpec(decl, tracker));
+    const after = afterEventFrom(stypPropertiesBySpec(rule, tracker));
 
     expect(await receiveProperties(after)).toEqual(initial);
 
@@ -42,7 +42,7 @@ describe('stypPropertiesBySpec', () => {
 
     const initial = { fontSize: '12px' };
     const tracker = trackValue(initial);
-    const after = afterEventFrom(stypPropertiesBySpec(decl, tracker));
+    const after = afterEventFrom(stypPropertiesBySpec(rule, tracker));
     const receiver = jest.fn();
 
     after(receiver);
@@ -60,7 +60,7 @@ describe('stypPropertiesBySpec', () => {
 
     const initial = { border: '1px solid white', borderWidth: '2px' };
     const tracker = trackValue(initial);
-    const after = afterEventFrom(stypPropertiesBySpec(decl, tracker));
+    const after = afterEventFrom(stypPropertiesBySpec(rule, tracker));
     const receiver = jest.fn();
 
     after(receiver);
@@ -76,7 +76,7 @@ describe('stypPropertiesBySpec', () => {
 
     const initial = { fontSize: '12px' };
     const tracker = trackValue<StypProperties | string>(initial);
-    const after = afterEventFrom(stypPropertiesBySpec(decl, tracker));
+    const after = afterEventFrom(stypPropertiesBySpec(rule, tracker));
     const receiver = jest.fn();
 
     after(receiver);
@@ -95,7 +95,7 @@ describe('stypPropertiesBySpec', () => {
   it('sends constructed properties', async () => {
 
     const initial = { fontSize: '12px' };
-    const after = afterEventFrom(stypPropertiesBySpec(decl, () => initial));
+    const after = afterEventFrom(stypPropertiesBySpec(rule, () => initial));
 
     expect(await receiveProperties(after)).toEqual(initial);
   });
@@ -103,7 +103,7 @@ describe('stypPropertiesBySpec', () => {
 
     const initial = { fontSize: '12px' };
     const tracker = trackValue(initial);
-    const after = afterEventFrom(stypPropertiesBySpec(decl, () => tracker));
+    const after = afterEventFrom(stypPropertiesBySpec(rule, () => tracker));
 
     expect(await receiveProperties(after)).toEqual(initial);
 
@@ -119,7 +119,7 @@ describe('stypPropertiesBySpec', () => {
     const properties = { ...initial };
     const emitter = new EventEmitter<[StypProperties]>();
     const tracker = afterEventFrom(emitter, [properties]);
-    const after = afterEventFrom(stypPropertiesBySpec(decl, () => tracker));
+    const after = afterEventFrom(stypPropertiesBySpec(rule, () => tracker));
     const receiver = jest.fn();
 
     after(receiver);

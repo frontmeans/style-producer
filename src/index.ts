@@ -1,3 +1,3 @@
-export * from './declaration';
+export * from './rule';
 export * from './selector';
 export * from './sheet';

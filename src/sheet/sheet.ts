@@ -1,13 +1,13 @@
-import { StypDeclaration, StypProperties, stypRoot } from '../declaration';
+import { StypProperties, stypRoot, StypRule } from '../rule';
 import { StypSelector } from '../selector';
 
 export abstract class StypSheet {
 
-  abstract readonly root: StypDeclaration;
+  abstract readonly root: StypRule;
 
-  abstract get(selector: StypSelector): StypDeclaration;
+  abstract get(selector: StypSelector): StypRule;
 
-  abstract add(selector: StypSelector, properties: StypProperties.Spec): StypDeclaration;
+  abstract add(selector: StypSelector, properties: StypProperties.Spec): StypRule;
 
 }
 
@@ -22,16 +22,16 @@ export function stypSheet(rootProperties?: StypProperties.Spec): StypSheet {
     }
 
     get(selector: StypSelector) {
-      return root.nested(selector);
+      return root.rule(selector);
     }
 
     add(selector: StypSelector, properties: StypProperties.Spec) {
 
-      const decl = root.nested(selector).add(properties);
+      const rule = root.rule(selector).add(properties);
 
-      root = decl.root;
+      root = rule.root;
 
-      return decl;
+      return rule;
     }
 
   }

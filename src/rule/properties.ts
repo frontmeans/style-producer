@@ -1,5 +1,5 @@
 import { AfterEvent, EventKeeper } from 'fun-events';
-import { StypDeclaration } from './declaration';
+import { StypRule } from './rule';
 
 /**
  * CSS properties map.
@@ -38,23 +38,23 @@ export namespace StypProperties {
    * - plain CSS text,
    * - CSS properties map,
    * - an event keeper sending one of the above, or
-   * - a function depending on style declaration and returning one of the above.
+   * - a function depending on style rule and returning one of the above.
    */
   export type Spec =
       string | StypProperties
       | EventKeeper<[string | StypProperties]>
-      | ((decl: StypDeclaration) => string | StypProperties | EventKeeper<[string | StypProperties]>);
+      | ((rule: StypRule) => string | StypProperties | EventKeeper<[string | StypProperties]>);
 
   /**
    * CSS properties builder function signature.
    *
    * This is a most generic form of CSS properties specifier.
    *
-   * @param decl A style declaration the properties generated for.
+   * @param rule A style rule the properties generated for.
    *
    * @return An `AfterEvent` registrar of CSS properties receivers.
    */
-  export type Builder = (decl: StypDeclaration) => AfterEvent<[StypProperties]>;
+  export type Builder = (rule: StypRule) => AfterEvent<[StypProperties]>;
 
   /**
    * Mutable CSS properties map.
