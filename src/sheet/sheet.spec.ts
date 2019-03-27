@@ -30,7 +30,7 @@ describe('StypSheet', () => {
       const added = sheet.add(selector, properties);
 
       expect(added.root).toBe(sheet.root);
-      expect(sheet.get(selector)).toBe(added);
+      expect(sheet.rule(selector)).toBe(added);
       expect(await receiveProperties(added)).toEqual(properties);
     });
   });

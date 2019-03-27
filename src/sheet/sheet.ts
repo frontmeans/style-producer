@@ -1,12 +1,37 @@
 import { StypProperties, stypRoot, StypRule } from '../rule';
 import { StypSelector } from '../selector';
 
+/**
+ * Dynamic CSS stylesheet.
+ *
+ * Represents a hierarchy of CSS rules.
+ */
 export abstract class StypSheet {
 
+  /**
+   * Root CSS rule.
+   *
+   * This corresponds to the global CSS.
+   */
   abstract readonly root: StypRule;
 
-  abstract get(selector: StypSelector): StypRule;
+  /**
+   * Returns CSS rule with the given `selector`.
+   *
+   * @param selector Structured CSS selector of the rule.
+   *
+   * @returns Either matching CSS rule, or empty one.
+   */
+  abstract rule(selector: StypSelector): StypRule;
 
+  /**
+   * Appends the given CSS `properties` to the rule with the given `selector`.
+   *
+   * @param selector Target rule selector.
+   * @param properties CSS properties specifier.
+   *
+   * @returns Modified CSS rule.
+   */
   abstract add(selector: StypSelector, properties: StypProperties.Spec): StypRule;
 
 }
@@ -21,7 +46,7 @@ export function stypSheet(rootProperties?: StypProperties.Spec): StypSheet {
       return root;
     }
 
-    get(selector: StypSelector) {
+    rule(selector: StypSelector) {
       return root.rule(selector);
     }
 
