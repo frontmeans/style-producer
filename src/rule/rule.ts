@@ -35,7 +35,7 @@ export abstract class StypRule implements EventKeeper<[StypProperties]> {
   /**
    * Whether this rule's properties are empty.
    *
-   * This is `true` when the rule properties are constant an empty.
+   * This is `true` when the rule properties are constant and empty.
    *
    * Empty CSS rules returned from `rule()` method when there is no matching rule found.
    */
@@ -55,29 +55,38 @@ export abstract class StypRule implements EventKeeper<[StypProperties]> {
   /**
    * An iterator of all nested CSS rules.
    */
-  get rules(): Iterable<StypRule> {
-    return overNone();
-  }
+  abstract get rules(): Iterable<StypRule>;
 
   /**
    * Returns nested CSS rule matching the given `selector`.
    *
    * @param selector Target rule selector.
    *
-   * @returns Either matching CSS rule, or empty one.
+   * @returns Either matching CSS rule, or `undefined` if not found.
    */
-  abstract rule(selector: StypSelector): StypRule;
+  abstract rule(selector: StypSelector): StypRule | undefined;
 
   /**
    * Appends CSS properties to this rule.
    *
-   * This method either modifies this rule, or constructs another one. The latter may happen only for empty CSS rules
-   * and never happens for the root one.
+   * This method modifies this rule.
    *
    * @param properties CSS properties specifier.
    *
+   * @returns `this` rule instance.
+   */
+  abstract add(properties: StypProperties.Spec): this;
+
+  /**
+   * Appends CSS properties to the nested rule.
+   *
+   * Creates target rule if necessary.
+   *
+   * @param selector Target rule selector.
+   * @param properties Optional CSS properties specifier.
+   *
    * @returns Modified CSS rule.
    */
-  abstract add(properties: StypProperties.Spec): StypRule;
+  abstract addRule(selector: StypSelector, properties?: StypProperties.Spec): StypRule;
 
 }

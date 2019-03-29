@@ -5,40 +5,6 @@ import { mergeStypProperties, noStypPropertiesSpec, stypPropertiesBySpec } from 
 import { isCombinator } from '../selector/selector.impl';
 import { StypRule as StypRule_ } from './rule';
 
-class EmptyStypRule extends StypRule_ {
-
-  get spec() {
-    return noStypPropertiesSpec;
-  }
-
-  get empty() {
-    return true;
-  }
-
-  constructor(
-      readonly root: StypRule,
-      readonly selector: StypSelector.Normalized) {
-    super();
-  }
-
-  rule(selector: StypSelector): StypRule_ {
-
-    const _selector = stypSelector(selector);
-
-    if (!_selector.length) {
-      return this;
-    }
-
-    return new EmptyStypRule(this.root, [...this.selector, ..._selector]);
-  }
-
-  add(properties: StypProperties.Spec) {
-    extendRule(this.root, this.selector, properties);
-    return this.root.rule(this.selector);
-  }
-
-}
-
 /**
  * @internal
  */
@@ -79,7 +45,7 @@ export class StypRule extends StypRule_ {
     this._spec = spec;
   }
 
-  rule(selector: StypSelector): StypRule_ {
+  rule(selector: StypSelector): StypRule | undefined {
 
     const sel = stypSelector(selector);
     const [keySelector, tail] = keySelectorAndTail(sel);
@@ -91,15 +57,18 @@ export class StypRule extends StypRule_ {
     const found = this._rules.get(stypRuleKey(keySelector));
 
     if (!found) {
-      return new EmptyStypRule(this.root, [...this.selector, ...sel]);
+      return;
     }
 
     return found.rule(tail);
   }
 
   add(properties: StypProperties.Spec): this {
-    extendRule(this, [], properties);
-    return this;
+    return this.addRule([], properties) as this;
+  }
+
+  addRule(selector: StypSelector, properties?: StypProperties.Spec): StypRule {
+    return extendRule(this, stypSelector(selector), properties);
   }
 
 }
@@ -107,14 +76,14 @@ export class StypRule extends StypRule_ {
 function extendRule(
     rule: StypRule,
     targetSelector: StypSelector.Normalized,
-    properties: StypProperties.Spec): void {
+    properties?: StypProperties.Spec): StypRule {
 
   const [dirSelector, tail] = keySelectorAndTail(targetSelector);
 
   if (!tail) {
     // Target rule
     rule._spec = extendSpec(rule, properties);
-    return;
+    return rule;
   }
 
   const dirKey = stypRuleKey(dirSelector);
@@ -128,17 +97,22 @@ function extendRule(
 
   rule._rules.set(dirKey, newNested);
 
-  extendRule(newNested, tail, properties);
+  return extendRule(newNested, tail, properties);
 }
 
-function extendSpec(rule: StypRule, properties: StypProperties.Spec): StypProperties.Builder {
+function extendSpec(rule: StypRule, properties?: StypProperties.Spec): StypProperties.Builder {
+
+  const oldSpec = rule._spec;
+
+  if (!properties) {
+    return oldSpec;
+  }
+
   if (rule.empty) {
     return r => stypPropertiesBySpec(r, properties);
   }
 
-  const old = rule._spec;
-
-  return r => mergeStypProperties(old(r), stypPropertiesBySpec(r, properties));
+  return r => mergeStypProperties(oldSpec(r), stypPropertiesBySpec(r, properties));
 }
 
 function keySelectorAndTail(selector: StypSelector.Normalized):

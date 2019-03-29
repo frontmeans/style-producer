@@ -21,7 +21,7 @@ describe('StypRule', () => {
   beforeEach(() => {
     selector = [{ e: 'test-element' }];
     mockSpec = jest.fn(r => afterEventOf({}));
-    rule = root.rule(selector).add(mockSpec);
+    rule = root.addRule(selector, mockSpec);
   });
 
   describe('empty', () => {
@@ -61,40 +61,63 @@ describe('StypRule', () => {
     });
   });
 
+  describe('rule', () => {
+    it('returns undefined for absent rule', () => {
+      expect(rule.rule({ c: 'absent' })).toBeUndefined();
+    });
+    it('returns itself for empty selector', () => {
+      expect(rule.rule('')).toBe(rule);
+    });
+    it('returns target nested rule', () => {
+
+      const nestedSelector: StypSelector = { c: 'nested' };
+      const nested = rule.addRule(nestedSelector);
+
+      expect(rule.rule(nestedSelector)).toBe(nested);
+    });
+  });
+
   describe('add', () => {
 
     beforeEach(() => {
-      rule = root.rule([ { e: 'element-1' }, '>', { e: 'element-1-1' }]).add({});
+      rule = root.addRule([ { e: 'element-1' }, '>', { e: 'element-1-1' }]);
     });
 
     let update: ValueTracker<StypProperties>;
-    let updated: StypRule;
 
     beforeEach(() => {
       update = trackValue({ display: 'block' });
-      updated = rule.add(update.read);
+      rule.add(update.read);
     });
 
     let rule2: StypRule;
 
     beforeEach(() => {
-      rule2 = root.rule([ { e: 'element-1', $: 'biz' }]);
+      rule2 = root.addRule([ { e: 'element-1', $: 'biz' }]);
     });
 
     it('updates existing rule', () => {
-      expect(updated).toBe(rule);
+      expect(rule).toBe(rule);
     });
-    it('stores updated rule in hierarchy', () => {
+    it('stores rule rule in hierarchy', () => {
       expect(root.rule(rule.selector)).toBe(rule);
     });
     it('applies update', async () => {
-      expect(await receiveProperties(updated)).toEqual(update.it);
+      expect(await receiveProperties(rule)).toEqual(update.it);
     });
     it('merges updated properties', async () => {
 
       const update2: StypProperties = { width: '100%' };
 
       rule.add(update2);
+
+      expect(await receiveProperties(rule)).toEqual({ ...update.it, ...update2 });
+    });
+    it('merges updated properties by `addRule', async () => {
+
+      const update2: StypProperties = { width: '100%' };
+
+      root.addRule(rule.selector, update2);
 
       expect(await receiveProperties(rule)).toEqual({ ...update.it, ...update2 });
     });
@@ -109,7 +132,7 @@ describe('StypRule', () => {
     it('adds nested rule', async () => {
 
       const update2: StypProperties = { width: '100%' };
-      const updated2 = rule.rule({ e: 'element-1-2' }).add(update2);
+      const updated2 = rule.addRule({ e: 'element-1-2' }, update2);
 
       expect(root.rule(updated2.selector)).toBe(updated2);
       expect(await receiveProperties(updated2)).toEqual(update2);
@@ -130,7 +153,7 @@ describe('empty rule', () => {
 
   beforeEach(() => {
     selector = [{ c: ['nested'] }];
-    rule = root.rule(selector);
+    rule = root.addRule(selector);
   });
 
   it('is empty', () => {
@@ -156,7 +179,7 @@ describe('empty rule', () => {
 
     beforeEach(() => {
       subSelector = [{ c: ['sub-nested'] }];
-      subNested = rule.rule(subSelector);
+      subNested = rule.addRule(subSelector);
     });
 
     it('returns empty selector', () => {
