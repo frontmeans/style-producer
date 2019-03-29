@@ -9,7 +9,7 @@ import {
 } from 'fun-events';
 import { isValueKeeper } from '../internal';
 import { StypProperties } from './properties';
-import { nextSkip, NextSkip, noop, valuesProvider } from 'call-thru';
+import { nextSkip, NextSkip, noop } from 'call-thru';
 import { itsIterator, itsReduction, overEntries } from 'a-iterable';
 import { StypRule } from './rule';
 
@@ -51,13 +51,13 @@ export function stypPropertiesBySpec(rule: StypRule, spec?: StypProperties.Spec)
 
 function preventDuplicates(properties: EventKeeper<[string | StypProperties]>): AfterEvent<[StypProperties]> {
 
-  const afterEvent: AfterEvent<[string | StypProperties]> = afterEventFrom(properties);
+  const afterEvent = afterEventFrom(properties);
   const onEvent: OnEvent<[StypProperties]> = afterEvent.thru(
       propertiesMap,
       passNonDuplicate(),
   );
 
-  return afterEventFrom(onEvent, valuesProvider(propertiesMap(afterEvent.kept[0])));
+  return afterEventFrom<[StypProperties]>(onEvent);
 }
 
 function passNonDuplicate<NextArgs extends any[]>():
@@ -127,8 +127,7 @@ export function mergeStypProperties(
                 })
                 .needs(baseInterest)
                 .needs(extensionInterest);
-          },
-          valuesProvider(addValues(base.kept[0], addendum.kept[0]))));
+          }));
 }
 
 function addValues(base: StypProperties, addendum: StypProperties): StypProperties {
