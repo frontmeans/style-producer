@@ -1,4 +1,4 @@
-import { StypSelector } from '../selector';
+import { StypSelector } from './selector';
 
 /**
  * CSS rule query.
@@ -7,7 +7,7 @@ import { StypSelector } from '../selector';
  * - CSS rule query part, or
  * - an array consisting of parts and their combinators.
  *
- * Queries are used to grab a subset of matching rules from `StypSheet`.
+ * Queries are used to grab a subset of matching rules from `StypRule`.
  */
 export type StypQuery = StypQuery.Part | (StypQuery.Part | StypSelector.Combinator)[];
 
@@ -53,7 +53,7 @@ export namespace StypQuery {
      * Qualifiers are typically not rendered as CSS selector text, but rather used to distinguish between style rules.
      *
      * Qualifier may have a `name=value` form. The `name` part may be qualified by selecting name parts with colons.
-     * The `StypSheet` would be able to grab rules either by full qualifier, or the ones with partially matched
+     * The `StypRule` would be able to grab rules either by full qualifier, or the ones with partially matched
      * qualifier names.
      *
      * Example: `foo:bar:baz=some value` matches `foo:bar:baz=some value`, `foo:bar:baz`, `foo:bar`, and `foo`.
