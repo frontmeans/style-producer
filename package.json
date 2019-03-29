@@ -24,7 +24,7 @@
     "a-iterable": "^2.2.3",
     "call-thru": "^2.3.0",
     "cssesc": "^3.0.0",
-    "fun-events": "^4.0.1",
+    "fun-events": "^4.1.1",
     "tslib": "^1.9.3"
   },
   "devDependencies": {
@@ -33,7 +33,7 @@
     "fs-extra": "^7.0.1",
     "jest": "^24.5.0",
     "jest-junit": "^6.3.0",
-    "rollup": "^1.7.3",
+    "rollup": "^1.7.4",
     "rollup-plugin-commonjs": "^9.2.2",
     "rollup-plugin-node-resolve": "^4.0.1",
     "rollup-plugin-sourcemaps": "^0.4.2",
