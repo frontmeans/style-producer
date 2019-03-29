@@ -1,5 +1,13 @@
-import { AfterEvent, afterEventBy, afterEventFrom, eventInterest, EventKeeper, OnEvent } from 'fun-events';
-import { isValueKeeper, keepValue } from '../internal';
+import {
+  AfterEvent,
+  afterEventBy,
+  afterEventFrom,
+  afterEventOf,
+  eventInterest,
+  EventKeeper,
+  OnEvent
+} from 'fun-events';
+import { isValueKeeper } from '../internal';
 import { StypProperties } from './properties';
 import { nextSkip, NextSkip, noop, valuesProvider } from 'call-thru';
 import { itsIterator, itsReduction, overEntries } from 'a-iterable';
@@ -8,7 +16,7 @@ import { StypRule } from './rule';
 /**
  * @internal
  */
-export const noStypProperties: AfterEvent<[StypProperties]> = /*#__PURE__*/ keepValue({});
+export const noStypProperties: AfterEvent<[StypProperties]> = /*#__PURE__*/ afterEventOf({});
 
 /**
  * @internal
@@ -35,10 +43,10 @@ export function stypPropertiesBySpec(rule: StypRule, spec?: StypProperties.Spec)
       return preventDuplicates(keeperOrProperties);
     }
 
-    return keepValue(propertiesMap(keeperOrProperties));
+    return afterEventOf(propertiesMap(keeperOrProperties));
   }
 
-  return keepValue(propertiesMap(spec));
+  return afterEventOf(propertiesMap(spec));
 }
 
 function preventDuplicates(properties: EventKeeper<[string | StypProperties]>): AfterEvent<[StypProperties]> {

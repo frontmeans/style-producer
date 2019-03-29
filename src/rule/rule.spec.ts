@@ -1,8 +1,7 @@
 import { StypRule } from './rule';
 import { StypSelector } from '../selector';
 import { stypRoot } from './root';
-import { keepValue } from '../internal';
-import { AfterEvent, AfterEvent__symbol, trackValue, ValueTracker } from 'fun-events';
+import { AfterEvent, AfterEvent__symbol, afterEventOf, trackValue, ValueTracker } from 'fun-events';
 import { StypProperties } from './properties';
 import { itsEmpty } from 'a-iterable';
 import Mock = jest.Mock;
@@ -21,7 +20,7 @@ describe('StypRule', () => {
 
   beforeEach(() => {
     selector = [{ e: 'test-element' }];
-    mockSpec = jest.fn(r => keepValue({}));
+    mockSpec = jest.fn(r => afterEventOf({}));
     rule = root.rule(selector).add(mockSpec);
   });
 
@@ -43,7 +42,7 @@ describe('StypRule', () => {
 
     beforeEach(() => {
       properties = { fontSize: '12px' };
-      mockSpec.mockImplementation(() => keepValue(properties));
+      mockSpec.mockImplementation(() => afterEventOf(properties));
     });
 
     it('reads the spec', () => {
