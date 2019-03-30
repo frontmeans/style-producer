@@ -6,8 +6,10 @@ import { StypRule } from './rule';
  *
  * Property keys expected to be camel-cased.
  *
- * Properties with keys started with `$` are internal. They can be referenced, but never rendered as CSS, except for
- * special `$$css` one, which is rendered as plain CSS text.
+ * Properties with keys started with `$` are internal. The properties with keys started with `$$` are reserved.
+ *
+ * Internal and reserved properties can be referenced, but they never rendered as CSS ones. They could be rendered
+ * in a special way though. For example a reserved `$$css` property is rendered as plain CSS text.
  */
 export interface StypProperties {
 

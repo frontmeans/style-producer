@@ -18,6 +18,13 @@ describe('stypPropertiesBySpec', () => {
 
     expect(await receiveProperties(after)).toEqual({});
   });
+  it('sends provided CSS text', async () => {
+
+    const css = 'font-size: 12px';
+    const after = afterEventFrom(stypPropertiesBySpec(rule, css));
+
+    expect(await receiveProperties(after)).toEqual({ $$css: css });
+  });
   it('sends provided properties', async () => {
 
     const initial = { fontSize: '12px' };
@@ -98,6 +105,13 @@ describe('stypPropertiesBySpec', () => {
     const after = afterEventFrom(stypPropertiesBySpec(rule, () => initial));
 
     expect(await receiveProperties(after)).toEqual(initial);
+  });
+  it('sends constructed CSS text', async () => {
+
+    const css = 'font-size: 12px';
+    const after = afterEventFrom(stypPropertiesBySpec(rule, () => css));
+
+    expect(await receiveProperties(after)).toEqual({ $$css: css });
   });
   it('sends constructed tracked properties', async () => {
 

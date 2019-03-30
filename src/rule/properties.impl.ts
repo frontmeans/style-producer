@@ -5,9 +5,9 @@ import {
   afterEventOf,
   eventInterest,
   EventKeeper,
+  isEventKeeper,
   OnEvent
 } from 'fun-events';
-import { isValueKeeper } from '../internal';
 import { StypProperties } from './properties';
 import { nextSkip, NextSkip, noop } from 'call-thru';
 import { itsIterator, itsReduction, overEntries } from 'a-iterable';
@@ -32,18 +32,22 @@ export function stypPropertiesBySpec(rule: StypRule, spec?: StypProperties.Spec)
   if (!spec) {
     return noStypProperties;
   }
-  if (isValueKeeper(spec)) {
-    return preventDuplicates(spec);
-  }
-  if (typeof spec === 'function') {
-
-    const keeperOrProperties = spec(rule);
-
-    if (isValueKeeper(keeperOrProperties)) {
-      return preventDuplicates(keeperOrProperties);
+  if (typeof spec !== 'string') {
+    if (isEventKeeper(spec)) {
+      return preventDuplicates(spec);
     }
+    if (typeof spec === 'function') {
 
-    return afterEventOf(propertiesMap(keeperOrProperties));
+      const keeperOrProperties = spec(rule);
+
+      if (typeof keeperOrProperties !== 'string') {
+        if (isEventKeeper(keeperOrProperties)) {
+          return preventDuplicates(keeperOrProperties);
+        }
+      }
+
+      return afterEventOf(propertiesMap(keeperOrProperties));
+    }
   }
 
   return afterEventOf(propertiesMap(spec));
