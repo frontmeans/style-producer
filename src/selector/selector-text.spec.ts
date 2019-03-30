@@ -27,7 +27,7 @@ describe('stypSelectorText', () => {
     expect(stypSelectorText({ e: 'span', $: 'foo' })).toBe('span');
   });
   it('formats qualifiers by second argument', () => {
-    expect(stypSelectorText({ e: 'span', $: ['foo', 'bar'] }, q => `@${q}`)).toBe('span@bar@foo');
+    expect(stypSelectorText({ e: 'span', $: ['foo', 'bar'] }, { qualify(q) { return `@${q}`; } })).toBe('span@bar@foo');
   });
 });
 

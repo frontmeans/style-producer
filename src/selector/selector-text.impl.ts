@@ -1,26 +1,35 @@
 import { isCombinator } from './selector.impl';
 import { StypSelector } from './selector';
 import { cssescId } from '../internal';
+import { StypSelectorTextOpts } from './selector-text';
+
+const ruleKeyTextOpts: StypSelectorTextOpts = {
+  qualify(s: string) {
+    return `@${cssescId(s)}`;
+  }
+};
 
 /**
  * @internal
  */
 export function stypRuleKey(selector: StypSelector.Normalized): string {
-  return formatStypSelector(selector, s => `@${cssescId(s)}`);
+  return formatStypSelector(selector, ruleKeyTextOpts);
 }
+
+const defaultTextOpts: StypSelectorTextOpts = {};
 
 /**
  * @internal
  */
 export function formatStypSelector(
     selector: StypSelector.Normalized,
-    formatQualifier?: (s: string) => string): string {
-  return selector.reduce((result, item) => result + formatItem(item, formatQualifier), '');
+    opts: StypSelectorTextOpts = defaultTextOpts): string {
+  return selector.reduce((result, item) => result + formatItem(item, opts), '');
 }
 
 function formatItem(
     item: StypSelector.NormalizedPart | StypSelector.Combinator,
-    formatQualifier?: (s: string) => string): string {
+    { qualify }: StypSelectorTextOpts): string {
   if (isCombinator(item)) {
     return item;
   }
@@ -42,8 +51,8 @@ function formatItem(
   if (s) {
     string += s;
   }
-  if (formatQualifier && $) {
-    string = $.reduce((result, qualifier) => result + formatQualifier(qualifier), string);
+  if (qualify && $) {
+    string = $.reduce((result, qualifier) => result + qualify(qualifier), string);
   }
 
   return string;
