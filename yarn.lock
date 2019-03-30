@@ -332,9 +332,9 @@
     "@types/jest-diff" "*"
 
 "@types/node@*", "@types/node@^11.11.6":
-  version "11.12.1"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.12.1.tgz#d90123f6c61fdf2f7cddd286ddae891586dd3488"
-  integrity sha512-sKDlqv6COJrR7ar0+GqqhrXQDzQlMcqMnF2iEU6m9hLo8kxozoAGUazwPyELHlRVmjsbvlnGXjnzyptSXVmceA==
+  version "11.12.2"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.12.2.tgz#d7f302e74b10e9801d52852137f652d9ee235da8"
+  integrity sha512-c82MtnqWB/CqqK7/zit74Ob8H1dBdV7bK+BcErwtXbe0+nUGkgzq5NTDmRW/pAv2lFtmeNmW95b0zK2hxpeklg==
 
 "@types/stack-utils@^1.0.1":
   version "1.0.1"
@@ -346,12 +346,12 @@
   resolved "https://registry.yarnpkg.com/@types/yargs/-/yargs-12.0.10.tgz#17a8ec65cd8e88f51b418ceb271af18d3137df67"
   integrity sha512-WsVzTPshvCSbHThUduGGxbmnwcpkgSctHGHTqzWyFg4lYAuV5qXlyFPOsP3OWqCINfmg/8VXP+zJaa4OxEsBQQ==
 
-a-iterable@^2.2.3:
-  version "2.2.3"
-  resolved "https://registry.yarnpkg.com/a-iterable/-/a-iterable-2.2.3.tgz#341f6fb3a1aec73f55fd3fab26b6ac5792b15936"
-  integrity sha512-iW12K0XxTxfss5lEPYYABt7gfEHTqvmqz3BjLdMd25uh1UFFaSGfJrpjWf27MdGm8KojmrYyK+1AXe6ukF+QSA==
+a-iterable@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/a-iterable/-/a-iterable-2.3.0.tgz#b5a4edb5c29b873f25c7a296c086f197ece00176"
+  integrity sha512-kqekdxXLZfv3Dt+AcJ79ZYKrgOTVzir9nd7GOdFSuURTaADB1PD2/Xf6Any/wUTA8kI3jQp6pG2LH2EgAYIsnA==
   dependencies:
-    call-thru "^2.2.1"
+    call-thru "^2.4.0"
     tslib "^1.9.0"
 
 abab@^2.0.0:
@@ -693,10 +693,10 @@ cache-base@^1.0.1:
     union-value "^1.0.0"
     unset-value "^1.0.0"
 
-call-thru@^2.2.1, call-thru@^2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/call-thru/-/call-thru-2.3.0.tgz#8a49e60fdc710e034a855daef17aee3adfb8c23b"
-  integrity sha512-83IAgtIVcw1wigGPtuQqwJC/ymQsfTnY6GaUVBMkWhQ/E8w/UeYMSxsVmAbBFuDBcoUXNXeQwfip2ktBtuzvTg==
+call-thru@^2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/call-thru/-/call-thru-2.4.0.tgz#d74790926f47c7afa74c6ccf3d9961f2d4e2513f"
+  integrity sha512-bRtgVfhNExcXJXzQ2T6ai0RApOqyRbiJlI7NsrltUBDxDatSuul1B1LD/QzNSWH4T3MXV69vTIMJlYklznrJEw==
   dependencies:
     tslib "^1.9.0"
 
@@ -1275,12 +1275,12 @@ fs.realpath@^1.0.0:
   resolved "https://registry.yarnpkg.com/fs.realpath/-/fs.realpath-1.0.0.tgz#1504ad2523158caa40db4a2787cb01411994ea4f"
   integrity sha1-FQStJSMVjKpA20onh8sBQRmU6k8=
 
-fun-events@^4.1.2:
-  version "4.1.2"
-  resolved "https://registry.yarnpkg.com/fun-events/-/fun-events-4.1.2.tgz#4b35257d39c5cc6b1b0464f8ea71c55c02bd960e"
-  integrity sha512-iiB1is0MnhmHgMIdYQyKJqnFfQtGgT9TYfJGWiJZzqkeBquq6rQMSUQQFLGW8X0SHuHJijkGdc3PbVt6ZixySA==
+fun-events@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/fun-events/-/fun-events-4.2.0.tgz#eb9f0af1e152082133ead797009076c060ed9c15"
+  integrity sha512-C0EacJIQsr+ulG8f364AWTN54n9jUTZ19bnUW4T1yTVgmYeRf7ehdKtH1iVdgQcLrxOJ40IBoc1cXVmNLNcGnA==
   dependencies:
-    call-thru "^2.3.0"
+    call-thru "^2.4.0"
     tslib "^1.9.0"
 
 function-bind@^1.1.1:
@@ -3548,10 +3548,10 @@ type-check@~0.3.2:
   dependencies:
     prelude-ls "~1.1.2"
 
-typescript@^3.3.4000:
-  version "3.3.4000"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.3.4000.tgz#76b0f89cfdbf97827e1112d64f283f1151d6adf0"
-  integrity sha512-jjOcCZvpkl2+z7JFn0yBOoLQyLoIkNZAs/fYJkUG6VKy6zLPHJGfQJYFHzibB6GJaF/8QrcECtlQ5cpvRHSMEA==
+typescript@^3.4.1:
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.4.1.tgz#b6691be11a881ffa9a05765a205cb7383f3b63c6"
+  integrity sha512-3NSMb2VzDQm8oBTLH6Nj55VVtUEpe/rgkIzMir0qVoLyjDZlnMBva0U6vDiV3IH+sl/Yu6oP5QwsAQtHPmDd2Q==
 
 uglify-js@^3.1.4:
   version "3.5.2"
