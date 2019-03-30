@@ -24,7 +24,7 @@
     "a-iterable": "^2.3.0",
     "call-thru": "^2.4.0",
     "cssesc": "^3.0.0",
-    "fun-events": "^4.2.0",
+    "fun-events": "^4.2.1",
     "tslib": "^1.9.3"
   },
   "devDependencies": {

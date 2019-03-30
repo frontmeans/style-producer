@@ -1275,10 +1275,10 @@ fs.realpath@^1.0.0:
   resolved "https://registry.yarnpkg.com/fs.realpath/-/fs.realpath-1.0.0.tgz#1504ad2523158caa40db4a2787cb01411994ea4f"
   integrity sha1-FQStJSMVjKpA20onh8sBQRmU6k8=
 
-fun-events@^4.2.0:
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/fun-events/-/fun-events-4.2.0.tgz#eb9f0af1e152082133ead797009076c060ed9c15"
-  integrity sha512-C0EacJIQsr+ulG8f364AWTN54n9jUTZ19bnUW4T1yTVgmYeRf7ehdKtH1iVdgQcLrxOJ40IBoc1cXVmNLNcGnA==
+fun-events@^4.2.1:
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/fun-events/-/fun-events-4.2.1.tgz#f3bba3bed87197bc7b2dba836adeb317dd4b4929"
+  integrity sha512-hAXas/ADxb5WVkMrJCFCOlHc824XL9bEQqAdoHL43xuZriP8bFqEC1meeL6UG+2SjuOGcHTdF0dOp8BBbahj0g==
   dependencies:
     call-thru "^2.4.0"
     tslib "^1.9.0"
