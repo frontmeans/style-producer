@@ -66,8 +66,9 @@ export class StypRule extends StypRule_ {
     return found.rule(tail);
   }
 
-  add(properties: StypProperties.Spec): this {
-    return this.addRule([], properties) as this;
+  set(properties?: StypProperties.Spec): this {
+    this._spec.it = properties ? r => stypPropertiesBySpec(r, properties) : noStypPropertiesSpec;
+    return this;
   }
 
   addRule(selector: StypSelector, properties?: StypProperties.Spec): StypRule {

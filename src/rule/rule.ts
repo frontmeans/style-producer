@@ -52,15 +52,35 @@ export abstract class StypRule implements EventKeeper<[StypProperties]> {
   abstract rule(selector: StypSelector): StypRule | undefined;
 
   /**
-   * Appends CSS properties to this rule.
+   * Sets CSS properties of this rule.
    *
-   * This method modifies this rule.
+   * @param properties CSS properties specifier. Or nothing to clear them.
+   *
+   * @returns `this` rule instance.
+   */
+  abstract set(properties?: StypProperties.Spec): this;
+
+  /**
+   * Appends CSS properties to this rule.
    *
    * @param properties CSS properties specifier.
    *
    * @returns `this` rule instance.
    */
-  abstract add(properties: StypProperties.Spec): this;
+  add(properties: StypProperties.Spec): this {
+    return this.addRule([], properties) as this;
+  }
+
+  /**
+   * Clears CSS properties of this rule.
+   *
+   * Calling this method is the same as calling `set()` without properties.
+   *
+   * @returns `this` rule instance.
+   */
+  clear(): this {
+    return this.set();
+  }
 
   /**
    * Appends CSS properties to the nested rule.

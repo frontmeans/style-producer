@@ -73,6 +73,21 @@ describe('StypRule', () => {
     });
   });
 
+  describe('set', () => {
+
+    beforeEach(() => {
+      rule = root.addRule([ { e: 'element-1' }, '>', { e: 'element-1-1' }], { display: 'block' });
+    });
+
+    it('replaces properties', async () => {
+
+      const replacement = { visibility: 'hidden' };
+
+      rule.set(replacement);
+      expect(await receiveProperties(rule)).toEqual(replacement);
+    });
+  });
+
   describe('add', () => {
 
     beforeEach(() => {
@@ -145,6 +160,21 @@ describe('StypRule', () => {
       rule.add(update2);
 
       expect(receiver).toHaveBeenCalledWith({ ...update.it, ...update2 });
+    });
+  });
+
+  describe('clear', () => {
+
+    beforeEach(() => {
+      rule = root.addRule([ { e: 'element-1' }, '>', { e: 'element-1-1' }], { display: 'block' });
+      rule.clear();
+    });
+
+    it('removes properties', async () => {
+      expect(await receiveProperties(rule)).toEqual({});
+    });
+    it('makes rule empty', () => {
+      expect(rule.empty).toBe(true);
     });
   });
 });
