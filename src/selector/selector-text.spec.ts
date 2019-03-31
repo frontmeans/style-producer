@@ -23,6 +23,9 @@ describe('stypSelectorText', () => {
   it('prints combinations', () => {
     expect(stypSelectorText([{ e: 'ul' }, '>', { e: 'a' }, '+', { e: 'span', s: ':after' }])).toBe('ul>a+span:after');
   });
+  it('separates parts', () => {
+    expect(stypSelectorText([{ e: 'ul' }, { e: 'a' }, { e: 'span', s: ':after' }])).toBe('ul a span:after');
+  });
   it('ignores qualifiers', () => {
     expect(stypSelectorText({ e: 'span', $: 'foo' })).toBe('span');
   });

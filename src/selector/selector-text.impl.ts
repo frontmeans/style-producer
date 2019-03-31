@@ -24,15 +24,22 @@ const defaultTextOpts: StypSelectorTextOpts = {};
 export function formatStypSelector(
     selector: StypSelector.Normalized,
     opts: StypSelectorTextOpts = defaultTextOpts): string {
-  return selector.reduce((result, item) => result + formatItem(item, opts), '');
+  return selector.reduce(
+      (result, item) => {
+        if (isCombinator(item)) {
+          return result + item;
+        }
+        if (result && !isCombinator(result[result.length - 1])) {
+          result += ' ';
+        }
+        return result + formatItem(item, opts);
+      },
+      '');
 }
 
 function formatItem(
-    item: StypSelector.NormalizedPart | StypSelector.Combinator,
+    item: StypSelector.NormalizedPart,
     { qualify }: StypSelectorTextOpts): string {
-  if (isCombinator(item)) {
-    return item;
-  }
 
   const { ns, e, i, c, s, $ } = item;
   let string: string;
