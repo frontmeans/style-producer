@@ -1,7 +1,15 @@
 import { StypRule } from './rule';
-import { StypSelector } from '../selector';
+import { StypSelector, stypSelector } from '../selector';
 import { stypRoot } from './root';
-import { AfterEvent, AfterEvent__symbol, afterEventOf, trackValue, ValueTracker } from 'fun-events';
+import {
+  AfterEvent,
+  AfterEvent__symbol,
+  afterEventFrom,
+  afterEventOf,
+  onEventFrom,
+  trackValue,
+  ValueTracker
+} from 'fun-events';
 import { StypProperties } from './properties';
 import { itsEmpty } from 'a-iterable';
 import Mock = jest.Mock;
@@ -164,9 +172,8 @@ describe('StypRule', () => {
   });
 
   describe('clear', () => {
-
     beforeEach(() => {
-      rule = root.addRule([ { e: 'element-1' }, '>', { e: 'element-1-1' }], { display: 'block' });
+      rule = root.addRule([{ e: 'element-1' }, '>', { e: 'element-1-1' }], { display: 'block' });
       rule.clear();
     });
 
@@ -175,6 +182,97 @@ describe('StypRule', () => {
     });
     it('makes rule empty', () => {
       expect(rule.empty).toBe(true);
+    });
+  });
+
+  describe('addRule', () => {
+    it('sends rule list update', () => {
+
+      const updateReceiver = jest.fn();
+      const rootUpdateReceiver = jest.fn();
+
+      rule.all.onUpdate(updateReceiver);
+      root.all.onUpdate(rootUpdateReceiver);
+
+      const subSelector = stypSelector([{ c: 'nested' }, '>', { c: 'nested-deeper' }]);
+      const nested = rule.addRule(subSelector);
+
+      expect(updateReceiver).toHaveBeenCalled();
+      expect(rootUpdateReceiver).toHaveBeenCalled();
+
+      const [added, removed] = updateReceiver.mock.calls[0];
+      const [addedToRoot, removedFromRoot] = updateReceiver.mock.calls[0];
+
+      expect(removed).toHaveLength(0);
+      expect(removedFromRoot).toBe(removed);
+      expect(ruleSelectors(added)).toEqual([[...rule.selector, subSelector[0]], nested.selector]);
+      expect(addedToRoot).toBe(added);
+    });
+    it('updates rule list', () => {
+
+      const listReceiver = jest.fn();
+      const rootListReceiver = jest.fn();
+
+      rule.all.read(listReceiver);
+      listReceiver.mockClear();
+      root.all.read(rootListReceiver);
+      rootListReceiver.mockClear();
+
+      const subSelector = stypSelector([{ c: 'nested' }, '>', { c: 'nested-deeper' }]);
+      const nested = rule.addRule(subSelector);
+
+      expect(listReceiver).toHaveBeenCalledWith(rule.all);
+      expect(rootListReceiver).toHaveBeenCalledWith(root.all);
+      expect(ruleSelectors(rule.all)).toEqual([rule.selector, [...rule.selector, subSelector[0]], nested.selector]);
+    });
+  });
+
+  describe('remove', () => {
+
+    let subSelector: StypSelector.Normalized;
+    let nested: StypRule;
+
+    beforeEach(() => {
+      subSelector = stypSelector([{ c: 'nested' }, '>', { c: 'nested-deeper' }]);
+      nested = rule.addRule(subSelector);
+    });
+
+    it('sends rule list update', () => {
+
+      const updateReceiver = jest.fn();
+      const rootUpdateReceiver = jest.fn();
+
+      onEventFrom(rule.all)(updateReceiver);
+      onEventFrom(root.all)(rootUpdateReceiver);
+
+      rule.rule(subSelector[0])!.remove();
+
+      expect(updateReceiver).toHaveBeenCalled();
+      expect(rootUpdateReceiver).toHaveBeenCalled();
+
+      const [added, removed] = updateReceiver.mock.calls[0];
+      const [addedToRoot, removedFromRoot] = updateReceiver.mock.calls[0];
+
+      expect(added).toHaveLength(0);
+      expect(addedToRoot).toBe(added);
+      expect(ruleSelectors(removed)).toEqual([[...rule.selector, subSelector[0]], nested.selector]);
+      expect(removedFromRoot).toBe(removed);
+    });
+    it('updates rule list', () => {
+
+      const listReceiver = jest.fn();
+      const rootListReceiver = jest.fn();
+
+      afterEventFrom(rule.all)(listReceiver);
+      listReceiver.mockClear();
+      afterEventFrom(root.all)(rootListReceiver);
+      rootListReceiver.mockClear();
+
+      rule.rule(subSelector[0])!.remove();
+
+      expect(listReceiver).toHaveBeenCalledWith(rule.all);
+      expect(rootListReceiver).toHaveBeenCalledWith(root.all);
+      expect(ruleSelectors(rule.all).length).toBe(1);
     });
   });
 });
@@ -238,4 +336,8 @@ describe('empty rule', () => {
 
 function receiveProperties(rule: StypRule): Promise<StypProperties> {
   return new Promise(resolve => rule.read(resolve));
+}
+
+function ruleSelectors(rules: Iterable<StypRule>): StypSelector.Normalized[] {
+  return [...rules].map(r => r.selector);
 }

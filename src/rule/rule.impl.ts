@@ -3,8 +3,51 @@ import { StypProperties } from './properties';
 import { stypRuleKey } from '../selector/selector-text.impl';
 import { mergeStypProperties, noStypPropertiesSpec, stypPropertiesBySpec } from './properties.impl';
 import { isCombinator } from '../selector/selector.impl';
-import { StypRule as StypRule_ } from './rule';
-import { AfterEvent, afterEventFrom, trackValue, ValueTracker } from 'fun-events';
+import { StypRule as StypRule_, StypRuleList } from './rule';
+import { AfterEvent, afterEventFrom, EventEmitter, trackValue, ValueTracker } from 'fun-events';
+
+class AllRules extends StypRuleList {
+
+  private readonly _updates = new EventEmitter<[StypRule[], StypRule[]]>();
+  readonly read: AfterEvent<[AllRules]>;
+
+  constructor(private readonly _root: StypRule) {
+    super();
+    this.read = afterEventFrom<[AllRules]>(this._updates.on.thru(() => this), [this]);
+  }
+
+  get onUpdate() {
+    return this._updates.on;
+  }
+
+  [Symbol.iterator](): IterableIterator<StypRule> {
+    return iterateAllRules(this._root);
+  }
+
+  _add(rule: StypRule, sendUpdate: boolean) {
+    rule.all.onUpdate((added, removed) => this._updates.send(added, removed));
+    if (sendUpdate) {
+      this._updates.send(allRules(rule), []);
+    }
+  }
+
+  _remove() {
+    this._updates.send([], [...allRules(this._root)]);
+    allRules(this._root).forEach(rule => rule.all._updates.done());
+  }
+
+}
+
+function allRules(rule: StypRule): StypRule[] {
+  return [...iterateAllRules(rule)];
+}
+
+function *iterateAllRules(rule: StypRule): IterableIterator<StypRule> {
+  yield rule;
+  for (const nested of rule.rules) {
+    yield *allRules(nested);
+  }
+}
 
 /**
  * @internal
@@ -15,7 +58,8 @@ export class StypRule extends StypRule_ {
   private readonly _selector: StypSelector.Normalized;
   readonly _spec: ValueTracker<StypProperties.Builder>;
   private readonly _read: AfterEvent<[StypProperties]>;
-  readonly _rules = new Map<string, StypRule>();
+  private readonly _rules = new Map<string, StypRule>();
+  private readonly _all: AllRules;
 
   get root(): StypRule {
     return this._root;
@@ -33,8 +77,12 @@ export class StypRule extends StypRule_ {
     return this._read;
   }
 
-  get rules(): Iterable<StypRule> {
+  get rules(): IterableIterator<StypRule> {
     return this._rules.values();
+  }
+
+  get all() {
+    return this._all;
   }
 
   constructor(
@@ -46,6 +94,7 @@ export class StypRule extends StypRule_ {
     this._selector = selector;
     this._spec = trackValue(spec);
     this._read = afterEventFrom(this._spec.read.dig(s => s(this)));
+    this._all = new AllRules(this);
   }
 
   rule(selector: StypSelector): StypRule | undefined {
@@ -57,7 +106,7 @@ export class StypRule extends StypRule_ {
       return this;
     }
 
-    const found = this._rules.get(stypRuleKey(keySelector));
+    const found = this._rule(stypRuleKey(keySelector));
 
     if (!found) {
       return;
@@ -72,7 +121,26 @@ export class StypRule extends StypRule_ {
   }
 
   addRule(selector: StypSelector, properties?: StypProperties.Spec): StypRule {
-    return extendRule(this, stypSelector(selector), properties);
+    return extendRule(this, stypSelector(selector), properties, true);
+  }
+
+  remove() {
+    this.all._remove();
+    return this;
+  }
+
+  _rule(key: string): StypRule | undefined {
+    return this._rules.get(key);
+  }
+
+  _addRule(key: string, rule: StypRule, sendUpdate: boolean) {
+    this._rules.set(key, rule);
+    rule._all.onUpdate((added, removed) => {
+      if (removed[0] === rule) {
+        this._rules.delete(key);
+      }
+    });
+    this._all._add(rule, sendUpdate);
   }
 
 }
@@ -80,7 +148,8 @@ export class StypRule extends StypRule_ {
 function extendRule(
     rule: StypRule,
     targetSelector: StypSelector.Normalized,
-    properties?: StypProperties.Spec): StypRule {
+    properties: StypProperties.Spec | undefined,
+    sendUpdate: boolean): StypRule {
 
   const [dirSelector, tail] = keySelectorAndTail(targetSelector);
 
@@ -91,20 +160,21 @@ function extendRule(
   }
 
   const dirKey = stypRuleKey(dirSelector);
-  const found = rule._rules.get(dirKey);
+  const found = rule._rule(dirKey);
 
   if (found) {
-    return extendRule(found, tail, properties);
+    return extendRule(found, tail, properties, sendUpdate);
   }
 
   const newNested = new StypRule(rule.root, [...rule.selector, ...dirSelector]);
+  const result = extendRule(newNested, tail, properties, false); // Send only a top-level update
 
-  rule._rules.set(dirKey, newNested);
+  rule._addRule(dirKey, newNested, sendUpdate);
 
-  return extendRule(newNested, tail, properties);
+  return result;
 }
 
-function extendSpec(rule: StypRule, properties?: StypProperties.Spec): StypProperties.Builder {
+function extendSpec(rule: StypRule, properties: StypProperties.Spec | undefined): StypProperties.Builder {
 
   const oldSpec = rule._spec.it;
 
