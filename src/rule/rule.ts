@@ -1,7 +1,6 @@
 import { AfterEvent, AfterEvent__symbol, EventKeeper } from 'fun-events';
 import { StypSelector } from '../selector';
 import { StypProperties } from './properties';
-import { overNone } from 'a-iterable';
 
 /**
  * CSS rule.
@@ -9,11 +8,6 @@ import { overNone } from 'a-iterable';
  * Represents CSS selector and corresponding CSS properties.
  */
 export abstract class StypRule implements EventKeeper<[StypProperties]> {
-
-  /**
-   * @internal
-   */
-  private _read?: AfterEvent<[StypProperties]>;
 
   /**
    * A reference to root CSS rule.
@@ -24,13 +18,6 @@ export abstract class StypRule implements EventKeeper<[StypProperties]> {
    * CSS selector of this rule.
    */
   abstract readonly selector: StypSelector.Normalized;
-
-  /**
-   * CSS properties specifier in most common form. I.e. CSS properties builder function.
-   *
-   * It is used once per rule instance to construct properties keeper.
-   */
-  abstract readonly spec: StypProperties.Builder;
 
   /**
    * Whether this rule's properties are empty.
@@ -44,9 +31,7 @@ export abstract class StypRule implements EventKeeper<[StypProperties]> {
   /**
    * `AfterEvent` CSS properties receiver registrar.
    */
-  get read(): AfterEvent<[StypProperties]> {
-    return this._read || (this._read = this.spec(this));
-  }
+  abstract readonly read: AfterEvent<[StypProperties]>;
 
   get [AfterEvent__symbol](): AfterEvent<[StypProperties]> {
     return this.read;

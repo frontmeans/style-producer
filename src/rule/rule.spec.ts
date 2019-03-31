@@ -49,10 +49,6 @@ describe('StypRule', () => {
       expect(rule.read.kept).toEqual([properties]);
       expect(mockSpec).toHaveBeenCalledWith(rule);
     });
-    it('caches the spec', () => {
-      expect(rule.read).toBe(rule.read);
-      expect(mockSpec).toHaveBeenCalledTimes(1);
-    });
   });
 
   describe('[AfterEvent__symbol]', () => {
@@ -136,6 +132,19 @@ describe('StypRule', () => {
 
       expect(root.rule(updated2.selector)).toBe(updated2);
       expect(await receiveProperties(updated2)).toEqual(update2);
+    });
+    it('sends updated properties', async () => {
+
+      const receiver = jest.fn();
+
+      rule.read(receiver);
+      receiver.mockClear();
+
+      const update2 = { width: '90%' };
+
+      rule.add(update2);
+
+      expect(receiver).toHaveBeenCalledWith({ ...update.it, ...update2 });
     });
   });
 });

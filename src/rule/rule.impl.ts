@@ -4,6 +4,7 @@ import { stypRuleKey } from '../selector/selector-text.impl';
 import { mergeStypProperties, noStypPropertiesSpec, stypPropertiesBySpec } from './properties.impl';
 import { isCombinator } from '../selector/selector.impl';
 import { StypRule as StypRule_ } from './rule';
+import { AfterEvent, afterEventFrom, trackValue, ValueTracker } from 'fun-events';
 
 /**
  * @internal
@@ -12,7 +13,8 @@ export class StypRule extends StypRule_ {
 
   private readonly _root: StypRule;
   private readonly _selector: StypSelector.Normalized;
-  _spec: StypProperties.Builder;
+  readonly _spec: ValueTracker<StypProperties.Builder>;
+  private readonly _read: AfterEvent<[StypProperties]>;
   readonly _rules = new Map<string, StypRule>();
 
   get root(): StypRule {
@@ -24,11 +26,11 @@ export class StypRule extends StypRule_ {
   }
 
   get empty() {
-    return this._spec === noStypPropertiesSpec;
+    return this._spec.it === noStypPropertiesSpec;
   }
 
-  get spec(): StypProperties.Builder {
-    return this._spec;
+  get read(): AfterEvent<[StypProperties]> {
+    return this._read;
   }
 
   get rules(): Iterable<StypRule> {
@@ -42,7 +44,8 @@ export class StypRule extends StypRule_ {
     super();
     this._root = root || this;
     this._selector = selector;
-    this._spec = spec;
+    this._spec = trackValue(spec);
+    this._read = afterEventFrom(this._spec.read.dig(s => s(this)));
   }
 
   rule(selector: StypSelector): StypRule | undefined {
@@ -82,7 +85,7 @@ function extendRule(
 
   if (!tail) {
     // Target rule
-    rule._spec = extendSpec(rule, properties);
+    rule._spec.it = extendSpec(rule, properties);
     return rule;
   }
 
@@ -102,7 +105,7 @@ function extendRule(
 
 function extendSpec(rule: StypRule, properties?: StypProperties.Spec): StypProperties.Builder {
 
-  const oldSpec = rule._spec;
+  const oldSpec = rule._spec.it;
 
   if (!properties) {
     return oldSpec;
