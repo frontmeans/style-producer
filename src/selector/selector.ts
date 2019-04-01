@@ -1,6 +1,4 @@
-import { filterIt, mapIt, overArray } from 'a-iterable';
 import { isCombinator } from './selector.impl';
-import { isPresent } from 'call-thru';
 import { StypQuery } from './query';
 
 /**
@@ -20,8 +18,8 @@ export namespace StypSelector {
   /**
    * Normalized structured CSS selector.
    *
-   * This is an array of normalized selector parts and combinators between them. When combinator is omitted a space is
-   * used.
+   * This is an array of normalized selector parts and combinators between them. Combinators do not follow each other.
+   * The last item is never a combinator.
    *
    * Normalized selector never contains empty parts.
    */
@@ -113,9 +111,12 @@ export namespace StypSelector {
    * Normalized part:
    * - is not empty, i.e. has at least one property,
    * - does not contain empty sub-parts,
-   * - does not contain empty class names
+   * - does not contain empty class names,
    * - does not contain empty class array,
-   * - class names are sorted.
+   * - class names are sorted,
+   * - does not contain empty qualifiers,
+   * - does not contain empty qualifiers array,
+   * - qualifiers are sorted.
    *
    * The `stypSelector()` function always returns an array of normalized parts.
    */
@@ -223,30 +224,36 @@ export function stypSelector(query: StypQuery): StypQuery.Normalized;
 export function stypSelector(selector: StypSelector): StypSelector.Normalized;
 
 export function stypSelector(selector: StypSelector): StypSelector.Normalized {
-  if (Array.isArray(selector)) {
-    return [
-      ...filterIt<
-          StypSelector.NormalizedPart | StypSelector.Combinator | undefined,
-          StypSelector.NormalizedPart | StypSelector.Combinator>(
-          mapIt(
-              overArray(selector),
-              normalizeItem),
-          isPresent),
-    ];
-  } else {
+  if (!Array.isArray(selector)) {
 
     const key = normalizeKey(selector);
 
     return key ? [key] : [];
   }
-}
 
-function normalizeItem(item: string | StypSelector.Part | StypSelector.Combinator):
-    StypSelector.NormalizedPart | StypSelector.Combinator | undefined {
-  if (isCombinator(item)) {
-    return item;
+  const normalized: StypSelector.Normalized = [];
+  let combinator: StypSelector.Combinator | undefined;
+
+  for (const item of selector) {
+    if (isCombinator(item)) {
+      combinator = combinator || item;
+      continue;
+    }
+
+    const normalizedPart = normalizeKey(item);
+
+    if (!normalizedPart) {
+      continue;
+    }
+    if (combinator) {
+      normalized.push(combinator);
+      combinator = undefined;
+    }
+
+    normalized.push(normalizedPart);
   }
-  return normalizeKey(item);
+
+  return normalized;
 }
 
 function normalizeKey(key: StypSelector.Part | string): StypSelector.NormalizedPart | undefined {

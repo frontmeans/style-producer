@@ -10,6 +10,9 @@ describe('stypSelector', () => {
   it('handles empty selector', () => {
     expect(stypSelector({})).toHaveLength(0);
   });
+  it('strips empty selector', () => {
+    expect(stypSelector([{ e: 'span' }, '>', {}, { c: 'nested' }])).toEqual([{ e: 'span' }, '>', { c: ['nested'] }]);
+  });
   it('handles raw selector', () => {
     expect(stypSelector({ s: 'abc' })).toEqual([{ s: 'abc' }]);
   });
@@ -18,6 +21,12 @@ describe('stypSelector', () => {
   });
   it('handles combinators', () => {
     expect(stypSelector(['abc', '>', { e: 'def' }])).toEqual([{ s: 'abc' }, '>', { e: 'def' }]);
+  });
+  it('strips subsequent combinators', () => {
+    expect(stypSelector(['abc', '>', '+', '~', { e: 'def' }])).toEqual([{ s: 'abc' }, '>', { e: 'def' }]);
+  });
+  it('strips last combinators', () => {
+    expect(stypSelector(['abc', '>', '+'])).toEqual([{ s: 'abc' }]);
   });
   it('handles id', () => {
     expect(stypSelector({ i: 'abc' })).toEqual([{ i: 'abc' }]);
