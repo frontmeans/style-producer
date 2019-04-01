@@ -1,6 +1,7 @@
 import { filterIt, mapIt, overArray } from 'a-iterable';
 import { isCombinator } from './selector.impl';
 import { isPresent } from 'call-thru';
+import { StypQuery } from './query';
 
 /**
  * Structured CSS selector.
@@ -202,6 +203,15 @@ export function stypSelector(selector: StypSelector.Element): [StypSelector.Norm
  * @returns Normalized structured CSS selector. An array containing only normalized non-element selector.
  */
 export function stypSelector(selector: StypSelector.NonElement): [StypSelector.NormalizedNonElement];
+
+/**
+ * Normalizes arbitrary CSS rule query.
+ *
+ * @param query CSS rule query to normalize.
+ *
+ * @returns Normalized CSS rule query.
+ */
+export function stypSelector(query: StypQuery): StypQuery.Normalized;
 
 /**
  * Normalizes arbitrary structured CSS selector.

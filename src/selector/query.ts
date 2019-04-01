@@ -14,6 +14,11 @@ export type StypQuery = StypQuery.Part | (StypQuery.Part | StypSelector.Combinat
 export namespace StypQuery {
 
   /**
+   * Normalized CSS rule query.
+   */
+  export type Normalized = StypQuery & StypSelector.Normalized;
+
+  /**
    * A part of structured CSS rule query.
    *
    * It may represent a selector like `element-name#id.class1.classN` with any of sub-parts omitted.

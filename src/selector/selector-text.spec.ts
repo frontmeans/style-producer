@@ -36,6 +36,6 @@ describe('stypSelectorText', () => {
 
 describe('stypRuleKey', () => {
   it('formats qualifiers', () => {
-    expect(stypRuleKey([{ e: 'span', $: ['foo:bar'] }])).toBe('span@foo\\:bar');
+    expect(stypRuleKeyText([{ e: 'span', $: ['foo:bar'] }])).toBe('span@foo\\:bar');
   });
 });
