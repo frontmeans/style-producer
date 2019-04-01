@@ -1,5 +1,6 @@
 import { formatStypSelector } from './selector-text.impl';
-import { stypSelector, StypSelector } from './selector';
+import { StypSelector } from './selector';
+import { stypSelector } from './selector-constructor';
 
 /**
  * Structured CSS selector textual representation options.

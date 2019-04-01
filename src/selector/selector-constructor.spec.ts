@@ -1,4 +1,4 @@
-import { stypSelector } from './selector';
+import { stypSelector } from './selector-constructor';
 
 describe('stypSelector', () => {
   it('converts string to raw selector', () => {
