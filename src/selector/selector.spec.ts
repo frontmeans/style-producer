@@ -64,7 +64,24 @@ describe('stypSelector', () => {
   it('normalizes qualifiers', () => {
     expect(stypSelector({ $: 'abc' })).toEqual([{ $: ['abc'] }]);
   });
+  it('removes empty qualifier', () => {
+    expect(stypSelector({ e: 'span', $: '' })).toEqual([{ e: 'span' }]);
+  });
+  it('strips empty qualifiers', () => {
+    expect(stypSelector({ $: ['', 'abc'] })).toEqual([{ $: ['abc'] }]);
+  });
+  it('removes empty qualifiers', () => {
+    expect(stypSelector({ e: 'span', $: ['', ''] })).toEqual([{ e: 'span' }]);
+  });
   it('sorts qualifiers', () => {
     expect(stypSelector({ $: ['def', 'abc'] })).toEqual([{ $: ['abc', 'def'] }]);
+  });
+  it('exposes qualifiers', () => {
+    expect(stypSelector({ $: ['foo:def', 'foo:z', 'bar:abc=vvv:xxx'] })).toEqual([{
+      $: [
+        'bar', 'bar:abc', 'bar:abc=vvv:xxx',
+        'foo', 'foo:def', 'foo:z',
+      ]
+    }]);
   });
 });

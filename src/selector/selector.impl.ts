@@ -1,5 +1,6 @@
 import { StypSelector } from './selector';
 import { StypRuleKey } from './rule-key';
+import { flatMapIt, itsReduction } from 'a-iterable';
 
 /**
  * @internal
@@ -19,7 +20,7 @@ export function normalizeStypSelectorPart(part: StypSelector.Part): StypSelector
   const i = part.i || undefined;
   const s = part.s || undefined;
   const c = normalizeClasses(part.c);
-  const $ = normalizeClasses(part.$);
+  const $ = normalizeQualifiers(part.$);
 
   if (!e && !i && !s && !c && !$) {
     return;
@@ -39,6 +40,52 @@ function normalizeClasses(classes: string | string[] | undefined): string[] | un
   classes = classes.filter(c => !!c);
 
   return classes.length ? classes.sort() : undefined;
+}
+
+function normalizeQualifiers(qualifiers: string | string[] | undefined): string[] | undefined {
+  if (!qualifiers) {
+    return;
+  }
+
+  if (!Array.isArray(qualifiers)) {
+    qualifiers = [...exposeQualifier(qualifiers)];
+  } else {
+    qualifiers = [
+      ...itsReduction(
+          flatMapIt(qualifiers, exposeQualifier),
+          (set, qualifier) => set.add(qualifier),
+          new Set<string>())
+    ].sort();
+  }
+
+  return qualifiers.length ? qualifiers : undefined;
+}
+
+const noQualifiers: Set<string> = new Set();
+
+function exposeQualifier(qualifier: string): Set<string> {
+  if (!qualifier) {
+    return noQualifiers;
+  }
+
+  const eqIdx = qualifier.indexOf('=');
+  const name = eqIdx < 0 ? qualifier : qualifier.substring(0, eqIdx);
+  const exposed = new Set<string>();
+  let lastExposed: string | undefined;
+
+  for (const part of name.split(':')) {
+    if (lastExposed) {
+      lastExposed += ':' + part;
+    } else {
+      lastExposed = part;
+    }
+    exposed.add(lastExposed);
+  }
+  if (eqIdx >= 0) {
+    exposed.add(qualifier);
+  }
+
+  return exposed;
 }
 
 const noKeyAndTail: [[]] = [[]];

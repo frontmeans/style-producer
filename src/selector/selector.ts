@@ -115,6 +115,7 @@ export namespace StypSelector {
    * - class names are sorted,
    * - does not contain empty qualifiers,
    * - does not contain empty qualifiers array,
+   * - qualifiers are exposed, e.g. `foo:bar=baz` is exposed as three qualifiers: `foo`, `foo:bar`, and `foo:bar=baz`
    * - qualifiers are sorted.
    *
    * The `stypSelector()` function always returns an array of normalized parts.
