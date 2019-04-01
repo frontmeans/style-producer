@@ -1,6 +1,7 @@
 import { AfterEvent, AfterEvent__symbol, EventKeeper, EventSender, OnEvent, OnEvent__symbol } from 'fun-events';
 import { StypSelector } from '../selector';
 import { StypProperties } from './properties';
+import { StypRuleKey } from '../selector/rule-key';
 
 /**
  * CSS rule.
@@ -18,6 +19,11 @@ export abstract class StypRule implements EventKeeper<[StypProperties]> {
    * CSS selector of this rule.
    */
   abstract readonly selector: StypSelector.Normalized;
+
+  /**
+   * A key of this rule in the enclosing one.
+   */
+  abstract readonly key: StypRuleKey;
 
   /**
    * Whether this rule's properties are empty.

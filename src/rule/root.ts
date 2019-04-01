@@ -17,5 +17,5 @@ const rootSelector: StypSelector.Normalized = [];
  * @returns New root CSS rule.
  */
 export function stypRoot(properties?: StypProperties.Spec): StypRule {
-  return new StypRule(undefined, rootSelector, r => stypPropertiesBySpec(r, properties));
+  return new StypRule(undefined, rootSelector, [], properties ? r => stypPropertiesBySpec(r, properties) : undefined);
 }

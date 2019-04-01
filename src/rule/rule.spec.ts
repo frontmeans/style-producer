@@ -186,6 +186,15 @@ describe('StypRule', () => {
   });
 
   describe('addRule', () => {
+    it('adds nested rule', () => {
+
+      const subSelector = stypSelector(['>', { c: 'nested' }]);
+      const nested = rule.addRule(subSelector);
+
+      expect(ruleSelectors(rule.rules)).toContain(nested.selector);
+      expect(nested.selector).toEqual([...rule.selector, ...subSelector]);
+      expect(nested.key).toEqual(subSelector);
+    });
     it('sends rule list update', () => {
 
       const updateReceiver = jest.fn();

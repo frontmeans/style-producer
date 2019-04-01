@@ -2,6 +2,7 @@ import { isCombinator } from './selector.impl';
 import { StypSelector } from './selector';
 import { cssescId } from '../internal';
 import { StypSelectorTextOpts } from './selector-text';
+import { StypRuleKey } from './rule-key';
 
 const ruleKeyTextOpts: StypSelectorTextOpts = {
   qualify(s: string) {
@@ -12,7 +13,7 @@ const ruleKeyTextOpts: StypSelectorTextOpts = {
 /**
  * @internal
  */
-export function stypRuleKey(selector: StypSelector.Normalized): string {
+export function stypRuleKeyText(selector: StypRuleKey): string {
   return formatStypSelector(selector, ruleKeyTextOpts);
 }
 

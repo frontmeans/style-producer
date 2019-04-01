@@ -17,8 +17,8 @@ describe('stypRoot', () => {
   });
 
   describe('empty', () => {
-    it('is `false`', () => {
-      expect(stypRoot().empty).toBe(false);
+    it('is `true`', () => {
+      expect(stypRoot().empty).toBe(true);
     });
   });
 
