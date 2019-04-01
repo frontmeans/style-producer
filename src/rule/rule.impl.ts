@@ -2,7 +2,7 @@ import { StypRuleKey, stypSelector, StypSelector } from '../selector';
 import { StypProperties } from './properties';
 import { stypRuleKeyText } from '../selector/selector-text.impl';
 import { mergeStypProperties, noStypPropertiesSpec, stypPropertiesBySpec } from './properties.impl';
-import { isCombinator } from '../selector/selector.impl';
+import { stypRuleKeyAndTail } from '../selector/selector.impl';
 import { StypRule as StypRule_, StypRuleList } from './rule';
 import { AfterEvent, afterEventFrom, EventEmitter, trackValue, ValueTracker } from 'fun-events';
 
@@ -107,7 +107,7 @@ export class StypRule extends StypRule_ {
   rule(selector: StypSelector): StypRule | undefined {
 
     const sel = stypSelector(selector);
-    const [keySelector, tail] = keySelectorAndTail(sel);
+    const [keySelector, tail] = stypRuleKeyAndTail(sel);
 
     if (!tail) {
       return this;
@@ -158,7 +158,7 @@ function extendRule(
     properties: StypProperties.Spec | undefined,
     sendUpdate: boolean): StypRule {
 
-  const [key, tail] = keySelectorAndTail(targetSelector);
+  const [key, tail] = stypRuleKeyAndTail(targetSelector);
 
   if (!tail) {
     // Target rule
@@ -194,30 +194,4 @@ function extendSpec(rule: StypRule, properties: StypProperties.Spec | undefined)
   }
 
   return r => mergeStypProperties(oldSpec(r), stypPropertiesBySpec(r, properties));
-}
-
-const noKeyAndTail: [StypRuleKey] = [[]];
-
-function keySelectorAndTail(selector: StypSelector.Normalized):
-    [StypRuleKey, StypSelector.Normalized?] {
-  if (!selector.length) {
-    return noKeyAndTail;
-  }
-
-  let i = 0;
-  let combinator: StypSelector.Combinator | undefined;
-
-  for (;;) {
-
-    const part = selector[i++];
-
-    if (isCombinator(part)) {
-      combinator = part;
-      continue;
-    }
-
-    const key: StypRuleKey = combinator ? [combinator, part] : [part];
-
-    return [key, selector.slice(i)];
-  }
 }
