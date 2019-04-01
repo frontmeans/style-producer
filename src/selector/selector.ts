@@ -166,5 +166,3 @@ export namespace StypSelector {
   }
 
 }
-
-
