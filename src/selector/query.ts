@@ -1,36 +1,28 @@
 import { StypSelector } from './selector';
+import { normalizeStypSelectorPart } from './selector.impl';
 
 /**
  * CSS rule query.
  *
- * This can be one of:
- * - CSS rule query part, or
- * - an array consisting of parts and their combinators.
+ * It may represent a selector like `element-name#id.class1.classN` with any of sub-parts omitted.
  *
  * Queries are used to grab a subset of matching rules from `StypRule`.
  */
-export type StypQuery = StypQuery.Part | (StypQuery.Part | StypSelector.Combinator)[];
+export type StypQuery = StypQuery.Element | StypQuery.NonElement;
 
 export namespace StypQuery {
 
   /**
    * Normalized CSS rule query.
    */
-  export type Normalized = StypQuery & StypSelector.Normalized;
+  export type Normalized = StypQuery & StypSelector.NormalizedPart;
 
   /**
-   * A part of structured CSS rule query.
-   *
-   * It may represent a selector like `element-name#id.class1.classN` with any of sub-parts omitted.
-   */
-  export type Part = Element | NonElement;
-
-  /**
-   * Base structure of the part of structured CSS selector.
+   * Base structure of CSS rule query.
    *
    * All of it sub-parts are optional.
    */
-  export interface PartBase {
+  export interface Base {
 
     /**
      * Element namespace.
@@ -54,32 +46,74 @@ export namespace StypQuery {
 
     /**
      * Qualifier or qualifiers.
-     *
-     * Qualifiers are typically not rendered as CSS selector text, but rather used to distinguish between style rules.
-     *
-     * Qualifier may have a `name=value` form. The `name` part may be qualified by selecting name parts with colons.
-     * The `StypRule` would be able to grab rules either by full qualifier, or the ones with partially matched
-     * qualifier names.
-     *
-     * Example: `foo:bar:baz=some value` matches `foo:bar:baz=some value`, `foo:bar:baz`, `foo:bar`, and `foo`.
      */
     $?: string | string[];
 
   }
 
   /**
-   * CSS rule query part containing element selector.
+   * CSS rule query containing element selector.
    */
-  export interface Element extends PartBase {
+  export interface Element extends Base {
     e: string;
   }
 
   /**
-   * CSS rule query part not containing element selector (and thus not containing namespace selector).
+   * CSS rule query not containing element selector (and thus not containing namespace selector).
    */
-  export interface NonElement extends PartBase {
+  export interface NonElement extends Base {
     ns?: undefined;
     e?: undefined;
   }
 
+}
+
+/**
+ * Normalizes arbitrary CSS rule query.
+ *
+ * @param query CSS rule query to normalize.
+ *
+ * @returns Normalized CSS rule query.
+ */
+export function stypQuery(query: StypQuery): StypQuery.Normalized | undefined {
+  return normalizeStypSelectorPart(query);
+}
+
+/**
+ * Checks whether the given structured CSS `selector` matches the target `query`.
+ *
+ * @param selector Normalized structured CSS selector.
+ * @param query Normalized CSS rule query.
+ *
+ * @returns `true` if `selector` matches the `query`, or `false` otherwise.
+ */
+export function stypSelectorMatches(selector: StypSelector.Normalized, query: StypQuery.Normalized): boolean {
+  if (!selector.length) {
+    return false;
+  }
+
+  const part = selector[selector.length - 1] as StypSelector.NormalizedPart;
+
+  if (query.ns && part.ns !== query.ns) {
+    return false;
+  }
+  if (query.e && part.e !== query.e) {
+    return false;
+  }
+  if (query.i && part.i !== query.i) {
+    return false;
+  }
+  if (query.c && !classesMatch(part.c, query.c)) {
+    return false;
+  }
+  // noinspection RedundantIfStatementJS
+  if (query.$ && !classesMatch(part.$, query.$)) {
+    return false;
+  }
+
+  return true;
+}
+
+function classesMatch(classes: string[] | undefined, query: string[]) {
+  return classes && query.every(qClass => classes.indexOf(qClass) >= 0);
 }

@@ -1,5 +1,4 @@
-import { isCombinator } from './selector.impl';
-import { StypQuery } from './query';
+import { isCombinator, normalizeStypSelectorPart } from './selector.impl';
 
 /**
  * Structured CSS selector.
@@ -130,12 +129,12 @@ export namespace StypSelector {
     /**
      * Array of classes. Either absent, or non-empty and containing non-empty class names sorted alphabetically.
      */
-    c?: string[];
+    c?: [string, ...string[]];
 
     /**
      * Array of qualifiers. Either absent, or non-empty and containing non-empty qualifiers sorted alphabetically.
      */
-    $?: string[];
+    $?: [string, ...string[]];
 
   }
 
@@ -147,12 +146,12 @@ export namespace StypSelector {
     /**
      * Array of classes. Either absent, or non-empty and containing non-empty class names sorted alphabetically.
      */
-    c?: string[];
+    c?: [string, ...string[]];
 
     /**
      * Array of qualifiers. Either absent, or non-empty and containing non-empty qualifiers sorted alphabetically.
      */
-    $?: string[];
+    $?: [string, ...string[]];
 
   }
 
@@ -206,15 +205,6 @@ export function stypSelector(selector: StypSelector.Element): [StypSelector.Norm
 export function stypSelector(selector: StypSelector.NonElement): [StypSelector.NormalizedNonElement];
 
 /**
- * Normalizes arbitrary CSS rule query.
- *
- * @param query CSS rule query to normalize.
- *
- * @returns Normalized CSS rule query.
- */
-export function stypSelector(query: StypQuery): StypQuery.Normalized;
-
-/**
  * Normalizes arbitrary structured CSS selector.
  *
  * @param selector CSS selector to normalize.
@@ -263,34 +253,5 @@ function normalizeKey(key: StypSelector.Part | string): StypSelector.NormalizedP
     }
     return { s: key };
   }
-  return normalizePart(key);
-}
-
-function normalizePart(part: StypSelector.Part): StypSelector.NormalizedPart | undefined {
-
-  const ns = part.ns || undefined;
-  const e = part.e || undefined;
-  const i = part.i || undefined;
-  const s = part.s || undefined;
-  const c = normalizeClasses(part.c);
-  const $ = normalizeClasses(part.$);
-
-  if (!e && !i && !s && !c && !$) {
-    return;
-  }
-
-  return { ns, e, i, s, c, $ } as StypSelector.NormalizedPart;
-}
-
-function normalizeClasses(classes: string | string[] | undefined): string[] | undefined {
-  if (!classes) {
-    return;
-  }
-  if (!Array.isArray(classes)) {
-    return [classes];
-  }
-
-  classes = classes.filter(c => !!c);
-
-  return classes.length ? classes.sort() : undefined;
+  return normalizeStypSelectorPart(key);
 }
