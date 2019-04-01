@@ -1,7 +1,6 @@
 import { AfterEvent, AfterEvent__symbol, EventKeeper, EventSender, OnEvent, OnEvent__symbol } from 'fun-events';
-import { StypSelector } from '../selector';
+import { StypQuery, StypRuleKey, StypSelector } from '../selector';
 import { StypProperties } from './properties';
-import { StypRuleKey } from '../selector/rule-key';
 
 /**
  * CSS rule.
@@ -49,7 +48,7 @@ export abstract class StypRule implements EventKeeper<[StypProperties]> {
   abstract readonly rules: IterableIterator<StypRule>;
 
   /**
-   * A list of all rules in hierarchy starting from this one.
+   * Dynamic list of all rules in hierarchy starting from this one.
    */
   abstract readonly all: StypRuleList;
 
@@ -61,6 +60,15 @@ export abstract class StypRule implements EventKeeper<[StypProperties]> {
    * @returns Either matching CSS rule, or `undefined` if not found.
    */
   abstract rule(selector: StypSelector): StypRule | undefined;
+
+  /**
+   * Grabs rules matching the given `query`.
+   *
+   * @param query CSS rule query to match.
+   *
+   * @returns Dynamic list of rules in hierarchy matching the given query starting from this one.
+   */
+  abstract grab(query: StypQuery): StypRuleList;
 
   /**
    * Sets CSS properties of this rule.

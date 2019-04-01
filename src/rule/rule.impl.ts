@@ -1,10 +1,11 @@
-import { StypRuleKey, stypSelector, StypSelector } from '../selector';
+import { StypQuery, stypQuery, StypRuleKey, stypSelector, StypSelector, stypSelectorMatches } from '../selector';
 import { StypProperties } from './properties';
 import { stypRuleKeyText } from '../selector/selector-text.impl';
 import { mergeStypProperties, noStypPropertiesSpec, stypPropertiesBySpec } from './properties.impl';
 import { stypRuleKeyAndTail } from '../selector/selector.impl';
 import { StypRule as StypRule_, StypRuleList } from './rule';
-import { AfterEvent, afterEventFrom, EventEmitter, trackValue, ValueTracker } from 'fun-events';
+import { AfterEvent, afterEventFrom, afterEventOf, EventEmitter, onNever, trackValue, ValueTracker } from 'fun-events';
+import { filterIt } from 'a-iterable';
 
 class AllRules extends StypRuleList {
 
@@ -48,6 +49,57 @@ function *iterateAllRules(rule: StypRule): IterableIterator<StypRule> {
     yield *allRules(nested);
   }
 }
+
+class GrabbedRules extends StypRuleList {
+
+  private readonly _updates = new EventEmitter<[StypRule[], StypRule[]]>();
+  private readonly _rules = new Set<StypRule>();
+  readonly read: AfterEvent<[GrabbedRules]>;
+
+  constructor(root: StypRule, query: StypQuery.Normalized) {
+    super();
+    this.read = afterEventFrom<[GrabbedRules]>(this._updates.on.thru(() => this), [this]);
+    this._rules = new Set(filterIt(root.all, matchingRule));
+    root.all.onUpdate((added, removed) => {
+      added = added.filter(matchingRule);
+      removed = removed.filter(matchingRule);
+      if (removed.length || added.length) {
+        removed.forEach(rule => this._rules.delete(rule));
+        added.forEach(rule => this._rules.add(rule));
+        this._updates.send(added, removed);
+      }
+    });
+
+    function matchingRule(rule: StypRule) {
+      return stypSelectorMatches(rule.selector, query);
+    }
+  }
+
+  get onUpdate() {
+    return this._updates.on;
+  }
+
+  [Symbol.iterator](): IterableIterator<StypRule> {
+    return this._rules.values();
+  }
+
+}
+
+class NoRules extends StypRuleList {
+
+  readonly read = afterEventOf(this);
+
+  get onUpdate() {
+    return onNever;
+  }
+
+  [Symbol.iterator](): IterableIterator<StypRule> {
+    return [][Symbol.iterator]();
+  }
+
+}
+
+const noRules = new NoRules();
 
 /**
  * @internal
@@ -120,6 +172,13 @@ export class StypRule extends StypRule_ {
     }
 
     return found.rule(tail);
+  }
+
+  grab(query: StypQuery): StypRuleList {
+
+    const q = stypQuery(query);
+
+    return q ? new GrabbedRules(this, q) : noRules;
   }
 
   set(properties?: StypProperties.Spec): this {
