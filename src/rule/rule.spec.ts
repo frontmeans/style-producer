@@ -362,6 +362,25 @@ describe('StypRule', () => {
       expect(receiver).toHaveBeenCalledWith(list);
       expect(ruleSelectors(list)).toEqual([nested1.selector]);
     });
+    it('reflects, but does not track modification when interest lost', () => {
+
+      const list = rule.grab({ c: 'nested' });
+      const onUpdate = jest.fn();
+
+      const interest = list.onUpdate(onUpdate);
+
+      const nested3 = rule.addRule({ c: ['nested', 'nested-3'] });
+
+      expect(onUpdate).toHaveBeenCalled();
+      onUpdate.mockClear();
+
+      interest.off();
+
+      const nested4 = rule.addRule({ c: ['nested', 'nested-4'] });
+      expect(onUpdate).not.toHaveBeenCalled();
+
+      expect(ruleSelectors(list)).toEqual([nested1.selector, nested2.selector, nested3.selector, nested4.selector]);
+    });
     it('ignores non-matching rule addition', () => {
 
       const list = rule.grab({ c: 'nested' });

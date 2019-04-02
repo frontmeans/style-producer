@@ -158,6 +158,6 @@ export abstract class StypRuleList
     return this.onUpdate;
   }
 
-  abstract [Symbol.iterator](): IterableIterator<StypRule>;
+  abstract [Symbol.iterator](): Iterator<StypRule>;
 
 }
