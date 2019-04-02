@@ -17,13 +17,13 @@ import {
   trackValue,
   ValueTracker
 } from 'fun-events';
-import { filterIt, itsIterator } from 'a-iterable';
+import { filterIt, itsIterable } from 'a-iterable';
 
 class GrabbedRules extends StypRuleList {
 
   readonly onUpdate: OnEvent<[StypRule_[], StypRule_[]]>;
   readonly read: AfterEvent<[GrabbedRules]>;
-  readonly [Symbol.iterator]: () => Iterator<StypRule_>;
+  readonly [Symbol.iterator]: () => IterableIterator<StypRule_>;
 
   constructor(list: StypRuleList, query: StypQuery.Normalized) {
     super();
@@ -70,7 +70,7 @@ class GrabbedRules extends StypRuleList {
       }
       // List changes are not currently tracked.
       // Request the rules explicitly.
-      return itsIterator(_buildList());
+      return itsIterable(_buildList());
     };
 
     function _buildList(): Iterable<StypRule_> {
