@@ -25,6 +25,7 @@
     "call-thru": "^2.4.0",
     "cssesc": "^3.0.0",
     "fun-events": "^4.3.0",
+    "hyphenate-style-name": "^1.0.3",
     "tslib": "^1.9.3"
   },
   "devDependencies": {

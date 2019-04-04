@@ -62,6 +62,7 @@ function baseConfig(tsconfig) {
       'a-iterable',
       'call-thru',
       'cssesc',
+      'hyphenate-style-name',
       'tslib',
     ],
     output: {
