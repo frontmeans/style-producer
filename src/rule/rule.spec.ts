@@ -289,7 +289,7 @@ describe('StypRule', () => {
       const whenDone = jest.fn();
       const reason = 'removal reason';
 
-      rule.read(noop).whenDone(whenDone);
+      nested.read(noop).whenDone(whenDone);
 
       rule.remove(reason);
       expect(whenDone).toHaveBeenCalledWith(reason);

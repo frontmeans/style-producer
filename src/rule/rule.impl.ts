@@ -17,7 +17,7 @@ import {
   trackValue,
   ValueTracker
 } from 'fun-events';
-import { filterIt, itsEach, itsIterable } from 'a-iterable';
+import { filterIt, itsIterable } from 'a-iterable';
 
 class GrabbedRules extends StypRuleList {
 
@@ -114,7 +114,10 @@ class AllRules extends StypRuleList {
     const removed = allRules(this._root);
 
     this._updates.send([], removed);
-    removed.forEach(rule => rule.rules._updates.done(reason));
+    removed.forEach(rule => {
+      rule.rules._updates.done(reason);
+      rule._spec.done(reason);
+    });
   }
 
 }
@@ -236,8 +239,7 @@ export class StypRule extends StypRule_ {
   }
 
   remove(reason?: any) {
-    this.rules._remove();
-    this._spec.done(reason);
+    this.rules._remove(reason);
     return this;
   }
 
