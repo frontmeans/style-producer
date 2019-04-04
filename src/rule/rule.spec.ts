@@ -13,6 +13,7 @@ import {
 import { StypProperties } from './properties';
 import { itsEmpty } from 'a-iterable';
 import Mock = jest.Mock;
+import { noop } from 'call-thru';
 
 describe('StypRule', () => {
 
@@ -282,6 +283,16 @@ describe('StypRule', () => {
       expect(listReceiver).toHaveBeenCalledWith(rule.rules);
       expect(rootListReceiver).toHaveBeenCalledWith(root.rules);
       expect(ruleSelectors(rule.rules).length).toBe(1);
+    });
+    it('exhaust events', () => {
+
+      const whenDone = jest.fn();
+      const reason = 'removal reason';
+
+      rule.read(noop).whenDone(whenDone);
+
+      rule.remove(reason);
+      expect(whenDone).toHaveBeenCalledWith(reason);
     });
   });
 

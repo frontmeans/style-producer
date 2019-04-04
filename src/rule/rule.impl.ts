@@ -109,12 +109,12 @@ class AllRules extends StypRuleList {
     }
   }
 
-  _remove() {
+  _remove(reason?: any) {
 
     const removed = allRules(this._root);
 
     this._updates.send([], removed);
-    removed.forEach(rule => rule.rules._updates.done());
+    removed.forEach(rule => rule.rules._updates.done(reason));
   }
 
 }
@@ -235,8 +235,9 @@ export class StypRule extends StypRule_ {
     return extendRule(this, stypSelector(selector), properties, true);
   }
 
-  remove() {
+  remove(reason?: any) {
     this.rules._remove();
+    this._spec.done(reason);
     return this;
   }
 

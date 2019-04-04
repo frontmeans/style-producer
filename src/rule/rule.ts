@@ -116,9 +116,11 @@ export abstract class StypRule implements EventKeeper<[StypProperties]> {
   /**
    * Removes this rule from hierarchy along with all nested rules.
    *
-   * @return `this` (just removed) rule instance.
+   * @param reason Optional removal reason.
+   *
+   * @returns `this` (just removed) rule instance.
    */
-  abstract remove(): this;
+  abstract remove(reason?: any): this;
 
 }
 
