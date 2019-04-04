@@ -200,8 +200,8 @@ describe('StypRule', () => {
       const updateReceiver = jest.fn();
       const rootUpdateReceiver = jest.fn();
 
-      rule.all.onUpdate(updateReceiver);
-      root.all.onUpdate(rootUpdateReceiver);
+      rule.rules.onUpdate(updateReceiver);
+      root.rules.onUpdate(rootUpdateReceiver);
 
       const subSelector = stypSelector([{ c: 'nested' }, '>', { c: 'nested-deeper' }]);
       const nested = rule.addRule(subSelector);
@@ -222,17 +222,17 @@ describe('StypRule', () => {
       const listReceiver = jest.fn();
       const rootListReceiver = jest.fn();
 
-      rule.all.read(listReceiver);
+      rule.rules.read(listReceiver);
       listReceiver.mockClear();
-      root.all.read(rootListReceiver);
+      root.rules.read(rootListReceiver);
       rootListReceiver.mockClear();
 
       const subSelector = stypSelector([{ c: 'nested' }, '>', { c: 'nested-deeper' }]);
       const nested = rule.addRule(subSelector);
 
-      expect(listReceiver).toHaveBeenCalledWith(rule.all);
-      expect(rootListReceiver).toHaveBeenCalledWith(root.all);
-      expect(ruleSelectors(rule.all)).toEqual([rule.selector, [...rule.selector, subSelector[0]], nested.selector]);
+      expect(listReceiver).toHaveBeenCalledWith(rule.rules);
+      expect(rootListReceiver).toHaveBeenCalledWith(root.rules);
+      expect(ruleSelectors(rule.rules)).toEqual([rule.selector, [...rule.selector, subSelector[0]], nested.selector]);
     });
   });
 
@@ -251,8 +251,8 @@ describe('StypRule', () => {
       const updateReceiver = jest.fn();
       const rootUpdateReceiver = jest.fn();
 
-      onEventFrom(rule.all)(updateReceiver);
-      onEventFrom(root.all)(rootUpdateReceiver);
+      onEventFrom(rule.rules)(updateReceiver);
+      onEventFrom(root.rules)(rootUpdateReceiver);
 
       rule.rule(subSelector[0])!.remove();
 
@@ -272,16 +272,16 @@ describe('StypRule', () => {
       const listReceiver = jest.fn();
       const rootListReceiver = jest.fn();
 
-      afterEventFrom(rule.all)(listReceiver);
+      afterEventFrom(rule.rules)(listReceiver);
       listReceiver.mockClear();
-      afterEventFrom(root.all)(rootListReceiver);
+      afterEventFrom(root.rules)(rootListReceiver);
       rootListReceiver.mockClear();
 
       rule.rule(subSelector[0])!.remove();
 
-      expect(listReceiver).toHaveBeenCalledWith(rule.all);
-      expect(rootListReceiver).toHaveBeenCalledWith(root.all);
-      expect(ruleSelectors(rule.all).length).toBe(1);
+      expect(listReceiver).toHaveBeenCalledWith(rule.rules);
+      expect(rootListReceiver).toHaveBeenCalledWith(root.rules);
+      expect(ruleSelectors(rule.rules).length).toBe(1);
     });
   });
 

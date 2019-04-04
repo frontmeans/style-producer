@@ -43,14 +43,14 @@ export abstract class StypRule implements EventKeeper<[StypProperties]> {
   }
 
   /**
-   * An iterator of all nested CSS rules.
+   * An iterable of all CSS rules directly nested in this one.
    */
-  abstract readonly nested: IterableIterator<StypRule>;
+  abstract readonly nested: Iterable<StypRule>;
 
   /**
-   * Dynamic list of all rules in hierarchy starting from this one.
+   * Dynamic list of all CSS rules in hierarchy starting from this one.
    */
-  abstract readonly all: StypRuleList;
+  abstract readonly rules: StypRuleList;
 
   /**
    * Returns nested CSS rule matching the given `selector`.

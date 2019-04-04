@@ -17,7 +17,7 @@ import {
   trackValue,
   ValueTracker
 } from 'fun-events';
-import { filterIt, itsIterable } from 'a-iterable';
+import { filterIt, itsEach, itsIterable } from 'a-iterable';
 
 class GrabbedRules extends StypRuleList {
 
@@ -103,15 +103,18 @@ class AllRules extends StypRuleList {
   }
 
   _add(rule: StypRule, sendUpdate: boolean) {
-    rule.all.onUpdate((added, removed) => this._updates.send(added, removed));
+    rule.rules.onUpdate((added, removed) => this._updates.send(added, removed));
     if (sendUpdate) {
       this._updates.send(allRules(rule), []);
     }
   }
 
   _remove() {
-    this._updates.send([], [...allRules(this._root)]);
-    allRules(this._root).forEach(rule => rule.all._updates.done());
+
+    const removed = allRules(this._root);
+
+    this._updates.send([], removed);
+    removed.forEach(rule => rule.rules._updates.done());
   }
 
 }
@@ -154,7 +157,7 @@ export class StypRule extends StypRule_ {
   readonly _spec: ValueTracker<StypProperties.Builder>;
   private readonly _read: AfterEvent<[StypProperties]>;
   private readonly _nested = new Map<string, StypRule>();
-  private readonly _all: AllRules;
+  private readonly _rules: AllRules;
 
   get root(): StypRule {
     return this._root;
@@ -180,8 +183,8 @@ export class StypRule extends StypRule_ {
     return this._nested.values();
   }
 
-  get all() {
-    return this._all;
+  get rules(): AllRules {
+    return this._rules;
   }
 
   constructor(
@@ -195,7 +198,7 @@ export class StypRule extends StypRule_ {
     this._key = key;
     this._spec = trackValue(spec);
     this._read = afterEventFrom(this._spec.read.dig(s => s(this)));
-    this._all = new AllRules(this);
+    this._rules = new AllRules(this);
   }
 
   rule(selector: StypSelector): StypRule | undefined {
@@ -220,7 +223,7 @@ export class StypRule extends StypRule_ {
 
     const q = stypQuery(query);
 
-    return q ? new GrabbedRules(this.all, q) : noRules;
+    return q ? new GrabbedRules(this.rules, q) : noRules;
   }
 
   set(properties?: StypProperties.Spec): this {
@@ -233,7 +236,7 @@ export class StypRule extends StypRule_ {
   }
 
   remove() {
-    this.all._remove();
+    this.rules._remove();
     return this;
   }
 
@@ -243,12 +246,12 @@ export class StypRule extends StypRule_ {
 
   _addRule(key: string, rule: StypRule, sendUpdate: boolean) {
     this._nested.set(key, rule);
-    rule._all.onUpdate((added, removed) => {
+    rule._rules.onUpdate((added, removed) => {
       if (removed[0] === rule) {
         this._nested.delete(key);
       }
     });
-    this._all._add(rule, sendUpdate);
+    this._rules._add(rule, sendUpdate);
   }
 
 }
