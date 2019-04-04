@@ -122,7 +122,7 @@ function allRules(rule: StypRule): StypRule[] {
 
 function *iterateAllRules(rule: StypRule): IterableIterator<StypRule> {
   yield rule;
-  for (const nested of rule.rules) {
+  for (const nested of rule.nested) {
     yield *allRules(nested);
   }
 }
@@ -153,7 +153,7 @@ export class StypRule extends StypRule_ {
   private readonly _key: StypRuleKey;
   readonly _spec: ValueTracker<StypProperties.Builder>;
   private readonly _read: AfterEvent<[StypProperties]>;
-  private readonly _rules = new Map<string, StypRule>();
+  private readonly _nested = new Map<string, StypRule>();
   private readonly _all: AllRules;
 
   get root(): StypRule {
@@ -176,8 +176,8 @@ export class StypRule extends StypRule_ {
     return this._read;
   }
 
-  get rules(): IterableIterator<StypRule> {
-    return this._rules.values();
+  get nested(): IterableIterator<StypRule> {
+    return this._nested.values();
   }
 
   get all() {
@@ -238,14 +238,14 @@ export class StypRule extends StypRule_ {
   }
 
   _rule(key: string): StypRule | undefined {
-    return this._rules.get(key);
+    return this._nested.get(key);
   }
 
   _addRule(key: string, rule: StypRule, sendUpdate: boolean) {
-    this._rules.set(key, rule);
+    this._nested.set(key, rule);
     rule._all.onUpdate((added, removed) => {
       if (removed[0] === rule) {
-        this._rules.delete(key);
+        this._nested.delete(key);
       }
     });
     this._all._add(rule, sendUpdate);

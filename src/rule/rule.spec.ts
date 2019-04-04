@@ -40,7 +40,7 @@ describe('StypRule', () => {
 
   describe('rules', () => {
     it('empty by default', () => {
-      expect(itsEmpty(rule.rules)).toBe(true);
+      expect(itsEmpty(rule.nested)).toBe(true);
     });
   });
 
@@ -191,7 +191,7 @@ describe('StypRule', () => {
       const subSelector = stypSelector(['>', { c: 'nested' }]);
       const nested = rule.addRule(subSelector);
 
-      expect(ruleSelectors(rule.rules)).toContain(nested.selector);
+      expect(ruleSelectors(rule.nested)).toContain(nested.selector);
       expect(nested.selector).toEqual([...rule.selector, ...subSelector]);
       expect(nested.key).toEqual(subSelector);
     });
@@ -419,9 +419,9 @@ describe('empty rule', () => {
     expect(rule.empty).toBe(true);
   });
 
-  describe('rules', () => {
+  describe('nested', () => {
     it('are empty', () => {
-      expect(itsEmpty(rule.rules)).toBe(true);
+      expect(itsEmpty(rule.nested)).toBe(true);
     });
   });
 
@@ -431,7 +431,7 @@ describe('empty rule', () => {
     });
   });
 
-  describe('nested', () => {
+  describe('rule', () => {
 
     let subSelector: StypSelector.Normalized;
     let subNested: StypRule;

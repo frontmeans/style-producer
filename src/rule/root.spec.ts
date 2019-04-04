@@ -28,9 +28,9 @@ describe('stypRoot', () => {
     });
   });
 
-  describe('rules', () => {
+  describe('nested', () => {
     it('is empty by default', () => {
-      expect([...stypRoot().rules]).toHaveLength(0);
+      expect([...stypRoot().nested]).toHaveLength(0);
     });
   });
 
