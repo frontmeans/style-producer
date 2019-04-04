@@ -12,6 +12,7 @@ import { StypProperties } from './properties';
 import { nextSkip, NextSkip, noop } from 'call-thru';
 import { itsIterator, itsReduction, overEntries } from 'a-iterable';
 import { StypRule } from './rule';
+import { IMPORTANT_CSS_SUFFIX } from '../internal';
 
 /**
  * @internal
@@ -153,5 +154,5 @@ function addValue(
 }
 
 function isImportantValue(value: StypProperties.Value) {
-  return typeof value === 'string' && value.endsWith('!important');
+  return typeof value === 'string' && value.endsWith(IMPORTANT_CSS_SUFFIX);
 }

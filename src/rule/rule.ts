@@ -123,14 +123,18 @@ export abstract class StypRule implements EventKeeper<[StypProperties]> {
 }
 
 /**
+ * Dynamically updated CSS rules interface.
+ *
+ * This is an iterable of rules, and an `EventSender` of their updates.
+ */
+export type StypRules = Iterable<StypRule> & EventSender<[StypRule[], StypRule[]]>;
+
+/**
  * Dynamically updated list of CSS rules.
  *
- * This is an iterable of rules, an `EventKeeper` of itself, and an `EventSender` of list updates.
+ * This is an iterable of rules, an `EventSender` of their updates, and an `EventKeeper` of itself.
  */
-export abstract class StypRuleList
-    implements Iterable<StypRule>,
-        EventKeeper<[StypRuleList]>,
-        EventSender<[StypRule[], StypRule[]]> {
+export abstract class StypRuleList implements StypRules, EventKeeper<[StypRuleList]> {
 
   /**
    * An `AfterEvent` registrar of rule list receiver.
