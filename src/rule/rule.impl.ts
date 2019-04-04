@@ -201,13 +201,13 @@ export class StypRule extends StypRule_ {
   rule(selector: StypSelector): StypRule | undefined {
 
     const sel = stypSelector(selector);
-    const [keySelector, tail] = stypRuleKeyAndTail(sel);
+    const [key, tail] = stypRuleKeyAndTail(sel);
 
     if (!tail) {
       return this;
     }
 
-    const found = this._rule(stypRuleKeyText(keySelector));
+    const found = this._rule(stypRuleKeyText(key));
 
     if (!found) {
       return;

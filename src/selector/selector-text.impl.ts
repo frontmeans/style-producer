@@ -5,16 +5,29 @@ import { StypSelectorTextOpts } from './selector-text';
 import { StypRuleKey } from './rule-key';
 
 const ruleKeyTextOpts: StypSelectorTextOpts = {
-  qualify(s: string) {
-    return `@${cssescId(s)}`;
+  qualify(qualifier: string) {
+    return `@${cssescId(qualifier)}`;
   }
 };
 
 /**
  * @internal
  */
-export function stypRuleKeyText(selector: StypRuleKey): string {
-  return formatStypSelector(selector, ruleKeyTextOpts);
+export function stypRuleKeyText(key: StypRuleKey): string {
+  return formatStypSelector(key, ruleKeyTextOpts);
+}
+
+const displayTextOpts: StypSelectorTextOpts = {
+  qualify(qualifier: string) {
+    return `@${qualifier}`;
+  }
+};
+
+/**
+ * @internal
+ */
+export function stypSelectorDisplayText(selector: StypSelector.Normalized): string {
+  return formatStypSelector(selector, displayTextOpts);
 }
 
 const defaultTextOpts: StypSelectorTextOpts = {};
