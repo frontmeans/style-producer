@@ -9,18 +9,20 @@ import { StypRule } from './rule';
  * Custom properties have keys starting with `$`. The properties with keys started with `$$` are reserved.
  *
  * Custom and reserved properties can be referenced, but they never rendered as CSS ones. They could be rendered
- * in a special way though. For example a reserved `$$css` property is rendered as plain CSS text.
+ * in a special way though. For example a reserved `$$css` property is rendered as raw CSS text.
  */
 export interface StypProperties {
 
   readonly [key: string]: StypProperties.Value;
 
   /**
-   * Plain CSS text.
+   * Raw CSS text.
    *
    * Never interpreted by the library.
    *
    * Note that is is always rendered before the rest of the properties in the map. So the latter take precedence.
+   *
+   * A `stypRenderText()` render is responsible for raw CSS text rendering.
    */
   $$css?: string;
 
@@ -37,7 +39,7 @@ export namespace StypProperties {
    * CSS properties specifier.
    *
    * This can be one of:
-   * - plain CSS text,
+   * - raw CSS text,
    * - CSS properties map,
    * - an event keeper sending one of the above, or
    * - a function depending on style rule and returning one of the above.

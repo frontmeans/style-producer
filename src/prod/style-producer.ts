@@ -1,5 +1,6 @@
 import { StypProperties, StypRule } from '../rule';
 import { StypSelector } from '../selector';
+import { StypRender } from './render';
 
 /**
  * CSS styles producer.
@@ -30,10 +31,13 @@ export interface StyleProducer {
   /**
    * Appends CSS rule to stylesheet.
    *
+   * This method relies on renders chain. For each render in chain this method calls the next one.
+   *
    * @param sheet CSS stylesheet to add properties to.
+   * @param selector CSS rule selector.
    * @param properties CSS properties to render.
    */
-  render(sheet: CSSStyleSheet, properties: StypProperties): void;
+  render(sheet: CSSStyleSheet, selector: StypSelector.Normalized, properties: StypProperties): void;
 
 }
 
@@ -79,6 +83,9 @@ export interface StypOptions {
    */
   schedule?: (producer: StyleProducer, operation: () => void) => void;
 
-  render?: (producer: StyleProducer, sheet: CSSStyleSheet, properties: StypProperties) => void;
+  /**
+   * Render or render chain to use.
+   */
+  render?: StypRender | StypRender[];
 
 }
