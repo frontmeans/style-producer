@@ -2,7 +2,8 @@ import { StypRules } from '../rule';
 import { EventInterest } from 'fun-events';
 import { StypOptions } from './style-producer';
 import { produceBasicStyle } from './produce-basic-style';
-import { StypRender, stypRenderText } from './render';
+import { StypRender } from './render';
+import { stypRenderText } from './text.render';
 
 /**
  * Produces and dynamically updates CSS stylesheets based on the given CSS rules.
