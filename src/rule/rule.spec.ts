@@ -306,23 +306,8 @@ describe('StypRule', () => {
       nested2 = nested1.addRule({ c: ['nested', 'nested-2'] });
     });
 
-    it('returns empty rules for empty query', async () => {
-
-      const list = rule.grab({});
-
-      expect([...list]).toHaveLength(0);
-      expect(await receiveSelectors(list)).toHaveLength(0);
-
-      const onUpdate = jest.fn();
-      const receiver = jest.fn();
-
-      list.onUpdate(onUpdate);
-      list.read(receiver);
-      receiver.mockClear();
-
-      rule.addRule({ c: 'some' });
-      expect(onUpdate).not.toHaveBeenCalled();
-      expect(receiver).not.toHaveBeenCalled();
+    it('returns all rules for empty query', () => {
+      expect(rule.grab({})).toBe(rule.rules);
     });
 
     it('contains matching rules', () => {

@@ -7,13 +7,11 @@ import { StypRule as StypRule_, StypRuleList } from './rule';
 import {
   AfterEvent,
   afterEventFrom,
-  afterEventOf,
   EventEmitter,
   eventInterest,
   noEventInterest,
   OnEvent,
   onEventBy,
-  onNever,
   trackValue,
   ValueTracker
 } from 'fun-events';
@@ -133,22 +131,6 @@ function *iterateAllRules(rule: StypRule): IterableIterator<StypRule> {
   }
 }
 
-class NoRules extends StypRuleList {
-
-  readonly read = afterEventOf(this);
-
-  get onUpdate() {
-    return onNever;
-  }
-
-  [Symbol.iterator](): IterableIterator<StypRule> {
-    return [][Symbol.iterator]();
-  }
-
-}
-
-const noRules = new NoRules();
-
 /**
  * @internal
  */
@@ -226,7 +208,7 @@ export class StypRule extends StypRule_ {
 
     const q = stypQuery(query);
 
-    return q ? new GrabbedRules(this.rules, q) : noRules;
+    return q ? new GrabbedRules(this.rules, q) : this.rules;
   }
 
   set(properties?: StypProperties.Spec): this {
