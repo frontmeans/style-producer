@@ -464,6 +464,24 @@ describe('StypRule', () => {
       expect(onUpdate).not.toHaveBeenCalled();
       expect(receiver).not.toHaveBeenCalled();
     });
+
+    describe('list grab', () => {
+      it('grabs matching rules', () => {
+
+        const list = rule.grab({ c: 'nested' }).grab({ c: 'nested-2' });
+
+        expect(ruleSelectors(list)).toEqual([nested2.selector]);
+      });
+    });
+
+    describe('nested grab', () => {
+      it('grabs matching nested rules', () => {
+
+        const list = rule.nested.grab({ c: 'nested' });
+
+        expect(ruleSelectors(list)).toEqual([nested1.selector]);
+      });
+    });
   });
 });
 

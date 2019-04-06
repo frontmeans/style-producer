@@ -80,6 +80,17 @@ class GrabbedRules extends StypRuleList {
     }
   }
 
+  grab(query: StypQuery.Element | StypQuery.NonElement): StypRuleList {
+    return grabRules(this, query);
+  }
+
+}
+
+function grabRules(list: StypRuleList, query: StypQuery): StypRuleList {
+
+  const q = stypQuery(query);
+
+  return q ? new GrabbedRules(list, q) : list;
 }
 
 class AllRules extends StypRuleList {
@@ -98,6 +109,10 @@ class AllRules extends StypRuleList {
 
   [Symbol.iterator](): IterableIterator<StypRule> {
     return iterateAllRules(this._root);
+  }
+
+  grab(query: StypQuery.Element | StypQuery.NonElement): StypRuleList {
+    return grabRules(this, query);
   }
 
   _add(rule: StypRule, sendUpdate: boolean) {
@@ -150,6 +165,10 @@ class NestedRules extends StypRuleList {
 
   [Symbol.iterator](): IterableIterator<StypRule> {
     return this._byKey.values();
+  }
+
+  grab(query: StypQuery.Element | StypQuery.NonElement): StypRuleList {
+    return grabRules(this, query);
   }
 
   _rule(key: string): StypRule | undefined {
@@ -242,13 +261,6 @@ export class StypRule extends StypRule_ {
     }
 
     return found.rule(tail);
-  }
-
-  grab(query: StypQuery): StypRuleList {
-
-    const q = stypQuery(query);
-
-    return q ? new GrabbedRules(this.rules, q) : this.rules;
   }
 
   set(properties?: StypProperties.Spec): this {

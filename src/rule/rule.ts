@@ -64,11 +64,15 @@ export abstract class StypRule implements EventKeeper<[StypProperties]> {
   /**
    * Grabs rules matching the given `query`.
    *
+   * Calling to this method is the same as calling `rules.grab(query)`.
+   *
    * @param query CSS rule query to match.
    *
    * @returns Dynamic list of rules in hierarchy matching the given query starting from this one.
    */
-  abstract grab(query: StypQuery): StypRuleList;
+  grab(query: StypQuery): StypRuleList {
+    return this.rules.grab(query);
+  }
 
   /**
    * Sets CSS properties of this rule.
@@ -165,5 +169,14 @@ export abstract class StypRuleList implements StypRules, EventKeeper<[StypRuleLi
   }
 
   abstract [Symbol.iterator](): IterableIterator<StypRule>;
+
+  /**
+   * Grabs rules from this list matching the given `query`.
+   *
+   * @param query CSS rule query to match.
+   *
+   * @returns Dynamic list of rules in this list matching the given query.
+   */
+  abstract grab(query: StypQuery): StypRuleList;
 
 }
