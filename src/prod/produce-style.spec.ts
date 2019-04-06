@@ -3,6 +3,8 @@ import { StyleProducer } from './style-producer';
 import { produceStyle } from './produce-style';
 import { AIterable, itsFirst, overArray } from 'a-iterable';
 import { StypSelector } from '../selector';
+import { StypRules } from '../rule/rule';
+import { StypRender } from './render';
 import SpyInstance = jest.SpyInstance;
 
 describe('produceStyle', () => {
@@ -43,6 +45,15 @@ describe('produceStyle', () => {
     const mockRender = jest.fn<void, [StyleProducer, CSSStyleSheet, StypSelector.Normalized, StypProperties]>();
 
     produceStyle(root.rules, { render: mockRender, schedule: scheduleNow });
+    expect(mockRender).toHaveBeenCalled();
+  });
+  it('uses the given render factory', () => {
+
+    const mockRender = jest.fn<void, [StyleProducer, CSSStyleSheet, StypSelector.Normalized, StypProperties]>();
+    const mockCreate = jest.fn<StypRender, [StypRules]>(() => mockRender);
+
+    produceStyle(root.rules, { render: { create: mockCreate }, schedule: scheduleNow });
+    expect(mockCreate).toHaveBeenCalledWith(root.rules);
     expect(mockRender).toHaveBeenCalled();
   });
   it('uses the given renders', () => {

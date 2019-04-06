@@ -1,6 +1,6 @@
 import { StyleProducer } from './style-producer';
 import { StypSelector, stypSelectorText } from '../selector';
-import { StypProperties } from '../rule';
+import { StypProperties, StypRules } from '../rule';
 import { filterIt, itsEach, ObjectEntry, overEntries } from 'a-iterable';
 import { IMPORTANT_CSS_SUFFIX } from '../internal';
 import hyphenateStyleName from 'hyphenate-style-name';
@@ -9,8 +9,18 @@ import { StypRender } from './render';
 /**
  * @internal
  */
-export function stypRenderDescriptor(render: StypRender): StypRender.Descriptor {
-  return typeof render === 'function' ? { render } : render;
+export function stypRenderDescriptor(list: StypRules, render: StypRender): StypRender.Descriptor {
+  if (typeof render === 'function') {
+    return { render };
+  }
+  if (isFactory(render)) {
+    return stypRenderDescriptor(list, render.create(list));
+  }
+  return render;
+}
+
+function isFactory(render: StypRender): render is StypRender.Factory {
+  return 'create' in render;
 }
 
 /**

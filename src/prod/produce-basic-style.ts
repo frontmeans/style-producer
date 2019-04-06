@@ -14,7 +14,7 @@ import { compareStypRenders, stypRenderDescriptor, stypRenderProperties } from '
  * You can enable only renders you need. This is useful only if you are not going to use all of them and want to save
  * the bundle size.
  *
- * @param rules CSS rules to produce stylesheets by. This can be either `StypRule.rules` to render all rules,
+ * @param rules CSS rules to produce stylesheets for. This can be either `StypRule.rules` to render all rules,
  * or a result of `StypRule.grab()` method call to render only matching ones.
  * @param opts Production options.
  *
@@ -149,9 +149,9 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
     if (!render) {
       descriptors = [];
     } else if (Array.isArray(render)) {
-      descriptors = render.map(stypRenderDescriptor);
+      descriptors = render.map(r => stypRenderDescriptor(rules, r));
     } else {
-      descriptors = [stypRenderDescriptor(render)];
+      descriptors = [stypRenderDescriptor(rules, render)];
     }
     descriptors.push({ render: stypRenderProperties });
     descriptors.sort(compareStypRenders);
