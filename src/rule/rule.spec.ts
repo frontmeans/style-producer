@@ -218,6 +218,26 @@ describe('StypRule', () => {
       expect(ruleSelectors(added)).toEqual([[...rule.selector, subSelector[0]], nested.selector]);
       expect(addedToRoot).toBe(added);
     });
+    it('sends nested list update', () => {
+
+      const updateReceiver = jest.fn();
+      const rootUpdateReceiver = jest.fn();
+
+      rule.nested.onUpdate(updateReceiver);
+      root.nested.onUpdate(rootUpdateReceiver);
+
+      const subSelector = stypSelector([{ c: 'nested' }, '>', { c: 'nested-deeper' }]);
+
+      rule.addRule(subSelector);
+
+      expect(updateReceiver).toHaveBeenCalled();
+      expect(rootUpdateReceiver).not.toHaveBeenCalled();
+
+      const [added, removed] = updateReceiver.mock.calls[0];
+
+      expect(removed).toHaveLength(0);
+      expect(ruleSelectors(added)).toEqual([[...rule.selector, subSelector[0]]]);
+    });
     it('updates rule list', () => {
 
       const listReceiver = jest.fn();
@@ -234,6 +254,24 @@ describe('StypRule', () => {
       expect(listReceiver).toHaveBeenCalledWith(rule.rules);
       expect(rootListReceiver).toHaveBeenCalledWith(root.rules);
       expect(ruleSelectors(rule.rules)).toEqual([rule.selector, [...rule.selector, subSelector[0]], nested.selector]);
+    });
+    it('updates nested list', () => {
+
+      const listReceiver = jest.fn();
+      const rootListReceiver = jest.fn();
+
+      rule.nested.read(listReceiver);
+      listReceiver.mockClear();
+      root.nested.read(rootListReceiver);
+      rootListReceiver.mockClear();
+
+      const subSelector = stypSelector([{ c: 'nested' }, '>', { c: 'nested-deeper' }]);
+
+      rule.addRule(subSelector);
+
+      expect(listReceiver).toHaveBeenCalledWith(rule.nested);
+      expect(rootListReceiver).not.toHaveBeenCalled();
+      expect(ruleSelectors(rule.nested)).toEqual([[...rule.selector, subSelector[0]]]);
     });
   });
 
@@ -268,6 +306,24 @@ describe('StypRule', () => {
       expect(ruleSelectors(removed)).toEqual([[...rule.selector, subSelector[0]], nested.selector]);
       expect(removedFromRoot).toBe(removed);
     });
+    it('sends nested list update', () => {
+
+      const updateReceiver = jest.fn();
+      const rootUpdateReceiver = jest.fn();
+
+      onEventFrom(rule.nested)(updateReceiver);
+      onEventFrom(root.nested)(rootUpdateReceiver);
+
+      rule.rule(subSelector[0])!.remove();
+
+      expect(updateReceiver).toHaveBeenCalled();
+      expect(rootUpdateReceiver).not.toHaveBeenCalled();
+
+      const [added, removed] = updateReceiver.mock.calls[0];
+
+      expect(added).toHaveLength(0);
+      expect(ruleSelectors(removed)).toEqual([[...rule.selector, subSelector[0]]]);
+    });
     it('updates rule list', () => {
 
       const listReceiver = jest.fn();
@@ -282,7 +338,23 @@ describe('StypRule', () => {
 
       expect(listReceiver).toHaveBeenCalledWith(rule.rules);
       expect(rootListReceiver).toHaveBeenCalledWith(root.rules);
-      expect(ruleSelectors(rule.rules).length).toBe(1);
+      expect(ruleSelectors(rule.rules)).toHaveLength(1);
+    });
+    it('updates nested list', () => {
+
+      const listReceiver = jest.fn();
+      const rootListReceiver = jest.fn();
+
+      afterEventFrom(rule.nested)(listReceiver);
+      listReceiver.mockClear();
+      afterEventFrom(root.nested)(rootListReceiver);
+      rootListReceiver.mockClear();
+
+      rule.rule(subSelector[0])!.remove();
+
+      expect(listReceiver).toHaveBeenCalledWith(rule.nested);
+      expect(rootListReceiver).not.toHaveBeenCalled();
+      expect(ruleSelectors(rule.nested)).toHaveLength(0);
     });
     it('exhaust events', () => {
 

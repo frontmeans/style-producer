@@ -87,13 +87,13 @@ class AllRules extends StypRuleList {
   private readonly _updates = new EventEmitter<[StypRule[], StypRule[]]>();
   readonly read: AfterEvent<[AllRules]>;
 
+  get onUpdate() {
+    return this._updates.on;
+  }
+
   constructor(private readonly _root: StypRule) {
     super();
     this.read = afterEventFrom<[AllRules]>(this._updates.on.thru(() => this), [this]);
-  }
-
-  get onUpdate() {
-    return this._updates.on;
   }
 
   [Symbol.iterator](): IterableIterator<StypRule> {
@@ -131,6 +131,47 @@ function *iterateAllRules(rule: StypRule): IterableIterator<StypRule> {
   }
 }
 
+class NestedRules extends StypRuleList {
+
+  readonly _all: AllRules;
+  readonly read: AfterEvent<[NestedRules]>;
+  private readonly _updates = new EventEmitter<[StypRule[], StypRule[]]>();
+  private readonly _byKey = new Map<string, StypRule>();
+
+  get onUpdate() {
+    return this._updates.on;
+  }
+
+  constructor(root: StypRule) {
+    super();
+    this._all = new AllRules(root);
+    this.read = afterEventFrom<[NestedRules]>(this._updates.on.thru(() => this), [this]);
+  }
+
+  [Symbol.iterator](): IterableIterator<StypRule> {
+    return this._byKey.values();
+  }
+
+  _rule(key: string): StypRule | undefined {
+    return this._byKey.get(key);
+  }
+
+  _add(key: string, rule: StypRule, sendUpdate: boolean) {
+    this._byKey.set(key, rule);
+    rule.rules.onUpdate((added, removed) => {
+      if (removed[0] === rule) {
+        this._byKey.delete(key);
+        this._updates.send([], [rule]);
+      }
+    });
+    if (sendUpdate) {
+      this._updates.send([rule], []);
+    }
+    this._all._add(rule, sendUpdate);
+  }
+
+}
+
 /**
  * @internal
  */
@@ -141,8 +182,7 @@ export class StypRule extends StypRule_ {
   private readonly _key: StypRuleKey;
   readonly _spec: ValueTracker<StypProperties.Builder>;
   private readonly _read: AfterEvent<[StypProperties]>;
-  private readonly _nested = new Map<string, StypRule>();
-  private readonly _rules: AllRules;
+  private readonly _nested: NestedRules;
 
   get root(): StypRule {
     return this._root;
@@ -164,12 +204,12 @@ export class StypRule extends StypRule_ {
     return this._read;
   }
 
-  get nested(): IterableIterator<StypRule> {
-    return this._nested.values();
+  get nested(): NestedRules {
+    return this._nested;
   }
 
   get rules(): AllRules {
-    return this._rules;
+    return this._nested._all;
   }
 
   constructor(
@@ -183,7 +223,7 @@ export class StypRule extends StypRule_ {
     this._key = key;
     this._spec = trackValue(spec);
     this._read = afterEventFrom(this._spec.read.dig(s => s(this)));
-    this._rules = new AllRules(this);
+    this._nested = new NestedRules(this);
   }
 
   rule(selector: StypSelector): StypRule | undefined {
@@ -195,7 +235,7 @@ export class StypRule extends StypRule_ {
       return this;
     }
 
-    const found = this._rule(stypRuleKeyText(key));
+    const found = this.nested._rule(stypRuleKeyText(key));
 
     if (!found) {
       return;
@@ -225,20 +265,6 @@ export class StypRule extends StypRule_ {
     return this;
   }
 
-  _rule(key: string): StypRule | undefined {
-    return this._nested.get(key);
-  }
-
-  _addRule(key: string, rule: StypRule, sendUpdate: boolean) {
-    this._nested.set(key, rule);
-    rule._rules.onUpdate((added, removed) => {
-      if (removed[0] === rule) {
-        this._nested.delete(key);
-      }
-    });
-    this._rules._add(rule, sendUpdate);
-  }
-
 }
 
 function extendRule(
@@ -256,7 +282,7 @@ function extendRule(
   }
 
   const keyText = stypRuleKeyText(key);
-  const found = rule._rule(keyText);
+  const found = rule.nested._rule(keyText);
 
   if (found) {
     return extendRule(found, tail, properties, sendUpdate);
@@ -265,7 +291,7 @@ function extendRule(
   const newNested = new StypRule(rule.root, [...rule.selector, ...key], key);
   const result = extendRule(newNested, tail, properties, false); // Send only a top-level update
 
-  rule._addRule(keyText, newNested, sendUpdate);
+  rule.nested._add(keyText, newNested, sendUpdate);
 
   return result;
 }
