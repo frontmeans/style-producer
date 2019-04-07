@@ -4,7 +4,6 @@ import { StypOptions } from './style-producer';
 import { produceBasicStyle } from './produce-basic-style';
 import { StypRender } from './render';
 import { stypRenderText } from './text.render';
-import { stypRenderAtRules } from './at-rules.render';
 
 /**
  * Produces and dynamically updates CSS stylesheets based on the given CSS rules.
@@ -29,7 +28,6 @@ export function produceStyle(rules: StypRules, opts: StypOptions = {}): EventInt
 function defaultRenders(render: StypRender | StypRender[] | undefined): StypRender[] {
 
   const result: StypRender[] = [
-    stypRenderAtRules,
     stypRenderText,
   ];
 
