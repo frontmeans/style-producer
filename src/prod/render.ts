@@ -1,5 +1,5 @@
-import { StypSelector, stypSelectorText } from '../selector';
-import { StypProperties, StypRuleList, StypRules } from '../rule';
+import { StypSelector } from '../selector';
+import { StypProperties, StypRule } from '../rule';
 import { StyleProducer } from './style-producer';
 
 /**
@@ -24,13 +24,13 @@ export namespace StypRender {
    * their job.
    *
    * @param producer Style producer instance.
-   * @param sheet CSS stylesheet to add properties to.
+   * @param sheetOrRule CSS stylesheet or rule to add properties to.
    * @param selector CSS rule selector.
    * @param properties CSS properties to render.
    */
   export type Function = (
       producer: StyleProducer,
-      sheet: CSSStyleSheet,
+      sheetOrRule: CSSStyleSheet | CSSRule,
       selector: StypSelector.Normalized,
       properties: StypProperties) => void;
 
@@ -60,15 +60,24 @@ export namespace StypRender {
   export interface Factory {
 
     /**
+     * Render order.
+     *
+     * Equals to zero when not specified, which means it will be invoked right before the basic render that renders CSS
+     * properties.
+     */
+    readonly order?: number;
+
+    /**
      * Creates CSS stylesheet render function.
      *
-     * This is called once per `stypRule()` call. The returned render is then.
+     * This is called once per rule. The returned render function is used then to render and update a style for the
+     * `rule`.
      *
-     * @param rules CSS rules to produce stylesheets for. This is an instance passed to `produceStyle()` function.
+     * @param rule CSS rule to create render for.
      *
-     * @returns A render to use.
+     * @returns A render function to use.
      */
-    create(rules: StypRules): StypRender;
+    create(rule: StypRule): Function;
 
   }
 

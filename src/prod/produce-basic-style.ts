@@ -5,7 +5,7 @@ import { StypSelector, stypSelector } from '../selector';
 import { noop } from 'call-thru';
 import { StyleProducer, StypOptions } from './style-producer';
 import { StypRender } from './render';
-import { compareStypRenders, stypRenderDescriptor, stypRenderProperties } from './render.impl';
+import { stypRenderFactories } from './render.impl';
 
 /**
  * Produces and dynamically updates basic CSS stylesheets based on the given CSS rules.
@@ -32,7 +32,7 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
     parent = document.head,
   } = opts;
   const view = document.defaultView || window;
-  const styleRender = buildRender();
+  const factories = stypRenderFactories(opts);
 
   class Styp implements StyleProducer {
 
@@ -73,14 +73,14 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
   }
 
   function trackRules(): EventInterest {
-    return onEventFrom(rules).consume(added => renderRules(added));
+    return onEventFrom(rules).consume(renderRules);
   }
 
   function renderRule(rule: StypRule): EventInterest {
 
     let _element: HTMLStyleElement | undefined;
     let _rev = 0;
-    const producer = new Styp(rule, styleRender);
+    const producer = new Styp(rule, renderForRule(rule));
     let selector = rule.selector;
 
     if (!selector.length) {
@@ -94,28 +94,28 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
 
       const rev = ++_rev;
 
-      schedule(
-          producer,
-          () => {
-            if (_rev !== rev) {
-              // Properties changed since this operation scheduled.
-              // Skip their rendering.
-              return;
-            }
+      schedule(producer, renderScheduled);
 
-            if (!_element) {
-              _element = document.createElement('style');
-              _element.setAttribute('type', 'text/css');
-              _element.append(document.createTextNode(''));
-              parent.append(_element);
-            } else {
-              clearProperties(_element);
-            }
+      function renderScheduled() {
+        if (_rev !== rev) {
+          // Properties changed since this operation scheduled.
+          // Skip their rendering.
+          return;
+        }
 
-            const sheet = _element.sheet as CSSStyleSheet;
+        if (!_element) {
+          _element = document.createElement('style');
+          _element.setAttribute('type', 'text/css');
+          _element.append(document.createTextNode(''));
+          parent.append(_element);
+        } else {
+          clearProperties(_element);
+        }
 
-            producer.render(sheet, selector, properties);
-          });
+        const sheet = _element.sheet as CSSStyleSheet;
+
+        producer.render(sheet, selector, properties);
+      }
     }
 
     function removeStyle() {
@@ -141,20 +141,9 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
     }
   }
 
-  function buildRender(): StypRender.Function {
+  function renderForRule(rule: StypRule): StypRender.Function {
 
-    const render = opts.render;
-    let descriptors: StypRender.Descriptor[];
-
-    if (!render) {
-      descriptors = [];
-    } else if (Array.isArray(render)) {
-      descriptors = render.map(r => stypRenderDescriptor(rules, r));
-    } else {
-      descriptors = [stypRenderDescriptor(rules, render)];
-    }
-    descriptors.push({ render: stypRenderProperties });
-    descriptors.sort(compareStypRenders);
+    const renders = factories.map(factory => factory.create(rule));
 
     return renderAt(0);
 
@@ -164,7 +153,7 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
         const nextIndex = index + 1;
         let nextRender: StypRender.Function;
 
-        if (nextIndex === descriptors.length) {
+        if (nextIndex === factories.length) {
           nextRender = noop;
         } else {
           nextRender = renderAt(nextIndex);
@@ -172,7 +161,7 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
 
         const nextProducer = new Styp(producer.rule, nextRender);
 
-        descriptors[index].render(nextProducer, sheet, selector, properties);
+        renders[index](nextProducer, sheet, selector, properties);
       };
     }
   }

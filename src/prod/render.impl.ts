@@ -1,22 +1,55 @@
-import { StyleProducer } from './style-producer';
-import { StypSelector, stypSelectorText } from '../selector';
-import { StypProperties, StypRules } from '../rule';
-import { filterIt, itsEach, ObjectEntry, overEntries } from 'a-iterable';
-import { IMPORTANT_CSS_SUFFIX } from '../internal';
-import hyphenateStyleName from 'hyphenate-style-name';
 import { StypRender } from './render';
+import { StypOptions } from './style-producer';
+import { stypRenderProperties } from './properties.render';
 
 /**
  * @internal
  */
-export function stypRenderDescriptor(list: StypRules, render: StypRender): StypRender.Descriptor {
+export function isCSSRuleGroup(sheetOrRule: CSSStyleSheet | CSSRule): sheetOrRule is (CSSGroupingRule | CSSStyleSheet) {
+  return 'cssRules' in sheetOrRule;
+}
+
+/**
+ * @internal
+ */
+export function stypRenderFactories(opts: StypOptions): StypRender.Factory[] {
+
+  const render = opts.render;
+  let factories: StypRender.Factory[];
+
+  if (!render) {
+    factories = [];
+  } else if (Array.isArray(render)) {
+    factories = render.map(stypRenderFactory);
+  } else {
+    factories = [stypRenderFactory(render)];
+  }
+  factories.push(stypRenderFactory(stypRenderProperties));
+  factories.sort(compareStypRenders);
+
+  return factories;
+}
+
+function stypRenderFactory(render: StypRender): StypRender.Factory {
   if (typeof render === 'function') {
-    return { render };
+    return {
+      create() {
+        return render;
+      }
+    };
   }
   if (isFactory(render)) {
-    return stypRenderDescriptor(list, render.create(list));
+    return render;
   }
-  return render;
+
+  const doRender = render.render.bind(render);
+
+  return {
+    order: render.order,
+    create() {
+      return doRender;
+    },
+  };
 }
 
 function isFactory(render: StypRender): render is StypRender.Factory {
@@ -26,47 +59,10 @@ function isFactory(render: StypRender): render is StypRender.Factory {
 /**
  * @internal
  */
-export function compareStypRenders(first: StypRender.Descriptor, second: StypRender.Descriptor): number {
+export function compareStypRenders(first: StypRender.Factory, second: StypRender.Factory): number {
 
   const firstOrder = first.order || 0;
   const secondOrder = second.order || 0;
 
   return firstOrder > secondOrder ? 1 : firstOrder < secondOrder ? -1 : 0;
-}
-
-/**
- * @internal
- */
-export function stypRenderProperties(
-    producer: StyleProducer,
-    sheet: CSSStyleSheet,
-    selector: StypSelector.Normalized,
-    properties: StypProperties): void {
-
-  const ruleIndex = sheet.insertRule(`${stypSelectorText(selector)}{}`, sheet.cssRules.length);
-  const cssRule = sheet.cssRules[ruleIndex] as CSSStyleRule;
-  const { style } = cssRule;
-
-  itsEach(
-      filterIt<ObjectEntry<StypProperties>, [string, StypProperties.Value]>(
-          overEntries(properties),
-          notCustomProperty),
-      ([key, value]) => {
-        value = String(value);
-
-        let priority: 'important' | undefined;
-
-        if (value.endsWith('!important')) {
-          priority = 'important';
-          value = value.substring(0, value.length - IMPORTANT_CSS_SUFFIX.length).trim();
-        }
-
-        style.setProperty(hyphenateStyleName(key), value, priority);
-      });
-
-  producer.render(sheet, selector, properties);
-}
-
-function notCustomProperty(entry: ObjectEntry<StypProperties>): entry is [string, StypProperties.Value] {
-  return String(entry[0])[0] !== '$';
 }

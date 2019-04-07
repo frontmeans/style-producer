@@ -33,11 +33,11 @@ export interface StyleProducer {
    *
    * This method relies on renders chain. For each render in chain this method calls the next one.
    *
-   * @param sheet CSS stylesheet to add properties to.
+   * @param sheetOrRule CSS stylesheet or rule to add properties to.
    * @param selector CSS rule selector.
    * @param properties CSS properties to render.
    */
-  render(sheet: CSSStyleSheet, selector: StypSelector.Normalized, properties: StypProperties): void;
+  render(sheetOrRule: CSSStyleSheet | CSSRule, selector: StypSelector.Normalized, properties: StypProperties): void;
 
 }
 
