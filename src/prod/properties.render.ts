@@ -1,10 +1,10 @@
 import { StyleProducer } from './style-producer';
-import { StypSelector, stypSelectorText } from '../selector';
+import { StypSelector } from '../selector';
 import { StypProperties } from '../rule';
 import { filterIt, itsEach, ObjectEntry, overEntries } from 'a-iterable';
 import { IMPORTANT_CSS_SUFFIX } from '../internal';
 import hyphenateStyleName from 'hyphenate-style-name';
-import { isCSSRuleGroup } from './render.impl';
+import { appendCSSRule } from './render.impl';
 
 /**
  * @internal
@@ -15,17 +15,7 @@ export function stypRenderProperties(
     selector: StypSelector.Normalized,
     properties: StypProperties): void {
 
-  let cssRule: CSSStyleRule;
-
-  if (isCSSRuleGroup(sheetOrRule)) {
-
-    const ruleIndex = sheetOrRule.insertRule(`${stypSelectorText(selector)}{}`, sheetOrRule.cssRules.length);
-
-    cssRule = sheetOrRule.cssRules[ruleIndex] as CSSStyleRule;
-  } else {
-    cssRule = sheetOrRule as CSSStyleRule;
-  }
-
+  const cssRule = appendCSSRule(sheetOrRule, selector) as CSSStyleRule;
   const { style } = cssRule;
 
   itsEach(
@@ -45,7 +35,7 @@ export function stypRenderProperties(
         style.setProperty(hyphenateStyleName(key), value, priority);
       });
 
-  producer.render(sheetOrRule, selector, properties);
+  producer.render(cssRule, selector, properties);
 }
 
 function notCustomProperty(entry: ObjectEntry<StypProperties>): entry is [string, StypProperties.Value] {

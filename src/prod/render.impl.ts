@@ -1,12 +1,26 @@
 import { StypRender } from './render';
 import { StypOptions } from './style-producer';
 import { stypRenderProperties } from './properties.render';
+import { StypSelector, stypSelectorText } from '../selector';
 
 /**
  * @internal
  */
 export function isCSSRuleGroup(sheetOrRule: CSSStyleSheet | CSSRule): sheetOrRule is (CSSGroupingRule | CSSStyleSheet) {
   return 'cssRules' in sheetOrRule;
+}
+
+/**
+ * @internal
+ */
+export function appendCSSRule(sheetOrRule: CSSStyleSheet | CSSRule, selector: StypSelector.Normalized): CSSRule {
+  if (!isCSSRuleGroup(sheetOrRule)) {
+    return sheetOrRule;
+  }
+
+  const ruleIndex = sheetOrRule.insertRule(`${stypSelectorText(selector)}{}`, sheetOrRule.cssRules.length);
+
+  return sheetOrRule.cssRules[ruleIndex];
 }
 
 /**
@@ -20,17 +34,17 @@ export function stypRenderFactories(opts: StypOptions): StypRender.Factory[] {
   if (!render) {
     factories = [];
   } else if (Array.isArray(render)) {
-    factories = render.map(stypRenderFactory);
+    factories = render.map(renderFactory);
   } else {
-    factories = [stypRenderFactory(render)];
+    factories = [renderFactory(render)];
   }
-  factories.push(stypRenderFactory(stypRenderProperties));
-  factories.sort(compareStypRenders);
+  factories.push(renderFactory(stypRenderProperties));
+  factories.sort(compareRenders);
 
   return factories;
 }
 
-function stypRenderFactory(render: StypRender): StypRender.Factory {
+function renderFactory(render: StypRender): StypRender.Factory {
   if (typeof render === 'function') {
     return {
       create() {
@@ -56,10 +70,7 @@ function isFactory(render: StypRender): render is StypRender.Factory {
   return 'create' in render;
 }
 
-/**
- * @internal
- */
-export function compareStypRenders(first: StypRender.Factory, second: StypRender.Factory): number {
+function compareRenders(first: StypRender.Factory, second: StypRender.Factory): number {
 
   const firstOrder = first.order || 0;
   const secondOrder = second.order || 0;

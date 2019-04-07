@@ -99,13 +99,13 @@ describe('produceStyle', () => {
     expect(style.getPropertyPriority('font-size')).toBe('important');
   });
   it('renders raw CSS text before CSS properties', () => {
-    root.addRule({ c: 'custom' }, { fontSize: '11px', $$css: 'font-size: 12px;' });
+    root.addRule({ c: 'custom' }, { fontSize: '11px', $$css: 'font-weight: bold; font-size: 12px;' });
     produceStyle(root.rules, { schedule: scheduleNow });
 
-    const styles = [...cssStyles('.custom')];
+    const style = cssStyle('.custom');
 
-    expect(styles[0].getPropertyValue('font-size')).toBe('12px');
-    expect(styles[1].getPropertyValue('font-size')).toBe('11px');
+    expect(style.getPropertyValue('font-size')).toBe('11px');
+    expect(style.getPropertyValue('font-weight')).toBe('bold');
   });
 });
 

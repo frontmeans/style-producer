@@ -1,8 +1,8 @@
 import { StyleProducer } from './style-producer';
-import { StypSelector, stypSelectorText } from '../selector';
+import { StypSelector } from '../selector';
 import { StypProperties } from '../rule';
 import { StypRender } from './render';
-import { isCSSRuleGroup } from './render.impl';
+import { appendCSSRule } from './render.impl';
 
 /**
  * CSS stylesheet render of raw CSS text. Renders the contents of `StypProperties.$$css` property.
@@ -20,11 +20,11 @@ export const stypRenderText: StypRender = function renderText(
   const css = properties.$$css;
 
   if (css) {
-    if (isCSSRuleGroup(sheetOrRule)) {
-      sheetOrRule.insertRule(`${stypSelectorText(selector)}{${css}}`, sheetOrRule.cssRules.length);
-    } else {
-      (sheetOrRule as CSSStyleRule).style.cssText = css;
-    }
+
+    const cssRule = appendCSSRule(sheetOrRule, selector) as CSSStyleRule;
+
+    cssRule.style.cssText = css;
+    sheetOrRule = cssRule;
   }
 
   producer.render(sheetOrRule, selector, properties);
