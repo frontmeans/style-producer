@@ -1,3 +1,3 @@
-export * from './prod';
+export * from './producer';
 export * from './rule';
 export * from './selector';

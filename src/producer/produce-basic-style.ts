@@ -5,7 +5,7 @@ import { StypSelector, stypSelector } from '../selector';
 import { noop } from 'call-thru';
 import { StyleProducer, StypOptions } from './style-producer';
 import { StypRender } from './render';
-import { stypRenderFactories } from './render.impl';
+import { stypRenderFactories } from './options.impl';
 
 /**
  * Produces and dynamically updates basic CSS stylesheets based on the given CSS rules.
