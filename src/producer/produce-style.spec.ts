@@ -1,5 +1,4 @@
 import { stypRoot, StypRule } from '../rule';
-import { StyleProducer } from './style-producer';
 import { produceStyle } from './produce-style';
 import { AIterable, itsFirst, overArray } from 'a-iterable';
 import { StypRender } from './render';
@@ -109,7 +108,7 @@ describe('produceStyle', () => {
   });
 });
 
-function scheduleNow(producer: StyleProducer, operation: () => void) {
+function scheduleNow(operation: () => void) {
   // Do not schedule. Execute immediately instead.
   operation();
 }

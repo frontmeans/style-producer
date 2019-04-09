@@ -102,7 +102,7 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
 
       const rev = ++_rev;
 
-      schedule(producer, renderScheduled);
+      schedule(renderScheduled);
 
       function renderScheduled() {
         if (_rev !== rev) {
@@ -174,7 +174,7 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
     }
   }
 
-  function scheduleInAnimationFrame(producer: StyleProducer, operation: () => void) {
+  function scheduleInAnimationFrame(operation: () => void) {
     view.requestAnimationFrame(operation);
   }
 }

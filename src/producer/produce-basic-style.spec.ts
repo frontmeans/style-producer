@@ -1,5 +1,4 @@
 import { StypProperties, stypRoot, StypRule } from '../rule';
-import { StyleProducer } from './style-producer';
 import { produceBasicStyle } from './produce-basic-style';
 import { AIterable, itsEmpty, itsFirst, overArray } from 'a-iterable';
 import { trackValue } from 'fun-events';
@@ -139,9 +138,9 @@ describe('produceBasicStyle', () => {
   it('does not re-renders too often', () => {
 
     const operations: (() => void)[] = [];
-    const mockScheduler = jest.fn<void, [StyleProducer, () => void]>();
+    const mockScheduler = jest.fn<void, [() => void]>();
 
-    mockScheduler.mockImplementation((producer, operation) => operations.push(operation));
+    mockScheduler.mockImplementation(operation => operations.push(operation));
 
     const mockRender = jest.fn();
     const properties = trackValue<StypProperties>({ display: 'block' });
@@ -167,7 +166,7 @@ describe('produceBasicStyle', () => {
   });
 });
 
-function scheduleNow(producer: StyleProducer, operation: () => void) {
+function scheduleNow(operation: () => void) {
   // Do not schedule. Execute immediately instead.
   operation();
 }

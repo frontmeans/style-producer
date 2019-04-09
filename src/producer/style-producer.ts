@@ -78,10 +78,9 @@ export interface StypOptions {
    *
    * By default modifies DOM tree in batches scheduled by `window.requestAnimationFrame()` function.
    *
-   * @param producer Style producer that initiated DOM manipulation.
    * @param operation A DOM tree manipulation operation to schedule.
    */
-  schedule?: (producer: StyleProducer, operation: () => void) => void;
+  schedule?: (operation: () => void) => void;
 
   /**
    * Render or render chain to use.
