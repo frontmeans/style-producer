@@ -6,7 +6,9 @@ import hyphenateStyleName from 'hyphenate-style-name';
 import { appendCSSRule } from './render.impl';
 
 /**
- * @internal
+ * Renders CSS properties.
+ *
+ * This render is always present, so there is typically no need to use it explicitly.
  */
 export function stypRenderProperties(producer: StyleProducer, properties: StypProperties): void {
 
