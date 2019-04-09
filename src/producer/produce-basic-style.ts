@@ -33,26 +33,6 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
   } = opts;
   const view = document.defaultView || window;
   const factories = stypRenderFactories(opts);
-
-  class Styp implements StyleProducer {
-
-    constructor(readonly rule: StypRule, private readonly _render: StypRender.Function) {
-    }
-
-    get document() {
-      return document;
-    }
-
-    get parent() {
-      return parent;
-    }
-
-    render(sheet: CSSStyleSheet, selector: StypSelector.Normalized, properties: StypProperties): void {
-      this._render(this, sheet, selector, properties);
-    }
-
-  }
-
   const renderInterest = renderRules(rules);
   const trackInterest = trackRules();
 
@@ -60,6 +40,34 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
     trackInterest.off(reason);
     renderInterest.off(reason);
   }).needs(renderInterest).needs(trackInterest);
+
+  function styleProducer(rule: StypRule, render: StypRender.Function) {
+
+    class Styp implements StyleProducer {
+
+      constructor() {
+      }
+
+      get rule() {
+        return rule;
+      }
+
+      get document() {
+        return document;
+      }
+
+      get parent() {
+        return parent;
+      }
+
+      render(sheet: CSSStyleSheet, selector: StypSelector.Normalized, properties: StypProperties): void {
+        render(this, sheet, selector, properties);
+      }
+
+    }
+
+    return new Styp();
+  }
 
   function renderRules(rulesToRender: Iterable<StypRule>): EventInterest {
     return itsReduction<EventInterest, EventInterest>(
@@ -80,7 +88,7 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
 
     let _element: HTMLStyleElement | undefined;
     let _rev = 0;
-    const producer = new Styp(rule, renderForRule(rule));
+    const producer = styleProducer(rule, renderForRule(rule));
     let selector = rule.selector;
 
     if (!selector.length) {
@@ -159,7 +167,7 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
           nextRender = renderAt(nextIndex);
         }
 
-        const nextProducer = new Styp(producer.rule, nextRender);
+        const nextProducer = styleProducer(producer.rule, nextRender);
 
         renders[index](nextProducer, sheet, selector, properties);
       };
