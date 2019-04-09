@@ -41,15 +41,20 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
     renderInterest.off(reason);
   }).needs(renderInterest).needs(trackInterest);
 
-  function styleProducer(rule: StypRule, render: StypRender.Function) {
+  function styleProducer(
+      rule: StypRule,
+      render: StypRender.Function,
+      {
+        target,
+        selector,
+      }: {
+        target: CSSStyleSheet | CSSRule,
+        selector: StypSelector.Normalized,
+      }) {
 
     class Styp implements StyleProducer {
 
       constructor() {
-      }
-
-      get rule() {
-        return rule;
       }
 
       get document() {
@@ -60,8 +65,29 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
         return parent;
       }
 
-      render(sheet: CSSStyleSheet, selector: StypSelector.Normalized, properties: StypProperties): void {
-        render(this, sheet, selector, properties);
+      get rule() {
+        return rule;
+      }
+
+      get target() {
+        return target;
+      }
+
+      get selector() {
+        return selector;
+      }
+
+      render(properties: StypProperties, options?: StypRender.Options): void {
+        if (!options) {
+          render(this, properties);
+        } else {
+          render(
+              styleProducer(rule, render, {
+                selector: options.selector || selector,
+                target: options.target || target,
+              }),
+              properties);
+        }
       }
 
     }
@@ -88,7 +114,6 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
 
     let _element: HTMLStyleElement | undefined;
     let _rev = 0;
-    const producer = styleProducer(rule, renderForRule(rule));
     let selector = rule.selector;
 
     if (!selector.length) {
@@ -120,9 +145,10 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
           clearProperties(_element);
         }
 
-        const sheet = _element.sheet as CSSStyleSheet;
+        const target = _element.sheet as CSSStyleSheet;
+        const producer = styleProducer(rule, renderForRule(rule), { target, selector } );
 
-        producer.render(sheet, selector, properties);
+        producer.render(properties);
       }
     }
 
@@ -156,7 +182,7 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
     return renderAt(0);
 
     function renderAt(index: number): StypRender.Function {
-      return (producer, sheet, selector, properties) => {
+      return (producer, properties) => {
 
         const nextIndex = index + 1;
         let nextRender: StypRender.Function;
@@ -167,9 +193,9 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
           nextRender = renderAt(nextIndex);
         }
 
-        const nextProducer = styleProducer(producer.rule, nextRender);
+        const nextProducer = styleProducer(producer.rule, nextRender, producer);
 
-        renders[index](nextProducer, sheet, selector, properties);
+        renders[index](nextProducer, properties);
       };
     }
   }

@@ -1,5 +1,4 @@
 import { StyleProducer } from './style-producer';
-import { StypSelector } from '../selector';
 import { StypProperties } from '../rule';
 import { filterIt, itsEach, ObjectEntry, overEntries } from 'a-iterable';
 import { IMPORTANT_CSS_SUFFIX } from '../internal';
@@ -9,13 +8,10 @@ import { appendCSSRule } from './render.impl';
 /**
  * @internal
  */
-export function stypRenderProperties(
-    producer: StyleProducer,
-    sheetOrRule: CSSStyleSheet | CSSRule,
-    selector: StypSelector.Normalized,
-    properties: StypProperties): void {
+export function stypRenderProperties(producer: StyleProducer, properties: StypProperties): void {
 
-  const cssRule = appendCSSRule(sheetOrRule, selector) as CSSStyleRule;
+  const { selector, target } = producer;
+  const cssRule = appendCSSRule(target, selector) as CSSStyleRule;
   const { style } = cssRule;
 
   itsEach(
@@ -35,7 +31,7 @@ export function stypRenderProperties(
         style.setProperty(hyphenateStyleName(key), value, priority);
       });
 
-  producer.render(cssRule, selector, properties);
+  producer.render(properties, { target: cssRule });
 }
 
 function notCustomProperty(entry: ObjectEntry<StypProperties>): entry is [string, StypProperties.Value] {

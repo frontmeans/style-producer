@@ -57,7 +57,7 @@ describe('produceStyle', () => {
   it('uses the given renders', () => {
 
     const mockRender1 = jest.fn<void, Parameters<StypRender.Function>>(
-        (producer, sheet, selector, properties) => producer.render(sheet, selector, properties));
+        (producer, properties) => producer.render(properties));
     const mockRender2 = jest.fn<void, Parameters<StypRender.Function>>();
 
     produceStyle(root.rules, { render: [mockRender1, mockRender2], schedule: scheduleNow });
@@ -68,15 +68,15 @@ describe('produceStyle', () => {
 
     const calls: number[] = [];
     const mockRender1 = jest.fn<void, Parameters<StypRender.Function>>(
-        (producer, sheet, selector, properties) => {
+        (producer, properties) => {
           calls.push(1);
-          producer.render(sheet, selector, properties);
+          producer.render(properties);
         }
     );
     const mockRender2 = jest.fn<void, Parameters<StypRender.Function>>(
-        (producer, sheet, selector, properties) => {
+        (producer, properties) => {
           calls.push(2);
-          producer.render(sheet, selector, properties);
+          producer.render(properties);
         }
     );
 

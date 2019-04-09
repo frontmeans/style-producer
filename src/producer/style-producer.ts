@@ -29,15 +29,24 @@ export interface StyleProducer {
   readonly rule: StypRule;
 
   /**
+   * CSS stylesheet or rule to add properties to.
+   */
+  readonly target: CSSStyleSheet | CSSRule;
+
+  /**
+   * Rendered CSS rule selector.
+   */
+  readonly selector: StypSelector.Normalized;
+
+  /**
    * Appends CSS rule to stylesheet.
    *
    * This method relies on renders chain. For each render in chain this method calls the next one.
    *
-   * @param sheetOrRule CSS stylesheet or rule to add properties to.
-   * @param selector CSS rule selector.
    * @param properties CSS properties to render.
+   * @param options Rendering options.
    */
-  render(sheetOrRule: CSSStyleSheet | CSSRule, selector: StypSelector.Normalized, properties: StypProperties): void;
+  render(properties: StypProperties, options?: StypRender.Options): void;
 
 }
 

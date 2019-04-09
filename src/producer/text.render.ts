@@ -1,5 +1,4 @@
 import { StyleProducer } from './style-producer';
-import { StypSelector } from '../selector';
 import { StypProperties } from '../rule';
 import { StypRender } from './render';
 import { appendCSSRule } from './render.impl';
@@ -11,21 +10,17 @@ import { appendCSSRule } from './render.impl';
  *
  * Enabled by default in `produceStyle()` function.
  */
-export const stypRenderText: StypRender = function renderText(
-    producer: StyleProducer,
-    sheetOrRule: CSSStyleSheet | CSSRule,
-    selector: StypSelector.Normalized,
-    properties: StypProperties) {
+export const stypRenderText: StypRender = function renderText(producer: StyleProducer, properties: StypProperties) {
 
   const css = properties.$$css;
 
-  if (css) {
+  if (!css) {
+    producer.render(properties);
+  } else {
 
-    const cssRule = appendCSSRule(sheetOrRule, selector) as CSSStyleRule;
+    const cssRule = appendCSSRule(producer.target, producer.selector) as CSSStyleRule;
 
     cssRule.style.cssText = css;
-    sheetOrRule = cssRule;
+    producer.render(properties, { target: cssRule });
   }
-
-  producer.render(sheetOrRule, selector, properties);
 };

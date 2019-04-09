@@ -27,21 +27,21 @@ export const stypRenderAtRules: StypRender = {
 
   order: -0xffff,
 
-  render(
-      producer: StyleProducer,
-      sheetOrRule: CSSStyleSheet | CSSRule,
-      selector: StypSelector.Normalized,
-      properties: StypProperties) {
-    if (!isCSSRuleGroup(sheetOrRule)) {
-      producer.render(sheetOrRule, selector, properties);
+  render(producer: StyleProducer, properties: StypProperties) {
+
+    const { selector } = producer;
+    let { target } = producer;
+
+    if (!isCSSRuleGroup(target)) {
+      producer.render(properties);
       return;
     }
 
-    let sheet: CSSGroupingRule | CSSStyleSheet = sheetOrRule;
+    let sheet: CSSGroupingRule | CSSStyleSheet = target;
     const extracted = extractAtSelectors(selector);
 
     if (!extracted) {
-      producer.render(sheet, selector, properties);
+      producer.render(properties);
       return;
     }
 
@@ -53,13 +53,13 @@ export const stypRenderAtRules: StypRender = {
       const ruleIdx = sheet.insertRule(`${atSelector}{}`, sheet.cssRules.length);
       const nested: CSSRule = sheet.cssRules[ruleIdx];
 
-      sheetOrRule = nested;
+      target = nested;
       if (isCSSRuleGroup(nested)) {
         sheet = nested;
       }
     }
 
-    producer.render(sheetOrRule, restSelector, properties);
+    producer.render(properties, { target, selector: restSelector });
   },
 
 };

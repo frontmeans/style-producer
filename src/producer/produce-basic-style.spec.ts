@@ -31,8 +31,6 @@ describe('produceBasicStyle', () => {
 
       expect(mockRender).toHaveBeenCalledWith(
           expect.objectContaining({ document }),
-          expect.anything(),
-          expect.anything(),
           expect.anything());
     });
   });
@@ -51,8 +49,6 @@ describe('produceBasicStyle', () => {
 
       expect(mockRender).toHaveBeenCalledWith(
           expect.objectContaining({ parent: document.head }),
-          expect.anything(),
-          expect.anything(),
           expect.anything());
     });
   });

@@ -18,21 +18,38 @@ export type StypRender = StypRender.Function | StypRender.Descriptor | StypRende
 export namespace StypRender {
 
   /**
+   * CSS rendering options.
+   *
+   * These are the options passed to `StyleProducer.render()` method.
+   */
+  export interface Options {
+
+    /**
+     * CSS stylesheet or rule to add properties to.
+     *
+     * When omitted the one from style producer is used.
+     */
+    target?: CSSStyleSheet | CSSRule;
+
+    /**
+     * Normalized CSS selector of the rule to render.
+     *
+     * When omitted the one from style producer is used.
+     */
+    selector?: StypSelector.Normalized;
+
+  }
+
+  /**
    * CSS stylesheet render function.
    *
    * It should normally call a `producer.render()` method as the last operation to allow other renders in chain to do
    * their job.
    *
    * @param producer Style producer instance.
-   * @param sheetOrRule CSS stylesheet or rule to add properties to.
-   * @param selector CSS rule selector.
    * @param properties CSS properties to render.
    */
-  export type Function = (
-      producer: StyleProducer,
-      sheetOrRule: CSSStyleSheet | CSSRule,
-      selector: StypSelector.Normalized,
-      properties: StypProperties) => void;
+  export type Function = (producer: StyleProducer, properties: StypProperties) => void;
 
   /**
    * CSS stylesheet render descriptor.
