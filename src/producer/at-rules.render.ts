@@ -138,11 +138,11 @@ function addAtSelector(atSelectors: Map<string, [string[], string?]>, qualifier:
     atSelectors.set(key, [[name], query]);
   } else {
 
-    const [names, prevValue] = atSelector;
+    const [names, prevQuery] = atSelector;
 
     names.push(name);
     if (query) {
-      atSelector[1] = prevValue ? `${prevValue} ${query}` : query;
+      atSelector[1] = prevQuery ? `${prevQuery} and ${query}` : query;
     }
   }
 }

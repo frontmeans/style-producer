@@ -1,8 +1,7 @@
 import { stypRoot, StypRule } from '../rule';
 import { produceStyle } from './produce-style';
-import { AIterable, overArray } from 'a-iterable';
 import { StypRender } from './render';
-import { cssStyle, scheduleNow } from '../spec';
+import { cssStyle, removeStyleElements, scheduleNow } from '../spec';
 import SpyInstance = jest.SpyInstance;
 
 describe('produceStyle', () => {
@@ -14,8 +13,7 @@ describe('produceStyle', () => {
   });
 
   afterEach(() => {
-    // Remove `<style>` elements
-    AIterable.from(overArray(document.head.querySelectorAll('style'))).forEach(e => e.remove());
+    removeStyleElements();
   });
 
   describe('default scheduler', () => {

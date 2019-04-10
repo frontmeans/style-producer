@@ -16,18 +16,36 @@ function stylesheets(): AIterable<CSSStyleSheet> {
       .filter<CSSStyleSheet>(isCSSStyleSheet);
 }
 
-export function cssStyles(selector?: string): AIterable<CSSStyleDeclaration> {
+function isCSSStyleSheet(sheet: StyleSheet): sheet is CSSStyleSheet {
+  return 'cssRules' in sheet;
+}
+
+function cssRules(): AIterable<CSSRule> {
   return stylesheets()
-      .flatMap(sheet => overArray(sheet.cssRules))
+      .flatMap(sheet => overArray(sheet.cssRules));
+}
+
+export function cssStyles(selector?: string): AIterable<CSSStyleDeclaration> {
+  return cssRules()
       .filter<CSSStyleRule>(isCSSStyleRule)
       .filter(r => !selector || r.selectorText === selector)
       .map(r => r.style);
 }
 
-function isCSSStyleSheet(sheet: StyleSheet): sheet is CSSStyleSheet {
-  return 'cssRules' in sheet;
-}
-
 function isCSSStyleRule(rule: CSSRule): rule is CSSStyleRule {
   return rule.type === CSSRule.STYLE_RULE;
+}
+
+export function mediaRules(query?: string): AIterable<CSSMediaRule> {
+  return cssRules()
+      .filter<CSSMediaRule>(isCSSMediaRule)
+      .filter(rule => !query || rule.media.mediaText === query);
+}
+
+function isCSSMediaRule(rule: CSSRule): rule is CSSMediaRule {
+  return rule.type === CSSRule.MEDIA_RULE;
+}
+
+export function removeStyleElements() {
+  AIterable.from(overArray(document.head.querySelectorAll('style'))).forEach(e => e.remove());
 }

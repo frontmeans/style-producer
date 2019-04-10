@@ -2,7 +2,7 @@ import { StypProperties, stypRoot, StypRule } from '../rule';
 import { produceBasicStyle } from './produce-basic-style';
 import { AIterable, itsEmpty, overArray } from 'a-iterable';
 import { trackValue } from 'fun-events';
-import { cssStyle, cssStyles, scheduleNow } from '../spec';
+import { cssStyle, cssStyles, removeStyleElements, scheduleNow } from '../spec';
 import { StypRender } from './render';
 import { StyleProducer } from './style-producer';
 import { stypSelector } from '../selector';
@@ -18,8 +18,7 @@ describe('produceBasicStyle', () => {
   });
 
   afterEach(() => {
-    // Remove `<style>` elements
-    AIterable.from(overArray(document.head.querySelectorAll('style'))).forEach(e => e.remove());
+    removeStyleElements();
   });
 
   describe('document', () => {
