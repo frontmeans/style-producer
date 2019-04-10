@@ -108,4 +108,3 @@ describe('produceStyle', () => {
     expect(style.getPropertyValue('font-weight')).toBe('bold');
   });
 });
-
