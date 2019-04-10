@@ -48,6 +48,18 @@ export interface StyleProducer {
    */
   render(properties: StypProperties, options?: StypRender.Options): void;
 
+  /**
+   * Tries to append CSS rule to `target` CSS stylesheet or rule.
+   *
+   * If `target` is stylesheet or grouping rule, then inserts the last rule.
+   * Otherwise just returns `target`.
+   *
+   * @param selector Appended CSS rule selector. Equals to the one from this producer when omitted.
+   *
+   * @returns Either appended empty CSS rule, or `target`.
+   */
+  addRule(selector?: StypSelector.Normalized): CSSRule;
+
 }
 
 /**

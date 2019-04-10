@@ -1,6 +1,5 @@
 import { StyleProducer } from './style-producer';
 import { StypProperties } from '../rule';
-import { appendCSSRule } from './render.impl';
 
 /**
  * Renders raw CSS text. I.e. the contents of `StypProperties.$$css` property.
@@ -17,7 +16,7 @@ export function stypRenderText(producer: StyleProducer, properties: StypProperti
     producer.render(properties);
   } else {
 
-    const cssRule = appendCSSRule(producer.target, producer.selector) as CSSStyleRule;
+    const cssRule = producer.addRule() as CSSStyleRule;
 
     cssRule.style.cssText = css;
     producer.render(properties, { target: cssRule });

@@ -3,7 +3,6 @@ import { StypProperties } from '../rule';
 import { filterIt, itsEach, ObjectEntry, overEntries } from 'a-iterable';
 import { IMPORTANT_CSS_SUFFIX } from '../internal';
 import hyphenateStyleName from 'hyphenate-style-name';
-import { appendCSSRule } from './render.impl';
 
 /**
  * Renders CSS properties.
@@ -12,8 +11,7 @@ import { appendCSSRule } from './render.impl';
  */
 export function stypRenderProperties(producer: StyleProducer, properties: StypProperties): void {
 
-  const { selector, target } = producer;
-  const cssRule = appendCSSRule(target, selector) as CSSStyleRule;
+  const cssRule = producer.addRule() as CSSStyleRule;
   const { style } = cssRule;
 
   itsEach(

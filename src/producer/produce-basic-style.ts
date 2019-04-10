@@ -1,11 +1,12 @@
 import { StypProperties, StypRule, StypRules } from '../rule';
 import { eventInterest, EventInterest, onEventFrom } from 'fun-events';
 import { itsReduction, mapIt } from 'a-iterable';
-import { StypSelector, stypSelector } from '../selector';
+import { StypSelector, stypSelector, stypSelectorText } from '../selector';
 import { noop } from 'call-thru';
 import { StyleProducer, StypOptions } from './style-producer';
 import { StypRender } from './render';
 import { stypRenderFactories } from './options.impl';
+import { isCSSRuleGroup } from './render.impl';
 
 /**
  * Produces and dynamically updates basic CSS stylesheets based on the given CSS rules.
@@ -88,6 +89,16 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
               }),
               properties);
         }
+      }
+
+      addRule(_selector: StypSelector.Normalized = selector): CSSRule {
+        if (!isCSSRuleGroup(target)) {
+          return target;
+        }
+
+        const ruleIndex = target.insertRule(`${stypSelectorText(_selector)}{}`, target.cssRules.length);
+
+        return target.cssRules[ruleIndex];
       }
 
     }
