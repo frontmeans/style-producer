@@ -3,11 +3,11 @@ import { produceBasicStyle } from './produce-basic-style';
 import { AIterable, itsEmpty, overArray } from 'a-iterable';
 import { trackValue } from 'fun-events';
 import { cssStyle, cssStyles, scheduleNow } from '../spec';
-import SpyInstance = jest.SpyInstance;
-import Mock = jest.Mock;
 import { StypRender } from './render';
 import { StyleProducer } from './style-producer';
-import { stypSelector } from '../selector/selector-constructor';
+import { stypSelector } from '../selector';
+import SpyInstance = jest.SpyInstance;
+import Mock = jest.Mock;
 
 describe('produceBasicStyle', () => {
 
@@ -99,7 +99,7 @@ describe('produceBasicStyle', () => {
     });
     it('passes target to next render', () => {
 
-      const target: CSSStyleSheet = { name: 'stylesheet' } as any;;
+      const target: CSSStyleSheet = { name: 'stylesheet' } as any;
       let properties: StypProperties = {};
       let producer: StyleProducer = null!;
 
