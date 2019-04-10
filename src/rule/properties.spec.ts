@@ -2,6 +2,7 @@ import { AfterEvent, afterEventFrom, EventEmitter, EventInterest, trackValue, Va
 import { mergeStypProperties, stypPropertiesBySpec } from './properties.impl';
 import { StypProperties } from './properties';
 import { StypRule } from './rule';
+import { readProperties } from '../spec';
 import Mock = jest.Mock;
 
 describe('stypPropertiesBySpec', () => {
@@ -16,21 +17,21 @@ describe('stypPropertiesBySpec', () => {
 
     const after = afterEventFrom(stypPropertiesBySpec(rule));
 
-    expect(await receiveProperties(after)).toEqual({});
+    expect(await readProperties(after)).toEqual({});
   });
   it('sends provided CSS text', async () => {
 
     const css = 'font-size: 12px';
     const after = afterEventFrom(stypPropertiesBySpec(rule, css));
 
-    expect(await receiveProperties(after)).toEqual({ $$css: css });
+    expect(await readProperties(after)).toEqual({ $$css: css });
   });
   it('sends provided properties', async () => {
 
     const initial = { fontSize: '12px' };
     const after = afterEventFrom(stypPropertiesBySpec(rule, initial));
 
-    expect(await receiveProperties(after)).toEqual(initial);
+    expect(await readProperties(after)).toEqual(initial);
   });
   it('sends tracked properties', async () => {
 
@@ -38,12 +39,12 @@ describe('stypPropertiesBySpec', () => {
     const tracker = trackValue(initial);
     const after = afterEventFrom(stypPropertiesBySpec(rule, tracker));
 
-    expect(await receiveProperties(after)).toEqual(initial);
+    expect(await readProperties(after)).toEqual(initial);
 
     const updated = { fontSize: '13px' };
 
     tracker.it = updated;
-    expect(await receiveProperties(after)).toEqual(updated);
+    expect(await readProperties(after)).toEqual(updated);
   });
   it('prevents tracked properties duplicates', () => {
 
@@ -104,14 +105,14 @@ describe('stypPropertiesBySpec', () => {
     const initial = { fontSize: '12px' };
     const after = afterEventFrom(stypPropertiesBySpec(rule, () => initial));
 
-    expect(await receiveProperties(after)).toEqual(initial);
+    expect(await readProperties(after)).toEqual(initial);
   });
   it('sends constructed CSS text', async () => {
 
     const css = 'font-size: 12px';
     const after = afterEventFrom(stypPropertiesBySpec(rule, () => css));
 
-    expect(await receiveProperties(after)).toEqual({ $$css: css });
+    expect(await readProperties(after)).toEqual({ $$css: css });
   });
   it('sends constructed tracked properties', async () => {
 
@@ -119,12 +120,12 @@ describe('stypPropertiesBySpec', () => {
     const tracker = trackValue(initial);
     const after = afterEventFrom(stypPropertiesBySpec(rule, () => tracker));
 
-    expect(await receiveProperties(after)).toEqual(initial);
+    expect(await readProperties(after)).toEqual(initial);
 
     const updated = { fontSize: '13px' };
 
     tracker.it = updated;
-    expect(await receiveProperties(after)).toEqual(updated);
+    expect(await readProperties(after)).toEqual(updated);
   });
   it('prevents constructed tracked properties duplicates', () => {
 
@@ -169,7 +170,7 @@ describe('mergeStypProperties', () => {
     expect(merged.kept).toEqual([{ ...baseProperties, ...addendumProperties }]);
   });
   it('merges initial properties', async () => {
-    expect(await receiveProperties(merged)).toEqual({ ...baseProperties, ...addendumProperties });
+    expect(await readProperties(merged)).toEqual({ ...baseProperties, ...addendumProperties });
   });
 
   describe('merging', () => {
@@ -204,7 +205,3 @@ describe('mergeStypProperties', () => {
     });
   });
 });
-
-async function receiveProperties(sender: AfterEvent<[StypProperties]>): Promise<StypProperties> {
-  return new Promise(resolve => sender(resolve));
-}

@@ -1,6 +1,5 @@
 import { stypRoot } from './root';
-import { StypRule } from './rule';
-import { StypProperties } from './properties';
+import { ruleProperties } from '../spec';
 
 describe('stypRoot', () => {
   it('always returns new instance', () => {
@@ -40,17 +39,13 @@ describe('stypRoot', () => {
       const initial = { fontSize: '12px' };
       const root = stypRoot(initial);
 
-      expect(await receiveProperties(root)).toEqual(initial);
+      expect(await ruleProperties(root)).toEqual(initial);
     });
     it('sends empty properties by default', async () => {
 
       const root = stypRoot();
 
-      expect(await receiveProperties(root)).toEqual({});
+      expect(await ruleProperties(root)).toEqual({});
     });
   });
 });
-
-function receiveProperties(rule: StypRule): Promise<StypProperties> {
-  return new Promise(resolve => rule.read(resolve));
-}

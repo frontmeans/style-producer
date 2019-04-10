@@ -1,4 +1,4 @@
-import { StypRule, StypRuleList } from './rule';
+import { StypRule } from './rule';
 import { StypSelector, stypSelector } from '../selector';
 import { stypRoot } from './root';
 import {
@@ -12,8 +12,9 @@ import {
 } from 'fun-events';
 import { StypProperties } from './properties';
 import { itsEmpty } from 'a-iterable';
-import Mock = jest.Mock;
 import { noop } from 'call-thru';
+import { ruleProperties } from '../spec';
+import Mock = jest.Mock;
 
 describe('StypRule', () => {
 
@@ -93,7 +94,7 @@ describe('StypRule', () => {
       const replacement = { visibility: 'hidden' };
 
       rule.set(replacement);
-      expect(await receiveProperties(rule)).toEqual(replacement);
+      expect(await ruleProperties(rule)).toEqual(replacement);
     });
   });
 
@@ -123,7 +124,7 @@ describe('StypRule', () => {
       expect(root.rule(rule.selector)).toBe(rule);
     });
     it('applies update', async () => {
-      expect(await receiveProperties(rule)).toEqual(update.it);
+      expect(await ruleProperties(rule)).toEqual(update.it);
     });
     it('merges updated properties', async () => {
 
@@ -131,7 +132,7 @@ describe('StypRule', () => {
 
       rule.add(update2);
 
-      expect(await receiveProperties(rule)).toEqual({ ...update.it, ...update2 });
+      expect(await ruleProperties(rule)).toEqual({ ...update.it, ...update2 });
     });
     it('merges updated properties by `addRule', async () => {
 
@@ -139,7 +140,7 @@ describe('StypRule', () => {
 
       root.addRule(rule.selector, update2);
 
-      expect(await receiveProperties(rule)).toEqual({ ...update.it, ...update2 });
+      expect(await ruleProperties(rule)).toEqual({ ...update.it, ...update2 });
     });
     it('adds another rule', async () => {
 
@@ -147,7 +148,7 @@ describe('StypRule', () => {
       const updated2 = rule2.add(update2);
 
       expect(root.rule(rule2.selector)).toEqual(updated2);
-      expect(await receiveProperties(updated2)).toEqual(update2);
+      expect(await ruleProperties(updated2)).toEqual(update2);
     });
     it('adds nested rule', async () => {
 
@@ -155,7 +156,7 @@ describe('StypRule', () => {
       const updated2 = rule.addRule({ e: 'element-1-2' }, update2);
 
       expect(root.rule(updated2.selector)).toBe(updated2);
-      expect(await receiveProperties(updated2)).toEqual(update2);
+      expect(await ruleProperties(updated2)).toEqual(update2);
     });
     it('sends updated properties', async () => {
 
@@ -179,7 +180,7 @@ describe('StypRule', () => {
     });
 
     it('removes properties', async () => {
-      expect(await receiveProperties(rule)).toEqual({});
+      expect(await ruleProperties(rule)).toEqual({});
     });
     it('makes rule empty', () => {
       expect(rule.empty).toBe(true);
@@ -513,7 +514,7 @@ describe('empty rule', () => {
 
   describe('read', () => {
     it('sends empty properties', async () => {
-      expect(await receiveProperties(rule)).toEqual({});
+      expect(await ruleProperties(rule)).toEqual({});
     });
   });
 
@@ -541,17 +542,6 @@ describe('empty rule', () => {
     });
   });
 });
-
-function receiveProperties(rule: StypRule): Promise<StypProperties> {
-  return new Promise(resolve => rule.read(resolve));
-}
-
-async function receiveSelectors(list: StypRuleList): Promise<StypSelector.Normalized[]> {
-
-  const rules: Iterable<StypRule> = await new Promise(resolve => list.read(resolve));
-
-  return ruleSelectors(rules);
-}
 
 function ruleSelectors(rules: Iterable<StypRule>): StypSelector.Normalized[] {
   return [...rules].map(r => r.selector);

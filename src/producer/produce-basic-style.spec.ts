@@ -1,7 +1,8 @@
 import { StypProperties, stypRoot, StypRule } from '../rule';
 import { produceBasicStyle } from './produce-basic-style';
-import { AIterable, itsEmpty, itsFirst, overArray } from 'a-iterable';
+import { AIterable, itsEmpty, overArray } from 'a-iterable';
 import { trackValue } from 'fun-events';
+import { cssStyle, cssStyles, scheduleNow } from '../spec';
 import SpyInstance = jest.SpyInstance;
 
 describe('produceBasicStyle', () => {
@@ -161,40 +162,3 @@ describe('produceBasicStyle', () => {
     expect(itsEmpty(cssStyles())).toBe(true);
   });
 });
-
-function scheduleNow(operation: () => void) {
-  // Do not schedule. Execute immediately instead.
-  operation();
-}
-
-function cssStyle(selector: string): CSSStyleDeclaration {
-
-  const style = itsFirst(cssStyles(selector));
-
-  if (!style) {
-    return fail(`Rule not found: ${selector}`);
-  }
-
-  return style;
-}
-
-function stylesheets(): AIterable<CSSStyleSheet> {
-  return AIterable.from(overArray(document.styleSheets))
-      .filter<CSSStyleSheet>(isCSSStyleSheet);
-}
-
-function cssStyles(selector?: string): AIterable<CSSStyleDeclaration> {
-  return stylesheets()
-      .flatMap(sheet => overArray(sheet.cssRules))
-      .filter<CSSStyleRule>(isCSSStyleRule)
-      .filter(r => !selector || r.selectorText === selector)
-      .map(r => r.style);
-}
-
-function isCSSStyleSheet(sheet: StyleSheet): sheet is CSSStyleSheet {
-  return 'cssRules' in sheet;
-}
-
-function isCSSStyleRule(rule: CSSRule): rule is CSSStyleRule {
-  return rule.type === CSSRule.STYLE_RULE;
-}
