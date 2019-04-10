@@ -4,6 +4,10 @@ import { AIterable, itsEmpty, overArray } from 'a-iterable';
 import { trackValue } from 'fun-events';
 import { cssStyle, cssStyles, scheduleNow } from '../spec';
 import SpyInstance = jest.SpyInstance;
+import Mock = jest.Mock;
+import { StypRender } from './render';
+import { StyleProducer } from './style-producer';
+import { stypSelector } from '../selector/selector-constructor';
 
 describe('produceBasicStyle', () => {
 
@@ -52,6 +56,67 @@ describe('produceBasicStyle', () => {
           expect.objectContaining({ parent: document.head }),
           expect.anything());
     });
+  });
+
+  describe('render', () => {
+
+    let mockRender1: Mock<void, Parameters<StypRender.Function>>;
+    let mockRender2: Mock<void, Parameters<StypRender.Function>>;
+
+    beforeEach(() => {
+      mockRender1 = jest.fn();
+      mockRender2 = jest.fn();
+    });
+
+    it('passes properties to next render', () => {
+
+      const properties: StypProperties = { $name: 'next' };
+      let producer: StyleProducer = null!;
+
+      mockRender1.mockImplementation(_producer => {
+        producer = _producer;
+        _producer.render(properties);
+      });
+
+      testProduceStyle();
+      expect(mockRender2).toHaveBeenCalledWith(producer, properties);
+    });
+    it('passes selector to next render', () => {
+
+      const selector = stypSelector('test');
+      let properties: StypProperties = {};
+      let producer: StyleProducer = null!;
+
+      mockRender1.mockImplementation((_producer, _properties) => {
+        producer = _producer;
+        _producer.render(properties = _properties, { selector });
+      });
+
+      testProduceStyle();
+      expect(mockRender2).toHaveBeenCalledWith(
+          expect.objectContaining({ selector, target: producer.target }),
+          properties);
+    });
+    it('passes target to next render', () => {
+
+      const target: CSSStyleSheet = { name: 'stylesheet' } as any;;
+      let properties: StypProperties = {};
+      let producer: StyleProducer = null!;
+
+      mockRender1.mockImplementation((_producer, _properties) => {
+        producer = _producer;
+        _producer.render(properties = _properties, { target });
+      });
+
+      testProduceStyle();
+      expect(mockRender2).toHaveBeenCalledWith(
+          expect.objectContaining({ selector: producer.selector, target }),
+          properties);
+    });
+
+    function testProduceStyle() {
+      produceBasicStyle(root.rules, { render: [mockRender1, mockRender2], schedule: scheduleNow });
+    }
   });
 
   describe('default scheduler', () => {
