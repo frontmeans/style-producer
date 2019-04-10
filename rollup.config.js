@@ -51,8 +51,6 @@ function baseConfig(tsconfig) {
         useTsconfigDeclarationDir: true,
       }),
       nodeResolve({
-        jsnext: true,
-        main: false,
         preferBuiltins: false,
       }),
       sourcemaps(),
