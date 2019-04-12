@@ -48,19 +48,6 @@ export abstract class StypRule implements EventKeeper<[StypProperties]> {
   abstract readonly rules: StypRuleHierarchy;
 
   /**
-   * Grabs rules matching the given `query`.
-   *
-   * Calling to this method is the same as calling `rules.grab(query)`.
-   *
-   * @param query CSS rule query to match.
-   *
-   * @returns Dynamic list of rules in hierarchy matching the given query starting from this one.
-   */
-  grab(query: StypQuery): StypRuleList {
-    return this.rules.grab(query);
-  }
-
-  /**
    * Sets CSS properties of this rule.
    *
    * @param properties CSS properties specifier. Or nothing to clear them.

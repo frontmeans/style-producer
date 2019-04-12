@@ -15,8 +15,8 @@ import { isCSSRuleGroup } from './render.impl';
  * You can enable only renders you need. This is useful only if you are not going to use all of them and want to save
  * the bundle size.
  *
- * @param rules CSS rules to produce stylesheets for. This can be either `StypRule.rules` to render all rules,
- * or a result of `StypRule.grab()` method call to render only matching ones.
+ * @param rules CSS rules to produce stylesheets for. This can be e.g. a `StypRule.rules` to render all rules,
+ * or a result of `StypRuleList.grab()` method call to render only matching ones.
  * @param opts Production options.
  *
  * @returns Event interest instance. When this interest is lost (i.e. its `off()` method is called) the produced

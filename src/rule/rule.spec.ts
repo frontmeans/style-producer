@@ -171,6 +171,7 @@ describe('StypRule', () => {
         expect(itsEmpty(rule.rules.nested)).toBe(true);
       });
     });
+
     describe('get', () => {
       it('returns undefined for absent rule', () => {
         expect(rule.rules.get({ c: 'absent' })).toBeUndefined();
@@ -186,6 +187,7 @@ describe('StypRule', () => {
         expect(rule.rules.get(nestedSelector)).toBe(nested);
       });
     });
+
     describe('add', () => {
       it('adds nested rule', () => {
 
@@ -272,6 +274,122 @@ describe('StypRule', () => {
         expect(listReceiver).toHaveBeenCalledWith(rule.rules.nested);
         expect(rootListReceiver).not.toHaveBeenCalled();
         expect(ruleSelectors(rule.rules.nested)).toEqual([[...rule.selector, subSelector[0]]]);
+      });
+    });
+
+    describe('grab', () => {
+
+      let nested1: StypRule;
+      let nested2: StypRule;
+
+      beforeEach(() => {
+        nested1 = rule.rules.add({ c: ['nested', 'nested-1'] });
+        nested2 = nested1.rules.add({ c: ['nested', 'nested-2'] });
+      });
+
+      it('returns all rules for empty query', () => {
+        expect(rule.rules.grab({})).toBe(rule.rules);
+      });
+
+      it('contains matching rules', () => {
+
+        const list = rule.rules.grab({ c: 'nested' });
+
+        expect(ruleSelectors(list)).toEqual([nested1.selector, nested2.selector]);
+      });
+      it('tracks matching rule addition', () => {
+
+        const list = rule.rules.grab({ c: 'nested' });
+        const onUpdate = jest.fn();
+        const receiver = jest.fn();
+
+        list.onUpdate(onUpdate);
+        list.read(receiver);
+        receiver.mockClear();
+
+        const nested3 = rule.rules.add({ c: 'nested' });
+
+        expect(onUpdate).toHaveBeenCalled();
+
+        const [added, removed] = onUpdate.mock.calls[0];
+
+        expect(ruleSelectors(added)).toEqual([nested3.selector]);
+        expect(removed).toHaveLength(0);
+        expect(receiver).toHaveBeenCalledWith(list);
+        expect(ruleSelectors(list)).toEqual([nested1.selector, nested2.selector, nested3.selector]);
+      });
+      it('tracks matching rule removal', () => {
+
+        const list = rule.rules.grab({ c: 'nested' });
+        const onUpdate = jest.fn();
+        const receiver = jest.fn();
+
+        list.onUpdate(onUpdate);
+        list.read(receiver);
+        receiver.mockClear();
+
+        nested2.remove();
+
+        expect(onUpdate).toHaveBeenCalled();
+
+        const [added, removed] = onUpdate.mock.calls[0];
+
+        expect(added).toHaveLength(0);
+        expect(ruleSelectors(removed)).toEqual([nested2.selector]);
+        expect(receiver).toHaveBeenCalledWith(list);
+        expect(ruleSelectors(list)).toEqual([nested1.selector]);
+      });
+      it('reflects, but does not track modification when interest lost', () => {
+
+        const list = rule.rules.grab({ c: 'nested' });
+        const onUpdate = jest.fn();
+
+        const interest = list.onUpdate(onUpdate);
+
+        const nested3 = rule.rules.add({ c: ['nested', 'nested-3'] });
+
+        expect(onUpdate).toHaveBeenCalled();
+        onUpdate.mockClear();
+
+        interest.off();
+
+        const nested4 = rule.rules.add({ c: ['nested', 'nested-4'] });
+        expect(onUpdate).not.toHaveBeenCalled();
+
+        expect(ruleSelectors(list)).toEqual([nested1.selector, nested2.selector, nested3.selector, nested4.selector]);
+      });
+      it('ignores non-matching rule addition', () => {
+
+        const list = rule.rules.grab({ c: 'nested' });
+        const onUpdate = jest.fn();
+        const receiver = jest.fn();
+
+        list.onUpdate(onUpdate);
+        list.read(receiver);
+        receiver.mockClear();
+
+        rule.rules.add({ c: 'nested-3' });
+
+        expect(onUpdate).not.toHaveBeenCalled();
+        expect(receiver).not.toHaveBeenCalled();
+      });
+
+      describe('list grab', () => {
+        it('grabs matching rules', () => {
+
+          const list = rule.rules.grab({ c: 'nested' }).grab({ c: 'nested-2' });
+
+          expect(ruleSelectors(list)).toEqual([nested2.selector]);
+        });
+      });
+
+      describe('nested grab', () => {
+        it('grabs matching nested rules', () => {
+
+          const list = rule.rules.nested.grab({ c: 'nested' });
+
+          expect(ruleSelectors(list)).toEqual([nested1.selector]);
+        });
       });
     });
   });
@@ -366,122 +484,6 @@ describe('StypRule', () => {
 
       rule.remove(reason);
       expect(whenDone).toHaveBeenCalledWith(reason);
-    });
-  });
-
-  describe('grab', () => {
-
-    let nested1: StypRule;
-    let nested2: StypRule;
-
-    beforeEach(() => {
-      nested1 = rule.rules.add({ c: ['nested', 'nested-1'] });
-      nested2 = nested1.rules.add({ c: ['nested', 'nested-2'] });
-    });
-
-    it('returns all rules for empty query', () => {
-      expect(rule.grab({})).toBe(rule.rules);
-    });
-
-    it('contains matching rules', () => {
-
-      const list = rule.grab({ c: 'nested' });
-
-      expect(ruleSelectors(list)).toEqual([nested1.selector, nested2.selector]);
-    });
-    it('tracks matching rule addition', () => {
-
-      const list = rule.grab({ c: 'nested' });
-      const onUpdate = jest.fn();
-      const receiver = jest.fn();
-
-      list.onUpdate(onUpdate);
-      list.read(receiver);
-      receiver.mockClear();
-
-      const nested3 = rule.rules.add({ c: 'nested' });
-
-      expect(onUpdate).toHaveBeenCalled();
-
-      const [added, removed] = onUpdate.mock.calls[0];
-
-      expect(ruleSelectors(added)).toEqual([nested3.selector]);
-      expect(removed).toHaveLength(0);
-      expect(receiver).toHaveBeenCalledWith(list);
-      expect(ruleSelectors(list)).toEqual([nested1.selector, nested2.selector, nested3.selector]);
-    });
-    it('tracks matching rule removal', () => {
-
-      const list = rule.grab({ c: 'nested' });
-      const onUpdate = jest.fn();
-      const receiver = jest.fn();
-
-      list.onUpdate(onUpdate);
-      list.read(receiver);
-      receiver.mockClear();
-
-      nested2.remove();
-
-      expect(onUpdate).toHaveBeenCalled();
-
-      const [added, removed] = onUpdate.mock.calls[0];
-
-      expect(added).toHaveLength(0);
-      expect(ruleSelectors(removed)).toEqual([nested2.selector]);
-      expect(receiver).toHaveBeenCalledWith(list);
-      expect(ruleSelectors(list)).toEqual([nested1.selector]);
-    });
-    it('reflects, but does not track modification when interest lost', () => {
-
-      const list = rule.rules.grab({ c: 'nested' });
-      const onUpdate = jest.fn();
-
-      const interest = list.onUpdate(onUpdate);
-
-      const nested3 = rule.rules.add({ c: ['nested', 'nested-3'] });
-
-      expect(onUpdate).toHaveBeenCalled();
-      onUpdate.mockClear();
-
-      interest.off();
-
-      const nested4 = rule.rules.add({ c: ['nested', 'nested-4'] });
-      expect(onUpdate).not.toHaveBeenCalled();
-
-      expect(ruleSelectors(list)).toEqual([nested1.selector, nested2.selector, nested3.selector, nested4.selector]);
-    });
-    it('ignores non-matching rule addition', () => {
-
-      const list = rule.grab({ c: 'nested' });
-      const onUpdate = jest.fn();
-      const receiver = jest.fn();
-
-      list.onUpdate(onUpdate);
-      list.read(receiver);
-      receiver.mockClear();
-
-      rule.rules.add({ c: 'nested-3' });
-
-      expect(onUpdate).not.toHaveBeenCalled();
-      expect(receiver).not.toHaveBeenCalled();
-    });
-
-    describe('list grab', () => {
-      it('grabs matching rules', () => {
-
-        const list = rule.grab({ c: 'nested' }).grab({ c: 'nested-2' });
-
-        expect(ruleSelectors(list)).toEqual([nested2.selector]);
-      });
-    });
-
-    describe('nested grab', () => {
-      it('grabs matching nested rules', () => {
-
-        const list = rule.rules.nested.grab({ c: 'nested' });
-
-        expect(ruleSelectors(list)).toEqual([nested1.selector]);
-      });
     });
   });
 });
