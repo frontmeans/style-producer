@@ -88,7 +88,7 @@ describe('produceStyle', () => {
     expect(calls).toEqual([2, 1]);
   });
   it('renders raw CSS text', () => {
-    root.addRule({ c: 'custom' }, 'font-size: 12px !important;');
+    root.rules.add({ c: 'custom' }, 'font-size: 12px !important;');
     produceStyle(root.rules, { schedule: scheduleNow });
 
     const style = cssStyle('.custom');
@@ -97,7 +97,7 @@ describe('produceStyle', () => {
     expect(style.getPropertyPriority('font-size')).toBe('important');
   });
   it('renders raw CSS text before CSS properties', () => {
-    root.addRule({ c: 'custom' }, { fontSize: '11px', $$css: 'font-weight: bold; font-size: 12px;' });
+    root.rules.add({ c: 'custom' }, { fontSize: '11px', $$css: 'font-weight: bold; font-size: 12px;' });
     produceStyle(root.rules, { schedule: scheduleNow });
 
     const style = cssStyle('.custom');

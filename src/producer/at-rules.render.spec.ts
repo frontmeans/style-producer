@@ -25,7 +25,7 @@ describe('stypRenderAtRules', () => {
   });
 
   it('does not append at-rules to non-grouping target', () => {
-    root.addRule({ c: 'screen-only', $: '@media=screen' }, { display: 'block' });
+    root.rules.add({ c: 'screen-only', $: '@media=screen' }, { display: 'block' });
     mockRender.mockImplementation((producer, properties) => {
       producer.render(properties, { target: producer.addRule() });
     });
@@ -34,21 +34,21 @@ describe('stypRenderAtRules', () => {
     expect(itsEmpty(mediaRules()));
   });
   it('appends rule to at-rule to grouping target', () => {
-    root.addRule({ c: 'screen-only', $: '@media=screen' }, { display: 'block' });
+    root.rules.add({ c: 'screen-only', $: '@media=screen' }, { display: 'block' });
     doProduceStyle();
     expect(atSelector('.screen-only')).toBe('.screen-only');
     expect(cssStyle('.screen-only').display).toBe('block');
     expect(itsEmpty(mediaRules('screen'))).toBe(false);
   });
   it('recognizes qualified at-rule qualifiers', () => {
-    root.addRule({ c: 'screen-only', $: '@media:scr:sm=screen' }, { display: 'block' });
+    root.rules.add({ c: 'screen-only', $: '@media:scr:sm=screen' }, { display: 'block' });
     doProduceStyle();
     expect(atSelector('.screen-only')).toBe('.screen-only');
     expect(cssStyle('.screen-only').display).toBe('block');
     expect(itsEmpty(mediaRules('screen'))).toBe(false);
   });
   it('supports multiple at-rule qualifiers', () => {
-    root.addRule([
+    root.rules.add([
           { c: 'screen-only', $: ['@media:scr=screen', '@media:sm=(max-width:620px)'] },
           '>',
           { c: 'nested' }
@@ -61,20 +61,20 @@ describe('stypRenderAtRules', () => {
     expect(itsEmpty(mediaRules('screen and (max-width:620px)'))).toBe(false);
   });
   it('supports at-rule qualifiers without values', () => {
-    root.addRule({ c: 'paged', $: '@page' }, { display: 'block' });
+    root.rules.add({ c: 'paged', $: '@page' }, { display: 'block' });
     doProduceStyle();
     expect(atSelector('.paged')).toBe('.paged');
     expect(cssStyle('.paged').display).toBe('block');
     expect(itsEmpty(cssStyles('@page'))).toBe(false);
   });
   it('respects non-at-rule qualifiers', () => {
-    root.addRule({ c: 'qualified', $: ['@media=print', 'other'] });
+    root.rules.add({ c: 'qualified', $: ['@media=print', 'other'] });
     doProduceStyle();
     expect(atSelector('.qualified')).toBe('.qualified@other');
     expect(itsEmpty(mediaRules('print'))).toBe(false);
   });
   it('does not append at-rules to non-at-rules qualified rules', () => {
-    root.addRule({ c: 'qualified', $: ['non-at-rule'] });
+    root.rules.add({ c: 'qualified', $: ['non-at-rule'] });
     doProduceStyle();
     expect(atSelector('.qualified')).toBe('.qualified@non-at-rule');
     expect(itsEmpty(mediaRules()));

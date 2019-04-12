@@ -156,12 +156,12 @@ describe('produceBasicStyle', () => {
     expect(cssStyle('.root').background).toBe('white');
   });
   it('renders rule', () => {
-    root.addRule({ c: 'custom' }, { display: 'block' });
+    root.rules.add({ c: 'custom' }, { display: 'block' });
     produceBasicStyle(root.rules, { schedule: scheduleNow });
     expect(cssStyle('.custom').display).toBe('block');
   });
   it('renders important properties', () => {
-    root.addRule({ c: 'custom' }, { fontSize: '12px !important' });
+    root.rules.add({ c: 'custom' }, { fontSize: '12px !important' });
     produceBasicStyle(root.rules, { schedule: scheduleNow });
 
     const style = cssStyle('.custom');
@@ -171,14 +171,14 @@ describe('produceBasicStyle', () => {
   });
   it('appends rule', () => {
     produceBasicStyle(root.rules, { schedule: scheduleNow });
-    root.addRule({ c: 'custom' }, { display: 'block' });
+    root.rules.add({ c: 'custom' }, { display: 'block' });
     expect(cssStyle('.custom').display).toBe('block');
   });
   it('updates rule', () => {
 
     const properties = trackValue<StypProperties>({ display: 'block' });
 
-    root.addRule({ c: 'custom' }, properties);
+    root.rules.add({ c: 'custom' }, properties);
     produceBasicStyle(root.rules, { schedule: scheduleNow });
     properties.it = { display: 'inline-block' };
 
@@ -186,7 +186,7 @@ describe('produceBasicStyle', () => {
   });
   it('removes rule', () => {
 
-    const rule = root.addRule({ c: 'custom' }, { display: 'block' });
+    const rule = root.rules.add({ c: 'custom' }, { display: 'block' });
     const interest = produceBasicStyle(root.rules, { schedule: scheduleNow });
     const onDone = jest.fn();
 
@@ -205,7 +205,7 @@ describe('produceBasicStyle', () => {
 
     const mockRender = jest.fn();
     const properties = trackValue<StypProperties>({ display: 'block' });
-    const rule = root.addRule({ c: 'custom' }, properties);
+    const rule = root.rules.add({ c: 'custom' }, properties);
 
     produceBasicStyle(rule.rules, { schedule: mockScheduler, render: mockRender });
     properties.it = { display: 'inline-block' };
@@ -219,7 +219,7 @@ describe('produceBasicStyle', () => {
 
     const properties = trackValue<StypProperties>({ display: 'block' });
 
-    root.addRule({ c: 'custom' }, properties);
+    root.rules.add({ c: 'custom' }, properties);
     produceBasicStyle(root.rules, { schedule: scheduleNow }).off();
 
     properties.it = { display: 'inline-block' };

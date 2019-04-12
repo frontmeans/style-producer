@@ -1,6 +1,7 @@
 import { StypSelector } from '../selector';
 import { StypProperties } from './properties';
-import { StypRule } from './rule.impl';
+import { StypRule as StypRule_ } from './rule.impl';
+import { StypRule } from './rule';
 import { stypPropertiesBySpec } from './properties.impl';
 
 const rootSelector: StypSelector.Normalized = [];
@@ -17,5 +18,5 @@ const rootSelector: StypSelector.Normalized = [];
  * @returns New root CSS rule.
  */
 export function stypRoot(properties?: StypProperties.Spec): StypRule {
-  return new StypRule(undefined, rootSelector, [], properties ? r => stypPropertiesBySpec(r, properties) : undefined);
+  return new StypRule_(undefined, rootSelector, [], properties ? r => stypPropertiesBySpec(r, properties) : undefined);
 }

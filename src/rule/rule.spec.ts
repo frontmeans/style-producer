@@ -31,18 +31,12 @@ describe('StypRule', () => {
   beforeEach(() => {
     selector = [{ e: 'test-element' }];
     mockSpec = jest.fn(r => afterEventOf({}));
-    rule = root.addRule(selector, mockSpec);
+    rule = root.rules.add(selector, mockSpec);
   });
 
   describe('empty', () => {
     it('is `false`', () => {
       expect(rule.empty).toBe(false);
-    });
-  });
-
-  describe('rules', () => {
-    it('empty by default', () => {
-      expect(itsEmpty(rule.nested)).toBe(true);
     });
   });
 
@@ -67,26 +61,10 @@ describe('StypRule', () => {
     });
   });
 
-  describe('rule', () => {
-    it('returns undefined for absent rule', () => {
-      expect(rule.rule({ c: 'absent' })).toBeUndefined();
-    });
-    it('returns itself for empty selector', () => {
-      expect(rule.rule('')).toBe(rule);
-    });
-    it('returns target nested rule', () => {
-
-      const nestedSelector: StypSelector = { c: 'nested' };
-      const nested = rule.addRule(nestedSelector);
-
-      expect(rule.rule(nestedSelector)).toBe(nested);
-    });
-  });
-
   describe('set', () => {
 
     beforeEach(() => {
-      rule = root.addRule([ { e: 'element-1' }, '>', { e: 'element-1-1' }], { display: 'block' });
+      rule = root.rules.add([ { e: 'element-1' }, '>', { e: 'element-1-1' }], { display: 'block' });
     });
 
     it('replaces properties', async () => {
@@ -101,7 +79,7 @@ describe('StypRule', () => {
   describe('add', () => {
 
     beforeEach(() => {
-      rule = root.addRule([ { e: 'element-1' }, '>', { e: 'element-1-1' }]);
+      rule = root.rules.add([ { e: 'element-1' }, '>', { e: 'element-1-1' }]);
     });
 
     let update: ValueTracker<StypProperties>;
@@ -114,14 +92,14 @@ describe('StypRule', () => {
     let rule2: StypRule;
 
     beforeEach(() => {
-      rule2 = root.addRule([ { e: 'element-1', $: 'biz' }]);
+      rule2 = root.rules.add([ { e: 'element-1', $: 'biz' }]);
     });
 
     it('updates existing rule', () => {
       expect(rule).toBe(rule);
     });
-    it('stores rule rule in hierarchy', () => {
-      expect(root.rule(rule.selector)).toBe(rule);
+    it('stores rule in hierarchy', () => {
+      expect(root.rules.get(rule.selector)).toBe(rule);
     });
     it('applies update', async () => {
       expect(await ruleProperties(rule)).toEqual(update.it);
@@ -134,11 +112,11 @@ describe('StypRule', () => {
 
       expect(await ruleProperties(rule)).toEqual({ ...update.it, ...update2 });
     });
-    it('merges updated properties by `addRule', async () => {
+    it('merges updated properties by `rules.add()', async () => {
 
       const update2: StypProperties = { width: '100%' };
 
-      root.addRule(rule.selector, update2);
+      root.rules.add(rule.selector, update2);
 
       expect(await ruleProperties(rule)).toEqual({ ...update.it, ...update2 });
     });
@@ -147,15 +125,15 @@ describe('StypRule', () => {
       const update2: StypProperties = { width: '100%' };
       const updated2 = rule2.add(update2);
 
-      expect(root.rule(rule2.selector)).toEqual(updated2);
+      expect(root.rules.get(rule2.selector)).toEqual(updated2);
       expect(await ruleProperties(updated2)).toEqual(update2);
     });
     it('adds nested rule', async () => {
 
       const update2: StypProperties = { width: '100%' };
-      const updated2 = rule.addRule({ e: 'element-1-2' }, update2);
+      const updated2 = rule.rules.add({ e: 'element-1-2' }, update2);
 
-      expect(root.rule(updated2.selector)).toBe(updated2);
+      expect(root.rules.get(updated2.selector)).toBe(updated2);
       expect(await ruleProperties(updated2)).toEqual(update2);
     });
     it('sends updated properties', async () => {
@@ -175,7 +153,7 @@ describe('StypRule', () => {
 
   describe('clear', () => {
     beforeEach(() => {
-      rule = root.addRule([{ e: 'element-1' }, '>', { e: 'element-1-1' }], { display: 'block' });
+      rule = root.rules.add([{ e: 'element-1' }, '>', { e: 'element-1-1' }], { display: 'block' });
       rule.clear();
     });
 
@@ -187,92 +165,114 @@ describe('StypRule', () => {
     });
   });
 
-  describe('addRule', () => {
-    it('adds nested rule', () => {
-
-      const subSelector = stypSelector(['>', { c: 'nested' }]);
-      const nested = rule.addRule(subSelector);
-
-      expect(ruleSelectors(rule.nested)).toContain(nested.selector);
-      expect(nested.selector).toEqual([...rule.selector, ...subSelector]);
-      expect(nested.key).toEqual(subSelector);
+  describe('rules', () => {
+    describe('nested', () => {
+      it('empty by default', () => {
+        expect(itsEmpty(rule.rules.nested)).toBe(true);
+      });
     });
-    it('sends rule list update', () => {
+    describe('get', () => {
+      it('returns undefined for absent rule', () => {
+        expect(rule.rules.get({ c: 'absent' })).toBeUndefined();
+      });
+      it('returns itself for empty selector', () => {
+        expect(rule.rules.get('')).toBe(rule);
+      });
+      it('returns target nested rule', () => {
 
-      const updateReceiver = jest.fn();
-      const rootUpdateReceiver = jest.fn();
+        const nestedSelector: StypSelector = { c: 'nested' };
+        const nested = rule.rules.add(nestedSelector);
 
-      rule.rules.onUpdate(updateReceiver);
-      root.rules.onUpdate(rootUpdateReceiver);
-
-      const subSelector = stypSelector([{ c: 'nested' }, '>', { c: 'nested-deeper' }]);
-      const nested = rule.addRule(subSelector);
-
-      expect(updateReceiver).toHaveBeenCalled();
-      expect(rootUpdateReceiver).toHaveBeenCalled();
-
-      const [added, removed] = updateReceiver.mock.calls[0];
-      const [addedToRoot, removedFromRoot] = updateReceiver.mock.calls[0];
-
-      expect(removed).toHaveLength(0);
-      expect(removedFromRoot).toBe(removed);
-      expect(ruleSelectors(added)).toEqual([[...rule.selector, subSelector[0]], nested.selector]);
-      expect(addedToRoot).toBe(added);
+        expect(rule.rules.get(nestedSelector)).toBe(nested);
+      });
     });
-    it('sends nested list update', () => {
+    describe('add', () => {
+      it('adds nested rule', () => {
 
-      const updateReceiver = jest.fn();
-      const rootUpdateReceiver = jest.fn();
+        const subSelector = stypSelector(['>', { c: 'nested' }]);
+        const nested = rule.rules.add(subSelector);
 
-      rule.nested.onUpdate(updateReceiver);
-      root.nested.onUpdate(rootUpdateReceiver);
+        expect(ruleSelectors(rule.rules.nested)).toContain(nested.selector);
+        expect(nested.selector).toEqual([...rule.selector, ...subSelector]);
+        expect(nested.key).toEqual(subSelector);
+      });
+      it('sends rule list update', () => {
 
-      const subSelector = stypSelector([{ c: 'nested' }, '>', { c: 'nested-deeper' }]);
+        const updateReceiver = jest.fn();
+        const rootUpdateReceiver = jest.fn();
 
-      rule.addRule(subSelector);
+        rule.rules.onUpdate(updateReceiver);
+        root.rules.onUpdate(rootUpdateReceiver);
 
-      expect(updateReceiver).toHaveBeenCalled();
-      expect(rootUpdateReceiver).not.toHaveBeenCalled();
+        const subSelector = stypSelector([{ c: 'nested' }, '>', { c: 'nested-deeper' }]);
+        const nested = rule.rules.add(subSelector);
 
-      const [added, removed] = updateReceiver.mock.calls[0];
+        expect(updateReceiver).toHaveBeenCalled();
+        expect(rootUpdateReceiver).toHaveBeenCalled();
 
-      expect(removed).toHaveLength(0);
-      expect(ruleSelectors(added)).toEqual([[...rule.selector, subSelector[0]]]);
-    });
-    it('updates rule list', () => {
+        const [added, removed] = updateReceiver.mock.calls[0];
+        const [addedToRoot, removedFromRoot] = updateReceiver.mock.calls[0];
 
-      const listReceiver = jest.fn();
-      const rootListReceiver = jest.fn();
+        expect(removed).toHaveLength(0);
+        expect(removedFromRoot).toBe(removed);
+        expect(ruleSelectors(added)).toEqual([[...rule.selector, subSelector[0]], nested.selector]);
+        expect(addedToRoot).toBe(added);
+      });
+      it('sends nested list update', () => {
 
-      rule.rules.read(listReceiver);
-      listReceiver.mockClear();
-      root.rules.read(rootListReceiver);
-      rootListReceiver.mockClear();
+        const updateReceiver = jest.fn();
+        const rootUpdateReceiver = jest.fn();
 
-      const subSelector = stypSelector([{ c: 'nested' }, '>', { c: 'nested-deeper' }]);
-      const nested = rule.addRule(subSelector);
+        rule.rules.nested.onUpdate(updateReceiver);
+        root.rules.nested.onUpdate(rootUpdateReceiver);
 
-      expect(listReceiver).toHaveBeenCalledWith(rule.rules);
-      expect(rootListReceiver).toHaveBeenCalledWith(root.rules);
-      expect(ruleSelectors(rule.rules)).toEqual([rule.selector, [...rule.selector, subSelector[0]], nested.selector]);
-    });
-    it('updates nested list', () => {
+        const subSelector = stypSelector([{ c: 'nested' }, '>', { c: 'nested-deeper' }]);
 
-      const listReceiver = jest.fn();
-      const rootListReceiver = jest.fn();
+        rule.rules.add(subSelector);
 
-      rule.nested.read(listReceiver);
-      listReceiver.mockClear();
-      root.nested.read(rootListReceiver);
-      rootListReceiver.mockClear();
+        expect(updateReceiver).toHaveBeenCalled();
+        expect(rootUpdateReceiver).not.toHaveBeenCalled();
 
-      const subSelector = stypSelector([{ c: 'nested' }, '>', { c: 'nested-deeper' }]);
+        const [added, removed] = updateReceiver.mock.calls[0];
 
-      rule.addRule(subSelector);
+        expect(removed).toHaveLength(0);
+        expect(ruleSelectors(added)).toEqual([[...rule.selector, subSelector[0]]]);
+      });
+      it('updates rule list', () => {
 
-      expect(listReceiver).toHaveBeenCalledWith(rule.nested);
-      expect(rootListReceiver).not.toHaveBeenCalled();
-      expect(ruleSelectors(rule.nested)).toEqual([[...rule.selector, subSelector[0]]]);
+        const listReceiver = jest.fn();
+        const rootListReceiver = jest.fn();
+
+        rule.rules.read(listReceiver);
+        listReceiver.mockClear();
+        root.rules.read(rootListReceiver);
+        rootListReceiver.mockClear();
+
+        const subSelector = stypSelector([{ c: 'nested' }, '>', { c: 'nested-deeper' }]);
+        const nested = rule.rules.add(subSelector);
+
+        expect(listReceiver).toHaveBeenCalledWith(rule.rules);
+        expect(rootListReceiver).toHaveBeenCalledWith(root.rules);
+        expect(ruleSelectors(rule.rules)).toEqual([rule.selector, [...rule.selector, subSelector[0]], nested.selector]);
+      });
+      it('updates nested list', () => {
+
+        const listReceiver = jest.fn();
+        const rootListReceiver = jest.fn();
+
+        rule.rules.nested.read(listReceiver);
+        listReceiver.mockClear();
+        root.rules.nested.read(rootListReceiver);
+        rootListReceiver.mockClear();
+
+        const subSelector = stypSelector([{ c: 'nested' }, '>', { c: 'nested-deeper' }]);
+
+        rule.rules.add(subSelector);
+
+        expect(listReceiver).toHaveBeenCalledWith(rule.rules.nested);
+        expect(rootListReceiver).not.toHaveBeenCalled();
+        expect(ruleSelectors(rule.rules.nested)).toEqual([[...rule.selector, subSelector[0]]]);
+      });
     });
   });
 
@@ -283,7 +283,7 @@ describe('StypRule', () => {
 
     beforeEach(() => {
       subSelector = stypSelector([{ c: 'nested' }, '>', { c: 'nested-deeper' }]);
-      nested = rule.addRule(subSelector);
+      nested = rule.rules.add(subSelector);
     });
 
     it('sends rule list update', () => {
@@ -294,7 +294,7 @@ describe('StypRule', () => {
       onEventFrom(rule.rules)(updateReceiver);
       onEventFrom(root.rules)(rootUpdateReceiver);
 
-      rule.rule(subSelector[0])!.remove();
+      rule.rules.get(subSelector[0])!.remove();
 
       expect(updateReceiver).toHaveBeenCalled();
       expect(rootUpdateReceiver).toHaveBeenCalled();
@@ -312,10 +312,10 @@ describe('StypRule', () => {
       const updateReceiver = jest.fn();
       const rootUpdateReceiver = jest.fn();
 
-      onEventFrom(rule.nested)(updateReceiver);
-      onEventFrom(root.nested)(rootUpdateReceiver);
+      onEventFrom(rule.rules.nested)(updateReceiver);
+      onEventFrom(root.rules.nested)(rootUpdateReceiver);
 
-      rule.rule(subSelector[0])!.remove();
+      rule.rules.get(subSelector[0])!.remove();
 
       expect(updateReceiver).toHaveBeenCalled();
       expect(rootUpdateReceiver).not.toHaveBeenCalled();
@@ -335,7 +335,7 @@ describe('StypRule', () => {
       afterEventFrom(root.rules)(rootListReceiver);
       rootListReceiver.mockClear();
 
-      rule.rule(subSelector[0])!.remove();
+      rule.rules.get(subSelector[0])!.remove();
 
       expect(listReceiver).toHaveBeenCalledWith(rule.rules);
       expect(rootListReceiver).toHaveBeenCalledWith(root.rules);
@@ -346,16 +346,16 @@ describe('StypRule', () => {
       const listReceiver = jest.fn();
       const rootListReceiver = jest.fn();
 
-      afterEventFrom(rule.nested)(listReceiver);
+      afterEventFrom(rule.rules.nested)(listReceiver);
       listReceiver.mockClear();
-      afterEventFrom(root.nested)(rootListReceiver);
+      afterEventFrom(root.rules.nested)(rootListReceiver);
       rootListReceiver.mockClear();
 
-      rule.rule(subSelector[0])!.remove();
+      rule.rules.get(subSelector[0])!.remove();
 
-      expect(listReceiver).toHaveBeenCalledWith(rule.nested);
+      expect(listReceiver).toHaveBeenCalledWith(rule.rules.nested);
       expect(rootListReceiver).not.toHaveBeenCalled();
-      expect(ruleSelectors(rule.nested)).toHaveLength(0);
+      expect(ruleSelectors(rule.rules.nested)).toHaveLength(0);
     });
     it('exhaust events', () => {
 
@@ -375,8 +375,8 @@ describe('StypRule', () => {
     let nested2: StypRule;
 
     beforeEach(() => {
-      nested1 = rule.addRule({ c: ['nested', 'nested-1'] });
-      nested2 = nested1.addRule({ c: ['nested', 'nested-2'] });
+      nested1 = rule.rules.add({ c: ['nested', 'nested-1'] });
+      nested2 = nested1.rules.add({ c: ['nested', 'nested-2'] });
     });
 
     it('returns all rules for empty query', () => {
@@ -399,7 +399,7 @@ describe('StypRule', () => {
       list.read(receiver);
       receiver.mockClear();
 
-      const nested3 = rule.addRule({ c: 'nested' });
+      const nested3 = rule.rules.add({ c: 'nested' });
 
       expect(onUpdate).toHaveBeenCalled();
 
@@ -433,19 +433,19 @@ describe('StypRule', () => {
     });
     it('reflects, but does not track modification when interest lost', () => {
 
-      const list = rule.grab({ c: 'nested' });
+      const list = rule.rules.grab({ c: 'nested' });
       const onUpdate = jest.fn();
 
       const interest = list.onUpdate(onUpdate);
 
-      const nested3 = rule.addRule({ c: ['nested', 'nested-3'] });
+      const nested3 = rule.rules.add({ c: ['nested', 'nested-3'] });
 
       expect(onUpdate).toHaveBeenCalled();
       onUpdate.mockClear();
 
       interest.off();
 
-      const nested4 = rule.addRule({ c: ['nested', 'nested-4'] });
+      const nested4 = rule.rules.add({ c: ['nested', 'nested-4'] });
       expect(onUpdate).not.toHaveBeenCalled();
 
       expect(ruleSelectors(list)).toEqual([nested1.selector, nested2.selector, nested3.selector, nested4.selector]);
@@ -460,7 +460,7 @@ describe('StypRule', () => {
       list.read(receiver);
       receiver.mockClear();
 
-      rule.addRule({ c: 'nested-3' });
+      rule.rules.add({ c: 'nested-3' });
 
       expect(onUpdate).not.toHaveBeenCalled();
       expect(receiver).not.toHaveBeenCalled();
@@ -478,7 +478,7 @@ describe('StypRule', () => {
     describe('nested grab', () => {
       it('grabs matching nested rules', () => {
 
-        const list = rule.nested.grab({ c: 'nested' });
+        const list = rule.rules.nested.grab({ c: 'nested' });
 
         expect(ruleSelectors(list)).toEqual([nested1.selector]);
       });
@@ -499,16 +499,16 @@ describe('empty rule', () => {
 
   beforeEach(() => {
     selector = [{ c: ['nested'] }];
-    rule = root.addRule(selector);
+    rule = root.rules.add(selector);
   });
 
   it('is empty', () => {
     expect(rule.empty).toBe(true);
   });
 
-  describe('nested', () => {
+  describe('rules.nested', () => {
     it('are empty', () => {
-      expect(itsEmpty(rule.nested)).toBe(true);
+      expect(itsEmpty(rule.rules.nested)).toBe(true);
     });
   });
 
@@ -525,14 +525,14 @@ describe('empty rule', () => {
 
     beforeEach(() => {
       subSelector = [{ c: ['sub-nested'] }];
-      subNested = rule.addRule(subSelector);
+      subNested = rule.rules.add(subSelector);
     });
 
     it('returns empty selector', () => {
       expect(subNested.empty).toBe(true);
     });
     it('returns itself when selector is empty', () => {
-      expect(rule.rule({})).toBe(rule);
+      expect(rule.rules.get({})).toBe(rule);
     });
     it('has the same root', () => {
       expect(subNested.root).toBe(root);

@@ -3,7 +3,7 @@ import { StypProperties } from './properties';
 import { stypRuleKeyText } from '../selector/selector-text.impl';
 import { mergeStypProperties, noStypPropertiesSpec, stypPropertiesBySpec } from './properties.impl';
 import { stypRuleKeyAndTail } from '../selector/selector.impl';
-import { StypRule as StypRule_, StypRuleList } from './rule';
+import { StypRule as StypRule_, StypRuleHierarchy, StypRuleList } from './rule';
 import {
   AfterEvent,
   afterEventFrom,
@@ -93,7 +93,7 @@ function grabRules(list: StypRuleList, query: StypQuery): StypRuleList {
   return q ? new GrabbedRules(list, q) : list;
 }
 
-class AllRules extends StypRuleList {
+class AllRules extends StypRuleHierarchy {
 
   private readonly _updates = new EventEmitter<[StypRule[], StypRule[]]>();
   readonly read: AfterEvent<[AllRules]>;
@@ -102,7 +102,7 @@ class AllRules extends StypRuleList {
     return this._updates.on;
   }
 
-  constructor(private readonly _root: StypRule) {
+  constructor(private readonly _root: StypRule, readonly nested: NestedRules) {
     super();
     this.read = afterEventFrom<[AllRules]>(this._updates.on.thru(() => this), [this]);
   }
@@ -113,6 +113,28 @@ class AllRules extends StypRuleList {
 
   grab(query: StypQuery.Element | StypQuery.NonElement): StypRuleList {
     return grabRules(this, query);
+  }
+
+  add(selector: StypSelector, properties?: StypProperties.Spec): StypRule {
+    return extendRule(this._root, stypSelector(selector), properties, true);
+  }
+
+  get(selector: StypSelector): StypRule | undefined {
+
+    const sel = stypSelector(selector);
+    const [key, tail] = stypRuleKeyAndTail(sel);
+
+    if (!tail) {
+      return this._root;
+    }
+
+    const found = this.nested._rule(stypRuleKeyText(key));
+
+    if (!found) {
+      return;
+    }
+
+    return found.rules.get(tail);
   }
 
   _add(rule: StypRule, sendUpdate: boolean) {
@@ -141,7 +163,7 @@ function allRules(rule: StypRule): StypRule[] {
 
 function *iterateAllRules(rule: StypRule): IterableIterator<StypRule> {
   yield rule;
-  for (const nested of rule.nested) {
+  for (const nested of rule.rules.nested) {
     yield *allRules(nested);
   }
 }
@@ -159,7 +181,7 @@ class NestedRules extends StypRuleList {
 
   constructor(root: StypRule) {
     super();
-    this._all = new AllRules(root);
+    this._all = new AllRules(root, this);
     this.read = afterEventFrom<[NestedRules]>(this._updates.on.thru(() => this), [this]);
   }
 
@@ -223,10 +245,6 @@ export class StypRule extends StypRule_ {
     return this._read;
   }
 
-  get nested(): NestedRules {
-    return this._nested;
-  }
-
   get rules(): AllRules {
     return this._nested._all;
   }
@@ -245,31 +263,9 @@ export class StypRule extends StypRule_ {
     this._nested = new NestedRules(this);
   }
 
-  rule(selector: StypSelector): StypRule | undefined {
-
-    const sel = stypSelector(selector);
-    const [key, tail] = stypRuleKeyAndTail(sel);
-
-    if (!tail) {
-      return this;
-    }
-
-    const found = this.nested._rule(stypRuleKeyText(key));
-
-    if (!found) {
-      return;
-    }
-
-    return found.rule(tail);
-  }
-
   set(properties?: StypProperties.Spec): this {
     this._spec.it = properties ? r => stypPropertiesBySpec(r, properties) : noStypPropertiesSpec;
     return this;
-  }
-
-  addRule(selector: StypSelector, properties?: StypProperties.Spec): StypRule {
-    return extendRule(this, stypSelector(selector), properties, true);
   }
 
   remove(reason?: any) {
@@ -294,7 +290,7 @@ function extendRule(
   }
 
   const keyText = stypRuleKeyText(key);
-  const found = rule.nested._rule(keyText);
+  const found = rule.rules.nested._rule(keyText);
 
   if (found) {
     return extendRule(found, tail, properties, sendUpdate);
@@ -303,7 +299,7 @@ function extendRule(
   const newNested = new StypRule(rule.root, [...rule.selector, ...key], key);
   const result = extendRule(newNested, tail, properties, false); // Send only a top-level update
 
-  rule.nested._add(keyText, newNested, sendUpdate);
+  rule.rules.nested._add(keyText, newNested, sendUpdate);
 
   return result;
 }

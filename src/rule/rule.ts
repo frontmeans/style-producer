@@ -43,23 +43,9 @@ export abstract class StypRule implements EventKeeper<[StypProperties]> {
   }
 
   /**
-   * Dynamic list of all CSS rules directly nested within this one.
-   */
-  abstract readonly nested: StypRuleList;
-
-  /**
    * Dynamic list of all CSS rules in hierarchy starting from this one.
    */
-  abstract readonly rules: StypRuleList;
-
-  /**
-   * Returns nested CSS rule matching the given `selector`.
-   *
-   * @param selector Target rule selector.
-   *
-   * @returns Either matching CSS rule, or `undefined` if not found.
-   */
-  abstract rule(selector: StypSelector): StypRule | undefined;
+  abstract readonly rules: StypRuleHierarchy;
 
   /**
    * Grabs rules matching the given `query`.
@@ -91,7 +77,7 @@ export abstract class StypRule implements EventKeeper<[StypProperties]> {
    * @returns `this` rule instance.
    */
   add(properties: StypProperties.Spec): this {
-    return this.addRule([], properties) as this;
+    return this.rules.add([], properties) as this;
   }
 
   /**
@@ -104,18 +90,6 @@ export abstract class StypRule implements EventKeeper<[StypProperties]> {
   clear(): this {
     return this.set();
   }
-
-  /**
-   * Appends CSS properties to the nested rule.
-   *
-   * Creates target rule if necessary.
-   *
-   * @param selector Target rule selector.
-   * @param properties Optional CSS properties specifier.
-   *
-   * @returns Modified CSS rule.
-   */
-  abstract addRule(selector: StypSelector, properties?: StypProperties.Spec): StypRule;
 
   /**
    * Removes this rule from hierarchy along with all nested rules.
@@ -178,5 +152,38 @@ export abstract class StypRuleList implements StypRules, EventKeeper<[StypRuleLi
    * @returns Dynamic list of rules in this list matching the given query.
    */
   abstract grab(query: StypQuery): StypRuleList;
+
+}
+
+/**
+ * Dynamic list of all CSS rules in hierarchy starting from its root.
+ */
+export abstract class StypRuleHierarchy extends StypRuleList {
+
+  /**
+   * Dynamic list of all CSS rules directly nested within the root one.
+   */
+  abstract readonly nested: StypRuleList;
+
+  /**
+   * Appends CSS properties to nested rule.
+   *
+   * Creates target rule if necessary.
+   *
+   * @param selector Target rule selector.
+   * @param properties Optional CSS properties specifier.
+   *
+   * @returns Modified CSS rule.
+   */
+  abstract add(selector: StypSelector, properties?: StypProperties.Spec): StypRule;
+
+  /**
+   * Returns nested CSS rule matching the given `selector`.
+   *
+   * @param selector Target rule selector.
+   *
+   * @returns Either matching CSS rule, or `undefined` if not found.
+   */
+  abstract get(selector: StypSelector): StypRule | undefined;
 
 }
