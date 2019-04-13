@@ -34,6 +34,71 @@ describe('StypRule', () => {
     rule = root.rules.add(selector, mockSpec);
   });
 
+  describe('outer', () => {
+    it('is `null` for root', () => {
+      expect(root.outer).toBeNull();
+    });
+    it('is root for top-level descendant', () => {
+
+      const nested = root.rules.add({ c: 'nested' });
+
+      expect(nested.outer).toBe(root);
+    });
+    it('is root for top-level child', () => {
+
+      const nested = root.rules.add(['>', { c: 'nested' }]);
+
+      expect(nested.outer).toBe(root);
+    });
+    it('is `null` for top-level sibling', () => {
+
+      const nested = root.rules.add(['+', { c: 'nested' }]);
+
+      expect(nested.outer).toBeNull();
+    });
+    it('is parent for descendant', () => {
+
+      const nested = rule.rules.add({ c: 'nested' });
+
+      expect(nested.outer).toBe(rule);
+      expect(rule.outer).toBe(root);
+    });
+    it('is parent for child', () => {
+
+      const nested = rule.rules.add(['>', { c: 'nested' }]);
+
+      expect(nested.outer).toBe(rule);
+    });
+    it('is grand parent for adjacent sibling', () => {
+
+      const nested = rule.rules.add({ c: 'nested' });
+      const sibling = nested.rules.add(['+', { c: 'sibling' }]);
+
+      expect(sibling.outer).toBe(rule);
+    });
+    it('is grand parent for general sibling', () => {
+
+      const nested = rule.rules.add({ c: 'nested' });
+      const sibling = nested.rules.add(['~', { c: 'sibling' }]);
+
+      expect(sibling.outer).toBe(rule);
+    });
+    it('handles multiple siblings', () => {
+
+      const nested = rule.rules.add({ c: 'nested' });
+      const sibling1 = nested.rules.add(['~', { c: 'sibling' }]);
+      const sibling2 = sibling1.rules.add(['+', { c: 'sibling' }]);
+
+      expect(sibling2.outer).toBe(rule);
+    });
+    it('caches the result', () => {
+
+      const nested = rule.rules.add({ c: 'nested' });
+
+      expect(nested.outer).toBe(nested.outer);
+    });
+  });
+
   describe('empty', () => {
     it('is `false`', () => {
       expect(rule.empty).toBe(false);

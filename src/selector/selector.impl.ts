@@ -117,3 +117,33 @@ export function stypRuleKeyAndTail(
     return [key, selector.slice(i)];
   }
 }
+
+const rootSelector: StypSelector.Normalized = [];
+
+/**
+ * @internal
+ */
+export function stypOuterSelector(selector: StypSelector.Normalized): StypSelector.Normalized | undefined {
+
+  let i = selector.length - 1;
+
+  if (i <= 0) {
+    return i ? undefined : rootSelector;
+  }
+
+  do {
+    --i;
+    switch (selector[i]) {
+      case '>':
+        return selector.slice(0, i);
+      case '+':
+      case '~':
+        --i;
+        continue;
+      default:
+        return selector.slice(0, i + 1);
+    }
+  } while (i > 0);
+
+  return;
+}

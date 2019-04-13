@@ -2,7 +2,7 @@ import { StypQuery, stypQuery, StypRuleKey, stypSelector, StypSelector, stypSele
 import { StypProperties } from './properties';
 import { stypRuleKeyText } from '../selector/selector-text.impl';
 import { mergeStypProperties, noStypPropertiesSpec, stypPropertiesBySpec } from './properties.impl';
-import { stypRuleKeyAndTail } from '../selector/selector.impl';
+import { stypOuterSelector, stypRuleKeyAndTail } from '../selector/selector.impl';
 import { StypRule as StypRule_, StypRuleHierarchy, StypRuleList } from './rule';
 import {
   AfterEvent,
@@ -219,6 +219,7 @@ class NestedRules extends StypRuleList {
 export class StypRule extends StypRule_ {
 
   private readonly _root: StypRule;
+  private _outer?: StypRule | null;
   private readonly _selector: StypSelector.Normalized;
   private readonly _key: StypRuleKey;
   readonly _spec: ValueTracker<StypProperties.Builder>;
@@ -227,6 +228,16 @@ export class StypRule extends StypRule_ {
 
   get root(): StypRule {
     return this._root;
+  }
+
+  get outer(): StypRule | null {
+    if (this._outer !== undefined) {
+      return this._outer;
+    }
+
+    const outerSelector = stypOuterSelector(this.selector);
+
+    return this._outer = outerSelector && this.root.rules.get(outerSelector) || null;
   }
 
   get selector(): StypSelector.Normalized {

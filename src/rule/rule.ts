@@ -10,9 +10,19 @@ import { StypProperties } from './properties';
 export abstract class StypRule implements EventKeeper<[StypProperties]> {
 
   /**
-   * A reference to root CSS rule.
+   * A reference to the root CSS rule.
    */
   abstract readonly root: StypRule;
+
+  /**
+   * A reference to outer CSS rule.
+   *
+   * The outer rule is the one for enclosing element.
+   * I.e. for the rule with selector is `a b+c` the parent one is `a b`, while the outer one is `a`.
+   *
+   * This is `null` for the root rule and may be `null` for the rule removed from hierarchy.
+   */
+  abstract readonly outer: StypRule | null;
 
   /**
    * CSS selector of this rule.
