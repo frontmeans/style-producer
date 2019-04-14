@@ -1,6 +1,6 @@
 import { StypProperties, stypRoot, StypRule } from '../rule';
 import { produceBasicStyle } from './produce-basic-style';
-import { AIterable, itsEmpty, overArray } from 'a-iterable';
+import { itsEmpty } from 'a-iterable';
 import { trackValue } from 'fun-events';
 import { cssStyle, cssStyles, removeStyleElements, scheduleNow } from '../spec';
 import { StypRender } from './render';
@@ -154,6 +154,11 @@ describe('produceBasicStyle', () => {
     root.add({ background: 'white' });
     produceBasicStyle(root.rules, { schedule: scheduleNow, rootSelector: '.root' });
     expect(cssStyle('.root').background).toBe('white');
+  });
+  it('renders root-combined rule', () => {
+    root.rules.add(['>', { c: 'nested' }], { background: 'white' });
+    produceBasicStyle(root.rules, { schedule: scheduleNow, rootSelector: '.root' });
+    expect(cssStyle('.root>.nested').background).toBe('white');
   });
   it('renders rule', () => {
     root.rules.add({ c: 'custom' }, { display: 'block' });

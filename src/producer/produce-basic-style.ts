@@ -7,6 +7,7 @@ import { StyleProducer, StypOptions } from './style-producer';
 import { StypRender } from './render';
 import { stypRenderFactories } from './options.impl';
 import { isCSSRuleGroup } from './render.impl';
+import { isCombinator } from '../selector/selector.impl';
 
 /**
  * Produces and dynamically updates basic CSS stylesheets based on the given CSS rules.
@@ -130,6 +131,9 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
     if (!selector.length) {
       // Use configured root selector
       selector = stypSelector(rootSelector);
+    } else if (isCombinator(selector[0])) {
+      // First combinator is relative to root selector
+      selector = [...stypSelector(rootSelector), ...selector];
     }
 
     return rule.read(renderProperties).whenDone(removeStyle);
