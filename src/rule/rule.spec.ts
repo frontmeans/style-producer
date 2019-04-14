@@ -242,7 +242,7 @@ describe('StypRule', () => {
         expect(rule.rules.get({ c: 'absent' })).toBeUndefined();
       });
       it('returns itself for empty selector', () => {
-        expect(rule.rules.get('')).toBe(rule);
+        expect(rule.rules.get([])).toBe(rule);
       });
       it('returns target nested rule', () => {
 
@@ -350,10 +350,6 @@ describe('StypRule', () => {
       beforeEach(() => {
         nested1 = rule.rules.add({ c: ['nested', 'nested-1'] });
         nested2 = nested1.rules.add({ c: ['nested', 'nested-2'] });
-      });
-
-      it('returns all rules for empty query', () => {
-        expect(rule.rules.grab({})).toBe(rule.rules);
       });
 
       it('contains matching rules', () => {
@@ -599,7 +595,7 @@ describe('empty rule', () => {
       expect(subNested.empty).toBe(true);
     });
     it('returns itself when selector is empty', () => {
-      expect(rule.rules.get({})).toBe(rule);
+      expect(rule.rules.get([])).toBe(rule);
     });
     it('has the same root', () => {
       expect(subNested.root).toBe(root);

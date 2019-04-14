@@ -56,24 +56,30 @@ function formatItem(
     { qualify }: StypSelectorTextOpts): string {
 
   const { ns, e, i, c, s, $ } = item;
-  let string: string;
+  let hasProperties = false;
+  let string = '';
 
-  if (ns != null) {
-    string = `${ns}|${e}`;
-  } else {
-    string = e || '';
-  }
   if (i) {
+    hasProperties = true;
     string += `#${cssescId(i)}`;
   }
   if (c) {
+    hasProperties = true;
     string = c.reduce((result, className) => `${result}.${cssescId(className)}`, string);
   }
   if (s) {
+    hasProperties = true;
     string += s;
   }
   if (qualify && $) {
     string = $.reduce((result, qualifier) => result + qualify(qualifier), string);
+  }
+  if (ns) {
+    string = `${ns}|${e || '*'}${string}`;
+  } else if (hasProperties) {
+    string = `${e || ''}${string}`;
+  } else {
+    string = `${e || '*'}${string}`;
   }
 
   return string;

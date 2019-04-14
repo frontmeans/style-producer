@@ -4,41 +4,55 @@ describe('stypSelector', () => {
   it('converts string to raw selector', () => {
     expect(stypSelector('abc')).toEqual([{ s: 'abc' }]);
   });
-  it('converts empty string to empty selector', () => {
-    expect(stypSelector('')).toHaveLength(0);
+  it('handles empty string', () => {
+    expect(stypSelector('')).toEqual([{}]);
   });
-  it('handles empty selector', () => {
-    expect(stypSelector({})).toHaveLength(0);
-  });
-  it('strips empty selector', () => {
-    expect(stypSelector([{ e: 'span' }, '>', {}, { c: 'nested' }])).toEqual([{ e: 'span' }, '>', { c: ['nested'] }]);
+  it('handles empty selector part', () => {
+    expect(stypSelector({})).toEqual([{}]);
   });
   it('handles raw selector', () => {
     expect(stypSelector({ s: 'abc' })).toEqual([{ s: 'abc' }]);
   });
   it('handles empty raw selector', () => {
-    expect(stypSelector({ s: '' })).toHaveLength(0);
+    expect(stypSelector({ s: '' })).toEqual([{}]);
   });
   it('handles combinators', () => {
     expect(stypSelector(['abc', '>', { e: 'def' }])).toEqual([{ s: 'abc' }, '>', { e: 'def' }]);
   });
-  it('strips subsequent combinators', () => {
-    expect(stypSelector(['abc', '>', '+', '~', { e: 'def' }])).toEqual([{ s: 'abc' }, '>', { e: 'def' }]);
+  it('handles subsequent combinators', () => {
+    expect(stypSelector([
+      'abc',
+      '>',
+      '+',
+      '~',
+      { e: 'def' },
+    ])).toEqual([
+      { s: 'abc' },
+      '>',
+      {},
+      '+',
+      {},
+      '~',
+      { e: 'def' },
+    ]);
   });
-  it('strips last combinators', () => {
-    expect(stypSelector(['abc', '>', '+'])).toEqual([{ s: 'abc' }]);
+  it('handles trailing combinators', () => {
+    expect(stypSelector(['abc', '>', '+'])).toEqual([{ s: 'abc' }, '>', {}, '+', {}]);
   });
   it('handles id', () => {
     expect(stypSelector({ i: 'abc' })).toEqual([{ i: 'abc' }]);
   });
   it('handles empty id', () => {
-    expect(stypSelector({ i: '' })).toHaveLength(0);
+    expect(stypSelector({ i: '' })).toEqual([{}]);
   });
   it('handles element', () => {
     expect(stypSelector({ e: 'span' })).toEqual([{ e: 'span' }]);
   });
   it('handles empty element', () => {
-    expect(stypSelector({ e: '' })).toHaveLength(0);
+    expect(stypSelector({ e: '' })).toEqual([{}]);
+  });
+  it('normalizes `*` element', () => {
+    expect(stypSelector({ e: '*' })).toEqual([{}]);
   });
   it('normalizes classes', () => {
     expect(stypSelector({ c: 'abc' })).toEqual([{ c: ['abc'] }]);

@@ -4,9 +4,6 @@ describe('stypQuery', () => {
   it('normalizes query', () => {
     expect(stypQuery({ e: 'span', c: 'some' })).toEqual({ e: 'span', c: ['some'] });
   });
-  it('returns `undefined` for empty query', () => {
-    expect(stypQuery({})).toBeUndefined();
-  });
 });
 
 describe('stypSelectorMatches', () => {

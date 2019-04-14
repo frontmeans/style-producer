@@ -11,6 +11,12 @@ describe('stypSelectorText', () => {
   it('prints namespace', () => {
     expect(stypSelectorText({ ns: 'foo', e: 'bar' })).toBe('foo|bar');
   });
+  it('prints generic element', () => {
+    expect(stypSelectorText({ $: 'foo' })).toBe('*');
+  });
+  it('prints generic namespaced element', () => {
+    expect(stypSelectorText({ ns: 'foo' })).toBe('foo|*');
+  });
   it('prints identifier', () => {
     expect(stypSelectorText({ i: 'foo:bar' })).toBe('#foo\\:bar');
   });

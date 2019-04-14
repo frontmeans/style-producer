@@ -13,23 +13,22 @@ export function isCombinator(item: string | StypSelector.Part | StypSelector.Com
 /**
  * @internal
  */
-export function normalizeStypSelectorPart(part: StypSelector.Part): StypSelector.NormalizedPart | undefined {
-
-  const ns = part.ns || undefined;
-  const e = part.e || undefined;
-  const i = part.i || undefined;
-  const s = part.s || undefined;
-  const c = normalizeClasses(part.c);
-  const $ = normalizeQualifiers(part.$);
-
-  if (!e && !i && !s && !c && !$) {
-    return;
-  }
-
-  return { ns, e, i, s, c, $ } as StypSelector.NormalizedPart;
+export function normalizeStypSelectorPart(part: StypSelector.Part): StypSelector.NormalizedPart {
+  return {
+    ns: part.ns || undefined,
+    e: normalizeElement(part.e),
+    i: part.i || undefined,
+    s: part.s || undefined,
+    c: normalizeClasses(part.c),
+    $: normalizeQualifiers(part.$)
+  };
 }
 
-function normalizeClasses(classes: string | string[] | undefined): string[] | undefined {
+function normalizeElement(e: string | undefined): string | undefined {
+  return e !== '*' && e || undefined;
+}
+
+function normalizeClasses(classes: string | string[] | undefined): [string, ...string[]] | undefined {
   if (!classes) {
     return;
   }
@@ -39,10 +38,10 @@ function normalizeClasses(classes: string | string[] | undefined): string[] | un
 
   classes = classes.filter(c => !!c);
 
-  return classes.length ? classes.sort() : undefined;
+  return classes.length ? classes.sort() as [string, ...string[]] : undefined;
 }
 
-function normalizeQualifiers(qualifiers: string | string[] | undefined): string[] | undefined {
+function normalizeQualifiers(qualifiers: string | string[] | undefined): [string, ...string[]] | undefined {
   if (!qualifiers) {
     return;
   }
@@ -58,7 +57,7 @@ function normalizeQualifiers(qualifiers: string | string[] | undefined): string[
     ].sort();
   }
 
-  return qualifiers.length ? qualifiers : undefined;
+  return qualifiers.length ? qualifiers as [string, ...string[]] : undefined;
 }
 
 const noQualifiers: Set<string> = new Set();

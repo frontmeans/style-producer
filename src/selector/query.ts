@@ -7,8 +7,38 @@ import { normalizeStypSelectorPart } from './selector.impl';
  * It may represent a selector like `element-name#id.class1.classN` with any of sub-parts omitted.
  *
  * Queries are used to grab a subset of matching rules from `StypRule`.
+ *
+ * All of its properties are optional.
  */
-export type StypQuery = StypQuery.Element | StypQuery.NonElement;
+export interface StypQuery {
+
+  /**
+   * Element namespace.
+   */
+  ns?: string;
+
+  /**
+   * Element name.
+   *
+   * This is the same as `*` when absent.
+   */
+  e?: string;
+
+  /**
+   * Element identifier.
+   */
+  i?: string;
+
+  /**
+   * Element class or classes.
+   */
+  c?: string | string[];
+
+  /**
+   * Qualifier or qualifiers.
+   */
+  $?: string | string[];
+}
 
 export namespace StypQuery {
 
@@ -16,55 +46,6 @@ export namespace StypQuery {
    * Normalized CSS rule query.
    */
   export type Normalized = StypQuery & StypSelector.NormalizedPart;
-
-  /**
-   * Base structure of CSS rule query.
-   *
-   * All of it sub-parts are optional.
-   */
-  export interface Base {
-
-    /**
-     * Element namespace.
-     */
-    ns?: string;
-
-    /**
-     * Element name.
-     */
-    e?: string;
-
-    /**
-     * Element identifier.
-     */
-    i?: string;
-
-    /**
-     * Element class or classes.
-     */
-    c?: string | string[];
-
-    /**
-     * Qualifier or qualifiers.
-     */
-    $?: string | string[];
-
-  }
-
-  /**
-   * CSS rule query containing element selector.
-   */
-  export interface Element extends Base {
-    e: string;
-  }
-
-  /**
-   * CSS rule query not containing element selector (and thus not containing namespace selector).
-   */
-  export interface NonElement extends Base {
-    ns?: undefined;
-    e?: undefined;
-  }
 
 }
 
@@ -75,7 +56,7 @@ export namespace StypQuery {
  *
  * @returns Normalized CSS rule query.
  */
-export function stypQuery(query: StypQuery): StypQuery.Normalized | undefined {
+export function stypQuery(query: StypQuery): StypQuery.Normalized {
   return normalizeStypSelectorPart(query);
 }
 

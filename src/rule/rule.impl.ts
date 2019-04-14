@@ -80,17 +80,14 @@ class GrabbedRules extends StypRuleList {
     }
   }
 
-  grab(query: StypQuery.Element | StypQuery.NonElement): StypRuleList {
+  grab(query: StypQuery): StypRuleList {
     return grabRules(this, query);
   }
 
 }
 
 function grabRules(list: StypRuleList, query: StypQuery): StypRuleList {
-
-  const q = stypQuery(query);
-
-  return q ? new GrabbedRules(list, q) : list;
+  return new GrabbedRules(list, stypQuery(query));
 }
 
 class AllRules extends StypRuleHierarchy {
@@ -111,7 +108,7 @@ class AllRules extends StypRuleHierarchy {
     return iterateAllRules(this._root);
   }
 
-  grab(query: StypQuery.Element | StypQuery.NonElement): StypRuleList {
+  grab(query: StypQuery): StypRuleList {
     return grabRules(this, query);
   }
 
@@ -189,7 +186,7 @@ class NestedRules extends StypRuleList {
     return this._byKey.values();
   }
 
-  grab(query: StypQuery.Element | StypQuery.NonElement): StypRuleList {
+  grab(query: StypQuery): StypRuleList {
     return grabRules(this, query);
   }
 

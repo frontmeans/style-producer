@@ -33,15 +33,10 @@ export namespace StypSelector {
    * It may represent a selector like `element-name#id.class1.classN[attr1][attr2]:pseudo-class::pseudo-element` with
    * any of sub-parts omitted. Attributes, pseudo-classes, and pseudo-elements are represented as raw CSS text and never
    * interpreted by this library. A raw CSS selector can also be represented by this structure.
-   */
-  export type Part = Element | NonElement;
-
-  /**
-   * Base structure of the part of structured CSS selector.
    *
-   * All of it sub-parts are optional.
+   * All of the properties are optional.
    */
-  export interface PartBase {
+  export interface Part {
 
     /**
      * Element namespace.
@@ -50,6 +45,8 @@ export namespace StypSelector {
 
     /**
      * Element name.
+     *
+     * This is the same as `*` when absent.
      */
     e?: string;
 
@@ -88,42 +85,22 @@ export namespace StypSelector {
   }
 
   /**
-   * CSS selector part containing element selector.
-   */
-  export interface Element extends PartBase {
-    e: string;
-  }
-
-  /**
-   * CSS selector part not containing element selector (and thus not containing namespace selector).
-   */
-  export interface NonElement extends PartBase {
-    ns?: undefined;
-    e?: undefined;
-  }
-
-  /**
    * Normalized part of structured CSS selector.
    *
    * Normalized part:
-   * - is not empty, i.e. has at least one property,
-   * - does not contain empty sub-parts,
+   * - does not contain empty properties,
+   * - does not contain element `*`,
    * - does not contain empty class names,
-   * - does not contain empty class array,
+   * - does not contain empty class names array,
    * - class names are sorted,
    * - does not contain empty qualifiers,
    * - does not contain empty qualifiers array,
    * - qualifiers are exposed, e.g. `foo:bar=baz` is exposed as three qualifiers: `foo`, `foo:bar`, and `foo:bar=baz`
    * - qualifiers are sorted.
    *
-   * The `stypSelector()` function always returns an array of normalized parts.
+   * The `stypSelector()` function always returns an array containing normalized parts.
    */
-  export type NormalizedPart = NormalizedElement | NormalizedNonElement;
-
-  /**
-   * Normalized CSS selector part containing element selector.
-   */
-  export interface NormalizedElement extends Element {
+  export interface NormalizedPart extends Part {
 
     /**
      * Array of classes. Either absent, or non-empty and containing non-empty class names sorted alphabetically.
@@ -135,34 +112,6 @@ export namespace StypSelector {
      */
     $?: [string, ...string[]];
 
-  }
-
-  /**
-   * Normalized CSS selector part not containing element selector (and thus not containing namespace selector).
-   */
-  export interface NormalizedNonElement extends NonElement {
-
-    /**
-     * Array of classes. Either absent, or non-empty and containing non-empty class names sorted alphabetically.
-     */
-    c?: [string, ...string[]];
-
-    /**
-     * Array of qualifiers. Either absent, or non-empty and containing non-empty qualifiers sorted alphabetically.
-     */
-    $?: [string, ...string[]];
-
-  }
-
-  /**
-   * Raw CSS selector text representation.
-   *
-   * It contains only `s` property and optionally qualifiers.
-   */
-  export interface Raw extends NormalizedNonElement {
-    i?: undefined;
-    c?: undefined;
-    s: string;
   }
 
 }
