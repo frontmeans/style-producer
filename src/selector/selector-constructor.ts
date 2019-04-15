@@ -1,5 +1,6 @@
 import { StypSelector } from './index';
 import { isCombinator, normalizeStypSelectorPart } from './selector.impl';
+import { isReadonlyArray } from '../internal';
 
 /**
  * Converts normalized CSS selector part to normalized CSS selector.
@@ -20,11 +21,11 @@ export function stypSelector(selector: StypSelector.NormalizedPart): [StypSelect
 export function stypSelector(selector: StypSelector): StypSelector.Normalized;
 
 export function stypSelector(selector: StypSelector): StypSelector.Normalized {
-  if (!Array.isArray(selector)) {
+  if (!isReadonlyArray(selector)) {
     return [normalizeKey(selector)];
   }
 
-  const normalized: StypSelector.Normalized = [];
+  const normalized: StypSelector.Mutable = [];
   let combinator: StypSelector.Combinator | undefined;
 
   for (const item of selector) {

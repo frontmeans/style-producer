@@ -8,7 +8,8 @@
  *
  * A normalized structured CSS selector can be constructed using `stypSelector()` function.
  */
-export type StypSelector = string | StypSelector.Part | (string | StypSelector.Part | StypSelector.Combinator)[];
+export type StypSelector =
+    string | StypSelector.Part | readonly (string | StypSelector.Part | StypSelector.Combinator)[];
 
 export namespace StypSelector {
 
@@ -20,7 +21,12 @@ export namespace StypSelector {
    *
    * Normalized selector never contains empty parts.
    */
-  export type Normalized = (NormalizedPart | Combinator)[];
+  export type Normalized = readonly (NormalizedPart | Combinator)[];
+
+  /**
+   * Mutable normalized structured CSS selector.
+   */
+  export type Mutable = (NormalizedPart | Combinator)[];
 
   /**
    * CSS selector combinator. One of `'>'`, `'+'`, or `'~'`. A space combinator is represented by combinator absence.

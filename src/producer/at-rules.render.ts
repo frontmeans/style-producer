@@ -4,6 +4,7 @@ import { StypSelector, stypSelector } from '../selector';
 import { StypProperties } from '../rule';
 import { isCombinator } from '../selector/selector.impl';
 import { isCSSRuleGroup } from './render.impl';
+import { isNotEmptyArray } from '../internal/types';
 
 /**
  * CSS stylesheet render of at-rules like `@media` queries.
@@ -69,7 +70,7 @@ function extractAtSelectors(
     [Map<string, [string[], string?]>, StypSelector.Normalized] | undefined {
 
   const atSelectors = new Map<string, [string[], string?]>();
-  const rest: StypSelector.Normalized = [];
+  const rest: StypSelector.Mutable = [];
 
   for (const part of selector) {
     if (isCombinator(part)) {
@@ -110,11 +111,11 @@ function extractPartAtSelectors(
   if (restQualifies.length === qualifiers.length) {
     return part; // No at-rule qualifiers found
   }
-  if (!restQualifies.length) {
-    return { ...part, $: undefined };
+  if (isNotEmptyArray(restQualifies)) {
+    return { ...part, $: restQualifies };
   }
 
-  return { ...part, $: restQualifies as [string, ...string[]] };
+  return { ...part, $: undefined };
 }
 
 function addAtSelector(atSelectors: Map<string, [string[], string?]>, qualifier: string) {

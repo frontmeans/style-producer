@@ -1,7 +1,7 @@
 import { StypSelector } from './selector';
 import { StypRuleKey } from './rule-key';
 import { flatMapIt, itsReduction } from 'a-iterable';
-import { isReadonlyArray } from '../internal';
+import { isNotEmptyArray, isReadonlyArray } from '../internal';
 
 /**
  * @internal
@@ -40,7 +40,7 @@ function normalizeClasses(classes: string | readonly string[] | undefined):
 
   const result = classes.filter(c => !!c);
 
-  return result.length ? result.sort() as [string, ...string[]] : undefined;
+  return isNotEmptyArray(result) ? result.sort() : undefined;
 }
 
 function normalizeQualifiers(qualifiers: string | readonly string[] | undefined):
@@ -60,7 +60,7 @@ function normalizeQualifiers(qualifiers: string | readonly string[] | undefined)
     ].sort();
   }
 
-  return qualifiers.length ? qualifiers as [string, ...string[]] : undefined;
+  return isNotEmptyArray(qualifiers) ? qualifiers : undefined;
 }
 
 const noQualifiers: Set<string> = new Set();
