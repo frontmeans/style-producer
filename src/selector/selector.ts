@@ -41,24 +41,24 @@ export namespace StypSelector {
     /**
      * Element namespace.
      */
-    ns?: string;
+    readonly ns?: string;
 
     /**
      * Element name.
      *
      * This is the same as `*` when absent.
      */
-    e?: string;
+    readonly e?: string;
 
     /**
      * Element identifier.
      */
-    i?: string;
+    readonly i?: string;
 
     /**
      * Element class or classes.
      */
-    c?: string | string[];
+    readonly c?: string | readonly string[];
 
     /**
      * Raw CSS selector text to append to the end.
@@ -67,7 +67,7 @@ export namespace StypSelector {
      *
      * When all other properties are omitted this one represents a raw CSS selector text.
      */
-    s?: string;
+    readonly s?: string;
 
     /**
      * Qualifier or qualifiers.
@@ -80,7 +80,7 @@ export namespace StypSelector {
      *
      * Example: `foo:bar:baz=some value` matches `foo:bar:baz=some value`, `foo:bar:baz`, `foo:bar`, and `foo`.
      */
-    $?: string | string[];
+    readonly $?: string | readonly string[];
 
   }
 
@@ -105,12 +105,12 @@ export namespace StypSelector {
     /**
      * Array of classes. Either absent, or non-empty and containing non-empty class names sorted alphabetically.
      */
-    c?: [string, ...string[]];
+    readonly c?: readonly [string, ...string[]];
 
     /**
      * Array of qualifiers. Either absent, or non-empty and containing non-empty qualifiers sorted alphabetically.
      */
-    $?: [string, ...string[]];
+    readonly $?: readonly [string, ...string[]];
 
   }
 

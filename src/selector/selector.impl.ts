@@ -1,6 +1,7 @@
 import { StypSelector } from './selector';
 import { StypRuleKey } from './rule-key';
 import { flatMapIt, itsReduction } from 'a-iterable';
+import { isReadonlyArray } from '../internal';
 
 /**
  * @internal
@@ -28,25 +29,27 @@ function normalizeElement(e: string | undefined): string | undefined {
   return e !== '*' && e || undefined;
 }
 
-function normalizeClasses(classes: string | string[] | undefined): [string, ...string[]] | undefined {
+function normalizeClasses(classes: string | readonly string[] | undefined):
+    readonly [string, ...string[]] | undefined {
   if (!classes) {
     return;
   }
-  if (!Array.isArray(classes)) {
+  if (!isReadonlyArray(classes)) {
     return [classes];
   }
 
-  classes = classes.filter(c => !!c);
+  const result = classes.filter(c => !!c);
 
-  return classes.length ? classes.sort() as [string, ...string[]] : undefined;
+  return result.length ? result.sort() as [string, ...string[]] : undefined;
 }
 
-function normalizeQualifiers(qualifiers: string | string[] | undefined): [string, ...string[]] | undefined {
+function normalizeQualifiers(qualifiers: string | readonly string[] | undefined):
+    readonly [string, ...string[]] | undefined {
   if (!qualifiers) {
     return;
   }
 
-  if (!Array.isArray(qualifiers)) {
+  if (!isReadonlyArray(qualifiers)) {
     qualifiers = [...exposeQualifier(qualifiers)];
   } else {
     qualifiers = [

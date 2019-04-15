@@ -15,29 +15,29 @@ export interface StypQuery {
   /**
    * Element namespace.
    */
-  ns?: string;
+  readonly ns?: string;
 
   /**
    * Element name.
    *
    * This is the same as `*` when absent.
    */
-  e?: string;
+  readonly e?: string;
 
   /**
    * Element identifier.
    */
-  i?: string;
+  readonly i?: string;
 
   /**
    * Element class or classes.
    */
-  c?: string | string[];
+  readonly c?: string | readonly string[];
 
   /**
    * Qualifier or qualifiers.
    */
-  $?: string | string[];
+  readonly $?: string | readonly string[];
 }
 
 export namespace StypQuery {
@@ -95,6 +95,6 @@ export function stypSelectorMatches(selector: StypSelector.Normalized, query: St
   return true;
 }
 
-function classesMatch(classes: string[] | undefined, query: string[]) {
+function classesMatch(classes: readonly string[] | undefined, query: readonly string[]) {
   return classes && query.every(qClass => classes.indexOf(qClass) >= 0);
 }
