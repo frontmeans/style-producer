@@ -1,14 +1,19 @@
 import { StypOptions } from './style-producer';
 import { StypRender } from './render';
 import { stypRenderProperties } from './properties.render';
+import { StypRule } from '../rule';
+
+export interface StypRenderSpecFactory extends StypRender.Factory {
+  create(rule: StypRule): StypRender.Spec;
+}
 
 /**
  * @internal
  */
-export function stypRenderFactories(opts: StypOptions): StypRender.Factory[] {
+export function stypRenderFactories(opts: StypOptions): StypRenderSpecFactory[] {
 
   const render = opts.render;
-  let factories: StypRender.Factory[];
+  let factories: StypRenderSpecFactory[];
 
   if (!render) {
     factories = [];
@@ -23,16 +28,21 @@ export function stypRenderFactories(opts: StypOptions): StypRender.Factory[] {
   return factories;
 }
 
-function renderFactory(render: StypRender): StypRender.Factory {
+function renderFactory(render: StypRender): StypRenderSpecFactory {
   if (typeof render === 'function') {
     return {
       create() {
-        return render;
+        return { render };
       }
     };
   }
   if (isFactory(render)) {
-    return render;
+    return {
+      order: render.order,
+      create(rule) {
+        return renderSpec(render.create(rule));
+      },
+    };
   }
 
   const doRender = render.render.bind(render);
@@ -40,7 +50,7 @@ function renderFactory(render: StypRender): StypRender.Factory {
   return {
     order: render.order,
     create() {
-      return doRender;
+      return { render: doRender };
     },
   };
 }
@@ -55,4 +65,8 @@ function compareRenders(first: StypRender.Factory, second: StypRender.Factory): 
   const secondOrder = second.order || 0;
 
   return firstOrder > secondOrder ? 1 : firstOrder < secondOrder ? -1 : 0;
+}
+
+function renderSpec(render: ReturnType<StypRender.Factory['create']>): StypRender.Spec {
+  return typeof render === 'function' ? { render } : render;
 }

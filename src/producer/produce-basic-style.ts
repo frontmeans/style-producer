@@ -1,5 +1,5 @@
 import { StypProperties, StypRule, StypRules } from '../rule';
-import { eventInterest, EventInterest, onEventFrom } from 'fun-events';
+import { AfterEvent, afterEventFrom, eventInterest, EventInterest, onEventFrom } from 'fun-events';
 import { itsReduction, mapIt } from 'a-iterable';
 import { StypSelector, stypSelector, stypSelectorText } from '../selector';
 import { noop } from 'call-thru';
@@ -124,6 +124,7 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
 
   function renderRule(rule: StypRule): EventInterest {
 
+    const [ reader, render ] = renderForRule(rule);
     let _element: HTMLStyleElement | undefined;
     let _rev = 0;
     let selector = rule.selector;
@@ -136,7 +137,7 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
       selector = [...stypSelector(rootSelector), ...selector];
     }
 
-    return rule.read(renderProperties).whenDone(removeStyle);
+    return reader(renderProperties).whenDone(removeStyle);
 
     function renderProperties(properties: StypProperties) {
 
@@ -161,7 +162,7 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
         }
 
         const target = _element.sheet as CSSStyleSheet;
-        const producer = styleProducer(rule, renderForRule(rule), { target, selector } );
+        const producer = styleProducer(rule, render, { target, selector });
 
         producer.render(properties);
       }
@@ -190,11 +191,14 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
     }
   }
 
-  function renderForRule(rule: StypRule): StypRender.Function {
+  function renderForRule(rule: StypRule): [AfterEvent<[StypProperties]>, StypRender.Function] {
 
-    const renders = factories.map(factory => factory.create(rule));
+    const specs = factories.map(factory => factory.create(rule));
+    const reader = specs.reduce(
+        (read, spec) => spec.read ? afterEventFrom(spec.read(read)) : read,
+        rule.read);
 
-    return renderAt(0);
+    return [reader, renderAt(0)];
 
     function renderAt(index: number): StypRender.Function {
       return (producer, properties) => {
@@ -210,7 +214,7 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
 
         const nextProducer = styleProducer(producer.rule, nextRender, producer);
 
-        renders[index](nextProducer, properties);
+        specs[index].render(nextProducer, properties);
       };
     }
   }

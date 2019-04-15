@@ -33,7 +33,7 @@ describe('stypRenderAtRules', () => {
     expect(atSelector('.screen-only')).toBeNull();
     expect(itsEmpty(mediaRules()));
   });
-  it('appends rule to at-rule to grouping target', () => {
+  it('appends at-rule to grouping target', () => {
     root.rules.add({ c: 'screen-only', $: '@media=screen' }, { display: 'block' });
     doProduceStyle();
     expect(atSelector('.screen-only')).toBe('.screen-only');
@@ -46,6 +46,17 @@ describe('stypRenderAtRules', () => {
     expect(atSelector('.screen-only')).toBe('.screen-only');
     expect(cssStyle('.screen-only').display).toBe('block');
     expect(itsEmpty(mediaRules('screen'))).toBe(false);
+  });
+  it('handles named at-rule qualifiers', () => {
+
+    const rule = root.rules.add({ c: 'screen-only', $: '@media:scr' }, { '@media:scr': 'screen' });
+
+    rule.rules.add({ c: 'small', $: '@media:scr=(max-width:620px)' }, { display: 'block' });
+
+    doProduceStyle();
+    expect(atSelector('.screen-only .small')).toBe('.screen-only .small');
+    expect(cssStyle('.screen-only .small').display).toBe('block');
+    expect(itsEmpty(mediaRules('screen and (max-width:620px)'))).toBe(false);
   });
   it('supports multiple at-rule qualifiers', () => {
     root.rules.add([

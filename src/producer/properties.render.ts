@@ -1,8 +1,8 @@
 import { StyleProducer } from './style-producer';
 import { StypProperties } from '../rule';
 import { filterIt, itsEach, ObjectEntry, overEntries } from 'a-iterable';
-import { IMPORTANT_CSS_SUFFIX } from '../internal';
 import hyphenateStyleName from 'hyphenate-style-name';
+import { stypPropertyValue } from '../rule/properties.impl';
 
 /**
  * Renders CSS properties.
@@ -15,25 +15,24 @@ export function stypRenderProperties(producer: StyleProducer, properties: StypPr
   const { style } = cssRule;
 
   itsEach(
-      filterIt<ObjectEntry<StypProperties>, [string, StypProperties.Value]>(
+      filterIt<ObjectEntry<StypProperties>, ObjectEntry<StypProperties, string>>(
           overEntries(properties),
           notCustomProperty),
-      ([key, value]) => {
-        value = String(value);
+      ([k, v]) => {
 
-        let priority: 'important' | undefined;
+        const [value, priority] = stypPropertyValue(v);
 
-        if (value.endsWith('!important')) {
-          priority = 'important';
-          value = value.substring(0, value.length - IMPORTANT_CSS_SUFFIX.length).trim();
+        if (value) {
+          style.setProperty(hyphenateStyleName(k), value, priority);
         }
-
-        style.setProperty(hyphenateStyleName(key), value, priority);
       });
 
   producer.render(properties, { target: cssRule });
 }
 
-function notCustomProperty(entry: ObjectEntry<StypProperties>): entry is [string, StypProperties.Value] {
-  return String(entry[0])[0] !== '$';
+function notCustomProperty(entry: ObjectEntry<StypProperties>): entry is ObjectEntry<StypProperties, string> {
+
+  const firstChar = String(entry[0])[0];
+
+  return firstChar !== '$' && firstChar !== '@';
 }

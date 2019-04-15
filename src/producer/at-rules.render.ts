@@ -1,32 +1,30 @@
 import { StypRender } from './render';
 import { StyleProducer } from './style-producer';
 import { StypSelector, stypSelector } from '../selector';
-import { StypProperties } from '../rule';
+import { StypProperties, StypRule } from '../rule';
 import { isCombinator } from '../selector/selector.impl';
 import { isCSSRuleGroup } from './render.impl';
 import { isNotEmptyArray } from '../internal';
+import { AfterEvent, afterEventFrom } from 'fun-events';
+import { mergeStypProperties, stypPropertyValue } from '../rule/properties.impl';
+import { filterIt, itsReduction, ObjectEntry, overEntries } from 'a-iterable';
 
-/**
- * CSS stylesheet render of at-rules like `@media` queries.
- *
- * At-rules are represented by qualifiers which names start with `@` symbol. Qualifier names are used as at-rules keys,
- * and their values - as query parts. If the rest of the selector is not empty, then properties are rendered in CSS
- * rule nested inside at-rule. Otherwise the properties are rendered in at-rule.
- *
- * So, for example CSS rule with `{ c: 'screen-only', $: '@media=screen' }` selector would be rendered as
- * ```css
- * @media screen {
- *   .screen-only {
- *      \/* CSS properties *\/
- *   }
- * }
- * ```
- *
- * Enabled by default in `produceStyle()` function.
- */
-export const stypRenderAtRules: StypRender = {
+class AtRulesRender implements StypRender.Spec {
 
-  order: -0xffff,
+  constructor(private readonly _rule: StypRule) {
+  }
+
+  read(properties: AfterEvent<[StypProperties]>) {
+
+    let outer = this._rule.outer;
+
+    while (outer) {
+      properties = mergeStypProperties(atPropertiesFrom(outer.read), properties);
+      outer = outer.outer;
+    }
+
+    return properties;
+  }
 
   render(producer: StyleProducer, properties: StypProperties) {
 
@@ -48,10 +46,9 @@ export const stypRenderAtRules: StypRender = {
 
     const [atSelectors, restSelector] = extracted;
 
-    for (const [key, [_, query]] of atSelectors) {
+    for (const atSelector of atSelectors) {
 
-      const atSelector = query ? `${key} ${query}` : key;
-      const ruleIdx = sheet.insertRule(`${atSelector}{}`, sheet.cssRules.length);
+      const ruleIdx = sheet.insertRule(`${buildAtSelector(properties, atSelector)}{}`, sheet.cssRules.length);
       const nested: CSSRule = sheet.cssRules[ruleIdx];
 
       target = nested;
@@ -61,15 +58,97 @@ export const stypRenderAtRules: StypRender = {
     }
 
     producer.render(properties, { target, selector: restSelector });
+  }
+
+}
+
+function buildAtSelector(
+    properties: StypProperties,
+    [key, [names, customQuery]]: [string, [Set<string>, string?]]) {
+
+  let query = '';
+
+  for (const name of names) {
+
+    const [namedQuery] = stypPropertyValue(properties[name]);
+
+    addQuery(namedQuery);
+  }
+
+  addQuery(customQuery);
+
+  return query ? `${key} ${query}` : key;
+
+  function addQuery(q?: string) {
+    if (q) {
+      if (query) {
+        query += ' and ';
+      }
+      query += q;
+    }
+  }
+}
+
+/**
+ * CSS stylesheet render of at-rules like `@media` queries.
+ *
+ * At-rules are represented by qualifiers which names start with `@` symbol. Qualifier names are used as at-rules keys,
+ * and their values - as queries. If the rest of the selector is not empty, then properties are rendered in CSS
+ * rule nested inside at-rule. Otherwise the properties are rendered in at-rule.
+ *
+ * So, for example CSS rule with `{ c: 'screen-only', $: '@media=screen' }` selector would be rendered as
+ * ```css
+ * @media screen {
+ *   .screen-only {
+ *      \/* CSS properties *\/
+ *   }
+ * }
+ * ```
+ *
+ * Another option is to use named at-rules qualifiers. When named qualifier is used, the corresponding property is
+ * searched in CSS rule and all of its outer rules. The values of all matching properties are used as queries.
+ *
+ * So the above example could be written as: `{ c: 'screen-only', $: '@media:screen' }` if CSS rule (or its outer
+ * one) contains property `@media:screen` with value `screen`.
+ *
+ * Enabled by default in `produceStyle()` function.
+ */
+export const stypRenderAtRules: StypRender = {
+
+  order: -0xffff,
+
+  create(rule) {
+    return new AtRulesRender(rule);
   },
 
 };
 
+function atPropertiesFrom(properties: AfterEvent<[StypProperties]>): AfterEvent<[StypProperties]> {
+  return afterEventFrom(properties.thru(onlyAtProperties));
+}
+
+function onlyAtProperties(properties: StypProperties): StypProperties {
+  return itsReduction(
+      filterIt<ObjectEntry<StypProperties>, ObjectEntry<StypProperties, string>>(
+          overEntries(properties),
+          isAtEntry),
+      (result: StypProperties.Mutable, [key, value]: ObjectEntry<StypProperties, string>) => {
+        result[key] = value;
+        return result;
+      },
+      {});
+
+}
+
+function isAtEntry(entry: ObjectEntry<StypProperties>): entry is ObjectEntry<StypProperties, string> {
+  return String(entry[0])[0] === '@';
+}
+
 function extractAtSelectors(
     selector: StypSelector.Normalized):
-    [Map<string, [string[], string?]>, StypSelector.Normalized] | undefined {
+    [Map<string, [Set<string>, string?]>, StypSelector.Normalized] | undefined {
 
-  const atSelectors = new Map<string, [string[], string?]>();
+  const atSelectors = new Map<string, [Set<string>, string?]>();
   const rest: StypSelector.Mutable = [];
 
   for (const part of selector) {
@@ -89,7 +168,7 @@ function extractAtSelectors(
 
 function extractPartAtSelectors(
     part: StypSelector.NormalizedPart,
-    atSelectors: Map<string, [string[], string?]>):
+    atSelectors: Map<string, [Set<string>, string?]>):
     StypSelector.NormalizedPart {
 
   const qualifiers = part.$;
@@ -118,7 +197,7 @@ function extractPartAtSelectors(
   return { ...part, $: undefined };
 }
 
-function addAtSelector(atSelectors: Map<string, [string[], string?]>, qualifier: string) {
+function addAtSelector(atSelectors: Map<string, [Set<string>, string?]>, qualifier: string) {
 
   const eqIdx = qualifier.indexOf('=');
   let name: string;
@@ -136,12 +215,12 @@ function addAtSelector(atSelectors: Map<string, [string[], string?]>, qualifier:
   const atSelector = atSelectors.get(key);
 
   if (!atSelector) {
-    atSelectors.set(key, [[name], query]);
+    atSelectors.set(key, [new Set<string>().add(name), query]);
   } else {
 
     const [names, prevQuery] = atSelector;
 
-    names.push(name);
+    names.add(name);
     if (query) {
       atSelector[1] = prevQuery ? `${prevQuery} and ${query}` : query;
     }

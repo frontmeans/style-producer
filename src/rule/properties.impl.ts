@@ -153,6 +153,23 @@ function addValue(
   return properties;
 }
 
+/**
+ * @internal
+ */
+export function stypPropertyValue(value: StypProperties.Value): [string, 'important'?] | [] {
+  if (!value) {
+    return [];
+  }
+
+  value = String(value);
+
+  if (value.endsWith(IMPORTANT_CSS_SUFFIX)) {
+    return[value.substring(0, value.length - IMPORTANT_CSS_SUFFIX.length).trim(), 'important'];
+  }
+
+  return [value];
+}
+
 function isImportantValue(value: StypProperties.Value) {
   return typeof value === 'string' && value.endsWith(IMPORTANT_CSS_SUFFIX);
 }
