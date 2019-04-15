@@ -32,7 +32,7 @@ export function stypRenderProperties(producer: StyleProducer, properties: StypPr
 
 function notCustomProperty(entry: ObjectEntry<StypProperties>): entry is ObjectEntry<StypProperties, string> {
 
-  const firstChar = String(entry[0])[0];
+  const first = String(entry[0])[0];
 
-  return firstChar !== '$' && firstChar !== '@';
+  return first >= 'a' && first <= 'z' || first >= 'A' && first <= 'Z';
 }

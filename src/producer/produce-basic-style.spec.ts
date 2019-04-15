@@ -165,6 +165,23 @@ describe('produceBasicStyle', () => {
     produceBasicStyle(root.rules, { schedule: scheduleNow });
     expect(cssStyle('.custom').display).toBe('block');
   });
+  it('renders prefixed properties', () => {
+    root.rules.add({ c: 'custom' }, { MsCustom: 'ms', MozCustom: 'moz' });
+    produceBasicStyle(root.rules, { schedule: scheduleNow });
+
+    const style = cssStyle('.custom');
+
+    expect(style.getPropertyValue('-ms-custom')).toBe('ms');
+    expect(style.getPropertyValue('-moz-custom')).toBe('moz');
+  });
+  it('does not render custom properties', () => {
+    root.rules.add({ c: 'custom' }, { _custom: 'value' });
+    produceBasicStyle(root.rules, { schedule: scheduleNow });
+
+    const style = cssStyle('.custom');
+
+    expect(style.getPropertyValue('_custom')).toBe('');
+  });
   it('renders important properties', () => {
     root.rules.add({ c: 'custom' }, { fontSize: '12px !important' });
     produceBasicStyle(root.rules, { schedule: scheduleNow });
