@@ -4,7 +4,7 @@ import { StypSelector, stypSelector } from '../selector';
 import { StypProperties } from '../rule';
 import { isCombinator } from '../selector/selector.impl';
 import { isCSSRuleGroup } from './render.impl';
-import { isNotEmptyArray } from '../internal/types';
+import { isNotEmptyArray } from '../internal';
 
 /**
  * CSS stylesheet render of at-rules like `@media` queries.
