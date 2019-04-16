@@ -1,10 +1,12 @@
 import { isCombinator } from './selector.impl';
 import { StypSelector } from './selector';
 import { cssescId } from '../internal';
-import { StypSelectorTextOpts } from './selector-text';
+import { StypSelectorFormat } from './selector-text';
 import { StypRuleKey } from './rule-key';
+import { qualifyClass, qualifyElement, qualifyId, xmlNs } from '../ns/namespace.impl';
+import { NamespaceRegistrar, newNamespaceRegistrar } from '../ns';
 
-const ruleKeyTextOpts: StypSelectorTextOpts = {
+const ruleKeyTextOpts: StypSelectorFormat = {
   qualify(qualifier: string) {
     return `@${cssescId(qualifier)}`;
   }
@@ -17,7 +19,7 @@ export function stypRuleKeyText(key: StypRuleKey): string {
   return formatStypSelector(key, ruleKeyTextOpts);
 }
 
-const displayTextOpts: StypSelectorTextOpts = {
+const displayTextOpts: StypSelectorFormat = {
   qualify(qualifier: string) {
     return `@${qualifier}`;
   }
@@ -30,14 +32,20 @@ export function stypSelectorDisplayText(selector: StypSelector.Normalized): stri
   return formatStypSelector(selector, displayTextOpts);
 }
 
-const defaultTextOpts: StypSelectorTextOpts = {};
+const defaultFormat: StypSelectorFormat = {};
 
 /**
  * @internal
  */
 export function formatStypSelector(
     selector: StypSelector.Normalized,
-    opts: StypSelectorTextOpts = defaultTextOpts): string {
+    {
+      qualify,
+      nsShortcut = newNamespaceRegistrar(),
+    }: StypSelectorFormat = defaultFormat): string {
+
+  const format: ItemFormat = { qualify, nsShortcut };
+
   return selector.reduce(
       (result, item) => {
         if (isCombinator(item)) {
@@ -46,14 +54,21 @@ export function formatStypSelector(
         if (result && !isCombinator(result[result.length - 1])) {
           result += ' ';
         }
-        return result + formatItem(item, opts);
+        return result + formatItem(item, format);
       },
       '');
 }
 
+interface ItemFormat extends StypSelectorFormat {
+  nsShortcut: NamespaceRegistrar;
+}
+
 function formatItem(
     item: StypSelector.NormalizedPart,
-    { qualify }: StypSelectorTextOpts): string {
+    {
+      qualify,
+      nsShortcut,
+    }: ItemFormat): string {
 
   const { ns, e, i, c, s, $ } = item;
   let hasProperties = false;
@@ -61,11 +76,13 @@ function formatItem(
 
   if (i) {
     hasProperties = true;
-    string += `#${cssescId(i)}`;
+    string += `#${cssescId(qualifyId(i, nsShortcut))}`;
   }
   if (c) {
     hasProperties = true;
-    string = c.reduce((result, className) => `${result}.${cssescId(className)}`, string);
+    string = c.reduce<string>(
+        (result, className) => `${result}.${cssescId(qualifyClass(className, nsShortcut))}`,
+        string);
   }
   if (s) {
     hasProperties = true;
@@ -75,11 +92,11 @@ function formatItem(
     string = $.reduce((result, qualifier) => result + qualify(qualifier), string);
   }
   if (ns) {
-    string = `${ns}|${e || '*'}${string}`;
+    string = `${xmlNs(ns, nsShortcut)}|${e || '*'}${string}`;
   } else if (hasProperties) {
-    string = `${e || ''}${string}`;
+    string = `${e ? qualifyElement(e, nsShortcut) : ''}${string}`;
   } else {
-    string = `${e || '*'}${string}`;
+    string = `${e ? qualifyElement(e, nsShortcut) : '*'}${string}`;
   }
 
   return string;

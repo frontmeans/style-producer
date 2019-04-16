@@ -5,6 +5,7 @@ import { produceBasicStyle } from './produce-basic-style';
 import { StypRender } from './render';
 import { stypRenderText } from './text.render';
 import { stypRenderAtRules } from './at-rules.render';
+import { isReadonlyArray } from '../internal';
 
 /**
  * Produces and dynamically updates CSS stylesheets based on the given CSS rules.
@@ -26,7 +27,7 @@ export function produceStyle(rules: StypRules, opts: StypOptions = {}): EventInt
   return produceBasicStyle(rules, { ...opts, render: defaultRenders(opts.render) });
 }
 
-function defaultRenders(render: StypRender | StypRender[] | undefined): StypRender[] {
+function defaultRenders(render: StypRender | readonly StypRender[] | undefined): readonly StypRender[] {
 
   const result: StypRender[] = [
     stypRenderAtRules,
@@ -34,7 +35,7 @@ function defaultRenders(render: StypRender | StypRender[] | undefined): StypRend
   ];
 
   if (render) {
-    if (Array.isArray(render)) {
+    if (isReadonlyArray(render)) {
       result.push(...render);
     } else {
       result.push(render);

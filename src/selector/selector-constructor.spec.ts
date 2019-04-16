@@ -1,6 +1,16 @@
 import { stypSelector } from './selector-constructor';
+import { NamespaceDef } from '../ns';
 
 describe('stypSelector', () => {
+
+  let nsA: NamespaceDef;
+  let nsB: NamespaceDef;
+
+  beforeEach(() => {
+    nsA = new NamespaceDef('A');
+    nsB = new NamespaceDef('B');
+  });
+
   it('converts string to raw selector', () => {
     expect(stypSelector('abc')).toEqual([{ s: 'abc' }]);
   });
@@ -62,6 +72,15 @@ describe('stypSelector', () => {
   });
   it('sorts classes', () => {
     expect(stypSelector({ c: ['def', 'abc'] })).toEqual([{ c: ['abc', 'def'] }]);
+  });
+  it('sorts namespaced classes', () => {
+    expect(stypSelector({ c: [['def', nsA], ['abc', nsB]] })).toEqual([{ c: [['def', nsA], ['abc', nsB]] }]);
+    expect(stypSelector({ c: [['def', nsB], ['abc', nsA]] })).toEqual([{ c: [['abc', nsA], ['def', nsB]] }]);
+    expect(stypSelector({ c: [['def', nsA], ['abc', nsA]] })).toEqual([{ c: [['abc', nsA], ['def', nsA]] }]);
+  });
+  it('sorts namespaced and local classes', () => {
+    expect(stypSelector({ c: ['def', ['abc', nsB]] })).toEqual([{ c: ['def', ['abc', nsB]] }]);
+    expect(stypSelector({ c: [['def', nsA], 'abc'] })).toEqual([{ c: ['abc', ['def', nsA]] }]);
   });
   it('strips empty classes', () => {
     expect(stypSelector({ c: ['', 'abc', ''] })).toEqual([{ c: ['abc'] }]);

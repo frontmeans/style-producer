@@ -15,6 +15,7 @@ import { itsEmpty } from 'a-iterable';
 import { noop } from 'call-thru';
 import { ruleProperties } from '../spec';
 import Mock = jest.Mock;
+import { NamespaceDef } from '../ns';
 
 describe('StypRule', () => {
 
@@ -344,12 +345,14 @@ describe('StypRule', () => {
 
     describe('grab', () => {
 
+      let ns: NamespaceDef;
       let nested1: StypRule;
       let nested2: StypRule;
 
       beforeEach(() => {
+        ns = new NamespaceDef('test');
         nested1 = rule.rules.add({ c: ['nested', 'nested-1'] });
-        nested2 = nested1.rules.add({ c: ['nested', 'nested-2'] });
+        nested2 = nested1.rules.add({ c: ['nested', ['nested-2', ns]] });
       });
 
       it('contains matching rules', () => {
@@ -438,7 +441,7 @@ describe('StypRule', () => {
       describe('list grab', () => {
         it('grabs matching rules', () => {
 
-          const list = rule.rules.grab({ c: 'nested' }).grab({ c: 'nested-2' });
+          const list = rule.rules.grab({ c: 'nested' }).grab({ c: ['nested-2', ns] });
 
           expect(ruleSelectors(list)).toEqual([nested2.selector]);
         });

@@ -1,32 +1,57 @@
 import { stypSelectorText } from './selector-text';
 import { stypRuleKeyText, stypSelectorDisplayText } from './selector-text.impl';
+import { NamespaceDef, NamespaceRegistrar, newNamespaceRegistrar } from '../ns';
 
 describe('stypSelectorText', () => {
-  it('prints raw selector', () => {
+
+  let ns: NamespaceDef;
+  let nsQualifier: NamespaceRegistrar;
+
+  beforeEach(() => {
+    ns = new NamespaceDef('test');
+    nsQualifier = newNamespaceRegistrar();
+  });
+
+  it('formats raw selector', () => {
     expect(stypSelectorText('.some')).toBe('.some');
   });
-  it('prints element name', () => {
+  it('formats element name', () => {
     expect(stypSelectorText({ e: 'span' })).toBe('span');
   });
-  it('prints namespace', () => {
+  it('formats element name from namespace', () => {
+    expect(stypSelectorText({ e: ['span', ns] })).toBe('test-span');
+  });
+  it('formats namespace', () => {
     expect(stypSelectorText({ ns: 'foo', e: 'bar' })).toBe('foo|bar');
   });
-  it('prints generic element', () => {
+  it('formats qualified namespace', () => {
+    expect(stypSelectorText({ ns, e: 'bar' })).toBe('test|bar');
+  });
+  it('formats generic element', () => {
     expect(stypSelectorText({ $: 'foo' })).toBe('*');
   });
-  it('prints generic namespaced element', () => {
+  it('formats generic namespaced element', () => {
     expect(stypSelectorText({ ns: 'foo' })).toBe('foo|*');
   });
-  it('prints identifier', () => {
+  it('formats generic element in qualified namespace', () => {
+    expect(stypSelectorText({ ns })).toBe('test|*');
+  });
+  it('formats identifier', () => {
     expect(stypSelectorText({ i: 'foo:bar' })).toBe('#foo\\:bar');
   });
-  it('prints classes', () => {
+  it('formats identifier from namespace', () => {
+    expect(stypSelectorText({ i: ['foo:bar', ns] })).toBe('#test-foo\\:bar');
+  });
+  it('formats classes', () => {
     expect(stypSelectorText({ c: ['foo', 'bar.baz'] })).toBe('.bar\\.baz.foo');
   });
-  it('prints pseudo-items', () => {
+  it('formats classes from namespace', () => {
+    expect(stypSelectorText({ c: ['foo', ['bar', ns]] })).toBe('.foo.bar\\@test');
+  });
+  it('formats pseudo-items', () => {
     expect(stypSelectorText({ e: 'a', s: ':hover' })).toBe('a:hover');
   });
-  it('prints combinations', () => {
+  it('formats combinations', () => {
     expect(stypSelectorText([{ e: 'ul' }, '>', { e: 'a' }, '+', { e: 'span', s: ':after' }])).toBe('ul>a+span:after');
   });
   it('separates parts', () => {
@@ -47,7 +72,7 @@ describe('stypRuleKeyText', () => {
 });
 
 describe('stypSelectorDisplayText', () => {
-  it('displays qualifiers', () => {
+  it('formats qualifiers', () => {
     expect(stypSelectorDisplayText([{ e: 'span', $: ['foo:bar=baz'] }])).toBe('span@foo:bar=baz');
   });
 });

@@ -1,4 +1,6 @@
-import { isNotEmptyArray } from '../internal';
+import { compareScalars, isNotEmptyArray } from '../internal';
+
+let orderSeq = 0;
 
 /**
  * Namespace definition.
@@ -11,6 +13,11 @@ export class NamespaceDef {
    * Preferred namespace shortcuts.
    */
   readonly shortcuts: readonly [string, ...string[]];
+
+  /**
+   * @internal
+   */
+  private readonly _order: number = orderSeq++;
 
   /**
    * Preferred namespace shortcut.
@@ -33,13 +40,24 @@ export class NamespaceDef {
    *
    * @param shortcut Namespace shortcut to apply to the name.
    * @param name A name to convert.
-   * @param scope Name scope. Can be `html` for HTML element names, `css` for CSS class names, or absent for everything
-   * else.
+   * @param scope Name scope. Can be `id` for element identifiers, `html` for HTML element names, `css` for CSS class
+   * names, or absent for everything else.
    *
    * @returns A name qualified with namespace shortcut.
    */
-  qualify(shortcut: string, name: string, scope?: 'html' | 'css'): string {
+  qualify(shortcut: string, name: string, scope?: 'id' | 'css' | 'html'): string {
     return scope === 'css' ? `${name}@${shortcut}` : `${shortcut}-${name}`;
+  }
+
+  /**
+   * Compares this namespace with another one based on internal sort order.
+   *
+   * @param other Namespace definition to compare with.
+   *
+   * @returns -1 if `this` is less than `other, `0` is they are the same, or `1` if `this` is greater than `other`.
+   */
+  compare(other: NamespaceDef): number {
+    return compareScalars(this._order, other._order);
   }
 
 }

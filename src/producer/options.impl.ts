@@ -2,6 +2,7 @@ import { StypOptions } from './style-producer';
 import { StypRender } from './render';
 import { stypRenderProperties } from './properties.render';
 import { StypRule } from '../rule';
+import { isReadonlyArray } from '../internal';
 
 export interface StypRenderSpecFactory extends StypRender.Factory {
   create(rule: StypRule): StypRender.Spec;
@@ -10,14 +11,14 @@ export interface StypRenderSpecFactory extends StypRender.Factory {
 /**
  * @internal
  */
-export function stypRenderFactories(opts: StypOptions): StypRenderSpecFactory[] {
+export function stypRenderFactories(opts: StypOptions): readonly StypRenderSpecFactory[] {
 
   const render = opts.render;
   let factories: StypRenderSpecFactory[];
 
   if (!render) {
     factories = [];
-  } else if (Array.isArray(render)) {
+  } else if (isReadonlyArray(render)) {
     factories = render.map(renderFactory);
   } else {
     factories = [renderFactory(render)];

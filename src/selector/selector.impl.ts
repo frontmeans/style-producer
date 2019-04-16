@@ -2,6 +2,8 @@ import { StypSelector } from './selector';
 import { StypRuleKey } from './rule-key';
 import { flatMapIt, itsReduction } from 'a-iterable';
 import { isNotEmptyArray, isReadonlyArray } from '../internal';
+import { NameInNamespace } from '../ns';
+import { compareNames, isSingleName } from '../ns/namespace.impl';
 
 /**
  * @internal
@@ -25,22 +27,22 @@ export function normalizeStypSelectorPart(part: StypSelector.Part): StypSelector
   };
 }
 
-function normalizeElement(e: string | undefined): string | undefined {
+function normalizeElement(e: NameInNamespace | undefined): NameInNamespace | undefined {
   return e !== '*' && e || undefined;
 }
 
-function normalizeClasses(classes: string | readonly string[] | undefined):
-    readonly [string, ...string[]] | undefined {
+function normalizeClasses(classes: NameInNamespace | readonly NameInNamespace[] | undefined):
+    readonly [NameInNamespace, ...NameInNamespace[]] | undefined {
   if (!classes) {
     return;
   }
-  if (!isReadonlyArray(classes)) {
+  if (isSingleName(classes)) {
     return [classes];
   }
 
   const result = classes.filter(c => !!c);
 
-  return isNotEmptyArray(result) ? result.sort() : undefined;
+  return isNotEmptyArray(result) ? result.sort(compareNames) : undefined;
 }
 
 function normalizeQualifiers(qualifiers: string | readonly string[] | undefined):
