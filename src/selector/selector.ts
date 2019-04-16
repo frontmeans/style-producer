@@ -1,3 +1,5 @@
+import { NameInNamespace, NamespaceDef } from '../ns';
+
 /**
  * Structured CSS selector.
  *
@@ -47,24 +49,24 @@ export namespace StypSelector {
     /**
      * Element namespace.
      */
-    readonly ns?: string;
+    readonly ns?: string | NamespaceDef;
 
     /**
      * Element name.
      *
      * This is the same as `*` when absent.
      */
-    readonly e?: string;
+    readonly e?: NameInNamespace;
 
     /**
      * Element identifier.
      */
-    readonly i?: string;
+    readonly i?: NameInNamespace;
 
     /**
-     * Element class or classes.
+     * Element class name or names.
      */
-    readonly c?: string | readonly string[];
+    readonly c?: NameInNamespace | readonly NameInNamespace[];
 
     /**
      * Raw CSS selector text to append to the end.
@@ -109,9 +111,10 @@ export namespace StypSelector {
   export interface NormalizedPart extends Part {
 
     /**
-     * Array of classes. Either absent, or non-empty and containing non-empty class names sorted alphabetically.
+     * Array of element class names. Either absent, or non-empty and containing non-empty class names sorted
+     * alphabetically.
      */
-    readonly c?: readonly [string, ...string[]];
+    readonly c?: readonly [NameInNamespace, ...NameInNamespace[]];
 
     /**
      * Array of qualifiers. Either absent, or non-empty and containing non-empty qualifiers sorted alphabetically.

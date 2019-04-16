@@ -1,13 +1,14 @@
 import { StypProperties, StypRule, StypRules } from '../rule';
 import { AfterEvent, afterEventFrom, eventInterest, EventInterest, onEventFrom } from 'fun-events';
 import { itsReduction, mapIt } from 'a-iterable';
-import { StypSelector, stypSelector, stypSelectorText } from '../selector';
+import { StypSelector, stypSelector, StypSelectorFormat, stypSelectorText } from '../selector';
 import { noop } from 'call-thru';
 import { StyleProducer, StypOptions } from './style-producer';
 import { StypRender } from './render';
 import { stypRenderFactories } from './options.impl';
 import { isCSSRuleGroup } from './render.impl';
 import { isCombinator } from '../selector/selector.impl';
+import { newNamespaceRegistrar } from '../ns';
 
 /**
  * Produces and dynamically updates basic CSS stylesheets based on the given CSS rules.
@@ -29,11 +30,13 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
     document = window.document,
     rootSelector = { e: 'body' },
     schedule = scheduleInAnimationFrame,
+    nsShortcut = newNamespaceRegistrar(),
   } = opts;
   const {
     parent = document.head,
   } = opts;
   const view = document.defaultView || window;
+  const format: StypSelectorFormat = { nsShortcut };
   const factories = stypRenderFactories(opts);
   const renderInterest = renderRules(rules);
   const trackInterest = trackRules();
@@ -97,7 +100,7 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
           return target;
         }
 
-        const ruleIndex = target.insertRule(`${stypSelectorText(_selector)}{}`, target.cssRules.length);
+        const ruleIndex = target.insertRule(`${selectorText(_selector)}{}`, target.cssRules.length);
 
         return target.cssRules[ruleIndex];
       }
@@ -105,6 +108,10 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
     }
 
     return new Styp();
+  }
+
+  function selectorText(selector: StypSelector.Normalized) {
+    return stypSelectorText(selector, format);
   }
 
   function renderRules(rulesToRender: Iterable<StypRule>): EventInterest {

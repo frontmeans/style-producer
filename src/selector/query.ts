@@ -1,5 +1,7 @@
 import { StypSelector } from './selector';
 import { normalizeStypSelectorPart } from './selector.impl';
+import { NameInNamespace, NamespaceDef } from '../ns';
+import { namesEqual } from '../ns/namespace.impl';
 
 /**
  * CSS rule query.
@@ -15,29 +17,30 @@ export interface StypQuery {
   /**
    * Element namespace.
    */
-  readonly ns?: string;
+  readonly ns?: string | NamespaceDef;
 
   /**
    * Element name.
    *
    * This is the same as `*` when absent.
    */
-  readonly e?: string;
+  readonly e?: NameInNamespace;
 
   /**
    * Element identifier.
    */
-  readonly i?: string;
+  readonly i?: NameInNamespace;
 
   /**
-   * Element class or classes.
+   * Element class name or names.
    */
-  readonly c?: string | readonly string[];
+  readonly c?: NameInNamespace | readonly NameInNamespace[];
 
   /**
    * Qualifier or qualifiers.
    */
   readonly $?: string | readonly string[];
+
 }
 
 export namespace StypQuery {
@@ -95,6 +98,6 @@ export function stypSelectorMatches(selector: StypSelector.Normalized, query: St
   return true;
 }
 
-function classesMatch(classes: readonly string[] | undefined, query: readonly string[]) {
-  return classes && query.every(qClass => classes.indexOf(qClass) >= 0);
+function classesMatch(classes: readonly NameInNamespace[] | undefined, query: readonly NameInNamespace[]) {
+  return classes && query.every(qClass => classes.find(mClass => namesEqual(qClass, mClass)));
 }
