@@ -1,7 +1,7 @@
 import { formatStypSelector } from './selector-text.impl';
 import { StypSelector } from './selector';
 import { stypSelector } from './selector-constructor';
-import { NamespaceRegistrar } from '../ns';
+import { NamespaceAliaser } from '../ns';
 
 /**
  * Structured CSS selector textual format.
@@ -19,11 +19,11 @@ export interface StypSelectorFormat {
   qualify?: (qualifier: string) => string;
 
   /**
-   * Namespace registrar to use.
+   * Namespace aliaser to use.
    *
    * New instance will be created if not specified.
    */
-  nsAlias?: NamespaceRegistrar;
+  nsAlias?: NamespaceAliaser;
 
 }
 

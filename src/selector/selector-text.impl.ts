@@ -4,7 +4,7 @@ import { cssescId } from '../internal';
 import { StypSelectorFormat } from './selector-text';
 import { StypRuleKey } from './rule-key';
 import { qualifyClass, qualifyElement, qualifyId, xmlNs } from '../ns/namespace.impl';
-import { NamespaceRegistrar, newNamespaceRegistrar } from '../ns';
+import { NamespaceAliaser, newNamespaceAliaser } from '../ns';
 
 const ruleKeyTextOpts: StypSelectorFormat = {
   qualify(qualifier: string) {
@@ -41,7 +41,7 @@ export function formatStypSelector(
     selector: StypSelector.Normalized,
     {
       qualify,
-      nsAlias = newNamespaceRegistrar(),
+      nsAlias = newNamespaceAliaser(),
     }: StypSelectorFormat = defaultFormat): string {
 
   const format: ItemFormat = { qualify, nsAlias };
@@ -60,7 +60,7 @@ export function formatStypSelector(
 }
 
 interface ItemFormat extends StypSelectorFormat {
-  nsAlias: NamespaceRegistrar;
+  nsAlias: NamespaceAliaser;
 }
 
 function formatItem(

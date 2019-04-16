@@ -1,25 +1,25 @@
 import { NamespaceDef } from './namespace';
 
 /**
- * Namespace registrar function interface.
+ * Namespace aliaser function interface.
  *
- * Namespace registrar function maps namespaces to their unique aliases.
+ * Namespace aliaser function maps namespaces to their unique aliases.
  *
  * @param ns A definition of namespace to find alias for.
  *
  * @returns Namespace alias.
  */
-export type NamespaceRegistrar = (ns: NamespaceDef) => string;
+export type NamespaceAliaser = (ns: NamespaceDef) => string;
 
 /**
- * Creates a namespace registrar.
+ * Creates a namespace aliaser.
  *
- * The returned registrar tries to find a registered alias for the given namespace. If not found then tries to use one
+ * The returned function tries to find a registered alias for the given namespace. If not found then tries to use one
  * of its preferred aliases. If all of them are reserved already for another namespaces, generates a new unique alias.
  *
- * @returns New instance of namespace registrar.
+ * @returns New instance of namespace aliaser.
  */
-export function newNamespaceRegistrar(): NamespaceRegistrar {
+export function newNamespaceAliaser(): NamespaceAliaser {
 
   const aliasesByNs = new Map<NamespaceDef, string>();
   const nsNumPerAlias = new Map<string, number>();

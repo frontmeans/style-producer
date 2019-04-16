@@ -1,15 +1,15 @@
 import { stypSelectorText } from './selector-text';
 import { stypRuleKeyText, stypSelectorDisplayText } from './selector-text.impl';
-import { NamespaceDef, NamespaceRegistrar, newNamespaceRegistrar } from '../ns';
+import { NamespaceDef, NamespaceAliaser, newNamespaceAliaser } from '../ns';
 
 describe('stypSelectorText', () => {
 
   let ns: NamespaceDef;
-  let nsQualifier: NamespaceRegistrar;
+  let nsQualifier: NamespaceAliaser;
 
   beforeEach(() => {
     ns = new NamespaceDef('test');
-    nsQualifier = newNamespaceRegistrar();
+    nsQualifier = newNamespaceAliaser();
   });
 
   it('formats raw selector', () => {

@@ -8,7 +8,7 @@ import { StypRender } from './render';
 import { stypRenderFactories } from './options.impl';
 import { isCSSRuleGroup } from './render.impl';
 import { isCombinator } from '../selector/selector.impl';
-import { newNamespaceRegistrar } from '../ns';
+import { newNamespaceAliaser } from '../ns';
 
 /**
  * Produces and dynamically updates basic CSS stylesheets based on the given CSS rules.
@@ -30,7 +30,7 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
     document = window.document,
     rootSelector = { e: 'body' },
     schedule = scheduleInAnimationFrame,
-    nsAlias = newNamespaceRegistrar(),
+    nsAlias = newNamespaceAliaser(),
   } = opts;
   const {
     parent = document.head,

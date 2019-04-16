@@ -1,5 +1,5 @@
 import { NameInNamespace, NamespaceDef } from './namespace';
-import { NamespaceRegistrar } from './namespace-registrar';
+import { NamespaceAliaser } from './namespace-aliaser';
 import { compareScalars } from '../internal';
 
 /**
@@ -42,34 +42,34 @@ export function compareNames(first: NameInNamespace, second: NameInNamespace): n
 /**
  * @internal
  */
-export function xmlNs(ns: string | NamespaceDef, nsAlias: NamespaceRegistrar): string {
+export function xmlNs(ns: string | NamespaceDef, nsAlias: NamespaceAliaser): string {
   return typeof ns === 'string' ? ns : nsAlias(ns);
 }
 
 /**
  * @internal
  */
-export function qualifyId(id: NameInNamespace, nsAlias: NamespaceRegistrar): string {
+export function qualifyId(id: NameInNamespace, nsAlias: NamespaceAliaser): string {
   return qualifyName(id, nsAlias, 'id');
 }
 
 /**
  * @internal
  */
-export function qualifyElement(id: NameInNamespace, nsAlias: NamespaceRegistrar): string {
+export function qualifyElement(id: NameInNamespace, nsAlias: NamespaceAliaser): string {
   return qualifyName(id, nsAlias, 'html');
 }
 
 /**
  * @internal
  */
-export function qualifyClass(className: NameInNamespace, nsAlias: NamespaceRegistrar): string {
+export function qualifyClass(className: NameInNamespace, nsAlias: NamespaceAliaser): string {
   return qualifyName(className, nsAlias, 'css');
 }
 
 function qualifyName(
     name: NameInNamespace,
-    nsAlias: NamespaceRegistrar,
+    nsAlias: NamespaceAliaser,
     scope?: 'id' | 'css' | 'html'): string {
   if (typeof name === 'string') {
     return name;

@@ -1,7 +1,7 @@
 import { StypProperties, StypRule } from '../rule';
 import { StypSelector } from '../selector';
 import { StypRender } from './render';
-import { NamespaceRegistrar } from '../ns';
+import { NamespaceAliaser } from '../ns';
 
 /**
  * CSS styles producer.
@@ -110,10 +110,10 @@ export interface StypOptions {
   render?: StypRender | readonly StypRender[];
 
   /**
-   * Namespace registrar to use.
+   * Namespace aliaser to use.
    *
    * New instance will be created if not specified.
    */
-  nsAlias?: NamespaceRegistrar;
+  nsAlias?: NamespaceAliaser;
 
 }
