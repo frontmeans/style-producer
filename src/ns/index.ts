@@ -1,2 +1,2 @@
-export * from './namespace-spec';
+export * from './namespace';
 export * from './namespace-manager';
