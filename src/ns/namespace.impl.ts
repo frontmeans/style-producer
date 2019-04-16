@@ -42,34 +42,34 @@ export function compareNames(first: NameInNamespace, second: NameInNamespace): n
 /**
  * @internal
  */
-export function xmlNs(ns: string | NamespaceDef, nsShortcut: NamespaceRegistrar): string {
-  return typeof ns === 'string' ? ns : nsShortcut(ns);
+export function xmlNs(ns: string | NamespaceDef, nsAlias: NamespaceRegistrar): string {
+  return typeof ns === 'string' ? ns : nsAlias(ns);
 }
 
 /**
  * @internal
  */
-export function qualifyId(id: NameInNamespace, nsShortcut: NamespaceRegistrar): string {
-  return qualifyName(id, nsShortcut, 'id');
+export function qualifyId(id: NameInNamespace, nsAlias: NamespaceRegistrar): string {
+  return qualifyName(id, nsAlias, 'id');
 }
 
 /**
  * @internal
  */
-export function qualifyElement(id: NameInNamespace, nsShortcut: NamespaceRegistrar): string {
-  return qualifyName(id, nsShortcut, 'html');
+export function qualifyElement(id: NameInNamespace, nsAlias: NamespaceRegistrar): string {
+  return qualifyName(id, nsAlias, 'html');
 }
 
 /**
  * @internal
  */
-export function qualifyClass(className: NameInNamespace, nsShortcut: NamespaceRegistrar): string {
-  return qualifyName(className, nsShortcut, 'css');
+export function qualifyClass(className: NameInNamespace, nsAlias: NamespaceRegistrar): string {
+  return qualifyName(className, nsAlias, 'css');
 }
 
 function qualifyName(
     name: NameInNamespace,
-    nsShortcut: NamespaceRegistrar,
+    nsAlias: NamespaceRegistrar,
     scope?: 'id' | 'css' | 'html'): string {
   if (typeof name === 'string') {
     return name;
@@ -77,5 +77,5 @@ function qualifyName(
 
   const [local, ns] = name;
 
-  return ns.qualify(nsShortcut(ns), local, scope);
+  return ns.qualify(nsAlias(ns), local, scope);
 }

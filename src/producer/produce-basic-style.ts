@@ -30,13 +30,13 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
     document = window.document,
     rootSelector = { e: 'body' },
     schedule = scheduleInAnimationFrame,
-    nsShortcut = newNamespaceRegistrar(),
+    nsAlias = newNamespaceRegistrar(),
   } = opts;
   const {
     parent = document.head,
   } = opts;
   const view = document.defaultView || window;
-  const format: StypSelectorFormat = { nsShortcut };
+  const format: StypSelectorFormat = { nsAlias: nsAlias };
   const factories = stypRenderFactories(opts);
   const renderInterest = renderRules(rules);
   const trackInterest = trackRules();

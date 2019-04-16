@@ -17,9 +17,9 @@ describe('NamespaceDef', () => {
     });
   });
 
-  describe('shortcut', () => {
+  describe('alias', () => {
     it('is `ns` by default', () => {
-      expect(new NamespaceDef().shortcut).toBe('ns');
+      expect(new NamespaceDef().alias).toBe('ns');
     });
   });
 });

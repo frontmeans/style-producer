@@ -10,9 +10,9 @@ let orderSeq = 0;
 export class NamespaceDef {
 
   /**
-   * Preferred namespace shortcuts.
+   * Preferred namespace aliases.
    */
-  readonly shortcuts: readonly [string, ...string[]];
+  readonly aliases: readonly [string, ...string[]];
 
   /**
    * @internal
@@ -20,33 +20,33 @@ export class NamespaceDef {
   private readonly _order: number = orderSeq++;
 
   /**
-   * Preferred namespace shortcut.
+   * Preferred namespace alias.
    */
-  get shortcut(): string {
-    return this.shortcuts[0];
+  get alias(): string {
+    return this.aliases[0];
   }
 
   /**
    * Constructs new namespace definition.
    *
-   * @param shortcuts Preferred namespace shortcuts.
+   * @param aliases Preferred namespace aliases.
    */
-  constructor(...shortcuts: string[]) {
-    this.shortcuts = isNotEmptyArray(shortcuts) ? shortcuts : ['ns'];
+  constructor(...aliases: string[]) {
+    this.aliases = isNotEmptyArray(aliases) ? aliases : ['ns'];
   }
 
   /**
-   * Qualifies a local name in this namespace. E.g by prefixing it with namespace shortcut.
+   * Qualifies a local name in this namespace. E.g by prefixing it with namespace alias.
    *
-   * @param shortcut Namespace shortcut to apply to the name.
+   * @param alias Namespace alias to apply to the name.
    * @param name A name to convert.
    * @param scope Name scope. Can be `id` for element identifiers, `html` for HTML element names, `css` for CSS class
    * names, or absent for everything else.
    *
-   * @returns A name qualified with namespace shortcut.
+   * @returns A name qualified with namespace alias.
    */
-  qualify(shortcut: string, name: string, scope?: 'id' | 'css' | 'html'): string {
-    return scope === 'css' ? `${name}@${shortcut}` : `${shortcut}-${name}`;
+  qualify(alias: string, name: string, scope?: 'id' | 'css' | 'html'): string {
+    return scope === 'css' ? `${name}@${alias}` : `${alias}-${name}`;
   }
 
   /**

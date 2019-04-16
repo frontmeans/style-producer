@@ -23,7 +23,7 @@ export interface StypSelectorFormat {
    *
    * New instance will be created if not specified.
    */
-  nsShortcut?: NamespaceRegistrar;
+  nsAlias?: NamespaceRegistrar;
 
 }
 

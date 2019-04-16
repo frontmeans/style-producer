@@ -41,10 +41,10 @@ export function formatStypSelector(
     selector: StypSelector.Normalized,
     {
       qualify,
-      nsShortcut = newNamespaceRegistrar(),
+      nsAlias = newNamespaceRegistrar(),
     }: StypSelectorFormat = defaultFormat): string {
 
-  const format: ItemFormat = { qualify, nsShortcut };
+  const format: ItemFormat = { qualify, nsAlias };
 
   return selector.reduce(
       (result, item) => {
@@ -60,14 +60,14 @@ export function formatStypSelector(
 }
 
 interface ItemFormat extends StypSelectorFormat {
-  nsShortcut: NamespaceRegistrar;
+  nsAlias: NamespaceRegistrar;
 }
 
 function formatItem(
     item: StypSelector.NormalizedPart,
     {
       qualify,
-      nsShortcut,
+      nsAlias,
     }: ItemFormat): string {
 
   const { ns, e, i, c, s, $ } = item;
@@ -76,12 +76,12 @@ function formatItem(
 
   if (i) {
     hasProperties = true;
-    string += `#${cssescId(qualifyId(i, nsShortcut))}`;
+    string += `#${cssescId(qualifyId(i, nsAlias))}`;
   }
   if (c) {
     hasProperties = true;
     string = c.reduce<string>(
-        (result, className) => `${result}.${cssescId(qualifyClass(className, nsShortcut))}`,
+        (result, className) => `${result}.${cssescId(qualifyClass(className, nsAlias))}`,
         string);
   }
   if (s) {
@@ -92,11 +92,11 @@ function formatItem(
     string = $.reduce((result, qualifier) => result + qualify(qualifier), string);
   }
   if (ns) {
-    string = `${xmlNs(ns, nsShortcut)}|${e || '*'}${string}`;
+    string = `${xmlNs(ns, nsAlias)}|${e || '*'}${string}`;
   } else if (hasProperties) {
-    string = `${e ? qualifyElement(e, nsShortcut) : ''}${string}`;
+    string = `${e ? qualifyElement(e, nsAlias) : ''}${string}`;
   } else {
-    string = `${e ? qualifyElement(e, nsShortcut) : '*'}${string}`;
+    string = `${e ? qualifyElement(e, nsAlias) : '*'}${string}`;
   }
 
   return string;
