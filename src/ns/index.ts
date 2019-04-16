@@ -1,2 +1,2 @@
 export * from './namespace';
-export * from './namespace-manager';
+export * from './namespace-registrar';
