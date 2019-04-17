@@ -350,7 +350,7 @@ describe('StypRule', () => {
       let nested2: StypRule;
 
       beforeEach(() => {
-        ns = new NamespaceDef('test');
+        ns = new NamespaceDef('test/url', 'test');
         nested1 = rule.rules.add({ c: ['nested', 'nested-1'] });
         nested2 = nested1.rules.add({ c: ['nested', ['nested-2', ns]] });
       });

@@ -21,12 +21,12 @@ export type NamespaceAliaser = (ns: NamespaceDef) => string;
  */
 export function newNamespaceAliaser(): NamespaceAliaser {
 
-  const aliasesByNs = new Map<NamespaceDef, string>();
+  const aliasesByNs = new Map<string, string>();
   const nsNumPerAlias = new Map<string, number>();
 
   return function nsAlias(ns: NamespaceDef): string {
 
-    const found = aliasesByNs.get(ns);
+    const found = aliasesByNs.get(ns.url);
 
     if (found) {
       return found;
@@ -39,7 +39,7 @@ export function newNamespaceAliaser(): NamespaceAliaser {
       const ids = nsNumPerAlias.get(preferred);
 
       if (!ids) {
-        aliasesByNs.set(ns, preferred);
+        aliasesByNs.set(ns.url, preferred);
         nsNumPerAlias.set(preferred, 1);
         return preferred;
       }
@@ -51,7 +51,7 @@ export function newNamespaceAliaser(): NamespaceAliaser {
     const firstPreferred = ns.alias;
     const generated = firstPreferred + (++nsNumRegistered);
 
-    aliasesByNs.set(ns, generated);
+    aliasesByNs.set(ns.url, generated);
     nsNumPerAlias.set(firstPreferred, nsNumRegistered);
 
     return generated;

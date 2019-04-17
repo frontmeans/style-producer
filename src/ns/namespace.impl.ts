@@ -36,7 +36,7 @@ export function compareNames(first: NameInNamespace, second: NameInNamespace): n
     return 1;
   }
 
-  return first[1].compare(second[1]) || compareScalars(first[0], second[0]);
+  return compareScalars(first[1].url, second[1].url) || compareScalars(first[0], second[0]);
 }
 
 /**

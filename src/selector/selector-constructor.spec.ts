@@ -7,8 +7,8 @@ describe('stypSelector', () => {
   let nsB: NamespaceDef;
 
   beforeEach(() => {
-    nsA = new NamespaceDef('A');
-    nsB = new NamespaceDef('B');
+    nsA = new NamespaceDef('test/A', 'A');
+    nsB = new NamespaceDef('test/B', 'B');
   });
 
   it('converts string to raw selector', () => {

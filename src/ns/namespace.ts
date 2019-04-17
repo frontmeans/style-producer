@@ -1,23 +1,21 @@
-import { compareScalars, isNotEmptyArray } from '../internal';
-
-let orderSeq = 0;
+import { isNotEmptyArray } from '../internal';
 
 /**
  * Namespace definition.
  *
- * There should be exactly one instance of definition per namespace.
+ * Namespaces are identified by their URLs.
  */
 export class NamespaceDef {
+
+  /**
+   * Unique namespace URL.
+   */
+  readonly url: string;
 
   /**
    * Preferred namespace aliases.
    */
   readonly aliases: readonly [string, ...string[]];
-
-  /**
-   * @internal
-   */
-  private readonly _order: number = orderSeq++;
 
   /**
    * Preferred namespace alias.
@@ -29,9 +27,11 @@ export class NamespaceDef {
   /**
    * Constructs new namespace definition.
    *
+   * @param url Unique namespace URL.
    * @param aliases Preferred namespace aliases.
    */
-  constructor(...aliases: string[]) {
+  constructor(url: string, ...aliases: string[]) {
+    this.url = url;
     this.aliases = isNotEmptyArray(aliases) ? aliases : ['ns'];
   }
 
@@ -47,17 +47,6 @@ export class NamespaceDef {
    */
   qualify(alias: string, name: string, scope?: 'id' | 'css' | 'html'): string {
     return scope === 'css' ? `${name}@${alias}` : `${alias}-${name}`;
-  }
-
-  /**
-   * Compares this namespace with another one based on internal sort order.
-   *
-   * @param other Namespace definition to compare with.
-   *
-   * @returns -1 if `this` is less than `other, `0` is they are the same, or `1` if `this` is greater than `other`.
-   */
-  compare(other: NamespaceDef): number {
-    return compareScalars(this._order, other._order);
   }
 
 }

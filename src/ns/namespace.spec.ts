@@ -6,7 +6,7 @@ describe('NamespaceDef', () => {
     let ns: NamespaceDef;
 
     beforeEach(() => {
-      ns = new NamespaceDef();
+      ns = new NamespaceDef('test/url');
     });
 
     it('appends suffix to CSS class names', () => {
@@ -19,7 +19,7 @@ describe('NamespaceDef', () => {
 
   describe('alias', () => {
     it('is `ns` by default', () => {
-      expect(new NamespaceDef().alias).toBe('ns');
+      expect(new NamespaceDef('test/url').alias).toBe('ns');
     });
   });
 });

@@ -8,7 +8,7 @@ describe('stypSelectorText', () => {
   let nsQualifier: NamespaceAliaser;
 
   beforeEach(() => {
-    ns = new NamespaceDef('test');
+    ns = new NamespaceDef('test/url', 'test');
     nsQualifier = newNamespaceAliaser();
   });
 
