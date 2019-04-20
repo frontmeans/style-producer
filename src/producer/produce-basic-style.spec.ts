@@ -144,17 +144,24 @@ describe('produceBasicStyle', () => {
         _producer.render(properties);
       });
 
+      const render1 = { order: -1, render: mockRender1, needs: [] as StypRender[]  };
+      const render2 = { order: 0, render: mockRender2, needs: render1 };
+
+      render1.needs.push(render2);
+
       produceBasicStyle(
           root.rules,
           {
             render: [
-              { order: -1, render: mockRender1, needs: mockRender2 },
-              { order: 0, render: mockRender2, needs: mockRender1 },
+              render1,
+              render2,
             ],
             schedule: scheduleNow,
           });
       expect(mockRender1).toHaveBeenCalledWith(producer, {});
+      expect(mockRender1).toHaveBeenCalledTimes(1);
       expect(mockRender2).toHaveBeenCalledWith(producer, properties);
+      expect(mockRender2).toHaveBeenCalledTimes(1);
     });
 
     function testProduceStyle() {
