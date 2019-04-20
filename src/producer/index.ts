@@ -1,4 +1,5 @@
 export * from './at-rules.render';
+export * from './globals.render';
 export * from './produce-basic-style';
 export * from './produce-style';
 export * from './properties.render';

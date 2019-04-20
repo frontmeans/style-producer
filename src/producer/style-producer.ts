@@ -1,7 +1,7 @@
+import { NamespaceAliaser } from '../ns';
 import { StypProperties, StypRule } from '../rule';
 import { StypSelector } from '../selector';
 import { StypRender } from './render';
-import { NamespaceAliaser } from '../ns';
 
 /**
  * CSS styles producer.
@@ -28,6 +28,11 @@ export interface StyleProducer {
    * CSS rule to produce styles for.
    */
   readonly rule: StypRule;
+
+  /**
+   * CSS stylesheet to add CSS rules to.
+   */
+  readonly styleSheet: CSSStyleSheet;
 
   /**
    * CSS stylesheet or rule to add properties to.

@@ -1,7 +1,7 @@
 import { stypRoot, StypRule } from '../rule';
+import { cssStyle, removeStyleElements, scheduleNow, stylesheets } from '../spec';
 import { produceStyle } from './produce-style';
 import { StypRender } from './render';
-import { cssStyle, removeStyleElements, scheduleNow } from '../spec';
 import SpyInstance = jest.SpyInstance;
 
 describe('produceStyle', () => {
@@ -104,5 +104,28 @@ describe('produceStyle', () => {
 
     expect(style.getPropertyValue('font-size')).toBe('11px');
     expect(style.getPropertyValue('font-weight')).toBe('bold');
+  });
+  it('renders imports', () => {
+    root.add({
+      '@import:some.css': '',
+      '@import:other.css': 'screen',
+    });
+    root.rules.add({ c: 'custom' });
+    produceStyle(root.rules, { schedule: scheduleNow });
+
+    stylesheets().forEach(sheet => {
+      expect(sheet.cssRules[0].type).toBe(CSSRule.IMPORT_RULE);
+      expect(sheet.cssRules[1].type).toBe(CSSRule.IMPORT_RULE);
+
+      const rule0 = sheet.cssRules[0] as CSSImportRule;
+
+      expect(rule0.href).toBe('some.css');
+      expect(rule0.media).toHaveLength(0);
+
+      const rule1 = sheet.cssRules[1] as CSSImportRule;
+
+      expect(rule1.href).toBe('other.css');
+      expect(rule1.media.mediaText).toBe('screen');
+    });
   });
 });

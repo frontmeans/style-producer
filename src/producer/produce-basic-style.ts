@@ -1,14 +1,14 @@
-import { StypProperties, StypRule, StypRules } from '../rule';
-import { AfterEvent, afterEventFrom, eventInterest, EventInterest, onEventFrom } from 'fun-events';
 import { itsReduction, mapIt } from 'a-iterable';
-import { StypSelector, stypSelector, StypSelectorFormat, stypSelectorText } from '../selector';
 import { noop } from 'call-thru';
-import { StyleProducer, StypOptions } from './style-producer';
-import { StypRender } from './render';
-import { stypRenderFactories } from './options.impl';
-import { isCSSRuleGroup } from './render.impl';
-import { isCombinator } from '../selector/selector.impl';
+import { AfterEvent, afterEventFrom, eventInterest, EventInterest, onEventFrom } from 'fun-events';
 import { newNamespaceAliaser } from '../ns';
+import { StypProperties, StypRule, StypRules } from '../rule';
+import { StypSelector, stypSelector, StypSelectorFormat, stypSelectorText } from '../selector';
+import { isCombinator } from '../selector/selector.impl';
+import { stypRenderFactories } from './options.impl';
+import { StypRender } from './render';
+import { isCSSRuleGroup } from './render.impl';
+import { StyleProducer, StypOptions } from './style-producer';
 
 /**
  * Produces and dynamically updates basic CSS stylesheets based on the given CSS rules.
@@ -50,9 +50,11 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
       rule: StypRule,
       render: StypRender.Function,
       {
+        styleSheet,
         target,
         selector,
       }: {
+        styleSheet: CSSStyleSheet,
         target: CSSStyleSheet | CSSRule,
         selector: StypSelector.Normalized,
       }) {
@@ -74,6 +76,10 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
         return rule;
       }
 
+      get styleSheet() {
+        return styleSheet;
+      }
+
       get target() {
         return target;
       }
@@ -88,8 +94,9 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
         } else {
           render(
               styleProducer(rule, render, {
-                selector: options.selector || selector,
+                styleSheet,
                 target: options.target || target,
+                selector: options.selector || selector,
               }),
               properties);
         }
@@ -168,8 +175,8 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
           clearProperties(_element);
         }
 
-        const target = _element.sheet as CSSStyleSheet;
-        const producer = styleProducer(rule, render, { target, selector });
+        const styleSheet = _element.sheet as CSSStyleSheet;
+        const producer = styleProducer(rule, render, { styleSheet, target: styleSheet, selector });
 
         producer.render(properties);
       }

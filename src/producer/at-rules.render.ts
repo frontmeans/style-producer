@@ -1,13 +1,13 @@
-import { StypRender } from './render';
-import { StyleProducer } from './style-producer';
-import { StypSelector, stypSelector } from '../selector';
-import { StypProperties, StypRule } from '../rule';
-import { isCombinator } from '../selector/selector.impl';
-import { isCSSRuleGroup } from './render.impl';
-import { isNotEmptyArray } from '../internal';
-import { AfterEvent, afterEventFrom } from 'fun-events';
-import { mergeStypProperties, stypPropertyValue } from '../rule/properties.impl';
 import { filterIt, itsReduction, ObjectEntry, overEntries } from 'a-iterable';
+import { AfterEvent, afterEventFrom } from 'fun-events';
+import { isNotEmptyArray } from '../internal';
+import { StypProperties, StypRule } from '../rule';
+import { mergeStypProperties, stypPropertyValue } from '../rule/properties.impl';
+import { StypSelector, stypSelector } from '../selector';
+import { isCombinator } from '../selector/selector.impl';
+import { StypRender } from './render';
+import { FIRST_RENDER_ORDER, isCSSRuleGroup } from './render.impl';
+import { StyleProducer } from './style-producer';
 
 class AtRulesRender implements StypRender.Spec {
 
@@ -115,7 +115,7 @@ function buildAtSelector(
  */
 export const stypRenderAtRules: StypRender = {
 
-  order: -0xffff,
+  order: FIRST_RENDER_ORDER,
 
   create(rule) {
     return new AtRulesRender(rule);
