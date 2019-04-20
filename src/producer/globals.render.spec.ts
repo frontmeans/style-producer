@@ -53,8 +53,10 @@ describe('stypRenderGlobals', () => {
     render(producer, {
       '@namespace:math': 'http://www.w3.org/1998/Math/MathML',
       '@import:some.css': '',
+      '@namespace:svg': 'http://www.w3.org/2000/svg',
     });
     expect(sheet.insertRule).toHaveBeenCalledWith('@namespace math url(http://www.w3.org/1998/Math/MathML);', 0);
     expect(sheet.insertRule).toHaveBeenCalledWith('@import url(some.css);', 0);
+    expect(sheet.insertRule).toHaveBeenCalledWith('@namespace svg url(http://www.w3.org/2000/svg);', 2);
   });
 });
