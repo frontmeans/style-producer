@@ -16,9 +16,9 @@ export function stypRenderFactories(opts: StypOptions): readonly StypRenderSpecF
   const factories = new Map<StypRender, StypRenderSpecFactory>();
 
   addRenders(opts.render);
-  addRender(stypRenderProperties);
+  factories.delete(stypRenderProperties);
 
-  return [...factories.values()].sort(compareRenders);
+  return [...factories.values(), renderFactory(stypRenderProperties)].sort(compareRenders);
 
   function addRenders(renders: StypRender | readonly StypRender[] | undefined) {
     if (renders) {
