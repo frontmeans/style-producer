@@ -3,6 +3,7 @@ import { stypRoot } from '../rule';
 import { stypRenderGlobals } from './globals.render';
 import { stypRenderFactories } from './options.impl';
 import { StypRender } from './render';
+import { FIRST_RENDER_ORDER } from './render.impl';
 import { StyleProducer } from './style-producer';
 
 describe('stypRenderGlobals', () => {
@@ -26,7 +27,8 @@ describe('stypRenderGlobals', () => {
 
   beforeEach(() => {
 
-    const spec = stypRenderFactories({ render: stypRenderGlobals })[0].create(stypRoot());
+    const factories = stypRenderFactories({ render: stypRenderGlobals });
+    const spec = factories.find(f => f.order === FIRST_RENDER_ORDER + 1)!.create(stypRoot());
 
     render = spec.render.bind(spec);
   });

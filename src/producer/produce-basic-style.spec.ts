@@ -78,6 +78,7 @@ describe('produceBasicStyle', () => {
       });
 
       testProduceStyle();
+      expect(mockRender1).toHaveBeenCalledWith(producer, {});
       expect(mockRender2).toHaveBeenCalledWith(producer, properties);
     });
     it('passes selector to next render', () => {
@@ -92,6 +93,7 @@ describe('produceBasicStyle', () => {
       });
 
       testProduceStyle();
+      expect(mockRender1).toHaveBeenCalledWith(producer, {});
       expect(mockRender2).toHaveBeenCalledWith(
           expect.objectContaining({ selector, target: producer.target }),
           properties);
@@ -108,9 +110,51 @@ describe('produceBasicStyle', () => {
       });
 
       testProduceStyle();
+      expect(mockRender1).toHaveBeenCalledWith(producer, {});
       expect(mockRender2).toHaveBeenCalledWith(
           expect.objectContaining({ selector: producer.selector, target }),
           properties);
+    });
+    it('fulfills render requirements', () => {
+
+      const properties: StypProperties = { $name: 'next' };
+      let producer: StyleProducer = null!;
+
+      mockRender1.mockImplementation(_producer => {
+        producer = _producer;
+        _producer.render(properties);
+      });
+
+      produceBasicStyle(
+          root.rules,
+          {
+            render: { order: -1, render: mockRender1, needs: mockRender2 },
+            schedule: scheduleNow,
+          });
+      expect(mockRender1).toHaveBeenCalledWith(producer, {});
+      expect(mockRender2).toHaveBeenCalledWith(producer, properties);
+    });
+    it('handles cyclic render requirements', () => {
+
+      const properties: StypProperties = { $name: 'next' };
+      let producer: StyleProducer = null!;
+
+      mockRender1.mockImplementation(_producer => {
+        producer = _producer;
+        _producer.render(properties);
+      });
+
+      produceBasicStyle(
+          root.rules,
+          {
+            render: [
+              { order: -1, render: mockRender1, needs: mockRender2 },
+              { order: 0, render: mockRender2, needs: mockRender1 },
+            ],
+            schedule: scheduleNow,
+          });
+      expect(mockRender1).toHaveBeenCalledWith(producer, {});
+      expect(mockRender2).toHaveBeenCalledWith(producer, properties);
     });
 
     function testProduceStyle() {

@@ -66,6 +66,11 @@ export namespace StypRender {
     readonly order?: number;
 
     /**
+     * A render or renders this one requires.
+     */
+    readonly needs?: StypRender | StypRender[];
+
+    /**
      * CSS stylesheet render function.
      */
     readonly render: Function<this>;
@@ -84,6 +89,11 @@ export namespace StypRender {
      * properties.
      */
     readonly order?: number;
+
+    /**
+     * A render or renders this one requires.
+     */
+    readonly needs?: StypRender | StypRender[];
 
     /**
      * Creates CSS stylesheet render function.

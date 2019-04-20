@@ -1,6 +1,7 @@
 import { overEntries } from 'a-iterable';
 import { StypProperties } from '../rule';
 import { stypPropertyValue } from '../rule/properties.impl';
+import { stypRenderAtRules } from './at-rules.render';
 import { StypRender } from './render';
 import { FIRST_RENDER_ORDER } from './render.impl';
 import { StyleProducer } from './style-producer';
@@ -52,6 +53,8 @@ import { StyleProducer } from './style-producer';
 export const stypRenderGlobals: StypRender = {
 
   order: FIRST_RENDER_ORDER + 1,
+
+  needs: stypRenderAtRules,
 
   render(producer: StyleProducer, properties: StypProperties) {
 

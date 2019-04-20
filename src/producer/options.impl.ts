@@ -1,8 +1,8 @@
-import { StypOptions } from './style-producer';
-import { StypRender } from './render';
-import { stypRenderProperties } from './properties.render';
-import { StypRule } from '../rule';
 import { isReadonlyArray } from '../internal';
+import { StypRule } from '../rule';
+import { stypRenderProperties } from './properties.render';
+import { StypRender } from './render';
+import { StypOptions } from './style-producer';
 
 export interface StypRenderSpecFactory extends StypRender.Factory {
   create(rule: StypRule): StypRender.Spec;
@@ -13,20 +13,33 @@ export interface StypRenderSpecFactory extends StypRender.Factory {
  */
 export function stypRenderFactories(opts: StypOptions): readonly StypRenderSpecFactory[] {
 
-  const render = opts.render;
-  let factories: StypRenderSpecFactory[];
+  const factories = new Map<StypRender, StypRenderSpecFactory>();
 
-  if (!render) {
-    factories = [];
-  } else if (isReadonlyArray(render)) {
-    factories = render.map(renderFactory);
-  } else {
-    factories = [renderFactory(render)];
+  addRenders(opts.render);
+  addRender(stypRenderProperties);
+
+  return [...factories.values()].sort(compareRenders);
+
+  function addRenders(renders: StypRender | readonly StypRender[] | undefined) {
+    if (renders) {
+      if (isReadonlyArray(renders)) {
+        renders.forEach(addRender);
+      } else {
+        addRender(renders);
+      }
+    }
   }
-  factories.push(renderFactory(stypRenderProperties));
-  factories.sort(compareRenders);
 
-  return factories;
+  function addRender(render: StypRender) {
+    if (factories.has(render)) {
+      return;
+    }
+
+    const factory = renderFactory(render);
+
+    factories.set(render, factory);
+    addRenders(factory.needs);
+  }
 }
 
 function renderFactory(render: StypRender): StypRenderSpecFactory {
@@ -40,6 +53,7 @@ function renderFactory(render: StypRender): StypRenderSpecFactory {
   if (isFactory(render)) {
     return {
       order: render.order,
+      needs: render.needs,
       create(rule) {
         return renderSpec(render.create(rule));
       },
@@ -50,6 +64,7 @@ function renderFactory(render: StypRender): StypRenderSpecFactory {
 
   return {
     order: render.order,
+    needs: render.needs,
     create() {
       return { render: doRender };
     },
