@@ -11,7 +11,7 @@ export function cssStyle(selector?: string): CSSStyleDeclaration {
   return style;
 }
 
-function stylesheets(): AIterable<CSSStyleSheet> {
+export function stylesheets(): AIterable<CSSStyleSheet> {
   return AIterable.from(overArray(document.styleSheets))
       .filter<CSSStyleSheet>(isCSSStyleSheet);
 }

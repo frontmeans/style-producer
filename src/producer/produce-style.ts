@@ -1,11 +1,12 @@
-import { StypRules } from '../rule';
 import { EventInterest } from 'fun-events';
-import { StypOptions } from './style-producer';
+import { isReadonlyArray } from '../internal';
+import { StypRules } from '../rule';
+import { stypRenderAtRules } from './at-rules.render';
+import { stypRenderGlobals } from './globals.render';
 import { produceBasicStyle } from './produce-basic-style';
 import { StypRender } from './render';
+import { StypOptions } from './style-producer';
 import { stypRenderText } from './text.render';
-import { stypRenderAtRules } from './at-rules.render';
-import { isReadonlyArray } from '../internal';
 
 /**
  * Produces and dynamically updates CSS stylesheets based on the given CSS rules.
@@ -31,6 +32,7 @@ function defaultRenders(render: StypRender | readonly StypRender[] | undefined):
 
   const result: StypRender[] = [
     stypRenderAtRules,
+    stypRenderGlobals,
     stypRenderText,
   ];
 
