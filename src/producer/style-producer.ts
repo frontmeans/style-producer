@@ -1,4 +1,4 @@
-import { NamespaceAliaser } from '../ns';
+import { NamespaceAliaser, NamespaceDef } from '../ns';
 import { StypProperties, StypRule } from '../rule';
 import { StypSelector } from '../selector';
 import { StypRender } from './render';
@@ -43,6 +43,17 @@ export interface StyleProducer {
    * Rendered CSS rule selector.
    */
   readonly selector: StypSelector.Normalized;
+
+  /**
+   * Maps namespace to its unique alias.
+   *
+   * This is based on `nsAlias` option.
+   *
+   * @param ns A definition of namespace to find alias for.
+   *
+   * @returns Namespace alias.
+   */
+  nsAlias(ns: NamespaceDef): string;
 
   /**
    * Appends CSS rule to stylesheet.

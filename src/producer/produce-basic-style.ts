@@ -1,7 +1,7 @@
 import { itsReduction, mapIt } from 'a-iterable';
 import { noop } from 'call-thru';
 import { AfterEvent, afterEventFrom, eventInterest, EventInterest, onEventFrom } from 'fun-events';
-import { newNamespaceAliaser } from '../ns';
+import { NamespaceDef, newNamespaceAliaser } from '../ns';
 import { StypProperties, StypRule, StypRules } from '../rule';
 import { StypSelector, stypSelector, StypSelectorFormat, stypSelectorText } from '../selector';
 import { isCombinator } from '../selector/selector.impl';
@@ -86,6 +86,10 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
 
       get selector() {
         return selector;
+      }
+
+      nsAlias(ns: NamespaceDef): string {
+        return nsAlias(ns);
       }
 
       render(properties: StypProperties, options?: StypRender.Options): void {

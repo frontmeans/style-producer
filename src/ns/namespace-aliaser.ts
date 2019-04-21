@@ -3,7 +3,7 @@ import { NamespaceDef } from './namespace';
 /**
  * Namespace aliaser function interface.
  *
- * Namespace aliaser function maps namespaces to their unique aliases.
+ * Maps namespaces to their unique aliases.
  *
  * @param ns A definition of namespace to find alias for.
  *

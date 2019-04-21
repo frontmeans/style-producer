@@ -1,3 +1,4 @@
+import { NamespaceDef } from '../ns';
 import { StypProperties, stypRoot, StypRule } from '../rule';
 import { produceBasicStyle } from './produce-basic-style';
 import { itsEmpty } from 'a-iterable';
@@ -54,6 +55,29 @@ describe('produceBasicStyle', () => {
       expect(mockRender).toHaveBeenCalledWith(
           expect.objectContaining({ parent: document.head }),
           expect.anything());
+    });
+  });
+
+  describe('nsAlias', () => {
+    it('is `nsAlias` option', () => {
+
+      const mockNsAlias = jest.fn();
+      let producer: StyleProducer = null!;
+
+      produceBasicStyle(
+          root.rules,
+          {
+            nsAlias: mockNsAlias,
+            schedule: scheduleNow,
+            render(_producer) {
+              producer = _producer;
+            },
+          });
+
+      const ns = new NamespaceDef('test/ns');
+
+      producer.nsAlias(ns);
+      expect(mockNsAlias).toHaveBeenCalledWith(ns);
     });
   });
 
