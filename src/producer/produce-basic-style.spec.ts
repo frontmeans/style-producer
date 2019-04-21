@@ -81,6 +81,38 @@ describe('produceBasicStyle', () => {
     });
   });
 
+  describe('addStyleSheet option', () => {
+    it('is used for CSS  stylesheet creation', () => {
+
+      const mockAddStyleSheet = jest.fn((producer: StyleProducer) => {
+
+        const { document, parent } = producer;
+        const element = document.createElement('style');
+
+        element.setAttribute('type', 'text/css');
+        element.append(document.createTextNode(''));
+
+        parent.append(element);
+
+        return {
+          styleSheet: element.sheet as CSSStyleSheet,
+          remove() {
+            element.remove();
+          }
+        };
+      });
+
+      produceBasicStyle(
+          root.rules,
+          {
+            schedule: scheduleNow,
+            addStyleSheet: mockAddStyleSheet,
+          });
+
+      expect(mockAddStyleSheet).toHaveBeenCalled();
+    });
+  });
+
   describe('render', () => {
 
     let mockRender1: Mock<void, Parameters<StypRender.Function>>;

@@ -110,6 +110,17 @@ export interface StypOptions {
   rootSelector?: StypSelector;
 
   /**
+   * Creates CSS stylesheet for each CSS rule.
+   *
+   * By default appends `<style>` element to `parent`.
+   *
+   * @param producer Style producer instance.
+   *
+   * @returns CSS stylesheet reference.
+   */
+  addStyleSheet?: (producer: StyleProducer) => StyleSheetRef;
+
+  /**
    * Schedules DOM operation.
    *
    * This is a function that is called each time DOM tree needs to be modified.
@@ -131,5 +142,24 @@ export interface StypOptions {
    * New instance will be created if not specified.
    */
   nsAlias?: NamespaceAliaser;
+
+}
+
+/**
+ * CSS stylesheet reference.
+ *
+ * It is an object created by `addStyleSheet` option.
+ */
+export interface StyleSheetRef {
+
+  /**
+   * CSS stylesheet reference.
+   */
+  readonly styleSheet: CSSStyleSheet;
+
+  /**
+   * Remoives stylesheet from the document.
+   */
+  remove(): void;
 
 }
