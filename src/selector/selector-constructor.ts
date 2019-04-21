@@ -1,6 +1,6 @@
+import { isReadonlyArray } from '../internal';
 import { StypSelector } from './index';
 import { isCombinator, normalizeStypSelectorPart } from './selector.impl';
-import { isReadonlyArray } from '../internal';
 
 /**
  * Converts normalized CSS selector part to normalized CSS selector.

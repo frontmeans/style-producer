@@ -1,6 +1,5 @@
-import { StypRule } from './rule';
-import { StypSelector, stypSelector } from '../selector';
-import { stypRoot } from './root';
+import { itsEmpty } from 'a-iterable';
+import { noop } from 'call-thru';
 import {
   AfterEvent,
   AfterEvent__symbol,
@@ -10,12 +9,13 @@ import {
   trackValue,
   ValueTracker
 } from 'fun-events';
-import { StypProperties } from './properties';
-import { itsEmpty } from 'a-iterable';
-import { noop } from 'call-thru';
-import { ruleProperties } from '../spec';
-import Mock = jest.Mock;
 import { NamespaceDef } from '../ns';
+import { StypSelector, stypSelector } from '../selector';
+import { ruleProperties } from '../spec';
+import { StypProperties } from './properties';
+import { stypRoot } from './root';
+import { StypRule } from './rule';
+import Mock = jest.Mock;
 
 describe('StypRule', () => {
 

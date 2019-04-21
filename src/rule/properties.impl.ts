@@ -1,3 +1,5 @@
+import { itsIterator, itsReduction, overEntries } from 'a-iterable';
+import { nextSkip, NextSkip, noop } from 'call-thru';
 import {
   AfterEvent,
   afterEventBy,
@@ -8,11 +10,9 @@ import {
   isEventKeeper,
   OnEvent
 } from 'fun-events';
-import { StypProperties } from './properties';
-import { nextSkip, NextSkip, noop } from 'call-thru';
-import { itsIterator, itsReduction, overEntries } from 'a-iterable';
-import { StypRule } from './rule';
 import { IMPORTANT_CSS_SUFFIX } from '../internal';
+import { StypProperties } from './properties';
+import { StypRule } from './rule';
 
 /**
  * @internal

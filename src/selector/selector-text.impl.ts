@@ -1,10 +1,10 @@
-import { isCombinator } from './selector.impl';
-import { StypSelector } from './selector';
 import { cssescId } from '../internal';
-import { StypSelectorFormat } from './selector-text';
-import { StypRuleKey } from './rule-key';
-import { qualifyClass, qualifyElement, qualifyId, xmlNs } from '../ns/namespace.impl';
 import { NamespaceAliaser, newNamespaceAliaser } from '../ns';
+import { qualifyClass, qualifyElement, qualifyId, xmlNs } from '../ns/namespace.impl';
+import { StypRuleKey } from './rule-key';
+import { StypSelector } from './selector';
+import { StypSelectorFormat } from './selector-text';
+import { isCombinator } from './selector.impl';
 
 const ruleKeyTextOpts: StypSelectorFormat = {
   qualify(qualifier: string) {

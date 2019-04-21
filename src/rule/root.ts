@@ -1,8 +1,8 @@
 import { StypSelector } from '../selector';
 import { StypProperties } from './properties';
-import { StypRule as StypRule_ } from './rule.impl';
-import { StypRule } from './rule';
 import { stypPropertiesBySpec } from './properties.impl';
+import { StypRule } from './rule';
+import { StypRule as StypRule_ } from './rule.impl';
 
 const rootSelector: StypSelector.Normalized = [];
 

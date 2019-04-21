@@ -1,5 +1,5 @@
-import { stypRoot } from './root';
 import { ruleProperties } from '../spec';
+import { stypRoot } from './root';
 
 describe('stypRoot', () => {
   it('always returns new instance', () => {

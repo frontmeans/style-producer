@@ -1,7 +1,7 @@
-import { formatStypSelector } from './selector-text.impl';
+import { NamespaceAliaser } from '../ns';
 import { StypSelector } from './selector';
 import { stypSelector } from './selector-constructor';
-import { NamespaceAliaser } from '../ns';
+import { formatStypSelector } from './selector-text.impl';
 
 /**
  * Structured CSS selector textual format.

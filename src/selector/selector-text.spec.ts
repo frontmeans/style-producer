@@ -1,6 +1,6 @@
+import { NamespaceAliaser, NamespaceDef, newNamespaceAliaser } from '../ns';
 import { stypSelectorText } from './selector-text';
 import { stypRuleKeyText, stypSelectorDisplayText } from './selector-text.impl';
-import { NamespaceDef, NamespaceAliaser, newNamespaceAliaser } from '../ns';
 
 describe('stypSelectorText', () => {
 

@@ -1,8 +1,8 @@
-import { StyleProducer } from './style-producer';
-import { StypProperties } from '../rule';
 import { filterIt, itsEach, ObjectEntry, overEntries } from 'a-iterable';
 import hyphenateStyleName from 'hyphenate-style-name';
+import { StypProperties } from '../rule';
 import { stypPropertyValue } from '../rule/properties.impl';
+import { StyleProducer } from './style-producer';
 
 /**
  * Renders CSS properties.

@@ -1,7 +1,7 @@
-import { StypSelector } from '../selector';
-import { StypProperties, StypRule } from '../rule';
-import { StyleProducer } from './style-producer';
 import { AfterEvent, EventKeeper } from 'fun-events';
+import { StypProperties, StypRule } from '../rule';
+import { StypSelector } from '../selector';
+import { StyleProducer } from './style-producer';
 
 /**
  * CSS stylesheet render interface.

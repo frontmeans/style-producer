@@ -1,8 +1,8 @@
 import { AfterEvent, afterEventFrom, EventEmitter, EventInterest, trackValue, ValueTracker } from 'fun-events';
-import { mergeStypProperties, stypPropertiesBySpec } from './properties.impl';
-import { StypProperties } from './properties';
-import { StypRule } from './rule';
 import { readProperties } from '../spec';
+import { StypProperties } from './properties';
+import { mergeStypProperties, stypPropertiesBySpec } from './properties.impl';
+import { StypRule } from './rule';
 import Mock = jest.Mock;
 
 describe('stypPropertiesBySpec', () => {

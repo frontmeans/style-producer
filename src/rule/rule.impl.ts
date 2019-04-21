@@ -1,9 +1,4 @@
-import { StypQuery, stypQuery, StypRuleKey, stypSelector, StypSelector, stypSelectorMatches } from '../selector';
-import { StypProperties } from './properties';
-import { stypRuleKeyText } from '../selector/selector-text.impl';
-import { mergeStypProperties, noStypPropertiesSpec, stypPropertiesBySpec } from './properties.impl';
-import { stypOuterSelector, stypRuleKeyAndTail } from '../selector/selector.impl';
-import { StypRule as StypRule_, StypRuleHierarchy, StypRuleList } from './rule';
+import { filterIt, itsIterable } from 'a-iterable';
 import {
   AfterEvent,
   afterEventFrom,
@@ -15,7 +10,12 @@ import {
   trackValue,
   ValueTracker
 } from 'fun-events';
-import { filterIt, itsIterable } from 'a-iterable';
+import { StypQuery, stypQuery, StypRuleKey, stypSelector, StypSelector, stypSelectorMatches } from '../selector';
+import { stypRuleKeyText } from '../selector/selector-text.impl';
+import { stypOuterSelector, stypRuleKeyAndTail } from '../selector/selector.impl';
+import { StypProperties } from './properties';
+import { mergeStypProperties, noStypPropertiesSpec, stypPropertiesBySpec } from './properties.impl';
+import { StypRule as StypRule_, StypRuleHierarchy, StypRuleList } from './rule';
 
 class GrabbedRules extends StypRuleList {
 

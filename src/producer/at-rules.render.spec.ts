@@ -1,9 +1,9 @@
-import { produceStyle } from './produce-style';
-import { stypRoot, StypRule } from '../rule';
-import { cssStyle, cssStyles, mediaRules, removeStyleElements, scheduleNow } from '../spec';
-import { StypRender } from './render';
-import { stypSelectorDisplayText } from '../selector/selector-text.impl';
 import { itsEmpty } from 'a-iterable';
+import { stypRoot, StypRule } from '../rule';
+import { stypSelectorDisplayText } from '../selector/selector-text.impl';
+import { cssStyle, cssStyles, mediaRules, removeStyleElements, scheduleNow } from '../spec';
+import { produceStyle } from './produce-style';
+import { StypRender } from './render';
 import Mock = jest.Mock;
 
 describe('stypRenderAtRules', () => {

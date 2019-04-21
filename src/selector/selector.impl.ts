@@ -1,9 +1,9 @@
-import { StypSelector } from './selector';
-import { StypRuleKey } from './rule-key';
 import { flatMapIt, itsReduction } from 'a-iterable';
 import { isNotEmptyArray, isReadonlyArray } from '../internal';
 import { NameInNamespace } from '../ns';
 import { compareNames, isSingleName } from '../ns/namespace.impl';
+import { StypRuleKey } from './rule-key';
+import { StypSelector } from './selector';
 
 /**
  * @internal

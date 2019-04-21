@@ -1,6 +1,6 @@
+import { compareScalars } from '../internal';
 import { NameInNamespace, NamespaceDef } from './namespace';
 import { NamespaceAliaser } from './namespace-aliaser';
-import { compareScalars } from '../internal';
 
 /**
  * @internal

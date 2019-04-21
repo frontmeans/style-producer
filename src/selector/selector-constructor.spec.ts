@@ -1,5 +1,5 @@
-import { stypSelector } from './selector-constructor';
 import { NamespaceDef } from '../ns';
+import { stypSelector } from './selector-constructor';
 
 describe('stypSelector', () => {
 

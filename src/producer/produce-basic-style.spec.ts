@@ -1,14 +1,14 @@
-import { NamespaceDef } from '../ns';
-import { StypProperties, stypRoot, StypRule } from '../rule';
-import { produceBasicStyle } from './produce-basic-style';
 import { itsEmpty } from 'a-iterable';
 import { trackValue } from 'fun-events';
+import { NamespaceDef } from '../ns';
+import { StypProperties, stypRoot, StypRule } from '../rule';
+import { stypSelector } from '../selector';
 import { cssStyle, cssStyles, removeStyleElements, scheduleNow } from '../spec';
+import { produceBasicStyle } from './produce-basic-style';
 import { StypRender } from './render';
 import { StyleProducer } from './style-producer';
-import { stypSelector } from '../selector';
-import SpyInstance = jest.SpyInstance;
 import Mock = jest.Mock;
+import SpyInstance = jest.SpyInstance;
 
 describe('produceBasicStyle', () => {
 

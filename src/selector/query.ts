@@ -1,7 +1,7 @@
-import { StypSelector } from './selector';
-import { normalizeStypSelectorPart } from './selector.impl';
 import { NameInNamespace, NamespaceDef } from '../ns';
 import { namesEqual } from '../ns/namespace.impl';
+import { StypSelector } from './selector';
+import { normalizeStypSelectorPart } from './selector.impl';
 
 /**
  * CSS rule query.
