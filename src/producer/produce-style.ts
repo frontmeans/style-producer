@@ -7,6 +7,7 @@ import { produceBasicStyle } from './produce-basic-style';
 import { StypRender } from './render';
 import { StypOptions } from './style-producer';
 import { stypRenderText } from './text.render';
+import { stypRenderXmlNs } from './xml-ns.render';
 
 /**
  * Produces and dynamically updates CSS stylesheets based on the given CSS rules.
@@ -32,6 +33,7 @@ function defaultRenders(render: StypRender | readonly StypRender[] | undefined):
 
   const result: StypRender[] = [
     stypRenderAtRules,
+    stypRenderXmlNs,
     stypRenderGlobals,
     stypRenderText,
   ];

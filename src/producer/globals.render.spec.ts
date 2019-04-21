@@ -1,9 +1,6 @@
 import Mocked = jest.Mocked;
-import { stypRoot } from '../rule';
 import { stypRenderGlobals } from './globals.render';
-import { stypRenderFactories } from './options.impl';
 import { StypRender } from './render';
-import { FIRST_RENDER_ORDER } from './render.impl';
 import { StyleProducer } from './style-producer';
 
 describe('stypRenderGlobals', () => {
@@ -27,10 +24,9 @@ describe('stypRenderGlobals', () => {
 
   beforeEach(() => {
 
-    const factories = stypRenderFactories({ render: stypRenderGlobals });
-    const spec = factories.find(f => f.order === FIRST_RENDER_ORDER + 1)!.create(stypRoot());
+    const renderDesc = stypRenderGlobals as StypRender.Descriptor;
 
-    render = spec.render.bind(spec);
+    render = renderDesc.render.bind(renderDesc);
   });
 
   it('renders default namespace', () => {
