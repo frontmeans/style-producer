@@ -15,7 +15,7 @@ import { StyleProducer } from './style-producer';
  *
  * At-rule parameters are taken from root CSS rule properties and treated as following rules.
  *
- * **`@import:url`** property value is treated as media query and appended after style URL. I.e.
+ * **`@import:url`** property value is treated as media query and appended after stylesheet URL. I.e.
  * ```json
  * {
  *     "@import:path/to/included.css": "screen"
