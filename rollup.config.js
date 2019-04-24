@@ -50,9 +50,7 @@ function baseConfig(tsconfig) {
         cacheRoot: 'target/.rts2_cache',
         useTsconfigDeclarationDir: true,
       }),
-      nodeResolve({
-        preferBuiltins: false,
-      }),
+      nodeResolve(),
       sourcemaps(),
     ],
     input: './src/index.ts',
