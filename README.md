@@ -192,7 +192,7 @@ be e.g. [@keyframes]. The value of qualifier (if present) is used as at-rule que
 
 It is also possible to specify at-rule query as CSS property. For that the property name should be the same as qualifier
 one. E.g. if CSS rule selector is `{ c: 'screen-only', $: '@media:sr' }` and CSS rule properties contain
-`{ '@media:sr': 'screen' }`, the rendered CSS would be the sane as above. This technique makes it possible to
+`{ '@media:sr': 'screen' }`, the rendered CSS would be the same as above. This technique makes it possible to
 dynamically update the at-rule queries.
 
 
@@ -271,4 +271,5 @@ The code above would add a unique prefix to the `button` element. E.g. by making
 
 The `i` (element identifier) and `c` (element class name(s)) properties accept namespaced values too.
 
-The `ns` (XML namespace) property accepts namespace (`NamespaceDef`) value instead of plain string.
+The `ns` (XML namespace) property accepts namespace (`NamespaceDef`) value instead of plain string. The corresponding
+[@namespace] rule would be rendered automatically by `stypRenderXmlNs` render.
