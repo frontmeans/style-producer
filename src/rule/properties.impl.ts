@@ -7,7 +7,9 @@ import {
   afterEventOf,
   eventInterest,
   EventKeeper,
+  EventSender,
   isEventKeeper,
+  isEventSender,
   OnEvent
 } from 'fun-events';
 import { IMPORTANT_CSS_SUFFIX } from '../internal';
@@ -37,21 +39,31 @@ export function stypPropertiesBySpec(rule: StypRule, spec?: StypProperties.Spec)
     if (isEventKeeper(spec)) {
       return preventDuplicates(spec);
     }
+    if (isEventSender(spec)) {
+      return preventDuplicates(propertiesKeeper(spec));
+    }
     if (typeof spec === 'function') {
 
-      const keeperOrProperties = spec(rule);
+      const senderOrProperties = spec(rule);
 
-      if (typeof keeperOrProperties !== 'string') {
-        if (isEventKeeper(keeperOrProperties)) {
-          return preventDuplicates(keeperOrProperties);
+      if (typeof senderOrProperties !== 'string') {
+        if (isEventKeeper(senderOrProperties)) {
+          return preventDuplicates(senderOrProperties);
+        }
+        if (isEventSender(senderOrProperties)) {
+          return preventDuplicates(propertiesKeeper(senderOrProperties));
         }
       }
 
-      return afterEventOf(propertiesMap(keeperOrProperties));
+      return afterEventOf(propertiesMap(senderOrProperties));
     }
   }
 
   return afterEventOf(propertiesMap(spec));
+}
+
+function propertiesKeeper(sender: EventSender<[string | StypProperties]>): AfterEvent<[string | StypProperties]> {
+  return afterEventFrom(sender, [{}]);
 }
 
 function preventDuplicates(properties: EventKeeper<[string | StypProperties]>): AfterEvent<[StypProperties]> {
