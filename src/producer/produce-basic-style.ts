@@ -1,4 +1,4 @@
-import { itsReduction, mapIt } from 'a-iterable';
+import { itsEach, itsReduction, mapIt } from 'a-iterable';
 import { noop } from 'call-thru';
 import { AfterEvent, afterEventFrom, eventInterest, EventInterest, onEventFrom } from 'fun-events';
 import { NamespaceDef, newNamespaceAliaser } from '../ns';
@@ -137,7 +137,18 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
   }
 
   function trackRules(): EventInterest {
-    return onEventFrom(rules).consume(renderRules);
+
+    const tracked = new Map<StypRule, EventInterest>();
+    const interest = onEventFrom(rules)((added, removed) => {
+      added.forEach(r => tracked.set(r, renderRule(r)));
+      removed.forEach(r => tracked.delete(r));
+    });
+
+    return eventInterest(reason => {
+      interest.off(reason);
+      itsEach(tracked.values(), i => i.off(reason));
+      tracked.clear();
+    }).needs(interest);
   }
 
   function renderRule(rule: StypRule): EventInterest {

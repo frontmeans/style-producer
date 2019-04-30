@@ -20,7 +20,7 @@ function isCSSStyleSheet(sheet: StyleSheet): sheet is CSSStyleSheet {
   return 'cssRules' in sheet;
 }
 
-function cssRules(): AIterable<CSSRule> {
+export function cssRules(): AIterable<CSSRule> {
   return stylesheets()
       .flatMap(sheet => overArray(sheet.cssRules));
 }

@@ -3,7 +3,7 @@ import { trackValue } from 'fun-events';
 import { NamespaceDef } from '../ns';
 import { StypProperties, stypRoot, StypRule } from '../rule';
 import { stypSelector } from '../selector';
-import { cssStyle, cssStyles, removeStyleElements, scheduleNow } from '../spec';
+import { cssStyle, cssStyles, removeStyleElements, scheduleNow, stylesheets } from '../spec';
 import { produceBasicStyle } from './produce-basic-style';
 import { StypRender } from './render';
 import { StyleProducer } from './style-producer';
@@ -298,10 +298,12 @@ describe('produceBasicStyle', () => {
     expect(style.getPropertyValue('font-size')).toBe('12px');
     expect(style.getPropertyPriority('font-size')).toBe('important');
   });
-  it('appends rule', () => {
+  it('appends rules', () => {
     produceBasicStyle(root.rules, { schedule: scheduleNow });
-    root.rules.add({ c: 'custom' }, { display: 'block' });
-    expect(cssStyle('.custom').display).toBe('block');
+    root.rules.add({ c: 'custom1' }, { display: 'block' });
+    root.rules.add({ c: 'custom2' }, { display: 'inline-block' });
+    expect(cssStyle('.custom1').display).toBe('block');
+    expect(cssStyle('.custom2').display).toBe('inline-block');
   });
   it('updates rule', () => {
 
@@ -348,10 +350,13 @@ describe('produceBasicStyle', () => {
 
     const properties = trackValue<StypProperties>({ display: 'block' });
 
-    root.rules.add({ c: 'custom' }, properties);
-    produceBasicStyle(root.rules, { schedule: scheduleNow }).off();
+    root.rules.add({ c: 'custom1' }, properties);
 
+    const interest = produceBasicStyle(root.rules, { schedule: scheduleNow });
+
+    root.rules.add({ c: 'custom2' }, { width: '100%' });
+    interest.off();
     properties.it = { display: 'inline-block' };
-    expect(itsEmpty(cssStyles())).toBe(true);
+    expect(itsEmpty(stylesheets())).toBe(true);
   });
 });
