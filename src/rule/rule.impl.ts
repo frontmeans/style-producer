@@ -1,6 +1,13 @@
-import { filterIt, itsFirst } from 'a-iterable';
-import { AfterEvent, afterEventBy, afterEventFrom, EventEmitter, trackValue, ValueTracker } from 'fun-events';
-import { StypQuery, StypRuleKey, stypSelector, StypSelector, stypSelectorsEqual } from '../selector';
+import {
+  AfterEvent,
+  afterEventBy,
+  afterEventFrom,
+  EventEmitter,
+  noEventInterest,
+  trackValue,
+  ValueTracker
+} from 'fun-events';
+import { StypQuery, StypRuleKey, stypSelector, StypSelector } from '../selector';
 import { stypRuleKeyText } from '../selector/selector-text.impl';
 import { stypOuterSelector, stypRuleKeyAndTail } from '../selector/selector.impl';
 import { StypProperties } from './properties';
@@ -35,9 +42,12 @@ class AllRules extends StypRuleHierarchy {
   }
 
   get(selector: StypSelector): StypRule | undefined {
+    return this._get(stypSelector(selector));
+  }
 
-    const sel = stypSelector(selector);
-    const [key, tail] = stypRuleKeyAndTail(sel);
+  private _get(selector: StypSelector.Normalized): StypRule | undefined {
+
+    const [key, tail] = stypRuleKeyAndTail(selector);
 
     if (!tail) {
       return this._root;
@@ -54,13 +64,34 @@ class AllRules extends StypRuleHierarchy {
 
   watch(selector: StypSelector): AfterEvent<[StypProperties]> {
 
-    const request = [...this._root.selector, ...stypSelector(selector)];
+    const request = stypSelector(selector);
+    const tracker = trackValue<StypProperties>({});
+    let readInterest = noEventInterest();
+    let receivers = 0;
 
-    return afterEventBy(
-        this.read
-            .thru((rules: StypRuleList) => matchingRule(rules, request))
-            .dig((rule: StypRule_ | undefined) => rule ? rule.read : trackValue<StypProperties>({}).read),
-        [{}]);
+    return afterEventBy(receiver => {
+      if (!receivers++) {
+        readInterest = this.read(() => {
+
+          const found = this._get(request);
+
+          if (found) {
+            readInterest = found
+                .read(properties => tracker.it = properties)
+                .whenDone(() => tracker.it = {});
+          } else {
+            readInterest.off();
+          }
+        });
+      }
+
+      return tracker.read(receiver).whenDone(reason => {
+        if (!--receivers) {
+          readInterest.off(reason);
+          readInterest = noEventInterest();
+        }
+      });
+    });
   }
 
   _add(rule: StypRule, sendUpdate: boolean) {
@@ -92,13 +123,6 @@ function *iterateAllRules(rule: StypRule): IterableIterator<StypRule> {
   for (const nested of rule.rules.nested) {
     yield *allRules(nested);
   }
-}
-
-function matchingRule(rules: StypRuleList, selector: StypSelector.Normalized): StypRule_ | undefined {
-  return itsFirst(
-      filterIt(
-          rules,
-          rule => stypSelectorsEqual(rule.selector, selector)));
 }
 
 class NestedRules extends StypRuleList {
@@ -203,7 +227,7 @@ export class StypRule extends StypRule_ {
     this._selector = selector;
     this._key = key;
     this._spec = trackValue(spec);
-    this._read = afterEventFrom(this._spec.read.dig(s => s(this)));
+    this._read = afterEventFrom(this._spec.read.dig(builder => builder(this)));
     this._nested = new NestedRules(this);
   }
 

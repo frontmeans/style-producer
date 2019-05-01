@@ -486,10 +486,28 @@ describe('StypRule', () => {
         const sel: StypSelector = { c: 'watched' };
         const watched = rule.rules.add(sel, { $name: 'watched' });
         const watch = rule.rules.watch(sel);
+        const receiver = jest.fn();
 
+        watch(receiver);
         watched.remove();
 
+        expect(receiver).toHaveBeenCalledWith({});
         expect(await readProperties(watch)).toEqual({});
+      });
+      it('can be tracked when interest is lost', async () => {
+
+        const sel: StypSelector = { c: 'watched' };
+
+        rule.rules.add(sel, { $name: 'watched' });
+
+        const watch = rule.rules.watch(sel);
+        const receiver = jest.fn();
+        const interest = watch(receiver);
+
+        expect(receiver).toHaveBeenCalledWith({ $name: 'watched' });
+
+        interest.off();
+        expect(await readProperties(watch)).toEqual({ $name: 'watched' });
       });
     });
   });
