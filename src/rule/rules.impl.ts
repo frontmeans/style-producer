@@ -30,7 +30,7 @@ export class Rules extends StypRuleList {
     let filterArray: (rules: StypRule[]) => StypRule[];
 
     if (ruleMatches) {
-      buildList = () => filterIt(list, ruleMatches);;
+      buildList = () => filterIt(list, ruleMatches);
       filterArray = rules => rules.filter(ruleMatches);
     } else {
       buildList = () => list;
