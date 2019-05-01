@@ -37,10 +37,10 @@ export function stypPropertiesBySpec(rule: StypRule, spec?: StypProperties.Spec)
   }
   if (typeof spec !== 'string') {
     if (isEventKeeper(spec)) {
-      return keeperToSpec(spec);
+      return preventDuplicates(spec);
     }
     if (isEventSender(spec)) {
-      return keeperToSpec(propertiesKeeper(spec));
+      return preventDuplicates(propertiesKeeper(spec));
     }
     if (typeof spec === 'function') {
 
@@ -48,10 +48,10 @@ export function stypPropertiesBySpec(rule: StypRule, spec?: StypProperties.Spec)
 
       if (typeof senderOrProperties !== 'string') {
         if (isEventKeeper(senderOrProperties)) {
-          return keeperToSpec(senderOrProperties);
+          return preventDuplicates(senderOrProperties);
         }
         if (isEventSender(senderOrProperties)) {
-          return keeperToSpec(propertiesKeeper(senderOrProperties));
+          return preventDuplicates(propertiesKeeper(senderOrProperties));
         }
       }
 
@@ -64,15 +64,6 @@ export function stypPropertiesBySpec(rule: StypRule, spec?: StypProperties.Spec)
 
 function propertiesKeeper(sender: EventSender<[string | StypProperties]>): AfterEvent<[string | StypProperties]> {
   return afterEventFrom(sender, [{}]);
-}
-
-function keeperToSpec(properties: EventKeeper<[string | StypProperties]>): AfterEvent<[StypProperties]> {
-
-  const result = preventDuplicates(properties);
-
-  result(noop); // Needed for updates tracking
-
-  return result;
 }
 
 function preventDuplicates(properties: EventKeeper<[string | StypProperties]>): AfterEvent<[StypProperties]> {
