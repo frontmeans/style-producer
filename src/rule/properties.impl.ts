@@ -37,10 +37,10 @@ export function stypPropertiesBySpec(rule: StypRule, spec?: StypProperties.Spec)
   }
   if (typeof spec !== 'string') {
     if (isEventKeeper(spec)) {
-      return preventDuplicates(spec);
+      return keeperToSpec(spec);
     }
     if (isEventSender(spec)) {
-      return preventDuplicates(propertiesKeeper(spec));
+      return keeperToSpec(propertiesKeeper(spec));
     }
     if (typeof spec === 'function') {
 
@@ -48,10 +48,10 @@ export function stypPropertiesBySpec(rule: StypRule, spec?: StypProperties.Spec)
 
       if (typeof senderOrProperties !== 'string') {
         if (isEventKeeper(senderOrProperties)) {
-          return preventDuplicates(senderOrProperties);
+          return keeperToSpec(senderOrProperties);
         }
         if (isEventSender(senderOrProperties)) {
-          return preventDuplicates(propertiesKeeper(senderOrProperties));
+          return keeperToSpec(propertiesKeeper(senderOrProperties));
         }
       }
 
@@ -66,6 +66,15 @@ function propertiesKeeper(sender: EventSender<[string | StypProperties]>): After
   return afterEventFrom(sender, [{}]);
 }
 
+function keeperToSpec(properties: EventKeeper<[string | StypProperties]>): AfterEvent<[StypProperties]> {
+
+  const result = preventDuplicates(properties);
+
+  result(noop); // Needed for updates tracking
+
+  return result;
+}
+
 function preventDuplicates(properties: EventKeeper<[string | StypProperties]>): AfterEvent<[StypProperties]> {
 
   const afterEvent = afterEventFrom(properties);
@@ -74,11 +83,7 @@ function preventDuplicates(properties: EventKeeper<[string | StypProperties]>): 
       passNonDuplicate(),
   );
 
-  const result = afterEventFrom<[StypProperties]>(onEvent);
-
-  result(noop); // Needed for updates tracking
-
-  return result;
+  return afterEventFrom<[StypProperties]>(onEvent);
 }
 
 function passNonDuplicate<NextArgs extends any[]>():
