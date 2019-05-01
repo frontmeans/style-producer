@@ -1,6 +1,7 @@
-import { AfterEvent, AfterEvent__symbol, EventKeeper, EventSender, OnEvent, OnEvent__symbol } from 'fun-events';
+import { AfterEvent, AfterEvent__symbol, EventKeeper, OnEvent, OnEvent__symbol } from 'fun-events';
 import { StypQuery, StypRuleKey, StypSelector } from '../selector';
 import { StypProperties } from './properties';
+import { StypRules } from './rules';
 
 /**
  * CSS rule.
@@ -98,13 +99,6 @@ export abstract class StypRule implements EventKeeper<[StypProperties]> {
   abstract remove(reason?: any): this;
 
 }
-
-/**
- * Dynamically updated CSS rules interface.
- *
- * This is an iterable of rules, and an `EventSender` of their updates.
- */
-export type StypRules = Iterable<StypRule> & EventSender<[StypRule[], StypRule[]]>;
 
 /**
  * Dynamically updated list of CSS rules.
