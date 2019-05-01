@@ -1,5 +1,5 @@
 import { filterIt, itsIterable } from 'a-iterable';
-import { noop, valueProvider } from 'call-thru';
+import { asis, noop } from 'call-thru';
 import {
   AfterEvent,
   afterEventFrom,
@@ -23,8 +23,19 @@ export class Rules extends StypRuleList {
   readonly read: AfterEvent<[Rules]>;
   readonly [Symbol.iterator]: () => IterableIterator<StypRule>;
 
-  constructor(list: StypRules, ruleMatches: (rule: StypRule) => boolean = valueProvider(true)) {
+  constructor(list: StypRules, ruleMatches?: (rule: StypRule) => boolean) {
     super();
+
+    let buildList: () => Iterable<StypRule>;
+    let filterArray: (rules: StypRule[]) => StypRule[];
+
+    if (ruleMatches) {
+      buildList = () => filterIt(list, ruleMatches);;
+      filterArray = rules => rules.filter(ruleMatches);
+    } else {
+      buildList = () => list;
+      filterArray = asis;
+    }
 
     const _emitter = new EventEmitter<[StypRule[], StypRule[]]>();
     let _listInterest = noEventInterest();
@@ -38,11 +49,11 @@ export class Rules extends StypRuleList {
       if (!_rules) {
         // This is a first receiver.
         // Start tracking the list changes.
-        const rules = _rules = new Set(_buildList());
+        const rules = _rules = new Set(buildList());
 
         _listInterest = onEventFrom(list)((added, removed) => {
-          added = added.filter(ruleMatches);
-          removed = removed.filter(ruleMatches);
+          added = filterArray(added);
+          removed = filterArray(removed);
           if (removed.length || added.length) {
             removed.forEach(rule => rules.delete(rule));
             added.forEach(rule => rules.add(rule));
@@ -80,12 +91,8 @@ export class Rules extends StypRuleList {
       }
       // List changes are not currently tracked.
       // Request the rules explicitly.
-      return itsIterable(_buildList());
+      return itsIterable(buildList());
     };
-
-    function _buildList(): Iterable<StypRule> {
-      return filterIt(list, ruleMatches);
-    }
 
   }
 
