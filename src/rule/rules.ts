@@ -10,7 +10,8 @@ import {
   onEventBy,
   onEventFrom
 } from 'fun-events';
-import { StypRule } from './rule';
+import { StypRule, StypRuleList } from './rule';
+import { Rules } from './rules.impl';
 
 /**
  * Dynamically updated CSS rule set.
@@ -50,23 +51,23 @@ export namespace StypRules {
 
 }
 
-const noStypRules: StypRules = {
+const noStypRules: StypRuleList = /*#__PURE__*/ new Rules({
   [Symbol.iterator](): IterableIterator<StypRule> {
     return [][Symbol.iterator]();
   },
   [OnEvent__symbol]() {
     return noEventInterest();
   }
-};
+});
 
 /**
- * Constructs dynamically updated CSS rule set out of their sources.
+ * Constructs dynamically updated CSS rule list out of rule sources.
  *
  * @param sources CSS rule sources.
  *
- * @returns Dynamic CSS rule set.
+ * @returns Dynamic CSS rule list.
  */
-export function stypRules(...sources: StypRules.Source[]): StypRules {
+export function stypRules(...sources: StypRules.Source[]): StypRuleList {
   return sources.length ? rulesByList(sources.map(rulesFromSource)) : noStypRules;
 }
 
@@ -75,7 +76,7 @@ function rulesFromSource(source: StypRules.Source): StypRules {
 }
 
 /**
- * Constructs lazily updated CSS rule set out of their sources.
+ * Constructs lazily updated CSS rule list out of rule sources.
  *
  * In contrast to [[stypRules]] this one does not evaluate sources (e.g. does not call source functions) until there
  * is an updates receiver registered.
@@ -85,9 +86,9 @@ function rulesFromSource(source: StypRules.Source): StypRules {
  *
  * @param sources CSS rule sources.
  *
- * @returns Dynamic CSS rule set.
+ * @returns Dynamic CSS rule list.
  */
-export function lazyStypRules(...sources: StypRules.Source[]): StypRules {
+export function lazyStypRules(...sources: StypRules.Source[]): StypRuleList {
   return sources.length ? rulesByList(sources.map(lazyRulesFromSource)) : noStypRules;
 }
 
@@ -95,11 +96,14 @@ function lazyRulesFromSource(source: StypRules.Source): StypRules {
   return typeof source === 'function' ? lazyRules(source) : rulesByValue(source);
 }
 
-function rulesByList(sources: StypRules[]): StypRules {
+function rulesByList(sources: StypRules[]): StypRuleList {
   if (sources.length === 1) {
-    return sources[0];
+
+    const source = sources[0];
+
+    return source instanceof StypRuleList ? source : new Rules(source);
   }
-  return {
+  return new Rules({
     * [Symbol.iterator](): IterableIterator<StypRule> {
       for (const rules of sources) {
         yield* rules;
@@ -119,7 +123,7 @@ function rulesByList(sources: StypRules[]): StypRules {
         return interest;
       });
     },
-  };
+  });
 }
 
 function evalRules(source: (this: void) => StypRule | StypRules | Promise<StypRule | StypRules>): StypRules {
@@ -161,14 +165,14 @@ function lazyRules(source: (this: void) => StypRule | StypRules | Promise<StypRu
           ruleSet.add(rule);
         });
 
-        if (existing.length) {
-          receiver(existing, []); // Report existing rules as just added
-        }
         sharedInterest = rules[OnEvent__symbol]((added, removed) => {
           removed.forEach(rule => ruleSet.delete(rule));
           added.forEach(rule => ruleSet.add(rule));
           emitter.send(added, removed);
         });
+        if (existing.length) {
+          receiver(existing, []); // Report existing rules as just added
+        }
       }
 
       return emitter.on(receiver)
@@ -223,15 +227,15 @@ function asyncRules(source: Promise<StypRule | StypRules>): StypRules {
                 existing.push(rule);
                 ruleSet.add(rule);
               });
-              if (existing.length) {
-                receiver(existing, []); // Report existing rules as just added
-              }
 
               sharedInterest = onEventFrom(rules)((added, removed) => {
                 removed.forEach(rule => ruleSet.delete(rule));
                 added.forEach(rule => ruleSet.add(rule));
                 emitter.send(added, removed);
               });
+              if (existing.length) {
+                receiver(existing, []); // Report existing rules as just added
+              }
             }
 
             sourceInterest = emitter.on(receiver).needs(interest).needs(sharedInterest);

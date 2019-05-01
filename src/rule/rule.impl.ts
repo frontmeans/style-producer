@@ -1,94 +1,11 @@
-import { filterIt, itsIterable } from 'a-iterable';
-import {
-  AfterEvent,
-  afterEventFrom,
-  EventEmitter,
-  eventInterest,
-  noEventInterest,
-  OnEvent,
-  onEventBy,
-  trackValue,
-  ValueTracker
-} from 'fun-events';
-import { StypQuery, stypQuery, StypRuleKey, stypSelector, StypSelector, stypSelectorMatches } from '../selector';
+import { AfterEvent, afterEventFrom, EventEmitter, trackValue, ValueTracker } from 'fun-events';
+import { StypQuery, StypRuleKey, stypSelector, StypSelector } from '../selector';
 import { stypRuleKeyText } from '../selector/selector-text.impl';
 import { stypOuterSelector, stypRuleKeyAndTail } from '../selector/selector.impl';
 import { StypProperties } from './properties';
 import { mergeStypProperties, noStypPropertiesSpec, stypPropertiesBySpec } from './properties.impl';
 import { StypRule as StypRule_, StypRuleHierarchy, StypRuleList } from './rule';
-
-class GrabbedRules extends StypRuleList {
-
-  readonly onUpdate: OnEvent<[StypRule_[], StypRule_[]]>;
-  readonly read: AfterEvent<[GrabbedRules]>;
-  readonly [Symbol.iterator]: () => IterableIterator<StypRule_>;
-
-  constructor(list: StypRuleList, query: StypQuery.Normalized) {
-    super();
-
-    const _emitter = new EventEmitter<[StypRule_[], StypRule_[]]>();
-    let _listInterest = noEventInterest();
-    let _rules: Set<StypRule_> | undefined;
-
-    this.onUpdate = onEventBy(receiver => {
-      if (!_rules) {
-        // This is a first receiver.
-        // Start tracking the list changes.
-
-        const rules = _rules = new Set(_buildList());
-
-        _listInterest = list.onUpdate((added, removed) => {
-          added = added.filter(_matchingRule);
-          removed = removed.filter(_matchingRule);
-          if (removed.length || added.length) {
-            removed.forEach(rule => rules.delete(rule));
-            added.forEach(rule => rules.add(rule));
-            _emitter.send(added, removed);
-          }
-        });
-      }
-
-      const interest = _emitter.on(receiver);
-
-      return eventInterest(reason => {
-        interest.off(reason);
-        if (!_emitter.size) {
-          // No more receivers left.
-          // Stop tracking the list changes.
-          _rules = undefined;
-          _listInterest.off(reason);
-        }
-      }).needs(interest).needs(_listInterest);
-    });
-    this.read = afterEventFrom<[GrabbedRules]>(this.onUpdate.thru(() => this), [this]);
-    this[Symbol.iterator] = () => {
-      if (_rules) {
-        // List changes are tracked.
-        return _rules.values();
-      }
-      // List changes are not currently tracked.
-      // Request the rules explicitly.
-      return itsIterable(_buildList());
-    };
-
-    function _buildList(): Iterable<StypRule_> {
-      return filterIt(list, _matchingRule);
-    }
-
-    function _matchingRule(rule: StypRule_): boolean {
-      return stypSelectorMatches(rule.selector, query);
-    }
-  }
-
-  grab(query: StypQuery): StypRuleList {
-    return grabRules(this, query);
-  }
-
-}
-
-function grabRules(list: StypRuleList, query: StypQuery): StypRuleList {
-  return new GrabbedRules(list, stypQuery(query));
-}
+import { grabRules } from './rules.impl';
 
 class AllRules extends StypRuleHierarchy {
 
