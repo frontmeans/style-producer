@@ -177,4 +177,15 @@ export abstract class StypRuleHierarchy extends StypRuleList {
    */
   abstract get(selector: StypSelector): StypRule | undefined;
 
+  /**
+   * Watches for CSS rule properties.
+   *
+   * The properties are empty when the watched rule does not exist.
+   *
+   * @param selector CSS selector of watched rule.
+   *
+   * @returns An `AfterEvent` registrar of CSS properties receiver.
+   */
+  abstract watch(selector: StypSelector): AfterEvent<[StypProperties]>;
+
 }

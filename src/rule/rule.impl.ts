@@ -1,5 +1,6 @@
-import { AfterEvent, afterEventFrom, EventEmitter, trackValue, ValueTracker } from 'fun-events';
-import { StypQuery, StypRuleKey, stypSelector, StypSelector } from '../selector';
+import { filterIt, itsFirst } from 'a-iterable';
+import { AfterEvent, afterEventBy, afterEventFrom, EventEmitter, trackValue, ValueTracker } from 'fun-events';
+import { StypQuery, StypRuleKey, stypSelector, StypSelector, stypSelectorsEqual } from '../selector';
 import { stypRuleKeyText } from '../selector/selector-text.impl';
 import { stypOuterSelector, stypRuleKeyAndTail } from '../selector/selector.impl';
 import { StypProperties } from './properties';
@@ -51,6 +52,17 @@ class AllRules extends StypRuleHierarchy {
     return found.rules.get(tail);
   }
 
+  watch(selector: StypSelector): AfterEvent<[StypProperties]> {
+
+    const request = [...this._root.selector, ...stypSelector(selector)];
+
+    return afterEventBy(
+        this.read
+            .thru((rules: StypRuleList) => matchingRule(rules, request))
+            .dig((rule: StypRule_ | undefined) => rule ? rule.read : trackValue<StypProperties>({}).read),
+        [{}]);
+  }
+
   _add(rule: StypRule, sendUpdate: boolean) {
     rule.rules.onUpdate((added, removed) => this._updates.send(added, removed));
     if (sendUpdate) {
@@ -80,6 +92,13 @@ function *iterateAllRules(rule: StypRule): IterableIterator<StypRule> {
   for (const nested of rule.rules.nested) {
     yield *allRules(nested);
   }
+}
+
+function matchingRule(rules: StypRuleList, selector: StypSelector.Normalized): StypRule_ | undefined {
+  return itsFirst(
+      filterIt(
+          rules,
+          rule => stypSelectorsEqual(rule.selector, selector)));
 }
 
 class NestedRules extends StypRuleList {

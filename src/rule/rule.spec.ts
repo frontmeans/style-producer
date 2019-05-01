@@ -11,7 +11,7 @@ import {
 } from 'fun-events';
 import { NamespaceDef } from '../ns';
 import { StypSelector, stypSelector } from '../selector';
-import { ruleProperties } from '../spec';
+import { readProperties, ruleProperties } from '../spec';
 import { StypProperties } from './properties';
 import { stypRoot } from './root';
 import { StypRule } from './rule';
@@ -454,6 +454,42 @@ describe('StypRule', () => {
 
           expect(ruleSelectors(list)).toEqual([nested1.selector]);
         });
+      });
+    });
+
+    describe('watch', () => {
+      it('receives empty properties for absent rule', async () => {
+
+        const sel: StypSelector = { c: 'watched' };
+
+        expect(await readProperties(rule.rules.watch(sel))).toEqual({});
+      });
+      it('receives existing rule properties', async () => {
+
+        const sel: StypSelector = { c: 'watched' };
+
+        rule.rules.add(sel, { $name: 'watched' });
+
+        expect(await readProperties(rule.rules.watch(sel))).toEqual({ $name: 'watched' });
+      });
+      it('receives added rule properties', async () => {
+
+        const sel: StypSelector = { c: 'watched' };
+        const watch = rule.rules.watch(sel);
+
+        rule.rules.add(sel, { $name: 'watched' });
+
+        expect(await readProperties(watch)).toEqual({ $name: 'watched' });
+      });
+      it('handles rule removal', async () => {
+
+        const sel: StypSelector = { c: 'watched' };
+        const watched = rule.rules.add(sel, { $name: 'watched' });
+        const watch = rule.rules.watch(sel);
+
+        watched.remove();
+
+        expect(await readProperties(watch)).toEqual({});
       });
     });
   });
