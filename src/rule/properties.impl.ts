@@ -10,7 +10,7 @@ import {
   EventSender,
   isEventKeeper,
   isEventSender,
-  OnEvent
+  OnEvent, trackValue
 } from 'fun-events';
 import { IMPORTANT_CSS_SUFFIX } from '../internal';
 import { StypProperties } from './properties';
@@ -74,7 +74,11 @@ function preventDuplicates(properties: EventKeeper<[string | StypProperties]>): 
       passNonDuplicate(),
   );
 
-  return afterEventFrom<[StypProperties]>(onEvent);
+  const result = afterEventFrom<[StypProperties]>(onEvent);
+
+  result(noop); // Needed for updates tracking
+
+  return result;
 }
 
 function passNonDuplicate<NextArgs extends any[]>():
