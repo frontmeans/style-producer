@@ -152,7 +152,7 @@ describe('StypRule', () => {
 
     beforeEach(() => {
       update = trackValue({ display: 'block' });
-      rule.add(update.read);
+      rule.add(update);
     });
 
     let rule2: StypRule;
@@ -161,12 +161,6 @@ describe('StypRule', () => {
       rule2 = root.rules.add([ { e: 'element-1', $: 'biz' }]);
     });
 
-    it('updates existing rule', () => {
-      expect(rule).toBe(rule);
-    });
-    it('stores rule in hierarchy', () => {
-      expect(root.rules.get(rule.selector)).toBe(rule);
-    });
     it('applies update', async () => {
       expect(await ruleProperties(rule)).toEqual(update.it);
     });
@@ -177,30 +171,6 @@ describe('StypRule', () => {
       rule.add(update2);
 
       expect(await ruleProperties(rule)).toEqual({ ...update.it, ...update2 });
-    });
-    it('merges updated properties by `rules.add()', async () => {
-
-      const update2: StypProperties = { width: '100%' };
-
-      root.rules.add(rule.selector, update2);
-
-      expect(await ruleProperties(rule)).toEqual({ ...update.it, ...update2 });
-    });
-    it('adds another rule', async () => {
-
-      const update2: StypProperties = { width: '100%' };
-      const updated2 = rule2.add(update2);
-
-      expect(root.rules.get(rule2.selector)).toEqual(updated2);
-      expect(await ruleProperties(updated2)).toEqual(update2);
-    });
-    it('adds nested rule', async () => {
-
-      const update2: StypProperties = { width: '100%' };
-      const updated2 = rule.rules.add({ e: 'element-1-2' }, update2);
-
-      expect(root.rules.get(updated2.selector)).toBe(updated2);
-      expect(await ruleProperties(updated2)).toEqual(update2);
     });
     it('sends updated properties', async () => {
 
@@ -263,6 +233,29 @@ describe('StypRule', () => {
         expect(ruleSelectors(rule.rules.nested)).toContain(nested.selector);
         expect(nested.selector).toEqual([...rule.selector, ...subSelector]);
         expect(nested.key).toEqual(subSelector);
+      });
+      it('stores rule in hierarchy', () => {
+        expect(root.rules.get(rule.selector)).toBe(rule);
+      });
+      it('merges updated properties', async () => {
+
+        const initial = { $init: 'value' };
+
+        mockSpec.mockImplementation(() => trackValue(initial).read);
+
+        const update: StypProperties = { width: '100%' };
+
+        root.rules.add(rule.selector, update);
+
+        expect(await ruleProperties(rule)).toEqual({ ...initial, ...update });
+      });
+      it('adds nested rule', async () => {
+
+        const update2: StypProperties = { width: '100%' };
+        const updated2 = rule.rules.add({ e: 'element-1-2' }, update2);
+
+        expect(root.rules.get(updated2.selector)).toBe(updated2);
+        expect(await ruleProperties(updated2)).toEqual(update2);
       });
       it('sends rule list update', () => {
 
