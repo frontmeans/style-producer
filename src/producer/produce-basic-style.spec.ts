@@ -1,5 +1,6 @@
 import { itsEmpty } from 'a-iterable';
-import { trackValue } from 'fun-events';
+import { noop } from 'call-thru';
+import { AfterEvent, afterEventBy, EventKeeper, noEventInterest, trackValue } from 'fun-events';
 import { NamespaceDef } from '../ns';
 import { StypProperties, stypRoot, StypRule } from '../rule';
 import { stypSelector } from '../selector';
@@ -218,6 +219,39 @@ describe('produceBasicStyle', () => {
       expect(mockRender1).toHaveBeenCalledTimes(1);
       expect(mockRender2).toHaveBeenCalledWith(producer, properties);
       expect(mockRender2).toHaveBeenCalledTimes(1);
+    });
+    it('handles premature rule removal', () => {
+
+      const properties: StypProperties = { $name: 'next' };
+      let action: () => void = noop;
+
+      const render: StypRender.Factory = {
+        create(): StypRender.Spec {
+          return {
+            render: mockRender1,
+            read(): EventKeeper<[StypProperties]> {
+              return afterEventBy(() => noEventInterest(), [properties]);
+            },
+          };
+        },
+      };
+
+      action();
+
+      expect(mockRender1).not.toHaveBeenCalled();
+
+      produceBasicStyle(root.rules, {
+        render: render,
+        schedule(op) {
+
+          const prev = action;
+
+          action = () => {
+            prev();
+            op();
+          };
+        },
+      });
     });
 
     function testProduceStyle() {
