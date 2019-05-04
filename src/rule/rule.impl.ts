@@ -65,33 +65,25 @@ class AllRules extends StypRuleHierarchy {
   watch(selector: StypSelector): AfterEvent<[StypProperties]> {
 
     const request = stypSelector(selector);
-    const tracker = trackValue<StypProperties>({});
-    let readInterest = noEventInterest();
-    let receivers = 0;
 
-    return afterEventBy(receiver => {
-      if (!receivers++) {
-        readInterest = this.read(() => {
+    return afterEventBy<[StypProperties]>(receiver => {
 
-          const found = this._get(request);
+      const tracker = trackValue<StypProperties>({});
+      const propertiesInterest = this.read.consume(() => {
 
-          if (found) {
-            readInterest = found
-                .read(properties => tracker.it = properties)
-                .whenDone(() => tracker.it = {});
-          } else {
-            readInterest.off();
-          }
-        });
-      }
+        const found = this._get(request);
 
-      return tracker.read(receiver).whenDone(reason => {
-        if (!--receivers) {
-          readInterest.off(reason);
-          readInterest = noEventInterest();
-        }
+        return found && found
+            .read(properties => tracker.it = properties)
+            .whenDone(() => tracker.it = {});
       });
-    });
+
+      const interest = tracker.read(receiver);
+
+      propertiesInterest.needs(interest);
+
+      return interest;
+    }).share();
   }
 
   _add(rule: StypRule, sendUpdate: boolean) {
