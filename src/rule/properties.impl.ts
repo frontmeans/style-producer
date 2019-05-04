@@ -168,8 +168,8 @@ function addValue(
 /**
  * @internal
  */
-export function stypPropertyValue(value: StypProperties.Value): [string, 'important'?] | [] {
-  if (!value) {
+export function stypPropertyValue(value: StypProperties.Value): readonly [string?, 'important'?] {
+  if (value == null) {
     return [];
   }
 

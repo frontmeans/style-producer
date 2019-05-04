@@ -298,6 +298,11 @@ describe('produceBasicStyle', () => {
     expect(style.getPropertyValue('font-size')).toBe('12px');
     expect(style.getPropertyPriority('font-size')).toBe('important');
   });
+  it('does not render undefined properties', () => {
+    root.rules.add({ c: 'custom' }, { display: 'block', fontSize: undefined });
+    produceBasicStyle(root.rules, { schedule: scheduleNow });
+    expect(cssStyle('.custom').fontSize).toBeUndefined();
+  });
   it('appends rules', () => {
     produceBasicStyle(root.rules, { schedule: scheduleNow });
     root.rules.add({ c: 'custom1' }, { display: 'block' });
