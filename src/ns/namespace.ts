@@ -15,13 +15,15 @@ export class NamespaceDef {
   /**
    * Preferred namespace aliases.
    */
-  readonly aliases: readonly [string, ...string[]];
+  readonly aliases: readonly string[];
 
   /**
-   * Preferred namespace alias.
+   * The most preferred namespace alias.
+   *
+   * By default this is the first preferred alias, or `ns` if there is no preferred aliases.
    */
   get alias(): string {
-    return this.aliases[0];
+    return this.aliases[0] || 'ns';
   }
 
   /**
@@ -32,7 +34,7 @@ export class NamespaceDef {
    */
   constructor(url: string, ...aliases: string[]) {
     this.url = url;
-    this.aliases = isNotEmptyArray(aliases) ? aliases : ['ns'];
+    this.aliases = aliases;
   }
 
   /**

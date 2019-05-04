@@ -32,9 +32,10 @@ export function newNamespaceAliaser(): NamespaceAliaser {
       return found;
     }
 
+    const mostPreferred = ns.alias;
     let nsNumRegistered = 0;
 
-    for (const preferred of ns.aliases) {
+    for (const preferred of [mostPreferred, ...ns.aliases]) {
 
       const ids = nsNumPerAlias.get(preferred);
 
@@ -44,15 +45,15 @@ export function newNamespaceAliaser(): NamespaceAliaser {
         return preferred;
       }
       if (!nsNumRegistered) {
+        // Use the first one
         nsNumRegistered = ids;
       }
     }
 
-    const firstPreferred = ns.alias;
-    const generated = firstPreferred + (++nsNumRegistered);
+    const generated = mostPreferred + (++nsNumRegistered);
 
     aliasesByNs.set(ns.url, generated);
-    nsNumPerAlias.set(firstPreferred, nsNumRegistered);
+    nsNumPerAlias.set(mostPreferred, nsNumRegistered);
 
     return generated;
   };
