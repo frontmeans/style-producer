@@ -1,7 +1,8 @@
 import { itsEach } from 'a-iterable';
+import { noop } from 'call-thru';
 import {
   EventEmitter,
-  eventInterest,
+  eventInterest, EventReceiver,
   EventSender,
   isEventSender,
   noEventInterest,
@@ -121,7 +122,7 @@ function rulesByList(sources: StypRules[]): StypRuleList {
         });
 
         return interest;
-      });
+      }).share();
     },
   });
 }
@@ -146,45 +147,27 @@ function evalRules(source: (this: void) => StypRule | StypRules | Promise<StypRu
 
 function lazyRules(source: (this: void) => StypRule | StypRules | Promise<StypRule | StypRules>): StypRules {
 
-  const emitter = new EventEmitter<[StypRule[], StypRule[]]>();
-  let sharedInterest = noEventInterest();
   const ruleSet = new Set<StypRule>();
+  const onEvent = onEventBy(receiver => {
+
+    const rules = rulesByValue(source());
+
+    reportExistingRules(rules, ruleSet, receiver);
+
+    return rules[OnEvent__symbol]((added, removed) => {
+      removed.forEach(rule => ruleSet.delete(rule));
+      added.forEach(rule => ruleSet.add(rule));
+      receiver(added, removed);
+    }).whenDone(() => {
+      ruleSet.clear();
+    });
+  }).share();
 
   return {
+    [OnEvent__symbol]: onEvent,
     [Symbol.iterator](): IterableIterator<StypRule> {
       return ruleSet.values();
     },
-    [OnEvent__symbol](receiver) {
-      if (!emitter.size) {
-
-        const rules = rulesByValue(source());
-        const existing: StypRule[] = [];
-
-        itsEach(rules, rule => {
-          existing.push(rule);
-          ruleSet.add(rule);
-        });
-
-        sharedInterest = rules[OnEvent__symbol]((added, removed) => {
-          removed.forEach(rule => ruleSet.delete(rule));
-          added.forEach(rule => ruleSet.add(rule));
-          emitter.send(added, removed);
-        });
-        if (existing.length) {
-          receiver(existing, []); // Report existing rules as just added
-        }
-      }
-
-      return emitter.on(receiver)
-          .needs(sharedInterest)
-          .whenDone(reason => {
-            if (!emitter.size) {
-              ruleSet.clear();
-              sharedInterest.off(reason);
-              sharedInterest = noEventInterest();
-            }
-          });
-    }
   };
 }
 
@@ -194,56 +177,54 @@ function rulesByValue(source: StypRule | StypRules | Promise<StypRule | StypRule
 
 function asyncRules(source: Promise<StypRule | StypRules>): StypRules {
 
-  const emitter = new EventEmitter<[StypRule[], StypRule[]]>();
-  let sharedInterest = noEventInterest();
   const ruleSet = new Set<StypRule>();
+  const onEvent = onEventBy<[StypRule[], StypRule[]]>(receiver => {
+
+    let sourceInterest = noEventInterest();
+    const interest = eventInterest(noop)
+        .whenDone(reason => {
+          sourceInterest.off(reason);
+          ruleSet.clear();
+        });
+
+    source.then(resolution => {
+      if (!interest.done) {
+
+        const rules = resolution instanceof StypRule ? resolution.rules : resolution;
+
+        reportExistingRules(rules, ruleSet, receiver);
+
+        sourceInterest = onEventFrom(rules)((added, removed) => {
+          removed.forEach(rule => ruleSet.delete(rule));
+          added.forEach(rule => ruleSet.add(rule));
+          receiver(added, removed);
+        }).needs(interest);
+      }
+    });
+
+    return interest;
+  }).share();
 
   return {
+    [OnEvent__symbol]: onEvent,
     [Symbol.iterator](): IterableIterator<StypRule> {
       return ruleSet.values();
     },
-    get [OnEvent__symbol](): OnEvent<[StypRule[], StypRule[]]> {
-      return onEventBy<[StypRule[], StypRule[]]>(receiver => {
-
-        let sourceInterest = noEventInterest();
-        const interest = eventInterest(reason => sourceInterest.off(reason))
-            .whenDone(reason => {
-              sourceInterest.off(reason);
-              if (!emitter.size) {
-                ruleSet.clear();
-                sharedInterest.off(reason);
-                sharedInterest = noEventInterest();
-              }
-            });
-
-        source.then(resolution => {
-          if (!interest.done) {
-            if (!emitter.size) {
-
-              const rules = resolution instanceof StypRule ? resolution.rules : resolution;
-              const existing: StypRule[] = [];
-
-              itsEach(rules, rule => {
-                existing.push(rule);
-                ruleSet.add(rule);
-              });
-
-              sharedInterest = onEventFrom(rules)((added, removed) => {
-                removed.forEach(rule => ruleSet.delete(rule));
-                added.forEach(rule => ruleSet.add(rule));
-                emitter.send(added, removed);
-              });
-              if (existing.length) {
-                receiver(existing, []); // Report existing rules as just added
-              }
-            }
-
-            sourceInterest = emitter.on(receiver).needs(interest).needs(sharedInterest);
-          }
-        });
-
-        return interest;
-      });
-    },
   };
+}
+
+function reportExistingRules(
+    rules: StypRules,
+    ruleSet: Set<StypRule>,
+    receiver: EventReceiver<[StypRule[], StypRule[]]>) {
+
+  const existing: StypRule[] = [];
+
+  itsEach(rules, rule => {
+    existing.push(rule);
+    ruleSet.add(rule);
+  });
+  if (existing.length) {
+    receiver(existing, []); // Report existing rules as just added
+  }
 }

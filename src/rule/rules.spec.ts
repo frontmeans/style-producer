@@ -238,6 +238,15 @@ describe('lazyStypRules', () => {
       expect(receiver).toHaveBeenCalledWith([...root.rules], []);
       expect([...rules]).toEqual([...root.rules]);
     });
+    it('does not send empty existing rules', () => {
+
+      const rules = lazyStypRules(() => rule.rules.nested);
+      const receiver = jest.fn();
+
+      onEventFrom(rules)(receiver);
+      expect(receiver).not.toHaveBeenCalled();
+      expect(itsEmpty(rules)).toBe(true);
+    });
     it('sends rule addition', () => {
 
       const rules = lazyStypRules(() => root.rules);
