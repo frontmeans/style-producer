@@ -119,6 +119,16 @@ describe('StypRule', () => {
       expect(rule.read.kept).toEqual([properties]);
       expect(mockSpec).toHaveBeenCalledWith(rule);
     });
+    it('reflects updates received while no property receivers registered', async () => {
+
+      const tracker = trackValue<StypProperties>({ $rev: 1 });
+
+      rule.set(tracker);
+
+      tracker.it = { $rev: 2 };
+
+      expect(await ruleProperties(rule)).toEqual({ $rev: 2 });
+    });
   });
 
   describe('[AfterEvent__symbol]', () => {
