@@ -36,7 +36,7 @@ jobs:
 
     - run:
         name: Run tests
-        command: yarn test --ci
+        command: yarn test --ci --runInBand
 
     - store_artifacts:
         name: Store test results
