@@ -1,4 +1,4 @@
-import { itsIterator, itsReduction, overEntries } from 'a-iterable';
+import { filterIt, itsIterator, itsReduction, overEntries } from 'a-iterable';
 import { nextSkip, NextSkip, noop } from 'call-thru';
 import {
   AfterEvent,
@@ -10,9 +10,10 @@ import {
   EventSender,
   isEventKeeper,
   isEventSender,
-  OnEvent, trackValue
+  OnEvent
 } from 'fun-events';
 import { IMPORTANT_CSS_SUFFIX } from '../internal';
+import { StypValue, stypValuesEqual } from '../value';
 import { StypProperties } from './properties';
 import { StypRule } from './rule';
 
@@ -96,18 +97,26 @@ function propertiesMap(properties: string | StypProperties): StypProperties {
 
 function propertiesEqual(first: StypProperties, second: StypProperties): boolean {
 
-  const s = itsIterator(overEntries(second));
+  const s = itsIterator(propertyEntries(second));
 
-  for (const [key, value] of overEntries(first)) {
+  for (const [key, value] of propertyEntries(first)) {
 
-    const { value: svalue } = s.next();
+    const { value: sentry } = s.next();
 
-    if (!svalue || key !== svalue[0] || value !== svalue[1]) {
+    if (!sentry || key !== sentry[0] || !stypValuesEqual(value, sentry[1])) {
       return false;
     }
   }
 
   return !s.next().value;
+}
+
+function propertyEntries(properties: StypProperties): Iterable<[keyof StypProperties, StypValue]> {
+  return filterIt(overEntries(properties), valuePresent);
+}
+
+function valuePresent([_key, value]: [keyof StypProperties, StypValue]): boolean {
+  return value != null;
 }
 
 /**
@@ -157,7 +166,7 @@ function addValues(base: StypProperties, addendum: StypProperties): StypProperti
 function addValue(
     properties: StypProperties.Mutable,
     key: keyof StypProperties,
-    value: StypProperties.Value): StypProperties.Mutable {
+    value: StypValue): StypProperties.Mutable {
   if (!isImportantValue(properties[key]) || isImportantValue(value)) {
     delete properties[key];
     properties[key] = value;
@@ -165,23 +174,12 @@ function addValue(
   return properties;
 }
 
-/**
- * @internal
- */
-export function stypPropertyValue(value: StypProperties.Value): readonly [string?, 'important'?] {
-  if (value == null) {
-    return [];
+function isImportantValue(value: StypValue) {
+  switch (typeof value) {
+    case 'string':
+      return value.endsWith(IMPORTANT_CSS_SUFFIX);
+    case 'object':
+      return value.priority === 'important';
   }
-
-  value = String(value);
-
-  if (value.endsWith(IMPORTANT_CSS_SUFFIX)) {
-    return[value.substring(0, value.length - IMPORTANT_CSS_SUFFIX.length).trim(), 'important'];
-  }
-
-  return [value];
-}
-
-function isImportantValue(value: StypProperties.Value) {
-  return typeof value === 'string' && value.endsWith(IMPORTANT_CSS_SUFFIX);
+  return false;
 }

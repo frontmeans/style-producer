@@ -1,4 +1,5 @@
 import { AfterEvent, EventKeeper, EventSender } from 'fun-events';
+import { StypValue } from '../value';
 import { StypRule } from './rule';
 
 /**
@@ -14,7 +15,7 @@ import { StypRule } from './rule';
  */
 export interface StypProperties {
 
-  readonly [key: string]: StypProperties.Value;
+  readonly [key: string]: StypValue;
 
   /**
    * Raw CSS text.
@@ -30,11 +31,6 @@ export interface StypProperties {
 }
 
 export namespace StypProperties {
-
-  /**
-   * CSS property value. Always scalar.
-   */
-  export type Value = string | number | boolean | undefined;
 
   /**
    * CSS properties specifier.

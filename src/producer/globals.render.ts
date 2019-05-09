@@ -1,6 +1,6 @@
 import { overEntries } from 'a-iterable';
 import { StypProperties } from '../rule';
-import { stypPropertyValue } from '../rule/properties.impl';
+import { stypSplitPriority, StypValue } from '../value';
 import { stypRenderAtRules } from './at-rules.render';
 import { StypRender } from './render';
 import { FIRST_RENDER_ORDER } from './render.impl';
@@ -68,7 +68,7 @@ export const stypRenderGlobals: StypRender = {
 
       if (key[0] === '@') {
 
-        const [value] = stypPropertyValue(v);
+        const [value] = stypSplitPriority(v);
         const importDelta = renderImport(sheet, importIndex, key, value);
 
         importIndex += importDelta;
@@ -90,7 +90,7 @@ function renderImport(
     sheet: CSSStyleSheet,
     index: number,
     key: string,
-    value: StypProperties.Value): number {
+    value: StypValue): number {
   if (!key.startsWith(IMPORT_PREFIX)) {
     return 0;
   }
@@ -111,7 +111,7 @@ function renderDefaultNamespace(
     sheet: CSSStyleSheet,
     index: number,
     key: string,
-    value: StypProperties.Value): number {
+    value: StypValue): number {
   if (key !== '@namespace') {
     return 0;
   }
@@ -127,7 +127,7 @@ function renderNamespacePrefix(
     sheet: CSSStyleSheet,
     index: number,
     key: string,
-    value: StypProperties.Value): number {
+    value: StypValue): number {
   if (!key.startsWith(NS_PREFIX)) {
     return 0;
   }

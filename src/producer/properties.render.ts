@@ -1,7 +1,7 @@
 import { filterIt, itsEach, ObjectEntry, overEntries } from 'a-iterable';
 import hyphenateStyleName from 'hyphenate-style-name';
 import { StypProperties } from '../rule';
-import { stypPropertyValue } from '../rule/properties.impl';
+import { stypSplitPriority } from '../value';
 import { StyleProducer } from './style-producer';
 
 /**
@@ -20,19 +20,23 @@ export function stypRenderProperties(producer: StyleProducer, properties: StypPr
           notCustomProperty),
       ([k, v]) => {
 
-        const [value, priority] = stypPropertyValue(v);
+        const [value, priority] = stypSplitPriority(v);
 
-        if (value) {
-          style.setProperty(hyphenateStyleName(k), value, priority);
-        }
+        style.setProperty(hyphenateStyleName(k), `${value}`, priority);
       });
 
   producer.render(properties, { target: cssRule });
 }
 
-function notCustomProperty(entry: ObjectEntry<StypProperties>): entry is ObjectEntry<StypProperties, string> {
+function notCustomProperty(entry: ObjectEntry<StypProperties>): entry is ObjectEntry<Required<StypProperties>, string> {
 
-  const first = String(entry[0])[0];
+  const [key, value] = entry;
+
+  if (value == null) {
+    return false;
+  }
+
+  const first = String(key)[0];
 
   return first >= 'a' && first <= 'z' || first >= 'A' && first <= 'Z';
 }
