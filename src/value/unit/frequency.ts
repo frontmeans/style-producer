@@ -1,4 +1,4 @@
-import { StypNumber } from '../numeric';
+import { StypDimension } from '../numeric';
 import { StypZero } from '../zero';
 
 /**
@@ -11,7 +11,7 @@ import { StypZero } from '../zero';
  * [<frequency>]: https://developer.mozilla.org/en-US/docs/Web/CSS/frequency
  */
 export type StypFrequency<ExtraUnit extends StypFrequencyPt.Unit = 'kHz'> =
-    StypNumber<StypFrequency.Unit | ExtraUnit> | StypZero<StypFrequency.Unit | ExtraUnit>;
+    StypDimension<StypFrequency.Unit | ExtraUnit> | StypZero<StypFrequency.Unit | ExtraUnit>;
 
 export namespace StypFrequency {
 
@@ -36,7 +36,7 @@ export namespace StypFrequency {
 export function stypFrequency<ExtraUnit extends StypFrequencyPt.Unit>(
     val: number,
     unit: StypFrequency.Unit | ExtraUnit): StypFrequency<ExtraUnit> {
-  return new StypNumber(val, unit);
+  return new StypDimension(val, unit);
 }
 
 /**
@@ -68,5 +68,5 @@ export namespace StypFrequencyPt {
  * [<frequency-percentage>]: https://developer.mozilla.org/en-US/docs/Web/CSS/frequency-percentage
  */
 export function stypFrequencyPt(val: number, unit: StypFrequencyPt.Unit): StypFrequencyPt {
-  return new StypNumber(val, unit);
+  return new StypDimension(val, unit);
 }

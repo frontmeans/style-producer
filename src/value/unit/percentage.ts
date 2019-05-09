@@ -1,4 +1,4 @@
-import { StypNumber, stypNumber } from '../numeric';
+import { StypDimension, stypDimension } from '../numeric';
 import { StypZero } from '../zero';
 
 /**
@@ -10,7 +10,7 @@ import { StypZero } from '../zero';
  *
  * [<length>]: https://developer.mozilla.org/en-US/docs/Web/CSS/length
  */
-export type StypPercentage<Unit extends string = '%'> = StypNumber<Unit | '%'> | StypZero<Unit | '%'>;
+export type StypPercentage<Unit extends string = '%'> = StypDimension<Unit | '%'> | StypZero<Unit | '%'>;
 
 /**
  * Constructs [<percentage>] CSS property value.
@@ -22,5 +22,5 @@ export type StypPercentage<Unit extends string = '%'> = StypNumber<Unit | '%'> |
  * [<percentage>]: https://developer.mozilla.org/en-US/docs/Web/CSS/percentage
  */
 export function stypPercentage<Unit extends string>(val: number): StypPercentage<Unit> {
-  return stypNumber(val, '%');
+  return stypDimension(val, '%');
 }

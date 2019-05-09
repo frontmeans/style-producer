@@ -1,8 +1,8 @@
+import { StypCalc } from './numeric';
 import { stypLength, StypLength, stypLengthPt, StypLengthPt, stypPercentage } from './unit';
-import { StypCalc, StypNumber } from './numeric';
 import { stypZero } from './zero';
 
-describe('StypNumber', () => {
+describe('StypDimension', () => {
 
   let value: StypLengthPt;
 
@@ -19,13 +19,13 @@ describe('StypNumber', () => {
   it('is equal to itself', () => {
     expect(value.is(value)).toBe(true);
   });
-  it('is equal to the same StypNumber', () => {
+  it('is equal to the same StypDimension', () => {
     expect(value.is(stypLength(16, 'px'))).toBe(true);
   });
-  it('is not equal to StypNumber with different unit', () => {
+  it('is not equal to StypDimension with different unit', () => {
     expect(value.is(stypLength(16, 'rem'))).toBe(false);
   });
-  it('is not equal to StypNumber with different value', () => {
+  it('is not equal to StypDimension with different value', () => {
     expect(value.is(stypLength(17, 'px'))).toBe(false);
   });
   it('is not equal to scalar value', () => {
@@ -42,7 +42,7 @@ describe('StypNumber', () => {
   });
 
   describe('add', () => {
-    it('is `StypNumber` when addendum has the same unit', () => {
+    it('is `StypDimension` when addendum has the same unit', () => {
       expect(value.add(stypLength(1, 'px'))).toMatchObject({
         type: 'number',
         val: 17,
@@ -67,7 +67,7 @@ describe('StypNumber', () => {
   });
 
   describe('sub', () => {
-    it('is `StypNumber` when addendum has the same unit', () => {
+    it('is `StypDimension` when addendum has the same unit', () => {
       expect(value.sub(stypLength(1, 'px'))).toMatchObject({
         type: 'number',
         val: 15,
@@ -92,7 +92,7 @@ describe('StypNumber', () => {
   });
 
   describe('mul', () => {
-    it('is `StypNumber` by default', () => {
+    it('is `StypDimension` by default', () => {
       expect(value.mul(2)).toMatchObject({
         type: 'number',
         val: 32,
@@ -108,7 +108,7 @@ describe('StypNumber', () => {
   });
 
   describe('div', () => {
-    it('is `StypNumber` by default', () => {
+    it('is `StypDimension` by default', () => {
       expect(value.div(2)).toMatchObject({
         type: 'number',
         val: 8,
@@ -128,7 +128,7 @@ describe('StypNumber', () => {
   });
 
   describe('negate', () => {
-    it('is `StypNumber`', () => {
+    it('is `StypDimension`', () => {
       expect(value.negate()).toMatchObject({
         type: 'number',
         val: -16,

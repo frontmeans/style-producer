@@ -5,11 +5,11 @@ import { stypZero, StypZero } from './zero';
 /**
  * Structured numeric value.
  *
- * This represents either a number with unit, zero values, or a `calc()` CSS function call.
+ * This represents either dimension, zero value, or a `calc()` CSS function call.
  *
  * @typeparam Unit Allowed unit type.
  */
-export type StypNumeric<Unit extends string> = StypNumber<Unit> | StypCalc<Unit> | StypZero<Unit>;
+export type StypNumeric<Unit extends string> = StypDimension<Unit> | StypCalc<Unit> | StypZero<Unit>;
 
 /**
  * Base interface of structured numeric value.
@@ -40,17 +40,15 @@ export interface StypNumericBase<Self extends StypNumericBase<Self, Unit>, Unit 
 }
 
 /**
- * Structured number value with unit. E.g. [<length>], [<angle>], [<percentage>], etc.
+ * Structured [<dimension>] value with unit.
  *
  * @typeparam Unit Allowed unit type.
  *
- * [<length>]: https://developer.mozilla.org/en-US/docs/Web/CSS/length
- * [<angle>]: https://developer.mozilla.org/en-US/docs/Web/CSS/angle
- * [<percentage>]: https://developer.mozilla.org/en-US/docs/Web/CSS/percentage
+ * [<dimension>]: https://developer.mozilla.org/en-US/docs/Web/CSS/dimension
  */
-export class StypNumber<Unit extends string>
-    extends StypValueStruct<StypNumber<Unit>>
-    implements StypNumericBase<StypNumber<Unit>, Unit> {
+export class StypDimension<Unit extends string>
+    extends StypValueStruct<StypDimension<Unit>>
+    implements StypNumericBase<StypDimension<Unit>, Unit> {
 
   // noinspection JSMethodCanBeStatic
   get type(): 'number' {
@@ -68,7 +66,7 @@ export class StypNumber<Unit extends string>
   readonly unit: Unit;
 
   /**
-   * Constructs new structured number value.
+   * Constructs new structured dimension value.
    *
    * @param val The numeric value.
    * @param unit The unit.
@@ -90,34 +88,34 @@ export class StypNumber<Unit extends string>
     return false;
   }
 
-  prioritize(priority: 'important' | undefined): StypNumber<Unit> {
-    return this.priority === priority ? this : new StypNumber(this.val, this.unit, { priority });
+  prioritize(priority: 'important' | undefined): StypDimension<Unit> {
+    return this.priority === priority ? this : new StypDimension(this.val, this.unit, { priority });
   }
 
   add(addendum: StypNumeric<Unit>): StypNumeric<Unit> {
     if (addendum.type === 'number' && this.unit === addendum.unit) {
-      return stypNumber(this.val + addendum.val, this.unit, this);
+      return stypDimension(this.val + addendum.val, this.unit, this);
     }
     return stypAddSub(this, '+', addendum);
   }
 
   sub(subtrahend: StypNumeric<Unit>): StypNumeric<Unit> {
     if (subtrahend.type === 'number' && this.unit === subtrahend.unit) {
-      return stypNumber(this.val - subtrahend.val, this.unit, this);
+      return stypDimension(this.val - subtrahend.val, this.unit, this);
     }
     return stypAddSub(this, '-', subtrahend);
   }
 
   mul(multiplier: number) {
-    return multiplier === 1 ? this : stypNumber(this.val * multiplier, this.unit, this);
+    return multiplier === 1 ? this : stypDimension(this.val * multiplier, this.unit, this);
   }
 
   div(divisor: number) {
-    return divisor === 1 ? this : stypNumber(this.val / divisor, this.unit, this);
+    return divisor === 1 ? this : stypDimension(this.val / divisor, this.unit, this);
   }
 
   negate() {
-    return stypNumber(-this.val, this.unit, this);
+    return stypDimension(-this.val, this.unit, this);
   }
 
   /**
@@ -136,19 +134,21 @@ export class StypNumber<Unit extends string>
 }
 
 /**
- * Constructs number CSS property value.
+ * Constructs structured [<dimension>] CSS property value.
  *
  * @param val Numeric value.
  * @param unit Value unit.
  * @param opts Construction options.
  *
- * @returns Either [[StypNumber]], or [[StypZero]] if `val === 0`.
+ * @returns Either [[StypDimension]], or [[StypZero]] if `val === 0`.
+ *
+ * [<dimension>]: https://developer.mozilla.org/en-US/docs/Web/CSS/dimension
  */
-export function stypNumber<Unit extends string>(
+export function stypDimension<Unit extends string>(
     val: number,
     unit: Unit,
-    opts?: StypValueOpts): StypNumber<Unit> | StypZero<Unit> {
-  return val ? new StypNumber(val, unit, opts) : stypZero.prioritize(opts && opts.priority);
+    opts?: StypValueOpts): StypDimension<Unit> | StypZero<Unit> {
+  return val ? new StypDimension(val, unit, opts) : stypZero.prioritize(opts && opts.priority);
 }
 
 /**

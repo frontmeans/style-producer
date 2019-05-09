@@ -1,4 +1,4 @@
-import { StypNumber, stypNumber } from '../numeric';
+import { StypDimension, stypDimension } from '../numeric';
 import { StypZero } from '../zero';
 
 /**
@@ -11,7 +11,7 @@ import { StypZero } from '../zero';
  * [<length>]: https://developer.mozilla.org/en-US/docs/Web/CSS/length
  */
 export type StypLength<ExtraUnit extends StypLengthPt.Unit = 'px'> =
-    StypNumber<StypLength.Unit | ExtraUnit> | StypZero<StypLength.Unit | ExtraUnit>;
+    StypDimension<StypLength.Unit | ExtraUnit> | StypZero<StypLength.Unit | ExtraUnit>;
 
 export namespace StypLength {
 
@@ -38,7 +38,7 @@ export namespace StypLength {
 export function stypLength<ExtraUnit extends StypLengthPt.Unit>(
     val: number,
     unit: StypLength.Unit | ExtraUnit): StypLength<ExtraUnit> {
-  return stypNumber(val, unit);
+  return stypDimension(val, unit);
 }
 
 /**
@@ -70,5 +70,5 @@ export namespace StypLengthPt {
  * [<length-percentage>]: https://developer.mozilla.org/en-US/docs/Web/CSS/length-percentage
  */
 export function stypLengthPt(val: number, unit: StypLengthPt.Unit): StypLengthPt {
-  return stypNumber(val, unit);
+  return stypDimension(val, unit);
 }
