@@ -7,7 +7,7 @@ describe('stypAngle()', () => {
 
     expect(angle).toMatchObject({
       type: 'number',
-      dim: 'deg',
+      unit: 'deg',
       val: 13,
     });
   });
@@ -20,7 +20,7 @@ describe('stypAnglePt()', () => {
 
     expect(angle).toMatchObject({
       type: 'number',
-      dim: '%',
+      unit: '%',
       val: 13,
     });
   });

@@ -6,37 +6,37 @@ import { StypZero } from '../zero';
  *
  * Can be constructed using [[stypFrequency]] function.
  *
- * @typeparam ExtraDim Additional allowed dimension. Can be `%`. Not present by default.
+ * @typeparam ExtraUnit Additional allowed unit. Can be `%`. Not present by default.
  *
  * [<frequency>]: https://developer.mozilla.org/en-US/docs/Web/CSS/frequency
  */
-export type StypFrequency<ExtraDim extends StypFrequencyPt.Dim = 'kHz'> =
-    StypNumber<StypFrequency.Dim | ExtraDim> | StypZero<StypFrequency.Dim | ExtraDim>;
+export type StypFrequency<ExtraUnit extends StypFrequencyPt.Unit = 'kHz'> =
+    StypNumber<StypFrequency.Unit | ExtraUnit> | StypZero<StypFrequency.Unit | ExtraUnit>;
 
 export namespace StypFrequency {
 
   /**
-   * Supported frequency dimensions, excluding percent.
+   * Supported frequency units, excluding percent.
    */
-  export type Dim = 'Hz' | 'kHz';
+  export type Unit = 'Hz' | 'kHz';
 
 }
 
 /**
  * Constructs [<frequency>] CSS property value.
  *
- * @typeparam ExtraDim Additional allowed dimension. Can be `%`. Not present by default.
+ * @typeparam ExtraUnit Additional allowed unit. Can be `%`. Not present by default.
  * @param val The numeric value.
- * @param dim Frequency dimension.
+ * @param unit Frequency unit.
  *
  * @returns Frequency value.
  *
  * [<frequency>]: https://developer.mozilla.org/en-US/docs/Web/CSS/frequency
  */
-export function stypFrequency<ExtraDim extends StypFrequencyPt.Dim>(
+export function stypFrequency<ExtraUnit extends StypFrequencyPt.Unit>(
     val: number,
-    dim: StypFrequency.Dim | ExtraDim): StypFrequency<ExtraDim> {
-  return new StypNumber(val, dim);
+    unit: StypFrequency.Unit | ExtraUnit): StypFrequency<ExtraUnit> {
+  return new StypNumber(val, unit);
 }
 
 /**
@@ -51,9 +51,9 @@ export type StypFrequencyPt = StypFrequency<'%'>;
 export namespace StypFrequencyPt {
 
   /**
-   * Supported frequency dimensions, including percent.
+   * Supported frequency units, including percent.
    */
-  export type Dim = StypFrequency.Dim | '%';
+  export type Unit = StypFrequency.Unit | '%';
 
 }
 
@@ -61,12 +61,12 @@ export namespace StypFrequencyPt {
  * Constructs [<frequency-percentage>] CSS property value.
  *
  * @param val The numeric value.
- * @param dim Frequency dimension.
+ * @param unit Frequency unit.
  *
  * @returns Frequency or percentage value.
  *
  * [<frequency-percentage>]: https://developer.mozilla.org/en-US/docs/Web/CSS/frequency-percentage
  */
-export function stypFrequencyPt(val: number, dim: StypFrequencyPt.Dim): StypFrequencyPt {
-  return new StypNumber(val, dim);
+export function stypFrequencyPt(val: number, unit: StypFrequencyPt.Unit): StypFrequencyPt {
+  return new StypNumber(val, unit);
 }

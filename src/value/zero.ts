@@ -5,9 +5,9 @@ import { StypValue } from './value';
 /**
  * Structured zero value.
  *
- * @typeparam Dim Allowed dimension type.
+ * @typeparam Unit Allowed unit type.
  */
-export interface StypZero<Dim extends string> extends StypNumericBase<StypZero<Dim>, Dim> {
+export interface StypZero<Unit extends string> extends StypNumericBase<StypZero<Unit>, Unit> {
 
   readonly type: '0';
 
@@ -21,7 +21,7 @@ export interface StypZero<Dim extends string> extends StypNumericBase<StypZero<D
 
 }
 
-class Zero<Dim extends string> extends StypValueStruct<Zero<Dim>> implements StypZero<Dim> {
+class Zero<Unit extends string> extends StypValueStruct<Zero<Unit>> implements StypZero<Unit> {
 
   constructor(opts?: { priority?: 'important'}) {
     super(opts);
@@ -44,11 +44,11 @@ class Zero<Dim extends string> extends StypValueStruct<Zero<Dim>> implements Sty
     return false;
   }
 
-  add(addendum: StypNumeric<Dim>): StypNumeric<Dim> {
+  add(addendum: StypNumeric<Unit>): StypNumeric<Unit> {
     return addendum.prioritize(this.priority);
   }
 
-  sub(subtrahend: StypNumeric<Dim>): StypNumeric<Dim> {
+  sub(subtrahend: StypNumeric<Unit>): StypNumeric<Unit> {
     return subtrahend.negate().prioritize(this.priority);
   }
 
@@ -64,7 +64,7 @@ class Zero<Dim extends string> extends StypValueStruct<Zero<Dim>> implements Sty
     return this;
   }
 
-  prioritize(priority: 'important' | undefined): Zero<Dim> {
+  prioritize(priority: 'important' | undefined): Zero<Unit> {
     // tslint:disable-next-line:no-use-before-declare
     return priority ? stypImportantZero : stypZero;
   }

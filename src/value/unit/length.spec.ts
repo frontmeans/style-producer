@@ -7,7 +7,7 @@ describe('stypLength()', () => {
 
     expect(length).toMatchObject({
       type: 'number',
-      dim: 'px',
+      unit: 'px',
       val: 13,
     });
   });
@@ -20,7 +20,7 @@ describe('stypLengthPt()', () => {
 
     expect(length).toMatchObject({
       type: 'number',
-      dim: '%',
+      unit: '%',
       val: 13,
     });
   });

@@ -6,11 +6,11 @@ import { StypZero } from '../zero';
  *
  * Can be constructed using [[stypPercentage]] function.
  *
- * @typeparam Dim Dimensions allowed in addition to `%`. Nothing but `%` by default.
+ * @typeparam Unit Units allowed in addition to `%`. Nothing but `%` by default.
  *
  * [<length>]: https://developer.mozilla.org/en-US/docs/Web/CSS/length
  */
-export type StypPercentage<Dim extends string = '%'> = StypNumber<Dim | '%'> | StypZero<Dim | '%'>;
+export type StypPercentage<Unit extends string = '%'> = StypNumber<Unit | '%'> | StypZero<Unit | '%'>;
 
 /**
  * Constructs [<percentage>] CSS property value.
@@ -21,6 +21,6 @@ export type StypPercentage<Dim extends string = '%'> = StypNumber<Dim | '%'> | S
  *
  * [<percentage>]: https://developer.mozilla.org/en-US/docs/Web/CSS/percentage
  */
-export function stypPercentage<Dim extends string>(val: number): StypPercentage<Dim> {
+export function stypPercentage<Unit extends string>(val: number): StypPercentage<Unit> {
   return stypNumber(val, '%');
 }

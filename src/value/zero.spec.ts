@@ -1,4 +1,4 @@
-import { stypPercentage } from './dim';
+import { stypPercentage } from './unit';
 import { stypZero, StypZero } from './zero';
 
 describe('StypZero', () => {

@@ -7,7 +7,7 @@ describe('stypResolution()', () => {
 
     expect(resolution).toMatchObject({
       type: 'number',
-      dim: 'dpi',
+      unit: 'dpi',
       val: 96,
     });
   });

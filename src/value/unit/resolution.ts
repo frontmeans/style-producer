@@ -8,14 +8,14 @@ import { StypZero } from '../zero';
  *
  * [<resolution>]: https://developer.mozilla.org/en-US/docs/Web/CSS/resolution
  */
-export type StypResolution = StypNumber<StypResolution.Dim> | StypZero<StypResolution.Dim>;
+export type StypResolution = StypNumber<StypResolution.Unit> | StypZero<StypResolution.Unit>;
 
 export namespace StypResolution {
 
   /**
-   * Supported resolution dimensions, excluding percent.
+   * Supported resolution units, excluding percent.
    */
-  export type Dim = 'dpi' | 'dpcm' | 'dppx' | 'x';
+  export type Unit = 'dpi' | 'dpcm' | 'dppx' | 'x';
 
 }
 
@@ -23,12 +23,12 @@ export namespace StypResolution {
  * Constructs [<resolution>] CSS property value.
  *
  * @param val The numeric value.
- * @param dim Resolution dimension.
+ * @param unit Resolution unit.
  *
  * @returns Resolution value.
  *
  * [<resolution>]: https://developer.mozilla.org/en-US/docs/Web/CSS/resolution
  */
-export function stypResolution(val: number, dim: StypResolution.Dim): StypResolution {
-  return new StypNumber(val, dim);
+export function stypResolution(val: number, unit: StypResolution.Unit): StypResolution {
+  return new StypNumber(val, unit);
 }

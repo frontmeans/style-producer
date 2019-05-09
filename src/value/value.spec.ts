@@ -1,4 +1,4 @@
-import { stypLength } from './dim';
+import { stypLength } from './unit';
 import { stypSplitPriority, stypValuesEqual } from './value';
 import { stypZero } from './zero';
 

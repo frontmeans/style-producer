@@ -7,7 +7,7 @@ describe('stypFrequency()', () => {
 
     expect(frequency).toMatchObject({
       type: 'number',
-      dim: 'kHz',
+      unit: 'kHz',
       val: 44,
     });
   });
@@ -26,7 +26,7 @@ describe('stypFrequencyPt()', () => {
 
     expect(frequency).toMatchObject({
       type: 'number',
-      dim: '%',
+      unit: '%',
       val: 13,
     });
   });

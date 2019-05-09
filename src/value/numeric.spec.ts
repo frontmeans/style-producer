@@ -1,4 +1,4 @@
-import { stypLength, StypLength, stypLengthPt, StypLengthPt, stypPercentage } from './dim';
+import { stypLength, StypLength, stypLengthPt, StypLengthPt, stypPercentage } from './unit';
 import { StypCalc, StypNumber } from './numeric';
 import { stypZero } from './zero';
 
@@ -22,7 +22,7 @@ describe('StypNumber', () => {
   it('is equal to the same StypNumber', () => {
     expect(value.is(stypLength(16, 'px'))).toBe(true);
   });
-  it('is not equal to StypNumber with different dimension', () => {
+  it('is not equal to StypNumber with different unit', () => {
     expect(value.is(stypLength(16, 'rem'))).toBe(false);
   });
   it('is not equal to StypNumber with different value', () => {
@@ -42,16 +42,16 @@ describe('StypNumber', () => {
   });
 
   describe('add', () => {
-    it('is `StypNumber` when addendum has the same dimension', () => {
+    it('is `StypNumber` when addendum has the same unit', () => {
       expect(value.add(stypLength(1, 'px'))).toMatchObject({
         type: 'number',
         val: 17,
-        dim: 'px',
+        unit: 'px',
       });
     });
-    it('is `StypCalc` when addendum has different dimension', () => {
+    it('is `StypCalc` when addendum has different unit', () => {
 
-      const right = stypPercentage<StypLength.Dim>(1);
+      const right = stypPercentage<StypLength.Unit>(1);
       const sum = value.add(right);
 
       expect(sum.type).toBe('calc');
@@ -67,16 +67,16 @@ describe('StypNumber', () => {
   });
 
   describe('sub', () => {
-    it('is `StypNumber` when addendum has the same dimension', () => {
+    it('is `StypNumber` when addendum has the same unit', () => {
       expect(value.sub(stypLength(1, 'px'))).toMatchObject({
         type: 'number',
         val: 15,
-        dim: 'px',
+        unit: 'px',
       });
     });
-    it('is `StypCalc` when addendum has different dimension', () => {
+    it('is `StypCalc` when addendum has different unit', () => {
 
-      const right = stypPercentage<StypLengthPt.Dim>(1);
+      const right = stypPercentage<StypLengthPt.Unit>(1);
       const diff = value.sub(right);
 
       expect(diff.type).toBe('calc');
@@ -96,7 +96,7 @@ describe('StypNumber', () => {
       expect(value.mul(2)).toMatchObject({
         type: 'number',
         val: 32,
-        dim: 'px',
+        unit: 'px',
       });
     });
     it('is the same value when multiplier is `1`', () => {
@@ -112,7 +112,7 @@ describe('StypNumber', () => {
       expect(value.div(2)).toMatchObject({
         type: 'number',
         val: 8,
-        dim: 'px',
+        unit: 'px',
       });
     });
     it('is the same value when divisor is `1`', () => {
@@ -122,7 +122,7 @@ describe('StypNumber', () => {
       expect(value.div(0)).toMatchObject({
         type: 'number',
         val: Infinity,
-        dim: 'px',
+        unit: 'px',
       });
     });
   });
@@ -132,23 +132,23 @@ describe('StypNumber', () => {
       expect(value.negate()).toMatchObject({
         type: 'number',
         val: -16,
-        dim: 'px',
+        unit: 'px',
       });
     });
   });
 
   describe('toFormula', () => {
-    it('is `<value><dimension>`', () => {
+    it('is `<value><unit>`', () => {
       expect(value.toFormula()).toBe('16px');
       expect(value.important().toFormula()).toBe('16px');
     });
   });
 
   describe('toString', () => {
-    it('is `<value><dimension>`', () => {
+    it('is `<value><unit>`', () => {
       expect(`${value}`).toBe('16px');
     });
-    it('is `<value><dimension> !important` is important', () => {
+    it('is `<value><unit> !important` is important', () => {
       expect(`${value.important()}`).toBe('16px !important');
     });
   });
@@ -158,13 +158,13 @@ describe('StypCalc', () => {
 
   let left: StypLengthPt;
   let right: StypLengthPt;
-  let calc: StypCalc<StypLengthPt.Dim>;
-  let important: StypCalc<StypLengthPt.Dim>;
+  let calc: StypCalc<StypLengthPt.Unit>;
+  let important: StypCalc<StypLengthPt.Unit>;
 
   beforeEach(() => {
     left = stypLengthPt(12, 'px');
     right = stypPercentage(100);
-    calc = left.add(right) as StypCalc<StypLengthPt.Dim>;
+    calc = left.add(right) as StypCalc<StypLengthPt.Unit>;
     important = calc.important();
   });
 
@@ -270,7 +270,7 @@ describe('StypCalc', () => {
       expect(`${important.negate()}`).toBe('calc(-12px - 100%) !important');
     });
     it('reverts operands of the diff', () => {
-      calc = left.sub(right) as StypCalc<StypLengthPt.Dim>;
+      calc = left.sub(right) as StypCalc<StypLengthPt.Unit>;
       important = calc.important();
       expect(`${calc.negate()}`).toBe('calc(100% - 12px)');
       expect(`${important.negate()}`).toBe('calc(100% - 12px) !important');

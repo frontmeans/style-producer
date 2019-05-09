@@ -7,7 +7,7 @@ describe('stypTime()', () => {
 
     expect(time).toMatchObject({
       type: 'number',
-      dim: 'ms',
+      unit: 'ms',
       val: 13,
     });
   });
@@ -20,7 +20,7 @@ describe('stypTimePt()', () => {
 
     expect(time).toMatchObject({
       type: 'number',
-      dim: '%',
+      unit: '%',
       val: 13,
     });
   });

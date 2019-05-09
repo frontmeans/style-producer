@@ -7,7 +7,7 @@ describe('stypPercentage()', () => {
 
     expect(percentage).toMatchObject({
       type: 'number',
-      dim: '%',
+      unit: '%',
       val: 99,
     });
   });
