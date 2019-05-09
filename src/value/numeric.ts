@@ -1,4 +1,4 @@
-import { StypValueStruct } from './struct';
+import { StypValueOpts, StypValueStruct } from './struct';
 import { StypValue, stypValuesEqual } from './value';
 import { stypZero, StypZero } from './zero';
 
@@ -74,7 +74,7 @@ export class StypNumber<Dim extends string>
    * @param dim The dimension.
    * @param opts CSS value options.
    */
-  constructor(val: number, dim: Dim, opts?: { priority?: 'important' }) {
+  constructor(val: number, dim: Dim, opts?: StypValueOpts) {
     super(opts);
     this.val = val;
     this.dim = dim;
@@ -135,96 +135,20 @@ export class StypNumber<Dim extends string>
 
 }
 
-function stypNumber<Dim extends string>(
+/**
+ * Constructs number CSS property value.
+ *
+ * @param val Numeric value.
+ * @param dim Value dimension.
+ * @param opts Construction options.
+ *
+ * @returns Either [[StypNumber]], or [[StypZero]] if `val === 0`.
+ */
+export function stypNumber<Dim extends string>(
     val: number,
     dim: Dim,
-    opts?: { priority?: 'important' }): StypNumber<Dim> | StypZero<Dim> {
+    opts?: StypValueOpts): StypNumber<Dim> | StypZero<Dim> {
   return val ? new StypNumber(val, dim, opts) : stypZero.prioritize(opts && opts.priority);
-}
-
-/**
- * Structured [<length>] property value.
- *
- * Can be constructed using [[stypLength]] function.
- *
- * @typeparam ExtraDim Additional allowed dimension. Can be `%`. Not present by default.
- *
- * [<length>]: https://developer.mozilla.org/en-US/docs/Web/CSS/length
- */
-export type StypLength<ExtraDim extends '%' | 'px' = 'px'> =
-    StypNumber<StypLength.Dim | ExtraDim> | StypZero<StypLength.Dim | ExtraDim>;
-
-export namespace StypLength {
-
-  /**
-   * Supported length dimensions, excluding percent.
-   */
-  export type Dim = 'cap' | 'ch' | 'em' | 'ex' | 'ic' | 'lh' | 'rem' | 'rlh'
-      | 'vh' | 'vw' | 'vi' | 'vb' | 'vmin' | 'vmax'
-      | 'px' | 'cm' | 'mm' | 'Q' | 'in' | 'pc' | 'pt';
-
-}
-
-/**
- * Constructs [<length>] CSS property value.
- *
- * @typeparam ExtraDim Additional allowed dimension. Can be `%`. Not present by default.
- * @param val The numeric value.
- * @param dim Length dimension.
- *
- * @returns Length value.
- *
- * [<length>]: https://developer.mozilla.org/en-US/docs/Web/CSS/length
- */
-export function stypLength<ExtraDim extends '%' | 'px'>(
-    val: number,
-    dim: StypLength.Dim | ExtraDim): StypLength<ExtraDim> {
-  return stypNumber(val, dim);
-}
-
-/**
- * Structured [<length-percentage>] CSS property value.
- *
- * Can be constructed using [[stypLengthPt]] function.
- *
- * [<length-percentage>]: https://developer.mozilla.org/en-US/docs/Web/CSS/length-percentage
- */
-export type StypLengthPt = StypLength<'%'>;
-
-export namespace StypLengthPt {
-
-  /**
-   * Supported length dimensions, including percent.
-   */
-  export type Dim = StypLength.Dim | '%';
-
-}
-
-/**
- * Constructs [<length-percentage>] CSS property value.
- *
- * @param val The numeric value.
- * @param dim Length dimension.
- *
- * @returns Length or percentage value.
- *
- * [<length-percentage>]: https://developer.mozilla.org/en-US/docs/Web/CSS/length-percentage
- */
-export function stypLengthPt(val: number, dim: StypLengthPt.Dim): StypLengthPt {
-  return stypNumber(val, dim);
-}
-
-/**
- * Constructs [<percentage>] CSS property value.
- *
- * @param val The number of percents.
- *
- * @returns Percentage value.
- *
- * [<percentage>]: https://developer.mozilla.org/en-US/docs/Web/CSS/percentage
- */
-export function stypPercentage(val: number): StypLengthPt {
-  return stypNumber(val, '%');
 }
 
 /**
@@ -262,7 +186,7 @@ export abstract class StypCalcBase<
       left: StypNumeric<Dim>,
       op: Op,
       right: Right,
-      opts?: { priority?: 'important' }) {
+      opts?: StypValueOpts) {
     super(opts);
     this.left = left.usual();
     this.op = op;
@@ -320,7 +244,7 @@ export abstract class StypCalcBase<
  */
 export class StypAddSub<Dim extends string> extends StypCalcBase<StypAddSub<Dim>, '+' | '-', StypNumeric<Dim>, Dim> {
 
-  constructor(left: StypNumeric<Dim>, op: '+' | '-', right: StypNumeric<Dim>, opts?: { priority?: 'important' }) {
+  constructor(left: StypNumeric<Dim>, op: '+' | '-', right: StypNumeric<Dim>, opts?: StypValueOpts) {
     super(left, op, right.usual(), opts);
   }
 

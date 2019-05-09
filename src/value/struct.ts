@@ -24,10 +24,10 @@ export abstract class StypValueStruct<Self extends StypValueStruct<Self>> {
   /**
    * Constructs structured CSS property value.
    *
-   * @param priority Constructed value priority.
+   * @param opts Construction options.
    */
-  protected constructor({ priority }: { priority?: 'important' } = {}) {
-    this.priority = priority;
+  protected constructor(opts?: StypValueOpts) {
+    this.priority = opts && opts.priority;
   }
 
   /**
@@ -71,5 +71,17 @@ export abstract class StypValueStruct<Self extends StypValueStruct<Self>> {
    * @returns A textual representation of this value to use as CSS property value.
    */
   abstract toString(): string;
+
+}
+
+/**
+ * Construction options of structured property CSS value.
+ */
+export interface StypValueOpts {
+
+  /**
+   * Constructed value priority.
+   */
+  readonly priority?: 'important';
 
 }

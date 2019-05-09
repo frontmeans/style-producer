@@ -1,38 +1,13 @@
-import { StypCalc, StypLength, stypLength, stypLengthPt, StypLengthPt, StypNumber, stypPercentage } from './numeric';
+import { stypLength, StypLength, stypLengthPt, StypLengthPt, stypPercentage } from './dim';
+import { StypCalc, StypNumber } from './numeric';
 import { stypZero } from './zero';
-
-describe('stypLength()', () => {
-  it('constructs StypLength instance', () => {
-
-    const length: StypLength = stypLength(13, 'px');
-
-    expect(length).toMatchObject({
-      type: 'number',
-      dim: 'px',
-      val: 13,
-    });
-  });
-});
-
-describe('stypPercentage()', () => {
-  it('constructs StypPercentage instance', () => {
-
-    const percentage = stypPercentage(99);
-
-    expect(percentage).toMatchObject({
-      type: 'number',
-      dim: '%',
-      val: 99,
-    });
-  });
-});
 
 describe('StypNumber', () => {
 
-  let value: StypNumber<StypLength.Dim | '%'>;
+  let value: StypLengthPt;
 
   beforeEach(() => {
-    value = stypLength(16, 'px') as StypNumber<StypLength.Dim>;
+    value = stypLength(16, 'px') as StypLengthPt;
   });
 
   it('is of type `number`', () => {
@@ -76,7 +51,7 @@ describe('StypNumber', () => {
     });
     it('is `StypCalc` when addendum has different dimension', () => {
 
-      const right = stypPercentage(1);
+      const right = stypPercentage<StypLength.Dim>(1);
       const sum = value.add(right);
 
       expect(sum.type).toBe('calc');
@@ -101,7 +76,7 @@ describe('StypNumber', () => {
     });
     it('is `StypCalc` when addendum has different dimension', () => {
 
-      const right = stypPercentage(1);
+      const right = stypPercentage<StypLengthPt.Dim>(1);
       const diff = value.sub(right);
 
       expect(diff.type).toBe('calc');
