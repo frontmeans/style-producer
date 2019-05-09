@@ -45,10 +45,10 @@ describe('stypRenderXmlNs', () => {
 
     selector = [{ ns: ns, e: 'some' }];
 
-    render(producer, { property: 'value' });
+    render(producer, { property: 'abstract-value.ts' });
     expect(producer.render).toHaveBeenCalledWith({
       '@namespace:test': 'test/ns',
-      property: 'value'
+      property: 'abstract-value.ts'
     });
   });
 });

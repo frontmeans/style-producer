@@ -249,7 +249,7 @@ describe('StypRule', () => {
       });
       it('merges updated properties', async () => {
 
-        const initial = { $init: 'value' };
+        const initial = { $init: 'abstract-value.ts' };
 
         mockSpec.mockImplementation(() => trackValue(initial).read);
 

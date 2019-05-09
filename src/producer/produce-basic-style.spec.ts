@@ -316,7 +316,7 @@ describe('produceBasicStyle', () => {
     expect(style.getPropertyValue('-moz-custom')).toBe('moz');
   });
   it('does not render custom properties', () => {
-    root.rules.add({ c: 'custom' }, { _custom: 'value' });
+    root.rules.add({ c: 'custom' }, { _custom: 'abstract-value.ts' });
     produceBasicStyle(root.rules, { schedule: scheduleNow });
 
     const style = cssStyle('.custom');
