@@ -2,9 +2,10 @@ import { filterIt, itsReduction, ObjectEntry, overEntries } from 'a-iterable';
 import { AfterEvent, afterEventFrom } from 'fun-events';
 import { isNotEmptyArray } from '../internal';
 import { StypProperties, StypRule } from '../rule';
-import { mergeStypProperties, stypPropertyValue } from '../rule/properties.impl';
+import { mergeStypProperties } from '../rule/properties.impl';
 import { StypSelector, stypSelector } from '../selector';
 import { isCombinator } from '../selector/selector.impl';
+import { stypSplitPriority, StypValue } from '../value';
 import { StypRender } from './render';
 import { FIRST_RENDER_ORDER, isCSSRuleGroup } from './render.impl';
 import { StyleProducer } from './style-producer';
@@ -70,7 +71,7 @@ function buildAtSelector(
 
   for (const name of names) {
 
-    const [namedQuery] = stypPropertyValue(properties[name]);
+    const [namedQuery] = stypSplitPriority(properties[name]);
 
     addQuery(namedQuery);
   }
@@ -79,7 +80,7 @@ function buildAtSelector(
 
   return query ? `${key} ${query}` : key;
 
-  function addQuery(q?: string) {
+  function addQuery(q?: StypValue) {
     if (q) {
       if (query) {
         query += ' and ';

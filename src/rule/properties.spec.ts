@@ -1,6 +1,7 @@
 import { noop } from 'call-thru';
 import { AfterEvent, afterEventFrom, EventEmitter, EventInterest, trackValue, ValueTracker } from 'fun-events';
 import { readProperties } from '../spec';
+import { stypLengthPt } from '../value';
 import { StypProperties } from './properties';
 import { mergeStypProperties, stypPropertiesBySpec } from './properties.impl';
 import { StypRule } from './rule';
@@ -184,8 +185,14 @@ describe('mergeStypProperties', () => {
   let addendum: ValueTracker<StypProperties>;
 
   beforeEach(() => {
-    baseProperties = { display: 'block', width: '100%' };
-    addendumProperties = { display: 'none' };
+    baseProperties = {
+      display: 'block',
+      width: '100%',
+    };
+    addendumProperties = {
+      display: 'none',
+      fontSize: stypLengthPt(12, 'px'),
+    };
     base = trackValue(baseProperties);
     addendum = trackValue(addendumProperties);
   });
@@ -214,24 +221,59 @@ describe('mergeStypProperties', () => {
       mockReceiver.mockClear();
     });
 
-    it('is aborted when interest lost', () => {
+    it('is aborted when interest is lost', () => {
       interest.off();
-      addendum.it = { ...addendumProperties, display: 'none !important' };
+      addendum.it = {
+        ...addendumProperties,
+        display: 'none !important',
+      };
       expect(mockReceiver).not.toHaveBeenCalled();
     });
-    it('overrides property', () => {
-      base.it = { ...baseProperties, display: 'inline-block' };
+    it('prefers property added later', () => {
+      base.it = {
+        ...baseProperties,
+        display: 'inline-block',
+      };
       expect(mockReceiver).not.toHaveBeenCalled();
     });
-    it('does not override important property', () => {
-      base.it = { ...baseProperties, display: 'inline-block !important' };
-      expect(mockReceiver).toHaveBeenCalledWith(expect.objectContaining({ display: 'inline-block !important' }));
+    it('prefers property with structured value added later', () => {
+      base.it = {
+        ...baseProperties,
+        fontSize: stypLengthPt(13, 'px'),
+      };
+      expect(mockReceiver).not.toHaveBeenCalled();
     });
-    it('overrides important property', () => {
-      base.it = { ...baseProperties, display: 'inline-block !important' };
+    it('prefers important property over usual one added later', () => {
+      base.it = {
+        ...baseProperties,
+        display: 'inline-block !important',
+      };
+      expect(mockReceiver).toHaveBeenCalledWith(expect.objectContaining({
+        display: 'inline-block !important',
+      }));
+    });
+    it('prefers important property with structured structured value over usual one added later', () => {
+      base.it = {
+        ...baseProperties,
+        fontSize: stypLengthPt(13, 'px').important(),
+      };
+      expect(mockReceiver).toHaveBeenCalledWith(expect.objectContaining({
+        fontSize:  stypLengthPt(13, 'px').important(),
+      }));
+    });
+    it('prefers important property added later', () => {
+      base.it = {
+        ...baseProperties,
+        display: 'inline-block !important',
+      };
       mockReceiver.mockClear();
-      addendum.it = { ...addendumProperties, display: 'none !important' };
-      expect(mockReceiver).toHaveBeenCalledWith(expect.objectContaining({ display: 'none !important' }));
+      addendum.it = {
+        ...addendumProperties,
+        display: 'none !important',
+      };
+      expect(mockReceiver).toHaveBeenCalledWith(expect.objectContaining({
+        display: 'none !important',
+      }));
     });
   });
 });
