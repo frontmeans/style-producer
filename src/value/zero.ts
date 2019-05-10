@@ -1,6 +1,5 @@
 import { StypNumeric, StypNumericBase } from './numeric';
-import { StypValueStruct } from './struct';
-import { StypValue } from './value';
+import { StypValue, StypValueStruct } from './value';
 
 /**
  * Structured zero value.

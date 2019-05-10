@@ -1,5 +1,4 @@
-import { StypValueOpts, StypValueStruct } from './struct';
-import { StypValue, stypValuesEqual } from './value';
+import { StypValue, StypValueOpts, stypValuesEqual, StypValueStruct } from './value';
 import { stypZero, StypZero } from './zero';
 
 /**
