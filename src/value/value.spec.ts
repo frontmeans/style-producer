@@ -1,6 +1,5 @@
-import { stypLength } from './unit';
+import { StypLength, stypLength } from './unit';
 import { stypSplitPriority, stypValuesEqual } from './value';
-import { stypZero } from './zero';
 
 describe('stypSplitPriority', () => {
   it('splits nothing when there is no value', () => {
@@ -44,7 +43,7 @@ describe('stypValuesEqual', () => {
 
     expect(stypValuesEqual(value, '1px')).toBe(false);
     expect(stypValuesEqual('1px', value)).toBe(false);
-    expect(stypValuesEqual(stypZero, 0)).toBe(true);
-    expect(stypValuesEqual('0 !important', stypZero.important())).toBe(true);
+    expect(stypValuesEqual(StypLength.zero, 0)).toBe(true);
+    expect(stypValuesEqual('0 !important', StypLength.zero.important())).toBe(true);
   });
 });

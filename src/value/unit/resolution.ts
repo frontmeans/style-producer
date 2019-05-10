@@ -1,5 +1,5 @@
 import { StypDimension } from '../numeric';
-import { StypZero } from '../zero';
+import { unitZeroDimensionKind } from '../numeric.impl';
 
 /**
  * Structured [<resolution>] property value.
@@ -8,7 +8,7 @@ import { StypZero } from '../zero';
  *
  * [<resolution>]: https://developer.mozilla.org/en-US/docs/Web/CSS/resolution
  */
-export type StypResolution = StypDimension<StypResolution.Unit> | StypZero<StypResolution.Unit>;
+export type StypResolution = StypDimension<StypResolution.Unit>;
 
 export namespace StypResolution {
 
@@ -18,6 +18,14 @@ export namespace StypResolution {
   export type Unit = 'dpi' | 'dpcm' | 'dppx' | 'x';
 
 }
+
+/**
+ * [<resolution>] dimension kind.
+ *
+ * [<resolution>]: https://developer.mozilla.org/en-US/docs/Web/CSS/resolution
+ */
+export const StypResolution: StypDimension.Kind.UnitZero<StypResolution.Unit> =
+    /*#__PURE__*/ unitZeroDimensionKind('dpi');
 
 /**
  * Constructs [<resolution>] CSS property value.
@@ -30,5 +38,5 @@ export namespace StypResolution {
  * [<resolution>]: https://developer.mozilla.org/en-US/docs/Web/CSS/resolution
  */
 export function stypResolution(val: number, unit: StypResolution.Unit): StypResolution {
-  return new StypDimension(val, unit);
+  return new StypDimension(val, unit, { dim: StypResolution });
 }
