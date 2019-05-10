@@ -1,4 +1,5 @@
 import { StypDimension, stypDimension } from '../numeric';
+import { unitlessZeroDimensionKind } from '../numeric.impl';
 import { StypZero } from '../zero';
 
 /**
@@ -6,12 +7,9 @@ import { StypZero } from '../zero';
  *
  * Can be constructed using [[stypLength]] function.
  *
- * @typeparam ExtraUnit Additional allowed unit. Can be `%`. Not present by default.
- *
  * [<length>]: https://developer.mozilla.org/en-US/docs/Web/CSS/length
  */
-export type StypLength<ExtraUnit extends StypLengthPt.Unit = 'px'> =
-    StypDimension<StypLength.Unit | ExtraUnit> | StypZero<StypLength.Unit | ExtraUnit>;
+export type StypLength = StypDimension<StypLength.Unit> | StypZero<StypLength.Unit>;
 
 export namespace StypLength {
 
@@ -25,9 +23,16 @@ export namespace StypLength {
 }
 
 /**
+ * [<length>] dimension kind.
+ *
+ * [<length>]: https://developer.mozilla.org/en-US/docs/Web/CSS/length
+ */
+export const StypLength: StypDimension.Kind.UnitlessZero<StypLength.Unit> =
+    /*#__PURE__*/ unitlessZeroDimensionKind();
+
+/**
  * Constructs [<length>] CSS property value.
  *
- * @typeparam ExtraUnit Additional allowed unit. Can be `%`. Not present by default.
  * @param val The numeric value.
  * @param unit Length unit.
  *
@@ -35,10 +40,8 @@ export namespace StypLength {
  *
  * [<length>]: https://developer.mozilla.org/en-US/docs/Web/CSS/length
  */
-export function stypLength<ExtraUnit extends StypLengthPt.Unit>(
-    val: number,
-    unit: StypLength.Unit | ExtraUnit): StypLength<ExtraUnit> {
-  return stypDimension(val, unit);
+export function stypLength(val: number, unit: StypLength.Unit): StypLength {
+  return stypDimension(val, unit, { dim: StypLength });
 }
 
 /**
@@ -48,7 +51,7 @@ export function stypLength<ExtraUnit extends StypLengthPt.Unit>(
  *
  * [<length-percentage>]: https://developer.mozilla.org/en-US/docs/Web/CSS/length-percentage
  */
-export type StypLengthPt = StypLength<'%'>;
+export type StypLengthPt = StypDimension<StypLengthPt.Unit> | StypZero<StypLengthPt.Unit>;
 
 export namespace StypLengthPt {
 
@@ -58,6 +61,14 @@ export namespace StypLengthPt {
   export type Unit = StypLength.Unit | '%';
 
 }
+
+/**
+ * [<length-percentage>] dimension kind.
+ *
+ * [<length-percentage>]: https://developer.mozilla.org/en-US/docs/Web/CSS/length-percentage
+ */
+export const StypLengthPt: StypDimension.Kind.UnitlessZero<StypLengthPt.Unit> =
+    /*#__PURE__*/ unitlessZeroDimensionKind();
 
 /**
  * Constructs [<length-percentage>] CSS property value.
@@ -70,5 +81,5 @@ export namespace StypLengthPt {
  * [<length-percentage>]: https://developer.mozilla.org/en-US/docs/Web/CSS/length-percentage
  */
 export function stypLengthPt(val: number, unit: StypLengthPt.Unit): StypLengthPt {
-  return stypDimension(val, unit);
+  return stypDimension(val, unit, { dim: StypLengthPt });
 }

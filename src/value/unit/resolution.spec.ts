@@ -1,15 +1,19 @@
 import { stypResolution, StypResolution } from './resolution';
 
 describe('stypResolution()', () => {
+  it('has zero with unit', () => {
+    expect(StypResolution.zero.type).toBe('dimension');
+    expect(StypResolution.zero.val).toBe(0);
+    expect(StypResolution.zero.unit).toBe('dpi');
+  });
   it('constructs `StypResolution` instance', () => {
 
-    const resolution: StypResolution = stypResolution(96, 'dpi');
+    const resolution = stypResolution(96, 'dpi');
 
-    expect(resolution).toMatchObject({
-      type: 'number',
-      unit: 'dpi',
-      val: 96,
-    });
+    expect(resolution.type).toBe('dimension');
+    expect(resolution.dim).toBe(StypResolution);
+    expect(resolution.val).toBe(96);
+    expect(resolution.unit).toBe('dpi');
   });
   it('constructs `StypResolution` instance with zero value', () => {
 

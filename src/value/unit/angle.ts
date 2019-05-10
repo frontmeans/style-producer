@@ -1,4 +1,5 @@
 import { StypDimension, stypDimension } from '../numeric';
+import { unitlessZeroDimensionKind } from '../numeric.impl';
 import { StypZero } from '../zero';
 
 /**
@@ -6,12 +7,9 @@ import { StypZero } from '../zero';
  *
  * Can be constructed using [[stypAngle]] function.
  *
- * @typeparam ExtraUnit Additional allowed unit. Can be `%`. Not present by default.
- *
  * [<angle>]: https://developer.mozilla.org/en-US/docs/Web/CSS/angle
  */
-export type StypAngle<ExtraUnit extends StypAnglePt.Unit = 'deg'> =
-    StypDimension<StypAngle.Unit | ExtraUnit> | StypZero<StypAngle.Unit | ExtraUnit>;
+export type StypAngle = StypDimension<StypAngle.Unit> | StypZero<StypAngle.Unit>;
 
 export namespace StypAngle {
 
@@ -23,9 +21,16 @@ export namespace StypAngle {
 }
 
 /**
+ * [<angle>] dimension kind.
+ *
+ * [<angle>]: https://developer.mozilla.org/en-US/docs/Web/CSS/angle
+ */
+export const StypAngle: StypDimension.Kind.UnitlessZero<StypAngle.Unit> =
+    /*#__PURE__*/ unitlessZeroDimensionKind();
+
+/**
  * Constructs [<angle>] CSS property value.
  *
- * @typeparam ExtraUnit Additional allowed unit. Can be `%`. Not present by default.
  * @param val The numeric value.
  * @param unit Angle unit.
  *
@@ -33,10 +38,8 @@ export namespace StypAngle {
  *
  * [<angle>]: https://developer.mozilla.org/en-US/docs/Web/CSS/angle
  */
-export function stypAngle<ExtraUnit extends StypAnglePt.Unit>(
-    val: number,
-    unit: StypAngle.Unit | ExtraUnit): StypAngle<ExtraUnit> {
-  return stypDimension(val, unit);
+export function stypAngle(val: number, unit: StypAngle.Unit): StypAngle {
+  return stypDimension(val, unit, { dim: StypAngle });
 }
 
 /**
@@ -46,7 +49,7 @@ export function stypAngle<ExtraUnit extends StypAnglePt.Unit>(
  *
  * [<angle-percentage>]: https://developer.mozilla.org/en-US/docs/Web/CSS/angle-percentage
  */
-export type StypAnglePt = StypAngle<'%'>;
+export type StypAnglePt = StypDimension<StypAnglePt.Unit> | StypZero<StypAnglePt.Unit>;
 
 export namespace StypAnglePt {
 
@@ -56,6 +59,14 @@ export namespace StypAnglePt {
   export type Unit = StypAngle.Unit | '%';
 
 }
+
+/**
+ * [<angle-percentage>] dimension kind.
+ *
+ * [<angle-percentage>]: https://developer.mozilla.org/en-US/docs/Web/CSS/angle-percentage
+ */
+export const StypAnglePt: StypDimension.Kind.UnitlessZero<StypAnglePt.Unit> =
+    /*#__PURE__*/ unitlessZeroDimensionKind();
 
 /**
  * Constructs [<angle-percentage>] CSS property value.
@@ -68,5 +79,5 @@ export namespace StypAnglePt {
  * [<angle-percentage>]: https://developer.mozilla.org/en-US/docs/Web/CSS/angle-percentage
  */
 export function stypAnglePt(val: number, unit: StypAnglePt.Unit): StypAnglePt {
-  return stypDimension(val, unit);
+  return stypDimension(val, unit, { dim: StypAnglePt });
 }

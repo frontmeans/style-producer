@@ -1,5 +1,5 @@
 import { StypValue, StypValueOpts, stypValuesEqual, StypValueStruct } from './value';
-import { stypZero, StypZero } from './zero';
+import { StypZero } from './zero';
 
 /**
  * Structured numeric value.
@@ -18,6 +18,8 @@ export type StypNumeric<Unit extends string> = StypDimension<Unit> | StypCalc<Un
  */
 export interface StypNumericBase<Self extends StypNumericBase<Self, Unit>, Unit extends string>
     extends StypValueStruct<Self> {
+
+  readonly dim: StypDimension.Kind<Unit>;
 
   add(addendum: StypNumeric<Unit>): StypNumeric<Unit>;
 
@@ -41,7 +43,7 @@ export interface StypNumericBase<Self extends StypNumericBase<Self, Unit>, Unit 
 /**
  * Structured [<dimension>] value with unit.
  *
- * @typeparam Unit Allowed unit type.
+ * @typeparam Unit Allowed units type.
  *
  * [<dimension>]: https://developer.mozilla.org/en-US/docs/Web/CSS/dimension
  */
@@ -50,9 +52,11 @@ export class StypDimension<Unit extends string>
     implements StypNumericBase<StypDimension<Unit>, Unit> {
 
   // noinspection JSMethodCanBeStatic
-  get type(): 'number' {
-    return 'number';
+  get type(): 'dimension' {
+    return 'dimension';
   }
+
+  readonly dim: StypDimension.Kind<Unit>;
 
   /**
    * The number value.
@@ -71,8 +75,9 @@ export class StypDimension<Unit extends string>
    * @param unit The unit.
    * @param opts CSS value options.
    */
-  constructor(val: number, unit: Unit, opts?: StypValueOpts) {
+  constructor(val: number, unit: Unit, opts: StypDimension.Opts<Unit>) {
     super(opts);
+    this.dim = opts.dim;
     this.val = val;
     this.unit = unit;
   }
@@ -81,39 +86,42 @@ export class StypDimension<Unit extends string>
     if (other === this) {
       return true;
     }
-    if (typeof other === 'object' && other.type === this.type) {
-      return this.unit === other.unit && this.val === other.val && this.priority === other.priority;
-    }
-    return false;
+    return typeof other === 'object'
+        && other.type === this.type
+        && this.unit === other.unit
+        && this.val === other.val
+        && this.priority === other.priority;
   }
 
   prioritize(priority: 'important' | undefined): StypDimension<Unit> {
-    return this.priority === priority ? this : new StypDimension(this.val, this.unit, { priority });
+    return this.priority === priority
+        ? this
+        : new StypDimension(this.val, this.unit, { dim: this.dim, priority });
   }
 
   add(addendum: StypNumeric<Unit>): StypNumeric<Unit> {
-    if (addendum.type === 'number' && this.unit === addendum.unit) {
+    if (addendum.type === 'dimension' && this.unit === addendum.unit) {
       return stypDimension(this.val + addendum.val, this.unit, this);
     }
     return stypAddSub(this, '+', addendum);
   }
 
   sub(subtrahend: StypNumeric<Unit>): StypNumeric<Unit> {
-    if (subtrahend.type === 'number' && this.unit === subtrahend.unit) {
+    if (subtrahend.type === 'dimension' && this.unit === subtrahend.unit) {
       return stypDimension(this.val - subtrahend.val, this.unit, this);
     }
     return stypAddSub(this, '-', subtrahend);
   }
 
-  mul(multiplier: number) {
+  mul(multiplier: number): StypNumeric<Unit> {
     return multiplier === 1 ? this : stypDimension(this.val * multiplier, this.unit, this);
   }
 
-  div(divisor: number) {
+  div(divisor: number): StypNumeric<Unit> {
     return divisor === 1 ? this : stypDimension(this.val / divisor, this.unit, this);
   }
 
-  negate() {
+  negate(): StypNumeric<Unit> {
     return stypDimension(-this.val, this.unit, this);
   }
 
@@ -132,6 +140,72 @@ export class StypDimension<Unit extends string>
 
 }
 
+export namespace StypDimension {
+
+  /**
+   * A kind of dimension. E.g. angle, length, percentage, etc.
+   *
+   * @typeparam Unit Allowed units type.
+   */
+  export interface Kind<Unit extends string> {
+
+    /**
+     * Zero value of this kind.
+     *
+     * Typically, this is unit-less [[stypZero]]. But some dimensions require units.
+     */
+    readonly zero: StypDimension<Unit> | StypZero<Unit>;
+
+  }
+
+  export namespace Kind {
+
+    /**
+     * A kind of dimension with unit-less zero. E.g. angle or length.
+     *
+     * @typeparam Unit Allowed units type.
+     */
+    export interface UnitlessZero<Unit extends string> {
+
+      /**
+       * Zero value of this kind without unit.
+       */
+      readonly zero: StypZero<Unit>;
+
+    }
+
+    /**
+     * A kind of dimension which zero value has unit. E.g. frequency or resolution.
+     *
+     * @typeparam Unit Allowed units type.
+     */
+    export interface UnitZero<Unit extends string> {
+
+      /**
+       * Zero value of this kind that has unit.
+       */
+      readonly zero: StypDimension<Unit>;
+
+    }
+
+  }
+
+  /**
+   * Construction options of dimensions.
+   *
+   * @typeparam Unit Allowed units type.
+   */
+  export interface Opts<Unit extends string> extends StypValueOpts {
+
+    /**
+     * A kind of dimension.
+     */
+    dim: Kind<Unit>;
+
+  }
+
+}
+
 /**
  * Constructs structured [<dimension>] CSS property value.
  *
@@ -146,8 +220,8 @@ export class StypDimension<Unit extends string>
 export function stypDimension<Unit extends string>(
     val: number,
     unit: Unit,
-    opts?: StypValueOpts): StypDimension<Unit> | StypZero<Unit> {
-  return val ? new StypDimension(val, unit, opts) : stypZero.prioritize(opts && opts.priority);
+    opts: StypDimension.Opts<Unit>): StypDimension<Unit> | StypZero<Unit> {
+  return val ? new StypDimension(val, unit, opts) : opts.dim.zero.prioritize(opts && opts.priority);
 }
 
 /**
@@ -177,6 +251,7 @@ export abstract class StypCalcBase<
     return 'calc';
   }
 
+  readonly dim: StypDimension.Kind<Unit>;
   readonly left: StypNumeric<Unit>;
   readonly op: Op;
   readonly right: Right;
@@ -185,8 +260,9 @@ export abstract class StypCalcBase<
       left: StypNumeric<Unit>,
       op: Op,
       right: Right,
-      opts?: StypValueOpts) {
+      opts: StypDimension.Opts<Unit>) {
     super(opts);
+    this.dim = opts.dim;
     this.left = left.usual();
     this.op = op;
     this.right = right;
@@ -244,12 +320,14 @@ export abstract class StypCalcBase<
 export class StypAddSub<Unit extends string>
     extends StypCalcBase<StypAddSub<Unit>, '+' | '-', StypNumeric<Unit>, Unit> {
 
-  constructor(left: StypNumeric<Unit>, op: '+' | '-', right: StypNumeric<Unit>, opts?: StypValueOpts) {
+  constructor(left: StypNumeric<Unit>, op: '+' | '-', right: StypNumeric<Unit>, opts: StypDimension.Opts<Unit>) {
     super(left, op, right.usual(), opts);
   }
 
   prioritize(priority: 'important' | undefined): StypAddSub<Unit> {
-    return this.priority === priority ? this : new StypAddSub(this.left, this.op, this.right, { priority });
+    return this.priority === priority
+        ? this
+        : new StypAddSub(this.left, this.op, this.right, { dim: this.dim, priority });
   }
 
   negate(): StypNumeric<Unit> {
@@ -284,7 +362,9 @@ function stypAddSub<Unit extends string>(
 export class StypMulDiv<Unit extends string> extends StypCalcBase<StypMulDiv<Unit>, '*' | '/', number, Unit> {
 
   prioritize(priority: 'important' | undefined): StypMulDiv<Unit> {
-    return this.priority === priority ? this : new StypMulDiv(this.left, this.op, this.right, { priority });
+    return this.priority === priority
+        ? this
+        : new StypMulDiv(this.left, this.op, this.right, { dim: this.dim, priority });
   }
 
   mul(multiplier: number): StypNumeric<Unit> {
@@ -318,7 +398,7 @@ export class StypMulDiv<Unit extends string> extends StypCalcBase<StypMulDiv<Uni
 
 function stypMul<Unit extends string>(left: StypNumeric<Unit>, right: number): StypNumeric<Unit> {
   return !right
-      ? stypZero.prioritize(left.priority)
+      ? left.dim.zero.prioritize(left.priority)
       : right === 1
           ? left.prioritize(left.priority)
           : new StypMulDiv(left, '*', right, left);
