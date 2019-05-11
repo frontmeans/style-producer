@@ -8,7 +8,7 @@ describe('stypFrequency()', () => {
   });
   it('constructs `StypFrequency` instance', () => {
 
-    const frequency: StypFrequency = stypFrequency(44, 'kHz');
+    const frequency = stypFrequency(44, 'kHz');
 
     expect(frequency.type).toBe('dimension');
     expect(frequency.dim).toBe(StypFrequency);
@@ -17,7 +17,7 @@ describe('stypFrequency()', () => {
   });
   it('constructs `StypFrequency` instance with zero value', () => {
 
-    const frequency: StypFrequency = stypFrequency(0, 'kHz');
+    const frequency = stypFrequency(0, 'kHz');
 
     expect(`${frequency}`).toBe('0kHz');
   });
@@ -31,7 +31,7 @@ describe('stypFrequencyPt()', () => {
   });
   it('constructs `StypFrequencyPt` instance', () => {
 
-    const frequency: StypFrequencyPt = stypFrequencyPt(13, '%');
+    const frequency = stypFrequencyPt(13, '%');
 
     expect(frequency.type).toBe('dimension');
     expect(frequency.dim).toBe(StypFrequencyPt);
@@ -40,7 +40,7 @@ describe('stypFrequencyPt()', () => {
   });
   it('constructs `StypFrequencyPt` instance with zero value', () => {
 
-    const frequency: StypFrequencyPt = stypFrequencyPt(0, 'kHz');
+    const frequency = stypFrequencyPt(0, 'kHz');
 
     expect(`${frequency}`).toBe('0kHz');
   });

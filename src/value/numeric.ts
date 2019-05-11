@@ -7,8 +7,10 @@ import { StypZero } from './zero';
  * This represents either dimension, zero value, or a `calc()` CSS function call.
  *
  * @typeparam Unit Allowed unit type.
+ * @typeparam Zero A type of zero value. [[StypZero]] by default.
  */
-export type StypNumeric<Unit extends string> = StypDimension<Unit> | StypCalc<Unit> | StypZero<Unit>;
+export type StypNumeric<Unit extends string, Zero extends StypZero<Unit> | StypDimension<Unit> = StypZero<Unit>> =
+    StypDimension<Unit> | StypCalc<Unit> | Zero;
 
 /**
  * Base interface of structured numeric value.
@@ -221,7 +223,7 @@ export function stypDimension<Unit extends string>(
     val: number,
     unit: Unit,
     opts: StypDimension.Opts<Unit>): StypDimension<Unit> | StypZero<Unit> {
-  return val ? new StypDimension(val, unit, opts) : opts.dim.zero.prioritize(opts && opts.priority);
+  return val ? new StypDimension<Unit>(val, unit, opts) : opts.dim.zero.prioritize(opts && opts.priority);
 }
 
 /**

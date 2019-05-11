@@ -1,4 +1,4 @@
-import { StypDimension } from '../numeric';
+import { StypDimension, StypNumeric } from '../numeric';
 import { unitZeroDimensionKind } from '../numeric.impl';
 
 /**
@@ -8,7 +8,7 @@ import { unitZeroDimensionKind } from '../numeric.impl';
  *
  * [<resolution>]: https://developer.mozilla.org/en-US/docs/Web/CSS/resolution
  */
-export type StypResolution = StypDimension<StypResolution.Unit>;
+export type StypResolution = StypNumeric<StypResolution.Unit, StypDimension<StypResolution.Unit>>;
 
 export namespace StypResolution {
 
@@ -37,6 +37,6 @@ export const StypResolution: StypDimension.Kind.UnitZero<StypResolution.Unit> =
  *
  * [<resolution>]: https://developer.mozilla.org/en-US/docs/Web/CSS/resolution
  */
-export function stypResolution(val: number, unit: StypResolution.Unit): StypResolution {
+export function stypResolution(val: number, unit: StypResolution.Unit): StypDimension<StypResolution.Unit> {
   return new StypDimension(val, unit, { dim: StypResolution });
 }

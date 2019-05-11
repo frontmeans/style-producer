@@ -1,4 +1,4 @@
-import { StypDimension, stypDimension } from '../numeric';
+import { StypDimension, stypDimension, StypNumeric } from '../numeric';
 import { unitlessZeroDimensionKind } from '../numeric.impl';
 import { StypZero } from '../zero';
 
@@ -9,7 +9,7 @@ import { StypZero } from '../zero';
  *
  * [<length>]: https://developer.mozilla.org/en-US/docs/Web/CSS/length
  */
-export type StypLength = StypDimension<StypLength.Unit> | StypZero<StypLength.Unit>;
+export type StypLength = StypNumeric<StypLength.Unit>;
 
 export namespace StypLength {
 
@@ -40,7 +40,8 @@ export const StypLength: StypDimension.Kind.UnitlessZero<StypLength.Unit> =
  *
  * [<length>]: https://developer.mozilla.org/en-US/docs/Web/CSS/length
  */
-export function stypLength(val: number, unit: StypLength.Unit): StypLength {
+export function stypLength(val: number, unit: StypLength.Unit):
+    StypDimension<StypLength.Unit> | StypZero<StypLength.Unit> {
   return stypDimension(val, unit, { dim: StypLength });
 }
 
@@ -51,7 +52,7 @@ export function stypLength(val: number, unit: StypLength.Unit): StypLength {
  *
  * [<length-percentage>]: https://developer.mozilla.org/en-US/docs/Web/CSS/length-percentage
  */
-export type StypLengthPt = StypDimension<StypLengthPt.Unit> | StypZero<StypLengthPt.Unit>;
+export type StypLengthPt = StypNumeric<StypLengthPt.Unit>;
 
 export namespace StypLengthPt {
 
@@ -80,6 +81,7 @@ export const StypLengthPt: StypDimension.Kind.UnitlessZero<StypLengthPt.Unit> =
  *
  * [<length-percentage>]: https://developer.mozilla.org/en-US/docs/Web/CSS/length-percentage
  */
-export function stypLengthPt(val: number, unit: StypLengthPt.Unit): StypLengthPt {
+export function stypLengthPt(val: number, unit: StypLengthPt.Unit):
+    StypDimension<StypLengthPt.Unit> | StypZero<StypLengthPt.Unit> {
   return stypDimension(val, unit, { dim: StypLengthPt });
 }
