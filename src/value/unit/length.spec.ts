@@ -1,13 +1,13 @@
 import { StypDimension } from '../numeric';
-import { stypLength, StypLength, stypLengthPt, StypLengthPt } from './length';
+import { StypLength, StypLengthPt } from './length';
 
-describe('stypLength()', () => {
+describe('StypLength', () => {
   it('has unitless zero', () => {
     expect(StypLength.zero.type).toBe('0');
   });
   it('constructs `StypLength` instance', () => {
 
-    const length = stypLength(13, 'px') as StypDimension<StypLength.Unit>;
+    const length = StypLength.of(13, 'px') as StypDimension<StypLength.Unit>;
 
     expect(length.type).toBe('dimension');
     expect(length.dim).toBe(StypLength);
@@ -16,13 +16,13 @@ describe('stypLength()', () => {
   });
 });
 
-describe('stypLengthPt()', () => {
+describe('StypLengthPt', () => {
   it('has unitless zero', () => {
     expect(StypLengthPt.zero.type).toBe('0');
   });
   it('constructs `StypLengthPt` instance', () => {
 
-    const length = stypLengthPt(13, '%') as StypDimension<StypLengthPt.Unit>;
+    const length = StypLengthPt.of(13, '%') as StypDimension<StypLengthPt.Unit>;
 
     expect(length.type).toBe('dimension');
     expect(length.dim).toBe(StypLengthPt);

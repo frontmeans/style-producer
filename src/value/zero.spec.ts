@@ -1,4 +1,4 @@
-import { StypLength, stypLengthPt, StypLengthPt } from './unit';
+import { StypLength, StypLengthPt } from './unit';
 import { StypZero } from './zero';
 
 describe('StypZero', () => {
@@ -59,13 +59,13 @@ describe('StypZero', () => {
   describe('add', () => {
     it('is equal to addendum', () => {
 
-      const right = stypLengthPt(12, '%');
+      const right = StypLengthPt.of(12, '%');
 
       expect(zero.add(right)).toBe(right);
     });
     it('inherits priority', () => {
 
-      const right = stypLengthPt(12, '%');
+      const right = StypLengthPt.of(12, '%');
 
       expect(important.add(right).is(right.important())).toBe(true);
     });
@@ -74,13 +74,13 @@ describe('StypZero', () => {
   describe('sub', () => {
     it('is equal to -addendum', () => {
 
-      const right = stypLengthPt(12, '%');
+      const right = StypLengthPt.of(12, '%');
 
       expect(zero.sub(right).is(right.negate())).toBe(true);
     });
     it('inherits priority', () => {
 
-      const right = stypLengthPt(12, '%');
+      const right = StypLengthPt.of(12, '%');
 
       expect(important.sub(right).is(right.important().negate())).toBe(true);
     });

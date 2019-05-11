@@ -158,6 +158,17 @@ export namespace StypDimension {
      */
     readonly zero: StypDimension<Unit> | StypZero<Unit>;
 
+    /**
+     * Constructs dimension value.
+     *
+     * @param val Numeric dimension value.
+     * @param unit Dimension unit.
+     *
+     * @returns Constructed dimension value. Either [[StypDimension]] instance, or [[StypZero]] if `val` is `0` and
+     * this dimension kind supports unitless zero.
+     */
+    of(val: number, unit: Unit): StypDimension<Unit> | StypZero<Unit>;
+
   }
 
   export namespace Kind {
@@ -174,6 +185,16 @@ export namespace StypDimension {
        */
       readonly zero: StypZero<Unit>;
 
+      /**
+       * Constructs dimension value.
+       *
+       * @param val Numeric dimension value.
+       * @param unit Dimension unit.
+       *
+       * @returns Constructed dimension value. Either [[StypDimension]] instance, or [[StypZero]] if `val` is `0`.
+       */
+      of(val: number, unit: Unit): StypDimension<Unit> | StypZero<Unit>;
+
     }
 
     /**
@@ -187,6 +208,16 @@ export namespace StypDimension {
        * Zero value of this kind that has unit.
        */
       readonly zero: StypDimension<Unit>;
+
+      /**
+       * Constructs dimension value.
+       *
+       * @param val Numeric dimension value.
+       * @param unit Dimension unit.
+       *
+       * @returns Constructed dimension value as a [[StypDimension]] instance.
+       */
+      of(val: number, unit: Unit): StypDimension<Unit>;
 
     }
 

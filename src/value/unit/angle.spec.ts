@@ -1,13 +1,13 @@
 import { StypDimension } from '../numeric';
-import { stypAngle, StypAngle, stypAnglePt, StypAnglePt } from './angle';
+import { StypAngle, StypAnglePt } from './angle';
 
-describe('stypAngle()', () => {
+describe('StypAngle', () => {
   it('has unitless zero', () => {
     expect(StypAngle.zero.type).toBe('0');
   });
   it('constructs `StypAngle` instance', () => {
 
-    const angle = stypAngle(13, 'deg') as StypDimension<StypAngle.Unit>;
+    const angle = StypAngle.of(13, 'deg') as StypDimension<StypAngle.Unit>;
 
     expect(angle.type).toBe('dimension');
     expect(angle.dim).toBe(StypAngle);
@@ -16,13 +16,13 @@ describe('stypAngle()', () => {
   });
 });
 
-describe('stypAnglePt()', () => {
+describe('StypAnglePt', () => {
   it('has unitless zero', () => {
     expect(StypAnglePt.zero.type).toBe('0');
   });
   it('constructs `StypAnglePt` instance', () => {
 
-    const angle = stypAnglePt(13, '%') as StypDimension<StypAnglePt.Unit>;
+    const angle = StypAnglePt.of(13, '%') as StypDimension<StypAnglePt.Unit>;
 
     expect(angle.type).toBe('dimension');
     expect(angle.dim).toBe(StypAnglePt);

@@ -1,4 +1,4 @@
-import { StypLength, stypLength } from './unit';
+import { StypLength } from './unit';
 import { stypSplitPriority, stypValuesEqual } from './value';
 
 describe('stypSplitPriority', () => {
@@ -14,7 +14,7 @@ describe('stypSplitPriority', () => {
   });
   it('splits structures value and priority', () => {
 
-    const value = stypLength(1, 'px');
+    const value = StypLength.of(1, 'px');
 
     expect(stypSplitPriority(value.important())).toEqual([value, 'important']);
     expect(stypSplitPriority(value)).toEqual([value]);
@@ -30,16 +30,16 @@ describe('stypValuesEqual', () => {
   });
   it('compares structured values', () => {
 
-    const value = stypLength(1, 'px');
+    const value = StypLength.of(1, 'px');
 
     expect(stypValuesEqual(value, value)).toBe(true);
-    expect(stypValuesEqual(value, stypLength(1, 'px'))).toBe(true);
-    expect(stypValuesEqual(value, stypLength(1, 'em'))).toBe(false);
+    expect(stypValuesEqual(value, StypLength.of(1, 'px'))).toBe(true);
+    expect(stypValuesEqual(value, StypLength.of(1, 'em'))).toBe(false);
     expect(stypValuesEqual(value, value.important())).toBe(false);
   });
   it('compares structured values', () => {
 
-    const value = stypLength(1, 'px');
+    const value = StypLength.of(1, 'px');
 
     expect(stypValuesEqual(value, '1px')).toBe(false);
     expect(stypValuesEqual('1px', value)).toBe(false);

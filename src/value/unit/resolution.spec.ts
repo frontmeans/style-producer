@@ -1,6 +1,6 @@
-import { stypResolution, StypResolution } from './resolution';
+import { StypResolution } from './resolution';
 
-describe('stypResolution()', () => {
+describe('StypResolution', () => {
   it('has zero with unit', () => {
     expect(StypResolution.zero.type).toBe('dimension');
     expect(StypResolution.zero.val).toBe(0);
@@ -8,7 +8,7 @@ describe('stypResolution()', () => {
   });
   it('constructs `StypResolution` instance', () => {
 
-    const resolution = stypResolution(96, 'dpi');
+    const resolution = StypResolution.of(96, 'dpi');
 
     expect(resolution.type).toBe('dimension');
     expect(resolution.dim).toBe(StypResolution);
@@ -17,7 +17,7 @@ describe('stypResolution()', () => {
   });
   it('constructs `StypResolution` instance with zero value', () => {
 
-    const resolution: StypResolution = stypResolution(0, 'x');
+    const resolution: StypResolution = StypResolution.of(0, 'x');
 
     expect(`${resolution}`).toBe('0x');
   });

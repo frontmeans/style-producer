@@ -1,7 +1,7 @@
 import { noop } from 'call-thru';
 import { AfterEvent, afterEventFrom, EventEmitter, EventInterest, trackValue, ValueTracker } from 'fun-events';
 import { readProperties } from '../spec';
-import { stypLengthPt } from '../value';
+import { StypLengthPt } from '../value';
 import { StypProperties } from './properties';
 import { mergeStypProperties, stypPropertiesBySpec } from './properties.impl';
 import { StypRule } from './rule';
@@ -191,7 +191,7 @@ describe('mergeStypProperties', () => {
     };
     addendumProperties = {
       display: 'none',
-      fontSize: stypLengthPt(12, 'px'),
+      fontSize: StypLengthPt.of(12, 'px'),
     };
     base = trackValue(baseProperties);
     addendum = trackValue(addendumProperties);
@@ -239,7 +239,7 @@ describe('mergeStypProperties', () => {
     it('prefers property with structured value added later', () => {
       base.it = {
         ...baseProperties,
-        fontSize: stypLengthPt(13, 'px'),
+        fontSize: StypLengthPt.of(13, 'px'),
       };
       expect(mockReceiver).not.toHaveBeenCalled();
     });
@@ -255,10 +255,10 @@ describe('mergeStypProperties', () => {
     it('prefers important property with structured structured value over usual one added later', () => {
       base.it = {
         ...baseProperties,
-        fontSize: stypLengthPt(13, 'px').important(),
+        fontSize: StypLengthPt.of(13, 'px').important(),
       };
       expect(mockReceiver).toHaveBeenCalledWith(expect.objectContaining({
-        fontSize:  stypLengthPt(13, 'px').important(),
+        fontSize:  StypLengthPt.of(13, 'px').important(),
       }));
     });
     it('prefers important property added later', () => {

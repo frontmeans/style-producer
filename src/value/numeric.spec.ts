@@ -1,40 +1,40 @@
 import { StypCalc, StypDimension } from './numeric';
-import { stypLength, stypLengthPt, StypLengthPt } from './unit';
+import { StypLength, StypLengthPt } from './unit';
 
 describe('StypDimension', () => {
 
   let value: StypLengthPt;
 
   beforeEach(() => {
-    value = stypLengthPt(16, 'px');
+    value = StypLengthPt.of(16, 'px');
   });
 
   it('is of type `dimension`', () => {
     expect(value.type).toBe('dimension');
   });
   it('is of type `0` when value is `0`', () => {
-    expect(stypLengthPt(0, 'px').type).toBe('0');
+    expect(StypLengthPt.of(0, 'px').type).toBe('0');
   });
   it('is equal to itself', () => {
     expect(value.is(value)).toBe(true);
   });
   it('is equal to the same `StypDimension`', () => {
-    expect(value.is(stypLengthPt(16, 'px'))).toBe(true);
+    expect(value.is(StypLengthPt.of(16, 'px'))).toBe(true);
   });
   it('is equal to different `StypDimension` with the same unit', () => {
-    expect(value.is(stypLength(16, 'px'))).toBe(true);
+    expect(value.is(StypLength.of(16, 'px'))).toBe(true);
   });
   it('is not equal to `StypDimension` with different unit', () => {
-    expect(value.is(stypLengthPt(16, 'rem'))).toBe(false);
+    expect(value.is(StypLengthPt.of(16, 'rem'))).toBe(false);
   });
   it('is not equal to `StypDimension` with different value', () => {
-    expect(value.is(stypLengthPt(17, 'px'))).toBe(false);
+    expect(value.is(StypLengthPt.of(17, 'px'))).toBe(false);
   });
   it('is not equal to scalar value', () => {
     expect(value.is('16px')).toBe(false);
   });
   it('is not equal to different value type', () => {
-    expect(value.is(value.add(stypLengthPt(33, '%')))).toBe(false);
+    expect(value.is(value.add(StypLengthPt.of(33, '%')))).toBe(false);
   });
   it('is not equal to the same value with different priority', () => {
     expect(value.is(value.important())).toBe(false);
@@ -45,7 +45,7 @@ describe('StypDimension', () => {
 
   describe('add', () => {
     it('is `StypDimension` when addendum has the same unit', () => {
-      expect(value.add(stypLengthPt(1, 'px'))).toMatchObject({
+      expect(value.add(StypLengthPt.of(1, 'px'))).toMatchObject({
         type: 'dimension',
         val: 17,
         unit: 'px',
@@ -53,7 +53,7 @@ describe('StypDimension', () => {
     });
     it('is `StypCalc` when addendum has different unit', () => {
 
-      const right = stypLengthPt(1, '%');
+      const right = StypLengthPt.of(1, '%');
       const sum = value.add(right) as StypCalc<StypLengthPt.Unit>;
 
       expect(sum.type).toBe('calc');
@@ -69,7 +69,7 @@ describe('StypDimension', () => {
 
   describe('sub', () => {
     it('is `StypDimension` when addendum has the same unit', () => {
-      expect(value.sub(stypLengthPt(1, 'px'))).toMatchObject({
+      expect(value.sub(StypLengthPt.of(1, 'px'))).toMatchObject({
         type: 'dimension',
         val: 15,
         unit: 'px',
@@ -77,7 +77,7 @@ describe('StypDimension', () => {
     });
     it('is `StypCalc` when addendum has different unit', () => {
 
-      const right = stypLengthPt(1, '%');
+      const right = StypLengthPt.of(1, '%');
       const diff = value.sub(right) as StypCalc<StypLengthPt.Unit>;
 
       expect(diff.type).toBe('calc');
@@ -164,8 +164,8 @@ describe('StypCalc', () => {
   let important: StypCalc<StypLengthPt.Unit>;
 
   beforeEach(() => {
-    left = stypLengthPt(12, 'px');
-    right = stypLengthPt(100, '%');
+    left = StypLengthPt.of(12, 'px');
+    right = StypLengthPt.of(100, '%');
     calc = left.add(right) as StypCalc<StypLengthPt.Unit>;
     important = calc.important();
   });
@@ -203,8 +203,8 @@ describe('StypCalc', () => {
 
   describe('add', () => {
     it('adds the value', () => {
-      expect(`${calc.add(stypLengthPt(1, 'rem'))}`).toBe('calc((12px + 100%) + 1rem)');
-      expect(`${important.add(stypLengthPt(1, 'rem'))}`).toBe('calc((12px + 100%) + 1rem) !important');
+      expect(`${calc.add(StypLengthPt.of(1, 'rem'))}`).toBe('calc((12px + 100%) + 1rem)');
+      expect(`${important.add(StypLengthPt.of(1, 'rem'))}`).toBe('calc((12px + 100%) + 1rem) !important');
     });
     it('does not add zero value', () => {
       expect(calc.add(StypLengthPt.zero)).toBe(calc);
@@ -214,8 +214,8 @@ describe('StypCalc', () => {
 
   describe('sub', () => {
     it('subtracts the value', () => {
-      expect(`${calc.sub(stypLengthPt(1, 'rem'))}`).toBe('calc((12px + 100%) - 1rem)');
-      expect(`${important.sub(stypLengthPt(1, 'rem'))}`).toBe('calc((12px + 100%) - 1rem) !important');
+      expect(`${calc.sub(StypLengthPt.of(1, 'rem'))}`).toBe('calc((12px + 100%) - 1rem)');
+      expect(`${important.sub(StypLengthPt.of(1, 'rem'))}`).toBe('calc((12px + 100%) - 1rem) !important');
     });
     it('does not subtract zero value', () => {
       expect(calc.sub(StypLengthPt.zero)).toBe(calc);

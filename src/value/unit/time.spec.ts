@@ -1,13 +1,13 @@
 import { StypDimension } from '../numeric';
-import { stypTime, StypTime, stypTimePt, StypTimePt } from './time';
+import { StypTime, StypTimePt } from './time';
 
-describe('stypTime()', () => {
+describe('StypTime', () => {
   it('has unitless zero', () => {
     expect(StypTime.zero.type).toBe('0');
   });
   it('constructs `StypTime` instance', () => {
 
-    const time = stypTime(13, 'ms') as StypDimension<StypTime.Unit>;
+    const time = StypTime.of(13, 'ms') as StypDimension<StypTime.Unit>;
 
     expect(time.type).toBe('dimension');
     expect(time.dim).toBe(StypTime);
@@ -16,13 +16,13 @@ describe('stypTime()', () => {
   });
 });
 
-describe('stypTimePt()', () => {
+describe('StypTimePt', () => {
   it('has unitless zero', () => {
     expect(StypTimePt.zero.type).toBe('0');
   });
   it('constructs `StypTimePt` instance', () => {
 
-    const time = stypTimePt(13, '%') as StypDimension<StypTimePt.Unit>;
+    const time = StypTimePt.of(13, '%') as StypDimension<StypTimePt.Unit>;
 
     expect(time.type).toBe('dimension');
     expect(time.dim).toBe(StypTimePt);

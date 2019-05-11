@@ -4,7 +4,7 @@ import { unitZeroDimensionKind } from '../numeric.impl';
 /**
  * Structured [<resolution>] property value.
  *
- * Can be constructed using [[stypResolution]] function.
+ * Can be constructed using `StypResolution.of()` function.
  *
  * [<resolution>]: https://developer.mozilla.org/en-US/docs/Web/CSS/resolution
  */
@@ -26,17 +26,3 @@ export namespace StypResolution {
  */
 export const StypResolution: StypDimension.Kind.UnitZero<StypResolution.Unit> =
     /*#__PURE__*/ unitZeroDimensionKind('dpi');
-
-/**
- * Constructs [<resolution>] CSS property value.
- *
- * @param val The numeric value.
- * @param unit Resolution unit.
- *
- * @returns Resolution value.
- *
- * [<resolution>]: https://developer.mozilla.org/en-US/docs/Web/CSS/resolution
- */
-export function stypResolution(val: number, unit: StypResolution.Unit): StypDimension<StypResolution.Unit> {
-  return new StypDimension(val, unit, { dim: StypResolution });
-}

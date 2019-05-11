@@ -4,7 +4,7 @@ import { unitZeroDimensionKind } from '../numeric.impl';
 /**
  * Structured [<frequency>] property value.
  *
- * Can be constructed using [[stypFrequency]] function.
+ * Can be constructed using `StypFrequency.of()` function.
  *
  * [<frequency>]: https://developer.mozilla.org/en-US/docs/Web/CSS/frequency
  */
@@ -28,23 +28,9 @@ export const StypFrequency: StypDimension.Kind.UnitZero<StypFrequency.Unit> =
     /*#__PURE__*/ unitZeroDimensionKind('kHz');
 
 /**
- * Constructs [<frequency>] CSS property value.
- *
- * @param val The numeric value.
- * @param unit Frequency unit.
- *
- * @returns Frequency value.
- *
- * [<frequency>]: https://developer.mozilla.org/en-US/docs/Web/CSS/frequency
- */
-export function stypFrequency(val: number, unit: StypFrequency.Unit): StypDimension<StypFrequency.Unit> {
-  return new StypDimension(val, unit, { dim: StypFrequency });
-}
-
-/**
  * Structured [<frequency-percentage>] CSS property value.
  *
- * Can be constructed using [[stypFrequencyPt]] function.
+ * Can be constructed using `StypFrequencyPt.of()` function.
  *
  * [<frequency-percentage>]: https://developer.mozilla.org/en-US/docs/Web/CSS/frequency-percentage
  */
@@ -66,17 +52,3 @@ export namespace StypFrequencyPt {
  */
 export const StypFrequencyPt: StypDimension.Kind.UnitZero<StypFrequencyPt.Unit> =
     /*#__PURE__*/ unitZeroDimensionKind('kHz');
-
-/**
- * Constructs [<frequency-percentage>] CSS property value.
- *
- * @param val The numeric value.
- * @param unit Frequency unit.
- *
- * @returns Frequency or percentage value.
- *
- * [<frequency-percentage>]: https://developer.mozilla.org/en-US/docs/Web/CSS/frequency-percentage
- */
-export function stypFrequencyPt(val: number, unit: StypFrequencyPt.Unit): StypDimension<StypFrequencyPt.Unit> {
-  return new StypDimension(val, unit, { dim: StypFrequencyPt });
-}

@@ -1,6 +1,6 @@
-import { stypFrequency, StypFrequency, stypFrequencyPt, StypFrequencyPt } from './frequency';
+import { StypFrequency, StypFrequencyPt } from './frequency';
 
-describe('stypFrequency()', () => {
+describe('StypFrequency', () => {
   it('has zero with unit', () => {
     expect(StypFrequency.zero.type).toBe('dimension');
     expect(StypFrequency.zero.val).toBe(0);
@@ -8,7 +8,7 @@ describe('stypFrequency()', () => {
   });
   it('constructs `StypFrequency` instance', () => {
 
-    const frequency = stypFrequency(44, 'kHz');
+    const frequency = StypFrequency.of(44, 'kHz');
 
     expect(frequency.type).toBe('dimension');
     expect(frequency.dim).toBe(StypFrequency);
@@ -17,13 +17,13 @@ describe('stypFrequency()', () => {
   });
   it('constructs `StypFrequency` instance with zero value', () => {
 
-    const frequency = stypFrequency(0, 'kHz');
+    const frequency = StypFrequency.of(0, 'kHz');
 
     expect(`${frequency}`).toBe('0kHz');
   });
 });
 
-describe('stypFrequencyPt()', () => {
+describe('StypFrequencyPt', () => {
   it('has zero with unit', () => {
     expect(StypFrequencyPt.zero.type).toBe('dimension');
     expect(StypFrequencyPt.zero.val).toBe(0);
@@ -31,7 +31,7 @@ describe('stypFrequencyPt()', () => {
   });
   it('constructs `StypFrequencyPt` instance', () => {
 
-    const frequency = stypFrequencyPt(13, '%');
+    const frequency = StypFrequencyPt.of(13, '%');
 
     expect(frequency.type).toBe('dimension');
     expect(frequency.dim).toBe(StypFrequencyPt);
@@ -40,7 +40,7 @@ describe('stypFrequencyPt()', () => {
   });
   it('constructs `StypFrequencyPt` instance with zero value', () => {
 
-    const frequency = stypFrequencyPt(0, 'kHz');
+    const frequency = StypFrequencyPt.of(0, 'kHz');
 
     expect(`${frequency}`).toBe('0kHz');
   });
