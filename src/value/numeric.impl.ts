@@ -297,9 +297,18 @@ function stypDiv<Unit extends string>(left: StypNumeric<Unit>, right: number): S
 /**
  * @internal
  */
-export function unitlessZeroDimensionKind<Unit extends string>(): StypDimension_.Kind.UnitlessZero<Unit> {
+export function unitlessZeroDimensionKind<Unit extends string>(
+    {
+      by = recognizeUnitlessZeroValue,
+    }: {
+      by?: (this: StypDimension_.Kind.UnitlessZero<Unit>, source: StypValue) =>
+          StypNumeric<Unit> | undefined,
+    } = {}
+): StypDimension_.Kind.UnitlessZero<Unit> {
 
   const dim: StypDimension_.Kind.UnitlessZero<Unit> = {
+
+    by,
 
     get zero(): StypZero<Unit> {
       return zero; // tslint:disable-line:no-use-before-declare
@@ -314,15 +323,30 @@ export function unitlessZeroDimensionKind<Unit extends string>(): StypDimension_
   const zero = newStypZero<Unit>(dim);
 
   return dim;
+}
 
+function recognizeUnitlessZeroValue<Unit extends string>(
+    this: StypDimension_.Kind.UnitlessZero<Unit>,
+    source: StypValue): StypNumeric<Unit> | undefined {
+  return typeof source === 'object' && source.dim === this ? source : undefined;
 }
 
 /**
  * @internal
  */
-export function unitZeroDimensionKind<Unit extends string>(zeroUnit: Unit): StypDimension_.Kind.UnitZero<Unit> {
+export function unitZeroDimensionKind<Unit extends string>(
+    {
+      zeroUnit,
+      by = recognizeUnitZeroValue,
+    }: {
+      zeroUnit: Unit,
+      by?: (this: StypDimension_.Kind.UnitZero<Unit>, source: StypValue) =>
+          StypNumeric<Unit, StypDimension_<Unit>> | undefined,
+    }): StypDimension_.Kind.UnitZero<Unit> {
 
   const dim: StypDimension_.Kind.UnitZero<Unit> = {
+
+    by,
 
     get zero(): StypDimension<Unit> {
       return zero; // tslint:disable-line:no-use-before-declare
@@ -337,4 +361,10 @@ export function unitZeroDimensionKind<Unit extends string>(zeroUnit: Unit): Styp
   const zero = new StypDimension(0, zeroUnit, { dim: dim });
 
   return dim;
+}
+
+function recognizeUnitZeroValue<Unit extends string>(
+    this: StypDimension_.Kind.UnitZero<Unit>,
+    source: StypValue): StypNumeric<Unit, StypDimension_<Unit>> | undefined {
+  return typeof source === 'object' && source.dim === this ? (source.type ? source : this.zero) : undefined;
 }

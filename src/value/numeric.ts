@@ -38,6 +38,10 @@ export abstract class StypNumericStruct<Self extends StypNumericStruct<Self, Uni
 
   abstract negate(): StypNumeric<Unit>;
 
+  by(source: StypValue): StypNumeric<Unit> {
+    return this.dim.by(source) || this as StypNumeric<Unit>;
+  }
+
   /**
    * Returns a textual representation of this value to be used within CSS `calc()` function.
    *
@@ -78,6 +82,8 @@ export interface StypDimension<Unit extends string>
    */
   readonly unit: Unit;
 
+  by(source: StypValue): StypNumeric<Unit>;
+
 }
 
 export namespace StypDimension {
@@ -107,6 +113,8 @@ export namespace StypDimension {
      */
     of(val: number, unit: Unit): StypDimension<Unit> | StypZero<Unit>;
 
+    by(source: StypValue): StypNumeric<Unit, StypDimension<Unit> | StypZero<Unit>> | undefined;
+
   }
 
   export namespace Kind {
@@ -116,7 +124,7 @@ export namespace StypDimension {
      *
      * @typeparam Unit Allowed units type.
      */
-    export interface UnitlessZero<Unit extends string> {
+    export interface UnitlessZero<Unit extends string> extends Kind<Unit> {
 
       /**
        * Zero value of this kind without unit.
@@ -133,6 +141,8 @@ export namespace StypDimension {
        */
       of(val: number, unit: Unit): StypDimension<Unit> | StypZero<Unit>;
 
+      by(source: StypValue): StypNumeric<Unit> | undefined;
+
     }
 
     /**
@@ -140,7 +150,7 @@ export namespace StypDimension {
      *
      * @typeparam Unit Allowed units type.
      */
-    export interface UnitZero<Unit extends string> {
+    export interface UnitZero<Unit extends string> extends Kind<Unit> {
 
       /**
        * Zero value of this kind that has unit.
@@ -156,6 +166,8 @@ export namespace StypDimension {
        * @returns Constructed dimension value as a [[StypDimension]] instance.
        */
       of(val: number, unit: Unit): StypDimension<Unit>;
+
+      by(source: StypValue): StypNumeric<Unit, StypDimension<Unit>> | undefined;
 
     }
 

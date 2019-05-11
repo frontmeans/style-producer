@@ -75,6 +75,10 @@ export abstract class StypValueStruct<Self extends StypValueStruct<Self>> {
     return this.prioritize(undefined);
   }
 
+  by(source: StypValue): StypValue {
+    return (typeof source === 'object' && source.type === this.type ? source : this) as StypValue;
+  }
+
   /**
    * Returns textual representation of this value.
    *

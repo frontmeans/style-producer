@@ -25,7 +25,7 @@ export namespace StypFrequency {
  * [<frequency>]: https://developer.mozilla.org/en-US/docs/Web/CSS/frequency
  */
 export const StypFrequency: StypDimension.Kind.UnitZero<StypFrequency.Unit> =
-    /*#__PURE__*/ unitZeroDimensionKind('kHz');
+    /*#__PURE__*/ unitZeroDimensionKind({ zeroUnit: 'kHz' });
 
 /**
  * Structured [<frequency-percentage>] CSS property value.
@@ -51,4 +51,4 @@ export namespace StypFrequencyPt {
  * [<frequency-percentage>]: https://developer.mozilla.org/en-US/docs/Web/CSS/frequency-percentage
  */
 export const StypFrequencyPt: StypDimension.Kind.UnitZero<StypFrequencyPt.Unit> =
-    /*#__PURE__*/ unitZeroDimensionKind('kHz');
+    /*#__PURE__*/ unitZeroDimensionKind({ zeroUnit: 'kHz' });
