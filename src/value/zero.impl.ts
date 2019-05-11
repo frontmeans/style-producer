@@ -1,8 +1,8 @@
-import { StypDimension, StypNumeric } from './numeric';
-import { StypValue, StypValueStruct } from './value';
+import { StypDimension, StypNumeric, StypNumericStruct } from './numeric';
+import { StypValue } from './value';
 import { StypZero } from './zero';
 
-class Zero<Unit extends string> extends StypValueStruct<Zero<Unit>> implements StypZero<Unit> {
+class Zero<Unit extends string> extends StypNumericStruct<Zero<Unit>, Unit> implements StypZero<Unit> {
 
   constructor(private readonly _byPriority: ZeroByPriority<Unit>, opts: StypDimension.Opts<Unit>) {
     super(opts);
@@ -10,10 +10,6 @@ class Zero<Unit extends string> extends StypValueStruct<Zero<Unit>> implements S
 
   get type(): 0 {
     return 0;
-  }
-
-  get dim(): StypDimension.Kind<Unit> {
-    return this._byPriority.dim;
   }
 
   is(other: StypValue): boolean {
@@ -79,7 +75,7 @@ class ZeroByPriority<Unit extends string> {
   readonly usual: Zero<Unit>;
   readonly important: Zero<Unit>;
 
-  constructor(readonly dim: StypDimension.Kind<Unit>) {
+  constructor(dim: StypDimension.Kind<Unit>) {
     this.usual = new Zero(this, { dim });
     this.important = new Zero(this, { dim, priority: 'important' });
   }
