@@ -36,7 +36,7 @@ export abstract class StypValueStruct<Self extends StypValueStruct<Self>> {
    *
    * @param opts Construction options.
    */
-  protected constructor(opts?: StypValueOpts) {
+  protected constructor(opts?: StypValue.Opts) {
     this.priority = opts && opts.priority;
   }
 
@@ -84,15 +84,19 @@ export abstract class StypValueStruct<Self extends StypValueStruct<Self>> {
 
 }
 
-/**
- * Construction options of structured property CSS value.
- */
-export interface StypValueOpts {
+export namespace StypValue {
 
   /**
-   * Constructed value priority.
+   * Construction options of structured property CSS value.
    */
-  readonly priority?: 'important';
+  export interface Opts {
+
+    /**
+     * Constructed value priority.
+     */
+    readonly priority?: 'important';
+
+  }
 
 }
 

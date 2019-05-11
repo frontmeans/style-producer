@@ -1,4 +1,4 @@
-import { StypValueOpts, StypValueStruct } from './value';
+import { StypValue, StypValueStruct } from './value';
 import { StypZero } from './zero';
 
 /**
@@ -166,7 +166,7 @@ export namespace StypDimension {
    *
    * @typeparam Unit Allowed units type.
    */
-  export interface Opts<Unit extends string> extends StypValueOpts {
+  export interface Opts<Unit extends string> extends StypValue.Opts {
 
     /**
      * A kind of dimension.
