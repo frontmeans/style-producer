@@ -13,7 +13,7 @@ describe('StypDimension', () => {
     expect(value.type).toBe('dimension');
   });
   it('is of type `0` when value is `0`', () => {
-    expect(StypLengthPt.of(0, 'px').type).toBe('0');
+    expect(StypLengthPt.of(0, 'px').type).toBe(0);
   });
   it('is equal to itself', () => {
     expect(value.is(value)).toBe(true);

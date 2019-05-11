@@ -3,7 +3,7 @@ import { StypLength, StypLengthPt } from './length';
 
 describe('StypLength', () => {
   it('has unitless zero', () => {
-    expect(StypLength.zero.type).toBe('0');
+    expect(StypLength.zero.type).toBe(0);
   });
   it('constructs `StypLength` instance', () => {
 
@@ -18,7 +18,7 @@ describe('StypLength', () => {
 
 describe('StypLengthPt', () => {
   it('has unitless zero', () => {
-    expect(StypLengthPt.zero.type).toBe('0');
+    expect(StypLengthPt.zero.type).toBe(0);
   });
   it('constructs `StypLengthPt` instance', () => {
 

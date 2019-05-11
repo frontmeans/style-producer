@@ -3,7 +3,7 @@ import { StypAngle, StypAnglePt } from './angle';
 
 describe('StypAngle', () => {
   it('has unitless zero', () => {
-    expect(StypAngle.zero.type).toBe('0');
+    expect(StypAngle.zero.type).toBe(0);
   });
   it('constructs `StypAngle` instance', () => {
 
@@ -18,7 +18,7 @@ describe('StypAngle', () => {
 
 describe('StypAnglePt', () => {
   it('has unitless zero', () => {
-    expect(StypAnglePt.zero.type).toBe('0');
+    expect(StypAnglePt.zero.type).toBe(0);
   });
   it('constructs `StypAnglePt` instance', () => {
 

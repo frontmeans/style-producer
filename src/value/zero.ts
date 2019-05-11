@@ -13,7 +13,7 @@ import { StypNumericStruct } from './numeric';
  */
 export interface StypZero<Unit extends string> extends StypNumericStruct<StypZero<Unit>, Unit> {
 
-  readonly type: '0';
+  readonly type: 0;
 
   mul(multiplier: number): this;
 

@@ -234,7 +234,7 @@ function stypAddSub<Unit extends string>(
     left: StypNumeric<Unit>,
     op: '+' | '-',
     right: StypNumeric<Unit>): StypNumeric<Unit> {
-  return right.type === '0' ? left : new StypAddSub(left, op, right, left);
+  return !right.type ? left : new StypAddSub(left, op, right, left);
 }
 
 /**

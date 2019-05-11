@@ -3,7 +3,7 @@ import { StypTime, StypTimePt } from './time';
 
 describe('StypTime', () => {
   it('has unitless zero', () => {
-    expect(StypTime.zero.type).toBe('0');
+    expect(StypTime.zero.type).toBe(0);
   });
   it('constructs `StypTime` instance', () => {
 
@@ -18,7 +18,7 @@ describe('StypTime', () => {
 
 describe('StypTimePt', () => {
   it('has unitless zero', () => {
-    expect(StypTimePt.zero.type).toBe('0');
+    expect(StypTimePt.zero.type).toBe(0);
   });
   it('constructs `StypTimePt` instance', () => {
 

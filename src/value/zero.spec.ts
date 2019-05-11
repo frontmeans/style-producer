@@ -13,8 +13,8 @@ describe('StypZero', () => {
 
   describe('type', () => {
     it('is `0`', () => {
-      expect(zero.type).toBe('0');
-      expect(important.type).toBe('0');
+      expect(zero.type).toBe(0);
+      expect(important.type).toBe(0);
     });
   });
 

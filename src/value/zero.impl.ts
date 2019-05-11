@@ -8,8 +8,8 @@ class Zero<Unit extends string> extends StypValueStruct<Zero<Unit>> implements S
     super(opts);
   }
 
-  get type(): '0' {
-    return '0';
+  get type(): 0 {
+    return 0;
   }
 
   get dim(): StypDimension.Kind<Unit> {
