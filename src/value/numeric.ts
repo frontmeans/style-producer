@@ -89,11 +89,25 @@ export interface StypDimension<Unit extends string>
 export namespace StypDimension {
 
   /**
-   * A kind of dimension. E.g. angle, length, percentage, etc.
+   * A kind of dimensions. E.g. angle, length, percentage, etc.
    *
    * @typeparam Unit Allowed units type.
    */
   export interface Kind<Unit extends string> {
+
+    /**
+     * A similar kind of dimensions supporting all units this one supports and, in addition, supporting percents (`%`).
+     *
+     * `undefined` if there is no such dimension kind. Refers itself if supports percents.
+     */
+    readonly pt?: Kind<Unit | '%'>;
+
+    /**
+     * A similar kind of dimensions supporting all units this one supports, except percents (`%`).
+     *
+     * `undefined` if there is no such dimension kind. Refers itself if does not support percents.
+     */
+    readonly noPt: Kind<Exclude<Unit, '%'>>;
 
     /**
      * Zero value of this kind.
@@ -126,6 +140,10 @@ export namespace StypDimension {
      */
     export interface UnitlessZero<Unit extends string> extends Kind<Unit> {
 
+      readonly pt?: UnitlessZero<Unit | '%'>;
+
+      readonly noPt: UnitlessZero<Exclude<Unit, '%'>>;
+
       /**
        * Zero value of this kind without unit.
        */
@@ -151,6 +169,10 @@ export namespace StypDimension {
      * @typeparam Unit Allowed units type.
      */
     export interface UnitZero<Unit extends string> extends Kind<Unit> {
+
+      readonly pt?: UnitZero<Unit | '%'>;
+
+      readonly noPt: UnitZero<Exclude<Unit, '%'>>;
 
       /**
        * Zero value of this kind that has unit.

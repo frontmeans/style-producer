@@ -5,6 +5,16 @@ describe('StypAngle', () => {
   it('has unitless zero', () => {
     expect(StypAngle.zero.type).toBe(0);
   });
+  describe('pt', () => {
+    it('is StypAnglePt', () => {
+      expect(StypAngle.pt).toBe(StypAnglePt);
+    });
+  });
+  describe('noPt', () => {
+    it('is StypAngle', () => {
+      expect(StypAngle.noPt).toBe(StypAngle);
+    });
+  });
   it('constructs `StypAngle` instance', () => {
 
     const angle = StypAngle.of(13, 'deg') as StypDimension<StypAngle.Unit>;
@@ -19,6 +29,16 @@ describe('StypAngle', () => {
 describe('StypAnglePt', () => {
   it('has unitless zero', () => {
     expect(StypAnglePt.zero.type).toBe(0);
+  });
+  describe('pt', () => {
+    it('is StypAnglePt', () => {
+      expect(StypAnglePt.pt).toBe(StypAnglePt);
+    });
+  });
+  describe('noPt', () => {
+    it('is StypAngle', () => {
+      expect(StypAnglePt.noPt).toBe(StypAngle);
+    });
   });
   it('constructs `StypAnglePt` instance', () => {
 

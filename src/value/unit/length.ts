@@ -27,7 +27,14 @@ export namespace StypLength {
  * [<length>]: https://developer.mozilla.org/en-US/docs/Web/CSS/length
  */
 export const StypLength: StypDimension.Kind.UnitlessZero<StypLength.Unit> =
-    /*#__PURE__*/ unitlessZeroDimensionKind();
+    /*#__PURE__*/ unitlessZeroDimensionKind({
+  pt() {
+    return StypLengthPt; // tslint:disable-line:no-use-before-declare
+  },
+  noPt() {
+    return StypLength;
+  },
+});
 
 /**
  * Structured [<length-percentage>] CSS property value.
@@ -53,4 +60,11 @@ export namespace StypLengthPt {
  * [<length-percentage>]: https://developer.mozilla.org/en-US/docs/Web/CSS/length-percentage
  */
 export const StypLengthPt: StypDimension.Kind.UnitlessZero<StypLengthPt.Unit> =
-    /*#__PURE__*/ unitlessZeroDimensionKind();
+    /*#__PURE__*/ unitlessZeroDimensionKind({
+  pt() {
+    return StypLengthPt;
+  },
+  noPt() {
+    return StypLength;
+  },
+});

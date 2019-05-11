@@ -300,10 +300,14 @@ function stypDiv<Unit extends string>(left: StypNumeric<Unit>, right: number): S
 export function unitlessZeroDimensionKind<Unit extends string>(
     {
       by = recognizeUnitlessZeroValue,
+      pt,
+      noPt,
     }: {
+      pt: () => StypDimension_.Kind.UnitlessZero<Unit | '%'>,
+      noPt: () => StypDimension_.Kind.UnitlessZero<Exclude<Unit, '%'>>,
       by?: (this: StypDimension_.Kind.UnitlessZero<Unit>, source: StypValue) =>
           StypNumeric<Unit> | undefined,
-    } = {}
+    }
 ): StypDimension_.Kind.UnitlessZero<Unit> {
 
   const dim: StypDimension_.Kind.UnitlessZero<Unit> = {
@@ -312,6 +316,14 @@ export function unitlessZeroDimensionKind<Unit extends string>(
 
     get zero(): StypZero<Unit> {
       return zero; // tslint:disable-line:no-use-before-declare
+    },
+
+    get pt() {
+      return pt();
+    },
+
+    get noPt() {
+      return noPt();
     },
 
     of(val: number, unit: Unit): StypDimension_<Unit> | StypZero<Unit> {
@@ -328,7 +340,16 @@ export function unitlessZeroDimensionKind<Unit extends string>(
 function recognizeUnitlessZeroValue<Unit extends string>(
     this: StypDimension_.Kind.UnitlessZero<Unit>,
     source: StypValue): StypNumeric<Unit> | undefined {
-  return typeof source === 'object' && source.dim === this ? source : undefined;
+  if (typeof source === 'object') {
+
+    const { dim } = source;
+
+    if (dim === this || dim === this.pt || dim === this.noPt) {
+      return source;
+    }
+  }
+
+  return;
 }
 
 /**
@@ -337,9 +358,13 @@ function recognizeUnitlessZeroValue<Unit extends string>(
 export function unitZeroDimensionKind<Unit extends string>(
     {
       zeroUnit,
+      withPercent,
+      noPercent,
       by = recognizeUnitZeroValue,
     }: {
       zeroUnit: Unit,
+      withPercent?: () => StypDimension_.Kind.UnitZero<Unit | '%'>,
+      noPercent?: () => StypDimension_.Kind.UnitZero<Exclude<Unit, '%'>>,
       by?: (this: StypDimension_.Kind.UnitZero<Unit>, source: StypValue) =>
           StypNumeric<Unit, StypDimension_<Unit>> | undefined,
     }): StypDimension_.Kind.UnitZero<Unit> {
@@ -347,6 +372,14 @@ export function unitZeroDimensionKind<Unit extends string>(
   const dim: StypDimension_.Kind.UnitZero<Unit> = {
 
     by,
+
+    get pt() {
+      return withPercent && withPercent();
+    },
+
+    get noPt() {
+      return noPercent ? noPercent() : this as StypDimension_.Kind.UnitZero<Exclude<Unit, '%'>>;
+    },
 
     get zero(): StypDimension<Unit> {
       return zero; // tslint:disable-line:no-use-before-declare
@@ -366,5 +399,13 @@ export function unitZeroDimensionKind<Unit extends string>(
 function recognizeUnitZeroValue<Unit extends string>(
     this: StypDimension_.Kind.UnitZero<Unit>,
     source: StypValue): StypNumeric<Unit, StypDimension_<Unit>> | undefined {
-  return typeof source === 'object' && source.dim === this ? (source.type ? source : this.zero) : undefined;
+  if (typeof source === 'object') {
+
+    const { dim } = source;
+
+    if (dim === this || dim === this.pt || dim === this.noPt) {
+      return source.type ? source : this.zero;
+    }
+  }
+  return;
 }

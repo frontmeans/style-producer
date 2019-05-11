@@ -6,6 +6,16 @@ describe('StypFrequency', () => {
     expect(StypFrequency.zero.val).toBe(0);
     expect(StypFrequency.zero.unit).toBe('kHz');
   });
+  describe('pt', () => {
+    it('is StypFrequencyPt', () => {
+      expect(StypFrequency.pt).toBe(StypFrequencyPt);
+    });
+  });
+  describe('noPt', () => {
+    it('is StypFrequency', () => {
+      expect(StypFrequency.noPt).toBe(StypFrequency);
+    });
+  });
   it('constructs `StypFrequency` instance', () => {
 
     const frequency = StypFrequency.of(44, 'kHz');
@@ -28,6 +38,16 @@ describe('StypFrequencyPt', () => {
     expect(StypFrequencyPt.zero.type).toBe('dimension');
     expect(StypFrequencyPt.zero.val).toBe(0);
     expect(StypFrequencyPt.zero.unit).toBe('kHz');
+  });
+  describe('pt', () => {
+    it('is StypFrequencyPt', () => {
+      expect(StypFrequencyPt.pt).toBe(StypFrequencyPt);
+    });
+  });
+  describe('noPt', () => {
+    it('is StypFrequency', () => {
+      expect(StypFrequencyPt.noPt).toBe(StypFrequency);
+    });
   });
   it('constructs `StypFrequencyPt` instance', () => {
 

@@ -6,6 +6,16 @@ describe('StypResolution', () => {
     expect(StypResolution.zero.val).toBe(0);
     expect(StypResolution.zero.unit).toBe('dpi');
   });
+  describe('pt', () => {
+    it('is undefined', () => {
+      expect(StypResolution.pt).toBeUndefined();
+    });
+  });
+  describe('noPt', () => {
+    it('is StypResolution', () => {
+      expect(StypResolution.noPt).toBe(StypResolution);
+    });
+  });
   it('constructs `StypResolution` instance', () => {
 
     const resolution = StypResolution.of(96, 'dpi');

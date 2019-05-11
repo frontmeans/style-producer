@@ -5,6 +5,16 @@ describe('StypTime', () => {
   it('has unitless zero', () => {
     expect(StypTime.zero.type).toBe(0);
   });
+  describe('pt', () => {
+    it('is StypTimePt', () => {
+      expect(StypTime.pt).toBe(StypTimePt);
+    });
+  });
+  describe('noPt', () => {
+    it('is StypTime', () => {
+      expect(StypTime.noPt).toBe(StypTime);
+    });
+  });
   it('constructs `StypTime` instance', () => {
 
     const time = StypTime.of(13, 'ms') as StypDimension<StypTime.Unit>;
@@ -19,6 +29,16 @@ describe('StypTime', () => {
 describe('StypTimePt', () => {
   it('has unitless zero', () => {
     expect(StypTimePt.zero.type).toBe(0);
+  });
+  describe('pt', () => {
+    it('is StypTimePt', () => {
+      expect(StypTimePt.pt).toBe(StypTimePt);
+    });
+  });
+  describe('noPt', () => {
+    it('is StypTime', () => {
+      expect(StypTimePt.noPt).toBe(StypTime);
+    });
   });
   it('constructs `StypTimePt` instance', () => {
 

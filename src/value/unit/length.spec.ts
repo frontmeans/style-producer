@@ -5,6 +5,16 @@ describe('StypLength', () => {
   it('has unitless zero', () => {
     expect(StypLength.zero.type).toBe(0);
   });
+  describe('pt', () => {
+    it('is StypLengthPt', () => {
+      expect(StypLength.pt).toBe(StypLengthPt);
+    });
+  });
+  describe('noPt', () => {
+    it('is StypLength', () => {
+      expect(StypLength.noPt).toBe(StypLength);
+    });
+  });
   it('constructs `StypLength` instance', () => {
 
     const length = StypLength.of(13, 'px') as StypDimension<StypLength.Unit>;
@@ -19,6 +29,16 @@ describe('StypLength', () => {
 describe('StypLengthPt', () => {
   it('has unitless zero', () => {
     expect(StypLengthPt.zero.type).toBe(0);
+  });
+  describe('pt', () => {
+    it('is StypLengthPt', () => {
+      expect(StypLengthPt.pt).toBe(StypLengthPt);
+    });
+  });
+  describe('noPt', () => {
+    it('is StypLength', () => {
+      expect(StypLengthPt.noPt).toBe(StypLength);
+    });
   });
   it('constructs `StypLengthPt` instance', () => {
 

@@ -24,8 +24,14 @@ export namespace StypAngle {
  *
  * [<angle>]: https://developer.mozilla.org/en-US/docs/Web/CSS/angle
  */
-export const StypAngle: StypDimension.Kind.UnitlessZero<StypAngle.Unit> =
-    /*#__PURE__*/ unitlessZeroDimensionKind();
+export const StypAngle: StypDimension.Kind.UnitlessZero<StypAngle.Unit> = /*#__PURE__*/ unitlessZeroDimensionKind({
+  pt() {
+    return StypAnglePt; // tslint:disable-line:no-use-before-declare
+  },
+  noPt() {
+    return StypAngle;
+  },
+});
 
 /**
  * Structured [<angle-percentage>] CSS property value.
@@ -51,4 +57,11 @@ export namespace StypAnglePt {
  * [<angle-percentage>]: https://developer.mozilla.org/en-US/docs/Web/CSS/angle-percentage
  */
 export const StypAnglePt: StypDimension.Kind.UnitlessZero<StypAnglePt.Unit> =
-    /*#__PURE__*/ unitlessZeroDimensionKind();
+    /*#__PURE__*/ unitlessZeroDimensionKind({
+  pt() {
+    return StypAnglePt;
+  },
+  noPt() {
+    return StypAngle;
+  },
+});
