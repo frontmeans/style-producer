@@ -184,10 +184,7 @@ export abstract class StypCalcBase<
   abstract toFormula(): string;
 
   toString() {
-
-    const string = 'calc' + this.toFormula();
-
-    return this.priority ? string + ' !important' : string;
+    return 'calc' + super.toString();
   }
 
 }
