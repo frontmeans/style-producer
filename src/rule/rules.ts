@@ -1,8 +1,8 @@
 import { itsEach } from 'a-iterable';
 import { noop } from 'call-thru';
 import {
-  EventEmitter,
-  eventInterest, EventReceiver,
+  eventInterest,
+  EventReceiver,
   EventSender,
   isEventSender,
   noEventInterest,

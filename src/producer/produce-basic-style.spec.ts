@@ -1,6 +1,6 @@
 import { itsEmpty } from 'a-iterable';
 import { noop } from 'call-thru';
-import { AfterEvent, afterEventBy, EventKeeper, noEventInterest, trackValue } from 'fun-events';
+import { afterEventBy, EventKeeper, noEventInterest, trackValue } from 'fun-events';
 import { NamespaceDef } from '../ns';
 import { StypProperties, stypRoot, StypRule } from '../rule';
 import { stypSelector } from '../selector';

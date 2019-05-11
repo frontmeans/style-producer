@@ -1,12 +1,4 @@
-import {
-  AfterEvent,
-  afterEventBy,
-  afterEventFrom,
-  EventEmitter,
-  noEventInterest,
-  trackValue,
-  ValueTracker
-} from 'fun-events';
+import { AfterEvent, afterEventBy, afterEventFrom, EventEmitter, trackValue, ValueTracker } from 'fun-events';
 import { StypQuery, StypRuleKey, stypSelector, StypSelector } from '../selector';
 import { stypRuleKeyText } from '../selector/selector-text.impl';
 import { stypOuterSelector, stypRuleKeyAndTail } from '../selector/selector.impl';

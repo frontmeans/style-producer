@@ -1,5 +1,3 @@
-import { isNotEmptyArray } from '../internal';
-
 /**
  * Namespace definition.
  *

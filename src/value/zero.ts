@@ -1,4 +1,4 @@
-import { StypNumericBase } from './numeric';
+import { StypNumericStruct } from './numeric';
 
 /**
  * Structured unit-less zero value.
@@ -11,7 +11,7 @@ import { StypNumericBase } from './numeric';
  * [<frequency>]: https://developer.mozilla.org/en-US/docs/Web/CSS/frequency
  * [<resolution>]: https://developer.mozilla.org/en-US/docs/Web/CSS/resolution
  */
-export interface StypZero<Unit extends string> extends StypNumericBase<StypZero<Unit>, Unit> {
+export interface StypZero<Unit extends string> extends StypNumericStruct<StypZero<Unit>, Unit> {
 
   readonly type: '0';
 

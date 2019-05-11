@@ -1,4 +1,4 @@
-import { StypValue, StypValueOpts, stypValuesEqual, StypValueStruct } from './value';
+import { StypValueOpts, StypValueStruct } from './value';
 import { StypZero } from './zero';
 
 /**
@@ -13,32 +13,44 @@ export type StypNumeric<Unit extends string, Zero extends StypZero<Unit> | StypD
     StypDimension<Unit> | StypCalc<Unit> | Zero;
 
 /**
- * Base interface of structured numeric value.
+ * Base implementation of structured numeric CSS property value.
  *
  * @typeparam Self A type of itself.
  * @typeparam Unit Allowed unit type.
  */
-export interface StypNumericBase<Self extends StypNumericBase<Self, Unit>, Unit extends string>
+export abstract class StypNumericStruct<Self extends StypNumericStruct<Self, Unit>, Unit extends string>
     extends StypValueStruct<Self> {
 
   readonly dim: StypDimension.Kind<Unit>;
 
-  add(addendum: StypNumeric<Unit>): StypNumeric<Unit>;
+  constructor(opts: StypDimension.Opts<Unit>) {
+    super(opts);
+    this.dim = opts.dim;
+  }
 
-  sub(subtrahend: StypNumeric<Unit>): StypNumeric<Unit>;
+  abstract add(addendum: StypNumeric<Unit>): StypNumeric<Unit>;
 
-  mul(multiplier: number): StypNumeric<Unit>;
+  abstract sub(subtrahend: StypNumeric<Unit>): StypNumeric<Unit>;
 
-  div(divisor: number): StypNumeric<Unit>;
+  abstract mul(multiplier: number): StypNumeric<Unit>;
 
-  negate(): StypNumeric<Unit>;
+  abstract div(divisor: number): StypNumeric<Unit>;
+
+  abstract negate(): StypNumeric<Unit>;
 
   /**
    * Returns a textual representation of this value to be used within CSS `calc()` function.
    *
    * @returns CSS value text without `!important` or `calc()`.
    */
-  toFormula(): string;
+  abstract toFormula(): string;
+
+  toString() {
+
+    const string = this.toFormula();
+
+    return this.priority ? string + ' !important' : string;
+  }
 
 }
 
@@ -49,96 +61,22 @@ export interface StypNumericBase<Self extends StypNumericBase<Self, Unit>, Unit 
  *
  * [<dimension>]: https://developer.mozilla.org/en-US/docs/Web/CSS/dimension
  */
-export class StypDimension<Unit extends string>
-    extends StypValueStruct<StypDimension<Unit>>
-    implements StypNumericBase<StypDimension<Unit>, Unit> {
+export interface StypDimension<Unit extends string>
+    extends StypValueStruct<StypDimension<Unit>>, StypNumericStruct<StypDimension<Unit>, Unit> {
 
-  // noinspection JSMethodCanBeStatic
-  get type(): 'dimension' {
-    return 'dimension';
-  }
+  readonly type: 'dimension';
 
   readonly dim: StypDimension.Kind<Unit>;
 
   /**
-   * The number value.
+   * Dimension value.
    */
   readonly val: number;
 
   /**
-   * The unit.
+   * Dimension unit.
    */
   readonly unit: Unit;
-
-  /**
-   * Constructs new structured dimension value.
-   *
-   * @param val The numeric value.
-   * @param unit The unit.
-   * @param opts CSS value options.
-   */
-  constructor(val: number, unit: Unit, opts: StypDimension.Opts<Unit>) {
-    super(opts);
-    this.dim = opts.dim;
-    this.val = val;
-    this.unit = unit;
-  }
-
-  is(other: StypValue): boolean {
-    if (other === this) {
-      return true;
-    }
-    return typeof other === 'object'
-        && other.type === this.type
-        && this.unit === other.unit
-        && this.val === other.val
-        && this.priority === other.priority;
-  }
-
-  prioritize(priority: 'important' | undefined): StypDimension<Unit> {
-    return this.priority === priority
-        ? this
-        : new StypDimension(this.val, this.unit, { dim: this.dim, priority });
-  }
-
-  add(addendum: StypNumeric<Unit>): StypNumeric<Unit> {
-    if (addendum.type === 'dimension' && this.unit === addendum.unit) {
-      return stypDimension(this.val + addendum.val, this.unit, this);
-    }
-    return stypAddSub(this, '+', addendum);
-  }
-
-  sub(subtrahend: StypNumeric<Unit>): StypNumeric<Unit> {
-    if (subtrahend.type === 'dimension' && this.unit === subtrahend.unit) {
-      return stypDimension(this.val - subtrahend.val, this.unit, this);
-    }
-    return stypAddSub(this, '-', subtrahend);
-  }
-
-  mul(multiplier: number): StypNumeric<Unit> {
-    return multiplier === 1 ? this : stypDimension(this.val * multiplier, this.unit, this);
-  }
-
-  div(divisor: number): StypNumeric<Unit> {
-    return divisor === 1 ? this : stypDimension(this.val / divisor, this.unit, this);
-  }
-
-  negate(): StypNumeric<Unit> {
-    return stypDimension(-this.val, this.unit, this);
-  }
-
-  /**
-   * Returns a textual representation of this value to be used within CSS `calc()` function.
-   *
-   * @returns `<value><unit>` or just `0`.
-   */
-  toFormula(): string {
-    return this.val + this.unit;
-  }
-
-  toString(): string {
-    return this.priority ? this.toFormula() + ' !important' : this.toFormula();
-  }
 
 }
 
@@ -240,151 +178,38 @@ export namespace StypDimension {
 }
 
 /**
- * Constructs structured [<dimension>] CSS property value.
- *
- * @param val Numeric value.
- * @param unit Value unit.
- * @param opts Construction options.
- *
- * @returns Either [[StypDimension]], or [[StypZero]] if `val === 0`.
- *
- * [<dimension>]: https://developer.mozilla.org/en-US/docs/Web/CSS/dimension
- */
-export function stypDimension<Unit extends string>(
-    val: number,
-    unit: Unit,
-    opts: StypDimension.Opts<Unit>): StypDimension<Unit> | StypZero<Unit> {
-  return val ? new StypDimension<Unit>(val, unit, opts) : opts.dim.zero.prioritize(opts && opts.priority);
-}
-
-/**
  * CSS `calc()` function call representation.
  *
- * This is either a [[StypAddSub]] addition or subtraction, or [[StypMulDiv]] for multiplication or division.
+ * This is either a [[StypAddSub]][addition/subtraction], or [[StypMulDiv]][multiplication/division].
  *
  * @typeparam Unit Allowed unit type.
  */
 export type StypCalc<Unit extends string> = StypAddSub<Unit> | StypMulDiv<Unit>;
 
 /**
- * Base implementation of CSS `calc()` function call representation.
- *
- * @typeparam Unit Allowed unit type.
- */
-export abstract class StypCalcBase<
-    Self extends StypCalcBase<Self, Op, Right, Unit>,
-    Op extends '+' | '-' | '*' | '/',
-    Right extends number | StypNumeric<Unit>,
-    Unit extends string>
-    extends StypValueStruct<Self>
-    implements StypNumericBase<Self, Unit> {
-
-  // noinspection JSMethodCanBeStatic
-  get type(): 'calc' {
-    return 'calc';
-  }
-
-  readonly dim: StypDimension.Kind<Unit>;
-  readonly left: StypNumeric<Unit>;
-  readonly op: Op;
-  readonly right: Right;
-
-  constructor(
-      left: StypNumeric<Unit>,
-      op: Op,
-      right: Right,
-      opts: StypDimension.Opts<Unit>) {
-    super(opts);
-    this.dim = opts.dim;
-    this.left = left.usual();
-    this.op = op;
-    this.right = right;
-  }
-
-  is(other: StypValue): boolean {
-    if (this === other) {
-      return true;
-    }
-    if (typeof other === 'object' && other.type === this.type) {
-      return this.op === other.op
-          && this.left.is(other.left)
-          && stypValuesEqual(this.right, other.right)
-          && this.priority === other.priority;
-    }
-    return false;
-  }
-
-  add(addendum: StypNumeric<Unit>): StypNumeric<Unit> {
-    return stypAddSub(this as StypNumeric<Unit>, '+', addendum);
-  }
-
-  sub(subtrahend: StypNumeric<Unit>): StypNumeric<Unit> {
-    return stypAddSub(this as StypNumeric<Unit>, '-', subtrahend);
-  }
-
-  mul(multiplier: number): StypNumeric<Unit> {
-    return stypMul(this as StypNumeric<Unit>, multiplier);
-  }
-
-  div(divisor: number): StypNumeric<Unit> {
-    return stypDiv(this as StypNumeric<Unit>, divisor);
-  }
-
-  abstract negate(): StypNumeric<Unit>;
-
-  abstract prioritize(priority: 'important' | undefined): Self;
-
-  abstract toFormula(): string;
-
-  toString() {
-
-    const string = 'calc' + this.toFormula();
-
-    return this.priority ? string + ' !important' : string;
-  }
-
-}
-
-/**
  * CSS `calc()` function call representation containing either addition or subtraction.
  *
  * @typeparam Unit Allowed unit type.
  */
-export class StypAddSub<Unit extends string>
-    extends StypCalcBase<StypAddSub<Unit>, '+' | '-', StypNumeric<Unit>, Unit> {
+export interface StypAddSub<Unit extends string> extends StypNumericStruct<StypAddSub<Unit>, Unit> {
 
-  constructor(left: StypNumeric<Unit>, op: '+' | '-', right: StypNumeric<Unit>, opts: StypDimension.Opts<Unit>) {
-    super(left, op, right.usual(), opts);
-  }
-
-  prioritize(priority: 'important' | undefined): StypAddSub<Unit> {
-    return this.priority === priority
-        ? this
-        : new StypAddSub(this.left, this.op, this.right, { dim: this.dim, priority });
-  }
-
-  negate(): StypNumeric<Unit> {
-    return this.op === '-'
-        ? new StypAddSub(this.right, this.op, this.left, this)
-        : new StypAddSub(this.left.negate(), '-', this.right, this);
-  }
+  readonly type: 'calc';
 
   /**
-   * Returns a textual representation of this value to be used within CSS `calc()` function.
-   *
-   * @returns `(<left> <op> <right>)`.
+   * Left operand.
    */
-  toFormula(): string {
-    return `(${this.left.toFormula()} ${this.op} ${this.right.toFormula()})`;
-  }
+  readonly left: StypNumeric<Unit>;
 
-}
+  /**
+   * Operator.
+   */
+  readonly op: '+' | '-';
 
-function stypAddSub<Unit extends string>(
-    left: StypNumeric<Unit>,
-    op: '+' | '-',
-    right: StypNumeric<Unit>): StypNumeric<Unit> {
-  return right.type === '0' ? left : new StypAddSub(left, op, right, left);
+  /**
+   * Right operand.
+   */
+  readonly right: StypNumeric<Unit>;
+
 }
 
 /**
@@ -392,53 +217,23 @@ function stypAddSub<Unit extends string>(
  *
  * @typeparam Unit Allowed unit type.
  */
-export class StypMulDiv<Unit extends string> extends StypCalcBase<StypMulDiv<Unit>, '*' | '/', number, Unit> {
+export interface StypMulDiv<Unit extends string> extends StypNumericStruct<StypMulDiv<Unit>, Unit> {
 
-  prioritize(priority: 'important' | undefined): StypMulDiv<Unit> {
-    return this.priority === priority
-        ? this
-        : new StypMulDiv(this.left, this.op, this.right, { dim: this.dim, priority });
-  }
-
-  mul(multiplier: number): StypNumeric<Unit> {
-    return (this.op === '*'
-        ? stypMul(this.left, this.right * multiplier)
-        : stypDiv(this.left, this.right / multiplier))
-        .prioritize(this.priority);
-  }
-
-  div(divisor: number): StypNumeric<Unit> {
-    return (this.op === '/'
-        ? stypDiv(this.left, this.right * divisor)
-        : stypMul(this.left, this.right / divisor))
-        .prioritize(this.priority);
-  }
-
-  negate(): StypNumeric<Unit> {
-    return new StypMulDiv(this.left, this.op, -this.right, this);
-  }
+  readonly type: 'calc';
 
   /**
-   * Returns a textual representation of this value to be used within CSS `calc()` function.
-   *
-   * @returns `(<left> <op> <right>)`.
+   * Left operand.
    */
-  toFormula(): string {
-    return `(${this.left.toFormula()} ${this.op} ${this.right})`;
-  }
+  readonly left: StypNumeric<Unit>;
 
-}
+  /**
+   * Operator.
+   */
+  readonly op: '*' | '/';
 
-function stypMul<Unit extends string>(left: StypNumeric<Unit>, right: number): StypNumeric<Unit> {
-  return !right
-      ? left.dim.zero.prioritize(left.priority)
-      : right === 1
-          ? left.prioritize(left.priority)
-          : new StypMulDiv(left, '*', right, left);
-}
+  /**
+   * Right operand.
+   */
+  readonly right: number;
 
-function stypDiv<Unit extends string>(left: StypNumeric<Unit>, right: number): StypNumeric<Unit> {
-  return right === 1
-      ? left.prioritize(left.priority)
-      : new StypMulDiv(left, '/', right, left);
 }
