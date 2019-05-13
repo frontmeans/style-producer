@@ -28,6 +28,19 @@ export abstract class StypNumericStruct<Self extends StypNumericStruct<Self, Uni
     this.dim = opts.dim;
   }
 
+  /**
+   * Tries to converts this numeric value to another dimension.
+   *
+   * Does not actually construct a value in another dimension, as long as dimension unit supported by both dimensions.
+   *
+   * @typeparam A unit type allowed in target dimension.
+   * @param dim Target dimension.
+   *
+   * @returns Either a value in dimension compatible with `dim`, or `undefined` if this value's unit is not supported
+   * by `dim`.
+   */
+  abstract toDim<U extends string>(dim: StypDimension.Kind<U>): StypNumeric<U> | undefined;
+
   abstract add(addendum: StypNumeric<Unit>): StypNumeric<Unit>;
 
   abstract sub(subtrahend: StypNumeric<Unit>): StypNumeric<Unit>;
@@ -37,6 +50,10 @@ export abstract class StypNumericStruct<Self extends StypNumericStruct<Self, Uni
   abstract div(divisor: number): StypNumeric<Unit>;
 
   abstract negate(): StypNumeric<Unit>;
+
+  by(source: StypValue): StypNumeric<Unit> {
+    return this.dim.by(source) || this as StypNumeric<Unit>;
+  }
 
   /**
    * Returns a textual representation of this value to be used within CSS `calc()` function.
@@ -78,16 +95,34 @@ export interface StypDimension<Unit extends string>
    */
   readonly unit: Unit;
 
+  by(source: StypValue): StypNumeric<Unit>;
+
 }
 
 export namespace StypDimension {
 
   /**
-   * A kind of dimension. E.g. angle, length, percentage, etc.
+   * A kind of dimensions. E.g. angle, length, percentage, etc.
+   *
+   * It is perfectly fine to use dimensions interchangeably as long as dimension units are compatible.
    *
    * @typeparam Unit Allowed units type.
    */
   export interface Kind<Unit extends string> {
+
+    /**
+     * A similar kind of dimensions supporting all units this one supports and, in addition, supporting percents (`%`).
+     *
+     * `undefined` if there is no such dimension kind. Refers itself if supports percents.
+     */
+    readonly pt?: Kind<Unit | '%'>;
+
+    /**
+     * A similar kind of dimensions supporting all units this one supports, except percents (`%`).
+     *
+     * `undefined` if there is no such dimension kind. Refers itself if does not support percents.
+     */
+    readonly noPt: Kind<Exclude<Unit, '%'>>;
 
     /**
      * Zero value of this kind.
@@ -107,6 +142,21 @@ export namespace StypDimension {
      */
     of(val: number, unit: Unit): StypDimension<Unit> | StypZero<Unit>;
 
+    /**
+     * Maps the given CSS property value to the one compatible with this dimension kind. Defaults to `undefined`
+     * if mapping is not possible.
+     *
+     * This method allows to use an structured value instance as [CSS property mapper][[StypMapper]].
+     *
+     * Any scalar or non-numeric value is mapped to `undefined`. A numeric value is converted to this dimension by
+     * `StypNumeric.toDim()` method.
+     *
+     * @param source A raw property value that should be converted.
+     *
+     * @returns Mapped property value or `undefined`.
+     */
+    by(source: StypValue): StypNumeric<Unit, StypDimension<Unit> | StypZero<Unit>> | undefined;
+
   }
 
   export namespace Kind {
@@ -116,7 +166,11 @@ export namespace StypDimension {
      *
      * @typeparam Unit Allowed units type.
      */
-    export interface UnitlessZero<Unit extends string> {
+    export interface UnitlessZero<Unit extends string> extends Kind<Unit> {
+
+      readonly pt?: UnitlessZero<Unit | '%'>;
+
+      readonly noPt: UnitlessZero<Exclude<Unit, '%'>>;
 
       /**
        * Zero value of this kind without unit.
@@ -133,6 +187,8 @@ export namespace StypDimension {
        */
       of(val: number, unit: Unit): StypDimension<Unit> | StypZero<Unit>;
 
+      by(source: StypValue): StypNumeric<Unit> | undefined;
+
     }
 
     /**
@@ -140,7 +196,11 @@ export namespace StypDimension {
      *
      * @typeparam Unit Allowed units type.
      */
-    export interface UnitZero<Unit extends string> {
+    export interface UnitZero<Unit extends string> extends Kind<Unit> {
+
+      readonly pt?: UnitZero<Unit | '%'>;
+
+      readonly noPt: UnitZero<Exclude<Unit, '%'>>;
 
       /**
        * Zero value of this kind that has unit.
@@ -156,6 +216,8 @@ export namespace StypDimension {
        * @returns Constructed dimension value as a [[StypDimension]] instance.
        */
       of(val: number, unit: Unit): StypDimension<Unit>;
+
+      by(source: StypValue): StypNumeric<Unit, StypDimension<Unit>> | undefined;
 
     }
 

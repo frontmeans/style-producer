@@ -25,4 +25,4 @@ export namespace StypResolution {
  * [<resolution>]: https://developer.mozilla.org/en-US/docs/Web/CSS/resolution
  */
 export const StypResolution: StypDimension.Kind.UnitZero<StypResolution.Unit> =
-    /*#__PURE__*/ unitZeroDimensionKind('dpi');
+    /*#__PURE__*/ unitZeroDimensionKind({ zeroUnit: 'dpi' });

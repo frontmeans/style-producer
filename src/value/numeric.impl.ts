@@ -44,6 +44,19 @@ export class StypDimension<Unit extends string>
     this.unit = unit;
   }
 
+  toDim<U extends string>(dim: StypDimension_.Kind<U>): StypDimension_<U> | undefined {
+
+    const thisDim: StypDimension_.Kind<any> = this.dim;
+
+    if (dim === thisDim /* same dimension */
+        || dim === thisDim.pt /* !% to compatible +% */
+        || dim === (this.unit === '%' ? dim.pt /* % to any +% */ : thisDim.noPt /* !% to compatible -% */)) {
+      return this as StypDimension_<any>;
+    }
+
+    return;
+  }
+
   is(other: StypValue): boolean {
     if (other === this) {
       return true;
@@ -114,7 +127,7 @@ export class StypDimension<Unit extends string>
 function stypDimension<Unit extends string>(
     val: number,
     unit: Unit,
-    opts: StypDimension_.Opts<Unit>): StypDimension<Unit> | StypZero<Unit> {
+    opts: StypDimension_.Opts<Unit>): StypDimension_<Unit> | StypZero<Unit> {
   return val ? new StypDimension<Unit>(val, unit, opts) : opts.dim.zero.prioritize(opts && opts.priority);
 }
 
@@ -137,6 +150,7 @@ export abstract class StypCalcBase<
   readonly op: Op;
   readonly right: Right;
 
+  // noinspection TypeScriptAbstractClassConstructorCanBeMadeProtected
   constructor(
       left: StypNumeric<Unit>,
       op: Op,
@@ -210,6 +224,27 @@ export class StypAddSub<Unit extends string>
         : new StypAddSub(this.left, this.op, this.right, { dim: this.dim, priority });
   }
 
+  toDim<U extends string>(dim: StypDimension_.Kind<U>): StypAddSub<U> | undefined {
+
+    const left = this.left.toDim(dim);
+
+    if (!left) {
+      return;
+    }
+
+    const right = this.right.toDim(dim);
+
+    if (!right) {
+      return;
+    }
+
+    if (left === this.left as StypNumeric<any> && right === this.right as StypNumeric<any>) {
+      return this as StypAddSub<any>;
+    }
+
+    return new StypAddSub<U>(left, this.op, right, { dim, priority: this.priority });
+  }
+
   negate(): StypNumeric<Unit> {
     return this.op === '-'
         ? new StypAddSub(this.right, this.op, this.left, this)
@@ -249,6 +284,21 @@ export class StypMulDiv<Unit extends string>
     return this.priority === priority
         ? this
         : new StypMulDiv(this.left, this.op, this.right, { dim: this.dim, priority });
+  }
+
+  toDim<U extends string>(dim: StypDimension_.Kind<U>): StypMulDiv<U> | undefined {
+
+    const left = this.left.toDim(dim);
+
+    if (!left) {
+      return;
+    }
+
+    if (left === this.left as StypNumeric<any>) {
+      return this as StypMulDiv<any>;
+    }
+
+    return new StypMulDiv<U>(left, this.op, this.right, { dim, priority: this.priority });
   }
 
   mul(multiplier: number): StypNumeric<Unit> {
@@ -297,34 +347,73 @@ function stypDiv<Unit extends string>(left: StypNumeric<Unit>, right: number): S
 /**
  * @internal
  */
-export function unitlessZeroDimensionKind<Unit extends string>(): StypDimension_.Kind.UnitlessZero<Unit> {
+export function unitlessZeroDimensionKind<Unit extends string>(
+    {
+      pt,
+      noPt,
+    }: {
+      pt: () => StypDimension_.Kind.UnitlessZero<Unit | '%'>,
+      noPt: () => StypDimension_.Kind.UnitlessZero<Exclude<Unit, '%'>>,
+    }
+): StypDimension_.Kind.UnitlessZero<Unit> {
 
-  const dim: StypDimension_.Kind.UnitlessZero<Unit> = {
+  const dimension: StypDimension_.Kind.UnitlessZero<Unit> = {
 
     get zero(): StypZero<Unit> {
       return zero; // tslint:disable-line:no-use-before-declare
+    },
+
+    get pt() {
+      return pt();
+    },
+
+    get noPt() {
+      return noPt();
     },
 
     of(val: number, unit: Unit): StypDimension_<Unit> | StypZero<Unit> {
       return val ? new StypDimension(val, unit, { dim: this }) : zero; // tslint:disable-line:no-use-before-declare
     },
 
+    by(source: StypValue): StypNumeric<Unit> | undefined {
+      if (typeof source === 'object') {
+        return source.toDim(this);
+      }
+      return;
+    }
+
   };
 
-  const zero = newStypZero<Unit>(dim);
+  const zero = newStypZero<Unit>(dimension);
 
-  return dim;
-
+  return dimension;
 }
 
 /**
  * @internal
  */
-export function unitZeroDimensionKind<Unit extends string>(zeroUnit: Unit): StypDimension_.Kind.UnitZero<Unit> {
+export function unitZeroDimensionKind<Unit extends string>(
+    {
+      zeroUnit,
+      withPercent,
+      noPercent,
+    }: {
+      zeroUnit: Unit,
+      withPercent?: () => StypDimension_.Kind.UnitZero<Unit | '%'>,
+      noPercent?: () => StypDimension_.Kind.UnitZero<Exclude<Unit, '%'>>,
+    }): StypDimension_.Kind.UnitZero<Unit> {
 
-  const dim: StypDimension_.Kind.UnitZero<Unit> = {
+  const dimension: StypDimension_.Kind.UnitZero<Unit> = {
 
-    get zero(): StypDimension<Unit> {
+    get pt() {
+      return withPercent && withPercent();
+    },
+
+    get noPt() {
+      return noPercent ? noPercent() : this as StypDimension_.Kind.UnitZero<Exclude<Unit, '%'>>;
+    },
+
+    get zero(): StypDimension_<Unit> {
       return zero; // tslint:disable-line:no-use-before-declare
     },
 
@@ -332,9 +421,16 @@ export function unitZeroDimensionKind<Unit extends string>(zeroUnit: Unit): Styp
       return new StypDimension(val, unit, { dim: this });
     },
 
+    by(source: StypValue): StypNumeric<Unit, StypDimension_<Unit>> | undefined {
+      if (typeof source === 'object') {
+        return source.toDim(this) as StypNumeric<Unit, StypDimension_<Unit>> | undefined;
+      }
+      return;
+    },
+
   };
 
-  const zero = new StypDimension(0, zeroUnit, { dim: dim });
+  const zero = new StypDimension(0, zeroUnit, { dim: dimension });
 
-  return dim;
+  return dimension;
 }

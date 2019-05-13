@@ -25,7 +25,14 @@ export namespace StypTime {
  * [<time>]: https://developer.mozilla.org/en-US/docs/Web/CSS/time
  */
 export const StypTime: StypDimension.Kind.UnitlessZero<StypTime.Unit> =
-    /*#__PURE__*/ unitlessZeroDimensionKind();
+    /*#__PURE__*/ unitlessZeroDimensionKind({
+  pt() {
+    return StypTimePt; // tslint:disable-line:no-use-before-declare
+  },
+  noPt() {
+    return StypTime;
+  },
+});
 
 /**
  * Structured [<time-percentage>] CSS property value.
@@ -51,4 +58,11 @@ export namespace StypTimePt {
  * [<time-percentage>]: https://developer.mozilla.org/en-US/docs/Web/CSS/time-percentage
  */
 export const StypTimePt: StypDimension.Kind.UnitlessZero<StypTimePt.Unit> =
-    /*#__PURE__*/ unitlessZeroDimensionKind();
+    /*#__PURE__*/ unitlessZeroDimensionKind({
+  pt() {
+    return StypTimePt;
+  },
+  noPt() {
+    return StypTime;
+  },
+});

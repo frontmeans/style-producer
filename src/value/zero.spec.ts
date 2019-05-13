@@ -1,4 +1,6 @@
-import { StypLength, StypLengthPt } from './unit';
+import { StypLength, StypLengthPt, StypResolution } from './unit';
+import { StypTime } from './unit/time';
+import { stypValuesEqual } from './value';
 import { StypZero } from './zero';
 
 describe('StypZero', () => {
@@ -22,6 +24,14 @@ describe('StypZero', () => {
     it('is original', () => {
       expect(zero.dim).toBe(StypLengthPt);
       expect(important.dim).toBe(StypLengthPt);
+    });
+  });
+
+  describe('toDim', () => {
+    it('returns a zero in another dimension', () => {
+      expect(zero.toDim(StypLength)).toBe(StypLength.zero);
+      expect(important.toDim(StypTime)).toBe(StypTime.zero.important());
+      expect(stypValuesEqual(zero.toDim(StypResolution), StypResolution.zero)).toBe(true);
     });
   });
 
