@@ -1,5 +1,7 @@
 import { StypCalc, StypDimension } from './numeric';
-import { StypLength, StypLengthPt } from './unit';
+import { StypAddSub, StypMulDiv } from './numeric.impl';
+import { StypFrequency, StypLength, StypLengthPt, StypTime } from './unit';
+import { stypValuesEqual } from './value';
 
 describe('StypDimension', () => {
 
@@ -9,12 +11,6 @@ describe('StypDimension', () => {
     value = StypLengthPt.of(16, 'px');
   });
 
-  it('is of type `dimension`', () => {
-    expect(value.type).toBe('dimension');
-  });
-  it('is of type `0` when value is `0`', () => {
-    expect(StypLengthPt.of(0, 'px').type).toBe(0);
-  });
   it('is equal to itself', () => {
     expect(value.is(value)).toBe(true);
   });
@@ -297,6 +293,114 @@ describe('StypCalc', () => {
     it('is calc() function call', () => {
       expect(`${calc}`).toBe('calc(12px + 100%)');
       expect(`${important}`).toBe('calc(12px + 100%) !important');
+    });
+  });
+});
+
+describe('StypAddSub', () => {
+
+  let calc: StypLength;
+  let calcPt: StypLengthPt;
+  let important: StypLength;
+  let importantPt: StypLengthPt;
+
+  beforeEach(() => {
+    calc = StypLength.of(12, 'px').add(StypLength.of(2, 'rem'));
+    important = calc.important();
+    calcPt = StypLengthPt.of(12, 'px').sub(StypLengthPt.of(2, 'rem'));
+    importantPt = calcPt.important();
+  });
+
+  describe('toDim', () => {
+    it('converts to the same dimension', () => {
+      expect(calc.toDim(calc.dim)).toBe(calc);
+      expect(important.toDim(important.dim)).toBe(important);
+    });
+    it('converts to percent dimension', () => {
+      expect(calc.toDim(StypLengthPt)).toBe(calc);
+      expect(important.toDim(StypLengthPt)).toBe(important);
+    });
+    it('converts to non-percent dimension', () => {
+      expect(calcPt.toDim(StypLength)).toBe(calcPt);
+      expect(importantPt.toDim(StypLength)).toBe(importantPt);
+    });
+    it('does not convert to non-percent dimension when left operand has percent unit', () => {
+      calcPt = StypLengthPt.of(12, '%').sub(StypLengthPt.of(2, 'rem'));
+      importantPt = calcPt.important();
+      expect(calcPt.toDim(StypLength)).toBeUndefined();
+      expect(importantPt.toDim(StypLength)).toBeUndefined();
+    });
+    it('does not convert to non-percent dimension when right operand has percent unit', () => {
+      calcPt = StypLengthPt.of(12, 'px').sub(StypLengthPt.of(20, '%'));
+      importantPt = calcPt.important();
+      expect(calcPt.toDim(StypLength)).toBeUndefined();
+      expect(importantPt.toDim(StypLength)).toBeUndefined();
+    });
+    it('does not convert to incompatible dimension', () => {
+      expect(calc.toDim(StypTime)).toBeUndefined();
+      expect(important.toDim(StypTime)).toBeUndefined();
+      expect(calcPt.toDim(StypTime)).toBeUndefined();
+      expect(importantPt.toDim(StypTime)).toBeUndefined();
+    });
+    it('converts to incompatible dimension when operands are zeroes', () => {
+      calc = new StypAddSub(StypLength.zero, '+', StypLength.zero, { dim: StypLength });
+      important = calc.important();
+
+      const expected = new StypAddSub(StypFrequency.zero, '+', StypFrequency.zero, { dim: StypFrequency });
+
+      expect(stypValuesEqual(calc.toDim(StypFrequency), expected)).toBe(true);
+      expect(stypValuesEqual(important.toDim(StypFrequency), expected.important())).toBe(true);
+    });
+  });
+});
+
+describe('StypMulDiv', () => {
+
+  let calc: StypLength;
+  let calcPt: StypLengthPt;
+  let important: StypLength;
+  let importantPt: StypLengthPt;
+
+  beforeEach(() => {
+    calc = StypLength.of(12, 'px').add(StypLength.of(2, 'rem')).mul(3);
+    important = calc.important();
+    calcPt = StypLengthPt.of(12, 'px').sub(StypLengthPt.of(2, 'rem')).div(2);
+    importantPt = calcPt.important();
+  });
+
+  describe('toDim', () => {
+    it('converts to the same dimension', () => {
+      expect(calc.toDim(calc.dim)).toBe(calc);
+      expect(important.toDim(important.dim)).toBe(important);
+    });
+    it('converts to percent dimension', () => {
+      expect(calc.toDim(StypLengthPt)).toBe(calc);
+      expect(important.toDim(StypLengthPt)).toBe(important);
+    });
+    it('converts to non-percent dimension', () => {
+      expect(calcPt.toDim(StypLength)).toBe(calcPt);
+      expect(importantPt.toDim(StypLength)).toBe(importantPt);
+    });
+    it('does not convert to non-percent dimension when left operand has percent unit', () => {
+      calcPt = StypLengthPt.of(12, '%').sub(StypLengthPt.of(2, 'rem')).mul(3);
+      importantPt = calcPt.important();
+      expect(calcPt.toDim(StypLength)).toBeUndefined();
+      expect(importantPt.toDim(StypLength)).toBeUndefined();
+    });
+    it('does not convert to incompatible dimension', () => {
+      expect(calc.toDim(StypTime)).toBeUndefined();
+      expect(important.toDim(StypTime)).toBeUndefined();
+      expect(calcPt.toDim(StypTime)).toBeUndefined();
+      expect(importantPt.toDim(StypTime)).toBeUndefined();
+    });
+    it('converts to incompatible dimension when operand is zero', () => {
+      calc = new StypMulDiv(StypLength.zero, '*', 10, { dim: StypLength });
+      important = calc.important();
+
+      const expected = new StypMulDiv(StypFrequency.zero, '*', 10, { dim: StypFrequency });
+
+      expect(stypValuesEqual(calc.toDim(StypFrequency), expected)).toBe(true);
+      expect(stypValuesEqual(important.toDim(StypFrequency), expected.important())).toBe(true);
     });
   });
 });

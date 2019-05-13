@@ -1,3 +1,4 @@
+import { StypLength } from './length';
 import { StypResolution } from './resolution';
 
 describe('StypResolution', () => {
@@ -16,19 +17,36 @@ describe('StypResolution', () => {
       expect(StypResolution.noPt).toBe(StypResolution);
     });
   });
-  it('constructs `StypResolution` instance', () => {
+  describe('of', () => {
+    it('constructs `StypResolution` instance', () => {
 
-    const resolution = StypResolution.of(96, 'dpi');
+      const resolution = StypResolution.of(96, 'dpi');
 
-    expect(resolution.type).toBe('dimension');
-    expect(resolution.dim).toBe(StypResolution);
-    expect(resolution.val).toBe(96);
-    expect(resolution.unit).toBe('dpi');
+      expect(resolution.type).toBe('dimension');
+      expect(resolution.dim).toBe(StypResolution);
+      expect(resolution.val).toBe(96);
+      expect(resolution.unit).toBe('dpi');
+    });
+    it('constructs `StypResolution` instance with zero value', () => {
+
+      const resolution: StypResolution = StypResolution.of(0, 'x');
+
+      expect(`${resolution}`).toBe('0x');
+    });
   });
-  it('constructs `StypResolution` instance with zero value', () => {
+  describe('toDim', () => {
 
-    const resolution: StypResolution = StypResolution.of(0, 'x');
+    let resolution: StypResolution;
 
-    expect(`${resolution}`).toBe('0x');
+    beforeEach(() => {
+      resolution = StypResolution.of(96, 'dpi');
+    });
+
+    it('converts to the same dimension', () => {
+      expect(resolution.toDim(StypResolution)).toBe(resolution);
+    });
+    it('does not convert to incompatible dimension', () => {
+      expect(resolution.toDim(StypLength)).toBeUndefined();
+    });
   });
 });

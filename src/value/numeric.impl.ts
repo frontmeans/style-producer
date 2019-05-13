@@ -44,6 +44,17 @@ export class StypDimension<Unit extends string>
     this.unit = unit;
   }
 
+  toDim<U extends string>(dim: StypDimension_.Kind<U>): StypDimension_<U> | undefined {
+
+    const thisDim: StypDimension_.Kind<any> = this.dim;
+
+    if (dim === thisDim || dim.noPt === thisDim || dim.pt === thisDim && this.unit !== '%') {
+      return this as StypDimension_<any>;
+    }
+
+    return;
+  }
+
   is(other: StypValue): boolean {
     if (other === this) {
       return true;
@@ -114,7 +125,7 @@ export class StypDimension<Unit extends string>
 function stypDimension<Unit extends string>(
     val: number,
     unit: Unit,
-    opts: StypDimension_.Opts<Unit>): StypDimension<Unit> | StypZero<Unit> {
+    opts: StypDimension_.Opts<Unit>): StypDimension_<Unit> | StypZero<Unit> {
   return val ? new StypDimension<Unit>(val, unit, opts) : opts.dim.zero.prioritize(opts && opts.priority);
 }
 
@@ -210,6 +221,27 @@ export class StypAddSub<Unit extends string>
         : new StypAddSub(this.left, this.op, this.right, { dim: this.dim, priority });
   }
 
+  toDim<U extends string>(dim: StypDimension_.Kind<U>): StypAddSub<U> | undefined {
+
+    const left = this.left.toDim(dim);
+
+    if (!left) {
+      return;
+    }
+
+    const right = this.right.toDim(dim);
+
+    if (!right) {
+      return;
+    }
+
+    if (left === this.left as StypNumeric<any> && right === this.right as StypNumeric<any>) {
+      return this as StypAddSub<any>;
+    }
+
+    return new StypAddSub<U>(left, this.op, right, { dim, priority: this.priority });
+  }
+
   negate(): StypNumeric<Unit> {
     return this.op === '-'
         ? new StypAddSub(this.right, this.op, this.left, this)
@@ -249,6 +281,21 @@ export class StypMulDiv<Unit extends string>
     return this.priority === priority
         ? this
         : new StypMulDiv(this.left, this.op, this.right, { dim: this.dim, priority });
+  }
+
+  toDim<U extends string>(dim: StypDimension_.Kind<U>): StypMulDiv<U> | undefined {
+
+    const left = this.left.toDim(dim);
+
+    if (!left) {
+      return;
+    }
+
+    if (left === this.left as StypNumeric<any>) {
+      return this as StypMulDiv<any>;
+    }
+
+    return new StypMulDiv<U>(left, this.op, this.right, { dim, priority: this.priority });
   }
 
   mul(multiplier: number): StypNumeric<Unit> {
@@ -327,14 +374,8 @@ export function unitlessZeroDimensionKind<Unit extends string>(
 
     by(source: StypValue): StypNumeric<Unit> | undefined {
       if (typeof source === 'object') {
-
-        const { dim } = source;
-
-        if (dim === this || dim === this.pt || dim === this.noPt) {
-          return source;
-        }
+        return source.toDim(this);
       }
-
       return;
     }
 
@@ -369,7 +410,7 @@ export function unitZeroDimensionKind<Unit extends string>(
       return noPercent ? noPercent() : this as StypDimension_.Kind.UnitZero<Exclude<Unit, '%'>>;
     },
 
-    get zero(): StypDimension<Unit> {
+    get zero(): StypDimension_<Unit> {
       return zero; // tslint:disable-line:no-use-before-declare
     },
 
@@ -380,11 +421,9 @@ export function unitZeroDimensionKind<Unit extends string>(
     by(source: StypValue): StypNumeric<Unit, StypDimension_<Unit>> | undefined {
       if (typeof source === 'object') {
 
-        const { dim } = source;
+        const result = source.toDim(this);
 
-        if (dim === this || dim === this.pt || dim === this.noPt) {
-          return source.type ? source : this.zero;
-        }
+        return result && (result.type ? result : this.zero);
       }
       return;
     },

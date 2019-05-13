@@ -28,6 +28,19 @@ export abstract class StypNumericStruct<Self extends StypNumericStruct<Self, Uni
     this.dim = opts.dim;
   }
 
+  /**
+   * Tries to converts this numeric value to another dimension.
+   *
+   * Does not actually construct a value in another dimension, as long as dimension unit supported by both dimensions.
+   *
+   * @typeparam A unit type allowed in target dimension.
+   * @param dim Target dimension.
+   *
+   * @returns Either a value in dimension compatible with `dim`, or `undefined` if this value's unit is not supported
+   * by `dim`.
+   */
+  abstract toDim<U extends string>(dim: StypDimension.Kind<U>): StypNumeric<U> | undefined;
+
   abstract add(addendum: StypNumeric<Unit>): StypNumeric<Unit>;
 
   abstract sub(subtrahend: StypNumeric<Unit>): StypNumeric<Unit>;
@@ -90,6 +103,8 @@ export namespace StypDimension {
 
   /**
    * A kind of dimensions. E.g. angle, length, percentage, etc.
+   *
+   * It is perfectly fine to use dimensions interchangeably as long as dimension units are compatible.
    *
    * @typeparam Unit Allowed units type.
    */

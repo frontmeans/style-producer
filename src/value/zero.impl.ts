@@ -12,6 +12,10 @@ class Zero<Unit extends string> extends StypNumericStruct<Zero<Unit>, Unit> impl
     return 0;
   }
 
+  toDim<U extends string>(dim: StypDimension.Kind<U>): StypDimension<U> | StypZero<U> {
+    return dim.zero.prioritize(this.priority);
+  }
+
   is(other: StypValue): boolean {
     if (this === other) {
       return true;
