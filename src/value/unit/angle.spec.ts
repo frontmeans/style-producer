@@ -1,6 +1,6 @@
 import { StypDimension } from '../numeric';
 import { StypAngle, StypAnglePt } from './angle';
-import { StypLength } from './length';
+import { StypLength, StypLengthPt } from './length';
 
 describe('StypAngle', () => {
   it('has unitless zero', () => {
@@ -99,6 +99,12 @@ describe('StypAnglePt', () => {
     });
     it('does not convert to incompatible dimension', () => {
       expect(angle.toDim(StypLength)).toBeUndefined();
+    });
+    it('converts percent value to incompatible percent dimension', () => {
+      expect(anglePt.toDim(StypLengthPt)).toBe(anglePt);
+    });
+    it('does not convert percent value to incompatible non-percent dimension', () => {
+      expect(anglePt.toDim(StypLength)).toBeUndefined();
     });
   });
 });

@@ -48,7 +48,9 @@ export class StypDimension<Unit extends string>
 
     const thisDim: StypDimension_.Kind<any> = this.dim;
 
-    if (dim === thisDim || dim.noPt === thisDim || dim.pt === thisDim && this.unit !== '%') {
+    if (dim === thisDim
+        || dim.noPt === thisDim
+        || (this.unit === '%' ? dim.pt === dim /* % to any % */ : dim.pt === thisDim /* !% to compatible !% */)) {
       return this as StypDimension_<any>;
     }
 
