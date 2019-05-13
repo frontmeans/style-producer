@@ -150,6 +150,7 @@ export abstract class StypCalcBase<
   readonly op: Op;
   readonly right: Right;
 
+  // noinspection TypeScriptAbstractClassConstructorCanBeMadeProtected
   constructor(
       left: StypNumeric<Unit>,
       op: Op,
@@ -422,10 +423,7 @@ export function unitZeroDimensionKind<Unit extends string>(
 
     by(source: StypValue): StypNumeric<Unit, StypDimension_<Unit>> | undefined {
       if (typeof source === 'object') {
-
-        const result = source.toDim(this);
-
-        return result && (result.type ? result : this.zero);
+        return source.toDim(this) as StypNumeric<Unit, StypDimension_<Unit>> | undefined;
       }
       return;
     },

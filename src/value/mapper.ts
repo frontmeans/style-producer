@@ -16,9 +16,9 @@ import { StypValue } from './value';
  * @typeparam R A type of mapped properties. This is an object containing mapped properties.
  * @typeparam K Type of mapped properties keys.
  */
-export type StypMapper<R extends StypProperties, K extends keyof R> =
+export type StypMapper<R, K extends keyof R> =
     StypMapper.Function<R, K>
-    | { by(source: StypValue, mapped: StypMapper.Mapped<R>, key: K): R[K] }
+    | StypMapper.Object<R, K>
     | R[K];
 
 export namespace StypMapper {
@@ -34,13 +34,13 @@ export namespace StypMapper {
    *
    * @returns Mapped property value.
    */
-  export type Function<R extends StypProperties, K extends keyof R> =
+  export type Function<R, K extends keyof R> =
       (this: void, source: StypValue, mapped: Mapped<R>, key: K) => R[K];
 
   /**
    * CSS property mapper object.
    */
-  export interface Object {
+  export interface Object<R, K extends keyof R> {
 
     /**
      * Maps CSS property value.
@@ -53,7 +53,7 @@ export namespace StypMapper {
      *
      * @returns Mapped property value.
      */
-    by<R extends StypProperties, K extends keyof R>(source: StypValue, mapped: Mapped<R>, key: K): R[K];
+    by(source: StypValue, mapped: Mapped<R>, key: K): R[K];
 
   }
 
@@ -64,7 +64,7 @@ export namespace StypMapper {
    *
    * @typeparam R A type of mapped properties. This is a mapping result type.
    */
-  export interface Mapped<R extends StypProperties> {
+  export interface Mapped<R> {
 
     /**
      * Original properties to convert.
@@ -92,7 +92,7 @@ export namespace StypMapper {
    *
    * @typeparam R A type of mapped properties. This is a mapping result type.
    */
-  export type Mapping<R extends StypProperties> = { [key in keyof R]: StypMapper<R, key>; };
+  export type Mapping<R> = { readonly [key in keyof R]: StypMapper<R, key>; };
 
 }
 
@@ -106,7 +106,7 @@ export const StypMapper = {
    *
    * @returns Mapped properties.
    */
-  map<R extends StypProperties>(from: StypProperties, mapping: StypMapper.Mapping<R>): R {
+  map<R>(from: StypProperties, mapping: StypMapper.Mapping<R>): R {
 
     const result: { [key in keyof R]: R[key] } = {} as any;
     const mapped = {
@@ -132,17 +132,17 @@ export const StypMapper = {
 
 };
 
-function mapperBy<R extends StypProperties, K extends keyof R>(mapper: StypMapper<R, K>): StypMapper.Function<R, K> {
+function mapperBy<R, K extends keyof R>(mapper: StypMapper<R, K> | undefined): StypMapper.Function<R, K> {
   switch (typeof mapper) {
     case 'function':
-      return mapper;
+      return mapper as StypMapper.Function<R, K>;
     case 'object':
-      return (mapper as StypMapper.Object).by.bind(mapper);
+      return (mapper as StypMapper.Object<R, K>).by.bind(mapper);
   }
 
   const type = typeof mapper;
 
   return (from: StypValue): R[K] => {
-    return typeof from === type ? from as R[K] : mapper;
+    return typeof from === type ? from as any : mapper;
   };
 }
