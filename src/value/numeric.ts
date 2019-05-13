@@ -142,6 +142,19 @@ export namespace StypDimension {
      */
     of(val: number, unit: Unit): StypDimension<Unit> | StypZero<Unit>;
 
+    /**
+     * Maps the given CSS property value to the one compatible with this dimension kind. Defaults to `undefined`
+     * if mapping is not possible.
+     *
+     * This method allows to use an structured value instance as [CSS property mapper][[StypMapper]].
+     *
+     * Any scalar or non-numeric value is mapped to `undefined`. A numeric value is converted to this dimension by
+     * `StypNumeric.toDim()` method.
+     *
+     * @param source A raw property value that should be converted.
+     *
+     * @returns Mapped property value or `undefined`.
+     */
     by(source: StypValue): StypNumeric<Unit, StypDimension<Unit> | StypZero<Unit>> | undefined;
 
   }

@@ -39,14 +39,15 @@ export namespace StypMapper {
 
   /**
    * CSS property mapper object.
+   *
+   * @typeparam R A type of mapped properties. This is a mapping result type.
+   * @typeparam K Type of mapped properties keys.
    */
   export interface Object<R, K extends keyof R> {
 
     /**
      * Maps CSS property value.
-     *
-     * @typeparam R A type of mapped properties. This is a mapping result type.
-     * @typeparam K Type of mapped properties keys.
+     * 
      * @param source A raw property value that should be converted.
      * @param mapped An object granting access to other mapped properties.
      * @param key A key of converted property.
