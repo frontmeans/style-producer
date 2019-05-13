@@ -85,7 +85,7 @@ export namespace StypMapper {
   }
 
   /**
-   * CSS properties mapping instruction.
+   * CSS properties mapping instructions.
    *
    * This is an object with the same set of keys as the mapping result. Each property of this object contains
    * corresponding property [mapper][[StypMapper]].
@@ -99,10 +99,11 @@ export namespace StypMapper {
 export const StypMapper = {
 
   /**
-   * Maps CSS properties accordingly to the given `mapping` instruction.
+   * Maps CSS properties accordingly to the given `mapping` instructions.
    *
+   * @typeparam R A type of mapped properties. This is a mapping result type.
    * @param from Raw CSS properties to map.
-   * @param mapping Mapping instruction.
+   * @param mapping Mapping instructions.
    *
    * @returns Mapped properties.
    */
@@ -131,6 +132,18 @@ export const StypMapper = {
   }
 
 };
+
+/**
+ * Constructs CSS properties mapper function.
+ *
+ * @typeparam R A type of mapped properties. This is a mapping result type.
+ * @param mapping Mapping instructions.
+ *
+ * @returns A function that maps CSS properties accordingly to the given `mapping` instructions.
+ */
+export function stypMapBy<R>(mapping: StypMapper.Mapping<R>): (from: StypProperties) => R {
+  return from => StypMapper.map(from, mapping);
+}
 
 function mapperBy<R, K extends keyof R>(mapper: StypMapper<R, K> | undefined): StypMapper.Function<R, K> {
   switch (typeof mapper) {

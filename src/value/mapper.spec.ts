@@ -1,4 +1,4 @@
-import { StypMapper } from './mapper';
+import { stypMapBy, StypMapper } from './mapper';
 import { StypFrequency, StypFrequencyPt, StypLength, StypLengthPt, StypTime, StypTimePt } from './unit';
 import { StypValue } from './value';
 import Mock = jest.Mock;
@@ -205,7 +205,7 @@ describe('StypMapper', () => {
       expect(mockMapper2).toHaveBeenCalledWith('init2', expect.anything(), '$value2');
     });
     it('grants access to mapped values', () => {
-      mockMapper1.mockImplementation((from, mapped, key) => mapped.get('$value2'));
+      mockMapper1.mockImplementation((from, mapped, _key) => mapped.get('$value2'));
       expect(
           StypMapper.map<Result>(
               {
@@ -222,5 +222,19 @@ describe('StypMapper', () => {
       expect(mockMapper2).toHaveBeenCalledWith('init2', expect.anything(), '$value2');
       expect(mockMapper2).toHaveBeenCalledTimes(1);
     });
+  });
+});
+
+describe('stypMapBy', () => {
+  it('creates mapping function', () => {
+
+    interface Result {
+      $value: string;
+    }
+
+    const mapping: StypMapper.Mapping<Result> = { $value(from) { return `${from}!`; } };
+    const mapper = stypMapBy(mapping);
+
+    expect(mapper({ $value: 'value' })).toEqual({ $value: 'value!'});
   });
 });
