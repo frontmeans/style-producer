@@ -79,7 +79,7 @@ export abstract class StypValueStruct<Self extends StypValueStruct<Self>> {
    * Maps the given CSS property value to the value of this one's type. Defaults to this value if mapping is not
    * possible.
    *
-   * This method allows to use an structured value instance as [CSS property mapper][[StypMapper]].
+   * This method allows to use an structured value instance as [CSS property mapping][[StypMapper.Mapping]].
    *
    * @param source A raw property value that should be converted.
    *

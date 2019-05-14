@@ -2,29 +2,29 @@ import { itsEach, overKeys } from 'a-iterable';
 import { StypProperties } from '../rule';
 import { StypValue } from './value';
 
-/**
- * CSS property mapper.
- *
- * It is used to recognize raw property value and convert it to the one of the given type.
- *
- * It is one of:
- * - Default property value. Replaces the source property value, unless the the have the same type.
- * - A mapping function. Replaces the source property value with the result of this function call.
- * - An object containing mapping method called `by()`. Replaces the source property value with the result of this
- *   method call.
- *
- * @typeparam R A type of mapped properties. This is an object containing mapped properties.
- * @typeparam K Type of mapped properties keys.
- */
-export type StypMapper<R, K extends keyof R> =
-    StypMapper.Function<R, K>
-    | StypMapper.Object<R, K>
-    | R[K];
-
 export namespace StypMapper {
 
   /**
-   * CSS property mapper function.
+   * CSS property mapping.
+   *
+   * It is used to recognize raw property value and convert it to the one of the given type.
+   *
+   * It is one of:
+   * - Default property value. Replaces the source property value, unless the the have the same type.
+   * - A mapping function. Replaces the source property value with the result of this function call.
+   * - An object containing mapping method called `by()`. Replaces the source property value with the result of this
+   *   method call.
+   *
+   * @typeparam R A type of mapped properties. This is an object containing mapped properties.
+   * @typeparam K Type of mapped properties keys.
+   */
+  export type Mapping<R, K extends keyof R> =
+      MappingFunction<R, K>
+      | MappingObject<R, K>
+      | R[K];
+
+  /**
+   * CSS property mapping function.
    *
    * @typeparam R A type of mapped properties. This is a mapping result type.
    * @typeparam K Type of mapped properties keys.
@@ -34,16 +34,16 @@ export namespace StypMapper {
    *
    * @returns Mapped property value.
    */
-  export type Function<R, K extends keyof R> =
+  export type MappingFunction<R, K extends keyof R> =
       (this: void, source: StypValue, mapped: Mapped<R>, key: K) => R[K];
 
   /**
-   * CSS property mapper object.
+   * CSS property mapping object.
    *
    * @typeparam R A type of mapped properties. This is a mapping result type.
    * @typeparam K Type of mapped properties keys.
    */
-  export interface Object<R, K extends keyof R> {
+  export interface MappingObject<R, K extends keyof R> {
 
     /**
      * Maps CSS property value.
@@ -59,9 +59,9 @@ export namespace StypMapper {
   }
 
   /**
-   * An object granting access for mappers to other mapped values.
+   * Grants access to mapped values.
    *
-   * It is passed as a second argument to mapper function.
+   * Passed as a second argument to mapping function.
    *
    * @typeparam R A type of mapped properties. This is a mapping result type.
    */
@@ -88,11 +88,11 @@ export namespace StypMapper {
   /**
    * Mappings of CSS properties.
    *
-   * This is an object of mappings for each CSS property to map with target property name as its key.
+   * Contains mappings for each mapped CSS property with that property name as a key.
    *
    * @typeparam R A type of mapped properties. This is a mapping result type.
    */
-  export type Mappings<R> = { readonly [key in keyof R]: StypMapper<R, key>; };
+  export type Mappings<R> = { readonly [key in keyof R]: Mapping<R, key>; };
 
 }
 
@@ -117,7 +117,7 @@ export const StypMapper = {
           return result[key];
         }
 
-        const mapper = mapperBy<R, K>(mappings[key]);
+        const mapper = mappingBy<R, K>(mappings[key]);
         const mappedValue = mapper(from[key as string], this, key);
 
         result[key] = mappedValue;
@@ -134,7 +134,7 @@ export const StypMapper = {
 };
 
 /**
- * Constructs CSS properties mapper function.
+ * Creates CSS properties mapper function.
  *
  * @typeparam R A type of mapped properties. This is a mapping result type.
  * @param mappings Mappings of CSS properties.
@@ -145,17 +145,19 @@ export function stypMapBy<R>(mappings: StypMapper.Mappings<R>): (from: StypPrope
   return from => StypMapper.map(from, mappings);
 }
 
-function mapperBy<R, K extends keyof R>(mapper: StypMapper<R, K> | undefined): StypMapper.Function<R, K> {
-  switch (typeof mapper) {
+function mappingBy<R, K extends keyof R>(
+    mapping: StypMapper.Mapping<R, K> | undefined):
+    StypMapper.MappingFunction<R, K> {
+  switch (typeof mapping) {
     case 'function':
-      return mapper as StypMapper.Function<R, K>;
+      return mapping as StypMapper.MappingFunction<R, K>;
     case 'object':
-      return (mapper as StypMapper.Object<R, K>).by.bind(mapper);
+      return (mapping as StypMapper.MappingObject<R, K>).by.bind(mapping);
   }
 
-  const type = typeof mapper;
+  const type = typeof mapping;
 
   return (from: StypValue): R[K] => {
-    return typeof from === type ? from as any : mapper;
+    return typeof from === type ? from as any : mapping;
   };
 }

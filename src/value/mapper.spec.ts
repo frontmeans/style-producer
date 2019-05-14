@@ -4,7 +4,7 @@ import { StypValue } from './value';
 import Mock = jest.Mock;
 
 describe('StypMapper', () => {
-  describe('scalar mapper', () => {
+  describe('scalar mapping', () => {
 
     interface Result {
       $value: string;
@@ -33,7 +33,7 @@ describe('StypMapper', () => {
     });
   });
 
-  describe('unitless zero dimension kind mapper', () => {
+  describe('unitless zero dimension kind mapping', () => {
 
     interface Result {
       $value?: StypLength;
@@ -87,7 +87,7 @@ describe('StypMapper', () => {
     });
   });
 
-  describe('unit zero dimension kind mapper', () => {
+  describe('unit zero dimension kind mapping', () => {
 
     interface Result {
       $value?: StypFrequency;
@@ -141,7 +141,7 @@ describe('StypMapper', () => {
     });
   });
 
-  describe('dimension mapper', () => {
+  describe('dimension mapping', () => {
 
     interface Result {
       $value: StypLength;
@@ -170,7 +170,7 @@ describe('StypMapper', () => {
     });
   });
 
-  describe('mapper function', () => {
+  describe('mapping function', () => {
 
     interface Result {
       $value1?: StypLength;
@@ -226,7 +226,7 @@ describe('StypMapper', () => {
 });
 
 describe('stypMapBy', () => {
-  it('creates mapping function', () => {
+  it('creates mapper function', () => {
 
     interface Result {
       $value: string;
