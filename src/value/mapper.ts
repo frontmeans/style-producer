@@ -102,12 +102,13 @@ export const StypMapper = {
    * Maps CSS properties accordingly to the given `mappings`.
    *
    * @typeparam R A type of mapped properties. This is a mapping result type.
-   * @param from Raw CSS properties to map.
+   *
    * @param mappings Mappings of CSS properties.
+   * @param from Raw CSS properties to map.
    *
    * @returns Mapped properties.
    */
-  map<R>(from: StypProperties, mappings: StypMapper.Mappings<R>): R {
+  map<R>(mappings: StypMapper.Mappings<R>, from: StypProperties): R {
 
     const result: { [key in keyof R]: R[key] } = {} as any;
     const mapped = {
@@ -142,7 +143,7 @@ export const StypMapper = {
  * @returns A function that maps CSS properties accordingly to the given `mappings`.
  */
 export function stypMapBy<R>(mappings: StypMapper.Mappings<R>): (from: StypProperties) => R {
-  return from => StypMapper.map(from, mappings);
+  return from => StypMapper.map(mappings, from);
 }
 
 function mappingBy<R, K extends keyof R>(

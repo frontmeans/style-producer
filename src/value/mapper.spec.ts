@@ -17,19 +17,19 @@ describe('StypMapper', () => {
     });
 
     it('maps absent value to default scalar value', () => {
-      expect(StypMapper.map({}, mappings)).toEqual(mappings);
+      expect(StypMapper.map(mappings, {})).toEqual(mappings);
     });
     it('maps incompatible scalar value to default scalar value', () => {
-      expect(StypMapper.map({ $value: 1 }, mappings)).toEqual(mappings);
+      expect(StypMapper.map(mappings, { $value: 1 })).toEqual(mappings);
     });
     it('maps structured value to default scalar value', () => {
-      expect(StypMapper.map({ $value: StypLength.of(12, 'px') }, mappings)).toEqual(mappings);
+      expect(StypMapper.map(mappings, { $value: StypLength.of(12, 'px') })).toEqual(mappings);
     });
     it('retains scalar value of the same type', () => {
 
       const initial = { $value: 'initial' };
 
-      expect(StypMapper.map(initial, mappings)).toEqual(initial);
+      expect(StypMapper.map(mappings, initial)).toEqual(initial);
     });
   });
 
@@ -46,28 +46,28 @@ describe('StypMapper', () => {
     });
 
     it('does not map absent value', () => {
-      expect(StypMapper.map<Result>({}, mappings)).toEqual({});
+      expect(StypMapper.map<Result>(mappings, {})).toEqual({});
     });
     it('removes scalar value', () => {
-      expect(StypMapper.map<Result>({ $value: 'some' }, mappings)).toEqual({});
+      expect(StypMapper.map<Result>(mappings, { $value: 'some' })).toEqual({});
     });
     it('removes incompatible structured value', () => {
-      expect(StypMapper.map<Result>({ $value: StypTime.of(10, 'ms') }, mappings)).toEqual({});
+      expect(StypMapper.map<Result>(mappings, { $value: StypTime.of(10, 'ms') })).toEqual({});
     });
     it('removes incompatible percent value', () => {
-      expect(StypMapper.map<Result>({ $value: StypLengthPt.of(10, '%') }, mappings)).toEqual({});
+      expect(StypMapper.map<Result>(mappings, { $value: StypLengthPt.of(10, '%') })).toEqual({});
     });
     it('retains same-dimension value', () => {
 
       const initial = { $value: StypLength.of(10, 'px') };
 
-      expect(StypMapper.map<Result>(initial, mappings)).toEqual(initial);
+      expect(StypMapper.map<Result>(mappings, initial)).toEqual(initial);
     });
     it('retains compatible non-percent value', () => {
 
       const initial = { $value: StypLengthPt.of(10, 'px') };
 
-      expect(StypMapper.map<Result>(initial, mappings)).toEqual(initial);
+      expect(StypMapper.map<Result>(mappings, initial)).toEqual(initial);
     });
     it('retains compatible percent value', () => {
 
@@ -77,13 +77,13 @@ describe('StypMapper', () => {
 
       const initial = { $value: StypTimePt.of(10, '%') };
 
-      expect(StypMapper.map<ResultPt>(initial, { $value: StypLengthPt })).toEqual(initial);
+      expect(StypMapper.map<ResultPt>({ $value: StypLengthPt }, initial)).toEqual(initial);
     });
     it('retains zero value', () => {
 
       const initial = { $value: StypTime.zero };
 
-      expect(StypMapper.map<Result>(initial, mappings)).toEqual({ $value: StypLength.zero });
+      expect(StypMapper.map<Result>(mappings, initial)).toEqual({ $value: StypLength.zero });
     });
   });
 
@@ -100,28 +100,28 @@ describe('StypMapper', () => {
     });
 
     it('does not map absent value', () => {
-      expect(StypMapper.map<Result>({}, mappings)).toEqual({});
+      expect(StypMapper.map<Result>(mappings, {})).toEqual({});
     });
     it('removes scalar value', () => {
-      expect(StypMapper.map<Result>({ $value: 'some' }, mappings)).toEqual({});
+      expect(StypMapper.map<Result>(mappings, { $value: 'some' })).toEqual({});
     });
     it('removes incompatible structured value', () => {
-      expect(StypMapper.map<Result>({ $value: StypTime.of(10, 'ms') }, mappings)).toEqual({});
+      expect(StypMapper.map<Result>(mappings, { $value: StypTime.of(10, 'ms') })).toEqual({});
     });
     it('removes incompatible percent value', () => {
-      expect(StypMapper.map<Result>({ $value: StypFrequencyPt.of(10, '%') }, mappings)).toEqual({});
+      expect(StypMapper.map<Result>(mappings, { $value: StypFrequencyPt.of(10, '%') })).toEqual({});
     });
     it('retains same-dimension value', () => {
 
       const initial = { $value: StypFrequency.of(10, 'kHz') };
 
-      expect(StypMapper.map<Result>(initial, mappings)).toEqual(initial);
+      expect(StypMapper.map<Result>(mappings, initial)).toEqual(initial);
     });
     it('retains compatible non-percent value', () => {
 
       const initial = { $value: StypFrequencyPt.of(10, 'kHz') };
 
-      expect(StypMapper.map<Result>(initial, mappings)).toEqual(initial);
+      expect(StypMapper.map<Result>(mappings, initial)).toEqual(initial);
     });
     it('retains compatible percent value', () => {
 
@@ -131,13 +131,13 @@ describe('StypMapper', () => {
 
       const initial = { $value: StypTimePt.of(10, '%') };
 
-      expect(StypMapper.map<ResultPt>(initial, { $value: StypFrequencyPt })).toEqual(initial);
+      expect(StypMapper.map<ResultPt>({ $value: StypFrequencyPt }, initial)).toEqual(initial);
     });
     it('retains zero value', () => {
 
       const initial = { $value: StypTime.zero };
 
-      expect(StypMapper.map<Result>(initial, mappings)).toEqual({ $value: StypFrequency.zero });
+      expect(StypMapper.map<Result>(mappings, initial)).toEqual({ $value: StypFrequency.zero });
     });
   });
 
@@ -154,19 +154,19 @@ describe('StypMapper', () => {
     });
 
     it('maps absent value to default one', () => {
-      expect(StypMapper.map<Result>({}, mappings)).toEqual(mappings);
+      expect(StypMapper.map<Result>(mappings, {})).toEqual(mappings);
     });
     it('maps scalar value to default one', () => {
-      expect(StypMapper.map({ $value: 1 }, mappings)).toEqual(mappings);
+      expect(StypMapper.map(mappings, { $value: 1 })).toEqual(mappings);
     });
     it('maps incompatible structured value to default one', () => {
-      expect(StypMapper.map({ $value: StypTime.of(12, 'ms') }, mappings)).toEqual(mappings);
+      expect(StypMapper.map(mappings, { $value: StypTime.of(12, 'ms') })).toEqual(mappings);
     });
     it('retains structured value of the same type', () => {
 
       const initial = { $value: StypLength.of(1, 'em') };
 
-      expect(StypMapper.map(initial, mappings)).toEqual(initial);
+      expect(StypMapper.map(mappings, initial)).toEqual(initial);
     });
   });
 
@@ -192,12 +192,10 @@ describe('StypMapper', () => {
 
     it('maps value', () => {
       expect(
-          StypMapper.map<Result>(
-              {
-                $value1: 'init1',
-                $value2: 'init2',
-              },
-              mappings)
+          StypMapper.map<Result>(mappings, {
+            $value1: 'init1',
+            $value2: 'init2',
+          })
       ).toEqual({
         $value2: StypLength.zero,
       });
@@ -207,12 +205,10 @@ describe('StypMapper', () => {
     it('grants access to mapped values', () => {
       mockMapper1.mockImplementation((from, mapped, _key) => mapped.get('$value2'));
       expect(
-          StypMapper.map<Result>(
-              {
-                $value1: 'init1',
-                $value2: 'init2',
-              },
-              mappings)
+          StypMapper.map<Result>(mappings, {
+            $value1: 'init1',
+            $value2: 'init2',
+          })
       ).toEqual({
         $value1: StypLength.zero,
         $value2: StypLength.zero,
