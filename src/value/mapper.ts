@@ -86,29 +86,28 @@ export namespace StypMapper {
   }
 
   /**
-   * CSS properties mapping instructions.
+   * Mappings of CSS properties.
    *
-   * This is an object with the same set of keys as the mapping result. Each property of this object contains
-   * corresponding property [mapper][[StypMapper]].
+   * This is an object of mappings for each CSS property to map with target property name as its key.
    *
    * @typeparam R A type of mapped properties. This is a mapping result type.
    */
-  export type Mapping<R> = { readonly [key in keyof R]: StypMapper<R, key>; };
+  export type Mappings<R> = { readonly [key in keyof R]: StypMapper<R, key>; };
 
 }
 
 export const StypMapper = {
 
   /**
-   * Maps CSS properties accordingly to the given `mapping` instructions.
+   * Maps CSS properties accordingly to the given `mappings`.
    *
    * @typeparam R A type of mapped properties. This is a mapping result type.
    * @param from Raw CSS properties to map.
-   * @param mapping Mapping instructions.
+   * @param mappings Mappings of CSS properties.
    *
    * @returns Mapped properties.
    */
-  map<R>(from: StypProperties, mapping: StypMapper.Mapping<R>): R {
+  map<R>(from: StypProperties, mappings: StypMapper.Mappings<R>): R {
 
     const result: { [key in keyof R]: R[key] } = {} as any;
     const mapped = {
@@ -118,7 +117,7 @@ export const StypMapper = {
           return result[key];
         }
 
-        const mapper = mapperBy<R, K>(mapping[key]);
+        const mapper = mapperBy<R, K>(mappings[key]);
         const mappedValue = mapper(from[key as string], this, key);
 
         result[key] = mappedValue;
@@ -127,7 +126,7 @@ export const StypMapper = {
       }
     };
 
-    itsEach(overKeys(mapping), key => mapped.get(key));
+    itsEach(overKeys(mappings), key => mapped.get(key));
 
     return result;
   }
@@ -138,12 +137,12 @@ export const StypMapper = {
  * Constructs CSS properties mapper function.
  *
  * @typeparam R A type of mapped properties. This is a mapping result type.
- * @param mapping Mapping instructions.
+ * @param mappings Mappings of CSS properties.
  *
- * @returns A function that maps CSS properties accordingly to the given `mapping` instructions.
+ * @returns A function that maps CSS properties accordingly to the given `mappings`.
  */
-export function stypMapBy<R>(mapping: StypMapper.Mapping<R>): (from: StypProperties) => R {
-  return from => StypMapper.map(from, mapping);
+export function stypMapBy<R>(mappings: StypMapper.Mappings<R>): (from: StypProperties) => R {
+  return from => StypMapper.map(from, mappings);
 }
 
 function mapperBy<R, K extends keyof R>(mapper: StypMapper<R, K> | undefined): StypMapper.Function<R, K> {
