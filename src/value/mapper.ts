@@ -130,21 +130,21 @@ export const StypMapper = {
     itsEach(overKeys(mappings), key => mapped.get(key));
 
     return result;
-  }
+  },
+
+  /**
+   * Creates CSS properties mapper function.
+   *
+   * @typeparam R A type of mapped properties. This is a mapping result type.
+   * @param mappings Mappings of CSS properties.
+   *
+   * @returns A function that maps CSS properties accordingly to the given `mappings`.
+   */
+  by<R>(mappings: StypMapper.Mappings<R>): (this: void, from: StypProperties) => R {
+    return StypMapper.map.bind<void, StypMapper.Mappings<R>, [StypProperties], R>(undefined, mappings);
+  },
 
 };
-
-/**
- * Creates CSS properties mapper function.
- *
- * @typeparam R A type of mapped properties. This is a mapping result type.
- * @param mappings Mappings of CSS properties.
- *
- * @returns A function that maps CSS properties accordingly to the given `mappings`.
- */
-export function stypMapBy<R>(mappings: StypMapper.Mappings<R>): (from: StypProperties) => R {
-  return from => StypMapper.map(mappings, from);
-}
 
 function mappingBy<R, K extends keyof R>(
     mapping: StypMapper.Mapping<R, K> | undefined):

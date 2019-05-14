@@ -1,4 +1,4 @@
-import { stypMapBy, StypMapper } from './mapper';
+import { StypMapper } from './mapper';
 import { StypFrequency, StypFrequencyPt, StypLength, StypLengthPt, StypTime, StypTimePt } from './unit';
 import { StypValue } from './value';
 import Mock = jest.Mock;
@@ -219,18 +219,18 @@ describe('StypMapper', () => {
       expect(mockMapper2).toHaveBeenCalledTimes(1);
     });
   });
-});
 
-describe('stypMapBy', () => {
-  it('creates mapper function', () => {
+  describe('by', () => {
+    it('creates mapper function', () => {
 
-    interface Result {
-      $value: string;
-    }
+      interface Result {
+        $value: string;
+      }
 
-    const mapping: StypMapper.Mappings<Result> = { $value(from) { return `${from}!`; } };
-    const mapper = stypMapBy(mapping);
+      const mapping: StypMapper.Mappings<Result> = { $value(from) { return `${from}!`; } };
+      const mapper = StypMapper.by(mapping);
 
-    expect(mapper({ $value: 'value' })).toEqual({ $value: 'value!'});
+      expect(mapper({ $value: 'value' })).toEqual({ $value: 'value!'});
+    });
   });
 });
