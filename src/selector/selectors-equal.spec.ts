@@ -1,4 +1,4 @@
-import { NamespaceDef } from '../ns';
+import { NamespaceDef } from 'namespace-aliaser';
 import { stypSelectorsEqual } from './selectors-equal';
 
 describe('stypSelectorsEqual', () => {

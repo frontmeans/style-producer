@@ -1,4 +1,4 @@
-import { NameInNamespace, NamespaceDef } from '../ns';
+import { NameInNamespace, NamespaceDef } from 'namespace-aliaser';
 
 /**
  * Structured CSS selector.

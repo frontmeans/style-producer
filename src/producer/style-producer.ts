@@ -1,4 +1,4 @@
-import { NamespaceAliaser, NamespaceDef } from '../ns';
+import { NamespaceAliaser, NamespaceDef } from 'namespace-aliaser';
 import { StypProperties, StypRule } from '../rule';
 import { StypSelector } from '../selector';
 import { StypRender } from './render';

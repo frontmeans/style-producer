@@ -1,4 +1,4 @@
-import { NamespaceAliaser } from '../ns';
+import { NamespaceAliaser } from 'namespace-aliaser';
 import { StypSelector } from './selector';
 import { stypSelector } from './selector-constructor';
 import { formatStypSelector } from './selector-text.impl';

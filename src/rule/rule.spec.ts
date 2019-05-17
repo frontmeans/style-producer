@@ -9,7 +9,7 @@ import {
   trackValue,
   ValueTracker
 } from 'fun-events';
-import { NamespaceDef } from '../ns';
+import { NamespaceDef } from 'namespace-aliaser';
 import { StypSelector, stypSelector } from '../selector';
 import { readProperties, ruleProperties } from '../spec';
 import { StypProperties } from './properties';

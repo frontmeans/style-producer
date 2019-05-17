@@ -2499,6 +2499,13 @@ ms@^2.1.1:
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.1.tgz#30a5864eb3ebb0a66f2ebe6d727af06a09d86e0a"
   integrity sha512-tgp+dl5cGk28utYktBsrFqA7HKgrhgPsg6Z/EfhWI4gl1Hwq8B/GmY/0oXZ6nF8hDVesS/FpnYaD/kOWhYQvyg==
 
+namespace-aliaser@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/namespace-aliaser/-/namespace-aliaser-1.0.0.tgz#3e5045d9838926e766e36fc19f42ee9a6b6dcc49"
+  integrity sha512-leJGOhHJNVEvzWvihNFD4GcjzPnTewHVOiczTwTRAtkjfDWBwyy/bPKD8Hq3Nzs9kydym/tqBLWqP+0OVNKmvQ==
+  dependencies:
+    tslib "^1.9.3"
+
 nan@^2.12.1:
   version "2.14.0"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.14.0.tgz#7818f722027b2459a86f0295d434d1fc2336c52c"

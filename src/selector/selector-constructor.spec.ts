@@ -1,4 +1,4 @@
-import { NamespaceDef } from '../ns';
+import { NamespaceDef } from 'namespace-aliaser';
 import { stypSelector } from './selector-constructor';
 
 describe('stypSelector', () => {
