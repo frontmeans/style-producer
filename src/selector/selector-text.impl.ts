@@ -124,5 +124,3 @@ function formatItem(
 function xmlNs(ns: string | NamespaceDef, nsAlias: NamespaceAliaser): string | undefined {
   return typeof ns === 'string' ? ns : ns.url ? nsAlias(ns) : undefined;
 }
-
-
