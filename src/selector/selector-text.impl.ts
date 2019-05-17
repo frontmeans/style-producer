@@ -1,7 +1,6 @@
 import {
-  NameInNamespace,
   NamespaceAliaser,
-  NamespaceDef, namespaceOf,
+  NamespaceDef,
   newNamespaceAliaser,
   qualifyCssName,
   qualifyHtmlName,
