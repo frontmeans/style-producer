@@ -1,7 +1,7 @@
 import { itsEach, itsReduction, mapIt } from 'a-iterable';
 import { noop } from 'call-thru';
 import { AfterEvent, afterEventFrom, eventInterest, EventInterest, onEventFrom } from 'fun-events';
-import { NamespaceDef, newNamespaceAliaser } from '../ns';
+import { NamespaceDef, newNamespaceAliaser } from 'namespace-aliaser';
 import { StypProperties, StypRule, StypRules } from '../rule';
 import { StypSelector, stypSelector, StypSelectorFormat, stypSelectorText } from '../selector';
 import { isCombinator } from '../selector/selector.impl';

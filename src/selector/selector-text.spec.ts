@@ -1,4 +1,4 @@
-import { NamespaceAliaser, NamespaceDef, newNamespaceAliaser } from '../ns';
+import { DEFAULT__NS, NamespaceAliaser, NamespaceDef, newNamespaceAliaser } from 'namespace-aliaser';
 import { stypSelectorText } from './selector-text';
 import { stypRuleKeyText, stypSelectorDisplayText } from './selector-text.impl';
 
@@ -27,6 +27,9 @@ describe('stypSelectorText', () => {
   it('formats qualified namespace', () => {
     expect(stypSelectorText({ ns, e: 'bar' })).toBe('test|bar');
   });
+  it('formats default namespace', () => {
+    expect(stypSelectorText({ ns: DEFAULT__NS, e: 'bar' })).toBe('bar');
+  });
   it('formats generic element', () => {
     expect(stypSelectorText({ $: 'foo' })).toBe('*');
   });
@@ -36,11 +39,17 @@ describe('stypSelectorText', () => {
   it('formats generic element in qualified namespace', () => {
     expect(stypSelectorText({ ns })).toBe('test|*');
   });
+  it('formats generic element in default namespace', () => {
+    expect(stypSelectorText({ ns: DEFAULT__NS })).toBe('*');
+  });
   it('formats identifier', () => {
     expect(stypSelectorText({ i: 'foo:bar' })).toBe('#foo\\:bar');
   });
+  it('formats identifier in default namespace', () => {
+    expect(stypSelectorText({ i: ['foo:bar', DEFAULT__NS] })).toBe('#foo\\:bar');
+  });
   it('formats identifier from namespace', () => {
-    expect(stypSelectorText({ i: ['foo:bar', ns] })).toBe('#test-foo\\:bar');
+    expect(stypSelectorText({ i: ['foo:bar', ns] })).toBe('#test\\:foo\\:bar');
   });
   it('formats classes', () => {
     expect(stypSelectorText({ c: ['foo', 'bar.baz'] })).toBe('.bar\\.baz.foo');

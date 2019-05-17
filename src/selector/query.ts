@@ -1,5 +1,4 @@
-import { NameInNamespace, NamespaceDef } from '../ns';
-import { namesEqual } from '../ns/namespace.impl';
+import { NameInNamespace, namesEqual, NamespaceDef } from 'namespace-aliaser';
 import { StypSelector } from './selector';
 import { normalizeStypSelectorPart } from './selector.impl';
 

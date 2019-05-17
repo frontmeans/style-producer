@@ -1,6 +1,12 @@
+import {
+  NamespaceAliaser,
+  NamespaceDef,
+  newNamespaceAliaser,
+  qualifyCssName,
+  qualifyHtmlName,
+  qualifyId
+} from 'namespace-aliaser';
 import { cssescId } from '../internal';
-import { NamespaceAliaser, newNamespaceAliaser } from '../ns';
-import { qualifyClass, qualifyElement, qualifyId, xmlNs } from '../ns/namespace.impl';
 import { StypRuleKey } from './rule-key';
 import { StypSelector } from './selector';
 import { StypSelectorFormat } from './selector-text';
@@ -81,7 +87,7 @@ function formatItem(
   if (c) {
     hasProperties = true;
     string = c.reduce<string>(
-        (result, className) => `${result}.${cssescId(qualifyClass(className, nsAlias))}`,
+        (result, className) => `${result}.${cssescId(qualifyCssName(className, nsAlias))}`,
         string);
   }
   if (s) {
@@ -92,12 +98,28 @@ function formatItem(
     string = $.reduce((result, qualifier) => result + qualify(qualifier), string);
   }
   if (ns) {
-    string = `${xmlNs(ns, nsAlias)}|${e || '*'}${string}`;
-  } else if (hasProperties) {
-    string = `${e ? qualifyElement(e, nsAlias) : ''}${string}`;
+
+    const alias = xmlNs(ns, nsAlias);
+
+    if (alias) {
+      string = `${alias}|${e || '*'}${string}`;
+    } else {
+      string = qualifyElement();
+    }
   } else {
-    string = `${e ? qualifyElement(e, nsAlias) : '*'}${string}`;
+    string = qualifyElement();
   }
 
   return string;
+
+  function qualifyElement(): string {
+    if (hasProperties) {
+      return `${e ? qualifyHtmlName(e, nsAlias) : ''}${string}`;
+    }
+    return `${e ? qualifyHtmlName(e, nsAlias) : '*'}${string}`;
+  }
+}
+
+function xmlNs(ns: string | NamespaceDef, nsAlias: NamespaceAliaser): string | undefined {
+  return typeof ns === 'string' ? ns : ns.url ? nsAlias(ns) : undefined;
 }

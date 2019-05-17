@@ -1,7 +1,7 @@
 import { itsEmpty } from 'a-iterable';
 import { noop } from 'call-thru';
 import { afterEventBy, EventKeeper, noEventInterest, trackValue } from 'fun-events';
-import { NamespaceDef } from '../ns';
+import { NamespaceDef } from 'namespace-aliaser';
 import { StypProperties, stypRoot, StypRule } from '../rule';
 import { stypSelector } from '../selector';
 import { cssStyle, cssStyles, removeStyleElements, scheduleNow, stylesheets } from '../spec';

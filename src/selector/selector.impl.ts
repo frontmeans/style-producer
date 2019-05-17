@@ -1,7 +1,6 @@
 import { flatMapIt, itsReduction } from 'a-iterable';
+import { compareNames, isNameInNamespace, NameInNamespace } from 'namespace-aliaser';
 import { isNotEmptyArray, isReadonlyArray } from '../internal';
-import { NameInNamespace } from '../ns';
-import { compareNames, isSingleName } from '../ns/namespace.impl';
 import { StypRuleKey } from './rule-key';
 import { StypSelector } from './selector';
 
@@ -36,7 +35,7 @@ function normalizeClasses(classes: NameInNamespace | readonly NameInNamespace[] 
   if (!classes) {
     return;
   }
-  if (isSingleName(classes)) {
+  if (isNameInNamespace(classes)) {
     return [classes];
   }
 
