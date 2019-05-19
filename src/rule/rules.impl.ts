@@ -30,7 +30,7 @@ export class Rules extends StypRuleList {
 
     let ruleSet: Set<StypRule> | undefined; // `undefined` updates are not tracked
 
-    this.onUpdate = onEventBy(receiver => {
+    this.onUpdate = onEventBy<[StypRule[], StypRule[]]>(receiver => {
 
       const rules = ruleSet || (ruleSet = new Set(buildList()));
 

@@ -111,7 +111,7 @@ function rulesByList(sources: StypRules[]): StypRuleList {
       }
     },
     get [OnEvent__symbol](): OnEvent<[StypRule[], StypRule[]]> {
-      return onEventBy(receiver => {
+      return onEventBy<[StypRule[], StypRule[]]>(receiver => {
 
         let sourceInterest = noEventInterest();
         const interest = eventInterest(reason => sourceInterest.off(reason));
