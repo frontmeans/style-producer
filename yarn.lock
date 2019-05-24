@@ -377,12 +377,12 @@
   resolved "https://registry.yarnpkg.com/@types/yargs/-/yargs-12.0.12.tgz#45dd1d0638e8c8f153e87d296907659296873916"
   integrity sha512-SOhuU4wNBxhhTHxYaiG5NY4HBhDIDnJF60GU+2LqHAdKKer86//e4yg69aENCtQ04n0ovz+tq2YPME5t5yp4pw==
 
-a-iterable@^2.3.1:
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/a-iterable/-/a-iterable-2.3.1.tgz#2c459991ba8ab96d831698454d804b0b2062080e"
-  integrity sha512-Yq5hbfMpLTjKAJWbwkI/MOkWsXkdPRGN7SLTH4DPjaMFBEjm5b/HDzk5dikdWcilFBG24g9vB1X88OpsBRS7Tw==
+a-iterable@^2.4.0-rc.1:
+  version "2.4.0-rc.1"
+  resolved "https://registry.yarnpkg.com/a-iterable/-/a-iterable-2.4.0-rc.1.tgz#840600739570c569a8b009dc464b77cc30514c83"
+  integrity sha512-uLZNMIIr1Vx/5IzeNESjUbF5DrHks30sJhiv0FNXWuDHm5bX9GsKu8N6YxSGtDduZqdLbJyneQMG5S5x8QbpUw==
   dependencies:
-    call-thru "^2.4.0"
+    call-thru "^2.5.0-rc.2"
     tslib "^1.9.0"
 
 abab@^2.0.0:
@@ -709,10 +709,10 @@ cache-base@^1.0.1:
     union-value "^1.0.0"
     unset-value "^1.0.0"
 
-call-thru@^2.4.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/call-thru/-/call-thru-2.4.0.tgz#d74790926f47c7afa74c6ccf3d9961f2d4e2513f"
-  integrity sha512-bRtgVfhNExcXJXzQ2T6ai0RApOqyRbiJlI7NsrltUBDxDatSuul1B1LD/QzNSWH4T3MXV69vTIMJlYklznrJEw==
+call-thru@^2.5.0-rc.2:
+  version "2.5.0-rc.2"
+  resolved "https://registry.yarnpkg.com/call-thru/-/call-thru-2.5.0-rc.2.tgz#3652e021d6cfb6eac52955252c678610313127ed"
+  integrity sha512-Xc7OaeBiPc4lmkorQXhT01IyL39pDFSUkBSEX1sllIGbuWAVvpVWYSbfCjvtReCXK3cSqKiQ9Gwi4D6TETiIbg==
   dependencies:
     tslib "^1.9.0"
 
@@ -1309,12 +1309,12 @@ fsevents@^1.2.7:
     nan "^2.12.1"
     node-pre-gyp "^0.12.0"
 
-fun-events@^4.4.2:
-  version "4.4.2"
-  resolved "https://registry.yarnpkg.com/fun-events/-/fun-events-4.4.2.tgz#e685aafac89871481ed459918709e48e1d02f72a"
-  integrity sha512-kz7Gomw0Xxuwi1pVJTf14Mnr7a4fb8ObKocoh9xbiUqVI9jw4ibJWzsc57PWvr469A1IlwwW7OzwQKcqWoY2YQ==
+fun-events@^4.5.0-rc.2:
+  version "4.5.0-rc.2"
+  resolved "https://registry.yarnpkg.com/fun-events/-/fun-events-4.5.0-rc.2.tgz#afd8c5a01f7aa46eba23fedbd1bc90147558cc61"
+  integrity sha512-K8dm7HUaQO2O71a71qrUqQWWl5iG/EIE8Fxba6rGnOhEoYYHC62zFv7OMoQ8oIESBAvhxn/R6p+5ezRsqqYAhA==
   dependencies:
-    call-thru "^2.4.0"
+    call-thru "^2.5.0-rc.2"
     tslib "^1.9.0"
 
 function-bind@^1.1.1:
@@ -3181,10 +3181,10 @@ rollup-pluginutils@^2.0.1, rollup-pluginutils@^2.7.0:
     estree-walker "^0.6.0"
     micromatch "^3.1.10"
 
-rollup@^1.12.2:
-  version "1.12.2"
-  resolved "https://registry.yarnpkg.com/rollup/-/rollup-1.12.2.tgz#a7c34a4bef71feb43e3ae69f0b26ae683e75db44"
-  integrity sha512-ePehZfVMIE4eO0/LV6VaMY8kp0D9sbziUabpBeJbHAHa2WJPxuS0lYLmiLamb02e098RIRyq1F2yjM4O08dQVA==
+rollup@^1.12.3:
+  version "1.12.3"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-1.12.3.tgz#068b1957d5bebf6c0a758cfe42609b512add35a9"
+  integrity sha512-ueWhPijWN+GaPgD3l77hXih/gcDXmYph6sWeQegwBYtaqAE834e8u+MC2wT6FKIUsz1DBOyOXAQXUZB+rjWDoQ==
   dependencies:
     "@types/estree" "0.0.39"
     "@types/node" "^12.0.2"

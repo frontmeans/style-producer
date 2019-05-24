@@ -1,5 +1,5 @@
 import { filterIt, itsIterator, itsReduction, overEntries } from 'a-iterable';
-import { nextSkip, NextSkip, noop } from 'call-thru';
+import { asis, nextSkip, NextSkip, noop } from 'call-thru';
 import {
   AfterEvent,
   afterEventBy,
@@ -73,13 +73,13 @@ function preventDuplicates(properties: EventKeeper<[string | StypProperties]>): 
   const onEvent: OnEvent<[StypProperties]> = afterEvent.thru(
       propertiesMap,
       passNonDuplicate(),
+      asis as (props: StypProperties) => StypProperties, // Needed to satisfy signature
   );
 
   return afterEventFrom<[StypProperties]>(onEvent);
 }
 
-function passNonDuplicate<NextArgs extends any[]>():
-    (update: StypProperties) => StypProperties | NextSkip<NextArgs, StypProperties> {
+function passNonDuplicate(): (update: StypProperties) => StypProperties | NextSkip<[StypProperties], StypProperties> {
 
   let stored: StypProperties | undefined;
 
@@ -115,7 +115,7 @@ function propertyEntries(properties: StypProperties): Iterable<[keyof StypProper
   return filterIt(overEntries(properties), valuePresent);
 }
 
-function valuePresent([_key, value]: [keyof StypProperties, StypValue]): boolean {
+function valuePresent([, value]: [keyof StypProperties, StypValue]): boolean {
   return value != null;
 }
 
