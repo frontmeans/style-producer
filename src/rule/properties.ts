@@ -67,4 +67,14 @@ export namespace StypProperties {
    */
   export type Mutable = { [key in keyof StypProperties]: StypProperties[key] };
 
+  /**
+   * A map of CSS properties of the given object.
+   *
+   * This is a helper type to convert existing interface to indexed one. All interface properties should CSS ones, i.e
+   * their values have to be assignable to [[StypValue]].
+   *
+   * @typeparam T A type with CSS properties.
+   */
+  export type Map<T> = { readonly [K in keyof T]: T[K] & StypValue };
+
 }
