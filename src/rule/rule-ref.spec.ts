@@ -3,11 +3,10 @@ import { StypSelector } from '../selector';
 import { StypAnglePt, StypLength } from '../value';
 import { stypRoot } from './root';
 import { StypRule } from './rule';
-import { stypRuleGetter } from './rule-getter';
-import { StypRuleRef } from './rule-ref';
+import { refStypRule, StypRuleRef } from './rule-ref';
 import Mock = jest.Mock;
 
-describe('stypRuleGetter', () => {
+describe('refStypRule', () => {
 
   interface RuleProperties {
     $length: StypLength;
@@ -21,7 +20,7 @@ describe('stypRuleGetter', () => {
   beforeEach(() => {
     root = stypRoot();
     selector = { c: 'rule' };
-    ref = stypRuleGetter<RuleProperties>(selector, { $length: StypLength.zero, $angle: StypAnglePt })(root);
+    ref = refStypRule<RuleProperties>(selector, { $length: StypLength.zero, $angle: StypAnglePt })(root);
   });
 
   let mockReceiver: Mock<void, [RuleProperties]>;
