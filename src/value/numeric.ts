@@ -21,6 +21,11 @@ export type StypNumeric<Unit extends string, Zero extends StypZero<Unit> | StypD
 export abstract class StypNumericStruct<Self extends StypNumericStruct<Self, Unit>, Unit extends string>
     extends StypValueStruct<Self> {
 
+  /**
+   * A type of structured numeric CSS property value.
+   */
+  abstract type: 'dimension' | 'calc' | 0;
+
   readonly dim: StypDimension.Kind<Unit>;
 
   constructor(opts: StypDimension.Opts<Unit>) {
