@@ -25,31 +25,31 @@ export type StypRuleGetter<T> = (root: StypRule) => StypRuleRef<T>;
  *
  * @returns New CSS rule key instance.
  */
-export function stypRuleGetter<T, P extends StypProperties.Map<T> = StypProperties.Map<T>>(
+export function stypRuleGetter<T>(
     selector: StypSelector,
-    mappings: StypMapper.Mappings<P>): StypRuleGetter<T> {
+    mappings: StypMapper.Mappings<StypProperties<T>>): StypRuleGetter<T> {
 
-  const mapper = StypMapper.by<P>(mappings);
+  const mapper = StypMapper.by(mappings);
 
   return key;
 
-  function key(root: StypRule): StypRuleRef<T, P> {
+  function key(root: StypRule): StypRuleRef<T> {
 
     const watched = root.rules.watch(selector);
-    const read = afterEventFrom<[P]>(watched.thru(mapper));
+    const read = afterEventFrom<[StypProperties<T>]>(watched.thru(mapper));
 
-    class Ref extends StypRuleRef<T, P> {
+    class Ref extends StypRuleRef<T> {
 
       get read() {
         return read;
       }
 
-      add(properties: EventKeeper<[Partial<P>]> | Partial<P>): this {
+      add(properties: EventKeeper<[Partial<StypProperties<T>>]> | Partial<StypProperties<T>>): this {
         root.rules.add(selector, properties);
         return this;
       }
 
-      set(properties?: EventKeeper<[Partial<P>]> | Partial<P>): this {
+      set(properties?: EventKeeper<[Partial<StypProperties<T>>]> | Partial<StypProperties<T>>): this {
         root.rules.add(selector).set(properties);
         return this;
       }

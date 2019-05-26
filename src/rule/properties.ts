@@ -5,6 +5,8 @@ import { StypRule } from './rule';
 /**
  * CSS properties map.
  *
+ * Contains named CSS properties.
+ *
  * Property keys expected to be camel-cased.
  *
  * Custom properties have keys starting with anything but ASCII letter. The properties with keys starting with `$$`
@@ -12,8 +14,14 @@ import { StypRule } from './rule';
  *
  * Custom and reserved properties can be referenced, but they are not rendered as CSS ones. They could be rendered
  * in a special way though. For example a reserved `$$css` property is rendered as raw CSS text.
+ *
+ * May be parameterized with properties structure. In that case the properties map would contain only properties
+ * present in the given structure.
+ *
+ * @typeparam T CSS properties structure. It is expected that all properties in this structure has string keys and
+ * values extending [[StypValue]].
  */
-export interface StypProperties {
+export type StypProperties<T = {
 
   readonly [key: string]: StypValue;
 
@@ -28,7 +36,11 @@ export interface StypProperties {
    */
   readonly $$css?: string;
 
-}
+}> = {
+
+  readonly [K in keyof T]: T[K] & StypValue;
+
+};
 
 export namespace StypProperties {
 
@@ -66,15 +78,5 @@ export namespace StypProperties {
    * Mutable CSS properties map.
    */
   export type Mutable = { [key in keyof StypProperties]: StypProperties[key] };
-
-  /**
-   * A map of CSS properties of the given object.
-   *
-   * This is a helper type to convert existing interface to indexed one. All interface properties should CSS ones, i.e
-   * their values have to be assignable to [[StypValue]].
-   *
-   * @typeparam T A type with CSS properties.
-   */
-  export type Map<T> = { readonly [K in keyof T]: T[K] & StypValue };
 
 }

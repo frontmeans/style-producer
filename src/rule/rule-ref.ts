@@ -8,15 +8,15 @@ import { StypProperties } from './properties';
  *
  * @typeparam T CSS properties interface of referenced rule.
  */
-export abstract class StypRuleRef<T, P extends StypProperties.Map<T> = StypProperties.Map<T>>
-    implements EventKeeper<[P]> {
+export abstract class StypRuleRef<T>
+    implements EventKeeper<[StypProperties<T>]> {
 
   /**
    * `AfterEvent` CSS properties receiver registrar.
    */
-  abstract readonly read: AfterEvent<[P]>;
+  abstract readonly read: AfterEvent<[StypProperties<T>]>;
 
-  get [AfterEvent__symbol](): AfterEvent<[P]> {
+  get [AfterEvent__symbol](): AfterEvent<[StypProperties<T>]> {
     return this.read;
   }
 
@@ -27,7 +27,7 @@ export abstract class StypRuleRef<T, P extends StypProperties.Map<T> = StypPrope
    *
    * @returns `this` rule instance.
    */
-  abstract set(properties?: Partial<P> | EventKeeper<[Partial<P>]>): this;
+  abstract set(properties?: Partial<StypProperties<T>> | EventKeeper<[Partial<StypProperties<T>>]>): this;
 
   /**
    * Appends CSS properties to the references CSS rule.
@@ -36,7 +36,7 @@ export abstract class StypRuleRef<T, P extends StypProperties.Map<T> = StypPrope
    *
    * @returns `this` rule instance.
    */
-  abstract add(properties: Partial<P> | EventKeeper<[Partial<P>]>): this;
+  abstract add(properties: Partial<StypProperties<T>> | EventKeeper<[Partial<StypProperties<T>>]>): this;
 
   /**
    * Clears CSS properties of the referenced rule.
