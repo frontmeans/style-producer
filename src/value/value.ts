@@ -22,11 +22,6 @@ export type StypValue =
 export abstract class StypValueStruct<Self extends StypValueStruct<Self>> {
 
   /**
-   * A type of structured CSS property value.
-   */
-  abstract type: StypValue.Type;
-
-  /**
    * CSS property value priority. E.g. whether it is `!important`.
    */
   readonly priority: 'important' | undefined;
@@ -97,11 +92,6 @@ export abstract class StypValueStruct<Self extends StypValueStruct<Self>> {
 }
 
 export namespace StypValue {
-
-  /**
-   * Structured CSS property value type.
-   */
-  export type Type = 'dimension' | 'calc' | 0;
 
   /**
    * Construction options of structured property CSS value.
