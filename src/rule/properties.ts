@@ -15,34 +15,41 @@ import { StypRule } from './rule';
  * Custom and reserved properties can be referenced, but they are not rendered as CSS ones. They could be rendered
  * in a special way though. For example a reserved `$$css` property is rendered as raw CSS text.
  *
- * May be parameterized with properties structure. In that case the properties map would contain only properties
- * present in the given structure.
+ * May be parameterized with properties structure. In that case the properties map contains only properties from
+ * the given structure.
  *
- * @typeparam T CSS properties structure. It is expected that all properties in this structure has string keys and
- * values extending [[StypValue]].
+ * @typeparam T CSS properties structure. Each property in this structure is expected to be compatible with
+ * [[StypValue]].
  */
-export type StypProperties<T = {
-
-  readonly [key: string]: StypValue;
-
-  /**
-   * Raw CSS text.
-   *
-   * Never interpreted by the library.
-   *
-   * Note that it is rendered before the rest of the properties in the map. So the latter take precedence.
-   *
-   * A `stypRenderText` render is responsible for raw CSS text rendering.
-   */
-  readonly $$css?: string;
-
-}> = {
+export type StypProperties<T extends StypProperties<T> = StypProperties.Generic> = {
 
   readonly [K in keyof T]: T[K] & StypValue;
 
 };
 
 export namespace StypProperties {
+
+  /**
+   * Generic CSS properties map.
+   *
+   * Allows any CSS properties. Requires `$$css` one, if present, to be a string.
+   */
+  export interface Generic {
+
+    readonly [key: string]: StypValue;
+
+    /**
+     * Raw CSS text.
+     *
+     * Never interpreted by the library.
+     *
+     * Note that it is rendered before the rest of the properties in the map. So the latter take precedence.
+     *
+     * A `stypRenderText` render is responsible for raw CSS text rendering.
+     */
+    readonly $$css?: string;
+
+  }
 
   /**
    * CSS properties specifier.

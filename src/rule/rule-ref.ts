@@ -11,14 +11,14 @@ import { StypRule } from './rule';
  *
  * @typeparam T CSS properties interface of referenced rule.
  */
-export abstract class StypRuleRef<T> implements EventKeeper<[StypProperties<T>]> {
+export abstract class StypRuleRef<T extends StypProperties<T>> implements EventKeeper<[T]> {
 
   /**
    * `AfterEvent` CSS properties receiver registrar.
    */
-  abstract readonly read: AfterEvent<[StypProperties<T>]>;
+  abstract readonly read: AfterEvent<[T]>;
 
-  get [AfterEvent__symbol](): AfterEvent<[StypProperties<T>]> {
+  get [AfterEvent__symbol](): AfterEvent<[T]> {
     return this.read;
   }
 
@@ -63,7 +63,7 @@ export abstract class StypRuleRef<T> implements EventKeeper<[StypProperties<T>]>
  *
  * @returns CSS rule reference.
  */
-export type RefStypRule<T> = (root: StypRule) => StypRuleRef<T>;
+export type RefStypRule<T extends StypProperties<T>> = (root: StypRule) => StypRuleRef<T>;
 
 /**
  * Constructs a CSS rule referrer that maps original CSS properties accordingly to the given `mappings`.
@@ -73,9 +73,9 @@ export type RefStypRule<T> = (root: StypRule) => StypRuleRef<T>;
  *
  * @returns New CSS rule key instance.
  */
-export function refStypRule<T>(
+export function refStypRule<T extends StypProperties<T>>(
     selector: StypSelector,
-    mappings: StypMapper.Mappings<StypProperties<T>>): RefStypRule<T> {
+    mappings: StypMapper.Mappings<T>): RefStypRule<T> {
 
   const mapper = StypMapper.by(mappings);
 
@@ -84,7 +84,7 @@ export function refStypRule<T>(
   function key(root: StypRule): StypRuleRef<T> {
 
     const watched = root.rules.watch(selector);
-    const read = afterEventFrom<[StypProperties<T>]>(watched.thru(mapper));
+    const read = afterEventFrom<[T]>(watched.thru(mapper));
 
     class Ref extends StypRuleRef<T> {
 
