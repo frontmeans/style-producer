@@ -40,7 +40,7 @@ describe('mapStypRuleRefs', () => {
 
       const refs = mapRefs(root);
       const result = readStypRuleRefMap<Props>(refs);
-      const mockMapReceiver = jest.fn<void, [Props]>()
+      const mockMapReceiver = jest.fn<void, [Props]>();
 
       result.once(mockMapReceiver);
 
