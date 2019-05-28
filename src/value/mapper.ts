@@ -2,6 +2,16 @@ import { itsEach, overKeys } from 'a-iterable';
 import { StypProperties } from '../rule';
 import { StypValue } from './value';
 
+/**
+ * A type of function that maps CSS properties to something else.
+ *
+ * @typeparam R A type of mapped properties. This is a mapping result type.
+ * @param from CSS properties to map.
+ *
+ * @returns Mapping result.
+ */
+export type StypMapper<R> = (this: void, from: StypProperties) => R;
+
 export namespace StypMapper {
 
   /**
@@ -140,7 +150,7 @@ export const StypMapper = {
    *
    * @returns A function that maps CSS properties accordingly to the given `mappings`.
    */
-  by<R>(mappings: StypMapper.Mappings<R>): (this: void, from: StypProperties) => R {
+  by<R>(mappings: StypMapper.Mappings<R>): StypMapper<R> {
     return StypMapper.map.bind<void, StypMapper.Mappings<R>, [StypProperties], R>(undefined, mappings);
   },
 
