@@ -1,3 +1,4 @@
+import { valueProvider } from 'call-thru';
 import { AfterEvent, AfterEvent__symbol, afterEventFrom, EventKeeper } from 'fun-events';
 import { StypSelector } from '../selector';
 import { StypMapper } from '../value';
@@ -9,7 +10,7 @@ import { StypRule } from './rule';
  *
  * Allows to access an modify CSS properties of the rule in a type safe manner.
  *
- * @typeparam T CSS properties interface of referenced rule.
+ * @typeparam T CSS properties structure of referenced rule.
  */
 export abstract class StypRuleRef<T extends StypProperties<T>> implements EventKeeper<[T]> {
 
@@ -59,7 +60,7 @@ export abstract class StypRuleRef<T extends StypProperties<T>> implements EventK
  * This is a function that obtains CSS rule reference relative to the given root.
  *
  * @typeparam T CSS properties interface of referenced rule.
- * @param root Root CSS rule the constructed reference wil be relative to.
+ * @param root Root CSS rule the constructed reference will be relative to.
  *
  * @returns CSS rule reference.
  */
@@ -68,21 +69,30 @@ export type RefStypRule<T extends StypProperties<T>> = (root: StypRule) => StypR
 /**
  * Constructs a CSS rule referrer that maps original CSS properties accordingly to the given `mappings`.
  *
+ * @typeparam T CSS properties structure of referenced rule.
  * @param selector CSS selector of target rule.
- * @param mappings Mappings of CSS properties.
+ * @param mappings Mappings of CSS properties, or a function returning such mapping and accepting a root CSS rule
+ * the constructed reference will be relative to as its only parameter.
  *
  * @returns New CSS rule key instance.
  */
 export function refStypRule<T extends StypProperties<T>>(
     selector: StypSelector,
-    mappings: StypMapper.Mappings<T>): RefStypRule<T> {
+    mappings: StypMapper.Mappings<T> | ((this: void, root: StypRule) => StypMapper.Mappings<T>)): RefStypRule<T> {
 
-  const mapper = StypMapper.by(mappings);
+  let createMapper: (root: StypRule) => StypMapper<T>;
 
-  return key;
+  if (typeof mappings === 'function') {
+    createMapper = root => StypMapper.by(mappings(root));
+  } else {
+    createMapper = valueProvider(StypMapper.by(mappings));
+  }
 
-  function key(root: StypRule): StypRuleRef<T> {
+  return ref;
 
+  function ref(root: StypRule): StypRuleRef<T> {
+
+    const mapper = createMapper(root);
     const watched = root.rules.watch(selector);
     const read = afterEventFrom<[T]>(watched.thru(mapper));
 

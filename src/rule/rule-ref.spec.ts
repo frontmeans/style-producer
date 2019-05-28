@@ -1,6 +1,7 @@
+import { valueProvider } from 'call-thru';
 import { AfterEvent__symbol } from 'fun-events';
 import { StypSelector } from '../selector';
-import { StypAnglePt, StypLength } from '../value';
+import { StypAnglePt, StypLength, StypMapper } from '../value';
 import { stypRoot } from './root';
 import { StypRule } from './rule';
 import { refStypRule, StypRuleRef } from './rule-ref';
@@ -20,7 +21,7 @@ describe('refStypRule', () => {
   beforeEach(() => {
     root = stypRoot();
     selector = { c: 'rule' };
-    ref = refStypRule<RuleProperties>(selector, { $length: StypLength.zero, $angle: StypAnglePt })(root);
+    ref = refStypRule(selector, { $length: StypLength.zero, $angle: StypAnglePt })(root);
   });
 
   let mockReceiver: Mock<void, [RuleProperties]>;
@@ -33,6 +34,20 @@ describe('refStypRule', () => {
   it('maps to default values', () => {
     expect(ref.read.kept).toEqual([{ $length: StypLength.zero }]);
     expect(mockReceiver).toHaveBeenCalledWith({ $length: StypLength.zero });
+  });
+
+  it('maps with constructed mappings', () => {
+    mockReceiver.mockClear();
+
+    const mockMap = jest.fn<StypMapper.Mappings<RuleProperties>, [StypRule]>(
+        valueProvider({ $length: StypLength.of(1, 'px') }));
+
+    ref = refStypRule(selector, mockMap)(root);
+    mockReceiver = jest.fn();
+    ref.read(mockReceiver);
+
+    expect(mockMap).toHaveBeenCalledWith(root);
+    expect(mockReceiver).toHaveBeenCalledWith({ $length: StypLength.of(1, 'px') });
   });
 
   describe('set', () => {
