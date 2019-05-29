@@ -10,7 +10,7 @@ import { RefStypRule, StypRuleRef } from './rule-ref';
  *
  * @typeparam R A type of target map of named CSS properties structures.
  */
-export abstract class StypRuleRefs<R extends StypRuleRefs.Struct<R>> implements EventKeeper<[R]> {
+export class StypRuleRefs<R extends StypRuleRefs.Struct<R>> implements EventKeeper<[R]> {
 
   private _read?: AfterEvent<[R]>;
 
@@ -20,7 +20,42 @@ export abstract class StypRuleRefs<R extends StypRuleRefs.Struct<R>> implements 
    * Each property in this map is a CSS rule reference corresponding to the same named property in properties structure.
    * I.e. it has the same name and the same properties structure of referenced rule.
    */
-  abstract readonly refs: { [K in keyof R]: StypRuleRef<R[K]> };
+  readonly refs: { readonly [K in keyof R]: StypRuleRef<R[K]> };
+
+  /**
+   * Constructs named CSS rules by resolving CSS rule referrers.
+   *
+   * @typeparam R A type of target map of named CSS properties structures.
+   * @param referrers Named CSS rule referrers to resolve.
+   * @param root A root CSS rule the references will be relative to.
+   *
+   * @returns New names CSS rules instance.
+   */
+  static by<R extends StypRuleRefs.Struct<R>>(
+      referrers: { readonly [K in keyof R]: RefStypRule<R[K]> },
+      root: StypRule): StypRuleRefs<R>;
+
+  static by<R extends StypRuleRefs.Struct<R>>(
+      referrers: { readonly [name: string]: RefStypRule<any> },
+      root: StypRule): StypRuleRefs<R> {
+
+    const refs: { [K in keyof R]?: StypRuleRef<any> } = {};
+
+    for (const key of Object.keys(referrers)) {
+      refs[key as keyof R] = referrers[key](root) as StypRuleRef<any>;
+    }
+
+    return new StypRuleRefs<R>(refs as { [K in keyof R]: StypRuleRef<R[K]> });
+  }
+
+  /**
+   * Constructs named CSS rules.
+   *
+   * @param refs A map of named CSS rule references.
+   */
+  constructor(refs: { readonly [K in keyof R]: StypRuleRef<R[K]> }) {
+    this.refs = refs;
+  }
 
   /**
    * An `AfterEvent` registrar of the receivers of named CSS properties structures for each CSS rule reference.
@@ -38,37 +73,6 @@ export abstract class StypRuleRefs<R extends StypRuleRefs.Struct<R>> implements 
 
   get [AfterEvent__symbol](): AfterEvent<[R]> {
     return this.read;
-  }
-
-  /**
-   * Constructs named CSS rules.
-   *
-   * @typeparam R A type of target map of named CSS properties structures.
-   * @param referrers Named CSS rule referrers to resolve.
-   * @param root A root CSS rule the references will be relative to.
-   *
-   * @returns A function that obtains each of the named CSS rule references relatively to the given root.
-   */
-  static by<R extends StypRuleRefs.Struct<R>>(
-      referrers: { readonly [name: string]: RefStypRule<any> },
-      root: StypRule): StypRuleRefs<R> {
-
-    const refs: { [K in keyof R]?: StypRuleRef<any> } = {};
-
-    for (const key of Object.keys(referrers)) {
-      refs[key as keyof R] = referrers[key](root) as StypRuleRef<any>;
-    }
-
-    class Refs extends StypRuleRefs<R> {
-
-      // noinspection JSMethodCanBeStatic
-      get refs()  {
-        return refs as { [K in keyof R]: StypRuleRef<R[K]> };
-      }
-
-    }
-
-    return new Refs();
   }
 
 }
