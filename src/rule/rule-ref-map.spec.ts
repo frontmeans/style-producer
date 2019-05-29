@@ -2,7 +2,7 @@ import { readProperties } from '../spec';
 import { StypAngle, StypLength } from '../value';
 import { stypRoot } from './root';
 import { StypRule } from './rule';
-import { refStypRule } from './rule-ref';
+import { RefStypRule } from './rule-ref';
 import { mapStypRuleRefs, MapStypRuleRefs, readStypRuleRefMap } from './rule-ref-map';
 
 describe('mapStypRuleRefs', () => {
@@ -22,8 +22,8 @@ describe('mapStypRuleRefs', () => {
 
   beforeEach(() => {
     mapRefs = mapStypRuleRefs<Props>({
-      first: refStypRule({ c: 'first' }, { $length: StypLength.zero }),
-      second: refStypRule({ c: 'second' }, { $angle: StypAngle.zero }),
+      first: RefStypRule.by({ c: 'first' }, { $length: StypLength.zero }),
+      second: RefStypRule.by({ c: 'second' }, { $angle: StypAngle.zero }),
     });
   });
 

@@ -66,54 +66,58 @@ export abstract class StypRuleRef<T extends StypProperties<T>> implements EventK
  */
 export type RefStypRule<T extends StypProperties<T>> = (this: void, root: StypRule) => StypRuleRef<T>;
 
-/**
- * Constructs a CSS rule referrer that maps original CSS properties accordingly to the given `mappings`.
- *
- * @typeparam T CSS properties structure of referenced rule.
- * @param selector CSS selector of target rule.
- * @param mappings Mappings of CSS properties, or a function returning such mapping and accepting a root CSS rule
- * the constructed reference will be relative to as its only parameter.
- *
- * @returns New CSS rule key instance.
- */
-export function refStypRule<T extends StypProperties<T>>(
-    selector: StypSelector,
-    mappings: StypMapper.Mappings<T> | ((this: void, root: StypRule) => StypMapper.Mappings<T>)): RefStypRule<T> {
+export const RefStypRule = {
 
-  let createMapper: (root: StypRule) => StypMapper<T>;
+  /**
+   * Constructs a CSS rule referrer that maps original CSS properties accordingly to the given `mappings`.
+   *
+   * @typeparam T CSS properties structure of referenced rule.
+   * @param selector CSS selector of target rule.
+   * @param mappings Mappings of CSS properties, or a function returning such mapping and accepting a root CSS rule
+   * the constructed reference will be relative to as its only parameter.
+   *
+   * @returns New CSS rule key instance.
+   */
+  by<T extends StypProperties<T>>(
+      selector: StypSelector,
+      mappings: StypMapper.Mappings<T> | ((this: void, root: StypRule) => StypMapper.Mappings<T>)): RefStypRule<T> {
 
-  if (typeof mappings === 'function') {
-    createMapper = root => StypMapper.by(mappings(root));
-  } else {
-    createMapper = valueProvider(StypMapper.by(mappings));
-  }
+    let createMapper: (root: StypRule) => StypMapper<T>;
 
-  return ref;
-
-  function ref(root: StypRule): StypRuleRef<T> {
-
-    const mapper = createMapper(root);
-    const watched = root.rules.watch(selector);
-    const read = afterEventFrom<[T]>(watched.thru(mapper));
-
-    class Ref extends StypRuleRef<T> {
-
-      get read() {
-        return read;
-      }
-
-      add(properties: EventKeeper<[Partial<StypProperties<T>>]> | Partial<StypProperties<T>>): this {
-        root.rules.add(selector, properties);
-        return this;
-      }
-
-      set(properties?: EventKeeper<[Partial<StypProperties<T>>]> | Partial<StypProperties<T>>): this {
-        root.rules.add(selector).set(properties);
-        return this;
-      }
-
+    if (typeof mappings === 'function') {
+      createMapper = root => StypMapper.by(mappings(root));
+    } else {
+      createMapper = valueProvider(StypMapper.by(mappings));
     }
 
-    return new Ref();
-  }
-}
+    return ref;
+
+    function ref(root: StypRule): StypRuleRef<T> {
+
+      const mapper = createMapper(root);
+      const watched = root.rules.watch(selector);
+      const read = afterEventFrom<[T]>(watched.thru(mapper));
+
+      class Ref extends StypRuleRef<T> {
+
+        get read() {
+          return read;
+        }
+
+        add(properties: EventKeeper<[Partial<StypProperties<T>>]> | Partial<StypProperties<T>>): this {
+          root.rules.add(selector, properties);
+          return this;
+        }
+
+        set(properties?: EventKeeper<[Partial<StypProperties<T>>]> | Partial<StypProperties<T>>): this {
+          root.rules.add(selector).set(properties);
+          return this;
+        }
+
+      }
+
+      return new Ref();
+    }
+  },
+
+};
