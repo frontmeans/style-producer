@@ -254,7 +254,8 @@ conflicts.
 
 Example:
 ```typescript
-import { NamespaceDef, stypRoot } from 'style-producer';
+import { NamespaceDef } from 'namespace-aliaser';
+import { stypRoot } from 'style-producer';
 
 // Declare custom namespace
 const customNs = new NamespaceDef(
