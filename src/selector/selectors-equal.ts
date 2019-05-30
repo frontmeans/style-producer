@@ -1,4 +1,4 @@
-import { NameInNamespace, NamespaceDef } from 'namespace-aliaser';
+import { NameInNamespace, namesEqual, NamespaceDef } from 'namespace-aliaser';
 import { StypSelector } from './selector';
 
 /**
@@ -26,8 +26,8 @@ function stypSelectorPartsEqual(
     return false;
   }
   return namespacesEqual(first.ns, second.ns)
-      && namesEqual(first.e, second.e)
-      && namesEqual(first.i, second.i)
+      && _namesEqual(first.e, second.e)
+      && _namesEqual(first.i, second.i)
       && classesEqual(first.c, second.c)
       && qualifiersEqual(first.$, second.$);
 }
@@ -42,14 +42,8 @@ function namespacesEqual(first: string | NamespaceDef | undefined, second: strin
   return first.url === second.url;
 }
 
-function namesEqual(first: NameInNamespace | undefined, second: NameInNamespace | undefined): boolean {
-  if (!first || typeof first === 'string') {
-    return first === second;
-  }
-  if (!second || typeof second === 'string') {
-    return false;
-  }
-  return first[0] === second[0] && first[1].url === second[1].url;
+function _namesEqual(first: NameInNamespace | undefined, second: NameInNamespace | undefined): boolean {
+  return first == null ? second == null : second != null && namesEqual(first, second);
 }
 
 function classesEqual(

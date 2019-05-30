@@ -1,4 +1,4 @@
-import { NamespaceDef } from 'namespace-aliaser';
+import { DEFAULT__NS, NamespaceDef } from 'namespace-aliaser';
 import { stypSelectorsEqual } from './selectors-equal';
 
 describe('stypSelectorsEqual', () => {
@@ -34,6 +34,7 @@ describe('stypSelectorsEqual', () => {
     expect(stypSelectorsEqual([{ e: 'span' }], [{ e: 'div' }])).toBe(false);
     expect(stypSelectorsEqual([{ e: 'span' }], [{ e: ['span', ns2] }])).toBe(false);
     expect(stypSelectorsEqual([{ e: 'span' }], [{ e: 'span' }])).toBe(true);
+    expect(stypSelectorsEqual([{ e: 'span' }], [{ e: ['span', DEFAULT__NS] }])).toBe(true);
     expect(stypSelectorsEqual([{ e: ['span', ns1] }], [{ e: ['div', ns1] }])).toBe(false);
     expect(stypSelectorsEqual([{ e: ['span', ns1] }], [{ e: ['span', ns2] }])).toBe(false);
     expect(stypSelectorsEqual([{ e: ['span', ns1] }], [{ e: 'span' }])).toBe(false);
