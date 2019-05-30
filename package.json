@@ -1,6 +1,6 @@
 {
   "name": "style-producer",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Produces and dynamically updates stylesheets",
   "keywords": [
     "css-in-js",
