@@ -1,5 +1,5 @@
 import { valueProvider } from 'call-thru';
-import { AfterEvent__symbol } from 'fun-events';
+import { AfterEvent__symbol, trackValue } from 'fun-events';
 import { StypSelector } from '../selector';
 import { StypAnglePt, StypLength, StypMapper } from '../value';
 import { stypRoot } from './root';
@@ -48,6 +48,22 @@ describe('RefStypRule', () => {
 
     expect(mockMap).toHaveBeenCalledWith(root);
     expect(mockReceiver).toHaveBeenCalledWith({ $length: StypLength.of(1, 'px') });
+  });
+
+  it('maps with received mappings', () => {
+    mockReceiver.mockClear();
+
+    const mappings = trackValue<StypMapper.Mappings<RuleProperties>>({ $length: StypLength.of(1, 'px') });
+
+    ref = RefStypRule.by(selector, mappings)(root);
+    mockReceiver = jest.fn();
+    ref.read(mockReceiver);
+
+    expect(mockReceiver).toHaveBeenCalledWith({ $length: StypLength.of(1, 'px') });
+
+    mockReceiver.mockClear();
+    mappings.it = { $length: StypLength.of(2, 'px') };
+    expect(mockReceiver).toHaveBeenCalledWith({ $length: StypLength.of(2, 'px') });
   });
 
   describe('set', () => {
