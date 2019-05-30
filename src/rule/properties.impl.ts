@@ -9,8 +9,7 @@ import {
   EventKeeper,
   EventSender,
   isEventKeeper,
-  isEventSender,
-  OnEvent
+  isEventSender
 } from 'fun-events';
 import { IMPORTANT_CSS_SUFFIX } from '../internal';
 import { StypValue, stypValuesEqual } from '../value';
@@ -68,15 +67,11 @@ function propertiesKeeper(sender: EventSender<[string | StypProperties]>): After
 }
 
 function preventDuplicates(properties: EventKeeper<[string | StypProperties]>): AfterEvent<[StypProperties]> {
-
-  const afterEvent = afterEventFrom(properties);
-  const onEvent: OnEvent<[StypProperties]> = afterEvent.thru(
+  return afterEventFrom(properties).keep.thru(
       propertiesMap,
       passNonDuplicate(),
       asis as (props: StypProperties) => StypProperties, // Needed to satisfy signature
   );
-
-  return afterEventFrom<[StypProperties]>(onEvent);
 }
 
 function passNonDuplicate(): (update: StypProperties) => StypProperties | NextSkip<[StypProperties], StypProperties> {

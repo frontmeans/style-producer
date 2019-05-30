@@ -1,5 +1,5 @@
 import { filterIt, itsReduction, ObjectEntry, overEntries } from 'a-iterable';
-import { AfterEvent, afterEventFrom } from 'fun-events';
+import { AfterEvent } from 'fun-events';
 import { isNotEmptyArray } from '../internal';
 import { StypProperties, StypRule } from '../rule';
 import { mergeStypProperties } from '../rule/properties.impl';
@@ -20,7 +20,7 @@ class AtRulesRender implements StypRender.Spec {
     let outer = this._rule.outer;
 
     while (outer) {
-      properties = mergeStypProperties(atPropertiesFrom(outer.read), properties);
+      properties = mergeStypProperties(outer.read.keep.thru(onlyAtProperties), properties);
       outer = outer.outer;
     }
 
@@ -123,10 +123,6 @@ export const stypRenderAtRules: StypRender = {
   },
 
 };
-
-function atPropertiesFrom(properties: AfterEvent<[StypProperties]>): AfterEvent<[StypProperties]> {
-  return afterEventFrom(properties.thru(onlyAtProperties));
-}
 
 function onlyAtProperties(properties: StypProperties): StypProperties {
   return itsReduction(
