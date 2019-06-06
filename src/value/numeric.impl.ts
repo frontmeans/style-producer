@@ -344,6 +344,10 @@ function stypDiv<Unit extends string>(left: StypNumeric<Unit>, right: number): S
       : new StypMulDiv(left, '/', right, left);
 }
 
+function isStypNumeric(source: StypValue): source is StypNumeric<any, any> {
+  return typeof source === 'object' && (source.type === 'dimension' || source.type === 'calc' || source.type === 0);
+}
+
 /**
  * @internal
  */
@@ -376,10 +380,13 @@ export function unitlessZeroDimensionKind<Unit extends string>(
     },
 
     by(source: StypValue): StypNumeric<Unit> | undefined {
-      if (typeof source === 'object') {
-        return source.toDim(this);
+      if (!isStypNumeric(source)) {
+        return;
       }
-      return;
+
+      const numeric: StypNumeric<any, any> = source;
+
+      return numeric.toDim(this);
     }
 
   };
@@ -422,10 +429,13 @@ export function unitZeroDimensionKind<Unit extends string>(
     },
 
     by(source: StypValue): StypNumeric<Unit, StypDimension_<Unit>> | undefined {
-      if (typeof source === 'object') {
-        return source.toDim(this) as StypNumeric<Unit, StypDimension_<Unit>> | undefined;
+      if (!isStypNumeric(source)) {
+        return;
       }
-      return;
+
+      const numeric: StypNumeric<any, any> = source;
+
+      return numeric.toDim(this);
     },
 
   };

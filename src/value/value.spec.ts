@@ -3,21 +3,38 @@ import { stypSplitPriority, stypValuesEqual } from './value';
 
 describe('stypSplitPriority', () => {
   it('splits nothing when there is no value', () => {
-    expect(stypSplitPriority(undefined)).toEqual([]);
+
+    const result: [] = stypSplitPriority(undefined);
+
+    expect(result).toEqual([]);
   });
   it('splits string value and priority', () => {
-    expect(stypSplitPriority('1px !important')).toEqual(['1px', 'important']);
-    expect(stypSplitPriority('1px')).toEqual(['1px']);
+
+    const result1: [string, 'important'?] = stypSplitPriority('1px !important');
+
+    expect(result1).toEqual(['1px', 'important']);
+
+    const result2 = stypSplitPriority('1px');
+
+    expect(result2).toEqual(['1px']);
   });
   it('does not extract priority from scalar value', () => {
-    expect(stypSplitPriority(1)).toEqual([1]);
+
+    const result: [number] = stypSplitPriority(1);
+
+    expect(result).toEqual([1]);
   });
   it('splits structures value and priority', () => {
 
     const value = StypLength.of(1, 'px');
 
-    expect(stypSplitPriority(value.important())).toEqual([value, 'important']);
-    expect(stypSplitPriority(value)).toEqual([value]);
+    const result1: [StypLength, 'important'?] = stypSplitPriority(value.important());
+
+    expect(result1).toEqual([value, 'important']);
+
+    const result2: [StypLength, 'important'?] = stypSplitPriority(value);
+
+    expect(result2).toEqual([value]);
   });
 });
 

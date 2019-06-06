@@ -151,7 +151,7 @@ export namespace StypDimension {
      * Maps the given CSS property value to the one compatible with this dimension kind. Defaults to `undefined`
      * if mapping is not possible.
      *
-     * This method allows to use an structured value instance as [CSS property mapping][[StypMapper.Mapping]].
+     * This method allows to use a dimension kind as [CSS property mapping][[StypMapper.Mapping]].
      *
      * Any scalar or non-numeric value is mapped to `undefined`. A numeric value is converted to this dimension by
      * `StypNumeric.toDim()` method.
