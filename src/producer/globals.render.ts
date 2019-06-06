@@ -1,6 +1,6 @@
 import { overEntries } from 'a-iterable';
 import { StypProperties } from '../rule';
-import { stypSplitPriority, StypValue } from '../value';
+import { stypSplitPriority, StypURL, StypValue } from '../value';
 import { stypRenderAtRules } from './at-rules.render';
 import { StypRender } from './render';
 import { FIRST_RENDER_ORDER } from './render.impl';
@@ -74,8 +74,12 @@ export const stypRenderGlobals: StypRender = {
         importIndex += importDelta;
         nsIndex += importDelta;
 
-        nsIndex += renderDefaultNamespace(sheet, nsIndex, key, value);
-        nsIndex += renderNamespacePrefix(sheet, nsIndex, key, value);
+        const url = StypURL.by(value);
+
+        if (url) {
+          nsIndex += renderDefaultNamespace(sheet, nsIndex, key, url);
+          nsIndex += renderNamespacePrefix(sheet, nsIndex, key, url);
+        }
       }
     }
 
@@ -95,8 +99,8 @@ function renderImport(
     return 0;
   }
 
-  const url = key.substring(IMPORT_PREFIX.length);
-  let css = `@import url(${url})`;
+  const url = new StypURL(key.substring(IMPORT_PREFIX.length));
+  let css = `@import ${url}`;
 
   if (value) {
     css += ' ' + value;
@@ -111,12 +115,12 @@ function renderDefaultNamespace(
     sheet: CSSStyleSheet,
     index: number,
     key: string,
-    value: StypValue): number {
+    url: StypURL): number {
   if (key !== '@namespace') {
     return 0;
   }
 
-  sheet.insertRule(`@namespace url(${value});`, index);
+  sheet.insertRule(`@namespace ${url};`, index);
 
   return 1;
 }
@@ -127,14 +131,14 @@ function renderNamespacePrefix(
     sheet: CSSStyleSheet,
     index: number,
     key: string,
-    value: StypValue): number {
+    url: StypURL): number {
   if (!key.startsWith(NS_PREFIX)) {
     return 0;
   }
 
   const prefix = key.substring(NS_PREFIX.length);
 
-  sheet.insertRule(`@namespace ${prefix} url(${value});`, index);
+  sheet.insertRule(`@namespace ${prefix} ${url};`, index);
 
   return 1;
 }
