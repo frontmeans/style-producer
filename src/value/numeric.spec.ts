@@ -11,32 +11,34 @@ describe('StypDimension', () => {
     value = StypLengthPt.of(16, 'px');
   });
 
-  it('is equal to itself', () => {
-    expect(value.is(value)).toBe(true);
-  });
-  it('is equal to the same `StypDimension`', () => {
-    expect(value.is(StypLengthPt.of(16, 'px'))).toBe(true);
-  });
-  it('is equal to different `StypDimension` with the same unit', () => {
-    expect(value.is(StypLength.of(16, 'px'))).toBe(true);
-  });
-  it('is not equal to `StypDimension` with different unit', () => {
-    expect(value.is(StypLengthPt.of(16, 'rem'))).toBe(false);
-  });
-  it('is not equal to `StypDimension` with different value', () => {
-    expect(value.is(StypLengthPt.of(17, 'px'))).toBe(false);
-  });
-  it('is not equal to scalar value', () => {
-    expect(value.is('16px')).toBe(false);
-  });
-  it('is not equal to different value type', () => {
-    expect(value.is(value.add(StypLengthPt.of(33, '%')))).toBe(false);
-  });
-  it('is not equal to the same value with different priority', () => {
-    expect(value.is(value.important())).toBe(false);
-  });
-  it('is not equal to the same value with same priority', () => {
-    expect(value.is(value.important().usual())).toBe(true);
+  describe('is', () => {
+    it('equals to itself', () => {
+      expect(value.is(value)).toBe(true);
+    });
+    it('equals to the same `StypDimension`', () => {
+      expect(value.is(StypLengthPt.of(16, 'px'))).toBe(true);
+    });
+    it('equals to different `StypDimension` with the same unit', () => {
+      expect(value.is(StypLength.of(16, 'px'))).toBe(true);
+    });
+    it('not equal to `StypDimension` with different unit', () => {
+      expect(value.is(StypLengthPt.of(16, 'rem'))).toBe(false);
+    });
+    it('not equal to `StypDimension` with different value', () => {
+      expect(value.is(StypLengthPt.of(17, 'px'))).toBe(false);
+    });
+    it('not equal to scalar value', () => {
+      expect(value.is('16px')).toBe(false);
+    });
+    it('not equal to different value type', () => {
+      expect(value.is(value.add(StypLengthPt.of(33, '%')))).toBe(false);
+    });
+    it('not equal to the same value with different priority', () => {
+      expect(value.is(value.important())).toBe(false);
+    });
+    it('equals to the same value with same priority', () => {
+      expect(value.is(value.important().usual())).toBe(true);
+    });
   });
 
   describe('add', () => {
