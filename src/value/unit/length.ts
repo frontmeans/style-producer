@@ -29,7 +29,7 @@ export namespace StypLength {
 export const StypLength: StypDimension.Kind.UnitlessZero<StypLength.Unit> =
     /*#__PURE__*/ unitlessZeroDimensionKind({
   pt() {
-    return StypLengthPt; // tslint:disable-line:no-use-before-declare
+    return StypLengthPt;
   },
   noPt() {
     return StypLength;

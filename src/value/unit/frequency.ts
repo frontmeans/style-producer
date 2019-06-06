@@ -27,7 +27,7 @@ export namespace StypFrequency {
 export const StypFrequency: StypDimension.Kind.UnitZero<StypFrequency.Unit> = /*#__PURE__*/ unitZeroDimensionKind({
   zeroUnit: 'kHz',
   withPercent() {
-    return StypFrequencyPt; // tslint:disable-line:no-use-before-declare
+    return StypFrequencyPt;
   },
   noPercent() {
     return StypFrequency;

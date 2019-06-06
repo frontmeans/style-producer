@@ -360,7 +360,7 @@ export function unitlessZeroDimensionKind<Unit extends string>(
   const dimension: StypDimension_.Kind.UnitlessZero<Unit> = {
 
     get zero(): StypZero<Unit> {
-      return zero; // tslint:disable-line:no-use-before-declare
+      return zero;
     },
 
     get pt() {
@@ -372,7 +372,7 @@ export function unitlessZeroDimensionKind<Unit extends string>(
     },
 
     of(val: number, unit: Unit): StypDimension_<Unit> | StypZero<Unit> {
-      return val ? new StypDimension(val, unit, { dim: this }) : zero; // tslint:disable-line:no-use-before-declare
+      return val ? new StypDimension(val, unit, { dim: this }) : zero;
     },
 
     by(source: StypValue): StypNumeric<Unit> | undefined {
@@ -414,7 +414,7 @@ export function unitZeroDimensionKind<Unit extends string>(
     },
 
     get zero(): StypDimension_<Unit> {
-      return zero; // tslint:disable-line:no-use-before-declare
+      return zero;
     },
 
     of(val: number, unit: Unit): StypDimension<Unit> {

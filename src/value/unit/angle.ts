@@ -26,7 +26,7 @@ export namespace StypAngle {
  */
 export const StypAngle: StypDimension.Kind.UnitlessZero<StypAngle.Unit> = /*#__PURE__*/ unitlessZeroDimensionKind({
   pt() {
-    return StypAnglePt; // tslint:disable-line:no-use-before-declare
+    return StypAnglePt;
   },
   noPt() {
     return StypAngle;
