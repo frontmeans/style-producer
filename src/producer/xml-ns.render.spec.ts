@@ -1,5 +1,6 @@
 import { NamespaceAliaser, NamespaceDef, newNamespaceAliaser } from 'namespace-aliaser';
 import { StypSelector } from '../selector';
+import { StypURL } from '../value';
 import { StypRender } from './render';
 import { StyleProducer } from './style-producer';
 import { stypRenderXmlNs } from './xml-ns.render';
@@ -47,7 +48,7 @@ describe('stypRenderXmlNs', () => {
 
     render(producer, { property: 'abstract-value.ts' });
     expect(producer.render).toHaveBeenCalledWith({
-      '@namespace:test': 'test/ns',
+      '@namespace:test': new StypURL('test/ns'),
       property: 'abstract-value.ts'
     });
   });

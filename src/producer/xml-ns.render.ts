@@ -4,6 +4,7 @@ import { NamespaceDef } from 'namespace-aliaser';
 import { StypProperties } from '../rule';
 import { StypSelector } from '../selector';
 import { isCombinator } from '../selector/selector.impl';
+import { StypURL } from '../value';
 import { stypRenderGlobals } from './globals.render';
 import { StypRender } from './render';
 import { FIRST_RENDER_ORDER } from './render.impl';
@@ -36,7 +37,7 @@ export const stypRenderXmlNs: StypRender = {
 
       const alias = producer.nsAlias(ns);
 
-      result[`@namespace:${alias}`] = ns.url;
+      result[`@namespace:${alias}`] = new StypURL(ns.url);
 
       return result;
     }
