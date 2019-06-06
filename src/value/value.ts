@@ -108,13 +108,51 @@ export namespace StypValue {
 }
 
 /**
- * Splits the given CSS property value onto value non-prioritized value and priority.
+ * Splits undefined CSS property value onto non-prioritized value and priority.
+ *
+ * @param value Undefined CSS property value to split.
+ *
+ * @returns An empty tuple.
+ */
+export function stypSplitPriority<T extends StypValue>(value: undefined): [];
+
+/**
+ * Splits string CSS property value onto non-prioritized value and priority.
+ *
+ * @param value CSS property value to split.
+ *
+ * @returns A tuple containing the value without `!priority` suffix, and priority.
+ */
+export function stypSplitPriority(value: string): [string, 'important'?];
+
+/**
+ * Splits scalar CSS property value onto non-prioritized value and priority.
+ *
+ * @param value CSS property value to split.
+ *
+ * @returns A tuple containing the value. Scalar value priority is always normal.
+ */
+export function stypSplitPriority<T extends number | boolean>(value: T): [T];
+
+/**
+ * Splits defined CSS property value onto non-prioritized value and priority.
  *
  * @param value CSS property value to split.
  *
  * @returns A tuple containing the value and priority.
  */
-export function stypSplitPriority<T extends StypValue>(value: T): readonly [T?, 'important'?] {
+export function stypSplitPriority<T extends StypValue>(value: Exclude<T, undefined>): [T, 'important'?];
+
+/**
+ * Splits arbitrary CSS property value onto value non-prioritized value and priority.
+ *
+ * @param value CSS property value to split.
+ *
+ * @returns A tuple containing the value and priority. Empty tuple if the value is `undefined`.
+ */
+export function stypSplitPriority<T extends StypValue>(value: T): [T?, 'important'?];
+
+export function stypSplitPriority<T extends StypValue>(value: T): [T?, 'important'?] {
   if (value == null) {
     return [];
   }
