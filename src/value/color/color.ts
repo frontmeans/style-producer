@@ -1,19 +1,55 @@
 import { StypValue, StypValueStruct } from '../value';
 
+/**
+ * Structured [<color>] CSS property value.
+ *
+ * Colors are represented by either `rgb()`, or `hsl()` functional notations.
+ *
+ * [<color>]: https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
+ */
 export type StypColor = StypRGB | StypHSL;
 
+/**
+ * CSS property value representing [RGB color] in `rgb()` or `rgba()` functional notation.
+ *
+ * [RGB color]: https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#RGB_colors
+ */
 export class StypRGB extends StypValueStruct<StypRGB> implements StypRGB.Coords {
 
   // noinspection JSMethodCanBeStatic
+  /**
+   * `rgb` value type.
+   */
   get type(): 'rgb' {
     return 'rgb';
   }
 
+  /**
+   * Red color value between `0` and `255`.
+   */
   readonly r: number;
+
+  /**
+   * Green color value between `0` and `255`.
+   */
   readonly g: number;
+
+  /**
+   * Blue color value between `0` and `255`.
+   */
   readonly b: number;
+
+  /**
+   * Alpha value between `0` and `1`.
+   */
   readonly a: number;
 
+  /**
+   * Constructs RGB color value.
+   *
+   * @param coords Color coordinates.
+   * @param opts Construction options.
+   */
   constructor(coords: StypRGB.Coords, opts?: StypValue.Opts) {
     super(opts);
     this.r = intCoord(coords.r, 255);
@@ -22,10 +58,18 @@ export class StypRGB extends StypValueStruct<StypRGB> implements StypRGB.Coords 
     this.a = coords.a != null ? coord(coords.a, 1) : 1;
   }
 
+  /**
+   * This color in RGB coordinates.
+   *
+   * Always the same as `this`.
+   */
   get rgb(): this {
     return this;
   }
 
+  /**
+   * This color in HSL coordinates.
+   */
   get hsl(): StypHSL {
 
     const { a } = this;
@@ -61,8 +105,8 @@ export class StypRGB extends StypValueStruct<StypRGB> implements StypRGB.Coords 
     return new StypHSL({ h, s, l, a }, this);
   }
 
-  by(value: StypValue): StypColor {
-    return StypColor.by(value) || this;
+  by(source: StypValue): StypColor {
+    return StypColor.by(source) || this;
   }
 
   is(other: StypValue): boolean {
@@ -91,10 +135,31 @@ export class StypRGB extends StypValueStruct<StypRGB> implements StypRGB.Coords 
 
 export namespace StypRGB {
 
+  /**
+   * [RGB color] coordinates.
+   *
+   * [RGB color]: https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#RGB_colors
+   */
   export interface Coords {
+
+    /**
+     * Red color value between `0` and `255`.
+     */
     r: number;
+
+    /**
+     * Green color value between `0` and `255`.
+     */
     g: number;
+
+    /**
+     * Blue color value between `0` and `255`.
+     */
     b: number;
+
+    /**
+     * Alpha value between `0` and `1`. `1` (full opacity) by default.
+     */
     a?: number;
   }
 
@@ -107,11 +172,32 @@ export class StypHSL extends StypValueStruct<StypHSL> implements StypHSL.Coords 
     return 'hsl';
   }
 
+  /**
+   * Hue angle value in degrees between `0` and `360`.
+   */
   readonly h: number;
+
+  /**
+   * Saturation percentage.
+   */
   readonly s: number;
+
+  /**
+   * Lightness percentage.
+   */
   readonly l: number;
+
+  /**
+   * Alpha value between `0` and `1`.
+   */
   readonly a: number;
 
+  /**
+   * Constructs HSL color value.
+   *
+   * @param coords Color coordinates.
+   * @param opts Construction options.
+   */
   constructor(coords: StypHSL.Coords, opts?: StypValue.Opts) {
     super(opts);
     this.h = angleCoord(coords.h);
@@ -120,6 +206,9 @@ export class StypHSL extends StypValueStruct<StypHSL> implements StypHSL.Coords 
     this.a = coords.a != null ? coord(coords.a, 1) : 1;
   }
 
+  /**
+   * This color in RGB coordinates.
+   */
   get rgb(): StypRGB {
 
     const { a } = this;
@@ -147,12 +236,17 @@ export class StypHSL extends StypValueStruct<StypHSL> implements StypHSL.Coords 
         this);
   }
 
+  /**
+   * This color in HSL coordinates.
+   *
+   * Always the same as `this`.
+   */
   get hsl(): this {
     return this;
   }
 
-  by(value: StypValue): StypColor {
-    return StypColor.by(value) || this;
+  by(source: StypValue): StypColor {
+    return StypColor.by(source) || this;
   }
 
   is(other: StypValue): boolean {
@@ -180,10 +274,31 @@ export class StypHSL extends StypValueStruct<StypHSL> implements StypHSL.Coords 
 
 export namespace StypHSL {
 
+  /**
+   * [HSL color] coordinates.
+   *
+   * [HSL color]: https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#HSL_colors
+   */
   export interface Coords {
+
+    /**
+     * Hue angle value in degrees.
+     */
     h: number;
+
+    /**
+     * Saturation percentage.
+     */
     s: number;
+
+    /**
+     * Lightness percentage.
+     */
     l: number;
+
+    /**
+     * Alpha value between `0` and `1`. `1` (full opacity) by default.
+     */
     a?: number;
   }
 
@@ -191,9 +306,18 @@ export namespace StypHSL {
 
 export const StypColor = {
 
-  by(value: StypValue): StypColor | undefined {
-    if (typeof value === 'object' && (value.type === 'rgb' || value.type === 'hsl')) {
-      return value;
+  /**
+   * Maps the given CSS property value to color. Defaults to `undefined` if mapping is not possible.
+   *
+   * This method allows to use a `StypColor` instance as [CSS property mapping][[StypMapper.Mapping]].
+   *
+   * @param source A raw property value that should be converted.
+   *
+   * @returns Mapped property value or `undefined`.
+   */
+  by(source: StypValue): StypColor | undefined {
+    if (typeof source === 'object' && (source.type === 'rgb' || source.type === 'hsl')) {
+      return source;
     }
     return;
   },
