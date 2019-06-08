@@ -1,3 +1,19 @@
+import {
+  hslBlue,
+  hslCrimson,
+  hslDarkBlue,
+  hslDarkGreen,
+  hslGreen,
+  hslRed,
+  hslWhite,
+  rgbBlue,
+  rgbCrimson,
+  rgbDarkBlue,
+  rgbDarkGreen,
+  rgbGreen,
+  rgbRed,
+  rgbWhite
+} from '../../spec';
 import { StypLength } from '../unit';
 import { StypColor, StypHSL, StypRGB } from './color';
 
@@ -267,63 +283,3 @@ describe('StypColor', () => {
     });
   });
 });
-
-function rgbWhite(a = 1) {
-  return new StypRGB({ r: 255, g: 255, b: 255, a });
-}
-
-function hslWhite(a = 1): StypHSL {
-  return new StypHSL({ a, h: 0, l: 100, s: 0 });
-}
-
-function rgbGreen(a = 1): StypRGB {
-  return new StypRGB({ r: 182, g: 204, b: 102, a });
-}
-
-function hslGreen(a = 1): StypHSL {
-  return new StypHSL({ h: 73, s: 50, l: 60, a });
-}
-
-function rgbDarkGreen(a = 1): StypRGB {
-  return new StypRGB({ r: 0, g: 102, b: 0, a });
-}
-
-function hslDarkGreen(a = 1): StypHSL {
-  return new StypHSL({ h: 120, s: 100, l: 20, a });
-}
-
-function rgbRed(a = 1): StypRGB {
-  return new StypRGB({ r: 204, g: 182, b: 102, a });
-}
-
-function hslRed(a = 1): StypHSL {
-  return new StypHSL({ h: 47, s: 50, l: 60, a });
-}
-
-function rgbCrimson(a = 1): StypRGB {
-  return new StypRGB({ r: 220, g: 20, b: 60, a });
-}
-
-function hslCrimson(a = 1): StypHSL {
-  return new StypHSL({ h: 348, s: 83, l: 47, a });
-}
-
-function rgbBlue(a = 1): StypRGB {
-  return new StypRGB({ r: 182, g: 102, b: 204, a });
-}
-
-function hslBlue(a = 1): StypHSL {
-  return new StypHSL({ h: 287, s: 50, l: 60, a });
-}
-
-function rgbDarkBlue(a = 1): StypRGB {
-  return new StypRGB({ r: 131, g: 51, b: 153, a });
-}
-
-function hslDarkBlue(a = 1): StypHSL {
-  return new StypHSL({ h: 287, s: 50, l: 40, a });
-}
-
-function rgbBlack(a = 1): StypRGB {
-  return new StypRGB({ r: 0, g: 0, b: 0, a });
-}
