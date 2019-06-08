@@ -1,3 +1,4 @@
+export * from './color';
 export * from './numeric';
 export * from './mapper';
 export * from './unit';
