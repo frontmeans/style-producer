@@ -62,6 +62,15 @@ describe('StypRGB', () => {
     });
   });
 
+  describe('set', () => {
+    it('updates coordinates', () => {
+      expect(value.set({ r: 99 })).toMatchObject({ ...coords, r: 99 });
+      expect(value.set({ g: 99 })).toMatchObject({ ...coords, g: 99 });
+      expect(value.set({ b: 99 })).toMatchObject({ ...coords, b: 99 });
+      expect(value.set({ a: 0.99 })).toMatchObject({ ...coords, a: 0.99 });
+    });
+  });
+
   describe('rgb', () => {
     it('returns itself', () => {
       expect(value.rgb).toBe(value);
@@ -181,6 +190,15 @@ describe('StypHSL', () => {
       expect(important.priority).toBe('important');
       expect(important).toMatchObject(coords);
       expect(important).toEqual(value.important());
+    });
+  });
+
+  describe('set', () => {
+    it('updates coordinates', () => {
+      expect(value.set({ h: 99 })).toMatchObject({ ...coords, h: 99 });
+      expect(value.set({ s: 99 })).toMatchObject({ ...coords, s: 99 });
+      expect(value.set({ l: 99 })).toMatchObject({ ...coords, l: 99 });
+      expect(value.set({ a: 0.99 })).toMatchObject({ ...coords, a: 0.99 });
     });
   });
 

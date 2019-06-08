@@ -1,6 +1,6 @@
 import { IMPORTANT_CSS_SUFFIX } from '../internal';
 import { StypColor } from './color';
-import { StypNumeric } from './numeric/numeric';
+import { StypNumeric } from './numeric';
 import { StypURL } from './url';
 
 /**
