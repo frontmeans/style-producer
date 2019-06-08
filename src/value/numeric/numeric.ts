@@ -2,7 +2,7 @@ import { StypValue, StypValueStruct } from '../value';
 import { StypZero } from './zero';
 
 /**
- * Structured numeric value.
+ * Structured numeric CSS property value.
  *
  * This represents either dimension, zero value, or a `calc()` CSS function call.
  *
