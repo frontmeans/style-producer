@@ -1,4 +1,4 @@
-import { StypValue, StypValueStruct } from './value';
+import { StypValue, StypValueStruct } from '../value';
 import { StypZero } from './zero';
 
 /**

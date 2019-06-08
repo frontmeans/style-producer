@@ -5,7 +5,7 @@ import {
   StypNumeric,
   StypNumericStruct
 } from './numeric';
-import { StypValue, stypValuesEqual } from './value';
+import { StypValue, stypValuesEqual } from '../value';
 import { StypZero } from './zero';
 import { newStypZero } from './zero.impl';
 

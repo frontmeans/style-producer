@@ -1,4 +1,4 @@
-import { StypNumericStruct } from './numeric';
+import { StypNumericStruct } from './';
 
 /**
  * Structured unit-less zero value.

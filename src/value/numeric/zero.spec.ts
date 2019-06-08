@@ -1,6 +1,6 @@
-import { StypLength, StypLengthPt, StypResolution } from './unit';
-import { StypTime } from './unit/time';
-import { stypValuesEqual } from './value';
+import { StypLength, StypLengthPt, StypResolution } from '../unit';
+import { StypTime } from '../unit/time';
+import { stypValuesEqual } from '../value';
 import { StypZero } from './zero';
 
 describe('StypZero', () => {

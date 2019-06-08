@@ -1,7 +1,7 @@
 import { StypCalc, StypDimension } from './numeric';
 import { StypAddSub, StypMulDiv } from './numeric.impl';
-import { StypFrequency, StypLength, StypLengthPt, StypTime } from './unit';
-import { stypValuesEqual } from './value';
+import { StypFrequency, StypLength, StypLengthPt, StypTime } from '../unit';
+import { stypValuesEqual } from '../value';
 
 describe('StypDimension', () => {
 

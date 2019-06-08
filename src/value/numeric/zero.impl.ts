@@ -1,5 +1,5 @@
-import { StypDimension, StypNumeric, StypNumericStruct } from './numeric';
-import { StypValue } from './value';
+import { StypDimension, StypNumeric, StypNumericStruct } from './';
+import { StypValue } from '../value';
 import { StypZero } from './zero';
 
 class Zero<Unit extends string> extends StypNumericStruct<Zero<Unit>, Unit> implements StypZero<Unit> {
