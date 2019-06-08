@@ -45,7 +45,7 @@ describe('StypURL', () => {
     it('not equal to the same value with different priority', () => {
       expect(value.is(value.important())).toBe(false);
     });
-    it('equals to the same value with same priority', () => {
+    it('equals to the same value with the same priority', () => {
       expect(value.is(value.important().usual())).toBe(true);
     });
   });
@@ -58,7 +58,7 @@ describe('StypURL', () => {
       expect(value.important().is(StypURL.by(`${url} !important`))).toBe(true);
     });
     it('recognizes URL', () => {
-      expect(value.is(StypURL.by(new StypURL(url)))).toBe(true);
+      expect(StypURL.by(value)).toBe(value);
     });
     it('does not recognize non-string value', () => {
       expect(StypURL.by(1)).toBeUndefined();
@@ -68,6 +68,12 @@ describe('StypURL', () => {
     });
     it('replaces by itself when not recognized', () => {
       expect(value.by(123)).toBe(value);
+    });
+    it('does not replace recognized URL', () => {
+
+      const other = new StypURL('./other');
+
+      expect(value.by(other)).toBe(other);
     });
   });
 
