@@ -1,4 +1,5 @@
 import { IMPORTANT_CSS_SUFFIX } from '../internal';
+import { StypColor } from './color';
 import { StypNumeric } from './numeric';
 import { StypURL } from './url';
 
@@ -10,7 +11,8 @@ import { StypURL } from './url';
 export type StypValue =
     string | number | boolean | undefined
     | StypNumeric<any>
-    | StypURL;
+    | StypURL
+    | StypColor;
 
 /**
  * Structured property CSS value. E.g. [<length>], [<percentage>], [<color>], etc.
