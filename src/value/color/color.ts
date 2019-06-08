@@ -10,11 +10,43 @@ import { StypValue, StypValueStruct } from '../value';
 export type StypColor = StypRGB | StypHSL;
 
 /**
+ * Structured color CSS property value base.
+ */
+export abstract class StypColorStruct<Self extends StypColorStruct<Self, Coords>, Coords>
+    extends StypValueStruct<Self> {
+
+  /**
+   * Color value type corresponding to color coordinates. Either `rgb` or `hsl`
+   */
+  abstract readonly type: 'rgb' | 'hsl';
+
+  /**
+   * This color in RGB coordinates.
+   */
+  abstract readonly rgb: StypRGB;
+
+  /**
+   * This color in HSL coordinates.
+   */
+  abstract readonly hsl: StypHSL;
+
+  /**
+   * Constructs another color value with updated coordinates.
+   *
+   * @param coords Partial color coordinates to apply. Missing values are taken from this color.
+   *
+   * @returns Updated color value.
+   */
+  abstract set(coords: Partial<Coords>): Self;
+
+}
+
+/**
  * CSS property value representing [RGB color] in `rgb()` or `rgba()` functional notation.
  *
  * [RGB color]: https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#RGB_colors
  */
-export class StypRGB extends StypValueStruct<StypRGB> implements StypRGB.Coords {
+export class StypRGB extends StypColorStruct<StypRGB, StypRGB.Coords> implements StypRGB.Coords {
 
   // noinspection JSMethodCanBeStatic
   /**
@@ -123,6 +155,10 @@ export class StypRGB extends StypValueStruct<StypRGB> implements StypRGB.Coords 
     return this.priority === priority ? this : new StypRGB(this, { priority });
   }
 
+  set({ r = this.r, g = this.g, b = this.b, a = this.a }: Partial<StypRGB.Coords>): StypRGB {
+    return new StypRGB({ r, g, b, a }, this);
+  }
+
   toString(): string {
 
     const rgb = `${this.r}, ${this.g}, ${this.b}`;
@@ -165,7 +201,7 @@ export namespace StypRGB {
 
 }
 
-export class StypHSL extends StypValueStruct<StypHSL> implements StypHSL.Coords {
+export class StypHSL extends StypColorStruct<StypHSL, StypHSL.Coords> implements StypHSL.Coords {
 
   // noinspection JSMethodCanBeStatic
   get type(): 'hsl' {
@@ -261,6 +297,10 @@ export class StypHSL extends StypValueStruct<StypHSL> implements StypHSL.Coords 
 
   prioritize(priority: 'important' | undefined): StypHSL {
     return this.priority === priority ? this : new StypHSL(this, { priority });
+  }
+
+  set({ h = this.h, s = this.s, l = this.l, a = this.a }: Partial<StypHSL.Coords>): StypHSL {
+    return new StypHSL({ h, s, l, a }, this);
   }
 
   toString(): string {
