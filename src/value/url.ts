@@ -1,5 +1,6 @@
 import cssesc from 'cssesc';
-import { stypSplitPriority, StypValue, StypValueStruct } from './value';
+import { stypSplitPriority } from './priority';
+import { StypValue, StypValueStruct } from './value';
 
 /**
  * Structured [<url>] CSS property value.
@@ -36,9 +37,9 @@ export class StypURL extends StypValueStruct<StypURL> {
     switch (typeof source) {
       case 'string':
 
-        const [value, priority] = stypSplitPriority(source);
+        const [url, priority] = stypSplitPriority(source);
 
-        return new StypURL(value, { priority });
+        return new StypURL(url, { priority });
       case 'object':
         if (source.type === 'url') {
           return source;

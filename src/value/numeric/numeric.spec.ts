@@ -1,4 +1,5 @@
 import { textAndPriority } from '../../spec';
+import { StypPriority } from '../priority';
 import { StypCalc, StypDimension } from './numeric';
 import { StypAddSub, StypMulDiv } from './numeric.impl';
 import { StypFrequency, StypLength, StypLengthPt, StypTime } from '../unit';
@@ -200,8 +201,10 @@ describe('StypCalc', () => {
 
   describe('add', () => {
     it('adds the value', () => {
-      expect(textAndPriority(calc.add(StypLengthPt.of(1, 'rem')))).toEqual(['calc((12px + 100%) + 1rem)', 0]);
-      expect(textAndPriority(important.add(StypLengthPt.of(1, 'rem')))).toEqual(['calc((12px + 100%) + 1rem)', 1]);
+      expect(textAndPriority(calc.add(StypLengthPt.of(1, 'rem'))))
+          .toEqual(['calc((12px + 100%) + 1rem)', StypPriority.Usual]);
+      expect(textAndPriority(important.add(StypLengthPt.of(1, 'rem'))))
+          .toEqual(['calc((12px + 100%) + 1rem)', StypPriority.Important]);
     });
     it('does not add zero value', () => {
       expect(calc.add(StypLengthPt.zero)).toBe(calc);
@@ -211,8 +214,10 @@ describe('StypCalc', () => {
 
   describe('sub', () => {
     it('subtracts the value', () => {
-      expect(textAndPriority(calc.sub(StypLengthPt.of(1, 'rem')))).toEqual(['calc((12px + 100%) - 1rem)', 0]);
-      expect(textAndPriority(important.sub(StypLengthPt.of(1, 'rem')))).toEqual(['calc((12px + 100%) - 1rem)', 1]);
+      expect(textAndPriority(calc.sub(StypLengthPt.of(1, 'rem'))))
+          .toEqual(['calc((12px + 100%) - 1rem)', StypPriority.Usual]);
+      expect(textAndPriority(important.sub(StypLengthPt.of(1, 'rem'))))
+          .toEqual(['calc((12px + 100%) - 1rem)', StypPriority.Important]);
     });
     it('does not subtract zero value', () => {
       expect(calc.sub(StypLengthPt.zero)).toBe(calc);
@@ -222,12 +227,16 @@ describe('StypCalc', () => {
 
   describe('mul', () => {
     it('multiplies', () => {
-      expect(textAndPriority(calc.mul(2))).toEqual(['calc((12px + 100%) * 2)', 0]);
-      expect(textAndPriority(important.mul(2))).toEqual(['calc((12px + 100%) * 2)', 1]);
+      expect(textAndPriority(calc.mul(2)))
+          .toEqual(['calc((12px + 100%) * 2)', StypPriority.Usual]);
+      expect(textAndPriority(important.mul(2)))
+          .toEqual(['calc((12px + 100%) * 2)', StypPriority.Important]);
     });
     it('multiplies the multiplier', () => {
-      expect(textAndPriority(calc.mul(2).mul(3))).toEqual(['calc((12px + 100%) * 6)', 0]);
-      expect(textAndPriority(important.mul(2).mul(3))).toEqual(['calc((12px + 100%) * 6)', 1]);
+      expect(textAndPriority(calc.mul(2).mul(3)))
+          .toEqual(['calc((12px + 100%) * 6)', StypPriority.Usual]);
+      expect(textAndPriority(important.mul(2).mul(3)))
+          .toEqual(['calc((12px + 100%) * 6)', StypPriority.Important]);
     });
     it('results to zero when multiplied by zero', () => {
       expect(calc.mul(0)).toBe(StypLengthPt.zero);
@@ -238,48 +247,64 @@ describe('StypCalc', () => {
       expect(important.mul(1)).toBe(important);
     });
     it('divides the divisor', () => {
-      expect(textAndPriority(calc.div(3).mul(2))).toEqual(['calc((12px + 100%) / 1.5)', 0]);
-      expect(textAndPriority(important.div(3).mul(2))).toEqual(['calc((12px + 100%) / 1.5)', 1]);
+      expect(textAndPriority(calc.div(3).mul(2)))
+          .toEqual(['calc((12px + 100%) / 1.5)', StypPriority.Usual]);
+      expect(textAndPriority(important.div(3).mul(2)))
+          .toEqual(['calc((12px + 100%) / 1.5)', StypPriority.Important]);
     });
   });
 
   describe('div', () => {
     it('divides', () => {
-      expect(textAndPriority(calc.div(2))).toEqual(['calc((12px + 100%) / 2)', 0]);
-      expect(textAndPriority(important.div(2))).toEqual(['calc((12px + 100%) / 2)', 1]);
+      expect(textAndPriority(calc.div(2)))
+          .toEqual(['calc((12px + 100%) / 2)', StypPriority.Usual]);
+      expect(textAndPriority(important.div(2)))
+          .toEqual(['calc((12px + 100%) / 2)', StypPriority.Important]);
     });
     it('multiplies the divisor', () => {
-      expect(textAndPriority(calc.div(2).div(3))).toEqual(['calc((12px + 100%) / 6)', 0]);
-      expect(textAndPriority(important.div(2).div(3))).toEqual(['calc((12px + 100%) / 6)', 1]);
+      expect(textAndPriority(calc.div(2).div(3)))
+          .toEqual(['calc((12px + 100%) / 6)', StypPriority.Usual]);
+      expect(textAndPriority(important.div(2).div(3)))
+          .toEqual(['calc((12px + 100%) / 6)', StypPriority.Important]);
     });
     it('results to the left operand when divided by one', () => {
       expect(calc.div(1)).toBe(calc);
       expect(important.div(1)).toBe(important);
     });
     it('divides the multiplier', () => {
-      expect(textAndPriority(calc.mul(3).div(2))).toEqual(['calc((12px + 100%) * 1.5)', 0]);
-      expect(textAndPriority(important.mul(3).div(2))).toEqual(['calc((12px + 100%) * 1.5)', 1]);
+      expect(textAndPriority(calc.mul(3).div(2)))
+          .toEqual(['calc((12px + 100%) * 1.5)', StypPriority.Usual]);
+      expect(textAndPriority(important.mul(3).div(2)))
+          .toEqual(['calc((12px + 100%) * 1.5)', StypPriority.Important]);
     });
   });
 
   describe('negate', () => {
     it('negates operands of the sum', () => {
-      expect(textAndPriority(calc.negate())).toEqual(['calc(-12px - 100%)', 0]);
-      expect(textAndPriority(important.negate())).toEqual(['calc(-12px - 100%)', 1]);
+      expect(textAndPriority(calc.negate()))
+          .toEqual(['calc(-12px - 100%)', StypPriority.Usual]);
+      expect(textAndPriority(important.negate()))
+          .toEqual(['calc(-12px - 100%)', StypPriority.Important]);
     });
     it('reverts operands of the diff', () => {
       calc = left.sub(right) as StypCalc<StypLengthPt.Unit>;
       important = calc.important();
-      expect(textAndPriority(calc.negate())).toEqual(['calc(100% - 12px)', 0]);
-      expect(textAndPriority(important.negate())).toEqual(['calc(100% - 12px)', 1]);
+      expect(textAndPriority(calc.negate()))
+          .toEqual(['calc(100% - 12px)', StypPriority.Usual]);
+      expect(textAndPriority(important.negate()))
+          .toEqual(['calc(100% - 12px)', StypPriority.Important]);
     });
     it('negates the multiplier', () => {
-      expect(textAndPriority(calc.mul(2).negate())).toEqual(['calc((12px + 100%) * -2)', 0]);
-      expect(textAndPriority(important.mul(2).negate())).toEqual(['calc((12px + 100%) * -2)', 1]);
+      expect(textAndPriority(calc.mul(2).negate()))
+          .toEqual(['calc((12px + 100%) * -2)', StypPriority.Usual]);
+      expect(textAndPriority(important.mul(2).negate()))
+          .toEqual(['calc((12px + 100%) * -2)', StypPriority.Important]);
     });
     it('negates the divisor', () => {
-      expect(textAndPriority(calc.div(2).negate())).toEqual(['calc((12px + 100%) / -2)', 0]);
-      expect(textAndPriority(important.div(2).negate())).toEqual(['calc((12px + 100%) / -2)', 1]);
+      expect(textAndPriority(calc.div(2).negate()))
+          .toEqual(['calc((12px + 100%) / -2)', StypPriority.Usual]);
+      expect(textAndPriority(important.div(2).negate()))
+          .toEqual(['calc((12px + 100%) / -2)', StypPriority.Important]);
     });
   });
 

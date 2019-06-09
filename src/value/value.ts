@@ -1,6 +1,6 @@
-import { IMPORTANT_CSS_SUFFIX } from '../internal';
 import { StypColor } from './color';
 import { StypNumeric } from './numeric';
+import { StypPriority } from './priority';
 import { StypURL } from './url';
 
 /**
@@ -39,7 +39,7 @@ export abstract class StypValueStruct<Self extends StypValueStruct<Self>> {
    * @param opts Construction options.
    */
   protected constructor(opts?: StypValue.Opts) {
-    this.priority = opts && opts.priority || 0;
+    this.priority = opts && opts.priority || StypPriority.Default;
   }
 
   /**
@@ -65,7 +65,7 @@ export abstract class StypValueStruct<Self extends StypValueStruct<Self>> {
    * @returns Either a new value equal to this one but having `priority` equal to `1`, or this one if already the case.
    */
   important(): Self {
-    return this.prioritize(1);
+    return this.prioritize(StypPriority.Important);
   }
 
   /**
@@ -74,7 +74,7 @@ export abstract class StypValueStruct<Self extends StypValueStruct<Self>> {
    * @returns Either a new value equal to this one but having `priority` equal to `0`, or this one if already the case.
    */
   usual(): Self {
-    return this.prioritize(0);
+    return this.prioritize(StypPriority.Usual);
   }
 
   /**
@@ -116,59 +116,6 @@ export namespace StypValue {
 
   }
 
-}
-
-/**
- * Splits undefined CSS property value onto non-prioritized value and priority.
- *
- * @param value Undefined CSS property value to split.
- *
- * @returns An `[undefined, 0]` tuple.
- */
-export function stypSplitPriority<T extends StypValue>(value: undefined): [undefined, 0];
-
-/**
- * Splits string CSS property value onto non-prioritized value and priority.
- *
- * @param value CSS property value to split.
- *
- * @returns A tuple containing the value without `!priority` suffix, and numeric priority (0 or 1).
- */
-export function stypSplitPriority(value: string): [string, 0 | 1];
-
-/**
- * Splits scalar CSS property value onto non-prioritized value and priority.
- *
- * @param value CSS property value to split.
- *
- * @returns A tuple containing the value and `0` priority.
- */
-export function stypSplitPriority<T extends number | boolean>(value: T): [T, 0];
-
-/**
- * Splits arbitrary CSS property value onto value non-prioritized value and priority.
- *
- * @param value CSS property value to split.
- *
- * @returns A tuple containing the value and numeric priority.
- */
-export function stypSplitPriority<T extends StypValue>(value: T): [T, number];
-
-export function stypSplitPriority<T extends StypValue>(value: T): [T, number] {
-  if (value == null) {
-    return [undefined as T, 0];
-  }
-
-  switch (typeof value) {
-    case 'object':
-      return [value, value.priority];
-    case 'string':
-      if (value.endsWith(IMPORTANT_CSS_SUFFIX)) {
-        return[value.substring(0, value.length - IMPORTANT_CSS_SUFFIX.length).trim() as T, 1];
-      }
-  }
-
-  return [value, 0];
 }
 
 /**

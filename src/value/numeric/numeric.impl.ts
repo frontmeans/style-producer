@@ -1,3 +1,4 @@
+import { StypPriority } from '../priority';
 import {
   StypAddSub as StypAddSub_,
   StypDimension as StypDimension_,
@@ -128,7 +129,9 @@ function stypDimension<Unit extends string>(
     val: number,
     unit: Unit,
     opts: StypDimension_.Opts<Unit>): StypDimension_<Unit> | StypZero<Unit> {
-  return val ? new StypDimension<Unit>(val, unit, opts) : opts.dim.zero.prioritize(opts.priority || 0);
+  return val
+      ? new StypDimension<Unit>(val, unit, opts)
+      : opts.dim.zero.prioritize(opts.priority || StypPriority.Default);
 }
 
 /**

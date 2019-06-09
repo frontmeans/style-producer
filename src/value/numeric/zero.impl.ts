@@ -1,3 +1,4 @@
+import { StypPriority } from '../priority';
 import { StypValue } from '../value';
 import { StypDimension, StypNumeric, StypNumericStruct } from './';
 import { StypZero } from './zero';
@@ -24,10 +25,10 @@ class Zero<Unit extends string> extends StypNumericStruct<Zero<Unit>, Unit> impl
       return other.type === this.type && other.priority === this.priority;
     }
     if (other === 0 || other === '0') {
-      return !this.priority;
+      return this.priority === StypPriority.Usual;
     }
     if (other === '0 !important') {
-      return this.priority === 1;
+      return this.priority === StypPriority.Important;
     }
     return false;
   }
@@ -77,13 +78,13 @@ class ZeroByPriority<Unit extends string> {
 
   constructor(readonly dim: StypDimension.Kind<Unit>) {
     this.usual = new Zero(this, { dim });
-    this.important = new Zero(this, { dim, priority: 1 });
+    this.important = new Zero(this, { dim, priority: StypPriority.Important });
   }
 
   get(priority: number): Zero<Unit> {
     switch (priority) {
-      case 0: return this.usual;
-      case 1: return this.important;
+      case StypPriority.Usual: return this.usual;
+      case StypPriority.Important: return this.important;
     }
     return new Zero(this, { dim: this.dim, priority });
   }

@@ -14,6 +14,7 @@ import {
   rgbRed,
   rgbWhite
 } from '../../spec';
+import { StypPriority } from '../priority';
 import { StypLength } from '../unit';
 import { StypColor, StypHSL, StypRGB } from './color';
 
@@ -187,7 +188,7 @@ describe('StypHSL', () => {
       const important = value.important();
 
       expect(important).not.toBe(value);
-      expect(important.priority).toBe(1);
+      expect(important.priority).toBe(StypPriority.Important);
       expect(important).toMatchObject(coords);
       expect(important).toEqual(value.important());
     });
