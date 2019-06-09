@@ -22,7 +22,7 @@ export function stypRenderProperties(producer: StyleProducer, properties: StypPr
 
         const [value, priority] = stypSplitPriority(v);
 
-        style.setProperty(hyphenateStyleName(k), `${value}`, priority);
+        style.setProperty(hyphenateStyleName(k), `${value}`, priority >= 1 ? 'important' : undefined);
       });
 
   producer.render(properties, { target: cssRule });

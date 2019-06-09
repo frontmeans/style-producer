@@ -68,10 +68,7 @@ export abstract class StypNumericStruct<Self extends StypNumericStruct<Self, Uni
   abstract toFormula(): string;
 
   toString() {
-
-    const string = this.toFormula();
-
-    return this.priority ? string + ' !important' : string;
+    return this.toFormula();
   }
 
 }

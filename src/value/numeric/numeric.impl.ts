@@ -68,7 +68,7 @@ export class StypDimension<Unit extends string>
         && this.priority === other.priority;
   }
 
-  prioritize(priority: 'important' | undefined): StypDimension<Unit> {
+  prioritize(priority: number): StypDimension<Unit> {
     return this.priority === priority
         ? this
         : new StypDimension(this.val, this.unit, { dim: this.dim, priority });
@@ -128,7 +128,7 @@ function stypDimension<Unit extends string>(
     val: number,
     unit: Unit,
     opts: StypDimension_.Opts<Unit>): StypDimension_<Unit> | StypZero<Unit> {
-  return val ? new StypDimension<Unit>(val, unit, opts) : opts.dim.zero.prioritize(opts && opts.priority);
+  return val ? new StypDimension<Unit>(val, unit, opts) : opts.dim.zero.prioritize(opts.priority || 0);
 }
 
 /**
@@ -193,7 +193,7 @@ export abstract class StypCalcBase<
 
   abstract negate(): StypNumeric<Unit>;
 
-  abstract prioritize(priority: 'important' | undefined): Self;
+  abstract prioritize(priority: number): Self;
 
   abstract toFormula(): string;
 
@@ -218,7 +218,7 @@ export class StypAddSub<Unit extends string>
     super(left, op, right.usual(), opts);
   }
 
-  prioritize(priority: 'important' | undefined): StypAddSub<Unit> {
+  prioritize(priority: number): StypAddSub<Unit> {
     return this.priority === priority
         ? this
         : new StypAddSub(this.left, this.op, this.right, { dim: this.dim, priority });
@@ -280,7 +280,7 @@ export class StypMulDiv<Unit extends string>
     extends StypCalcBase<StypMulDiv<Unit>, '*' | '/', number, Unit>
     implements StypMulDiv_<Unit> {
 
-  prioritize(priority: 'important' | undefined): StypMulDiv<Unit> {
+  prioritize(priority: number): StypMulDiv<Unit> {
     return this.priority === priority
         ? this
         : new StypMulDiv(this.left, this.op, this.right, { dim: this.dim, priority });

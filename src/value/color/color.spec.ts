@@ -56,7 +56,7 @@ describe('StypRGB', () => {
       const important = value.important();
 
       expect(important).not.toBe(value);
-      expect(important.priority).toBe('important');
+      expect(important.priority).toBe(1);
       expect(important).toMatchObject(coords);
       expect(important).toEqual(value.important());
     });
@@ -187,7 +187,7 @@ describe('StypHSL', () => {
       const important = value.important();
 
       expect(important).not.toBe(value);
-      expect(important.priority).toBe('important');
+      expect(important.priority).toBe(1);
       expect(important).toMatchObject(coords);
       expect(important).toEqual(value.important());
     });

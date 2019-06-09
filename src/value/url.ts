@@ -62,7 +62,7 @@ export class StypURL extends StypValueStruct<StypURL> {
     return StypURL.by(source) || this;
   }
 
-  prioritize(priority: 'important' | undefined): StypURL {
+  prioritize(priority: number): StypURL {
     return priority === this.priority ? this : new StypURL(this.url, { priority });
   }
 

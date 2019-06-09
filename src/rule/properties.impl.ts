@@ -162,19 +162,19 @@ function addValue(
     properties: StypProperties.Mutable,
     key: keyof StypProperties,
     value: StypValue): StypProperties.Mutable {
-  if (!isImportantValue(properties[key]) || isImportantValue(value)) {
+  if (priorityOf(properties[key]) <= priorityOf(value)) {
     delete properties[key];
     properties[key] = value;
   }
   return properties;
 }
 
-function isImportantValue(value: StypValue) {
+function priorityOf(value: StypValue): number {
   switch (typeof value) {
     case 'string':
-      return value.endsWith(IMPORTANT_CSS_SUFFIX);
+      return value.endsWith(IMPORTANT_CSS_SUFFIX) ? 1 : 0;
     case 'object':
-      return value.priority === 'important';
+      return value.priority;
   }
-  return false;
+  return 0;
 }
