@@ -152,12 +152,12 @@ Apart from being scalars and strings, CSS property values may be structured. I.e
 There are several implementations of structured values available:
 
 - Numeric values supporting arithmetic operations (`StypDimension`, `StypCalc`):
-  - `StypAngle`/`StypAnglePt` - for [<angle>]/[<angle-percentage>] values,
-  - `StypFrequency`/`StypFrequencyPt` - for [<frequency>]/[<frequency-percentage>] values,
-  - `StypLength`/`StypLengthPt` - for [<length>]/[<length-percentage>] values,
-  - `StypResolution` - for [<resolution>] values, and
-  - `StypTime`/`StypTimePt` - for [<time>]/[<time-percentage>] values.   
-- Color values supporting [<color>] manipulations (`StypColor`):
+  - `StypAngle`/`StypAnglePt` - for [angle]/[angle-percentage] values,
+  - `StypFrequency`/`StypFrequencyPt` - for [frequency]/[frequency-percentage] values,
+  - `StypLength`/`StypLengthPt` - for [length]/[length-percentage] values,
+  - `StypResolution` - for [resolution] values, and
+  - `StypTime`/`StypTimePt` - for [time]/[time-percentage] values.   
+- Color values supporting [color] manipulations (`StypColor`):
   - `StypRGB` - for [RGB colors], and
   - `StypHSL` for [HSL colors].
 - `StypURL` representing [<url>] values.
@@ -222,17 +222,17 @@ mySettingsRef.set({
 });
 ```
 
-[<angle>]: https://developer.mozilla.org/en-US/docs/Web/CSS/angle
-[<angle-percentage>]: https://developer.mozilla.org/en-US/docs/Web/CSS/angle-percentage
-[<frequency>]: https://developer.mozilla.org/en-US/docs/Web/CSS/frequency
-[<frequency-percentage>]: https://developer.mozilla.org/en-US/docs/Web/CSS/frequency-percentag
-[<length>]: https://developer.mozilla.org/en-US/docs/Web/CSS/length
-[<length-percentage>]: https://developer.mozilla.org/en-US/docs/Web/CSS/length-percentage
-[<resolution>]: https://developer.mozilla.org/en-US/docs/Web/CSS/resolution
-[<time>]: https://developer.mozilla.org/en-US/docs/Web/CSS/time
-[<time-percentage>]: https://developer.mozilla.org/en-US/docs/Web/CSS/time-percentage
+[angle]: https://developer.mozilla.org/en-US/docs/Web/CSS/angle
+[angle-percentage]: https://developer.mozilla.org/en-US/docs/Web/CSS/angle-percentage
+[frequency]: https://developer.mozilla.org/en-US/docs/Web/CSS/frequency
+[frequency-percentage]: https://developer.mozilla.org/en-US/docs/Web/CSS/frequency-percentag
+[length]: https://developer.mozilla.org/en-US/docs/Web/CSS/length
+[length-percentage]: https://developer.mozilla.org/en-US/docs/Web/CSS/length-percentage
+[resolution]: https://developer.mozilla.org/en-US/docs/Web/CSS/resolution
+[time]: https://developer.mozilla.org/en-US/docs/Web/CSS/time
+[time-percentage]: https://developer.mozilla.org/en-US/docs/Web/CSS/time-percentage
 
-[<color>]: https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
+[color]: https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
 [RGB colors]: https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#RGB_colors
 [HSL colors]: https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#HSL_colors
 
