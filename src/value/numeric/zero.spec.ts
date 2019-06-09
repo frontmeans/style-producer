@@ -1,5 +1,4 @@
-import { StypLength, StypLengthPt, StypResolution } from '../unit';
-import { StypTime } from '../unit/time';
+import { StypLength, StypLengthPt, StypResolution, StypTime } from '../unit';
 import { stypValuesEqual } from '../value';
 import { StypZero } from './zero';
 
@@ -117,11 +116,20 @@ describe('StypZero', () => {
     });
   });
 
+  describe('prioritize', () => {
+    it('assigns priority', () => {
+
+      const prioritized = zero.prioritize(2);
+
+      expect(prioritized.priority).toBe(2);
+    });
+  });
+
   describe('important', () => {
     it('is singleton', () => {
       expect(zero.important()).toBe(important);
       expect(important.important()).toBe(important);
-      expect(zero.prioritize('important')).toBe(important);
+      expect(zero.prioritize(1)).toBe(important);
     });
   });
 
@@ -129,7 +137,7 @@ describe('StypZero', () => {
     it('is singleton', () => {
       expect(zero.usual()).toBe(zero);
       expect(important.usual()).toBe(zero);
-      expect(zero.prioritize(undefined)).toBe(zero);
+      expect(zero.prioritize(0)).toBe(zero);
     });
   });
 
@@ -143,9 +151,7 @@ describe('StypZero', () => {
   describe('toString', () => {
     it('is `0`', () => {
       expect(`${zero}`).toBe('0');
-    });
-    it('is `0 !important` if important', () => {
-      expect(`${important}`).toBe('0 !important');
+      expect(`${important}`).toBe('0');
     });
   });
 });

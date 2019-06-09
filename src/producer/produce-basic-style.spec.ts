@@ -5,6 +5,7 @@ import { NamespaceDef } from 'namespace-aliaser';
 import { StypProperties, stypRoot, StypRule } from '../rule';
 import { stypSelector } from '../selector';
 import { cssStyle, cssStyles, removeStyleElements, scheduleNow, stylesheets } from '../spec';
+import { StypLength } from '../value/unit';
 import { produceBasicStyle } from './produce-basic-style';
 import { StypRender } from './render';
 import { StyleProducer } from './style-producer';
@@ -325,6 +326,24 @@ describe('produceBasicStyle', () => {
   });
   it('renders important properties', () => {
     root.rules.add({ c: 'custom' }, { fontSize: '12px !important' });
+    produceBasicStyle(root.rules, { schedule: scheduleNow });
+
+    const style = cssStyle('.custom');
+
+    expect(style.getPropertyValue('font-size')).toBe('12px');
+    expect(style.getPropertyPriority('font-size')).toBe('important');
+  });
+  it('renders prioritized properties', () => {
+    root.rules.add({ c: 'custom' }, { fontSize: StypLength.of(12, 'px').prioritize(0.5) });
+    produceBasicStyle(root.rules, { schedule: scheduleNow });
+
+    const style = cssStyle('.custom');
+
+    expect(style.getPropertyValue('font-size')).toBe('12px');
+    expect(style.getPropertyPriority('font-size')).toBe('');
+  });
+  it('renders prioritized important properties', () => {
+    root.rules.add({ c: 'custom' }, { fontSize: StypLength.of(12, 'px').prioritize(1.5) });
     produceBasicStyle(root.rules, { schedule: scheduleNow });
 
     const style = cssStyle('.custom');

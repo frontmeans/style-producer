@@ -1,3 +1,4 @@
+import { StypPriority } from './priority';
 import { StypLength } from './unit';
 import { StypURL } from './url';
 
@@ -20,7 +21,7 @@ describe('StypURL', () => {
       const important = value.important();
 
       expect(important).not.toBe(value);
-      expect(important.priority).toBe('important');
+      expect(important.priority).toBe(StypPriority.Important);
       expect(important.url).toBe(value.url);
       expect(important).toEqual(value.important());
     });

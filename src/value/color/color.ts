@@ -151,7 +151,7 @@ export class StypRGB extends StypColorStruct<StypRGB, StypRGB.Coords> implements
         && other.priority === this.priority;
   }
 
-  prioritize(priority: 'important' | undefined): StypRGB {
+  prioritize(priority: number): StypRGB {
     return this.priority === priority ? this : new StypRGB(this, { priority });
   }
 
@@ -295,7 +295,7 @@ export class StypHSL extends StypColorStruct<StypHSL, StypHSL.Coords> implements
         && other.priority === this.priority;
   }
 
-  prioritize(priority: 'important' | undefined): StypHSL {
+  prioritize(priority: number): StypHSL {
     return this.priority === priority ? this : new StypHSL(this, { priority });
   }
 

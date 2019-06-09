@@ -1,7 +1,7 @@
 import { filterIt, itsEach, ObjectEntry, overEntries } from 'a-iterable';
 import hyphenateStyleName from 'hyphenate-style-name';
 import { StypProperties } from '../rule';
-import { stypSplitPriority } from '../value';
+import { StypPriority, stypSplitPriority } from '../value';
 import { StyleProducer } from './style-producer';
 
 /**
@@ -22,7 +22,10 @@ export function stypRenderProperties(producer: StyleProducer, properties: StypPr
 
         const [value, priority] = stypSplitPriority(v);
 
-        style.setProperty(hyphenateStyleName(k), `${value}`, priority);
+        style.setProperty(
+            hyphenateStyleName(k),
+            `${value}`,
+            priority >= StypPriority.Important ? 'important' : undefined);
       });
 
   producer.render(properties, { target: cssRule });
