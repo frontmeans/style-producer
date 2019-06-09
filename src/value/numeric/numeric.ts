@@ -74,11 +74,11 @@ export abstract class StypNumericStruct<Self extends StypNumericStruct<Self, Uni
 }
 
 /**
- * Structured [<dimension>] value with unit.
+ * Structured [dimension] value with unit.
  *
  * @typeparam Unit Allowed units type.
  *
- * [<dimension>]: https://developer.mozilla.org/en-US/docs/Web/CSS/dimension
+ * [dimension]: https://developer.mozilla.org/en-US/docs/Web/CSS/dimension
  */
 export interface StypDimension<Unit extends string>
     extends StypValueStruct<StypDimension<Unit>>, StypNumericStruct<StypDimension<Unit>, Unit> {

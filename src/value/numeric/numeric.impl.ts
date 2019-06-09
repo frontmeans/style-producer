@@ -113,7 +113,7 @@ export class StypDimension<Unit extends string>
 }
 
 /**
- * Constructs structured [<dimension>] CSS property value.
+ * Constructs structured [dimension] CSS property value.
  *
  * @param val Numeric value.
  * @param unit Value unit.
@@ -121,7 +121,7 @@ export class StypDimension<Unit extends string>
  *
  * @returns Either [[StypDimension]], or [[StypZero]] if `val === 0`.
  *
- * [<dimension>]: https://developer.mozilla.org/en-US/docs/Web/CSS/dimension
+ * [dimension]: https://developer.mozilla.org/en-US/docs/Web/CSS/dimension
  *
  * @internal
  */

@@ -3,9 +3,9 @@ import { stypSplitPriority } from './priority';
 import { StypValue, StypValueStruct } from './value';
 
 /**
- * Structured [<url>] CSS property value.
+ * Structured [URL] CSS property value.
  *
- * [<url>]: https://developer.mozilla.org/en-US/docs/Web/CSS/url
+ * [URL]: https://developer.mozilla.org/en-US/docs/Web/CSS/url
  */
 export class StypURL extends StypValueStruct<StypURL> {
 

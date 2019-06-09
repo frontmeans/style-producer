@@ -15,13 +15,13 @@ export type StypValue =
     | StypColor;
 
 /**
- * Structured property CSS value. E.g. [<length>], [<percentage>], [<color>], etc.
+ * Structured property CSS value. E.g. [length], [percentage], [color], etc.
  *
  * @typeparam Self A type of itself.
  *
- * [<length>]: https://developer.mozilla.org/en-US/docs/Web/CSS/length
- * [<percentage>]: https://developer.mozilla.org/en-US/docs/Web/CSS/percentage
- * [<color>]: https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
+ * [length]: https://developer.mozilla.org/en-US/docs/Web/CSS/length
+ * [percentage]: https://developer.mozilla.org/en-US/docs/Web/CSS/percentage
+ * [color]: https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
  */
 export abstract class StypValueStruct<Self extends StypValueStruct<Self>> {
 

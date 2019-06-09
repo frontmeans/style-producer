@@ -2,11 +2,11 @@ import { StypDimension, StypNumeric } from '../numeric';
 import { unitlessZeroDimensionKind } from '../numeric/numeric.impl';
 
 /**
- * Structured [<length>] property value.
+ * Structured [length] property value.
  *
  * Can be constructed using `StypLength.of()` function.
  *
- * [<length>]: https://developer.mozilla.org/en-US/docs/Web/CSS/length
+ * [length]: https://developer.mozilla.org/en-US/docs/Web/CSS/length
  */
 export type StypLength = StypNumeric<StypLength.Unit>;
 
@@ -22,9 +22,9 @@ export namespace StypLength {
 }
 
 /**
- * [<length>] dimension kind.
+ * [length] dimension kind.
  *
- * [<length>]: https://developer.mozilla.org/en-US/docs/Web/CSS/length
+ * [length]: https://developer.mozilla.org/en-US/docs/Web/CSS/length
  */
 export const StypLength: StypDimension.Kind.UnitlessZero<StypLength.Unit> =
     /*#__PURE__*/ unitlessZeroDimensionKind({
@@ -37,11 +37,11 @@ export const StypLength: StypDimension.Kind.UnitlessZero<StypLength.Unit> =
 });
 
 /**
- * Structured [<length-percentage>] CSS property value.
+ * Structured [length-percentage] CSS property value.
  *
  * Can be constructed using `StypLengthPt.of()` function.
  *
- * [<length-percentage>]: https://developer.mozilla.org/en-US/docs/Web/CSS/length-percentage
+ * [length-percentage]: https://developer.mozilla.org/en-US/docs/Web/CSS/length-percentage
  */
 export type StypLengthPt = StypNumeric<StypLengthPt.Unit>;
 
@@ -55,9 +55,9 @@ export namespace StypLengthPt {
 }
 
 /**
- * [<length-percentage>] dimension kind.
+ * [length-percentage] dimension kind.
  *
- * [<length-percentage>]: https://developer.mozilla.org/en-US/docs/Web/CSS/length-percentage
+ * [length-percentage]: https://developer.mozilla.org/en-US/docs/Web/CSS/length-percentage
  */
 export const StypLengthPt: StypDimension.Kind.UnitlessZero<StypLengthPt.Unit> =
     /*#__PURE__*/ unitlessZeroDimensionKind({

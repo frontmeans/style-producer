@@ -2,11 +2,11 @@ import { StypDimension, StypNumeric } from '../numeric';
 import { unitZeroDimensionKind } from '../numeric/numeric.impl';
 
 /**
- * Structured [<frequency>] property value.
+ * Structured [frequency] property value.
  *
  * Can be constructed using `StypFrequency.of()` function.
  *
- * [<frequency>]: https://developer.mozilla.org/en-US/docs/Web/CSS/frequency
+ * [frequency]: https://developer.mozilla.org/en-US/docs/Web/CSS/frequency
  */
 export type StypFrequency = StypNumeric<StypFrequency.Unit, StypDimension<StypFrequency.Unit>>;
 
@@ -20,9 +20,9 @@ export namespace StypFrequency {
 }
 
 /**
- * [<frequency>] dimension kind.
+ * [frequency] dimension kind.
  *
- * [<frequency>]: https://developer.mozilla.org/en-US/docs/Web/CSS/frequency
+ * [frequency]: https://developer.mozilla.org/en-US/docs/Web/CSS/frequency
  */
 export const StypFrequency: StypDimension.Kind.UnitZero<StypFrequency.Unit> = /*#__PURE__*/ unitZeroDimensionKind({
   zeroUnit: 'kHz',
@@ -35,11 +35,11 @@ export const StypFrequency: StypDimension.Kind.UnitZero<StypFrequency.Unit> = /*
 });
 
 /**
- * Structured [<frequency-percentage>] CSS property value.
+ * Structured [frequency-percentage] CSS property value.
  *
  * Can be constructed using `StypFrequencyPt.of()` function.
  *
- * [<frequency-percentage>]: https://developer.mozilla.org/en-US/docs/Web/CSS/frequency-percentage
+ * [frequency-percentage]: https://developer.mozilla.org/en-US/docs/Web/CSS/frequency-percentage
  */
 export type StypFrequencyPt = StypNumeric<StypFrequencyPt.Unit, StypDimension<StypFrequencyPt.Unit>>;
 
@@ -53,9 +53,9 @@ export namespace StypFrequencyPt {
 }
 
 /**
- * [<frequency-percentage>] dimension kind.
+ * [frequency-percentage] dimension kind.
  *
- * [<frequency-percentage>]: https://developer.mozilla.org/en-US/docs/Web/CSS/frequency-percentage
+ * [frequency-percentage]: https://developer.mozilla.org/en-US/docs/Web/CSS/frequency-percentage
  */
 export const StypFrequencyPt: StypDimension.Kind.UnitZero<StypFrequencyPt.Unit> = /*#__PURE__*/ unitZeroDimensionKind({
   zeroUnit: 'kHz',

@@ -2,11 +2,11 @@ import { StypDimension, StypNumeric } from '../numeric';
 import { unitlessZeroDimensionKind } from '../numeric/numeric.impl';
 
 /**
- * Structured [<time>] property value.
+ * Structured [time] property value.
  *
  * Can be constructed using `StypTime.of()` function.
  *
- * [<time>]: https://developer.mozilla.org/en-US/docs/Web/CSS/time
+ * [time]: https://developer.mozilla.org/en-US/docs/Web/CSS/time
  */
 export type StypTime = StypNumeric<StypTime.Unit>;
 
@@ -20,9 +20,9 @@ export namespace StypTime {
 }
 
 /**
- * [<time>] dimension kind.
+ * [time] dimension kind.
  *
- * [<time>]: https://developer.mozilla.org/en-US/docs/Web/CSS/time
+ * [time]: https://developer.mozilla.org/en-US/docs/Web/CSS/time
  */
 export const StypTime: StypDimension.Kind.UnitlessZero<StypTime.Unit> =
     /*#__PURE__*/ unitlessZeroDimensionKind({
@@ -35,11 +35,11 @@ export const StypTime: StypDimension.Kind.UnitlessZero<StypTime.Unit> =
 });
 
 /**
- * Structured [<time-percentage>] CSS property value.
+ * Structured [time-percentage] CSS property value.
  *
  * Can be constructed using `StypTimePt.of()` function.
  *
- * [<time-percentage>]: https://developer.mozilla.org/en-US/docs/Web/CSS/time-percentage
+ * [time-percentage]: https://developer.mozilla.org/en-US/docs/Web/CSS/time-percentage
  */
 export type StypTimePt = StypNumeric<StypTimePt.Unit>;
 
@@ -53,9 +53,9 @@ export namespace StypTimePt {
 }
 
 /**
- * [<time-percentage>] dimension kind.
+ * [time-percentage] dimension kind.
  *
- * [<time-percentage>]: https://developer.mozilla.org/en-US/docs/Web/CSS/time-percentage
+ * [time-percentage]: https://developer.mozilla.org/en-US/docs/Web/CSS/time-percentage
  */
 export const StypTimePt: StypDimension.Kind.UnitlessZero<StypTimePt.Unit> =
     /*#__PURE__*/ unitlessZeroDimensionKind({

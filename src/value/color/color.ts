@@ -1,11 +1,11 @@
 import { StypValue, StypValueStruct } from '../value';
 
 /**
- * Structured [<color>] CSS property value.
+ * Structured [color] CSS property value.
  *
  * Colors are represented by either `rgb()`, or `hsl()` functional notations.
  *
- * [<color>]: https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
+ * [color]: https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
  */
 export type StypColor = StypRGB | StypHSL;
 
