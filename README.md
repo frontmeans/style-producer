@@ -160,7 +160,7 @@ There are several implementations of structured values available:
 - Color values supporting [color] manipulations (`StypColor`):
   - `StypRGB` - for [RGB colors], and
   - `StypHSL` for [HSL colors].
-- `StypURL` representing [<url>] values.
+- `StypURL` representing [url] values.
 
 Any custom implementation can be added.  
 
@@ -236,7 +236,7 @@ mySettingsRef.set({
 [RGB colors]: https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#RGB_colors
 [HSL colors]: https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#HSL_colors
 
-[<url>]: https://developer.mozilla.org/en-US/docs/Web/CSS/url 
+[url]: https://developer.mozilla.org/en-US/docs/Web/CSS/url 
 
 
 Producing CSS
