@@ -1,4 +1,4 @@
-import { StypDimension, StypNumeric } from '../numeric/numeric';
+import { StypDimension, StypNumeric } from '../numeric';
 import { unitlessZeroDimensionKind } from '../numeric/numeric.impl';
 
 /**

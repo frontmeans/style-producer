@@ -30,6 +30,8 @@ export abstract class StypValueStruct<Self extends StypValueStruct<Self>> {
    *
    * The value `StypPriority.Important` and above means the property is `!important`. Everything else means normal
    * priority.
+   *
+   * The property value with higher priority number takes precedence over the one with lower one.
    */
   readonly priority: number;
 
@@ -62,7 +64,8 @@ export abstract class StypValueStruct<Self extends StypValueStruct<Self>> {
   /**
    * Creates `!important` variant of this value.
    *
-   * @returns Either a new value equal to this one but having `priority` equal to `1`, or this one if already the case.
+   * @returns Either a new value equal to this one but having `priority` equal to `StypPriority.Important`,
+   * or this one if already the case.
    */
   important(): Self {
     return this.prioritize(StypPriority.Important);
@@ -71,7 +74,8 @@ export abstract class StypValueStruct<Self extends StypValueStruct<Self>> {
   /**
    * Creates usual (not `!important`) variant of this value.
    *
-   * @returns Either a new value equal to this one but having `priority` equal to `0`, or this one if already the case.
+   * @returns Either a new value equal to this one but having `priority` equal to `StypPriority.Usual`,
+   * or this one if already the case.
    */
   usual(): Self {
     return this.prioritize(StypPriority.Usual);
@@ -110,7 +114,8 @@ export namespace StypValue {
     /**
      * Constructed value priority.
      *
-     * The value `1` and above means the property is `!important`. Everything else means normal priority.
+     * The value `StypPriority.Important` and above means the property is `!important`. Everything else means normal
+     * priority.
      */
     readonly priority?: number;
 

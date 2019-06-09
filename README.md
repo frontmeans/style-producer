@@ -120,7 +120,8 @@ rule.rules.grab({ e: 'button' }); // Grab all CSS rules for the `button` element
 
 ### CSS Properties
 
-CSS properties are represented by object with camel-cased property names and their corresponding scalar values:
+CSS properties are represented by object with camel-cased property names and their corresponding string, scalar,
+or structured values:
 ```typescript
 const cssProperties = {
   position: 'fixed',
@@ -137,10 +138,105 @@ replaced using `StypRule.set()` method, or removed all together using `StypRule.
 CSS properties with names started with anything but ASCII letter are not rendered as CSS. Still, they can be referenced
 and used internally.
 
-CSS property values ending with `!important` string are recognized as important ones. Note that the order of properties
-is meaningful. But important property values are always take precedence over non-important ones.   
+CSS property string values ending with `!important` suffix are recognized as having `!important` priority. Note that the
+order of properties is meaningful. But important property values are always take precedence over non-important ones.   
 
 CSS rule properties may be defined by `EventKeeper` instance that may update properties dynamically.
+
+
+### Type-safe CSS Properties
+
+Apart from being scalars and strings, CSS property values may be structured. I.e represented by objects implementing
+`StypValueStruct` interface.
+
+There are several implementations of structured values available:
+
+- Numeric values supporting arithmetic operations (`StypDimension`, `StypCalc`):
+  - `StypAngle`/`StypAnglePt` - for [<angle>]/[<angle-percentage>] values,
+  - `StypFrequency`/`StypFrequencyPt` - for [<frequency>]/[<frequency-percentage>] values,
+  - `StypLength`/`StypLengthPt` - for [<length>]/[<length-percentage>] values,
+  - `StypResolution` - for [<resolution>] values, and
+  - `StypTime`/`StypTimePt` - for [<time>]/[<time-percentage>] values.   
+- Color values supporting [<color>] manipulations (`StypColor`):
+  - `StypRGB` - for [RGB colors], and
+  - `StypHSL` for [HSL colors].
+- `StypURL` representing [<url>] values.
+
+Any custom implementation can be added.  
+
+It is possible to declare CSS properties structure to work with them in type safe manner. For that declare properties
+interface and use `StypMapper` to map arbitrary CSS properties to that interface, or `StypRuleRef` to access CSS rule
+in type safe manner:
+
+```typescript
+import { RefStypRule, StypColor, StypLengthPt, StypRGB, stypRoot } from 'style-producer';
+
+// Type-safe CSS properties representing custom settings
+interface MySettings {
+  $color: StypColor;
+  $bgColor: StypColor;
+  $gap: StypLengthPt;
+}
+
+// Construct a mapping function for custom settings
+const MySettings = RefStypRule.by<MySettings>(
+    { $: '.my-settings' }, // Selector of CSS rule containing settings
+    { // Mappings for settings
+      $color: new StypRGB({ r: 0, g: 0, b: 0 }), // Text is black by default
+      $bgColor: new StypRGB({ r: 255, g: 255, b: 255 }), // Background is white by default
+      $gap: StypLengthPt.of(4, 'px'), // Gaps are 4 pixels by default 
+    });
+
+// CSS rules root
+const root = stypRoot();
+
+// Settings CSS rule reference
+const mySettingsRef = MySettings(root);
+
+// Define `<body>` style
+root.add(mySettingsRef.read.thru(
+    ({ $color, $bgColor, $gap }) => ({
+      color: $color, // Apply default text color
+      backgroundColor: $bgColor, // Apply default background color
+      padding: $gap, // Padding is based on default gap
+    })
+));
+ 
+
+// Define `<input>` element style based on default settings.
+root.rules.add(
+    { e: 'input' },
+    mySettingsRef.read.thru(
+        ({ $color, $bgColor, $gap }) => ({
+          color: $color,
+          backgroundColor: $bgColor.hsl.set({ l: $bgColor.l * 0.85 }), // Convert to HSL and darken input background
+          padding: `${$gap} ${$gap.mul(1.5)}`, // Padding is based on default gap
+          border: `1px solid ${$color}`,          
+        })
+    )
+);
+
+// Make text dark grey
+mySettingsRef.set({
+  $color: new StypRGB({ r: 192, g: 192, b: 192 }), // Override default value
+});
+```
+
+[<angle>]: https://developer.mozilla.org/en-US/docs/Web/CSS/angle
+[<angle-percentage>]: https://developer.mozilla.org/en-US/docs/Web/CSS/angle-percentage
+[<frequency>]: https://developer.mozilla.org/en-US/docs/Web/CSS/frequency
+[<frequency-percentage>]: https://developer.mozilla.org/en-US/docs/Web/CSS/frequency-percentag
+[<length>]: https://developer.mozilla.org/en-US/docs/Web/CSS/length
+[<length-percentage>]: https://developer.mozilla.org/en-US/docs/Web/CSS/length-percentage
+[<resolution>]: https://developer.mozilla.org/en-US/docs/Web/CSS/resolution
+[<time>]: https://developer.mozilla.org/en-US/docs/Web/CSS/time
+[<time-percentage>]: https://developer.mozilla.org/en-US/docs/Web/CSS/time-percentage
+
+[<color>]: https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
+[RGB colors]: https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#RGB_colors
+[HSL colors]: https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#HSL_colors
+
+[<url>]: https://developer.mozilla.org/en-US/docs/Web/CSS/url 
 
 
 Producing CSS

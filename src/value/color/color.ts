@@ -201,6 +201,11 @@ export namespace StypRGB {
 
 }
 
+/**
+ * CSS property value representing [HSL color] in `hsl()` or `hsla()` functional notation.
+ *
+ * [[HSL color]: https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#HSL_colors
+ */
 export class StypHSL extends StypColorStruct<StypHSL, StypHSL.Coords> implements StypHSL.Coords {
 
   // noinspection JSMethodCanBeStatic
