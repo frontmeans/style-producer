@@ -35,7 +35,7 @@ export namespace StypRules {
    *
    * This can be one of:
    * - Single `StypRule` instance.
-   *   A `StypRule.list` is used instead.
+   *   A `StypRule.rules.self` is used instead. I.e. a list containing only the rule itself.
    * - A `StypRules` instance.
    *   It is used as is.
    * - A promise of one of the above.
@@ -172,7 +172,7 @@ function lazyRules(source: (this: void) => StypRule | StypRules | Promise<StypRu
 }
 
 function rulesByValue(source: StypRule | StypRules | Promise<StypRule | StypRules>): StypRules {
-  return source instanceof StypRule ? source.rules : isEventSender(source) ? source : asyncRules(source);
+  return source instanceof StypRule ? source.rules.self : isEventSender(source) ? source : asyncRules(source);
 }
 
 function asyncRules(source: Promise<StypRule | StypRules>): StypRules {

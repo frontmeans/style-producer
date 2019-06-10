@@ -22,8 +22,8 @@ describe('stypRules', () => {
     expect(itsEmpty(rules)).toBe(true);
     expect(onEventFrom(rules)(noop).done).toBe(true);
   });
-  it('returns rule hierarchy for single rule', () => {
-    expect(stypRules(root)).toBe(root.rules);
+  it('returns self rule list for single rule', () => {
+    expect(stypRules(root)).toBe(root.rules.self);
   });
   it('returns rule list as is', () => {
     expect(stypRules(root.rules.nested)).toBe(root.rules.nested);
@@ -31,7 +31,7 @@ describe('stypRules', () => {
 
   describe('with source function', () => {
     it('returns call result rules', () => {
-      expect([...stypRules(() => root)]).toEqual([...root.rules]);
+      expect([...stypRules(() => root)]).toEqual([...root.rules.self]);
     });
     it('sends rule addition', () => {
 
@@ -156,17 +156,17 @@ describe('stypRules', () => {
 
     it('returns all rules', () => {
 
-      const rules = new Set(stypRules(root, root2));
+      const rules = new Set(stypRules(root, root2.rules));
 
       expect(rules).toContain(root);
-      expect(rules).toContain(rule);
+      expect(rules).not.toContain(rule);
       expect(rules).toContain(root2);
       expect(rules).toContain(rule2);
-      expect(rules.size).toBe(4);
+      expect(rules.size).toBe(3);
     });
     it('sends rule addition', () => {
 
-      const rules = stypRules(root, root2);
+      const rules = stypRules(root, root2.rules);
       const receiver = jest.fn();
 
       onEventFrom(rules)(receiver);
@@ -174,29 +174,29 @@ describe('stypRules', () => {
       const added = root2.rules.add({ c: 'added' });
 
       expect(receiver).toHaveBeenCalledWith([added], []);
-      expect([...rules]).toHaveLength(5);
+      expect([...rules]).toHaveLength(4);
     });
     it('sends rule removal', () => {
 
-      const rules = stypRules(root, root2);
+      const rules = stypRules(root, root2.rules);
       const receiver = jest.fn();
 
       onEventFrom(rules)(receiver);
       rule2.remove();
 
       expect(receiver).toHaveBeenCalledWith([], [rule2]);
-      expect([...rules]).toHaveLength(3);
+      expect([...rules]).toHaveLength(2);
     });
     it('does not send updates when interest is lost', () => {
 
-      const rules = stypRules(root, root2);
+      const rules = stypRules(root, root2.rules);
       const receiver = jest.fn();
 
       onEventFrom(rules)(receiver).off();
       rule2.remove();
 
       expect(receiver).not.toHaveBeenCalled();
-      expect([...rules]).toHaveLength(3);
+      expect([...rules]).toHaveLength(2);
     });
   });
 });
@@ -218,8 +218,8 @@ describe('lazyStypRules', () => {
     expect(itsEmpty(rules)).toBe(true);
     expect(onEventFrom(rules)(noop).done).toBe(true);
   });
-  it('returns rule hierarchy for single rule', () => {
-    expect(lazyStypRules(root)).toBe(root.rules);
+  it('returns self rule list for single rule', () => {
+    expect(lazyStypRules(root)).toBe(root.rules.self);
   });
   it('returns rule list as is', () => {
     expect(lazyStypRules(root.rules.nested)).toBe(root.rules.nested);
