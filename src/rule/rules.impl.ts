@@ -67,6 +67,9 @@ export class Rules extends StypRuleList {
 
 }
 
+/**
+ * @internal
+ */
 export function singleRuleList(rule: StypRule): StypRuleList {
 
   const rules = [rule];
