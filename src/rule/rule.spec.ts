@@ -218,6 +218,12 @@ describe('StypRule', () => {
       });
     });
 
+    describe('self', () => {
+      it('contains only rule itself', () => {
+        expect([...rule.rules.self]).toEqual([rule]);
+      });
+    });
+
     describe('get', () => {
       it('returns undefined for absent rule', () => {
         expect(rule.rules.get({ c: 'absent' })).toBeUndefined();

@@ -5,11 +5,12 @@ import { stypOuterSelector, stypRuleKeyAndTail } from '../selector/selector.impl
 import { StypProperties } from './properties';
 import { mergeStypProperties, noStypPropertiesSpec, stypPropertiesBySpec } from './properties.impl';
 import { StypRule as StypRule_, StypRuleHierarchy, StypRuleList } from './rule';
-import { grabRules } from './rules.impl';
+import { grabRules, singleRuleList } from './rules.impl';
 
 class AllRules extends StypRuleHierarchy {
 
   private readonly _updates = new EventEmitter<[StypRule[], StypRule[]]>();
+  readonly self: StypRuleList;
   readonly read: AfterEvent<[AllRules]>;
 
   get onUpdate() {
@@ -18,6 +19,7 @@ class AllRules extends StypRuleHierarchy {
 
   constructor(private readonly _root: StypRule, readonly nested: NestedRules) {
     super();
+    this.self = singleRuleList(_root);
     this.read = afterEventFrom<[AllRules]>(this._updates.on.thru(() => this), [this]);
   }
 

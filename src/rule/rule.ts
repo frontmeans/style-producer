@@ -152,6 +152,13 @@ export abstract class StypRuleList implements StypRules, EventKeeper<[StypRuleLi
 export abstract class StypRuleHierarchy extends StypRuleList {
 
   /**
+   * Dynamic list containing only root CSS rule.
+   *
+   * This list never changes actually.
+   */
+  abstract readonly self: StypRuleList;
+
+  /**
    * Dynamic list of all CSS rules directly nested within the root one.
    */
   abstract readonly nested: StypRuleList;
