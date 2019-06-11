@@ -1,4 +1,5 @@
 import { StypPriority } from '../priority';
+import { StypValue, stypValuesEqual } from '../value';
 import {
   StypAddSub as StypAddSub_,
   StypDimension as StypDimension_,
@@ -6,9 +7,7 @@ import {
   StypNumeric,
   StypNumericStruct
 } from './numeric';
-import { StypValue, stypValuesEqual } from '../value';
 import { StypZero } from './zero';
-import { newStypZero } from './zero.impl';
 
 /**
  * @internal
@@ -75,14 +74,28 @@ export class StypDimension<Unit extends string>
         : new StypDimension(this.val, this.unit, { dim: this.dim, priority });
   }
 
-  add(addendum: StypNumeric<Unit>): StypNumeric<Unit> {
+  add(addendum: StypNumeric<Unit>): StypNumeric<Unit>;
+
+  add(addendum: number, unit?: Unit): StypNumeric<Unit>;
+
+  add(addendum: StypNumeric<Unit> | number, unit?: Unit): StypNumeric<Unit> {
+    if (typeof addendum === 'number') {
+      addendum = stypDimension(addendum, unit || this.unit, this);
+    }
     if (addendum.type === 'dimension' && this.unit === addendum.unit) {
       return stypDimension(this.val + addendum.val, this.unit, this);
     }
     return stypAddSub(this, '+', addendum);
   }
 
-  sub(subtrahend: StypNumeric<Unit>): StypNumeric<Unit> {
+  sub(subtrahend: StypNumeric<Unit>): StypNumeric<Unit>;
+
+  sub(subtrahend: number, unit?: Unit): StypNumeric<Unit>;
+
+  sub(subtrahend: StypNumeric<Unit> | number, unit?: Unit): StypNumeric<Unit> {
+    if (typeof subtrahend === 'number') {
+      subtrahend = stypDimension(subtrahend, unit || this.unit, this);
+    }
     if (subtrahend.type === 'dimension' && this.unit === subtrahend.unit) {
       return stypDimension(this.val - subtrahend.val, this.unit, this);
     }
@@ -125,7 +138,7 @@ export class StypDimension<Unit extends string>
  *
  * @internal
  */
-function stypDimension<Unit extends string>(
+export function stypDimension<Unit extends string>(
     val: number,
     unit: Unit,
     opts: StypDimension_.Opts<Unit>): StypDimension_<Unit> | StypZero<Unit> {
@@ -178,11 +191,25 @@ export abstract class StypCalcBase<
     return false;
   }
 
-  add(addendum: StypNumeric<Unit>): StypNumeric<Unit> {
+  add(addendum: StypNumeric<Unit>): StypNumeric<Unit>;
+
+  add(addendum: number, unit: Unit): StypNumeric<Unit>;
+
+  add(addendum: StypNumeric<Unit> | number, unit?: Unit): StypNumeric<Unit> {
+    if (typeof addendum === 'number') {
+      addendum = stypDimension(addendum, unit as Unit, this);
+    }
     return stypAddSub(this as StypNumeric<Unit>, '+', addendum);
   }
 
-  sub(subtrahend: StypNumeric<Unit>): StypNumeric<Unit> {
+  sub(subtrahend: StypNumeric<Unit>): StypNumeric<Unit>;
+
+  sub(subtrahend: number, unit: Unit): StypNumeric<Unit>;
+
+  sub(subtrahend: StypNumeric<Unit> | number, unit?: Unit): StypNumeric<Unit> {
+    if (typeof subtrahend === 'number') {
+      subtrahend = stypDimension(subtrahend, unit as Unit, this);
+    }
     return stypAddSub(this as StypNumeric<Unit>, '-', subtrahend);
   }
 
@@ -347,103 +374,9 @@ function stypDiv<Unit extends string>(left: StypNumeric<Unit>, right: number): S
       : new StypMulDiv(left, '/', right, left);
 }
 
-function isStypNumeric(source: StypValue): source is StypNumeric<any, any> {
+/**
+ * @internal
+ */
+export function isStypNumeric(source: StypValue): source is StypNumeric<any, any> {
   return typeof source === 'object' && (source.type === 'dimension' || source.type === 'calc' || source.type === 0);
-}
-
-/**
- * @internal
- */
-export function unitlessZeroDimensionKind<Unit extends string>(
-    {
-      pt,
-      noPt,
-    }: {
-      pt: () => StypDimension_.Kind.UnitlessZero<Unit | '%'>,
-      noPt: () => StypDimension_.Kind.UnitlessZero<Exclude<Unit, '%'>>,
-    }
-): StypDimension_.Kind.UnitlessZero<Unit> {
-
-  const dimension: StypDimension_.Kind.UnitlessZero<Unit> = {
-
-    get zero(): StypZero<Unit> {
-      return zero;
-    },
-
-    get pt() {
-      return pt();
-    },
-
-    get noPt() {
-      return noPt();
-    },
-
-    of(val: number, unit: Unit): StypDimension_<Unit> | StypZero<Unit> {
-      return val ? new StypDimension(val, unit, { dim: this }) : zero;
-    },
-
-    by(source: StypValue): StypNumeric<Unit> | undefined {
-      if (!isStypNumeric(source)) {
-        return;
-      }
-
-      const numeric: StypNumeric<any, any> = source;
-
-      return numeric.toDim(this);
-    }
-
-  };
-
-  const zero = newStypZero<Unit>(dimension);
-
-  return dimension;
-}
-
-/**
- * @internal
- */
-export function unitZeroDimensionKind<Unit extends string>(
-    {
-      zeroUnit,
-      withPercent,
-      noPercent,
-    }: {
-      zeroUnit: Unit,
-      withPercent?: () => StypDimension_.Kind.UnitZero<Unit | '%'>,
-      noPercent?: () => StypDimension_.Kind.UnitZero<Exclude<Unit, '%'>>,
-    }): StypDimension_.Kind.UnitZero<Unit> {
-
-  const dimension: StypDimension_.Kind.UnitZero<Unit> = {
-
-    get pt() {
-      return withPercent && withPercent();
-    },
-
-    get noPt() {
-      return noPercent ? noPercent() : this as StypDimension_.Kind.UnitZero<Exclude<Unit, '%'>>;
-    },
-
-    get zero(): StypDimension_<Unit> {
-      return zero;
-    },
-
-    of(val: number, unit: Unit): StypDimension<Unit> {
-      return new StypDimension(val, unit, { dim: this });
-    },
-
-    by(source: StypValue): StypNumeric<Unit, StypDimension_<Unit>> | undefined {
-      if (!isStypNumeric(source)) {
-        return;
-      }
-
-      const numeric: StypNumeric<any, any> = source;
-
-      return numeric.toDim(this);
-    },
-
-  };
-
-  const zero = new StypDimension(0, zeroUnit, { dim: dimension });
-
-  return dimension;
 }

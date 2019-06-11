@@ -1,6 +1,7 @@
 import { StypPriority } from '../priority';
 import { StypValue } from '../value';
 import { StypDimension, StypNumeric, StypNumericStruct } from './';
+import { stypDimension } from './numeric.impl';
 import { StypZero } from './zero';
 
 class Zero<Unit extends string> extends StypNumericStruct<Zero<Unit>, Unit> implements StypZero<Unit> {
@@ -33,11 +34,25 @@ class Zero<Unit extends string> extends StypNumericStruct<Zero<Unit>, Unit> impl
     return false;
   }
 
-  add(addendum: StypNumeric<Unit>): StypNumeric<Unit> {
+  add(addendum: StypNumeric<Unit>): StypNumeric<Unit>;
+
+  add(addendum: number, unit?: Unit): StypNumeric<Unit>;
+
+  add(addendum: StypNumeric<Unit> | number, unit?: Unit): StypNumeric<Unit> {
+    if (typeof addendum === 'number') {
+      addendum = stypDimension(addendum, unit as Unit, this);
+    }
     return addendum.prioritize(this.priority);
   }
 
-  sub(subtrahend: StypNumeric<Unit>): StypNumeric<Unit> {
+  sub(subtrahend: StypNumeric<Unit>): StypNumeric<Unit>;
+
+  sub(subtrahend: number, unit: Unit): StypNumeric<Unit>;
+
+  sub(subtrahend: StypNumeric<Unit> | number, unit?: Unit): StypNumeric<Unit> {
+    if (typeof subtrahend === 'number') {
+      subtrahend = stypDimension(subtrahend, unit as Unit, this);
+    }
     return subtrahend.negate().prioritize(this.priority);
   }
 

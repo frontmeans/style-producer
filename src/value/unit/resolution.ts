@@ -1,5 +1,5 @@
 import { StypDimension, StypNumeric } from '../numeric';
-import { unitZeroDimensionKind } from '../numeric/numeric.impl';
+import { unitZeroDimensionKind } from '../numeric/dimension-kind.impl';
 
 /**
  * Structured [resolution] property value.

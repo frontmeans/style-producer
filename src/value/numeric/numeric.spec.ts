@@ -1,16 +1,16 @@
 import { textAndPriority } from '../../spec';
 import { StypPriority } from '../priority';
-import { StypCalc, StypDimension } from './numeric';
-import { StypAddSub, StypMulDiv } from './numeric.impl';
 import { StypFrequency, StypLength, StypLengthPt, StypTime } from '../unit';
 import { stypValuesEqual } from '../value';
+import { StypCalc, StypDimension } from './numeric';
+import { StypAddSub, StypMulDiv } from './numeric.impl';
 
 describe('StypDimension', () => {
 
-  let value: StypLengthPt;
+  let value: StypDimension<StypLengthPt.Unit>;
 
   beforeEach(() => {
-    value = StypLengthPt.of(16, 'px');
+    value = StypLengthPt.of(16, 'px') as StypDimension<StypLengthPt.Unit>;
   });
 
   describe('is', () => {
@@ -51,6 +51,13 @@ describe('StypDimension', () => {
         unit: 'px',
       });
     });
+    it('is `StypDimension` when addendum is unitless number', () => {
+      expect(value.add(1)).toMatchObject({
+        type: 'dimension',
+        val: 17,
+        unit: 'px',
+      });
+    });
     it('is `StypCalc` when addendum has different unit', () => {
 
       const right = StypLengthPt.of(1, '%');
@@ -62,6 +69,17 @@ describe('StypDimension', () => {
       expect(sum.op).toBe('+');
       expect(sum.right).toBe(right);
     });
+    it('is `StypCalc` when addendum is number with different unit', () => {
+
+      const right = 1;
+      const sum = value.add(right, '%') as StypCalc<StypLengthPt.Unit>;
+
+      expect(sum.type).toBe('calc');
+      expect(sum.dim).toBe(value.dim);
+      expect(sum.left).toBe(value);
+      expect(sum.op).toBe('+');
+      expect(`${sum.right}`).toBe(`${StypLengthPt.of(right, '%')}`);
+    });
     it('is the same value when addendum is zero', () => {
       expect(value.add(StypLengthPt.zero)).toBe(value);
     });
@@ -70,6 +88,13 @@ describe('StypDimension', () => {
   describe('sub', () => {
     it('is `StypDimension` when addendum has the same unit', () => {
       expect(value.sub(StypLengthPt.of(1, 'px'))).toMatchObject({
+        type: 'dimension',
+        val: 15,
+        unit: 'px',
+      });
+    });
+    it('is `StypDimension` when addendum is unitless number', () => {
+      expect(value.sub(1)).toMatchObject({
         type: 'dimension',
         val: 15,
         unit: 'px',
@@ -85,6 +110,17 @@ describe('StypDimension', () => {
       expect(diff.left).toBe(value);
       expect(diff.op).toBe('-');
       expect(diff.right).toBe(right);
+    });
+    it('is `StypCalc` when addendum is number with different unit', () => {
+
+      const right = 1;
+      const diff = value.sub(right, '%') as StypCalc<StypLengthPt.Unit>;
+
+      expect(diff.type).toBe('calc');
+      expect(diff.dim).toBe(value.dim);
+      expect(diff.left).toBe(value);
+      expect(diff.op).toBe('-');
+      expect(`${diff.right}`).toBe(`${StypLengthPt.of(1, '%')}`);
     });
     it('is the same value when addendum is zero', () => {
       expect(value.sub(StypLengthPt.zero)).toBe(value);
@@ -200,10 +236,16 @@ describe('StypCalc', () => {
   });
 
   describe('add', () => {
-    it('adds the value', () => {
+    it('adds structured value', () => {
       expect(textAndPriority(calc.add(StypLengthPt.of(1, 'rem'))))
           .toEqual(['calc((12px + 100%) + 1rem)', StypPriority.Usual]);
       expect(textAndPriority(important.add(StypLengthPt.of(1, 'rem'))))
+          .toEqual(['calc((12px + 100%) + 1rem)', StypPriority.Important]);
+    });
+    it('adds numeric value', () => {
+      expect(textAndPriority(calc.add(1, 'rem')))
+          .toEqual(['calc((12px + 100%) + 1rem)', StypPriority.Usual]);
+      expect(textAndPriority(important.add(1, 'rem')))
           .toEqual(['calc((12px + 100%) + 1rem)', StypPriority.Important]);
     });
     it('does not add zero value', () => {
@@ -213,10 +255,16 @@ describe('StypCalc', () => {
   });
 
   describe('sub', () => {
-    it('subtracts the value', () => {
+    it('subtracts structured value', () => {
       expect(textAndPriority(calc.sub(StypLengthPt.of(1, 'rem'))))
           .toEqual(['calc((12px + 100%) - 1rem)', StypPriority.Usual]);
       expect(textAndPriority(important.sub(StypLengthPt.of(1, 'rem'))))
+          .toEqual(['calc((12px + 100%) - 1rem)', StypPriority.Important]);
+    });
+    it('subtracts numeric value', () => {
+      expect(textAndPriority(calc.sub(1, 'rem')))
+          .toEqual(['calc((12px + 100%) - 1rem)', StypPriority.Usual]);
+      expect(textAndPriority(important.sub(1, 'rem')))
           .toEqual(['calc((12px + 100%) - 1rem)', StypPriority.Important]);
     });
     it('does not subtract zero value', () => {

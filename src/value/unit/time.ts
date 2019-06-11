@@ -1,5 +1,5 @@
 import { StypDimension, StypNumeric } from '../numeric';
-import { unitlessZeroDimensionKind } from '../numeric/numeric.impl';
+import { unitlessZeroDimensionKind } from '../numeric/dimension-kind.impl';
 
 /**
  * Structured [time] property value.

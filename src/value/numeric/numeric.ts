@@ -48,7 +48,11 @@ export abstract class StypNumericStruct<Self extends StypNumericStruct<Self, Uni
 
   abstract add(addendum: StypNumeric<Unit>): StypNumeric<Unit>;
 
+  abstract add(addendum: number, unit: Unit): StypNumeric<Unit>;
+
   abstract sub(subtrahend: StypNumeric<Unit>): StypNumeric<Unit>;
+
+  abstract sub(subtrahend: number, unit: Unit): StypNumeric<Unit>;
 
   abstract mul(multiplier: number): StypNumeric<Unit>;
 
@@ -96,6 +100,14 @@ export interface StypDimension<Unit extends string>
    * Dimension unit.
    */
   readonly unit: Unit;
+
+  add(addendum: StypNumeric<Unit>): StypNumeric<Unit>;
+
+  add(addendum: number, unit?: Unit): StypNumeric<Unit>;
+
+  sub(subtrahend: StypNumeric<Unit>): StypNumeric<Unit>;
+
+  sub(subtrahend: number, unit?: Unit): StypNumeric<Unit>;
 
   by(source: StypValue): StypNumeric<Unit>;
 
