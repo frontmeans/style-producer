@@ -33,11 +33,12 @@ export abstract class StypColorStruct<Self extends StypColorStruct<Self, Coords>
   /**
    * Constructs another color value with updated coordinates.
    *
-   * @param coords Partial color coordinates to apply. Missing values are taken from this color.
+   * @param coords Either partial color coordinates to apply or a function returning them and accepting this color
+   * instance as its only argument. Missing values are taken from this color.
    *
    * @returns Updated color value.
    */
-  abstract set(coords: Partial<Coords>): Self;
+  abstract set(coords: Partial<Coords> | ((this: void, color: this) => Partial<Coords>)): Self;
 
 }
 
@@ -155,7 +156,13 @@ export class StypRGB extends StypColorStruct<StypRGB, StypRGB.Coords> implements
     return this.priority === priority ? this : new StypRGB(this, { priority });
   }
 
-  set({ r = this.r, g = this.g, b = this.b, a = this.a }: Partial<StypRGB.Coords>): StypRGB {
+  set(coords: Partial<StypRGB.Coords> | ((this: void, color: this) => Partial<StypRGB.Coords>)): StypRGB {
+    if (typeof coords === 'function') {
+      coords = coords(this);
+    }
+
+    const { r = this.r, g = this.g, b = this.b, a = this.a } = coords;
+
     return new StypRGB({ r, g, b, a }, this);
   }
 
@@ -304,7 +311,13 @@ export class StypHSL extends StypColorStruct<StypHSL, StypHSL.Coords> implements
     return this.priority === priority ? this : new StypHSL(this, { priority });
   }
 
-  set({ h = this.h, s = this.s, l = this.l, a = this.a }: Partial<StypHSL.Coords>): StypHSL {
+  set(coords: Partial<StypHSL.Coords> | ((this: void, color: this) => Partial<StypHSL.Coords>)): StypHSL {
+    if (typeof coords === 'function') {
+      coords = coords(this);
+    }
+
+    const { h = this.h, s = this.s, l = this.l, a = this.a } = coords;
+
     return new StypHSL({ h, s, l, a }, this);
   }
 

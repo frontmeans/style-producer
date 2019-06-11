@@ -209,7 +209,7 @@ root.rules.add(
     mySettingsRef.read.thru(
         ({ $color, $bgColor, $gap }) => ({
           color: $color,
-          backgroundColor: $bgColor.hsl.set({ l: $bgColor.hsl.l * 0.85 }), // Convert to HSL and darken input background
+          backgroundColor: $bgColor.hsl.set(hsl => ({ l: hsl.l * 0.85 })), // Convert to HSL and darken input background
           padding: `${$gap} ${$gap.mul(1.5)}`, // Padding is based on default gap
           border: `1px solid ${$color}`,          
         })

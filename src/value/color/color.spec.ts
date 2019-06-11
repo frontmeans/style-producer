@@ -70,6 +70,9 @@ describe('StypRGB', () => {
       expect(value.set({ b: 99 })).toMatchObject({ ...coords, b: 99 });
       expect(value.set({ a: 0.99 })).toMatchObject({ ...coords, a: 0.99 });
     });
+    it('modifies coordinates', () => {
+      expect(value.set(color => ({ r: color.r - 1 }))).toMatchObject({ ...coords, r: 254 });
+    });
   });
 
   describe('rgb', () => {
@@ -200,6 +203,9 @@ describe('StypHSL', () => {
       expect(value.set({ s: 99 })).toMatchObject({ ...coords, s: 99 });
       expect(value.set({ l: 99 })).toMatchObject({ ...coords, l: 99 });
       expect(value.set({ a: 0.99 })).toMatchObject({ ...coords, a: 0.99 });
+    });
+    it('modifies coordinates', () => {
+      expect(value.set(color => ({ h: color.h + 1 }))).toMatchObject({ ...coords, h: 241 });
     });
   });
 
