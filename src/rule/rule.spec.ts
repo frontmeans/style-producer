@@ -31,7 +31,7 @@ describe('StypRule', () => {
 
   beforeEach(() => {
     selector = [{ e: 'test-element' }];
-    mockSpec = jest.fn(r => afterEventOf({}));
+    mockSpec = jest.fn(_r => afterEventOf({}));
     rule = root.rules.add(selector, mockSpec);
   });
 
@@ -569,6 +569,25 @@ describe('StypRule', () => {
 
       expect(added).toHaveLength(0);
       expect(ruleSelectors(removed)).toEqual([[...rule.selector, subSelector[0]]]);
+    });
+    it('sends self list update', () => {
+
+      const updateReceiver = jest.fn();
+      const rootUpdateReceiver = jest.fn();
+
+      rule.rules.self.onUpdate(updateReceiver);
+      onEventFrom(root.rules.self)(rootUpdateReceiver);
+
+      rule.remove();
+
+      expect(updateReceiver).toHaveBeenCalled();
+      expect(rootUpdateReceiver).not.toHaveBeenCalled();
+
+      const [added, removed] = updateReceiver.mock.calls[0];
+
+      expect(added).toHaveLength(0);
+      expect(ruleSelectors(removed)).toEqual([rule.selector]);
+      expect(itsEmpty(rule.rules.self)).toBe(true);
     });
     it('updates rule list', () => {
 

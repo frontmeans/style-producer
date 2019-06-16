@@ -1,6 +1,6 @@
 import { filterIt, itsIterable } from 'a-iterable';
 import { asis, valueProvider } from 'call-thru';
-import { AfterEvent, afterEventFrom, OnEvent, OnEvent__symbol, onEventBy, onEventFrom, onNever } from 'fun-events';
+import { AfterEvent, afterEventFrom, OnEvent, onEventBy, onEventFrom } from 'fun-events';
 import { stypQuery, StypQuery, stypSelectorMatches } from '../selector';
 import { StypRule, StypRuleList } from './rule';
 import { StypRules } from './rules';
@@ -47,7 +47,7 @@ export class Rules extends StypRuleList {
       });
     }).share();
 
-    this.read = afterEventFrom<[Rules]>(this.onUpdate.thru(valueProvider<this>(this)), [this]);
+    this.read = afterEventFrom<[Rules]>(this.onUpdate.thru(valueProvider(this)), [this]);
 
     this[Symbol.iterator] = () => {
       if (ruleSet) {
@@ -65,28 +65,6 @@ export class Rules extends StypRuleList {
     return grabRules(this, query);
   }
 
-}
-
-/**
- * @internal
- */
-export function singleRuleList(rule: StypRule): StypRuleList {
-
-  const rules = [rule];
-
-  class Self implements StypRules {
-
-    get [OnEvent__symbol]() {
-      return onNever;
-    }
-
-    [Symbol.iterator](): IterableIterator<StypRule> {
-      return itsIterable(rules);
-    }
-
-  }
-
-  return new Rules(new Self());
 }
 
 /**
