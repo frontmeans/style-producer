@@ -34,13 +34,13 @@ export class Rules extends StypRuleList {
 
       const rules = ruleSet || (ruleSet = new Set(buildList()));
 
-      return onEventFrom(list)((added, removed) => {
+      return onEventFrom(list)(function (added, removed) {
         added = filterArray(added);
         removed = filterArray(removed);
         if (removed.length || added.length) {
           removed.forEach(rule => rules.delete(rule));
           added.forEach(rule => rules.add(rule));
-          receiver(added, removed);
+          receiver.call(this, added, removed);
         }
       }).whenDone(() => {
         ruleSet = undefined;

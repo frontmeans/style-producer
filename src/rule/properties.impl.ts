@@ -1,11 +1,10 @@
 import { filterIt, itsIterator, itsReduction, overEntries } from 'a-iterable';
-import { asis, nextSkip, NextSkip, noop } from 'call-thru';
+import { asis, isPresent, nextSkip, NextSkip } from 'call-thru';
 import {
   AfterEvent,
-  afterEventBy,
   afterEventFrom,
+  afterEventFromAll,
   afterEventOf,
-  eventInterest,
   EventKeeper,
   EventSender,
   isEventKeeper,
@@ -107,11 +106,7 @@ function propertiesEqual(first: StypProperties, second: StypProperties): boolean
 }
 
 function propertyEntries(properties: StypProperties): Iterable<[keyof StypProperties, StypValue]> {
-  return filterIt(overEntries(properties), valuePresent);
-}
-
-function valuePresent([, value]: [keyof StypProperties, StypValue]): boolean {
-  return value != null;
+  return filterIt(overEntries(properties), isPresent);
 }
 
 /**
@@ -122,33 +117,9 @@ export function mergeStypProperties(
     addendum: AfterEvent<[StypProperties]>):
     AfterEvent<[StypProperties]> {
   return preventDuplicates(
-      afterEventBy(
-          receiver => {
-
-            let send: () => void = noop;
-            let baseProperties: StypProperties = {};
-            let addendumProperties: StypProperties = {};
-
-            const baseInterest = base(properties => {
-              baseProperties = properties;
-              send();
-            });
-            const extensionInterest = addendum(properties => {
-              addendumProperties = properties;
-              send();
-            });
-
-            send = () => receiver(addValues(baseProperties, addendumProperties));
-            send();
-
-            return eventInterest(
-                reason => {
-                  baseInterest.off(reason);
-                  extensionInterest.off(reason);
-                })
-                .needs(baseInterest)
-                .needs(extensionInterest);
-          }));
+      afterEventFromAll({ base, addendum })
+          .keep.thru(({ base: [baseProperties], addendum: [addendumProperties] }) =>
+              addValues(baseProperties, addendumProperties)));
 }
 
 function addValues(base: StypProperties, addendum: StypProperties): StypProperties {

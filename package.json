@@ -24,7 +24,7 @@
     "a-iterable": "^2.4.0",
     "call-thru": "^2.5.0",
     "cssesc": "^3.0.0",
-    "fun-events": "^4.5.1",
+    "fun-events": "^4.6.0-dev.2",
     "hyphenate-style-name": "^1.0.3",
     "namespace-aliaser": "^1.0.0",
     "tslib": "^1.10.0"

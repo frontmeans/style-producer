@@ -9,7 +9,7 @@ import {
   OnEvent,
   OnEvent__symbol,
   onEventBy,
-  onEventFrom
+  onEventFrom, receiveEventsBy
 } from 'fun-events';
 import { StypRule, StypRuleList } from './rule';
 import { Rules } from './rules.impl';
@@ -154,10 +154,10 @@ function lazyRules(source: (this: void) => StypRule | StypRules | Promise<StypRu
 
     reportExistingRules(rules, ruleSet, receiver);
 
-    return rules[OnEvent__symbol]((added, removed) => {
+    return rules[OnEvent__symbol](function (added, removed) {
       removed.forEach(rule => ruleSet.delete(rule));
       added.forEach(rule => ruleSet.add(rule));
-      receiver(added, removed);
+      receiver.call(this, added, removed);
     }).whenDone(() => {
       ruleSet.clear();
     });
@@ -194,10 +194,10 @@ function asyncRules(source: Promise<StypRule | StypRules>): StypRules {
 
         reportExistingRules(rules, ruleSet, receiver);
 
-        sourceInterest = onEventFrom(rules)((added, removed) => {
+        sourceInterest = onEventFrom(rules)(function (added, removed) {
           removed.forEach(rule => ruleSet.delete(rule));
           added.forEach(rule => ruleSet.add(rule));
-          receiver(added, removed);
+          receiver.call(this, added, removed);
         }).needs(interest);
       }
     });
@@ -225,6 +225,6 @@ function reportExistingRules(
     ruleSet.add(rule);
   });
   if (existing.length) {
-    receiver(existing, []); // Report existing rules as just added
+    receiveEventsBy(receiver)(existing, []); // Report existing rules as just added
   }
 }

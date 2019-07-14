@@ -1300,13 +1300,13 @@ fsevents@^1.2.7:
     nan "^2.12.1"
     node-pre-gyp "^0.12.0"
 
-fun-events@^4.5.1:
-  version "4.5.1"
-  resolved "https://registry.yarnpkg.com/fun-events/-/fun-events-4.5.1.tgz#c2979a44f4e0b060cf3283ade6ee093fea003106"
-  integrity sha512-FhrBB2HF2qVPEYerAuVm1LeAd1VWA3sqNkXPaBMyU05QQ+yVlOJJS+Idq8w677mFVl47gGWcF9u2PZv90wLyLg==
+fun-events@^4.6.0-dev.2:
+  version "4.6.0-dev.2"
+  resolved "https://registry.yarnpkg.com/fun-events/-/fun-events-4.6.0-dev.2.tgz#b6f7af916043915b7d1908bcbb70cd596520a449"
+  integrity sha512-3bjwdJ8NymxCzecVgl73JdDgoyEa7H1ephuJ40UF0+rZHmmJmgZ7OOaI4G8vv5MhuTJn9rClsAtHBbVPL/khXw==
   dependencies:
     call-thru "^2.5.0"
-    tslib "^1.9.0"
+    tslib "^1.10.0"
 
 function-bind@^1.1.1:
   version "1.1.1"
