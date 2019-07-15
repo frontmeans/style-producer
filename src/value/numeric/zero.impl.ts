@@ -56,11 +56,11 @@ class Zero<Unit extends string> extends StypNumericStruct<Zero<Unit>, Unit> impl
     return subtrahend.negate().prioritize(this.priority);
   }
 
-  mul(multiplier: number): this {
+  mul(): this {
     return this;
   }
 
-  div(divisor: number): this {
+  div(): this {
     return this;
   }
 

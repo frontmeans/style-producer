@@ -10,7 +10,7 @@ import {
   ValueTracker
 } from 'fun-events';
 import { StypQuery, StypRuleKey, stypSelector, StypSelector } from '../selector';
-import { stypRuleKeyText, stypSelectorDisplayText } from '../selector/selector-text.impl';
+import { stypRuleKeyText } from '../selector/selector-text.impl';
 import { stypOuterSelector, stypRuleKeyAndTail } from '../selector/selector.impl';
 import { StypProperties } from './properties';
 import { mergeStypProperties, noStypPropertiesSpec, stypPropertiesBySpec } from './properties.impl';
@@ -116,7 +116,7 @@ function selfRuleList(rule: StypRule, all: AllRules): StypRuleList {
   const onUpdate = new EventEmitter<[StypRule[], StypRule[]]>();
   const rules = [rule];
 
-  all.onUpdate((added, removed) => {
+  all.onUpdate((_added, removed) => {
     if (removed[0] === rule) {
       rules.length = 0;
       onUpdate.send([], [rule]);
@@ -180,7 +180,7 @@ class NestedRules extends StypRuleList {
 
   _add(key: string, rule: StypRule, sendUpdate: boolean) {
     this._byKey.set(key, rule);
-    rule.rules.onUpdate((added, removed) => {
+    rule.rules.onUpdate((_added, removed) => {
       if (removed[0] === rule) {
         this._byKey.delete(key);
         this._updates.send([], [rule]);

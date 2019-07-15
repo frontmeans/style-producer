@@ -15,7 +15,7 @@ describe('stypRenderXmlNs', () => {
 
   beforeEach(() => {
     sheet = {
-      insertRule: jest.fn((rule: string, index: string) => {
+      insertRule: jest.fn((_rule: string, index: string) => {
         return index;
       }),
     } as any;

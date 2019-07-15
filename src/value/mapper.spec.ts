@@ -203,7 +203,7 @@ describe('StypMapper', () => {
       expect(mockMapper2).toHaveBeenCalledWith('init2', expect.anything(), '$value2');
     });
     it('grants access to mapped values', () => {
-      mockMapper1.mockImplementation((from, mapped, _key) => mapped.get('$value2'));
+      mockMapper1.mockImplementation((_from, mapped) => mapped.get('$value2'));
       expect(
           StypMapper.map<Result>(mappings, {
             $value1: 'init1',

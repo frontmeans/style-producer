@@ -1,15 +1,13 @@
-import { DEFAULT__NS, NamespaceAliaser, NamespaceDef, newNamespaceAliaser } from 'namespace-aliaser';
+import { DEFAULT__NS, NamespaceDef } from 'namespace-aliaser';
 import { stypSelectorText } from './selector-text';
 import { stypRuleKeyText, stypSelectorDisplayText } from './selector-text.impl';
 
 describe('stypSelectorText', () => {
 
   let ns: NamespaceDef;
-  let nsQualifier: NamespaceAliaser;
 
   beforeEach(() => {
     ns = new NamespaceDef('test/url', 'test');
-    nsQualifier = newNamespaceAliaser();
   });
 
   it('formats raw selector', () => {

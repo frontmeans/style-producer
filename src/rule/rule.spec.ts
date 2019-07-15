@@ -165,10 +165,8 @@ describe('StypRule', () => {
       rule.add(update);
     });
 
-    let rule2: StypRule;
-
     beforeEach(() => {
-      rule2 = root.rules.add([ { e: 'element-1', $: 'biz' }]);
+      root.rules.add([ { e: 'element-1', $: 'biz' }]);
     });
 
     it('applies update', async () => {
