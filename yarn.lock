@@ -1300,10 +1300,10 @@ fsevents@^1.2.7:
     nan "^2.12.1"
     node-pre-gyp "^0.12.0"
 
-fun-events@^4.6.0-dev.2:
-  version "4.6.0-dev.2"
-  resolved "https://registry.yarnpkg.com/fun-events/-/fun-events-4.6.0-dev.2.tgz#b6f7af916043915b7d1908bcbb70cd596520a449"
-  integrity sha512-3bjwdJ8NymxCzecVgl73JdDgoyEa7H1ephuJ40UF0+rZHmmJmgZ7OOaI4G8vv5MhuTJn9rClsAtHBbVPL/khXw==
+fun-events@^4.6.0-dev.3:
+  version "4.6.0-dev.3"
+  resolved "https://registry.yarnpkg.com/fun-events/-/fun-events-4.6.0-dev.3.tgz#42f5a71f69ec8c2b71d5fcc932890c483bf783cb"
+  integrity sha512-lwiIvK6sSmdABWTY9aiARmOnY3//S/8YYftaqIrRHwCZsY7RBNbqphZzJghL/9jNIVSVF8y7fiHnc/y+Dcf+0A==
   dependencies:
     call-thru "^2.5.0"
     tslib "^1.10.0"
