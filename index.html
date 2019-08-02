@@ -1,0 +1,600 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Style Producer</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.js" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">Style Producer</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1> Style Producer</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<a href="#style-producer" id="style-producer" style="color: inherit; text-decoration: none;">
+					<h1>Style Producer</h1>
+				</a>
+				<p><a href="https://www.npmjs.com/package/style-producer"><img src="https://img.shields.io/npm/v/style-producer.svg" alt="NPM"></a>
+					<a href="https://circleci.com/gh/surol/style-producer"><img src="https://circleci.com/gh/surol/style-producer.svg?style=shield" alt="CircleCI"></a>
+				<a href="https://codecov.io/gh/surol/style-producer"><img src="https://codecov.io/gh/surol/style-producer/branch/master/graph/badge.svg" alt="codecov"></a></p>
+				<p>Produces and dynamically updates stylesheets right in the browser.</p>
+				<p>Usage example:</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { produceStyle, stypRoot } <span class="hljs-keyword">from</span> <span class="hljs-string">'style-producer'</span>;
+
+<span class="hljs-keyword">const</span> root = stypRoot(); <span class="hljs-comment">// Create root CSS rule</span>
+<span class="hljs-keyword">const</span> h1 = root.rules.add({ e: <span class="hljs-string">'h1'</span> }, { fontSize: <span class="hljs-string">'24px'</span> }); <span class="hljs-comment">// Define CSS rule for `h1` element</span>
+
+<span class="hljs-comment">// ...add more CSS rules</span>
+
+<span class="hljs-keyword">const</span> interest = produceStyle(root.rules); <span class="hljs-comment">// Produce stylesheets</span>
+
+h1.add({ fontWeight: <span class="hljs-string">'bold'</span>, fontSize: <span class="hljs-string">'22px'</span> }); <span class="hljs-comment">// Update CSS rule. Stylesheet will be updated automatically</span>
+
+interest.off(); <span class="hljs-comment">// Remove produced stylesheets  </span></code></pre>
+				<a href="#structured-css-selectors" id="structured-css-selectors" style="color: inherit; text-decoration: none;">
+					<h2>Structured CSS Selectors</h2>
+				</a>
+				<p>Style Producer is designed to never parse any CSS. Thus it operates with structured CSS selectors rather than trying
+				to parse selectors text.</p>
+				<p>Structured CSS selector is one of:</p>
+				<ul>
+					<li>raw CSS selector text,</li>
+					<li>CSS selector part, or</li>
+					<li>an array consisting of strings, parts, and their combinators.</li>
+				</ul>
+				<p>Raw CSS selector text is never interpreted and is used verbatim.</p>
+				<p>CSS combinator is one of: <code>&gt;</code>, <code>+</code>, or <code>~</code>.</p>
+				<p>CSS selector part is a structure representing selectors like
+					<code>element-name#id.class1.classN[attr1][attr2]:pseudo-class::pseudo-element</code>.
+					Each selector part is represented by corresponding property. Except for attributes, pseudo-classes, and pseudo-elements
+				which represented as raw CSS text and never interpreted:</p>
+				<ul>
+					<li>Element selector:
+					<code>{ e: &#39;element-name&#39; }</code>.</li>
+					<li>Element selector in XML namespace:
+					<code>{ ns: &#39;ns-prefix&#39;, e: &#39;element-name&#39; }</code>.</li>
+					<li>Universal element selector:
+					<code>{ e: &#39;*&#39; }</code>, which is the same as <code>{}</code>.</li>
+					<li>Universal element selector in XML namespace:
+					<code>{ ns: &#39;ns-prefix&#39;, e: &#39;*&#39; }</code>, which is the same as <code>{ ns: &#39;ns-prefix&#39; }</code>.  </li>
+					<li>Element identifier:
+					<code>{ i: &#39;element-id&#39; }</code>.</li>
+					<li>Element class:
+					<code>{ c: &#39;class-name&#39; }</code>.</li>
+					<li>Multiple element classes:
+					<code>{ c: [&#39;class-1&#39;, &#39;class-2&#39;] }</code>.</li>
+					<li>Additional selectors:
+					<code>{ e: &#39;a&#39;, s: &#39;[href^=https://]:visited&#39; }</code>.</li>
+					<li>Raw CSS selector:
+					<code>{ s: &#39;.my-selector&#39; }</code>  </li>
+				</ul>
+				<p>Selector part may combine multiple properties. Parts may be combined too.
+				E.g. <code>[{ e: &#39;ul&#39;, c: &#39;unstyled&#39; }, &#39;&gt;&#39;, { e: &#39;li&#39; }]</code> corresponds to <code>ul.unstyled &gt; li</code> CSS selector.</p>
+				<a href="#qualifiers" id="qualifiers" style="color: inherit; text-decoration: none;">
+					<h3>Qualifiers</h3>
+				</a>
+				<p>CSS selector may include qualifiers. Qualifiers do not correspond to CSS selectors directly. Instead they are used
+				internally to classify selectors. E.g. they are used to render <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule">at-rule</a> selectors.</p>
+				<p>Qualifiers are represented by <code>$</code> property of structured CSS selector part, tha may contain either one qualifier, or an
+					array of qualifiers:
+				<code>{ c: &#39;sr-only&#39;, $: &#39;@media=screen&#39; }</code>. </p>
+				<p>Each qualifier is a string in the following format:
+					<code>&lt;name&gt;[=&lt;value&gt;]</code>, where <code>&lt;name&gt;</code> may be qualified and consist of multiple colon-separated parts like
+				<code>block:visibility:hidden</code>.</p>
+				<p>The presence of <code>q1:q2:q3=v</code> qualifier means the same as presence of <code>q1</code>, <code>q1:q2</code>, <code>q1:q2:q3</code>, and <code>q1:q2:q3=v</code>
+				qualifiers.</p>
+				<a href="#css-rules" id="css-rules" style="color: inherit; text-decoration: none;">
+					<h2>CSS Rules</h2>
+				</a>
+				<p>CSS rules are represented by <code>StypRule</code> class and organized in hierarchy.</p>
+				<p>The top of the hierarchy is root CSS rule. It may be constructed by <code>stypRoot()</code> function.</p>
+				<p>Rules are added to the hierarchy using <code>StypRule.rules.add()</code> method like this:</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> nested = rule.rules.add(selector, properties);</code></pre>
+				<p>where <code>selector</code> is structured CSS selector, and <code>properties</code> is CSS properties map.</p>
+				<p>CSS rule may be removed from hierarchy with <code>StypRule.remove()</code> method.</p>
+				<p><code>StypRule.rules</code> property contains a dynamically updated CSS rule list including all rules in hierarchy starting from
+				current one. To obtain only rules directly nested within current one use a <code>StypRule.rules.nested</code> property. </p>
+				<p>It is possible to grab a subset of matching rules using a <code>StypRule.rules.grab()</code> method:</p>
+				<pre><code class="language-typescript">rule.rules.grab({ e: <span class="hljs-string">'button'</span> }); <span class="hljs-comment">// Grab all CSS rules for the `button` element.</span></code></pre>
+				<a href="#css-properties" id="css-properties" style="color: inherit; text-decoration: none;">
+					<h3>CSS Properties</h3>
+				</a>
+				<p>CSS properties are represented by object with camel-cased property names and their corresponding string, scalar,
+				or structured values:</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> cssProperties = {
+  position: <span class="hljs-string">'fixed'</span>,
+  display: <span class="hljs-string">'block'</span>,
+  width: <span class="hljs-string">'100%'</span>,
+  height: <span class="hljs-string">'120px'</span>,
+  borderBottom: <span class="hljs-string">'1px solid black'</span>,
+}</code></pre>
+				<p>CSS rule may be constructed with initial properties. Properties may be appended using <code>StypRule.add()</code> method,
+				replaced using <code>StypRule.set()</code> method, or removed all together using <code>StypRule.clear()</code> method.</p>
+				<p>CSS properties with names started with anything but ASCII letter are not rendered as CSS. Still, they can be referenced
+				and used internally.</p>
+				<p>CSS property string values ending with <code>!important</code> suffix are recognized as having <code>!important</code> priority. Note that the
+				order of properties is meaningful. But important property values are always take precedence over non-important ones.   </p>
+				<p>CSS rule properties may be defined by <code>EventKeeper</code> instance that may update properties dynamically.</p>
+				<a href="#type-safe-css-properties" id="type-safe-css-properties" style="color: inherit; text-decoration: none;">
+					<h3>Type-safe CSS Properties</h3>
+				</a>
+				<p>Apart from being scalars and strings, CSS property values may be structured. I.e represented by objects implementing
+				<code>StypValueStruct</code> interface.</p>
+				<p>There are several implementations of structured values available:</p>
+				<ul>
+					<li>Numeric values supporting arithmetic operations (<code>StypDimension</code>, <code>StypCalc</code>):<ul>
+							<li><code>StypAngle</code>/<code>StypAnglePt</code> - for <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/angle">angle</a>/<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/angle-percentage">angle-percentage</a> values,</li>
+							<li><code>StypFrequency</code>/<code>StypFrequencyPt</code> - for <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/frequency">frequency</a>/<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/frequency-percentag">frequency-percentage</a> values,</li>
+							<li><code>StypLength</code>/<code>StypLengthPt</code> - for <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/length">length</a>/<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/length-percentage">length-percentage</a> values,</li>
+							<li><code>StypResolution</code> - for <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/resolution">resolution</a> values, and</li>
+							<li><code>StypTime</code>/<code>StypTimePt</code> - for <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/time">time</a>/<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/time-percentage">time-percentage</a> values.   </li>
+						</ul>
+					</li>
+					<li>Color values supporting <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value">color</a> manipulations (<code>StypColor</code>):<ul>
+							<li><code>StypRGB</code> - for <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#RGB_colors">RGB colors</a>, and</li>
+							<li><code>StypHSL</code> for <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#HSL_colors">HSL colors</a>.</li>
+						</ul>
+					</li>
+					<li><code>StypURL</code> representing <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/url">url</a> values.</li>
+				</ul>
+				<p>Any custom implementation can be added.  </p>
+				<p>It is possible to declare CSS properties structure to work with them in type safe manner. For that declare properties
+					interface and use <code>StypMapper</code> to map arbitrary CSS properties to that interface, or <code>StypRuleRef</code> to access CSS rule
+				in type safe manner:</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { RefStypRule, StypColor, StypLengthPt, StypRGB, stypRoot } <span class="hljs-keyword">from</span> <span class="hljs-string">'style-producer'</span>;
+
+<span class="hljs-comment">// Type-safe CSS properties representing custom settings</span>
+<span class="hljs-keyword">interface</span> MySettings {
+  $color: StypColor;
+  $bgColor: StypColor;
+  $gap: StypLengthPt;
+}
+
+<span class="hljs-comment">// Construct a mapping function for custom settings</span>
+<span class="hljs-keyword">const</span> MySettings = RefStypRule.by&lt;MySettings&gt;(
+    { $: <span class="hljs-string">'.my-settings'</span> }, <span class="hljs-comment">// Selector of CSS rule containing settings</span>
+    { <span class="hljs-comment">// Mappings for settings</span>
+      $color: <span class="hljs-keyword">new</span> StypRGB({ r: <span class="hljs-number">0</span>, g: <span class="hljs-number">0</span>, b: <span class="hljs-number">0</span> }), <span class="hljs-comment">// Text is black by default</span>
+      $bgColor: <span class="hljs-keyword">new</span> StypRGB({ r: <span class="hljs-number">255</span>, g: <span class="hljs-number">255</span>, b: <span class="hljs-number">255</span> }), <span class="hljs-comment">// Background is white by default</span>
+      $gap: StypLengthPt.of(<span class="hljs-number">4</span>, <span class="hljs-string">'px'</span>), <span class="hljs-comment">// Gaps are 4 pixels by default </span>
+    });
+
+<span class="hljs-comment">// CSS rules root</span>
+<span class="hljs-keyword">const</span> root = stypRoot();
+
+<span class="hljs-comment">// Settings CSS rule reference</span>
+<span class="hljs-keyword">const</span> mySettingsRef = MySettings(root);
+
+<span class="hljs-comment">// Define `&lt;body&gt;` style</span>
+root.add(mySettingsRef.read.thru(
+    <span class="hljs-function">(<span class="hljs-params">{ $color, $bgColor, $gap }</span>) =&gt;</span> ({
+      color: $color, <span class="hljs-comment">// Apply default text color</span>
+      backgroundColor: $bgColor, <span class="hljs-comment">// Apply default background color</span>
+      padding: $gap, <span class="hljs-comment">// Padding is based on default gap</span>
+    })
+));
+
+
+<span class="hljs-comment">// Define `&lt;input&gt;` element style based on default settings.</span>
+root.rules.add(
+    { e: <span class="hljs-string">'input'</span> },
+    mySettingsRef.read.thru(
+        <span class="hljs-function">(<span class="hljs-params">{ $color, $bgColor, $gap }</span>) =&gt;</span> ({
+          color: $color,
+          backgroundColor: $bgColor.hsl.set(<span class="hljs-function"><span class="hljs-params">hsl</span> =&gt;</span> ({ l: hsl.l * <span class="hljs-number">0.85</span> })), <span class="hljs-comment">// Convert to HSL and darken input background</span>
+          padding: <span class="hljs-string">`<span class="hljs-subst">${$gap}</span> <span class="hljs-subst">${$gap.mul(1.5)}</span>`</span>, <span class="hljs-comment">// Padding is based on default gap</span>
+          border: <span class="hljs-string">`1px solid <span class="hljs-subst">${$color}</span>`</span>,          
+        })
+    )
+);
+
+<span class="hljs-comment">// Make text dark grey</span>
+mySettingsRef.set({
+  $color: <span class="hljs-keyword">new</span> StypRGB({ r: <span class="hljs-number">192</span>, g: <span class="hljs-number">192</span>, b: <span class="hljs-number">192</span> }), <span class="hljs-comment">// Override default value</span>
+});</code></pre>
+				<a href="#producing-css" id="producing-css" style="color: inherit; text-decoration: none;">
+					<h2>Producing CSS</h2>
+				</a>
+				<p>Stylesheets may be produced using a <code>produceStyle()</code> function. It accepts a dynamically updated list of CSS rules
+				(e.g. <code>StypRules.rules</code>) and optional set of options.</p>
+				<p>By default, this function creates a <code>&lt;style&gt;</code> element per CSS rule inside a document head. This element&#39;s stylesheet
+					is filled and updated with that rule contents. Once the rule is removed the corresponding <code>&lt;style&gt;</code> element is removed
+				too.</p>
+				<p>When CSS is no longer needed an <code>off()</code> method of the <code>EventInterest</code> instance returned from <code>produceStyle()</code> function
+				may be called. That would remove all <code>&lt;style&gt;</code> elements.</p>
+				<a href="#css-renders" id="css-renders" style="color: inherit; text-decoration: none;">
+					<h3>CSS Renders</h3>
+				</a>
+				<p>Style production is performed by CSS renders that may be specified as <code>render</code> option passed to <code>produceStyle()</code>.</p>
+				<p>By default all renders are enabled. This may be not what you need. In that case you can use a <code>produceBasicStyle()</code>
+					function instead. The latter enables CSS properties rendering only. The rest of the necessary renders may be specified
+				with the <code>render</code> option. This may reduce the final bundle size a little bit. </p>
+				<a href="#raw-css-text" id="raw-css-text" style="color: inherit; text-decoration: none;">
+					<h3>Raw CSS Text</h3>
+				</a>
+				<p>CSS rule properties may be specified as raw text. This is the same as specifying a special <code>$$css</code> property.</p>
+				<p>The <code>stypRenderText</code> render treats this text as plain CSS. This text is rendered before the rest of the properties,
+				so the latter take precedence.</p>
+				<a href="#a-hrefhttpsdevelopermozillaorgen-usdocswebcssmediamediaa-and-other-a-hrefhttpsdevelopermozillaorgen-usdocswebcssat-ruleat-rulesa" id="a-hrefhttpsdevelopermozillaorgen-usdocswebcssmediamediaa-and-other-a-hrefhttpsdevelopermozillaorgen-usdocswebcssat-ruleat-rulesa" style="color: inherit; text-decoration: none;">
+					<h3><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media">@media</a> and other <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule">at-rules</a></h3>
+				</a>
+				<p>There is no dedicated <code>@media</code> properties in structured CSS selector. However, a <code>stypRenderAtRules</code> render recognizes
+					selector qualifiers as <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule">at-rules</a> and renders corresponding rules. So, CSS rule with selector like this:
+				<code>{ c: &#39;screen-only&#39;, $: &#39;@media=screen&#39; }</code> would be rendered as</p>
+				<pre><code class="language-css">@<span class="hljs-keyword">media</span> screen {
+  <span class="hljs-selector-class">.screen-only</span> {
+    <span class="hljs-comment">/* CSS properties */</span>
+  }
+}</code></pre>
+				<p><code>stypRenderAtRules</code> render treats all qualifiers starting with <code>@</code> as at-rule qualifiers. So the qualifier name may
+				be e.g. <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@keyframes">@keyframes</a>. The value of qualifier (if present) is used as at-rule query.</p>
+				<p>It is also possible to specify at-rule query as CSS property. For that the property name should be the same as qualifier
+					one. E.g. if CSS rule selector is <code>{ c: &#39;screen-only&#39;, $: &#39;@media:sr&#39; }</code> and CSS rule properties contain
+					<code>{ &#39;@media:sr&#39;: &#39;screen&#39; }</code>, the rendered CSS would be the same as above. This technique makes it possible to
+				dynamically update the at-rule queries.</p>
+				<a href="#a-hrefhttpsdevelopermozillaorgen-usdocswebcssimportimporta-and-a-hrefhttpsdevelopermozillaorgen-usdocswebcssnamespacenamespacea-rules" id="a-hrefhttpsdevelopermozillaorgen-usdocswebcssimportimporta-and-a-hrefhttpsdevelopermozillaorgen-usdocswebcssnamespacenamespacea-rules" style="color: inherit; text-decoration: none;">
+					<h3><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@import">@import</a> and <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@namespace">@namespace</a> rules</h3>
+				</a>
+				<p>These rules are rendered by <code>stypRenderGlobals</code> render. This render interprets properly named CSS properties and renders
+				corresponding CSS rules. </p>
+				<p><strong><code>@import:url</code></strong> property value is treated as media query and appended after stylesheet URL. I.e.</p>
+				<pre><code class="language-json">{
+     <span class="hljs-attr">"@import:path/to/included.css"</span>: <span class="hljs-string">"screen"</span>
+}</code></pre>
+				<p>becomes</p>
+				<pre><code class="language-css">@<span class="hljs-keyword">import</span> url(path/to/included.css) screen;</code></pre>
+				<p><strong><code>@namespace</code></strong> property value is treated as default namespace URL. I.e.</p>
+				<pre><code class="language-json">{
+    <span class="hljs-attr">"@namespace"</span>: <span class="hljs-string">"http://www.w3.org/1999/xhtml"</span>
+}</code></pre>
+				<p>becomes</p>
+				<pre><code class="language-css">@<span class="hljs-keyword">namespace</span> url(http://www.w3.org/<span class="hljs-number">1999</span>/xhtml);</code></pre>
+				<p><strong><code>@namespace:prefix</code></strong> property value is treated as namespace URL with the given prefix. I.e</p>
+				<pre><code class="language-json">{
+    <span class="hljs-attr">"@namespace:svg"</span>: <span class="hljs-string">"http://www.w3.org/2000/svg"</span>
+}</code></pre>
+				<p>becomes</p>
+				<pre><code class="language-css">@<span class="hljs-keyword">namespace</span> svg url(http://www.w3.org/<span class="hljs-number">2000</span>/svg);</code></pre>
+				<a href="#namespaces" id="namespaces" style="color: inherit; text-decoration: none;">
+					<h3>Namespaces</h3>
+				</a>
+				<p>It is possible to specify namespaces for CSS selector elements. I.e. not only XML element namespace, but also
+				the one for HTML element name, element identifier, or element class.</p>
+				<p>Then the unique namespace alias will be applied to original name or identifier. This can be used to avoid naming
+				conflicts.</p>
+				<p>Example:</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { NamespaceDef } <span class="hljs-keyword">from</span> <span class="hljs-string">'namespace-aliaser'</span>;
+<span class="hljs-keyword">import</span> { stypRoot } <span class="hljs-keyword">from</span> <span class="hljs-string">'style-producer'</span>;
+
+<span class="hljs-comment">// Declare custom namespace</span>
+<span class="hljs-keyword">const</span> customNs = <span class="hljs-keyword">new</span> NamespaceDef(
+    <span class="hljs-string">'https://wesib.github.io/elements'</span>, <span class="hljs-comment">// Unique namespace URL</span>
+    <span class="hljs-string">'b'</span>,                                <span class="hljs-comment">// Preferred namespace aliases, from most wanted to less wanted</span>
+    <span class="hljs-string">'wesib'</span>);
+
+<span class="hljs-keyword">const</span> root = stypRoot(); <span class="hljs-comment">// Root CSS rule</span>
+<span class="hljs-comment">// Declare styles for custom element</span>
+<span class="hljs-keyword">const</span> rule = root.rules.add({ e: [<span class="hljs-string">'button'</span>, customNs] }, { background: <span class="hljs-string">'gray'</span> });</code></pre>
+				<p>The code above would add a unique prefix to the <code>button</code> element. E.g. by making it <code>b-button</code>.</p>
+				<p>The <code>i</code> (element identifier) and <code>c</code> (element class name(s)) properties accept namespaced values too.</p>
+				<p>The <code>ns</code> (XML namespace) property accepts namespace (<code>NamespaceDef</code>) value instead of plain string. The corresponding
+				<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@namespace">@namespace</a> rule would be rendered automatically by <code>stypRenderXmlNs</code> render.</p>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/stypangle.html">Styp<wbr>Angle</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/stypanglept.html">Styp<wbr>Angle<wbr>Pt</a>
+					</li>
+					<li class=" tsd-kind-module tsd-has-type-parameter">
+						<a href="modules/stypdimension.html">Styp<wbr>Dimension</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/stypfrequency.html">Styp<wbr>Frequency</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/stypfrequencypt.html">Styp<wbr>Frequency<wbr>Pt</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/styplength.html">Styp<wbr>Length</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/styplengthpt.html">Styp<wbr>Length<wbr>Pt</a>
+					</li>
+					<li class=" tsd-kind-module tsd-has-type-parameter">
+						<a href="modules/stypproperties.html">Styp<wbr>Properties</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/stypquery.html">Styp<wbr>Query</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/styprender.html">Styp<wbr>Render</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/stypresolution.html">Styp<wbr>Resolution</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/styprulekey.html">Styp<wbr>Rule<wbr>Key</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/styprules.html">Styp<wbr>Rules</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/stypselector.html">Styp<wbr>Selector</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/styptime.html">Styp<wbr>Time</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/styptimept.html">Styp<wbr>Time<wbr>Pt</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/stypvalue.html">Styp<wbr>Value</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-enum">
+						<a href="enums/styppriority.html" class="tsd-kind-icon">Styp<wbr>Priority</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="classes/stypcolorstruct.html" class="tsd-kind-icon">Styp<wbr>Color<wbr>Struct</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/styphsl.html" class="tsd-kind-icon">StypHSL</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="classes/stypnumericstruct.html" class="tsd-kind-icon">Styp<wbr>Numeric<wbr>Struct</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/styprgb.html" class="tsd-kind-icon">StypRGB</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/styprule.html" class="tsd-kind-icon">Styp<wbr>Rule</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/styprulehierarchy.html" class="tsd-kind-icon">Styp<wbr>Rule<wbr>Hierarchy</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/styprulelist.html" class="tsd-kind-icon">Styp<wbr>Rule<wbr>List</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="classes/stypruleref.html" class="tsd-kind-icon">Styp<wbr>Rule<wbr>Ref</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="classes/styprulerefs.html" class="tsd-kind-icon">Styp<wbr>Rule<wbr>Refs</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/stypurl.html" class="tsd-kind-icon">StypURL</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="classes/stypvaluestruct.html" class="tsd-kind-icon">Styp<wbr>Value<wbr>Struct</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/styleproducer.html" class="tsd-kind-icon">Style<wbr>Producer</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/stylesheetref.html" class="tsd-kind-icon">Style<wbr>Sheet<wbr>Ref</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/stypaddsub.html" class="tsd-kind-icon">Styp<wbr>Add<wbr>Sub</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/stypmuldiv.html" class="tsd-kind-icon">Styp<wbr>Mul<wbr>Div</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/stypoptions.html" class="tsd-kind-icon">Styp<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/stypselectorformat.html" class="tsd-kind-icon">Styp<wbr>Selector<wbr>Format</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/stypzero.html" class="tsd-kind-icon">Styp<wbr>Zero</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="globals.html#refstyprule" class="tsd-kind-icon">Ref<wbr>Styp<wbr>Rule</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="globals.html#stypcalc" class="tsd-kind-icon">Styp<wbr>Calc</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#stypcolor" class="tsd-kind-icon">Styp<wbr>Color</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="globals.html#stypnumeric" class="tsd-kind-icon">Styp<wbr>Numeric</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#lazystyprules" class="tsd-kind-icon">lazy<wbr>Styp<wbr>Rules</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#mixstypcolors" class="tsd-kind-icon">mix<wbr>Styp<wbr>Colors</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#producebasicstyle" class="tsd-kind-icon">produce<wbr>Basic<wbr>Style</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#producestyle" class="tsd-kind-icon">produce<wbr>Style</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#stypquery" class="tsd-kind-icon">styp<wbr>Query</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#styprenderproperties" class="tsd-kind-icon">styp<wbr>Render<wbr>Properties</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#styprendertext" class="tsd-kind-icon">styp<wbr>Render<wbr>Text</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#styproot" class="tsd-kind-icon">styp<wbr>Root</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#styprules" class="tsd-kind-icon">styp<wbr>Rules</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#stypselector" class="tsd-kind-icon">styp<wbr>Selector</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#stypselectormatches" class="tsd-kind-icon">styp<wbr>Selector<wbr>Matches</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#stypselectortext" class="tsd-kind-icon">styp<wbr>Selector<wbr>Text</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#stypselectorsequal" class="tsd-kind-icon">styp<wbr>Selectors<wbr>Equal</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#stypsplitpriority" class="tsd-kind-icon">styp<wbr>Split<wbr>Priority</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#stypvaluesequal" class="tsd-kind-icon">styp<wbr>Values<wbr>Equal</a>
+					</li>
+					<li class=" tsd-kind-object-literal">
+						<a href="globals.html#refstyprule" class="tsd-kind-icon">Ref<wbr>Styp<wbr>Rule</a>
+					</li>
+					<li class=" tsd-kind-object-literal">
+						<a href="globals.html#stypcolor" class="tsd-kind-icon">Styp<wbr>Color</a>
+					</li>
+					<li class=" tsd-kind-object-literal tsd-has-type-parameter">
+						<a href="globals.html#stypmapper" class="tsd-kind-icon">Styp<wbr>Mapper</a>
+					</li>
+					<li class=" tsd-kind-object-literal">
+						<a href="globals.html#styprenderatrules" class="tsd-kind-icon">styp<wbr>Render<wbr>AtRules</a>
+					</li>
+					<li class=" tsd-kind-object-literal">
+						<a href="globals.html#styprenderglobals" class="tsd-kind-icon">styp<wbr>Render<wbr>Globals</a>
+					</li>
+					<li class=" tsd-kind-object-literal">
+						<a href="globals.html#styprenderxmlns" class="tsd-kind-icon">styp<wbr>Render<wbr>Xml<wbr>Ns</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
+</body>
+</html>
