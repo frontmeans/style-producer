@@ -4,6 +4,8 @@ Style Producer
 [![NPM][npm-image]][npm-url]
 [![CircleCI][ci-image]][ci-url]
 [![codecov][codecov-image]][codecov-url]
+[![GitHub Project][github-image]][github-url]
+[![API Documentation][api-docs-image]][api-docs-url]
 
 Produces and dynamically updates stylesheets right in the browser.
 
@@ -24,12 +26,16 @@ interest.off(); // Remove produced stylesheets
 ```
 
 
-[npm-image]: https://img.shields.io/npm/v/style-producer.svg
+[npm-image]: https://img.shields.io/npm/v/style-producer.svg?logo=npm
 [npm-url]: https://www.npmjs.com/package/style-producer
-[ci-image]:https://circleci.com/gh/surol/style-producer.svg?style=shield
-[ci-url]:https://circleci.com/gh/surol/style-producer  
+[ci-image]: https://img.shields.io/circleci/build/github/surol/style-producer?logo=circleci
+[ci-url]: https://img.shields.io/codecov/c/github/surol/style-producer?logo=codecov
 [codecov-image]: https://codecov.io/gh/surol/style-producer/branch/master/graph/badge.svg
 [codecov-url]: https://codecov.io/gh/surol/style-producer
+[github-image]: https://img.shields.io/static/v1?logo=github&label=GitHub&message=project&color=informational
+[github-url]: https://github.com/surol/style-producer
+[api-docs-image]: https://img.shields.io/static/v1?logo=typescript&label=API&message=docs&color=informational
+[api-docs-url]: https://surol.github.io/style-producer/
 
 
 Structured CSS Selectors
