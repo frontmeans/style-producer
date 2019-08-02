@@ -1,3 +1,6 @@
+/**
+ * @module style-producer
+ */
 import { filterIt, itsEmpty, itsReduction, mapIt, overArray } from 'a-iterable';
 import { isPresent } from 'call-thru';
 import { NamespaceDef } from 'namespace-aliaser';
@@ -15,7 +18,9 @@ import { StyleProducer } from './style-producer';
  *
  * Renders `@namespace` declarations for CSS selectors containing namespace definitions.
  *
- * Enabled by default in `produceStyle()` function.
+ * Enabled by default in [[produceStyle]] function.
+ *
+ * @category Rendering
  */
 export const stypRenderXmlNs: StypRender = {
 

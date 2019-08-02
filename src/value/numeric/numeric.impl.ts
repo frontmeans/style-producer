@@ -34,9 +34,9 @@ export class StypDimension<Unit extends string>
   /**
    * Constructs new structured dimension value.
    *
-   * @param val The numeric value.
-   * @param unit The unit.
-   * @param opts CSS value options.
+   * @param val  The numeric value.
+   * @param unit  The unit.
+   * @param opts  CSS value options.
    */
   constructor(val: number, unit: Unit, opts: StypDimension_.Opts<Unit>) {
     super(opts);
@@ -128,9 +128,9 @@ export class StypDimension<Unit extends string>
 /**
  * Constructs structured [dimension] CSS property value.
  *
- * @param val Numeric value.
- * @param unit Value unit.
- * @param opts Construction options.
+ * @param val  Numeric value.
+ * @param unit  Value unit.
+ * @param opts  Construction options.
  *
  * @returns Either [[StypDimension]], or [[StypZero]] if `val === 0`.
  *
@@ -236,7 +236,7 @@ export abstract class StypCalcBase<
 /**
  * CSS `calc()` function call representation containing either addition or subtraction.
  *
- * @typeparam Unit Allowed unit type.
+ * @typeparam Unit  Allowed unit type.
  *
  * @internal
  */
@@ -302,7 +302,7 @@ function stypAddSub<Unit extends string>(
 /**
  * CSS `calc()` function call representation containing either multiplication or division.
  *
- * @typeparam Unit Allowed unit type.
+ * @typeparam Unit  Allowed unit type.
  *
  * @internal
  */

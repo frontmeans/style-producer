@@ -1,3 +1,6 @@
+/**
+ * @module style-producer
+ */
 import { NamespaceAliaser, NamespaceDef } from 'namespace-aliaser';
 import { StypProperties, StypRule } from '../rule';
 import { StypSelector } from '../selector';
@@ -6,7 +9,9 @@ import { StypRender } from './render';
 /**
  * CSS styles producer.
  *
- * It is constructed by `produceStyle()` function for each processed CSS rule.
+ * It is constructed by [[produceStyle]] function for each processed CSS rule.
+ *
+ * @category Rendering
  */
 export interface StyleProducer {
 
@@ -47,9 +52,9 @@ export interface StyleProducer {
   /**
    * Maps namespace to its unique alias.
    *
-   * This is based on `nsAlias` option.
+   * This is based on [[StypOptions.nsAlias]] option.
    *
-   * @param ns A definition of namespace to find alias for.
+   * @param ns  A definition of namespace to find alias for.
    *
    * @returns Namespace alias.
    */
@@ -60,8 +65,8 @@ export interface StyleProducer {
    *
    * This method relies on renders chain. For each render in chain this method calls the next one.
    *
-   * @param properties CSS properties to render.
-   * @param options Rendering options.
+   * @param properties  CSS properties to render.
+   * @param options  Rendering options.
    */
   render(properties: StypProperties, options?: StypRender.Options): void;
 
@@ -71,7 +76,7 @@ export interface StyleProducer {
    * If `target` is stylesheet or grouping rule, then inserts the last rule.
    * Otherwise just returns `target`.
    *
-   * @param selector Appended CSS rule selector. Equals to the one from this producer when omitted.
+   * @param selector  Appended CSS rule selector. Equals to the one from this producer when omitted.
    *
    * @returns Either appended empty CSS rule, or `target`.
    */
@@ -82,7 +87,9 @@ export interface StyleProducer {
 /**
  * CSS styles production options.
  *
- * This options are accepted by `produceStyle()` function.
+ * This options are accepted by [[produceStyle]] function.
+ *
+ * @category Rendering
  */
 export interface StypOptions {
 
@@ -114,7 +121,7 @@ export interface StypOptions {
    *
    * By default appends `<style>` element to `parent`.
    *
-   * @param producer Style producer instance.
+   * @param producer  Style producer instance.
    *
    * @returns CSS stylesheet reference.
    */
@@ -127,7 +134,7 @@ export interface StypOptions {
    *
    * By default modifies DOM tree in batches scheduled by `window.requestAnimationFrame()` function.
    *
-   * @param operation A DOM tree manipulation operation to schedule.
+   * @param operation  A DOM tree manipulation operation to schedule.
    */
   schedule?: (operation: () => void) => void;
 
@@ -148,7 +155,9 @@ export interface StypOptions {
 /**
  * CSS stylesheet reference.
  *
- * It is an object created by `addStyleSheet` option.
+ * It is an object created by [[StypOptions.addStyleSheet]] option.
+ *
+ * @category Rendering
  */
 export interface StyleSheetRef {
 

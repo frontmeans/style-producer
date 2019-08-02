@@ -1,3 +1,6 @@
+/**
+ * @module style-producer
+ */
 import { NameInNamespace, NamespaceDef } from 'namespace-aliaser';
 
 /**
@@ -8,7 +11,9 @@ import { NameInNamespace, NamespaceDef } from 'namespace-aliaser';
  * - CSS selector part, or
  * - an array consisting of strings, parts, and their combinators.
  *
- * A normalized structured CSS selector can be constructed using `stypSelector()` function.
+ * A normalized structured CSS selector can be constructed using [[stypSelector]] function.
+ *
+ * @category CSS Rule
  */
 export type StypSelector =
     string | StypSelector.Part | readonly (string | StypSelector.Part | StypSelector.Combinator)[];

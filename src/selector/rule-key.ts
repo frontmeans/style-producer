@@ -1,3 +1,6 @@
+/**
+ * @module style-producer
+ */
 import { StypSelector } from './selector';
 
 /**
@@ -5,6 +8,8 @@ import { StypSelector } from './selector';
  *
  * This is an empty tuple for root selector, or normalized CSS selector part optionally preceded by combinator
  * for nested one.
+ *
+ * @category CSS Rule
  */
 export type StypRuleKey = [] | StypRuleKey.Nested;
 

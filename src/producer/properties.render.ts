@@ -1,3 +1,6 @@
+/**
+ * @module style-producer
+ */
 import { filterIt, itsEach, ObjectEntry, overEntries } from 'a-iterable';
 import hyphenateStyleName from 'hyphenate-style-name';
 import { StypProperties } from '../rule';
@@ -8,6 +11,8 @@ import { StyleProducer } from './style-producer';
  * Renders CSS properties.
  *
  * This render is always present, so there is typically no need to use it explicitly.
+ *
+ * @category Rendering
  */
 export function stypRenderProperties(producer: StyleProducer, properties: StypProperties): void {
 

@@ -1,3 +1,6 @@
+/**
+ * @module style-producer
+ */
 import { StypValue, StypValueStruct } from '../value';
 import { StypZero } from './zero';
 
@@ -6,8 +9,9 @@ import { StypZero } from './zero';
  *
  * This represents either dimension, zero value, or a `calc()` CSS function call.
  *
- * @typeparam Unit Allowed unit type.
- * @typeparam Zero A type of zero value. [[StypZero]] by default.
+ * @category CSS Value
+ * @typeparam Unit  Allowed unit type.
+ * @typeparam Zero  A type of zero value. [[StypZero]] by default.
  */
 export type StypNumeric<Unit extends string, Zero extends StypZero<Unit> | StypDimension<Unit> = StypZero<Unit>> =
     StypDimension<Unit> | StypCalc<Unit> | Zero;
@@ -15,8 +19,9 @@ export type StypNumeric<Unit extends string, Zero extends StypZero<Unit> | StypD
 /**
  * Base implementation of structured numeric CSS property value.
  *
- * @typeparam Self A type of itself.
- * @typeparam Unit Allowed unit type.
+ * @category CSS Value
+ * @typeparam Self  A type of itself.
+ * @typeparam Unit  Allowed unit type.
  */
 export abstract class StypNumericStruct<Self extends StypNumericStruct<Self, Unit>, Unit extends string>
     extends StypValueStruct<Self> {
@@ -38,8 +43,8 @@ export abstract class StypNumericStruct<Self extends StypNumericStruct<Self, Uni
    *
    * Does not actually construct a value in another dimension, as long as dimension unit supported by both dimensions.
    *
-   * @typeparam A unit type allowed in target dimension.
-   * @param dim Target dimension.
+   * @typeparam U  A unit type allowed in target dimension.
+   * @param dim  Target dimension.
    *
    * @returns Either a value in dimension compatible with `dim`, or `undefined` if this value's unit is not supported
    * by `dim`.
@@ -78,11 +83,10 @@ export abstract class StypNumericStruct<Self extends StypNumericStruct<Self, Uni
 }
 
 /**
- * Structured [dimension] value with unit.
+ * Structured [dimension](https://developer.mozilla.org/en-US/docs/Web/CSS/dimension) value with unit.
  *
- * @typeparam Unit Allowed units type.
- *
- * [dimension]: https://developer.mozilla.org/en-US/docs/Web/CSS/dimension
+ * @category CSS Value
+ * @typeparam Unit  Allowed units type.
  */
 export interface StypDimension<Unit extends string>
     extends StypValueStruct<StypDimension<Unit>>, StypNumericStruct<StypDimension<Unit>, Unit> {
@@ -120,7 +124,7 @@ export namespace StypDimension {
    *
    * It is perfectly fine to use dimensions interchangeably as long as dimension units are compatible.
    *
-   * @typeparam Unit Allowed units type.
+   * @typeparam Unit  Allowed units type.
    */
   export interface Kind<Unit extends string> {
 
@@ -141,15 +145,15 @@ export namespace StypDimension {
     /**
      * Zero value of this kind.
      *
-     * Typically, this is unit-less [[stypZero]]. But some dimensions require units.
+     * Typically, this is unit-less [[StypZero]]. But some dimensions require units.
      */
     readonly zero: StypDimension<Unit> | StypZero<Unit>;
 
     /**
      * Constructs dimension value.
      *
-     * @param val Numeric dimension value.
-     * @param unit Dimension unit.
+     * @param val  Numeric dimension value.
+     * @param unit  Dimension unit.
      *
      * @returns Constructed dimension value. Either [[StypDimension]] instance, or [[StypZero]] if `val` is `0` and
      * this dimension kind supports unitless zero.
@@ -160,12 +164,12 @@ export namespace StypDimension {
      * Maps the given CSS property value to the one compatible with this dimension kind. Defaults to `undefined`
      * if mapping is not possible.
      *
-     * This method allows to use a dimension kind as [CSS property mapping][[StypMapper.Mapping]].
+     * This method allows to use a dimension kind as {@link StypMapper.Mapping CSS property mapping}.
      *
      * Any scalar or non-numeric value is mapped to `undefined`. A numeric value is converted to this dimension by
-     * `StypNumeric.toDim()` method.
+     * [[StypNumeric.toDim]] method.
      *
-     * @param source A raw property value that should be converted.
+     * @param source  A raw property value that should be converted.
      *
      * @returns Mapped property value or `undefined`.
      */
@@ -178,7 +182,7 @@ export namespace StypDimension {
     /**
      * A kind of dimension with unit-less zero. E.g. angle or length.
      *
-     * @typeparam Unit Allowed units type.
+     * @typeparam Unit  Allowed units type.
      */
     export interface UnitlessZero<Unit extends string> extends Kind<Unit> {
 
@@ -194,8 +198,8 @@ export namespace StypDimension {
       /**
        * Constructs dimension value.
        *
-       * @param val Numeric dimension value.
-       * @param unit Dimension unit.
+       * @param val  Numeric dimension value.
+       * @param unit  Dimension unit.
        *
        * @returns Constructed dimension value. Either [[StypDimension]] instance, or [[StypZero]] if `val` is `0`.
        */
@@ -208,7 +212,7 @@ export namespace StypDimension {
     /**
      * A kind of dimension which zero value has unit. E.g. frequency or resolution.
      *
-     * @typeparam Unit Allowed units type.
+     * @typeparam Unit  Allowed units type.
      */
     export interface UnitZero<Unit extends string> extends Kind<Unit> {
 
@@ -224,8 +228,8 @@ export namespace StypDimension {
       /**
        * Constructs dimension value.
        *
-       * @param val Numeric dimension value.
-       * @param unit Dimension unit.
+       * @param val  Numeric dimension value.
+       * @param unit  Dimension unit.
        *
        * @returns Constructed dimension value as a [[StypDimension]] instance.
        */
@@ -240,7 +244,7 @@ export namespace StypDimension {
   /**
    * Construction options of dimensions.
    *
-   * @typeparam Unit Allowed units type.
+   * @typeparam Unit  Allowed units type.
    */
   export interface Opts<Unit extends string> extends StypValue.Opts {
 
@@ -256,16 +260,18 @@ export namespace StypDimension {
 /**
  * CSS `calc()` function call representation.
  *
- * This is either a [[StypAddSub]][addition/subtraction], or [[StypMulDiv]][multiplication/division].
+ * This is either a {@link StypAddSub addition/subtraction}, or {@link StypMulDiv multiplication/division}.
  *
- * @typeparam Unit Allowed unit type.
+ * @category CSS Value
+ * @typeparam Unit  Allowed unit type.
  */
 export type StypCalc<Unit extends string> = StypAddSub<Unit> | StypMulDiv<Unit>;
 
 /**
  * CSS `calc()` function call representation containing either addition or subtraction.
  *
- * @typeparam Unit Allowed unit type.
+ * @category CSS Value
+ * @typeparam Unit  Allowed unit type.
  */
 export interface StypAddSub<Unit extends string> extends StypNumericStruct<StypAddSub<Unit>, Unit> {
 
@@ -291,7 +297,8 @@ export interface StypAddSub<Unit extends string> extends StypNumericStruct<StypA
 /**
  * CSS `calc()` function call representation containing either multiplication or division.
  *
- * @typeparam Unit Allowed unit type.
+ * @category CSS Value
+ * @typeparam Unit  Allowed unit type.
  */
 export interface StypMulDiv<Unit extends string> extends StypNumericStruct<StypMulDiv<Unit>, Unit> {
 

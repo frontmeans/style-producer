@@ -1,3 +1,6 @@
+/**
+ * @module style-producer
+ */
 import { itsEach } from 'a-iterable';
 import { noop } from 'call-thru';
 import {
@@ -18,6 +21,8 @@ import { Rules } from './rules.impl';
  * Dynamically updated CSS rule set.
  *
  * This is an iterable of rules, and an `EventSender` of their updates.
+ *
+ * @category CSS Rule
  */
 export interface StypRules extends Iterable<StypRule>, EventSender<[StypRule[], StypRule[]]> {
 
@@ -64,7 +69,8 @@ const noStypRules: StypRuleList = /*#__PURE__*/ new Rules({
 /**
  * Constructs dynamically updated CSS rule list out of rule sources.
  *
- * @param sources CSS rule sources.
+ * @category CSS Rule
+ * @param sources  CSS rule sources.
  *
  * @returns Dynamic CSS rule list.
  */
@@ -85,7 +91,8 @@ function rulesFromSource(source: StypRules.Source): StypRules {
  * This means that the constructed rule set won't necessary contain the rules from all sources originally. It will
  * report them as updates instead.
  *
- * @param sources CSS rule sources.
+ * @category CSS Rule
+ * @param sources  CSS rule sources.
  *
  * @returns Dynamic CSS rule list.
  */

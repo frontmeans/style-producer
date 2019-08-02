@@ -1,11 +1,15 @@
+/**
+ * @module style-producer
+ */
 import { NameInNamespace, namesEqual, NamespaceDef } from 'namespace-aliaser';
 import { StypSelector } from './selector';
 
 /**
  * Tests whether two normalized structured CSS selectors equal.
  *
- * @param first First selector.
- * @param second Second selector.
+ * @category CSS Rule
+ * @param first  First selector.
+ * @param second  Second selector.
  *
  * @returns `true` if selectors are equal, `false` otherwise.
  */

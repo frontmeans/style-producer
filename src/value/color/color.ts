@@ -1,16 +1,21 @@
+/**
+ * @module style-producer
+ */
 import { StypValue, StypValueStruct } from '../value';
 
 /**
- * Structured [color] CSS property value.
+ * Structured [color](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value) CSS property value.
  *
  * Colors are represented by either `rgb()`, or `hsl()` functional notations.
  *
- * [color]: https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
+ * @category CSS Value
  */
 export type StypColor = StypRGB | StypHSL;
 
 /**
  * Structured color CSS property value base.
+ *
+ * @category CSS Value
  */
 export abstract class StypColorStruct<Self extends StypColorStruct<Self, Coords>, Coords>
     extends StypValueStruct<Self> {
@@ -33,7 +38,7 @@ export abstract class StypColorStruct<Self extends StypColorStruct<Self, Coords>
   /**
    * Constructs another color value with updated coordinates.
    *
-   * @param coords Either partial color coordinates to apply or a function returning them and accepting this color
+   * @param coords  Either partial color coordinates to apply or a function returning them and accepting this color
    * instance as its only argument. Missing values are taken from this color.
    *
    * @returns Updated color value.
@@ -43,9 +48,10 @@ export abstract class StypColorStruct<Self extends StypColorStruct<Self, Coords>
 }
 
 /**
- * CSS property value representing [RGB color] in `rgb()` or `rgba()` functional notation.
+ * CSS property value representing [RGB color](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#RGB_colors)
+ * in `rgb()` or `rgba()` functional notation.
  *
- * [RGB color]: https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#RGB_colors
+ * @category CSS Value
  */
 export class StypRGB extends StypColorStruct<StypRGB, StypRGB.Coords> implements StypRGB.Coords {
 
@@ -80,8 +86,8 @@ export class StypRGB extends StypColorStruct<StypRGB, StypRGB.Coords> implements
   /**
    * Constructs RGB color value.
    *
-   * @param coords Color coordinates.
-   * @param opts Construction options.
+   * @param coords  Color coordinates.
+   * @param opts  Construction options.
    */
   constructor(coords: StypRGB.Coords, opts?: StypValue.Opts) {
     super(opts);
@@ -179,9 +185,7 @@ export class StypRGB extends StypColorStruct<StypRGB, StypRGB.Coords> implements
 export namespace StypRGB {
 
   /**
-   * [RGB color] coordinates.
-   *
-   * [RGB color]: https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#RGB_colors
+   * [RGB color](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#RGB_colors) coordinates.
    */
   export interface Coords {
 
@@ -209,9 +213,10 @@ export namespace StypRGB {
 }
 
 /**
- * CSS property value representing [HSL color] in `hsl()` or `hsla()` functional notation.
+ * CSS property value representing [HSL color](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#HSL_colors)
+ * in `hsl()` or `hsla()` functional notation.
  *
- * [[HSL color]: https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#HSL_colors
+ * @category CSS Value
  */
 export class StypHSL extends StypColorStruct<StypHSL, StypHSL.Coords> implements StypHSL.Coords {
 
@@ -243,8 +248,8 @@ export class StypHSL extends StypColorStruct<StypHSL, StypHSL.Coords> implements
   /**
    * Constructs HSL color value.
    *
-   * @param coords Color coordinates.
-   * @param opts Construction options.
+   * @param coords  Color coordinates.
+   * @param opts  Construction options.
    */
   constructor(coords: StypHSL.Coords, opts?: StypValue.Opts) {
     super(opts);
@@ -333,9 +338,7 @@ export class StypHSL extends StypColorStruct<StypHSL, StypHSL.Coords> implements
 export namespace StypHSL {
 
   /**
-   * [HSL color] coordinates.
-   *
-   * [HSL color]: https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#HSL_colors
+   * [HSL color](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#HSL_colors) coordinates.
    */
   export interface Coords {
 
@@ -362,14 +365,17 @@ export namespace StypHSL {
 
 }
 
+/**
+ * @category CSS Value
+ */
 export const StypColor = {
 
   /**
    * Maps the given CSS property value to color. Defaults to `undefined` if mapping is not possible.
    *
-   * This method allows to use a `StypColor` instance as [CSS property mapping][[StypMapper.Mapping]].
+   * This method allows to use a [[StypColor]] object as {@link StypMapper.Mapping CSS property mapping}.
    *
-   * @param source A raw property value that should be converted.
+   * @param source  A raw property value that should be converted.
    *
    * @returns Mapped property value or `undefined`.
    */

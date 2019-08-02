@@ -5,7 +5,8 @@ import { isCombinator, normalizeStypSelectorPart } from './selector.impl';
 /**
  * Converts normalized CSS selector part to normalized CSS selector.
  *
- * @param selector Normalized CSS selector part.
+ * @category CSS Rule
+ * @param selector  Normalized CSS selector part.
  *
  * @returns Normalized structured CSS selector. An array containing `selector` as its only item.
  */
@@ -14,7 +15,7 @@ export function stypSelector(selector: StypSelector.NormalizedPart): [StypSelect
 /**
  * Normalizes arbitrary structured CSS selector.
  *
- * @param selector CSS selector to normalize.
+ * @param selector  CSS selector to normalize.
  *
  * @returns Normalized structured CSS selector.
  */

@@ -1,3 +1,6 @@
+/**
+ * @module style-producer
+ */
 import { itsEach, itsReduction, mapIt } from 'a-iterable';
 import { noop } from 'call-thru';
 import { AfterEvent, afterEventFrom, eventInterest, EventInterest, onEventFrom } from 'fun-events';
@@ -13,13 +16,14 @@ import { StyleProducer, StyleSheetRef, StypOptions } from './style-producer';
 /**
  * Produces and dynamically updates basic CSS stylesheets based on the given CSS rules.
  *
- * Unlike `produceStyle()`, this function does not enable renders but the basic one which just renders CSS properties.
+ * Unlike [[produceStyle]], this function does not enable renders but the basic one which just renders CSS properties.
  * You can enable only renders you need. This is useful only if you are not going to use all of them and want to save
  * the bundle size.
  *
- * @param rules CSS rules to produce stylesheets for. This can be e.g. a `StypRule.rules` to render all rules,
- * or a result of `StypRuleList.grab()` method call to render only matching ones.
- * @param opts Production options.
+ * @category Rendering
+ * @param rules  CSS rules to produce stylesheets for. This can be e.g. a [[StypRule.rules]] to render all rules,
+ * or a result of [[StypRuleList.grab]] method call to render only matching ones.
+ * @param opts  Production options.
  *
  * @returns Event interest instance. When this interest is lost (i.e. its `off()` method is called) the produced
  * stylesheets are removed.

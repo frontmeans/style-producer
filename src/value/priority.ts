@@ -1,15 +1,20 @@
+/**
+ * @module style-producer
+ */
 import { IMPORTANT_CSS_SUFFIX } from '../internal';
 import { StypValue } from './value';
 
 /**
  * Predefined CSS property value priorities.
+ *
+ * @category CSS Value
  */
 export const enum StypPriority {
 
   /**
    * Usual, non-important priority.
    *
-   * This priority is assigned to values by `StypValueStruct.usual()` method.
+   * This priority is assigned to values by [[StypValueStruct.usual]] method.
    */
   Usual = 0,
 
@@ -24,7 +29,7 @@ export const enum StypPriority {
    * Important priority.
    *
    * This priority corresponds to values with `!important` suffix. It is applied to string values with `!important`
-   * suffix, and can be assigned to structured values using `StypValueStruct.important()` method.
+   * suffix, and can be assigned to structured values using [[StypValueStruct.important]] method.
    *
    * All numeric priorities with higher values are rendered as `!important` ones.
    */
@@ -35,7 +40,8 @@ export const enum StypPriority {
 /**
  * Splits undefined CSS property value onto non-prioritized value and priority.
  *
- * @param value Undefined CSS property value to split.
+ * @category CSS Value
+ * @param value  Undefined CSS property value to split.
  *
  * @returns An `[undefined, 0]` tuple.
  */
@@ -44,7 +50,7 @@ export function stypSplitPriority<T extends StypValue>(value: undefined): [undef
 /**
  * Splits string CSS property value onto non-prioritized value and priority.
  *
- * @param value CSS property value to split.
+ * @param value  CSS property value to split.
  *
  * @returns A tuple containing the value without `!priority` suffix, and numeric priority (0 or 1).
  */
@@ -53,7 +59,7 @@ export function stypSplitPriority(value: string): [string, 0 | 1];
 /**
  * Splits scalar CSS property value onto non-prioritized value and priority.
  *
- * @param value CSS property value to split.
+ * @param value  CSS property value to split.
  *
  * @returns A tuple containing the value and `0` priority.
  */
@@ -62,7 +68,7 @@ export function stypSplitPriority<T extends number | boolean>(value: T): [T, 0];
 /**
  * Splits arbitrary CSS property value onto value non-prioritized value and priority.
  *
- * @param value CSS property value to split.
+ * @param value  CSS property value to split.
  *
  * @returns A tuple containing the value and numeric priority.
  */

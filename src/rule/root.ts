@@ -1,3 +1,6 @@
+/**
+ * @module style-producer
+ */
 import { StypSelector } from '../selector';
 import { StypProperties } from './properties';
 import { stypPropertiesBySpec } from './properties.impl';
@@ -13,7 +16,8 @@ const rootSelector: StypSelector.Normalized = [];
  *
  * The root CSS rule selector is empty.
  *
- * @param properties Initial CSS rule properties specifier.
+ * @category CSS Rule
+ * @param properties  Initial CSS rule properties specifier.
  *
  * @returns New root CSS rule.
  */

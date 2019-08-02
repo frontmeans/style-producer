@@ -1,0 +1,10 @@
+{
+  "categorizeByGroup": true,
+  "categoryOrder": ["CSS Rule", "CSS Value", "Rendering", "*"],
+  "exclude": ["**/spec/**/*.ts", "**/internal/**/*.ts", "**/*.impl.ts"],
+  "excludeNotExported": true,
+  "mode": "file",
+  "name": "Style Producer",
+  "out": "./target/typedoc",
+  "tsconfig": "tsconfig.main.json"
+}

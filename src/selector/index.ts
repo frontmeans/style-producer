@@ -1,3 +1,6 @@
+/**
+ * @module style-producer
+ */
 export * from './query';
 export * from './rule-key';
 export * from './selector';

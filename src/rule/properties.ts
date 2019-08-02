@@ -1,3 +1,6 @@
+/**
+ * @module style-producer
+ */
 import { AfterEvent, EventKeeper, EventSender } from 'fun-events';
 import { StypValue } from '../value';
 import { StypRule } from './rule';
@@ -18,7 +21,8 @@ import { StypRule } from './rule';
  * May be parameterized with properties structure. In that case the properties map contains only properties from
  * the given structure.
  *
- * @typeparam T CSS properties structure. Each property in this structure is expected to be compatible with
+ * @category CSS Rule
+ * @typeparam T  CSS properties structure. Each property in this structure is expected to be compatible with
  * [[StypValue]].
  */
 export type StypProperties<T extends StypProperties<T> = StypProperties.Generic> = {
@@ -75,7 +79,7 @@ export namespace StypProperties {
    *
    * This is a most generic form of CSS properties specifier.
    *
-   * @param rule A style rule the properties generated for.
+   * @param rule  A style rule the properties generated for.
    *
    * @return An `AfterEvent` registrar of CSS properties receivers.
    */

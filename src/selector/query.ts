@@ -1,3 +1,6 @@
+/**
+ * @module style-producer
+ */
 import { NameInNamespace, namesEqual, NamespaceDef } from 'namespace-aliaser';
 import { StypSelector } from './selector';
 import { normalizeStypSelectorPart } from './selector.impl';
@@ -10,6 +13,8 @@ import { normalizeStypSelectorPart } from './selector.impl';
  * Queries are used to grab a subset of matching rules from `StypRule`.
  *
  * All of its properties are optional.
+ *
+ * @category CSS Rule
  */
 export interface StypQuery {
 
@@ -54,7 +59,8 @@ export namespace StypQuery {
 /**
  * Normalizes arbitrary CSS rule query.
  *
- * @param query CSS rule query to normalize.
+ * @category CSS Rule
+ * @param query  CSS rule query to normalize.
  *
  * @returns Normalized CSS rule query.
  */
@@ -65,8 +71,9 @@ export function stypQuery(query: StypQuery): StypQuery.Normalized {
 /**
  * Checks whether the given structured CSS `selector` matches the target `query`.
  *
- * @param selector Normalized structured CSS selector.
- * @param query Normalized CSS rule query.
+ * @category CSS Rule
+ * @param selector  Normalized structured CSS selector.
+ * @param query  Normalized CSS rule query.
  *
  * @returns `true` if `selector` matches the `query`, or `false` otherwise.
  */

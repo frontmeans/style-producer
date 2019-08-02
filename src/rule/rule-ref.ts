@@ -1,3 +1,6 @@
+/**
+ * @module style-producer
+ */
 import { valueProvider } from 'call-thru';
 import {
   AfterEvent,
@@ -17,7 +20,8 @@ import { StypRule } from './rule';
  *
  * Allows to access an modify CSS properties of the rule in a type safe manner.
  *
- * @typeparam T CSS properties structure of referenced rule.
+ * @category CSS Rule
+ * @typeparam T  CSS properties structure of referenced rule.
  */
 export abstract class StypRuleRef<T extends StypProperties<T>> implements EventKeeper<[T]> {
 
@@ -33,7 +37,7 @@ export abstract class StypRuleRef<T extends StypProperties<T>> implements EventK
   /**
    * Sets CSS properties of the referenced rule.
    *
-   * @param properties CSS properties specifier. Or nothing to clear them.
+   * @param properties  CSS properties specifier. Or nothing to clear them.
    *
    * @returns `this` rule instance.
    */
@@ -42,7 +46,7 @@ export abstract class StypRuleRef<T extends StypProperties<T>> implements EventK
   /**
    * Appends CSS properties to the references CSS rule.
    *
-   * @param properties CSS properties specifier.
+   * @param properties  CSS properties specifier.
    *
    * @returns `this` rule instance.
    */
@@ -66,22 +70,26 @@ export abstract class StypRuleRef<T extends StypProperties<T>> implements EventK
  *
  * This is a function that obtains CSS rule reference relative to the given root.
  *
- * @typeparam T CSS properties interface of referenced rule.
- * @param root Root CSS rule the constructed reference will be relative to.
+ * @category CSS Rule
+ * @typeparam T  CSS properties interface of referenced rule.
+ * @param root  Root CSS rule the constructed reference will be relative to.
  *
  * @returns CSS rule reference.
  */
 export type RefStypRule<T extends StypProperties<T>> = (this: void, root: StypRule) => StypRuleRef<T>;
 
+/**
+ * @category CSS Rule
+ */
 export const RefStypRule = {
 
   /**
    * Constructs a CSS rule referrer that maps original CSS properties accordingly to the given `mappings`.
    *
-   * @typeparam T CSS properties structure of referenced rule.
-   * @param selector CSS selector of target rule.
-   * @param mappings Either a mappings of CSS properties, an event keeper sending such mappings, or a function returning
-   * one of them and accepting a root CSS rule as its only argument.
+   * @typeparam T  CSS properties structure of referenced rule.
+   * @param selector  CSS selector of target rule.
+   * @param mappings  Either a mappings of CSS properties, an event keeper sending such mappings, or a function
+   * returning one of them and accepting a root CSS rule as its only argument.
    * the constructed reference will be relative to as its only parameter.
    *
    * @returns New CSS rule key instance.

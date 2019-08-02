@@ -1,3 +1,6 @@
+/**
+ * @module style-producer
+ */
 import { overEntries } from 'a-iterable';
 import { StypProperties } from '../rule';
 import { stypSplitPriority, StypURL, StypValue } from '../value';
@@ -48,7 +51,9 @@ import { StyleProducer } from './style-producer';
  * @namespace svg url(http://www.w3.org/2000/svg);
  * ```
  *
- * Enabled by default in `produceStyle()` function.
+ * Enabled by default in [[produceStyle]] function.
+ *
+ * @category Rendering
  */
 export const stypRenderGlobals: StypRender = {
 

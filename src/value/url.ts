@@ -1,11 +1,14 @@
+/**
+ * @module style-producer
+ */
 import cssesc from 'cssesc';
 import { stypSplitPriority } from './priority';
 import { StypValue, StypValueStruct } from './value';
 
 /**
- * Structured [URL] CSS property value.
+ * Structured [URL](https://developer.mozilla.org/en-US/docs/Web/CSS/url) CSS property value.
  *
- * [URL]: https://developer.mozilla.org/en-US/docs/Web/CSS/url
+ * @category CSS Value
  */
 export class StypURL extends StypValueStruct<StypURL> {
 
@@ -25,11 +28,11 @@ export class StypURL extends StypValueStruct<StypURL> {
   /**
    * Maps the given CSS property value to URL. Defaults to `undefined` if mapping is not possible.
    *
-   * This method allows to use a `StypURL` class as [CSS property mapping][[StypMapper.Mapping]].
+   * This method allows to use a [[StypURL]] class as [CSS property mapping][[StypMapper.Mapping]].
    *
    * Strings are treated as URLs (without `url()` functional syntax). `!important` suffix is respected.
    *
-   * @param source A raw property value that should be converted.
+   * @param source  A raw property value that should be converted.
    *
    * @returns Mapped property value or `undefined`.
    */
@@ -51,8 +54,8 @@ export class StypURL extends StypValueStruct<StypURL> {
   /**
    * Constructs URL value.
    *
-   * @param url Target URL.
-   * @param opts Construction options.
+   * @param url  Target URL.
+   * @param opts  Construction options.
    */
   constructor(url: string, opts?: StypValue.Opts) {
     super(opts);

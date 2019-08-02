@@ -1,3 +1,6 @@
+/**
+ * @module style-producer
+ */
 import { itsEach, overKeys } from 'a-iterable';
 import { StypProperties } from '../rule';
 import { StypValue } from './value';
@@ -5,8 +8,9 @@ import { StypValue } from './value';
 /**
  * A type of function that maps CSS properties to something else.
  *
- * @typeparam R A type of mapped properties. This is a mapping result type.
- * @param from CSS properties to map.
+ * @category CSS Value
+ * @typeparam R  A type of mapped properties. This is a mapping result type.
+ * @param from  CSS properties to map.
  *
  * @returns Mapping result.
  */
@@ -25,8 +29,8 @@ export namespace StypMapper {
    * - An object containing mapping method called `by()`. Replaces the source property value with the result of this
    *   method call.
    *
-   * @typeparam R A type of mapped properties. This is an object containing mapped properties.
-   * @typeparam K Type of mapped properties keys.
+   * @typeparam R  A type of mapped properties. This is an object containing mapped properties.
+   * @typeparam K  Type of mapped properties keys.
    */
   export type Mapping<R, K extends keyof R> =
       MappingFunction<R, K>
@@ -36,11 +40,11 @@ export namespace StypMapper {
   /**
    * CSS property mapping function.
    *
-   * @typeparam R A type of mapped properties. This is a mapping result type.
-   * @typeparam K Type of mapped properties keys.
-   * @param source A raw property value that should be converted.
-   * @param mapped An object granting access to other mapped properties.
-   * @param key A key of converted property.
+   * @typeparam R  A type of mapped properties. This is a mapping result type.
+   * @typeparam K  Type of mapped properties keys.
+   * @param source  A raw property value that should be converted.
+   * @param mapped  An object granting access to other mapped properties.
+   * @param key  A key of converted property.
    *
    * @returns Mapped property value.
    */
@@ -50,17 +54,17 @@ export namespace StypMapper {
   /**
    * CSS property mapping object.
    *
-   * @typeparam R A type of mapped properties. This is a mapping result type.
-   * @typeparam K Type of mapped properties keys.
+   * @typeparam R  A type of mapped properties. This is a mapping result type.
+   * @typeparam K  Type of mapped properties keys.
    */
   export interface MappingObject<R, K extends keyof R> {
 
     /**
      * Maps CSS property value.
      *
-     * @param source A raw property value that should be converted.
-     * @param mapped An object granting access to other mapped properties.
-     * @param key A key of converted property.
+     * @param source  A raw property value that should be converted.
+     * @param mapped  An object granting access to other mapped properties.
+     * @param key  A key of converted property.
      *
      * @returns Mapped property value.
      */
@@ -73,7 +77,7 @@ export namespace StypMapper {
    *
    * Passed as a second argument to mapping function.
    *
-   * @typeparam R A type of mapped properties. This is a mapping result type.
+   * @typeparam R  A type of mapped properties. This is a mapping result type.
    */
   export interface Mapped<R> {
 
@@ -87,7 +91,7 @@ export namespace StypMapper {
      *
      * The mapping is performed at most once per property.
      *
-     * @param key Mapped property key.
+     * @param key  Mapped property key.
      *
      * @returns Mapped property value.
      */
@@ -100,7 +104,7 @@ export namespace StypMapper {
    *
    * Contains mappings for each mapped CSS property with that property name as a key.
    *
-   * @typeparam R A type of mapped properties. This is a mapping result type.
+   * @typeparam R  A type of mapped properties. This is a mapping result type.
    */
   export type Mappings<R> = { readonly [key in keyof R]: Mapping<R, key>; };
 
@@ -111,10 +115,10 @@ export const StypMapper = {
   /**
    * Maps CSS properties accordingly to the given `mappings`.
    *
-   * @typeparam R A type of mapped properties. This is a mapping result type.
+   * @typeparam R  A type of mapped properties. This is a mapping result type.
    *
-   * @param mappings Mappings of CSS properties.
-   * @param from Raw CSS properties to map.
+   * @param mappings  Mappings of CSS properties.
+   * @param from  Raw CSS properties to map.
    *
    * @returns Mapped properties.
    */
@@ -145,8 +149,8 @@ export const StypMapper = {
   /**
    * Creates CSS properties mapper function.
    *
-   * @typeparam R A type of mapped properties. This is a mapping result type.
-   * @param mappings Mappings of CSS properties.
+   * @typeparam R  A type of mapped properties. This is a mapping result type.
+   * @param mappings  Mappings of CSS properties.
    *
    * @returns A function that maps CSS properties accordingly to the given `mappings`.
    */

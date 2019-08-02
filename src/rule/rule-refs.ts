@@ -1,3 +1,6 @@
+/**
+ * @module style-producer
+ */
 import { AfterEvent, AfterEvent__symbol, afterEventFromAll, EventKeeper } from 'fun-events';
 import { StypProperties } from './properties';
 import { StypRule } from './rule';
@@ -8,7 +11,8 @@ import { RefStypRule, StypRuleRef } from './rule-ref';
  *
  * Implements an event keeper interface by sending named CSS properties structures for each CSS rule reference.
  *
- * @typeparam R A type of target map of named CSS properties structures.
+ * @category CSS Rule
+ * @typeparam R  A type of target map of named CSS properties structures.
  */
 export class StypRuleRefs<R extends StypRuleRefs.Struct<R>> implements EventKeeper<[R]> {
 
@@ -25,9 +29,9 @@ export class StypRuleRefs<R extends StypRuleRefs.Struct<R>> implements EventKeep
   /**
    * Constructs named CSS rules by resolving CSS rule referrers.
    *
-   * @typeparam R A type of target map of named CSS properties structures.
-   * @param referrers Named CSS rule referrers to resolve.
-   * @param root A root CSS rule the references will be relative to.
+   * @typeparam R  A type of target map of named CSS properties structures.
+   * @param referrers  Named CSS rule referrers to resolve.
+   * @param root  A root CSS rule the references will be relative to.
    *
    * @returns New names CSS rules instance.
    */
@@ -51,7 +55,7 @@ export class StypRuleRefs<R extends StypRuleRefs.Struct<R>> implements EventKeep
   /**
    * Constructs named CSS rules.
    *
-   * @param refs A map of named CSS rule references.
+   * @param refs  A map of named CSS rule references.
    */
   constructor(refs: { readonly [K in keyof R]: StypRuleRef<R[K]> }) {
     this.refs = refs;
@@ -104,7 +108,7 @@ export namespace StypRuleRefs {
    *
    * These referrers then resolved to the same named CSS rule references.
    *
-   * @typeparam R A type of target map of named CSS properties structures.
+   * @typeparam R  A type of target map of named CSS properties structures.
    */
   export type Referrers<R extends Struct<R>> = {
     readonly [K in keyof R]: RefStypRule<R[K]>;

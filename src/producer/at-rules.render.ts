@@ -1,3 +1,6 @@
+/**
+ * @module style-producer
+ */
 import { filterIt, itsReduction, ObjectEntry, overEntries } from 'a-iterable';
 import { AfterEvent } from 'fun-events';
 import { isNotEmptyArray } from '../internal';
@@ -112,7 +115,9 @@ function buildAtSelector(
  * So the above example could be written as: `{ c: 'screen-only', $: '@media:screen' }` if CSS rule (or its outer
  * one) contains property `@media:screen` with value `screen`.
  *
- * Enabled by default in `produceStyle()` function.
+ * Enabled by default in [[produceStyle]] function.
+ *
+ * @category Rendering
  */
 export const stypRenderAtRules: StypRender = {
 

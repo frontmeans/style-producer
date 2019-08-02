@@ -1,3 +1,6 @@
+/**
+ * @module style-producer
+ */
 import { EventInterest } from 'fun-events';
 import { isReadonlyArray } from '../internal';
 import { StypRules } from '../rule';
@@ -16,11 +19,12 @@ import { stypRenderXmlNs } from './xml-ns.render';
  * rules change.
  *
  * This function enables all default renders. E.g. the one supporting raw CSS text rules. If you don't need all of them
- * you may prefer a `produceBasicStyle()` variant of this function.
+ * you may prefer a [[produceBasicStyle]] variant of this function.
  *
- * @param rules CSS rules to produce stylesheets for. This can be e.g. a `StypRule.rules` to render all rules,
- * or a result of `StypRuleList.grab()` method call to render only matching ones.
- * @param opts Production options.
+ * @category Rendering
+ * @param rules  CSS rules to produce stylesheets for. This can be e.g. a [[StypRule.rules]] to render all rules,
+ * or a result of [[StypRuleList.grab]] method call to render only matching ones.
+ * @param opts  Production options.
  *
  * @returns Event interest instance. When this interest is lost (i.e. its `off()` method is called) the produced
  * stylesheets are removed.
