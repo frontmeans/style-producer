@@ -29,7 +29,7 @@ interest.off(); // Remove produced stylesheets
 [npm-image]: https://img.shields.io/npm/v/style-producer.svg?logo=npm
 [npm-url]: https://www.npmjs.com/package/style-producer
 [ci-image]: https://img.shields.io/circleci/build/github/surol/style-producer?logo=circleci
-[ci-url]: https://img.shields.io/codecov/c/github/surol/style-producer?logo=codecov
+[ci-url]: https://circleci.com/gh/surol/style-producer
 [codecov-image]: https://codecov.io/gh/surol/style-producer/branch/master/graph/badge.svg
 [codecov-url]: https://codecov.io/gh/surol/style-producer
 [github-image]: https://img.shields.io/static/v1?logo=github&label=GitHub&message=project&color=informational
