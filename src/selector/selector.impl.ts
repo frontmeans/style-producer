@@ -1,5 +1,5 @@
 import { flatMapIt, itsReduction } from 'a-iterable';
-import { compareNames, isNameInNamespace, NameInNamespace } from 'namespace-aliaser';
+import { compareNames, isQualifiedName, QualifiedName } from 'namespace-aliaser';
 import { isNotEmptyArray, isReadonlyArray } from '../internal';
 import { StypRuleKey } from './rule-key';
 import { StypSelector } from './selector';
@@ -26,16 +26,16 @@ export function normalizeStypSelectorPart(part: StypSelector.Part): StypSelector
   };
 }
 
-function normalizeElement(e: NameInNamespace | undefined): NameInNamespace | undefined {
+function normalizeElement(e: QualifiedName | undefined): QualifiedName | undefined {
   return e !== '*' && e || undefined;
 }
 
-function normalizeClasses(classes: NameInNamespace | readonly NameInNamespace[] | undefined):
-    readonly [NameInNamespace, ...NameInNamespace[]] | undefined {
+function normalizeClasses(classes: QualifiedName | readonly QualifiedName[] | undefined):
+    readonly [QualifiedName, ...QualifiedName[]] | undefined {
   if (!classes) {
     return;
   }
-  if (isNameInNamespace(classes)) {
+  if (isQualifiedName(classes)) {
     return [classes];
   }
 

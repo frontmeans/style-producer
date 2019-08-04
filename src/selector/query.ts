@@ -1,7 +1,7 @@
 /**
  * @module style-producer
  */
-import { NameInNamespace, namesEqual, NamespaceDef } from 'namespace-aliaser';
+import { namesEqual, NamespaceDef, QualifiedName } from 'namespace-aliaser';
 import { StypSelector } from './selector';
 import { normalizeStypSelectorPart } from './selector.impl';
 
@@ -28,17 +28,17 @@ export interface StypQuery {
    *
    * This is the same as `*` when absent.
    */
-  readonly e?: NameInNamespace;
+  readonly e?: QualifiedName;
 
   /**
    * Element identifier.
    */
-  readonly i?: NameInNamespace;
+  readonly i?: QualifiedName;
 
   /**
    * Element class name or names.
    */
-  readonly c?: NameInNamespace | readonly NameInNamespace[];
+  readonly c?: QualifiedName | readonly QualifiedName[];
 
   /**
    * Qualifier or qualifiers.
@@ -104,6 +104,6 @@ export function stypSelectorMatches(selector: StypSelector.Normalized, query: St
   return true;
 }
 
-function classesMatch(classes: readonly NameInNamespace[] | undefined, query: readonly NameInNamespace[]) {
+function classesMatch(classes: readonly QualifiedName[] | undefined, query: readonly QualifiedName[]) {
   return classes && query.every(qClass => classes.find(mClass => namesEqual(qClass, mClass)));
 }

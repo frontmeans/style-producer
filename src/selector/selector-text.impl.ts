@@ -1,10 +1,10 @@
 import {
+  css__naming,
+  html__naming,
+  id__naming,
   NamespaceAliaser,
   NamespaceDef,
   newNamespaceAliaser,
-  qualifyCssName,
-  qualifyHtmlName,
-  qualifyId
 } from 'namespace-aliaser';
 import { cssescId } from '../internal';
 import { StypRuleKey } from './rule-key';
@@ -82,12 +82,12 @@ function formatItem(
 
   if (i) {
     hasProperties = true;
-    string += `#${cssescId(qualifyId(i, nsAlias))}`;
+    string += `#${cssescId(id__naming.name(i, nsAlias))}`;
   }
   if (c) {
     hasProperties = true;
     string = c.reduce<string>(
-        (result, className) => `${result}.${cssescId(qualifyCssName(className, nsAlias))}`,
+        (result, className) => `${result}.${cssescId(css__naming.name(className, nsAlias))}`,
         string);
   }
   if (s) {
@@ -114,9 +114,9 @@ function formatItem(
 
   function qualifyElement(): string {
     if (hasProperties) {
-      return `${e ? qualifyHtmlName(e, nsAlias) : ''}${string}`;
+      return `${e ? html__naming.name(e, nsAlias) : ''}${string}`;
     }
-    return `${e ? qualifyHtmlName(e, nsAlias) : '*'}${string}`;
+    return `${e ? html__naming.name(e, nsAlias) : '*'}${string}`;
   }
 }
 

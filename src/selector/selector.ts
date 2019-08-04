@@ -1,7 +1,7 @@
 /**
  * @module style-producer
  */
-import { NameInNamespace, NamespaceDef } from 'namespace-aliaser';
+import { NamespaceDef, QualifiedName } from 'namespace-aliaser';
 
 /**
  * Structured CSS selector.
@@ -61,17 +61,17 @@ export namespace StypSelector {
      *
      * This is the same as `*` when absent.
      */
-    readonly e?: NameInNamespace;
+    readonly e?: QualifiedName;
 
     /**
      * Element identifier.
      */
-    readonly i?: NameInNamespace;
+    readonly i?: QualifiedName;
 
     /**
      * Element class name or names.
      */
-    readonly c?: NameInNamespace | readonly NameInNamespace[];
+    readonly c?: QualifiedName | readonly QualifiedName[];
 
     /**
      * Raw CSS selector text to append to the end.
@@ -119,7 +119,7 @@ export namespace StypSelector {
      * Array of element class names. Either absent, or non-empty and containing non-empty class names sorted
      * alphabetically.
      */
-    readonly c?: readonly [NameInNamespace, ...NameInNamespace[]];
+    readonly c?: readonly [QualifiedName, ...QualifiedName[]];
 
     /**
      * Array of qualifiers. Either absent, or non-empty and containing non-empty qualifiers sorted alphabetically.

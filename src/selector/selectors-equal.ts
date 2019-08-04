@@ -1,7 +1,7 @@
 /**
  * @module style-producer
  */
-import { NameInNamespace, namesEqual, NamespaceDef } from 'namespace-aliaser';
+import { QualifiedName, namesEqual, NamespaceDef } from 'namespace-aliaser';
 import { StypSelector } from './selector';
 
 /**
@@ -46,13 +46,13 @@ function namespacesEqual(first: string | NamespaceDef | undefined, second: strin
   return first.url === second.url;
 }
 
-function _namesEqual(first: NameInNamespace | undefined, second: NameInNamespace | undefined): boolean {
+function _namesEqual(first: QualifiedName | undefined, second: QualifiedName | undefined): boolean {
   return first == null ? second == null : second != null && namesEqual(first, second);
 }
 
 function classesEqual(
-    first: readonly (string | NameInNamespace)[] | undefined,
-    second: readonly (string | NameInNamespace)[] | undefined): boolean {
+    first: readonly QualifiedName[] | undefined,
+    second: readonly QualifiedName[] | undefined): boolean {
   if (!first) {
     return !second;
   }
