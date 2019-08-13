@@ -72,11 +72,14 @@ export abstract class StypRuleRef<T extends StypProperties<T>> implements EventK
  *
  * @category CSS Rule
  * @typeparam T  CSS properties interface of referenced rule.
+ */
+export type RefStypRule<T extends StypProperties<T>> =
+/**
  * @param root  Root CSS rule the constructed reference will be relative to.
  *
  * @returns CSS rule reference.
  */
-export type RefStypRule<T extends StypProperties<T>> = (this: void, root: StypRule) => StypRuleRef<T>;
+    (this: void, root: StypRule) => StypRuleRef<T>;
 
 /**
  * @category CSS Rule

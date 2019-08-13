@@ -66,11 +66,12 @@ export namespace StypProperties {
    * - a function depending on style rule and returning one of the above.
    */
   export type Spec =
-      string | StypProperties
+      | string
+      | StypProperties
       | EventKeeper<[string | StypProperties]>
       | EventSender<[string | StypProperties]>
       | ((rule: StypRule) =>
-      string | StypProperties
+      | string | StypProperties
       | EventKeeper<[string | StypProperties]>
       | EventSender<[string | StypProperties]>);
 
@@ -78,12 +79,14 @@ export namespace StypProperties {
    * CSS properties builder function signature.
    *
    * This is a most generic form of CSS properties specifier.
-   *
+   */
+  export type Builder =
+  /**
    * @param rule  A style rule the properties generated for.
    *
    * @return An `AfterEvent` registrar of CSS properties receivers.
    */
-  export type Builder = (rule: StypRule) => AfterEvent<[StypProperties]>;
+      (this: void, rule: StypRule) => AfterEvent<[StypProperties]>;
 
   /**
    * Mutable CSS properties map.

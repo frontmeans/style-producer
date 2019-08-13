@@ -14,7 +14,9 @@ import { StypZero } from './zero';
  * @typeparam Zero  A type of zero value. [[StypZero]] by default.
  */
 export type StypNumeric<Unit extends string, Zero extends StypZero<Unit> | StypDimension<Unit> = StypZero<Unit>> =
-    StypDimension<Unit> | StypCalc<Unit> | Zero;
+    | StypDimension<Unit>
+    | StypCalc<Unit>
+    | Zero;
 
 /**
  * Base implementation of structured numeric CSS property value.

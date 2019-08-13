@@ -52,10 +52,14 @@ export namespace StypRender {
    * It should normally call a [[StyleProducer.render]] method as the last operation to allow other renders in chain
    * to do their job.
    *
+   * @typeparam This  `this` instance type.
+   */
+  export type Function<This = void> =
+  /**
    * @param producer  Style producer instance.
    * @param properties  CSS properties to render.
    */
-  export type Function<This = void> = (this: This, producer: StyleProducer, properties: StypProperties) => void;
+      (this: This, producer: StyleProducer, properties: StypProperties) => void;
 
   /**
    * CSS stylesheet render descriptor.

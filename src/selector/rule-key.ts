@@ -18,6 +18,8 @@ export namespace StypRuleKey {
   /**
    * A key of nested CSS rule within its parent.
    */
-  export type Nested = [StypSelector.NormalizedPart] | [StypSelector.Combinator, StypSelector.NormalizedPart];
+  export type Nested =
+      | [StypSelector.NormalizedPart]
+      | [StypSelector.Combinator, StypSelector.NormalizedPart];
 
 }

@@ -51,7 +51,8 @@ export namespace StypRules {
    *   The function will be called lazily upon rules access.
    */
   export type Source =
-      StypRule | StypRules
+      | StypRule
+      | StypRules
       | Promise<StypRule | StypRules>
       | ((this: void) => StypRule | StypRules | Promise<StypRule | StypRules>);
 

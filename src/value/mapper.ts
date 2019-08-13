@@ -10,11 +10,14 @@ import { StypValue } from './value';
  *
  * @category CSS Value
  * @typeparam R  A type of mapped properties. This is a mapping result type.
+ */
+export type StypMapper<R> =
+/**
  * @param from  CSS properties to map.
  *
  * @returns Mapping result.
  */
-export type StypMapper<R> = (this: void, from: StypProperties) => R;
+    (this: void, from: StypProperties) => R;
 
 export namespace StypMapper {
 
@@ -33,7 +36,7 @@ export namespace StypMapper {
    * @typeparam K  Type of mapped properties keys.
    */
   export type Mapping<R, K extends keyof R> =
-      MappingFunction<R, K>
+      | MappingFunction<R, K>
       | MappingObject<R, K>
       | R[K];
 
@@ -42,13 +45,15 @@ export namespace StypMapper {
    *
    * @typeparam R  A type of mapped properties. This is a mapping result type.
    * @typeparam K  Type of mapped properties keys.
+   */
+  export type MappingFunction<R, K extends keyof R> =
+  /**
    * @param source  A raw property value that should be converted.
    * @param mapped  An object granting access to other mapped properties.
    * @param key  A key of converted property.
    *
    * @returns Mapped property value.
    */
-  export type MappingFunction<R, K extends keyof R> =
       (this: void, source: StypValue, mapped: Mapped<R>, key: K) => R[K];
 
   /**
@@ -164,10 +169,10 @@ function mappingBy<R, K extends keyof R>(
     mapping: StypMapper.Mapping<R, K> | undefined):
     StypMapper.MappingFunction<R, K> {
   switch (typeof mapping) {
-    case 'function':
-      return mapping as StypMapper.MappingFunction<R, K>;
-    case 'object':
-      return (mapping as StypMapper.MappingObject<R, K>).by.bind(mapping);
+  case 'function':
+    return mapping as StypMapper.MappingFunction<R, K>;
+  case 'object':
+    return (mapping as StypMapper.MappingObject<R, K>).by.bind(mapping);
   }
 
   const type = typeof mapping;

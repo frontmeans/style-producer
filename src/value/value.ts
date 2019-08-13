@@ -14,7 +14,10 @@ import { StypURL } from './url';
  * @category CSS Value
  */
 export type StypValue =
-    string | number | boolean | undefined
+    | string
+    | number
+    | boolean
+    | undefined
     | StypNumeric<any>
     | StypURL
     | StypColor;

@@ -16,7 +16,9 @@ import { NamespaceDef, QualifiedName } from 'namespace-aliaser';
  * @category CSS Rule
  */
 export type StypSelector =
-    string | StypSelector.Part | readonly (string | StypSelector.Part | StypSelector.Combinator)[];
+    | string
+    | StypSelector.Part
+    | readonly (string | StypSelector.Part | StypSelector.Combinator)[];
 
 export namespace StypSelector {
 
