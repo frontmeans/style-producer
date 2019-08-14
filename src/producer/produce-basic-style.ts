@@ -136,7 +136,7 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
           interest.off(reason);
           prev.off(reason);
         }),
-        eventInterest(noop),
+        eventInterest(),
     );
   }
 
