@@ -2,7 +2,6 @@
  * @module style-producer
  */
 import { itsEach } from 'a-iterable';
-import { noop } from 'call-thru';
 import {
   eventInterest,
   EventReceiver,
@@ -12,7 +11,8 @@ import {
   OnEvent,
   OnEvent__symbol,
   onEventBy,
-  onEventFrom, receiveEventsBy
+  onEventFrom,
+  receiveEventsBy,
 } from 'fun-events';
 import { StypRule, StypRuleList } from './rule';
 import { Rules } from './rules.impl';
@@ -189,11 +189,10 @@ function asyncRules(source: Promise<StypRule | StypRules>): StypRules {
   const onEvent = onEventBy<[StypRule[], StypRule[]]>(receiver => {
 
     let sourceInterest = noEventInterest();
-    const interest = eventInterest(noop)
-        .whenDone(reason => {
-          sourceInterest.off(reason);
-          ruleSet.clear();
-        });
+    const interest = eventInterest(reason => {
+      sourceInterest.off(reason);
+      ruleSet.clear();
+    });
 
     source.then(resolution => {
       if (!interest.done) {
