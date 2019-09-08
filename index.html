@@ -235,7 +235,7 @@ root.rules.add(
         <span class="hljs-function">(<span class="hljs-params">{ $color, $bgColor, $gap }</span>) =&gt;</span> ({
           color: $color,
           backgroundColor: $bgColor.hsl.set(<span class="hljs-function"><span class="hljs-params">hsl</span> =&gt;</span> ({ l: hsl.l * <span class="hljs-number">0.85</span> })), <span class="hljs-comment">// Convert to HSL and darken input background</span>
-          padding: <span class="hljs-string">`<span class="hljs-subst">${$gap}</span> <span class="hljs-subst">${$gap.mul(1.5)}</span>`</span>, <span class="hljs-comment">// Padding is based on default gap</span>
+          padding: <span class="hljs-string">`<span class="hljs-subst">${$gap}</span> <span class="hljs-subst">${$gap.mul(<span class="hljs-number">1.5</span>)}</span>`</span>, <span class="hljs-comment">// Padding is based on default gap</span>
           border: <span class="hljs-string">`1px solid <span class="hljs-subst">${$color}</span>`</span>,          
         })
     )
