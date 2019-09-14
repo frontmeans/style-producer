@@ -70,8 +70,9 @@ export namespace StypProperties {
       | StypProperties
       | EventKeeper<[string | StypProperties]>
       | EventSender<[string | StypProperties]>
-      | ((rule: StypRule) =>
-      | string | StypProperties
+      | ((this: void, rule: StypRule) =>
+      | string
+      | StypProperties
       | EventKeeper<[string | StypProperties]>
       | EventSender<[string | StypProperties]>);
 
