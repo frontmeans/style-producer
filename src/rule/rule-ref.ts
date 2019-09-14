@@ -93,7 +93,7 @@ export const RefStypRule = {
    * @param selector  CSS selector of target rule.
    * @param mappings  Either a mappings of CSS properties, an event keeper sending such mappings, or a function
    * returning one of them and accepting a root CSS rule as its only argument.
-   * the constructed reference will be relative to as its only parameter.
+   * The constructed reference will be relative to as its only parameter.
    *
    * @returns New CSS rule key instance.
    */
