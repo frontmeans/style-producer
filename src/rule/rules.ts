@@ -4,6 +4,7 @@
 import { itsEach } from 'a-iterable';
 import {
   eventInterest,
+  EventNotifier,
   EventReceiver,
   EventSender,
   isEventSender,
@@ -12,7 +13,6 @@ import {
   OnEvent__symbol,
   onEventBy,
   onEventFrom,
-  receiveEventsBy,
 } from 'fun-events';
 import { StypRule, StypRuleList } from './rule';
 import { Rules } from './rules.impl';
@@ -232,6 +232,10 @@ function reportExistingRules(
     ruleSet.add(rule);
   });
   if (existing.length) {
-    receiveEventsBy(receiver)(existing, []); // Report existing rules as just added
+
+    const dispatcher = new EventNotifier<[StypRule[], StypRule[]]>();
+
+    dispatcher.on(receiver);
+    dispatcher.send(existing, []); // Report existing rules as just added
   }
 }
