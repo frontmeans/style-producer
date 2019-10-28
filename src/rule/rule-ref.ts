@@ -2,14 +2,7 @@
  * @module style-producer
  */
 import { valueProvider } from 'call-thru';
-import {
-  AfterEvent,
-  AfterEvent__symbol,
-  afterEventFromAll,
-  afterEventOf,
-  EventKeeper,
-  isEventKeeper
-} from 'fun-events';
+import { afterAll, AfterEvent, AfterEvent__symbol, afterThe, EventKeeper, isEventKeeper } from 'fun-events';
 import { StypSelector } from '../selector';
 import { StypMapper } from '../value';
 import { StypProperties } from './properties';
@@ -117,7 +110,7 @@ export const RefStypRule = {
 
     function ref(root: StypRule): StypRuleRef<T> {
 
-      const read = afterEventFromAll({
+      const read = afterAll({
         ms: createMappings(root),
         ps: root.rules.watch(selector),
       }).keep.thru(
@@ -155,5 +148,5 @@ export const RefStypRule = {
 function mappingsKeeper<T extends StypProperties<T>>(
     mappings: StypMapper.Mappings<T> | EventKeeper<[StypMapper.Mappings<T>]>):
     EventKeeper<[StypMapper.Mappings<T>]> {
-  return isEventKeeper(mappings) ? mappings : afterEventOf(mappings);
+  return isEventKeeper(mappings) ? mappings : afterThe(mappings);
 }

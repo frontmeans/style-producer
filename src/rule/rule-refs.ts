@@ -1,7 +1,7 @@
 /**
  * @module style-producer
  */
-import { AfterEvent, AfterEvent__symbol, afterEventFromAll, EventKeeper } from 'fun-events';
+import { afterAll, AfterEvent, AfterEvent__symbol, EventKeeper } from 'fun-events';
 import { StypProperties } from './properties';
 import { StypRule } from './rule';
 import { RefStypRule, StypRuleRef } from './rule-ref';
@@ -69,7 +69,7 @@ export class StypRuleRefs<R extends StypRuleRefs.Struct<R>> implements EventKeep
       return this._read;
     }
 
-    const fromAll: AfterEvent<[{ [K in keyof R]: [StypProperties<any>] }]> = afterEventFromAll(this.refs);
+    const fromAll: AfterEvent<[{ [K in keyof R]: [StypProperties<any>] }]> = afterAll(this.refs);
 
     return this._read = fromAll.keep.thru(flattenProperties) as AfterEvent<[R]>;
   }

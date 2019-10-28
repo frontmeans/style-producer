@@ -1407,10 +1407,10 @@ fsevents@^1.2.7:
     nan "^2.12.1"
     node-pre-gyp "^0.12.0"
 
-fun-events@^5.0.7:
-  version "5.0.7"
-  resolved "https://registry.yarnpkg.com/fun-events/-/fun-events-5.0.7.tgz#a58ac23f6c759e0f7236dad65ee398b8dbe0bf2c"
-  integrity sha512-ZCq9ZZyr8DaQwucHnq8YJb9fo0jGJx8mK80yoFDUsD5eSZ9SuRXMxpPgh8Fu5rohIqzD4avynUkAjEkDjBgrGQ==
+fun-events@7.0.0-dev.0:
+  version "7.0.0-dev.0"
+  resolved "https://registry.yarnpkg.com/fun-events/-/fun-events-7.0.0-dev.0.tgz#e0dd77103cbc3e102efa2d535d52fd2713f9faec"
+  integrity sha512-ov1GR8cz3pT6paSCKFgXBaACFIrUT+Cx0TU3VmVjMMjSXN6vyj2mOS6dfrs3uIsSy2CjVtzbJ0YPand2VRYm6w==
 
 function-bind@^1.0.2, function-bind@^1.1.1:
   version "1.1.1"
@@ -4010,10 +4010,10 @@ typescript@3.5.x:
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.5.3.tgz#c830f657f93f1ea846819e929092f5fe5983e977"
   integrity sha512-ACzBtm/PhXBDId6a6sDJfroT2pOWt/oOnk4/dElG5G33ZL776N3Y6/6bKZJBFpd+b05F3Ct9qDjMeJmRWtE2/g==
 
-typescript@^3.6.4:
-  version "3.6.4"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.6.4.tgz#b18752bb3792bc1a0281335f7f6ebf1bbfc5b91d"
-  integrity sha512-unoCll1+l+YK4i4F8f22TaNVPRHcD9PA3yCuZ8g5e0qGqlVlJ/8FSateOLLSagn+Yg5+ZwuPkL8LFUc0Jcvksg==
+typescript@^3.7.1-rc:
+  version "3.7.1-rc"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.7.1-rc.tgz#2054b872d67f8dc732e36c1df397f9327f37ada0"
+  integrity sha512-2rMtWppLsaPvmpXsoIAXWDBQVnJMw1ITGGSnidMuayLj9iCmMRT69ncKZw/Mk5rXfJkilApKucWQZxproALoRw==
 
 uglify-js@^3.1.4:
   version "3.6.4"

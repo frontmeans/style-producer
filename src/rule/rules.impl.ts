@@ -1,6 +1,6 @@
 import { filterIt, itsIterable } from 'a-iterable';
-import { asis, valueProvider } from 'call-thru';
-import { AfterEvent, afterEventFrom, OnEvent, onEventBy, onEventFrom } from 'fun-events';
+import { asis, valueProvider, valuesProvider } from 'call-thru';
+import { AfterEvent, afterSupplied, OnEvent, onEventBy, onSupplied } from 'fun-events';
 import { stypQuery, StypQuery, stypSelectorMatches } from '../selector';
 import { StypRule, StypRuleList } from './rule';
 import { StypRules } from './rules';
@@ -34,20 +34,21 @@ export class Rules extends StypRuleList {
 
       const rules = ruleSet || (ruleSet = new Set(buildList()));
 
-      return onEventFrom(list)(function (added, removed) {
-        added = filterArray(added);
-        removed = filterArray(removed);
-        if (removed.length || added.length) {
-          removed.forEach(rule => rules.delete(rule));
-          added.forEach(rule => rules.add(rule));
-          receiver.call(this, added, removed);
-        }
-      }).whenDone(() => {
-        ruleSet = undefined;
+      onSupplied(list)({
+        supply: receiver.supply.whenOff(() => ruleSet = undefined),
+        receive(context, added, removed) {
+          added = filterArray(added);
+          removed = filterArray(removed);
+          if (removed.length || added.length) {
+            removed.forEach(rule => rules.delete(rule));
+            added.forEach(rule => rules.add(rule));
+            receiver.receive(context, added, removed);
+          }
+        },
       });
     }).share();
 
-    this.read = afterEventFrom<[Rules]>(this.onUpdate.thru(valueProvider(this)), [this]);
+    this.read = afterSupplied<[Rules]>(this.onUpdate.thru(valueProvider(this)), valuesProvider(this));
 
     this[Symbol.iterator] = () => {
       if (ruleSet) {

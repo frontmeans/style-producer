@@ -1,6 +1,6 @@
 import { itsEmpty } from 'a-iterable';
 import { noop } from 'call-thru';
-import { afterEventBy, EventKeeper, noEventInterest, trackValue } from 'fun-events';
+import { afterNever, trackValue } from 'fun-events';
 import { NamespaceDef } from 'namespace-aliaser';
 import { StypProperties, stypRoot, StypRule } from '../rule';
 import { stypSelector } from '../selector';
@@ -223,15 +223,14 @@ describe('produceBasicStyle', () => {
     });
     it('handles premature rule removal', () => {
 
-      const properties: StypProperties = { $name: 'next' };
       let action: () => void = noop;
 
       const render: StypRender.Factory = {
         create(): StypRender.Spec {
           return {
             render: mockRender1,
-            read(): EventKeeper<[StypProperties]> {
-              return afterEventBy(() => noEventInterest(), [properties]);
+            read() {
+              return afterNever;
             },
           };
         },
@@ -376,10 +375,10 @@ describe('produceBasicStyle', () => {
   it('removes rule', () => {
 
     const rule = root.rules.add({ c: 'custom' }, { display: 'block' });
-    const interest = produceBasicStyle(root.rules, { schedule: scheduleNow });
+    const supply = produceBasicStyle(root.rules, { schedule: scheduleNow });
     const onDone = jest.fn();
 
-    interest.whenDone(onDone);
+    supply.whenOff(onDone);
     rule.remove();
 
     expect(onDone).not.toHaveBeenCalled();
@@ -404,16 +403,16 @@ describe('produceBasicStyle', () => {
     operations.forEach(operation => operation());
     expect(mockRender).toHaveBeenCalledTimes(1);
   });
-  it('removes styles when updates interest is lost', () => {
+  it('removes styles when updates supply is cut off', () => {
 
     const properties = trackValue<StypProperties>({ display: 'block' });
 
     root.rules.add({ c: 'custom1' }, properties);
 
-    const interest = produceBasicStyle(root.rules, { schedule: scheduleNow });
+    const supply = produceBasicStyle(root.rules, { schedule: scheduleNow });
 
     root.rules.add({ c: 'custom2' }, { width: '100%' });
-    interest.off();
+    supply.off();
     properties.it = { display: 'inline-block' };
     expect(itsEmpty(stylesheets())).toBe(true);
   });

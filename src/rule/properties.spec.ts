@@ -1,5 +1,5 @@
-import { noop } from 'call-thru';
-import { AfterEvent, afterEventFrom, EventEmitter, EventInterest, trackValue, ValueTracker } from 'fun-events';
+import { noop, valuesProvider } from 'call-thru';
+import { AfterEvent, afterSupplied, EventEmitter, EventSupply, trackValue, ValueTracker } from 'fun-events';
 import { readProperties } from '../spec';
 import { StypLengthPt } from '../value';
 import { StypProperties } from './properties';
@@ -159,7 +159,7 @@ describe('stypPropertiesBySpec', () => {
     const updated = { fontSize: '13px' };
     const properties = { ...initial };
     const emitter = new EventEmitter<[StypProperties]>();
-    const tracker = afterEventFrom(emitter, [properties]);
+    const tracker = afterSupplied(emitter, valuesProvider(properties));
     const spec = trackSpec(stypPropertiesBySpec(rule, () => tracker));
     const receiver = jest.fn();
 
@@ -204,7 +204,12 @@ describe('mergeStypProperties', () => {
   });
 
   it('keeps initial properties', () => {
-    expect(merged.kept).toEqual([{ ...baseProperties, ...addendumProperties }]);
+
+    const receiver = jest.fn();
+
+    merged.once(receiver);
+
+    expect(receiver).toHaveBeenCalledWith({ ...baseProperties, ...addendumProperties });
   });
   it('merges initial properties', async () => {
     expect(await readProperties(merged)).toEqual({ ...baseProperties, ...addendumProperties });
@@ -213,16 +218,16 @@ describe('mergeStypProperties', () => {
   describe('merging', () => {
 
     let mockReceiver: Mock<void, [StypProperties]>;
-    let interest: EventInterest;
+    let supply: EventSupply;
 
     beforeEach(() => {
       mockReceiver = jest.fn();
-      interest = merged(mockReceiver);
+      supply = merged(mockReceiver);
       mockReceiver.mockClear();
     });
 
-    it('is aborted when interest is lost', () => {
-      interest.off();
+    it('is aborted when supply is cut off', () => {
+      supply.off();
       addendum.it = {
         ...addendumProperties,
         display: 'none !important',

@@ -1,7 +1,7 @@
 /**
  * @module style-producer
  */
-import { QualifiedName, namesEqual, NamespaceDef } from 'namespace-aliaser';
+import { namesEqual, NamespaceDef, QualifiedName } from 'namespace-aliaser';
 import { StypSelector } from './selector';
 
 /**

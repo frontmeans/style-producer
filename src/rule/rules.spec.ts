@@ -1,6 +1,6 @@
 import { itsEmpty } from 'a-iterable';
 import { noop } from 'call-thru';
-import { onEventFrom } from 'fun-events';
+import { onSupplied } from 'fun-events';
 import { stypRoot } from './root';
 import { StypRule } from './rule';
 import { lazyStypRules, StypRules, stypRules } from './rules';
@@ -20,7 +20,7 @@ describe('stypRules', () => {
     const rules = stypRules();
 
     expect(itsEmpty(rules)).toBe(true);
-    expect(onEventFrom(rules)(noop).done).toBe(true);
+    expect(onSupplied(rules)(noop).isOff).toBe(true);
   });
   it('returns self rule list for single rule', () => {
     expect(stypRules(root)).toBe(root.rules.self);
@@ -38,7 +38,7 @@ describe('stypRules', () => {
       const rules = stypRules(() => root.rules);
       const receiver = jest.fn();
 
-      onEventFrom(rules)(receiver);
+      onSupplied(rules)(receiver);
 
       const added = root.rules.add({ c: 'added' });
 
@@ -50,7 +50,7 @@ describe('stypRules', () => {
       const rules = stypRules(() => root.rules);
       const receiver = jest.fn();
 
-      onEventFrom(rules)(receiver);
+      onSupplied(rules)(receiver);
       rule.remove();
 
       expect(receiver).toHaveBeenCalledWith([], [rule]);
@@ -69,7 +69,7 @@ describe('stypRules', () => {
 
       await new Promise(resolve => {
         receiver.mockImplementation(resolve);
-        onEventFrom(rules)(receiver);
+        onSupplied(rules)(receiver);
       });
 
       expect(receiver).toHaveBeenCalledWith([...root.rules], []);
@@ -83,7 +83,7 @@ describe('stypRules', () => {
         receiver.mockImplementation(resolve);
       });
 
-      onEventFrom(rules)(receiver);
+      onSupplied(rules)(receiver);
       receiver.mockClear();
       await promise;
 
@@ -100,7 +100,7 @@ describe('stypRules', () => {
         receiver.mockImplementation(resolve);
       });
 
-      onEventFrom(rules)(receiver);
+      onSupplied(rules)(receiver);
       receiver.mockClear();
       await promise;
 
@@ -108,20 +108,20 @@ describe('stypRules', () => {
       expect(receiver).toHaveBeenCalledWith([], [rule]);
       expect([...rules]).toHaveLength(1);
     });
-    it('does not send anything when interest is lost', async () => {
+    it('does not send anything when supply is cut off', async () => {
 
       let resolution: (rules: StypRules) => void = noop;
       const rules = stypRules(new Promise(resolve => resolution = resolve));
       const receiver = jest.fn();
 
-      onEventFrom(rules)(receiver).off();
+      onSupplied(rules)(receiver).off();
       rule.remove();
       resolution(root.rules);
       await Promise.resolve();
 
       expect(receiver).not.toHaveBeenCalled();
     });
-    it('becomes empty when all interests are lost', async () => {
+    it('becomes empty when all supplies cut off', async () => {
 
       const rules = stypRules(Promise.resolve(root));
       const receiver1 = jest.fn();
@@ -131,15 +131,15 @@ describe('stypRules', () => {
         receiver1.mockImplementation(resolve);
       });
 
-      const interest1 = onEventFrom(rules)(receiver1);
-      const interest2 = onEventFrom(rules)(receiver2);
+      const supply1 = onSupplied(rules)(receiver1);
+      const supply2 = onSupplied(rules)(receiver2);
 
       await promise;
 
-      interest1.off();
+      supply1.off();
       expect([...rules]).toEqual([...root.rules]);
 
-      interest2.off();
+      supply2.off();
       expect(itsEmpty(rules)).toBe(true);
     });
   });
@@ -169,7 +169,7 @@ describe('stypRules', () => {
       const rules = stypRules(root, root2.rules);
       const receiver = jest.fn();
 
-      onEventFrom(rules)(receiver);
+      onSupplied(rules)(receiver);
 
       const added = root2.rules.add({ c: 'added' });
 
@@ -181,18 +181,18 @@ describe('stypRules', () => {
       const rules = stypRules(root, root2.rules);
       const receiver = jest.fn();
 
-      onEventFrom(rules)(receiver);
+      onSupplied(rules)(receiver);
       rule2.remove();
 
       expect(receiver).toHaveBeenCalledWith([], [rule2]);
       expect([...rules]).toHaveLength(2);
     });
-    it('does not send updates when interest is lost', () => {
+    it('does not send updates when supply is cut off', () => {
 
       const rules = stypRules(root, root2.rules);
       const receiver = jest.fn();
 
-      onEventFrom(rules)(receiver).off();
+      onSupplied(rules)(receiver).off();
       rule2.remove();
 
       expect(receiver).not.toHaveBeenCalled();
@@ -216,7 +216,7 @@ describe('lazyStypRules', () => {
     const rules = lazyStypRules();
 
     expect(itsEmpty(rules)).toBe(true);
-    expect(onEventFrom(rules)(noop).done).toBe(true);
+    expect(onSupplied(rules)(noop).isOff).toBe(true);
   });
   it('returns self rule list for single rule', () => {
     expect(lazyStypRules(root)).toBe(root.rules.self);
@@ -234,7 +234,7 @@ describe('lazyStypRules', () => {
       const rules = lazyStypRules(() => root.rules);
       const receiver = jest.fn();
 
-      onEventFrom(rules)(receiver);
+      onSupplied(rules)(receiver);
       expect(receiver).toHaveBeenCalledWith([...root.rules], []);
       expect([...rules]).toEqual([...root.rules]);
     });
@@ -243,7 +243,7 @@ describe('lazyStypRules', () => {
       const rules = lazyStypRules(() => rule.rules.nested);
       const receiver = jest.fn();
 
-      onEventFrom(rules)(receiver);
+      onSupplied(rules)(receiver);
       expect(receiver).not.toHaveBeenCalled();
       expect(itsEmpty(rules)).toBe(true);
     });
@@ -252,7 +252,7 @@ describe('lazyStypRules', () => {
       const rules = lazyStypRules(() => root.rules);
       const receiver = jest.fn();
 
-      onEventFrom(rules)(receiver);
+      onSupplied(rules)(receiver);
 
       const added = root.rules.add({ c: 'added' });
 
@@ -264,25 +264,25 @@ describe('lazyStypRules', () => {
       const rules = lazyStypRules(() => root.rules);
       const receiver = jest.fn();
 
-      onEventFrom(rules)(receiver);
+      onSupplied(rules)(receiver);
       rule.remove();
 
       expect(receiver).toHaveBeenCalledWith([], [rule]);
       expect([...rules]).toHaveLength(1);
     });
-    it('becomes empty when all interests are lost', () => {
+    it('becomes empty when all supplies cut off', () => {
 
       const rules = lazyStypRules(() => root.rules);
       const receiver1 = jest.fn();
       const receiver2 = jest.fn();
 
-      const interest1 = onEventFrom(rules)(receiver1);
-      const interest2 = onEventFrom(rules)(receiver2);
+      const supply1 = onSupplied(rules)(receiver1);
+      const supply2 = onSupplied(rules)(receiver2);
 
-      interest1.off();
+      supply1.off();
       expect([...rules]).toHaveLength(2);
 
-      interest2.off();
+      supply2.off();
       expect(itsEmpty(rules)).toBe(true);
     });
   });
