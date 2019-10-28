@@ -1407,10 +1407,10 @@ fsevents@^1.2.7:
     nan "^2.12.1"
     node-pre-gyp "^0.12.0"
 
-fun-events@7.0.0-dev.1:
-  version "7.0.0-dev.1"
-  resolved "https://registry.yarnpkg.com/fun-events/-/fun-events-7.0.0-dev.1.tgz#2ff2572cc0c714af469599f083496c7a7866f08f"
-  integrity sha512-TNrb9plI/UDBsCID9vujzDr52/RRNwwvczsNiHjdcf/JXWr4otIRu/G1Hq7Rcgvi2CPito1YQZxqnFDWWQY7xw==
+fun-events@^7.0.0-dev.2:
+  version "7.0.0-dev.2"
+  resolved "https://registry.yarnpkg.com/fun-events/-/fun-events-7.0.0-dev.2.tgz#f06590b9f5975f5ed2216f7e0ed4b2c168318a2a"
+  integrity sha512-QDEYTN6CB7TNDFBlAkzfGpNPbhqu9N/Mag4rf3EHHdDh/DI3qYYr/eYm/JEnXTUfyoTJmL+FuwWq7PWDtCWbKQ==
 
 function-bind@^1.0.2, function-bind@^1.1.1:
   version "1.1.1"
