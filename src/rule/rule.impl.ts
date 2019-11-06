@@ -1,13 +1,13 @@
 import { itsIterable } from 'a-iterable';
-import { valueProvider } from 'call-thru';
+import { valueProvider, valuesProvider } from 'call-thru';
 import {
   AfterEvent,
   afterEventBy,
-  afterEventFrom,
+  afterSupplied,
   EventEmitter,
   OnEvent__symbol,
   trackValue,
-  ValueTracker
+  ValueTracker,
 } from 'fun-events';
 import { StypQuery, StypRuleKey, stypSelector, StypSelector } from '../selector';
 import { stypRuleKeyText } from '../selector/selector-text.impl';
@@ -31,7 +31,7 @@ class AllRules extends StypRuleHierarchy {
   constructor(private readonly _root: StypRule, readonly nested: NestedRules) {
     super();
     this.self = selfRuleList(_root, this);
-    this.read = afterEventFrom<[AllRules]>(this._updates.on.thru(valueProvider(this)), [this]);
+    this.read = afterSupplied<[AllRules]>(this._updates.on.thru(valueProvider(this)), valuesProvider(this));
   }
 
   [Symbol.iterator](): IterableIterator<StypRule> {
@@ -74,20 +74,20 @@ class AllRules extends StypRuleHierarchy {
     return afterEventBy<[StypProperties]>(receiver => {
 
       const tracker = trackValue<StypProperties>({});
-      const propertiesInterest = this.read.consume(() => {
+      const propertiesSupply = this.read.consume(() => {
 
         const found = this._get(request);
 
         return found && found
             .read(properties => tracker.it = properties)
-            .whenDone(() => tracker.it = {});
+            .whenOff(() => tracker.it = {});
       });
 
-      const interest = tracker.read(receiver);
+      const supply = tracker.read(receiver);
 
-      propertiesInterest.needs(interest);
+      propertiesSupply.needs(supply);
 
-      return interest;
+      return supply;
     }).share();
   }
 
@@ -121,7 +121,7 @@ function selfRuleList(rule: StypRule, all: AllRules): StypRuleList {
       rules.length = 0;
       onUpdate.send([], [rule]);
     }
-  }).whenDone(reason => onUpdate.done(reason));
+  }).whenOff(reason => onUpdate.done(reason));
 
   class Self implements StypRules {
 
@@ -163,7 +163,7 @@ class NestedRules extends StypRuleList {
   constructor(root: StypRule) {
     super();
     this._all = new AllRules(root, this);
-    this.read = afterEventFrom<[NestedRules]>(this._updates.on.thru(valueProvider(this)), [this]);
+    this.read = afterSupplied<[NestedRules]>(this._updates.on.thru(valueProvider(this)), valuesProvider(this));
   }
 
   [Symbol.iterator](): IterableIterator<StypRule> {

@@ -32,7 +32,6 @@ describe('RefStypRule', () => {
   });
 
   it('maps to default values', () => {
-    expect(ref.read.kept).toEqual([{ $length: StypLength.zero }]);
     expect(mockReceiver).toHaveBeenCalledWith({ $length: StypLength.zero });
   });
 

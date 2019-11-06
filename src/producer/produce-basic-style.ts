@@ -3,7 +3,7 @@
  */
 import { itsEach, itsReduction, mapIt } from 'a-iterable';
 import { noop } from 'call-thru';
-import { AfterEvent, afterEventFrom, eventInterest, EventInterest, onEventFrom } from 'fun-events';
+import { AfterEvent, afterSupplied, eventSupply, EventSupply, onSupplied } from 'fun-events';
 import { NamespaceDef, newNamespaceAliaser } from 'namespace-aliaser';
 import { StypProperties, StypRule, StypRules } from '../rule';
 import { StypSelector, stypSelector, StypSelectorFormat, stypSelectorText } from '../selector';
@@ -25,10 +25,9 @@ import { StyleProducer, StyleSheetRef, StypOptions } from './style-producer';
  * or a result of [[StypRuleList.grab]] method call to render only matching ones.
  * @param opts  Production options.
  *
- * @returns Event interest instance. When this interest is lost (i.e. its `off()` method is called) the produced
- * stylesheets are removed.
+ * @returns Styles supply. Once cut off (i.e. its `off()` method is called) the produced stylesheets are removed.
  */
-export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): EventInterest {
+export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): EventSupply {
 
   const {
     document = window.document,
@@ -43,13 +42,13 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
   const view = document.defaultView || window;
   const format: StypSelectorFormat = { nsAlias };
   const factories = stypRenderFactories(opts);
-  const renderInterest = renderRules(rules);
-  const trackInterest = trackRules();
+  const renderSupply = renderRules(rules);
+  const trackSupply = trackRules();
 
-  return eventInterest(reason => {
-    trackInterest.off(reason);
-    renderInterest.off(reason);
-  }).needs(renderInterest).needs(trackInterest);
+  return eventSupply(reason => {
+    trackSupply.off(reason);
+    renderSupply.off(reason);
+  }).needs(renderSupply).needs(trackSupply);
 
   function styleProducer(
       rule: StypRule,
@@ -129,40 +128,40 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
     return stypSelectorText(selector, format);
   }
 
-  function renderRules(rulesToRender: Iterable<StypRule>): EventInterest {
-    return itsReduction<EventInterest, EventInterest>(
+  function renderRules(rulesToRender: Iterable<StypRule>): EventSupply {
+    return itsReduction<EventSupply, EventSupply>(
         mapIt(rulesToRender, renderRule),
-        (prev, interest) => eventInterest(reason => {
-          interest.off(reason);
+        (prev, supply) => eventSupply(reason => {
+          supply.off(reason);
           prev.off(reason);
         }),
-        eventInterest(),
+        eventSupply(),
     );
   }
 
-  function trackRules(): EventInterest {
+  function trackRules(): EventSupply {
 
-    const tracked = new Map<StypRule, EventInterest>();
-    const interest = onEventFrom(rules)((added, removed) => {
+    const tracked = new Map<StypRule, EventSupply>();
+    const supply = onSupplied(rules)((added, removed) => {
       added.forEach(r => tracked.set(r, renderRule(r)));
       removed.forEach(r => tracked.delete(r));
     });
 
-    return eventInterest(reason => {
-      interest.off(reason);
+    return eventSupply(reason => {
+      supply.off(reason);
       itsEach(tracked.values(), i => i.off(reason));
       tracked.clear();
-    }).needs(interest);
+    }).needs(supply);
   }
 
-  function renderRule(rule: StypRule): EventInterest {
+  function renderRule(rule: StypRule): EventSupply {
 
     const [ reader, render ] = renderForRule(rule);
     let _sheetRef: StyleSheetRef | undefined;
     let _rev = 0;
     const selector = ruleSelector(rule);
 
-    return reader(renderProperties).whenDone(removeStyle);
+    return reader(renderProperties).whenOff(removeStyle);
 
     function renderProperties(properties: StypProperties) {
 
@@ -241,7 +240,7 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
 
     const specs = factories.map(factory => factory.create(rule));
     const reader = specs.reduce(
-        (read, spec) => spec.read ? afterEventFrom(spec.read(read)) : read,
+        (read, spec) => spec.read ? afterSupplied(spec.read(read)) : read,
         rule.read);
 
     return [reader, renderAt(0)];

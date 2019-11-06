@@ -1,14 +1,14 @@
 import { filterIt, itsIterator, itsReduction, overEntries } from 'a-iterable';
-import { asis, isPresent, nextSkip, NextSkip } from 'call-thru';
+import { asis, isPresent, nextSkip, NextSkip, valuesProvider } from 'call-thru';
 import {
+  afterAll,
   AfterEvent,
-  afterEventFrom,
-  afterEventFromAll,
-  afterEventOf,
+  afterSupplied,
+  afterThe,
   EventKeeper,
   EventSender,
   isEventKeeper,
-  isEventSender
+  isEventSender,
 } from 'fun-events';
 import { IMPORTANT_CSS_SUFFIX } from '../internal';
 import { StypValue, stypValuesEqual } from '../value';
@@ -18,7 +18,7 @@ import { StypRule } from './rule';
 /**
  * @internal
  */
-export const noStypProperties: AfterEvent<[StypProperties]> = /*#__PURE__*/ afterEventOf({});
+export const noStypProperties: AfterEvent<[StypProperties]> = /*#__PURE__*/ afterThe({});
 
 /**
  * @internal
@@ -54,19 +54,19 @@ export function stypPropertiesBySpec(rule: StypRule, spec?: StypProperties.Spec)
         }
       }
 
-      return afterEventOf(propertiesMap(senderOrProperties));
+      return afterThe(propertiesMap(senderOrProperties));
     }
   }
 
-  return afterEventOf(propertiesMap(spec));
+  return afterThe(propertiesMap(spec));
 }
 
 function propertiesKeeper(sender: EventSender<[string | StypProperties]>): AfterEvent<[string | StypProperties]> {
-  return afterEventFrom(sender, [{}]);
+  return afterSupplied(sender, valuesProvider({}));
 }
 
 function preventDuplicates(properties: EventKeeper<[string | StypProperties]>): AfterEvent<[StypProperties]> {
-  return afterEventFrom(properties).keep.thru(
+  return afterSupplied(properties).keep.thru(
       propertiesMap,
       passNonDuplicate(),
       asis as (props: StypProperties) => StypProperties, // Needed to satisfy signature
@@ -117,7 +117,7 @@ export function mergeStypProperties(
     addendum: AfterEvent<[StypProperties]>):
     AfterEvent<[StypProperties]> {
   return preventDuplicates(
-      afterEventFromAll({ base, addendum })
+      afterAll({ base, addendum })
           .keep.thru(({ base: [baseProperties], addendum: [addendumProperties] }) =>
               addValues(baseProperties, addendumProperties)));
 }

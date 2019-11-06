@@ -14,15 +14,24 @@ Usage example:
 import { produceStyle, stypRoot } from 'style-producer';
 
 const root = stypRoot(); // Create root CSS rule
-const h1 = root.rules.add({ e: 'h1' }, { fontSize: '24px' }); // Define CSS rule for `h1` element
+const h1 = root.rules.add(
+    { e: 'h1' }, // Define CSS rule for `h1` element
+    {
+      fontSize: '24px',
+    },
+);
 
 // ...add more CSS rules
 
-const interest = produceStyle(root.rules); // Produce stylesheets
+const supply = produceStyle(root.rules); // Produce stylesheets
 
-h1.add({ fontWeight: 'bold', fontSize: '22px' }); // Update CSS rule. Stylesheet will be updated automatically
+// Update CSS rule. Stylesheet will be updated automatically
+h1.add({
+  fontWeight: 'bold',
+  fontSize: '22px',
+});
 
-interest.off(); // Remove produced stylesheets  
+supply.off(); // Remove produced stylesheets  
 ```
 
 
@@ -191,7 +200,8 @@ const MySettings = RefStypRule.by<MySettings>(
       $color: new StypRGB({ r: 0, g: 0, b: 0 }), // Text is black by default
       $bgColor: new StypRGB({ r: 255, g: 255, b: 255 }), // Background is white by default
       $gap: StypLengthPt.of(4, 'px'), // Gaps are 4 pixels by default 
-    });
+    },
+);
 
 // CSS rules root
 const root = stypRoot();
@@ -205,7 +215,7 @@ root.add(mySettingsRef.read.thru(
       color: $color, // Apply default text color
       backgroundColor: $bgColor, // Apply default background color
       padding: $gap, // Padding is based on default gap
-    })
+    }),
 ));
  
 
@@ -218,8 +228,8 @@ root.rules.add(
           backgroundColor: $bgColor.hsl.set(hsl => ({ l: hsl.l * 0.85 })), // Convert to HSL and darken input background
           padding: `${$gap} ${$gap.mul(1.5)}`, // Padding is based on default gap
           border: `1px solid ${$color}`,          
-        })
-    )
+        }),
+    ),
 );
 
 // Make text dark grey
@@ -363,11 +373,17 @@ import { stypRoot } from 'style-producer';
 const customNs = new NamespaceDef(
     'https://wesib.github.io/elements', // Unique namespace URL
     'b',                                // Preferred namespace aliases, from most wanted to less wanted
-    'wesib');
+    'wesib',
+);
 
 const root = stypRoot(); // Root CSS rule
 // Declare styles for custom element
-const rule = root.rules.add({ e: ['button', customNs] }, { background: 'gray' });
+const rule = root.rules.add(
+    { e: ['button', customNs] },
+    { 
+      background: 'gray',
+    },
+);
 ```
 
 The code above would add a unique prefix to the `button` element. E.g. by making it `b-button`.

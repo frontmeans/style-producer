@@ -1,8 +1,8 @@
-import { afterEventFrom, EventKeeper } from 'fun-events';
+import { afterSupplied, EventKeeper } from 'fun-events';
 import { StypProperties, StypRule } from '../rule';
 
 export async function readProperties(keeper: EventKeeper<[StypProperties]>): Promise<StypProperties> {
-  return new Promise(resolve => afterEventFrom(keeper).once(resolve));
+  return new Promise(resolve => afterSupplied(keeper).once(resolve));
 }
 
 export function ruleProperties(rule: StypRule): Promise<StypProperties> {

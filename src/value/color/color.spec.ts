@@ -12,7 +12,7 @@ import {
   rgbDarkGreen,
   rgbGreen,
   rgbRed,
-  rgbWhite
+  rgbWhite,
 } from '../../spec';
 import { StypPriority } from '../priority';
 import { StypLength } from '../unit';

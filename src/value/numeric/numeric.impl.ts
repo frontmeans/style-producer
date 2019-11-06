@@ -5,7 +5,7 @@ import {
   StypDimension as StypDimension_,
   StypMulDiv as StypMulDiv_,
   StypNumeric,
-  StypNumericStruct
+  StypNumericStruct,
 } from './numeric';
 import { StypZero } from './zero';
 

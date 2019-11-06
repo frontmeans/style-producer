@@ -3,16 +3,16 @@
  */
 import { itsEach } from 'a-iterable';
 import {
-  eventInterest,
   EventNotifier,
   EventReceiver,
   EventSender,
+  eventSupply,
   isEventSender,
-  noEventInterest,
+  noEventSupply,
   OnEvent,
   OnEvent__symbol,
-  onEventBy,
-  onEventFrom,
+  onEventBy, onNever,
+  onSupplied,
 } from 'fun-events';
 import { StypRule, StypRuleList } from './rule';
 import { Rules } from './rules.impl';
@@ -59,12 +59,10 @@ export namespace StypRules {
 }
 
 const noStypRules: StypRuleList = /*#__PURE__*/ new Rules({
+  [OnEvent__symbol]: onNever,
   [Symbol.iterator](): IterableIterator<StypRule> {
     return [][Symbol.iterator]();
   },
-  [OnEvent__symbol]() {
-    return noEventInterest();
-  }
 });
 
 /**
@@ -120,16 +118,12 @@ function rulesByList(sources: StypRules[]): StypRuleList {
     },
     get [OnEvent__symbol](): OnEvent<[StypRule[], StypRule[]]> {
       return onEventBy<[StypRule[], StypRule[]]>(receiver => {
-
-        let sourceInterest = noEventInterest();
-        const interest = eventInterest(reason => sourceInterest.off(reason));
-        const sourceInterests = sources.map(rules => onEventFrom(rules)(receiver).needs(interest));
-
-        sourceInterest = eventInterest(reason => {
-          sourceInterests.forEach(i => i.off(reason));
-        });
-
-        return interest;
+        sources.forEach(source => onSupplied(source)({
+          supply: eventSupply().needs(receiver.supply),
+          receive(context, added, removed) {
+            receiver.receive(context, added, removed);
+          }
+        }));
       }).share();
     },
   });
@@ -161,13 +155,13 @@ function lazyRules(source: (this: void) => StypRule | StypRules | Promise<StypRu
     const rules = rulesByValue(source());
 
     reportExistingRules(rules, ruleSet, receiver);
-
-    return rules[OnEvent__symbol](function (added, removed) {
-      removed.forEach(rule => ruleSet.delete(rule));
-      added.forEach(rule => ruleSet.add(rule));
-      receiver.call(this, added, removed);
-    }).whenDone(() => {
-      ruleSet.clear();
+    rules[OnEvent__symbol]({
+      supply: receiver.supply.whenOff(() => ruleSet.clear()),
+      receive(context, added, removed) {
+        removed.forEach(rule => ruleSet.delete(rule));
+        added.forEach(rule => ruleSet.add(rule));
+        receiver.receive(context, added, removed);
+      },
     });
   }).share();
 
@@ -188,28 +182,30 @@ function asyncRules(source: Promise<StypRule | StypRules>): StypRules {
   const ruleSet = new Set<StypRule>();
   const onEvent = onEventBy<[StypRule[], StypRule[]]>(receiver => {
 
-    let sourceInterest = noEventInterest();
-    const interest = eventInterest(reason => {
-      sourceInterest.off(reason);
+    let sourceSupply = noEventSupply();
+    const { supply } = receiver;
+
+    supply.whenOff(reason => {
+      sourceSupply.off(reason);
       ruleSet.clear();
     });
 
     source.then(resolution => {
-      if (!interest.done) {
+      if (!supply.isOff) {
 
         const rules = resolution instanceof StypRule ? resolution.rules : resolution;
 
         reportExistingRules(rules, ruleSet, receiver);
 
-        sourceInterest = onEventFrom(rules)(function (added, removed) {
-          removed.forEach(rule => ruleSet.delete(rule));
-          added.forEach(rule => ruleSet.add(rule));
-          receiver.call(this, added, removed);
-        }).needs(interest);
+        sourceSupply = onSupplied(rules)({
+          receive(context, added, removed) {
+            removed.forEach(rule => ruleSet.delete(rule));
+            added.forEach(rule => ruleSet.add(rule));
+            receiver.receive(context, added, removed);
+          }
+        }).needs(supply);
       }
     });
-
-    return interest;
   }).share();
 
   return {
@@ -223,7 +219,8 @@ function asyncRules(source: Promise<StypRule | StypRules>): StypRules {
 function reportExistingRules(
     rules: StypRules,
     ruleSet: Set<StypRule>,
-    receiver: EventReceiver<[StypRule[], StypRule[]]>) {
+    receiver: EventReceiver.Generic<[StypRule[], StypRule[]]>,
+) {
 
   const existing: StypRule[] = [];
 

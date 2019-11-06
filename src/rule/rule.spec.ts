@@ -3,11 +3,11 @@ import { noop } from 'call-thru';
 import {
   AfterEvent,
   AfterEvent__symbol,
-  afterEventFrom,
-  afterEventOf,
-  onEventFrom,
+  afterSupplied,
+  afterThe,
+  onSupplied,
   trackValue,
-  ValueTracker
+  ValueTracker,
 } from 'fun-events';
 import { NamespaceDef } from 'namespace-aliaser';
 import { StypSelector, stypSelector } from '../selector';
@@ -31,7 +31,7 @@ describe('StypRule', () => {
 
   beforeEach(() => {
     selector = [{ e: 'test-element' }];
-    mockSpec = jest.fn(_r => afterEventOf({}));
+    mockSpec = jest.fn(_r => afterThe({}));
     rule = root.rules.add(selector, mockSpec);
   });
 
@@ -112,11 +112,16 @@ describe('StypRule', () => {
 
     beforeEach(() => {
       properties = { fontSize: '12px' };
-      mockSpec.mockImplementation(() => afterEventOf(properties));
+      mockSpec.mockImplementation(() => afterThe(properties));
     });
 
     it('reads the spec', () => {
-      expect(rule.read.kept).toEqual([properties]);
+
+      const receiver = jest.fn();
+
+      rule.read(receiver);
+
+      expect(receiver).toHaveBeenCalledWith(properties);
       expect(mockSpec).toHaveBeenCalledWith(rule);
     });
     it('reflects updates received while no property receivers registered', async () => {
@@ -410,19 +415,19 @@ describe('StypRule', () => {
         expect(receiver).toHaveBeenCalledWith(list);
         expect(ruleSelectors(list)).toEqual([nested1.selector]);
       });
-      it('reflects, but does not track modification when interest lost', () => {
+      it('reflects, but does not track modification when supply is cut off', () => {
 
         const list = rule.rules.grab({ c: 'nested' });
         const onUpdate = jest.fn();
 
-        const interest = list.onUpdate(onUpdate);
+        const supply = list.onUpdate(onUpdate);
 
         const nested3 = rule.rules.add({ c: ['nested', 'nested-3'] });
 
         expect(onUpdate).toHaveBeenCalled();
         onUpdate.mockClear();
 
-        interest.off();
+        supply.off();
 
         const nested4 = rule.rules.add({ c: ['nested', 'nested-4'] });
         expect(onUpdate).not.toHaveBeenCalled();
@@ -501,7 +506,7 @@ describe('StypRule', () => {
         expect(receiver).toHaveBeenCalledWith({});
         expect(await readProperties(watch)).toEqual({});
       });
-      it('can be tracked when interest is lost', async () => {
+      it('can be tracked when supply is cut off', async () => {
 
         const sel: StypSelector = { c: 'watched' };
 
@@ -509,11 +514,11 @@ describe('StypRule', () => {
 
         const watch = rule.rules.watch(sel);
         const receiver = jest.fn();
-        const interest = watch(receiver);
+        const supply = watch(receiver);
 
         expect(receiver).toHaveBeenCalledWith({ $name: 'watched' });
 
-        interest.off();
+        supply.off();
         expect(await readProperties(watch)).toEqual({ $name: 'watched' });
       });
     });
@@ -534,8 +539,8 @@ describe('StypRule', () => {
       const updateReceiver = jest.fn();
       const rootUpdateReceiver = jest.fn();
 
-      onEventFrom(rule.rules)(updateReceiver);
-      onEventFrom(root.rules)(rootUpdateReceiver);
+      onSupplied(rule.rules)(updateReceiver);
+      onSupplied(root.rules)(rootUpdateReceiver);
 
       rule.rules.get(subSelector[0])!.remove();
 
@@ -555,8 +560,8 @@ describe('StypRule', () => {
       const updateReceiver = jest.fn();
       const rootUpdateReceiver = jest.fn();
 
-      onEventFrom(rule.rules.nested)(updateReceiver);
-      onEventFrom(root.rules.nested)(rootUpdateReceiver);
+      onSupplied(rule.rules.nested)(updateReceiver);
+      onSupplied(root.rules.nested)(rootUpdateReceiver);
 
       rule.rules.get(subSelector[0])!.remove();
 
@@ -574,7 +579,7 @@ describe('StypRule', () => {
       const rootUpdateReceiver = jest.fn();
 
       rule.rules.self.onUpdate(updateReceiver);
-      onEventFrom(root.rules.self)(rootUpdateReceiver);
+      onSupplied(root.rules.self)(rootUpdateReceiver);
 
       rule.remove();
 
@@ -592,9 +597,9 @@ describe('StypRule', () => {
       const listReceiver = jest.fn();
       const rootListReceiver = jest.fn();
 
-      afterEventFrom(rule.rules)(listReceiver);
+      afterSupplied(rule.rules)(listReceiver);
       listReceiver.mockClear();
-      afterEventFrom(root.rules)(rootListReceiver);
+      afterSupplied(root.rules)(rootListReceiver);
       rootListReceiver.mockClear();
 
       rule.rules.get(subSelector[0])!.remove();
@@ -608,9 +613,9 @@ describe('StypRule', () => {
       const listReceiver = jest.fn();
       const rootListReceiver = jest.fn();
 
-      afterEventFrom(rule.rules.nested)(listReceiver);
+      afterSupplied(rule.rules.nested)(listReceiver);
       listReceiver.mockClear();
-      afterEventFrom(root.rules.nested)(rootListReceiver);
+      afterSupplied(root.rules.nested)(rootListReceiver);
       rootListReceiver.mockClear();
 
       rule.rules.get(subSelector[0])!.remove();
@@ -619,12 +624,12 @@ describe('StypRule', () => {
       expect(rootListReceiver).not.toHaveBeenCalled();
       expect(ruleSelectors(rule.rules.nested)).toHaveLength(0);
     });
-    it('exhaust events', () => {
+    it('cuts off events', () => {
 
       const whenDone = jest.fn();
       const reason = 'removal reason';
 
-      nested.read(noop).whenDone(whenDone);
+      nested.read(noop).whenOff(whenDone);
 
       rule.remove(reason);
       expect(whenDone).toHaveBeenCalledWith(reason);
