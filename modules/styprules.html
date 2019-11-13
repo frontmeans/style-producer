@@ -124,7 +124,7 @@
 					<div class="tsd-signature tsd-kind-icon">Event&lt;T&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Event&lt;T&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in /home/lorus/wesib/style-producer/node_modules/fun-events/d.ts/event-sender.d.ts:37</li>
+							<li>Defined in /home/lorus/wesib/style-producer/node_modules/fun-events/d.ts/event-sender.d.ts:36</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -150,7 +150,7 @@
 					<div class="tsd-signature tsd-kind-icon">Source<span class="tsd-signature-symbol">:</span> <a href="../classes/styprule.html" class="tsd-signature-type">StypRule</a><span class="tsd-signature-symbol"> | </span><a href="styprules.html" class="tsd-signature-type">StypRules</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../classes/styprule.html" class="tsd-signature-type">StypRule</a><span class="tsd-signature-symbol"> | </span><a href="styprules.html" class="tsd-signature-type">StypRules</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/surol/style-producer/blob/b218d56/src/rule/rules.ts#L53">rule/rules.ts:53</a></li>
+							<li>Defined in <a href="https://github.com/surol/style-producer/blob/46531ee/src/rule/rules.ts#L53">rule/rules.ts:53</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -188,7 +188,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides Iterable.[Symbol.iterator]</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/style-producer/blob/b218d56/src/rule/rules.ts#L29">rule/rules.ts:29</a></li>
+									<li>Defined in <a href="https://github.com/surol/style-producer/blob/46531ee/src/rule/rules.ts#L29">rule/rules.ts:29</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">IterableIterator</span><span class="tsd-signature-symbol">&lt;</span><a href="../classes/styprule.html" class="tsd-signature-type">StypRule</a><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -199,14 +199,14 @@
 					<a name="__computed" class="tsd-anchor"></a>
 					<h3>__computed</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-module tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">__computed<span class="tsd-signature-symbol">(</span>receiver<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">EventReceiver</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><a href="../classes/styprule.html" class="tsd-signature-type">StypRule</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">, </span><a href="../classes/styprule.html" class="tsd-signature-type">StypRule</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">EventInterest</span></li>
+						<li class="tsd-signature tsd-kind-icon">__computed<span class="tsd-signature-symbol">(</span>receiver<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">EventReceiver</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><a href="../classes/styprule.html" class="tsd-signature-type">StypRule</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">, </span><a href="../classes/styprule.html" class="tsd-signature-type">StypRule</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">EventSupply</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Inherited from EventSender.[OnEvent__symbol]</p>
 								<ul>
-									<li>Defined in /home/lorus/wesib/style-producer/node_modules/fun-events/d.ts/event-sender.d.ts:29</li>
+									<li>Defined in /home/lorus/wesib/style-producer/node_modules/fun-events/d.ts/event-sender.d.ts:28</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -219,13 +219,12 @@
 								<li>
 									<h5>receiver: <span class="tsd-signature-type">EventReceiver</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><a href="../classes/styprule.html" class="tsd-signature-type">StypRule</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">, </span><a href="../classes/styprule.html" class="tsd-signature-type">StypRule</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>A receiver of events.</p>
+										<p>A receiver of events to register.</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">EventInterest</span></h4>
-							<p>An event interest. The events will be sent to <code>receiver</code> until the [[EventInterest.off]] method
-							of the returned event interest is called.</p>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">EventSupply</span></h4>
+							<p>A supply of events from this sender to the given <code>receiver</code>.</p>
 						</li>
 					</ul>
 				</section>
