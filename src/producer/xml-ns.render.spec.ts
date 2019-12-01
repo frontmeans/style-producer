@@ -49,7 +49,7 @@ describe('stypRenderXmlNs', () => {
     render(producer, { property: 'abstract-value.ts' });
     expect(producer.render).toHaveBeenCalledWith({
       '@namespace:test': new StypURL('test/ns'),
-      property: 'abstract-value.ts'
+      property: 'abstract-value.ts',
     });
   });
 });

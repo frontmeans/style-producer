@@ -114,7 +114,7 @@ describe('stypSelector', () => {
       $: [
         'bar', 'bar:abc', 'bar:abc=vvv:xxx',
         'foo', 'foo:def', 'foo:z',
-      ]
+      ],
     }]);
   });
 });

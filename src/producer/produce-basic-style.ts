@@ -283,6 +283,6 @@ function addStyleElement(producer: StyleProducer): StyleSheetRef {
     styleSheet: element.sheet as CSSStyleSheet,
     remove() {
       element.parentElement!.removeChild(element);
-    }
+    },
   };
 }

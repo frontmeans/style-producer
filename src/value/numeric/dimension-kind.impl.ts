@@ -14,7 +14,7 @@ export function unitlessZeroDimensionKind<Unit extends string>(
     }: {
       pt: () => StypDimension.Kind.UnitlessZero<Unit | '%'>,
       noPt: () => StypDimension.Kind.UnitlessZero<Exclude<Unit, '%'>>,
-    }
+    },
 ): StypDimension.Kind.UnitlessZero<Unit> {
 
   const dimension: StypDimension.Kind.UnitlessZero<Unit> = {
@@ -43,7 +43,7 @@ export function unitlessZeroDimensionKind<Unit extends string>(
       const numeric: StypNumeric<any, any> = source;
 
       return numeric.toDim(this);
-    }
+    },
 
   };
 

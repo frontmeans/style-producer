@@ -195,7 +195,7 @@ describe('StypMapper', () => {
           StypMapper.map<Result>(mappings, {
             $value1: 'init1',
             $value2: 'init2',
-          })
+          }),
       ).toEqual({
         $value2: StypLength.zero,
       });
@@ -208,7 +208,7 @@ describe('StypMapper', () => {
           StypMapper.map<Result>(mappings, {
             $value1: 'init1',
             $value2: 'init2',
-          })
+          }),
       ).toEqual({
         $value1: StypLength.zero,
         $value2: StypLength.zero,

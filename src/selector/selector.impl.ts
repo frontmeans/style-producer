@@ -22,7 +22,7 @@ export function normalizeStypSelectorPart(part: StypSelector.Part): StypSelector
     i: part.i || undefined,
     s: part.s || undefined,
     c: normalizeClasses(part.c),
-    $: normalizeQualifiers(part.$)
+    $: normalizeQualifiers(part.$),
   };
 }
 
@@ -57,7 +57,7 @@ function normalizeQualifiers(qualifiers: string | readonly string[] | undefined)
       ...itsReduction(
           flatMapIt(qualifiers, exposeQualifier),
           (set, qualifier) => set.add(qualifier),
-          new Set<string>())
+          new Set<string>()),
     ].sort();
   }
 

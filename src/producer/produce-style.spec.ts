@@ -70,13 +70,13 @@ describe('produceStyle', () => {
         (producer, properties) => {
           calls.push(1);
           producer.render(properties);
-        }
+        },
     );
     const mockRender2 = jest.fn<void, Parameters<StypRender.Function>>(
         (producer, properties) => {
           calls.push(2);
           producer.render(properties);
-        }
+        },
     );
 
     produceStyle(root.rules, {

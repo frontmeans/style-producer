@@ -143,7 +143,7 @@ export const StypMapper = {
         result[key] = mappedValue;
 
         return mappedValue;
-      }
+      },
     };
 
     itsEach(overKeys(mappings), key => mapped.get(key));

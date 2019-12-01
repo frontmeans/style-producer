@@ -122,7 +122,7 @@ function rulesByList(sources: StypRules[]): StypRuleList {
           supply: eventSupply().needs(receiver.supply),
           receive(context, added, removed) {
             receiver.receive(context, added, removed);
-          }
+          },
         }));
       }).share();
     },
@@ -139,7 +139,7 @@ function evalRules(source: (this: void) => StypRule | StypRules | Promise<StypRu
     },
     get [OnEvent__symbol]() {
       return rules()[OnEvent__symbol];
-    }
+    },
   };
 
   function rules(): StypRules {
@@ -202,7 +202,7 @@ function asyncRules(source: Promise<StypRule | StypRules>): StypRules {
             removed.forEach(rule => ruleSet.delete(rule));
             added.forEach(rule => ruleSet.add(rule));
             receiver.receive(context, added, removed);
-          }
+          },
         }).needs(supply);
       }
     });

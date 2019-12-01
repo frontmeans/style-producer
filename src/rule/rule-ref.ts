@@ -95,7 +95,7 @@ export const RefStypRule = {
       mappings:
           | StypMapper.Mappings<T>
           | EventKeeper<[StypMapper.Mappings<T>]>
-          | ((this: void, root: StypRule) => StypMapper.Mappings<T> | EventKeeper<[StypMapper.Mappings<T>]>)
+          | ((this: void, root: StypRule) => StypMapper.Mappings<T> | EventKeeper<[StypMapper.Mappings<T>]>),
   ): RefStypRule<T> {
 
     let createMappings: (root: StypRule) => EventKeeper<[StypMapper.Mappings<T>]>;
@@ -117,7 +117,7 @@ export const RefStypRule = {
           ({
              ms: [_mappings],
              ps: [_properties],
-           }) => StypMapper.map(_mappings, _properties)
+           }) => StypMapper.map(_mappings, _properties),
       );
 
       class Ref extends StypRuleRef<T> {

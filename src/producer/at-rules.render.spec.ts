@@ -62,9 +62,9 @@ describe('stypRenderAtRules', () => {
     root.rules.add([
           { c: 'screen-only', $: ['@media:scr=screen', '@media:sm=(max-width:620px)'] },
           '>',
-          { c: 'nested' }
+          { c: 'nested' },
         ],
-        { display: 'block' }
+        { display: 'block' },
     );
     doProduceStyle();
     expect(atSelector('.screen-only>.nested')).toBe('.screen-only>.nested');

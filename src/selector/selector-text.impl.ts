@@ -15,7 +15,7 @@ import { isCombinator } from './selector.impl';
 const ruleKeyTextOpts: StypSelectorFormat = {
   qualify(qualifier: string) {
     return `@${cssescId(qualifier)}`;
-  }
+  },
 };
 
 /**
@@ -28,7 +28,7 @@ export function stypRuleKeyText(key: StypRuleKey): string {
 const displayTextOpts: StypSelectorFormat = {
   qualify(qualifier: string) {
     return `@${qualifier}`;
-  }
+  },
 };
 
 /**

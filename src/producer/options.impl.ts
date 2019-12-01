@@ -47,7 +47,7 @@ function renderFactory(render: StypRender): StypRenderSpecFactory {
     return {
       create() {
         return { render: render as StypRender.Function<any> };
-      }
+      },
     };
   }
   if (isFactory(render)) {

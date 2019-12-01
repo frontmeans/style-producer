@@ -100,7 +100,7 @@ describe('produceBasicStyle', () => {
           styleSheet: element.sheet as CSSStyleSheet,
           remove() {
             element.remove();
-          }
+          },
         };
       });
 
