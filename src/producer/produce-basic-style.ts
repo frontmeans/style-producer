@@ -57,7 +57,8 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
         styleSheet: CSSStyleSheet,
         target: CSSStyleSheet | CSSRule,
         selector: StypSelector.Normalized,
-      }) {
+      },
+  ) {
 
     class Styp implements StyleProducer {
 

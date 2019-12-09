@@ -133,12 +133,14 @@ function onlyAtProperties(properties: StypProperties): StypProperties {
   return itsReduction(
       filterIt<ObjectEntry<StypProperties>, ObjectEntry<StypProperties, string>>(
           overEntries(properties),
-          isAtEntry),
+          isAtEntry,
+      ),
       (result: StypProperties.Mutable, [key, value]: ObjectEntry<StypProperties, string>) => {
         result[key] = value;
         return result;
       },
-      {});
+      {},
+  );
 
 }
 
@@ -147,8 +149,8 @@ function isAtEntry(entry: ObjectEntry<StypProperties>): entry is ObjectEntry<Sty
 }
 
 function extractAtSelectors(
-    selector: StypSelector.Normalized):
-    [Map<string, [Set<string>, string?]>, StypSelector.Normalized] | undefined {
+    selector: StypSelector.Normalized,
+): [Map<string, [Set<string>, string?]>, StypSelector.Normalized] | undefined {
 
   const atSelectors = new Map<string, [Set<string>, string?]>();
   const rest: StypSelector.Mutable = [];

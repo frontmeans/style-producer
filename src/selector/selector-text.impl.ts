@@ -48,7 +48,8 @@ export function formatStypSelector(
     {
       qualify,
       nsAlias = newNamespaceAliaser(),
-    }: StypSelectorFormat = defaultFormat): string {
+    }: StypSelectorFormat = defaultFormat,
+): string {
 
   const format: ItemFormat = { qualify, nsAlias };
 
@@ -62,7 +63,8 @@ export function formatStypSelector(
         }
         return result + formatItem(item, format);
       },
-      '');
+      '',
+  );
 }
 
 interface ItemFormat extends StypSelectorFormat {
@@ -74,7 +76,8 @@ function formatItem(
     {
       qualify,
       nsAlias,
-    }: ItemFormat): string {
+    }: ItemFormat,
+): string {
 
   const { ns, e, i, c, s, $ } = item;
   let hasProperties = false;
@@ -88,7 +91,8 @@ function formatItem(
     hasProperties = true;
     string = c.reduce<string>(
         (result, className) => `${result}.${cssescId(css__naming.name(className, nsAlias))}`,
-        string);
+        string,
+    );
   }
   if (s) {
     hasProperties = true;

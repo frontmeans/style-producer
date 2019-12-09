@@ -7,8 +7,9 @@ import { StypSelector } from './selector';
 /**
  * @internal
  */
-export function isCombinator(item: string | StypSelector.Part | StypSelector.Combinator):
-    item is StypSelector.Combinator {
+export function isCombinator(
+    item: string | StypSelector.Part | StypSelector.Combinator,
+): item is StypSelector.Combinator {
   return item === '>' || item === '+' || item === '~';
 }
 
@@ -30,8 +31,9 @@ function normalizeElement(e: QualifiedName | undefined): QualifiedName | undefin
   return e !== '*' && e || undefined;
 }
 
-function normalizeClasses(classes: QualifiedName | readonly QualifiedName[] | undefined):
-    readonly [QualifiedName, ...QualifiedName[]] | undefined {
+function normalizeClasses(
+    classes: QualifiedName | readonly QualifiedName[] | undefined,
+): readonly [QualifiedName, ...QualifiedName[]] | undefined {
   if (!classes) {
     return;
   }
@@ -44,8 +46,9 @@ function normalizeClasses(classes: QualifiedName | readonly QualifiedName[] | un
   return isNotEmptyArray(result) ? result.sort(compareNames) : undefined;
 }
 
-function normalizeQualifiers(qualifiers: string | readonly string[] | undefined):
-    readonly [string, ...string[]] | undefined {
+function normalizeQualifiers(
+    qualifiers: string | readonly string[] | undefined,
+): readonly [string, ...string[]] | undefined {
   if (!qualifiers) {
     return;
   }
@@ -97,8 +100,8 @@ const noKeyAndTail: [[]] = [[]];
  * @internal
  */
 export function stypRuleKeyAndTail(
-    selector: StypSelector.Normalized):
-    [[]] | [StypRuleKey.Nested, StypSelector.Normalized?] {
+    selector: StypSelector.Normalized,
+): [[]] | [StypRuleKey.Nested, StypSelector.Normalized?] {
   if (!selector.length) {
     return noKeyAndTail;
   }
@@ -126,7 +129,9 @@ const rootSelector: StypSelector.Normalized = [];
 /**
  * @internal
  */
-export function stypOuterSelector(selector: StypSelector.Normalized): StypSelector.Normalized | undefined {
+export function stypOuterSelector(
+    selector: StypSelector.Normalized,
+): StypSelector.Normalized | undefined {
 
   let i = selector.length - 1;
 

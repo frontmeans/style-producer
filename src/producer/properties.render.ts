@@ -22,7 +22,8 @@ export function stypRenderProperties(producer: StyleProducer, properties: StypPr
   itsEach(
       filterIt<ObjectEntry<StypProperties>, ObjectEntry<StypProperties, string>>(
           overEntries(properties),
-          notCustomProperty),
+          notCustomProperty,
+      ),
       ([k, v]) => {
 
         const [value, priority] = stypSplitPriority(v);
@@ -30,8 +31,10 @@ export function stypRenderProperties(producer: StyleProducer, properties: StypPr
         style.setProperty(
             hyphenateStyleName(k),
             `${value}`,
-            priority >= StypPriority.Important ? 'important' : undefined);
-      });
+            priority >= StypPriority.Important ? 'important' : undefined,
+        );
+      },
+  );
 
   producer.render(properties, { target: cssRule });
 }
