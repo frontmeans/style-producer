@@ -46,7 +46,7 @@ function renderFactory(render: StypRender): StypRenderSpecFactory {
   if (typeof render === 'function') {
     return {
       create() {
-        return { render: render as StypRender.Function<any> };
+        return { render };
       },
     };
   }
@@ -84,5 +84,5 @@ function compareRenders(first: StypRender.Factory, second: StypRender.Factory): 
 }
 
 function renderSpec(render: ReturnType<StypRender.Factory['create']>): StypRender.Spec {
-  return typeof render === 'function' ? { render: render as StypRender.Function<any> } : render;
+  return typeof render === 'function' ? { render } : render;
 }

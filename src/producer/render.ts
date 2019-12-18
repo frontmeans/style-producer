@@ -51,15 +51,13 @@ export namespace StypRender {
    *
    * It should normally call a [[StyleProducer.render]] method as the last operation to allow other renders in chain
    * to do their job.
-   *
-   * @typeparam This  `this` instance type.
    */
-  export type Function<This = void> =
+  export type Function =
   /**
    * @param producer  Style producer instance.
    * @param properties  CSS properties to render.
    */
-      (this: This, producer: StyleProducer, properties: StypProperties) => void;
+      (this: void, producer: StyleProducer, properties: StypProperties) => void;
 
   /**
    * CSS stylesheet render descriptor.
@@ -80,9 +78,15 @@ export namespace StypRender {
     readonly needs?: StypRender | StypRender[];
 
     /**
-     * CSS stylesheet render function.
+     * CSS stylesheet render method.
+     *
+     * It should normally call a [[StyleProducer.render]] method as the last operation to allow other renders in chain
+     * to do their job.
+     *
+     * @param producer  Style producer instance.
+     * @param properties  CSS properties to render.
      */
-    readonly render: Function<this>;
+    render(producer: StyleProducer, properties: StypProperties): void;
 
   }
 
@@ -124,23 +128,29 @@ export namespace StypRender {
   export interface Spec {
 
     /**
-     * CSS stylesheet render function.
+     * CSS stylesheet render method.
+     *
+     * It should normally call a [[StyleProducer.render]] method as the last operation to allow other renders in chain
+     * to do their job.
+     *
+     * @param producer  Style producer instance.
+     * @param properties  CSS properties to render.
      */
-    render: Function<this>;
+    render(producer: StyleProducer, properties: StypProperties): void;
 
     /**
      * Reads or converts CSS properties from the rule.
      *
-     * The style producer will receive the CSS properties from the returned event keeper.
+     * The style producer will receive CSS properties from the returned event keeper.
      *
      * When omitted the original properties will be used instead.
      *
-     * @param properties `AfterEvent` registrar of CSS rule properties receivers. This is either the one from CSS rule,
-     * or the one returned from previous render factory in render chain.
+     * @param properties  `AfterEvent` registrar of CSS rule properties receivers. This is either the one from CSS rule,
+     * or the one returned from previous render specifier in render chain.
      *
      * @returns CSS properties event keeper.
      */
-    read?: (this: this, properties: AfterEvent<[StypProperties]>) => EventKeeper<[StypProperties]>;
+    read?(properties: AfterEvent<[StypProperties]>): EventKeeper<[StypProperties]>;
 
   }
 
