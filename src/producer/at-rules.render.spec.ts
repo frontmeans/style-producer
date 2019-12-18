@@ -125,7 +125,8 @@ describe('stypRenderAtRules', () => {
               },
             },
           ],
-        });
+        },
+    );
   }
 
   function atSelector(selector: string): string | null {

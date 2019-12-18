@@ -286,7 +286,8 @@ export class StypHSL extends StypColorStruct<StypHSL, StypHSL.Coords> implements
           b: hueToRgb(p, q, hueAsFraction - (1.0 / 3.0)),
           a,
         },
-        this);
+        this,
+    );
   }
 
   /**

@@ -141,7 +141,8 @@ export class StypDimension<Unit extends string>
 export function stypDimension<Unit extends string>(
     val: number,
     unit: Unit,
-    opts: StypDimension_.Opts<Unit>): StypDimension_<Unit> | StypZero<Unit> {
+    opts: StypDimension_.Opts<Unit>,
+): StypDimension_<Unit> | StypZero<Unit> {
   return val
       ? new StypDimension<Unit>(val, unit, opts)
       : opts.dim.zero.prioritize(opts.priority || StypPriority.Default);
@@ -171,7 +172,8 @@ export abstract class StypCalcBase<
       left: StypNumeric<Unit>,
       op: Op,
       right: Right,
-      opts: StypDimension_.Opts<Unit>) {
+      opts: StypDimension_.Opts<Unit>,
+  ) {
     super(opts);
     this.left = left.usual();
     this.op = op;
@@ -295,7 +297,8 @@ export class StypAddSub<Unit extends string>
 function stypAddSub<Unit extends string>(
     left: StypNumeric<Unit>,
     op: '+' | '-',
-    right: StypNumeric<Unit>): StypNumeric<Unit> {
+    right: StypNumeric<Unit>,
+): StypNumeric<Unit> {
   return !right.type ? left : new StypAddSub(left, op, right, left);
 }
 

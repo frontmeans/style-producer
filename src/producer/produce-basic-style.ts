@@ -103,7 +103,8 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
                 target: options.target || production.target,
                 selector: options.selector || production.selector,
               }),
-              properties);
+              properties,
+          );
         }
       }
 
@@ -195,7 +196,8 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
                 return this.styleSheet;
               },
               selector,
-            });
+            },
+        );
 
         producer.render(properties);
       }
@@ -242,7 +244,8 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
     const specs = factories.map(factory => factory.create(rule));
     const reader = specs.reduce(
         (read, spec) => spec.read ? afterSupplied(spec.read(read)) : read,
-        rule.read);
+        rule.read,
+    );
 
     return [reader, renderAt(0)];
 

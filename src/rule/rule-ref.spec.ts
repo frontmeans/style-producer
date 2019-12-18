@@ -39,7 +39,8 @@ describe('RefStypRule', () => {
     mockReceiver.mockClear();
 
     const mockMap = jest.fn<StypMapper.Mappings<RuleProperties>, [StypRule]>(
-        valueProvider({ $length: StypLength.of(1, 'px') }));
+        valueProvider({ $length: StypLength.of(1, 'px') }),
+    );
 
     ref = RefStypRule.by(selector, mockMap)(root);
     mockReceiver = jest.fn();

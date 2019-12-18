@@ -60,7 +60,8 @@ function normalizeQualifiers(
       ...itsReduction(
           flatMapIt(qualifiers, exposeQualifier),
           (set, qualifier) => set.add(qualifier),
-          new Set<string>()),
+          new Set<string>(),
+      ),
     ].sort();
   }
 

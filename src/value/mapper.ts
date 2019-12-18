@@ -166,8 +166,8 @@ export const StypMapper = {
 };
 
 function mappingBy<R, K extends keyof R>(
-    mapping: StypMapper.Mapping<R, K> | undefined):
-    StypMapper.MappingFunction<R, K> {
+    mapping: StypMapper.Mapping<R, K> | undefined,
+): StypMapper.MappingFunction<R, K> {
   switch (typeof mapping) {
   case 'function':
     return mapping as StypMapper.MappingFunction<R, K>;

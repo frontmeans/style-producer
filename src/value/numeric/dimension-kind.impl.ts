@@ -64,7 +64,8 @@ export function unitZeroDimensionKind<Unit extends string>(
       zeroUnit: Unit,
       withPercent?: () => StypDimension.Kind.UnitZero<Unit | '%'>,
       noPercent?: () => StypDimension.Kind.UnitZero<Exclude<Unit, '%'>>,
-    }): StypDimension.Kind.UnitZero<Unit> {
+    },
+): StypDimension.Kind.UnitZero<Unit> {
 
   const dimension: StypDimension.Kind.UnitZero<Unit> = {
 

@@ -34,11 +34,13 @@ describe('produceBasicStyle', () => {
           {
             render: mockRender,
             schedule: scheduleNow,
-          });
+          },
+      );
 
       expect(mockRender).toHaveBeenCalledWith(
           expect.objectContaining({ document }),
-          expect.anything());
+          expect.anything(),
+      );
     });
   });
 
@@ -52,11 +54,13 @@ describe('produceBasicStyle', () => {
           {
             render: mockRender,
             schedule: scheduleNow,
-          });
+          },
+      );
 
       expect(mockRender).toHaveBeenCalledWith(
           expect.objectContaining({ parent: document.head }),
-          expect.anything());
+          expect.anything(),
+      );
     });
   });
 
@@ -74,7 +78,8 @@ describe('produceBasicStyle', () => {
             render(_producer) {
               producer = _producer;
             },
-          });
+          },
+      );
 
       const ns = new NamespaceDef('test/ns');
 
@@ -109,7 +114,8 @@ describe('produceBasicStyle', () => {
           {
             schedule: scheduleNow,
             addStyleSheet: mockAddStyleSheet,
-          });
+          },
+      );
 
       expect(mockAddStyleSheet).toHaveBeenCalled();
     });
@@ -154,7 +160,8 @@ describe('produceBasicStyle', () => {
       expect(mockRender1).toHaveBeenCalledWith(producer, {});
       expect(mockRender2).toHaveBeenCalledWith(
           expect.objectContaining({ selector, target: producer.target }),
-          properties);
+          properties,
+      );
     });
     it('passes target to next render', () => {
 
@@ -171,7 +178,8 @@ describe('produceBasicStyle', () => {
       expect(mockRender1).toHaveBeenCalledWith(producer, {});
       expect(mockRender2).toHaveBeenCalledWith(
           expect.objectContaining({ selector: producer.selector, target }),
-          properties);
+          properties,
+      );
     });
     it('fulfills render requirements', () => {
 
@@ -188,7 +196,8 @@ describe('produceBasicStyle', () => {
           {
             render: { order: -1, render: mockRender1, needs: mockRender2 },
             schedule: scheduleNow,
-          });
+          },
+      );
       expect(mockRender1).toHaveBeenCalledWith(producer, {});
       expect(mockRender2).toHaveBeenCalledWith(producer, properties);
     });
@@ -215,7 +224,8 @@ describe('produceBasicStyle', () => {
               render2,
             ],
             schedule: scheduleNow,
-          });
+          },
+      );
       expect(mockRender1).toHaveBeenCalledWith(producer, {});
       expect(mockRender1).toHaveBeenCalledTimes(1);
       expect(mockRender2).toHaveBeenCalledWith(producer, properties);

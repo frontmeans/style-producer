@@ -68,7 +68,8 @@ class AtRulesRender implements StypRender.Spec {
 
 function buildAtSelector(
     properties: StypProperties,
-    [key, [names, customQuery]]: [string, [Set<string>, string?]]) {
+    [key, [names, customQuery]]: [string, [Set<string>, string?]],
+) {
 
   let query = '';
 
@@ -172,8 +173,8 @@ function extractAtSelectors(
 
 function extractPartAtSelectors(
     part: StypSelector.NormalizedPart,
-    atSelectors: Map<string, [Set<string>, string?]>):
-    StypSelector.NormalizedPart {
+    atSelectors: Map<string, [Set<string>, string?]>,
+): StypSelector.NormalizedPart {
 
   const qualifiers = part.$;
 

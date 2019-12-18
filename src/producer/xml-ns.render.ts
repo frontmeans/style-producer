@@ -54,6 +54,8 @@ function extractXmlNsDefs(selector: StypSelector.Normalized): Iterable<Namespace
   return filterIt<NamespaceDef | null, NamespaceDef>(
       mapIt(
           overArray(selector),
-          part => !isCombinator(part) && part.ns && typeof part.ns !== 'string' ? part.ns : null),
-      isPresent);
+          part => !isCombinator(part) && part.ns && typeof part.ns !== 'string' ? part.ns : null,
+      ),
+      isPresent,
+  );
 }

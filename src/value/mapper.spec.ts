@@ -192,10 +192,13 @@ describe('StypMapper', () => {
 
     it('maps value', () => {
       expect(
-          StypMapper.map<Result>(mappings, {
-            $value1: 'init1',
-            $value2: 'init2',
-          }),
+          StypMapper.map<Result>(
+              mappings,
+              {
+                $value1: 'init1',
+                $value2: 'init2',
+              },
+          ),
       ).toEqual({
         $value2: StypLength.zero,
       });
@@ -205,10 +208,13 @@ describe('StypMapper', () => {
     it('grants access to mapped values', () => {
       mockMapper1.mockImplementation((_from, mapped) => mapped.get('$value2'));
       expect(
-          StypMapper.map<Result>(mappings, {
-            $value1: 'init1',
-            $value2: 'init2',
-          }),
+          StypMapper.map<Result>(
+              mappings,
+              {
+                $value1: 'init1',
+                $value2: 'init2',
+              },
+          ),
       ).toEqual({
         $value1: StypLength.zero,
         $value2: StypLength.zero,

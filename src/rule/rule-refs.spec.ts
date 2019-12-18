@@ -27,7 +27,8 @@ describe('StypRuleRefs', () => {
           first: RefStypRule.by({ c: 'first' }, { $length: StypLength.zero }),
           second: RefStypRule.by({ c: 'second' }, { $angle: StypAngle.zero }),
         },
-        root);
+        root,
+    );
   });
 
   it('resolves rule references', async () => {

@@ -22,7 +22,8 @@ export function stypSelectorsEqual(first: StypSelector.Normalized, second: StypS
 
 function stypSelectorPartsEqual(
     first: StypSelector.NormalizedPart | StypSelector.Combinator,
-    second: StypSelector.NormalizedPart | StypSelector.Combinator): boolean {
+    second: StypSelector.NormalizedPart | StypSelector.Combinator,
+): boolean {
   if (typeof first === 'string') {
     return first === second;
   }
@@ -52,7 +53,8 @@ function _namesEqual(first: QualifiedName | undefined, second: QualifiedName | u
 
 function classesEqual(
     first: readonly QualifiedName[] | undefined,
-    second: readonly QualifiedName[] | undefined): boolean {
+    second: readonly QualifiedName[] | undefined,
+): boolean {
   if (!first) {
     return !second;
   }

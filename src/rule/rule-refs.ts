@@ -37,11 +37,13 @@ export class StypRuleRefs<R extends StypRuleRefs.Struct<R>> implements EventKeep
    */
   static by<R extends StypRuleRefs.Struct<R>>(
       referrers: { readonly [K in keyof R]: RefStypRule<R[K]> },
-      root: StypRule): StypRuleRefs<R>;
+      root: StypRule,
+  ): StypRuleRefs<R>;
 
   static by<R extends StypRuleRefs.Struct<R>>(
       referrers: { readonly [name: string]: RefStypRule<any> },
-      root: StypRule): StypRuleRefs<R> {
+      root: StypRule,
+  ): StypRuleRefs<R> {
 
     const refs: { [K in keyof R]?: StypRuleRef<any> } = {};
 
@@ -81,7 +83,8 @@ export class StypRuleRefs<R extends StypRuleRefs.Struct<R>> implements EventKeep
 }
 
 function flattenProperties<R extends StypRuleRefs.Struct<R>>(
-    propertiesMap: { readonly [name: string]: [StypProperties<any>] }): R {
+    propertiesMap: { readonly [name: string]: [StypProperties<any>] },
+): R {
 
   const result: { [name: string]: StypProperties<any> } = {};
 

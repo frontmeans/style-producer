@@ -245,7 +245,8 @@ export class StypRule extends StypRule_ {
       root: StypRule | undefined,
       selector: StypSelector.Normalized,
       key: StypRuleKey,
-      spec: StypProperties.Builder = noStypPropertiesSpec) {
+      spec: StypProperties.Builder = noStypPropertiesSpec,
+  ) {
     super();
     this._root = root || this;
     this._selector = selector;
@@ -271,7 +272,8 @@ function extendRule(
     rule: StypRule,
     targetSelector: StypSelector.Normalized,
     properties: StypProperties.Spec | undefined,
-    sendUpdate: boolean): StypRule {
+    sendUpdate: boolean,
+): StypRule {
 
   const [key, tail] = stypRuleKeyAndTail(targetSelector);
 

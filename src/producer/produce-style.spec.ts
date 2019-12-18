@@ -56,7 +56,8 @@ describe('produceStyle', () => {
   it('uses the given renders', () => {
 
     const mockRender1 = jest.fn<void, Parameters<StypRender.Function>>(
-        (producer, properties) => producer.render(properties));
+        (producer, properties) => producer.render(properties),
+    );
     const mockRender2 = jest.fn<void, Parameters<StypRender.Function>>();
 
     produceStyle(root.rules, { render: [mockRender1, mockRender2], schedule: scheduleNow });

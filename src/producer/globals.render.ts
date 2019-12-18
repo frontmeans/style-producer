@@ -99,7 +99,8 @@ function renderImport(
     sheet: CSSStyleSheet,
     index: number,
     key: string,
-    value: StypValue): number {
+    value: StypValue,
+): number {
   if (!key.startsWith(IMPORT_PREFIX)) {
     return 0;
   }
@@ -120,7 +121,8 @@ function renderDefaultNamespace(
     sheet: CSSStyleSheet,
     index: number,
     key: string,
-    url: StypURL): number {
+    url: StypURL,
+): number {
   if (key !== '@namespace') {
     return 0;
   }
@@ -136,7 +138,8 @@ function renderNamespacePrefix(
     sheet: CSSStyleSheet,
     index: number,
     key: string,
-    url: StypURL): number {
+    url: StypURL,
+): number {
   if (!key.startsWith(NS_PREFIX)) {
     return 0;
   }

@@ -115,9 +115,9 @@ export const RefStypRule = {
         ps: root.rules.watch(selector),
       }).keep.thru(
           ({
-             ms: [_mappings],
-             ps: [_properties],
-           }) => StypMapper.map(_mappings, _properties),
+            ms: [_mappings],
+            ps: [_properties],
+          }) => StypMapper.map(_mappings, _properties),
       );
 
       class Ref extends StypRuleRef<T> {
@@ -146,7 +146,7 @@ export const RefStypRule = {
 };
 
 function mappingsKeeper<T extends StypProperties<T>>(
-    mappings: StypMapper.Mappings<T> | EventKeeper<[StypMapper.Mappings<T>]>):
-    EventKeeper<[StypMapper.Mappings<T>]> {
+    mappings: StypMapper.Mappings<T> | EventKeeper<[StypMapper.Mappings<T>]>,
+): EventKeeper<[StypMapper.Mappings<T>]> {
   return isEventKeeper(mappings) ? mappings : afterThe(mappings);
 }

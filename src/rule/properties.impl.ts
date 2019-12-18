@@ -114,25 +114,28 @@ function propertyEntries(properties: StypProperties): Iterable<[keyof StypProper
  */
 export function mergeStypProperties(
     base: AfterEvent<[StypProperties]>,
-    addendum: AfterEvent<[StypProperties]>):
-    AfterEvent<[StypProperties]> {
+    addendum: AfterEvent<[StypProperties]>,
+): AfterEvent<[StypProperties]> {
   return preventDuplicates(
-      afterAll({ base, addendum })
-          .keep.thru(({ base: [baseProperties], addendum: [addendumProperties] }) =>
-              addValues(baseProperties, addendumProperties)));
+      afterAll({ base, addendum }).keep.thru(
+          ({ base: [baseProperties], addendum: [addendumProperties] }) => addValues(baseProperties, addendumProperties),
+      ),
+  );
 }
 
 function addValues(base: StypProperties, addendum: StypProperties): StypProperties {
   return itsReduction(
       overEntries(addendum),
       (result, [k, v]) => addValue(result, k, v),
-      { ...base });
+      { ...base },
+  );
 }
 
 function addValue(
     properties: StypProperties.Mutable,
     key: keyof StypProperties,
-    value: StypValue): StypProperties.Mutable {
+    value: StypValue,
+): StypProperties.Mutable {
   if (priorityOf(properties[key]) <= priorityOf(value)) {
     delete properties[key];
     properties[key] = value;

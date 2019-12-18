@@ -31,5 +31,6 @@ export function mixStypColors(color1: StypColor, color2: StypColor, weight: numb
         b: rgba1.b * w1 + rgba2.b * w2,
         a: rgba1.a * weight + rgba2.a * (1 - weight),
       },
-      color1);
+      color1,
+  );
 }
