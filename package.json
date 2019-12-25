@@ -30,7 +30,9 @@
     "namespace-aliaser": "^2.0.2"
   },
   "devDependencies": {
-    "@types/jest": "^24.0.23",
+    "@rollup/plugin-commonjs": "^11.0.0",
+    "@rollup/plugin-node-resolve": "^6.0.0",
+    "@types/jest": "^24.0.24",
     "a-iterable": "^2.4.4",
     "call-thru": "^2.5.3",
     "codecov": "^3.6.1",
@@ -41,16 +43,14 @@
     "jest-junit": "^10.0.0",
     "namespace-aliaser": "^2.0.2",
     "npm-run-all": "^4.1.5",
-    "rollup": "^1.27.10",
-    "rollup-plugin-commonjs": "^10.1.0",
-    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup": "^1.27.14",
     "rollup-plugin-sourcemaps": "^0.4.2",
     "rollup-plugin-typescript2": "^0.25.3",
     "ts-jest": "^24.2.0",
     "tslint": "^5.20.1",
-    "typedoc": "^0.15.4",
+    "typedoc": "^0.15.5",
     "typedoc-plugin-external-module-name": "^2.1.0",
-    "typescript": "^3.7.3"
+    "typescript": "^3.7.4"
   },
   "scripts": {
     "all": "run-p rebuild lint test",
