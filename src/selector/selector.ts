@@ -2,6 +2,7 @@
  * @module style-producer
  */
 import { NamespaceDef, QualifiedName } from 'namespace-aliaser';
+import { StypSubSelector } from './sub-selector';
 
 /**
  * Structured CSS selector.
@@ -46,8 +47,8 @@ export namespace StypSelector {
    * A part of structured CSS selector.
    *
    * It may represent a selector like `element-name#id.class1.classN[attr1][attr2]:pseudo-class::pseudo-element` with
-   * any of sub-parts omitted. Attributes, pseudo-classes, and pseudo-elements are represented as raw CSS text and never
-   * interpreted by this library. A raw CSS selector can also be represented by this structure.
+   * any of sub-parts omitted. Attributes, pseudo-classes, and pseudo-elements are represented as sub-selectors.
+   * A raw CSS selector can also be represented by this structure, but is never parsed.
    *
    * All of the properties are optional.
    */
@@ -76,11 +77,15 @@ export namespace StypSelector {
     readonly c?: QualifiedName | readonly QualifiedName[];
 
     /**
+     * Sub-selector(s) representing either attribute selector, pseudo-class, or pseudo-element.
+     */
+    readonly u?: StypSubSelector | readonly StypSubSelector[];
+
+    /**
      * Raw CSS selector text to append to the end.
      *
-     * This may contain attribute selectors, pseudo-classes, and pseudo-elements.
-     *
-     * When all other properties are omitted this one represents a raw CSS selector text.
+     * When all other properties are omitted this one represents a raw CSS selector text. Otherwise it is appended
+     * to other selector parts representation.
      */
     readonly s?: string;
 
@@ -127,6 +132,14 @@ export namespace StypSelector {
      * Array of qualifiers. Either absent, or non-empty and containing non-empty qualifiers sorted alphabetically.
      */
     readonly $?: readonly [string, ...string[]];
+
+    /**
+     * Array of normalized sub-selectors, each of which represents either attribute selector, pseudo-class,
+     * or pseudo-element.
+     *
+     * Either absent or non-empty.
+     */
+    readonly u?: readonly [StypSubSelector.Normalized, ...StypSubSelector.Normalized[]];
 
   }
 
