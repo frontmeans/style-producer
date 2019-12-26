@@ -58,7 +58,8 @@ export namespace StypRules {
 
 }
 
-const noStypRules: StypRuleList = /*#__PURE__*/ new Rules({
+const noStypRules: StypRuleList =
+    /*#__PURE__*/ new Rules({
   [OnEvent__symbol]: onNever,
   [Symbol.iterator](): IterableIterator<StypRule> {
     return [][Symbol.iterator]();

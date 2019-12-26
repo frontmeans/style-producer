@@ -125,13 +125,14 @@ function normalizeSubSelectors(
   if (!subs) {
     return;
   }
-  if (! /*#__INLINE__*/ isSubSelectorsArray(subs)) {
-    return [normalizeSubSelector(subs)];
+  if (/*#__INLINE__*/ isSubSelectorsArray(subs)) {
+
+    const result = subs.map(normalizeSubSelector);
+
+    return isNotEmptyArray(result) ? result : undefined;
   }
 
-  const result = subs.map(normalizeSubSelector);
-
-  return isNotEmptyArray(result) ? result : undefined;
+  return [normalizeSubSelector(subs)];
 }
 
 function isSubSelectorsArray(

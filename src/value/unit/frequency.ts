@@ -22,7 +22,8 @@ export namespace StypFrequency {
 
 }
 
-export const StypFrequency: StypDimension.Kind.UnitZero<StypFrequency.Unit> = /*#__PURE__*/ unitZeroDimensionKind({
+export const StypFrequency: StypDimension.Kind.UnitZero<StypFrequency.Unit> =
+    /*#__PURE__*/ unitZeroDimensionKind({
   zeroUnit: 'kHz',
   withPercent() {
     return StypFrequencyPt;
@@ -51,7 +52,8 @@ export namespace StypFrequencyPt {
 
 }
 
-export const StypFrequencyPt: StypDimension.Kind.UnitZero<StypFrequencyPt.Unit> = /*#__PURE__*/ unitZeroDimensionKind({
+export const StypFrequencyPt: StypDimension.Kind.UnitZero<StypFrequencyPt.Unit> =
+    /*#__PURE__*/ unitZeroDimensionKind({
   zeroUnit: 'kHz',
   withPercent() {
     return StypFrequencyPt;
