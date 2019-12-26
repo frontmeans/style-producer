@@ -64,26 +64,34 @@ CSS combinator is one of: `>`, `+`, or `~`.
 
 CSS selector part is a structure representing selectors like
 `element-name#id.class1.classN[attr1][attr2]:pseudo-class::pseudo-element`.
-Each selector part is represented by corresponding property. Except for attributes, pseudo-classes, and pseudo-elements
-which represented as raw CSS text and never interpreted:
+Each selector part is represented by corresponding property.:
 - Element selector:
-  `{ e: 'element-name' }`.
+  `{ e: 'element-name' }` for `element-name`.
 - Element selector in XML namespace:
-  `{ ns: 'ns-prefix', e: 'element-name' }`.
+  `{ ns: 'ns-prefix', e: 'element-name' }` for `ns-prefix | element-name`.
 - Universal element selector:
-  `{ e: '*' }`, which is the same as `{}`.
+  `{ e: '*' }`, which is the same as `{}` for `*`.
 - Universal element selector in XML namespace:
-  `{ ns: 'ns-prefix', e: '*' }`, which is the same as `{ ns: 'ns-prefix' }`.  
+  `{ ns: 'ns-prefix', e: '*' }`, which is the same as `{ ns: 'ns-prefix' }` for `ns-prefix | *`.  
 - Element identifier:
-  `{ i: 'element-id' }`.
+  `{ i: 'element-id' }` for `#element-id`.
 - Element class:
-  `{ c: 'class-name' }`.
+  `{ c: 'class-name' }` for `.class-name`.
 - Multiple element classes:
-  `{ c: ['class-1', 'class-2'] }`.
+  `{ c: ['class-1', 'class-2'] }` for `.class-1.class-2`.
+- Attribute selector:
+  `{ u: ['disabled'] }` for `[disabled]`,
+  `{ u: ['lang', '|=', 'en'] }` for `[lang |= "en"]`.
+- Pseudo-element:
+  `{ e: 'li', u: ['::', 'after'] }` for `li::after`.
+- Pseudo-class:
+  `{ u: [':', 'host', { c: 'active' }] }` for `:host(.active)`,
+  `{ u: [':', 'is', [{ e: 'ul' }, '>', { e: 'li' }], [{ c: 'menu'}, { c: 'menu-item'}]] }`
+   for `:is(ul > li, .menu > .menu-item)`       
 - Additional selectors:
-  `{ e: 'a', s: '[href^=https://]:visited' }`.
+  `{ e: 'a', s: '[href^=https://]:visited' }` for `a[href^=https://]:visited`.
 - Raw CSS selector:
-  `{ s: '.my-selector' }`  
+  `{ s: '.my-selector' }` for `.my-selector`.  
 
 Selector part may combine multiple properties. Parts may be combined too.
 E.g. `[{ e: 'ul', c: 'unstyled' }, '>', { e: 'li' }]` corresponds to `ul.unstyled > li` CSS selector.
