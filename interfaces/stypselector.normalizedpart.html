@@ -75,10 +75,12 @@
 					<p>Normalized part:</p>
 					<ul>
 						<li>does not contain empty properties,</li>
-						<li>does not contain element <code>*</code>,</li>
+						<li>does not contain unnecessary <code>*</code> element,</li>
 						<li>does not contain empty class names,</li>
 						<li>does not contain empty class names array,</li>
 						<li>class names are sorted,</li>
+						<li>does not contain empty sub-selectors array,</li>
+						<li>sub-selectors are normalized.</li>
 						<li>does not contain empty qualifiers,</li>
 						<li>does not contain empty qualifiers array,</li>
 						<li>qualifiers are exposed, e.g. <code>foo:bar=baz</code> is exposed as three qualifiers: <code>foo</code>, <code>foo:bar</code>, and <code>foo:bar=baz</code></li>
@@ -91,7 +93,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<a href="stypselector.part.html" class="tsd-signature-type">Part</a>
+						<a href="styppureselector.normalizedpart.html" class="tsd-signature-type">NormalizedPart</a>
 						<ul class="tsd-hierarchy">
 							<li>
 								<span class="target">NormalizedPart</span>
@@ -107,12 +109,13 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite"><a href="stypselector.normalizedpart.html#_" class="tsd-kind-icon">$</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite"><a href="stypselector.normalizedpart.html#c" class="tsd-kind-icon">c</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="stypselector.normalizedpart.html#_" class="tsd-kind-icon">$</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited"><a href="stypselector.normalizedpart.html#c" class="tsd-kind-icon">c</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="stypselector.normalizedpart.html#e" class="tsd-kind-icon">e</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="stypselector.normalizedpart.html#i" class="tsd-kind-icon">i</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="stypselector.normalizedpart.html#ns" class="tsd-kind-icon">ns</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="stypselector.normalizedpart.html#s" class="tsd-kind-icon">s</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited"><a href="stypselector.normalizedpart.html#u" class="tsd-kind-icon">u</a></li>
 							</ul>
 						</section>
 					</div>
@@ -120,14 +123,13 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="_" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> $</h3>
 					<div class="tsd-signature tsd-kind-icon">$<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">keyof [string, string]</span></div>
 					<aside class="tsd-sources">
-						<p>Overrides <a href="stypselector.part.html">Part</a>.<a href="stypselector.part.html#_">$</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/surol/style-producer/blob/46531ee/src/selector/selector.ts#L129">selector/selector.ts:129</a></li>
+							<li>Defined in <a href="https://github.com/surol/style-producer/blob/6b8faf8/src/selector/selector.ts#L94">src/selector/selector.ts:94</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -136,14 +138,15 @@
 						</div>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited">
 					<a name="c" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> c</h3>
 					<div class="tsd-signature tsd-kind-icon">c<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">keyof [QualifiedName, string | [string, NamespaceDef&lt;&gt;]]</span></div>
 					<aside class="tsd-sources">
-						<p>Overrides <a href="stypselector.part.html">Part</a>.<a href="stypselector.part.html#c">c</a></p>
+						<p>Inherited from <a href="styppureselector.normalizedpart.html">NormalizedPart</a>.<a href="styppureselector.normalizedpart.html#c">c</a></p>
+						<p>Overrides <a href="styppureselector.part.html">Part</a>.<a href="styppureselector.part.html#c">c</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/surol/style-producer/blob/46531ee/src/selector/selector.ts#L124">selector/selector.ts:124</a></li>
+							<li>Defined in <a href="https://github.com/surol/style-producer/blob/6b8faf8/src/selector/pure-selector.ts#L115">src/selector/pure-selector.ts:115</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -158,16 +161,17 @@
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> e</h3>
 					<div class="tsd-signature tsd-kind-icon">e<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">QualifiedName</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="stypselector.part.html">Part</a>.<a href="stypselector.part.html#e">e</a></p>
+						<p>Inherited from <a href="styppureselector.part.html">Part</a>.<a href="styppureselector.part.html#e">e</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/surol/style-producer/blob/46531ee/src/selector/selector.ts#L66">selector/selector.ts:66</a></li>
+							<li>Defined in <a href="https://github.com/surol/style-producer/blob/6b8faf8/src/selector/pure-selector.ts#L65">src/selector/pure-selector.ts:65</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>Element name.</p>
 						</div>
-						<p>This is the same as <code>*</code> when absent.</p>
+						<p>This is the same as <code>*</code> when absent. Unless the part contains only sub-selectors, and the first one is either
+						pseudo-class or pseudo-element.</p>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
@@ -175,9 +179,9 @@
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> i</h3>
 					<div class="tsd-signature tsd-kind-icon">i<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">QualifiedName</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="stypselector.part.html">Part</a>.<a href="stypselector.part.html#i">i</a></p>
+						<p>Inherited from <a href="styppureselector.part.html">Part</a>.<a href="styppureselector.part.html#i">i</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/surol/style-producer/blob/46531ee/src/selector/selector.ts#L71">selector/selector.ts:71</a></li>
+							<li>Defined in <a href="https://github.com/surol/style-producer/blob/6b8faf8/src/selector/pure-selector.ts#L70">src/selector/pure-selector.ts:70</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -191,9 +195,9 @@
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> ns</h3>
 					<div class="tsd-signature tsd-kind-icon">ns<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">NamespaceDef</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="stypselector.part.html">Part</a>.<a href="stypselector.part.html#ns">ns</a></p>
+						<p>Inherited from <a href="styppureselector.part.html">Part</a>.<a href="styppureselector.part.html#ns">ns</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/surol/style-producer/blob/46531ee/src/selector/selector.ts#L59">selector/selector.ts:59</a></li>
+							<li>Defined in <a href="https://github.com/surol/style-producer/blob/6b8faf8/src/selector/pure-selector.ts#L57">src/selector/pure-selector.ts:57</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -207,17 +211,36 @@
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> s</h3>
 					<div class="tsd-signature tsd-kind-icon">s<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="stypselector.part.html">Part</a>.<a href="stypselector.part.html#s">s</a></p>
+						<p>Inherited from <a href="styppureselector.part.html">Part</a>.<a href="styppureselector.part.html#s">s</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/surol/style-producer/blob/46531ee/src/selector/selector.ts#L85">selector/selector.ts:85</a></li>
+							<li>Defined in <a href="https://github.com/surol/style-producer/blob/6b8faf8/src/selector/pure-selector.ts#L88">src/selector/pure-selector.ts:88</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>Raw CSS selector text to append to the end.</p>
 						</div>
-						<p>This may contain attribute selectors, pseudo-classes, and pseudo-elements.</p>
-						<p>When all other properties are omitted this one represents a raw CSS selector text.</p>
+						<p>When all other properties are omitted this one represents a raw CSS selector text. Otherwise it is appended
+						to other selector parts representation.</p>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited">
+					<a name="u" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> u</h3>
+					<div class="tsd-signature tsd-kind-icon">u<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">keyof [StypSubSelector.Normalized, [string] | [string, &quot;&#x3D;&quot; | &quot;~&#x3D;&quot; | &quot;|&#x3D;&quot; | &quot;^&#x3D;&quot; | &quot;$&#x3D;&quot; | &quot;*&#x3D;&quot;, string, undefined | &quot;i&quot;] | [&quot;:&quot; | &quot;::&quot;, string, ReadonlyArray&lt;&quot;+&quot; | &quot;&gt;&quot; | &quot;~&quot; | NormalizedPart&gt;]]</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="styppureselector.normalizedpart.html">NormalizedPart</a>.<a href="styppureselector.normalizedpart.html#u">u</a></p>
+						<p>Overrides <a href="styppureselector.part.html">Part</a>.<a href="styppureselector.part.html#u">u</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/surol/style-producer/blob/6b8faf8/src/selector/pure-selector.ts#L123">src/selector/pure-selector.ts:123</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Array of normalized sub-selectors, each of which represents either attribute selector, pseudo-class,
+							or pseudo-element.</p>
+						</div>
+						<p>Either absent or non-empty.</p>
 					</div>
 				</section>
 			</section>
@@ -253,6 +276,9 @@
 						<a href="../modules/stypproperties.html">Styp<wbr>Properties</a>
 					</li>
 					<li class=" tsd-kind-module">
+						<a href="../modules/styppureselector.html">Styp<wbr>Pure<wbr>Selector</a>
+					</li>
+					<li class=" tsd-kind-module">
 						<a href="../modules/stypquery.html">Styp<wbr>Query</a>
 					</li>
 					<li class=" tsd-kind-module">
@@ -269,6 +295,9 @@
 					</li>
 					<li class="current tsd-kind-module">
 						<a href="../modules/stypselector.html">Styp<wbr>Selector</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/stypsubselector.html">Styp<wbr>Sub<wbr>Selector</a>
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="../modules/styptime.html">Styp<wbr>Time</a>
@@ -288,10 +317,10 @@
 					<li class="current tsd-kind-interface tsd-parent-kind-module">
 						<a href="stypselector.normalizedpart.html" class="tsd-kind-icon">Normalized<wbr>Part</a>
 						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="stypselector.normalizedpart.html#_" class="tsd-kind-icon">$</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited">
 								<a href="stypselector.normalizedpart.html#c" class="tsd-kind-icon">c</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
@@ -305,6 +334,9 @@
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 								<a href="stypselector.normalizedpart.html#s" class="tsd-kind-icon">s</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited">
+								<a href="stypselector.normalizedpart.html#u" class="tsd-kind-icon">u</a>
 							</li>
 						</ul>
 					</li>

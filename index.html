@@ -108,27 +108,35 @@ supply.off(); <span class="hljs-comment">// Remove produced stylesheets  </span>
 				<p>CSS combinator is one of: <code>&gt;</code>, <code>+</code>, or <code>~</code>.</p>
 				<p>CSS selector part is a structure representing selectors like
 					<code>element-name#id.class1.classN[attr1][attr2]:pseudo-class::pseudo-element</code>.
-					Each selector part is represented by corresponding property. Except for attributes, pseudo-classes, and pseudo-elements
-				which represented as raw CSS text and never interpreted:</p>
+				Each selector part is represented by corresponding property.:</p>
 				<ul>
 					<li>Element selector:
-					<code>{ e: &#39;element-name&#39; }</code>.</li>
+					<code>{ e: &#39;element-name&#39; }</code> for <code>element-name</code>.</li>
 					<li>Element selector in XML namespace:
-					<code>{ ns: &#39;ns-prefix&#39;, e: &#39;element-name&#39; }</code>.</li>
+					<code>{ ns: &#39;ns-prefix&#39;, e: &#39;element-name&#39; }</code> for <code>ns-prefix | element-name</code>.</li>
 					<li>Universal element selector:
-					<code>{ e: &#39;*&#39; }</code>, which is the same as <code>{}</code>.</li>
+					<code>{ e: &#39;*&#39; }</code>, which is the same as <code>{}</code> for <code>*</code>.</li>
 					<li>Universal element selector in XML namespace:
-					<code>{ ns: &#39;ns-prefix&#39;, e: &#39;*&#39; }</code>, which is the same as <code>{ ns: &#39;ns-prefix&#39; }</code>.  </li>
+					<code>{ ns: &#39;ns-prefix&#39;, e: &#39;*&#39; }</code>, which is the same as <code>{ ns: &#39;ns-prefix&#39; }</code> for <code>ns-prefix | *</code>.  </li>
 					<li>Element identifier:
-					<code>{ i: &#39;element-id&#39; }</code>.</li>
+					<code>{ i: &#39;element-id&#39; }</code> for <code>#element-id</code>.</li>
 					<li>Element class:
-					<code>{ c: &#39;class-name&#39; }</code>.</li>
+					<code>{ c: &#39;class-name&#39; }</code> for <code>.class-name</code>.</li>
 					<li>Multiple element classes:
-					<code>{ c: [&#39;class-1&#39;, &#39;class-2&#39;] }</code>.</li>
+					<code>{ c: [&#39;class-1&#39;, &#39;class-2&#39;] }</code> for <code>.class-1.class-2</code>.</li>
+					<li>Attribute selector:
+						<code>{ u: [&#39;disabled&#39;] }</code> for <code>[disabled]</code>,
+					<code>{ u: [&#39;lang&#39;, &#39;|=&#39;, &#39;en&#39;] }</code> for <code>[lang |= &quot;en&quot;]</code>.</li>
+					<li>Pseudo-element:
+					<code>{ e: &#39;li&#39;, u: [&#39;::&#39;, &#39;after&#39;] }</code> for <code>li::after</code>.</li>
+					<li>Pseudo-class:
+						<code>{ u: [&#39;:&#39;, &#39;host&#39;, { c: &#39;active&#39; }] }</code> for <code>:host(.active)</code>,
+						<code>{ u: [&#39;:&#39;, &#39;is&#39;, [{ e: &#39;ul&#39; }, &#39;&gt;&#39;, { e: &#39;li&#39; }], [{ c: &#39;menu&#39;}, { c: &#39;menu-item&#39;}]] }</code>
+					for <code>:is(ul &gt; li, .menu &gt; .menu-item)</code>       </li>
 					<li>Additional selectors:
-					<code>{ e: &#39;a&#39;, s: &#39;[href^=https://]:visited&#39; }</code>.</li>
+					<code>{ e: &#39;a&#39;, s: &#39;[href^=https://]:visited&#39; }</code> for <code>a[href^=https://]:visited</code>.</li>
 					<li>Raw CSS selector:
-					<code>{ s: &#39;.my-selector&#39; }</code>  </li>
+					<code>{ s: &#39;.my-selector&#39; }</code> for <code>.my-selector</code>.  </li>
 				</ul>
 				<p>Selector part may combine multiple properties. Parts may be combined too.
 				E.g. <code>[{ e: &#39;ul&#39;, c: &#39;unstyled&#39; }, &#39;&gt;&#39;, { e: &#39;li&#39; }]</code> corresponds to <code>ul.unstyled &gt; li</code> CSS selector.</p>
@@ -284,7 +292,7 @@ mySettingsRef.set({
 				<p>There is no dedicated <code>@media</code> properties in structured CSS selector. However, a <code>stypRenderAtRules</code> render recognizes
 					selector qualifiers as <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule">at-rules</a> and renders corresponding rules. So, CSS rule with selector like this:
 				<code>{ c: &#39;screen-only&#39;, $: &#39;@media=screen&#39; }</code> would be rendered as</p>
-				<pre><code class="language-css">@<span class="hljs-keyword">media</span> screen {
+				<pre><code class="language-css"><span class="hljs-keyword">@media</span> screen {
   <span class="hljs-selector-class">.screen-only</span> {
     <span class="hljs-comment">/* CSS properties */</span>
   }
@@ -305,19 +313,19 @@ mySettingsRef.set({
      <span class="hljs-attr">"@import:path/to/included.css"</span>: <span class="hljs-string">"screen"</span>
 }</code></pre>
 				<p>becomes</p>
-				<pre><code class="language-css">@<span class="hljs-keyword">import</span> url(path/to/included.css) screen;</code></pre>
+				<pre><code class="language-css"><span class="hljs-keyword">@import</span> url(path/to/included.css) screen;</code></pre>
 				<p><strong><code>@namespace</code></strong> property value is treated as default namespace URL. I.e.</p>
 				<pre><code class="language-json">{
     <span class="hljs-attr">"@namespace"</span>: <span class="hljs-string">"http://www.w3.org/1999/xhtml"</span>
 }</code></pre>
 				<p>becomes</p>
-				<pre><code class="language-css">@<span class="hljs-keyword">namespace</span> url(http://www.w3.org/<span class="hljs-number">1999</span>/xhtml);</code></pre>
+				<pre><code class="language-css"><span class="hljs-keyword">@namespace</span> url(<span class="hljs-attribute">http:</span>//www.w3.org/<span class="hljs-number">1999</span>/xhtml);</code></pre>
 				<p><strong><code>@namespace:prefix</code></strong> property value is treated as namespace URL with the given prefix. I.e</p>
 				<pre><code class="language-json">{
     <span class="hljs-attr">"@namespace:svg"</span>: <span class="hljs-string">"http://www.w3.org/2000/svg"</span>
 }</code></pre>
 				<p>becomes</p>
-				<pre><code class="language-css">@<span class="hljs-keyword">namespace</span> svg url(http://www.w3.org/<span class="hljs-number">2000</span>/svg);</code></pre>
+				<pre><code class="language-css"><span class="hljs-keyword">@namespace</span> svg url(<span class="hljs-attribute">http:</span>//www.w3.org/<span class="hljs-number">2000</span>/svg);</code></pre>
 				<a href="#namespaces" id="namespaces" style="color: inherit; text-decoration: none;">
 					<h3>Namespaces</h3>
 				</a>
@@ -381,6 +389,9 @@ mySettingsRef.set({
 						<a href="modules/stypproperties.html">Styp<wbr>Properties</a>
 					</li>
 					<li class=" tsd-kind-module">
+						<a href="modules/styppureselector.html">Styp<wbr>Pure<wbr>Selector</a>
+					</li>
+					<li class=" tsd-kind-module">
 						<a href="modules/stypquery.html">Styp<wbr>Query</a>
 					</li>
 					<li class=" tsd-kind-module">
@@ -397,6 +408,9 @@ mySettingsRef.set({
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="modules/stypselector.html">Styp<wbr>Selector</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/stypsubselector.html">Styp<wbr>Sub<wbr>Selector</a>
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="modules/styptime.html">Styp<wbr>Time</a>

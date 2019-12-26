@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>StypQuery | Style Producer</title>
+	<title>StypSubSelector | Style Producer</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,10 +54,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="stypquery.html">StypQuery</a>
+					<a href="stypsubselector.html">StypSubSelector</a>
 				</li>
 			</ul>
-			<h1>Module StypQuery</h1>
+			<h1>Module StypSubSelector</h1>
 		</div>
 	</div>
 </header>
@@ -67,11 +67,14 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>CSS rule query.</p>
+						<p>A sub-selector of structured CSS selector.</p>
 					</div>
-					<p>It may represent a selector like <code>element-name#id.class1.classN</code> with any of sub-parts omitted.</p>
-					<p>Queries are used to grab a subset of matching rules from <code>StypRule</code>.</p>
-					<p>All of its properties are optional.</p>
+					<p>This can be one of:</p>
+					<ul>
+						<li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Attribute_selectors">attribute selector</a>,</li>
+						<li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes">pseudo-class</a>, or</li>
+						<li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements">pseudo-element</a>.</li>
+					</ul>
 				</div>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -81,17 +84,15 @@
 						<section class="tsd-index-section ">
 							<h3>Type aliases</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="stypquery.html#normalized" class="tsd-kind-icon">Normalized</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
-							<h3>Properties</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-module"><a href="stypquery.html#_" class="tsd-kind-icon">$</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-module"><a href="stypquery.html#c" class="tsd-kind-icon">c</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-module"><a href="stypquery.html#e" class="tsd-kind-icon">e</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-module"><a href="stypquery.html#i" class="tsd-kind-icon">i</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-module"><a href="stypquery.html#ns" class="tsd-kind-icon">ns</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="stypsubselector.html#attribute" class="tsd-kind-icon">Attribute</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="stypsubselector.html#attributeflag" class="tsd-kind-icon">Attribute<wbr>Flag</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="stypsubselector.html#attributeoperator" class="tsd-kind-icon">Attribute<wbr>Operator</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="stypsubselector.html#normalized" class="tsd-kind-icon">Normalized</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="stypsubselector.html#normalizedparameter" class="tsd-kind-icon">Normalized<wbr>Parameter</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="stypsubselector.html#normalizedpseudo" class="tsd-kind-icon">Normalized<wbr>Pseudo</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="stypsubselector.html#parameter" class="tsd-kind-icon">Parameter</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="stypsubselector.html#pseudo" class="tsd-kind-icon">Pseudo</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="stypsubselector.html#pseudoprefix" class="tsd-kind-icon">Pseudo<wbr>Prefix</a></li>
 							</ul>
 						</section>
 					</div>
@@ -100,96 +101,151 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Type aliases</h2>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
+					<a name="attribute" class="tsd-anchor"></a>
+					<h3>Attribute</h3>
+					<div class="tsd-signature tsd-kind-icon">Attribute<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">keyof [string]</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">keyof [string, AttributeOperator, string, undefined | &quot;i&quot;]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/surol/style-producer/blob/6b8faf8/src/selector/sub-selector.ts#L40">src/selector/sub-selector.ts:40</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Structured attribute selector.</p>
+						</div>
+						<p>This is either an attribute name representing selector like <code>[attribute]</code>, or a tuple consisting of attribute name,
+						operator, value, and optional flag to representing selector like <code>[attribute^=&quot;value&quot; i]</code>;</p>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
+					<a name="attributeflag" class="tsd-anchor"></a>
+					<h3>Attribute<wbr>Flag</h3>
+					<div class="tsd-signature tsd-kind-icon">Attribute<wbr>Flag<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"i"</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/surol/style-producer/blob/6b8faf8/src/selector/sub-selector.ts#L52">src/selector/sub-selector.ts:52</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Attribute selector flag.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
+					<a name="attributeoperator" class="tsd-anchor"></a>
+					<h3>Attribute<wbr>Operator</h3>
+					<div class="tsd-signature tsd-kind-icon">Attribute<wbr>Operator<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"&#x3D;"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"~&#x3D;"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"|&#x3D;"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"^&#x3D;"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"$&#x3D;"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"*&#x3D;"</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/surol/style-producer/blob/6b8faf8/src/selector/sub-selector.ts#L47">src/selector/sub-selector.ts:47</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Attribute selector operator.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
 					<a name="normalized" class="tsd-anchor"></a>
 					<h3>Normalized</h3>
-					<div class="tsd-signature tsd-kind-icon">Normalized<span class="tsd-signature-symbol">:</span> <a href="stypquery.html" class="tsd-signature-type">StypQuery</a><span class="tsd-signature-symbol"> &amp; </span><a href="../interfaces/stypselector.normalizedpart.html" class="tsd-signature-type">NormalizedPart</a></div>
+					<div class="tsd-signature tsd-kind-icon">Normalized<span class="tsd-signature-symbol">:</span> <a href="stypsubselector.html#attribute" class="tsd-signature-type">Attribute</a><span class="tsd-signature-symbol"> | </span><a href="stypsubselector.html#normalizedpseudo" class="tsd-signature-type">NormalizedPseudo</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/surol/style-producer/blob/6b8faf8/src/selector/query.ts#L56">src/selector/query.ts:56</a></li>
+							<li>Defined in <a href="https://github.com/surol/style-producer/blob/6b8faf8/src/selector/sub-selector.ts#L30">src/selector/sub-selector.ts:30</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Normalized CSS rule query.</p>
+							<p>Normalized structured CSS sub-selector.</p>
 						</div>
 					</div>
 				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-module">
-					<a name="_" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> $</h3>
-					<div class="tsd-signature tsd-kind-icon">$<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">keyof string[]</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
+					<a name="normalizedparameter" class="tsd-anchor"></a>
+					<h3>Normalized<wbr>Parameter</h3>
+					<div class="tsd-signature tsd-kind-icon">Normalized<wbr>Parameter<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">keyof (&quot;+&quot; | &quot;&gt;&quot; | &quot;~&quot; | NormalizedPart)[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/surol/style-producer/blob/6b8faf8/src/selector/query.ts#L47">src/selector/query.ts:47</a></li>
+							<li>Defined in <a href="https://github.com/surol/style-producer/blob/6b8faf8/src/selector/sub-selector.ts#L96">src/selector/sub-selector.ts:96</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Qualifier or qualifiers.</p>
+							<p>Normalized structured CSS sub-selector&#39;s parameter.</p>
 						</div>
+						<p>This is a <a href="styppureselector.html#normalized">normalized pure CSS selector</a> containing no qualifiers.</p>
+						<p>Raw string parameter is represented by sub-selector part containing only <code>s</code> property.</p>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-module">
-					<a name="c" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> c</h3>
-					<div class="tsd-signature tsd-kind-icon">c<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">QualifiedName</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">keyof QualifiedName[]</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
+					<a name="normalizedpseudo" class="tsd-anchor"></a>
+					<h3>Normalized<wbr>Pseudo</h3>
+					<div class="tsd-signature tsd-kind-icon">Normalized<wbr>Pseudo<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">keyof [PseudoPrefix, string, ReadonlyArray]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/surol/style-producer/blob/6b8faf8/src/selector/query.ts#L42">src/selector/query.ts:42</a></li>
+							<li>Defined in <a href="https://github.com/surol/style-producer/blob/6b8faf8/src/selector/sub-selector.ts#L73">src/selector/sub-selector.ts:73</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Element class name or names.</p>
+							<p>Normalized structured pseudo-class or pseudo-element.</p>
 						</div>
+						<p>It contains normalized parameters represented as tuples, if any.</p>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-module">
-					<a name="e" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> e</h3>
-					<div class="tsd-signature tsd-kind-icon">e<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">QualifiedName</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
+					<a name="parameter" class="tsd-anchor"></a>
+					<h3>Parameter</h3>
+					<div class="tsd-signature tsd-kind-icon">Parameter<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">keyof (string | Part)[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/surol/style-producer/blob/6b8faf8/src/selector/query.ts#L32">src/selector/query.ts:32</a></li>
+							<li>Defined in <a href="https://github.com/surol/style-producer/blob/6b8faf8/src/selector/sub-selector.ts#L87">src/selector/sub-selector.ts:87</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Element name.</p>
+							<p>Structured CSS sub-selector&#39;s parameter.</p>
 						</div>
-						<p>This is the same as <code>*</code> when absent.</p>
+						<p>This is a <a href="styppureselector.html">pure CSS selector</a> containing no qualifiers.</p>
+						<p>Raw string parameter may be represented either by string, or by sub-selector part containing only <code>s</code> property.</p>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-module">
-					<a name="i" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> i</h3>
-					<div class="tsd-signature tsd-kind-icon">i<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">QualifiedName</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
+					<a name="pseudo" class="tsd-anchor"></a>
+					<h3>Pseudo</h3>
+					<div class="tsd-signature tsd-kind-icon">Pseudo<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">keyof [PseudoPrefix, string, string | Part]</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">keyof [PseudoPrefix, string, ReadonlyArray]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/surol/style-producer/blob/6b8faf8/src/selector/query.ts#L37">src/selector/query.ts:37</a></li>
+							<li>Defined in <a href="https://github.com/surol/style-producer/blob/6b8faf8/src/selector/sub-selector.ts#L64">src/selector/sub-selector.ts:64</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Element identifier.</p>
+							<p>Structured pseudo-class or pseudo-element.</p>
 						</div>
+						<p>This is a tuple containing:</p>
+						<ul>
+							<li>a pseudo-prefix (i.e. <code>:</code> for pseudo-classes, or <code>::</code> for pseudo-elements),</li>
+							<li>pseudo-class or pseudo-element name (e.g. <code>host</code>, or <code>visited</code>),</li>
+							<li>and optional parameters (i.e. the parentheses content following the name).</li>
+						</ul>
+						<p>Multiple colon-separated parameters may be represented as tuples.</p>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-module">
-					<a name="ns" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> ns</h3>
-					<div class="tsd-signature tsd-kind-icon">ns<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">NamespaceDef</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
+					<a name="pseudoprefix" class="tsd-anchor"></a>
+					<h3>Pseudo<wbr>Prefix</h3>
+					<div class="tsd-signature tsd-kind-icon">Pseudo<wbr>Prefix<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">":"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"::"</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/surol/style-producer/blob/6b8faf8/src/selector/query.ts#L25">src/selector/query.ts:25</a></li>
+							<li>Defined in <a href="https://github.com/surol/style-producer/blob/6b8faf8/src/selector/sub-selector.ts#L78">src/selector/sub-selector.ts:78</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Element namespace.</p>
+							<p>Pseudo-class (<code>:</code>) or pseudo-element (<code>::</code>) prefix.</p>
 						</div>
 					</div>
 				</section>
@@ -228,7 +284,7 @@
 					<li class=" tsd-kind-module">
 						<a href="styppureselector.html">Styp<wbr>Pure<wbr>Selector</a>
 					</li>
-					<li class="current tsd-kind-module">
+					<li class=" tsd-kind-module">
 						<a href="stypquery.html">Styp<wbr>Query</a>
 					</li>
 					<li class=" tsd-kind-module">
@@ -246,7 +302,7 @@
 					<li class=" tsd-kind-module">
 						<a href="stypselector.html">Styp<wbr>Selector</a>
 					</li>
-					<li class=" tsd-kind-module">
+					<li class="current tsd-kind-module">
 						<a href="stypsubselector.html">Styp<wbr>Sub<wbr>Selector</a>
 					</li>
 					<li class=" tsd-kind-module">
@@ -263,22 +319,31 @@
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
-						<a href="stypquery.html#normalized" class="tsd-kind-icon">Normalized</a>
+						<a href="stypsubselector.html#attribute" class="tsd-kind-icon">Attribute</a>
 					</li>
-					<li class=" tsd-kind-property tsd-parent-kind-module">
-						<a href="stypquery.html#_" class="tsd-kind-icon">$</a>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+						<a href="stypsubselector.html#attributeflag" class="tsd-kind-icon">Attribute<wbr>Flag</a>
 					</li>
-					<li class=" tsd-kind-property tsd-parent-kind-module">
-						<a href="stypquery.html#c" class="tsd-kind-icon">c</a>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+						<a href="stypsubselector.html#attributeoperator" class="tsd-kind-icon">Attribute<wbr>Operator</a>
 					</li>
-					<li class=" tsd-kind-property tsd-parent-kind-module">
-						<a href="stypquery.html#e" class="tsd-kind-icon">e</a>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+						<a href="stypsubselector.html#normalized" class="tsd-kind-icon">Normalized</a>
 					</li>
-					<li class=" tsd-kind-property tsd-parent-kind-module">
-						<a href="stypquery.html#i" class="tsd-kind-icon">i</a>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+						<a href="stypsubselector.html#normalizedparameter" class="tsd-kind-icon">Normalized<wbr>Parameter</a>
 					</li>
-					<li class=" tsd-kind-property tsd-parent-kind-module">
-						<a href="stypquery.html#ns" class="tsd-kind-icon">ns</a>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+						<a href="stypsubselector.html#normalizedpseudo" class="tsd-kind-icon">Normalized<wbr>Pseudo</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+						<a href="stypsubselector.html#parameter" class="tsd-kind-icon">Parameter</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+						<a href="stypsubselector.html#pseudo" class="tsd-kind-icon">Pseudo</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+						<a href="stypsubselector.html#pseudoprefix" class="tsd-kind-icon">Pseudo<wbr>Prefix</a>
 					</li>
 				</ul>
 			</nav>

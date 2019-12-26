@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>StypTime | Style Producer</title>
+	<title>StypPureSelector | Style Producer</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,10 +54,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="styptime.html">StypTime</a>
+					<a href="styppureselector.html">StypPureSelector</a>
 				</li>
 			</ul>
-			<h1>Module StypTime</h1>
+			<h1>Module StypPureSelector</h1>
 		</div>
 	</div>
 </header>
@@ -67,9 +67,17 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Structured <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/time">time</a> property value.</p>
+						<p>Pure CSS selector.</p>
 					</div>
-					<p>Can be constructed using <code>StypTime.of()</code> function.</p>
+					<p>This can be one of:</p>
+					<ul>
+						<li>raw CSS selector text,</li>
+						<li>CSS selector part, or</li>
+						<li>an array consisting of strings, parts, and their combinators.</li>
+					</ul>
+					<p>A normalized pure CSS selector can be constructed using <a href="../globals.html#stypselector">stypSelector</a> function.</p>
+					<p>This is the base of <a href="stypselector.html">structured CSS selector</a>. In contrast to the latter it does not support
+					qualifiers.</p>
 				</div>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -77,9 +85,16 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
+							<h3>Interfaces</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/styppureselector.normalizedpart.html" class="tsd-kind-icon">Normalized<wbr>Part</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/styppureselector.part.html" class="tsd-kind-icon">Part</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
 							<h3>Type aliases</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="styptime.html#unit" class="tsd-kind-icon">Unit</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="styppureselector.html#normalized" class="tsd-kind-icon">Normalized</a></li>
 							</ul>
 						</section>
 					</div>
@@ -88,18 +103,21 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Type aliases</h2>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
-					<a name="unit" class="tsd-anchor"></a>
-					<h3>Unit</h3>
-					<div class="tsd-signature tsd-kind-icon">Unit<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"s"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"ms"</span></div>
+					<a name="normalized" class="tsd-anchor"></a>
+					<h3>Normalized</h3>
+					<div class="tsd-signature tsd-kind-icon">Normalized<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">keyof (&quot;+&quot; | &quot;&gt;&quot; | &quot;~&quot; | NormalizedPart)[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/surol/style-producer/blob/6b8faf8/src/value/unit/time.ts#L21">src/value/unit/time.ts:21</a></li>
+							<li>Defined in <a href="https://github.com/surol/style-producer/blob/6b8faf8/src/selector/pure-selector.ts#L38">src/selector/pure-selector.ts:38</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Supported time units, excluding percent.</p>
+							<p>Normalized pure CSS selector.</p>
 						</div>
+						<p>This is an array of normalized selector parts and combinators between them. Combinators do not follow each other.
+						The last item is never a combinator.</p>
+						<p>Normalized selector never contains empty parts.</p>
 					</div>
 				</section>
 			</section>
@@ -134,7 +152,7 @@
 					<li class=" tsd-kind-module tsd-has-type-parameter">
 						<a href="stypproperties.html">Styp<wbr>Properties</a>
 					</li>
-					<li class=" tsd-kind-module">
+					<li class="current tsd-kind-module">
 						<a href="styppureselector.html">Styp<wbr>Pure<wbr>Selector</a>
 					</li>
 					<li class=" tsd-kind-module">
@@ -158,7 +176,7 @@
 					<li class=" tsd-kind-module">
 						<a href="stypsubselector.html">Styp<wbr>Sub<wbr>Selector</a>
 					</li>
-					<li class="current tsd-kind-module">
+					<li class=" tsd-kind-module">
 						<a href="styptime.html">Styp<wbr>Time</a>
 					</li>
 					<li class=" tsd-kind-module">
@@ -171,8 +189,14 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/styppureselector.normalizedpart.html" class="tsd-kind-icon">Normalized<wbr>Part</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/styppureselector.part.html" class="tsd-kind-icon">Part</a>
+					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
-						<a href="styptime.html#unit" class="tsd-kind-icon">Unit</a>
+						<a href="styppureselector.html#normalized" class="tsd-kind-icon">Normalized</a>
 					</li>
 				</ul>
 			</nav>

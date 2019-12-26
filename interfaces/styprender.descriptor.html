@@ -91,7 +91,12 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="styprender.descriptor.html#needs" class="tsd-kind-icon">needs</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="styprender.descriptor.html#order" class="tsd-kind-icon">order</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="styprender.descriptor.html#render" class="tsd-kind-icon">render</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Methods</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="styprender.descriptor.html#render" class="tsd-kind-icon">render</a></li>
 							</ul>
 						</section>
 					</div>
@@ -105,7 +110,7 @@
 					<div class="tsd-signature tsd-kind-icon">needs<span class="tsd-signature-symbol">:</span> <a href="../modules/styprender.html" class="tsd-signature-type">StypRender</a><span class="tsd-signature-symbol"> | </span><a href="../modules/styprender.html" class="tsd-signature-type">StypRender</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/surol/style-producer/blob/46531ee/src/producer/render.ts#L80">producer/render.ts:80</a></li>
+							<li>Defined in <a href="https://github.com/surol/style-producer/blob/6b8faf8/src/producer/render.ts#L78">src/producer/render.ts:78</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -120,7 +125,7 @@
 					<div class="tsd-signature tsd-kind-icon">order<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/surol/style-producer/blob/46531ee/src/producer/render.ts#L75">producer/render.ts:75</a></li>
+							<li>Defined in <a href="https://github.com/surol/style-producer/blob/6b8faf8/src/producer/render.ts#L73">src/producer/render.ts:73</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -131,20 +136,47 @@
 						properties.</p>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
 					<a name="render" class="tsd-anchor"></a>
 					<h3>render</h3>
-					<div class="tsd-signature tsd-kind-icon">render<span class="tsd-signature-symbol">:</span> <a href="../modules/styprender.html#function" class="tsd-signature-type">Function</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">this</span><span class="tsd-signature-symbol">&gt;</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/surol/style-producer/blob/46531ee/src/producer/render.ts#L85">producer/render.ts:85</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>CSS stylesheet render function.</p>
-						</div>
-					</div>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">render<span class="tsd-signature-symbol">(</span>producer<span class="tsd-signature-symbol">: </span><a href="styleproducer.html" class="tsd-signature-type">StyleProducer</a>, properties<span class="tsd-signature-symbol">: </span><a href="../modules/stypproperties.html" class="tsd-signature-type">StypProperties</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/surol/style-producer/blob/6b8faf8/src/producer/render.ts#L89">src/producer/render.ts:89</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>CSS stylesheet render method.</p>
+								</div>
+								<p>It should normally call a <a href="styleproducer.html#render">StyleProducer.render</a> method as the last operation to allow other renders in chain
+								to do their job.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>producer: <a href="styleproducer.html" class="tsd-signature-type">StyleProducer</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Style producer instance.</p>
+									</div>
+								</li>
+								<li>
+									<h5>properties: <a href="../modules/stypproperties.html" class="tsd-signature-type">StypProperties</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>CSS properties to render.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
 				</section>
 			</section>
 		</div>
@@ -179,6 +211,9 @@
 						<a href="../modules/stypproperties.html">Styp<wbr>Properties</a>
 					</li>
 					<li class=" tsd-kind-module">
+						<a href="../modules/styppureselector.html">Styp<wbr>Pure<wbr>Selector</a>
+					</li>
+					<li class=" tsd-kind-module">
 						<a href="../modules/stypquery.html">Styp<wbr>Query</a>
 					</li>
 					<li class="current tsd-kind-module">
@@ -195,6 +230,9 @@
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="../modules/stypselector.html">Styp<wbr>Selector</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/stypsubselector.html">Styp<wbr>Sub<wbr>Selector</a>
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="../modules/styptime.html">Styp<wbr>Time</a>
@@ -220,7 +258,7 @@
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="styprender.descriptor.html#order" class="tsd-kind-icon">order</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
 								<a href="styprender.descriptor.html#render" class="tsd-kind-icon">render</a>
 							</li>
 						</ul>
@@ -236,7 +274,7 @@
 					<li class=" tsd-kind-interface tsd-parent-kind-module">
 						<a href="styprender.spec.html" class="tsd-kind-icon">Spec</a>
 					</li>
-					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
 						<a href="../modules/styprender.html#function" class="tsd-kind-icon">Function</a>
 					</li>
 				</ul>
