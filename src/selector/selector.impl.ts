@@ -1,8 +1,10 @@
-import { flatMapIt, itsReduction } from 'a-iterable';
+import { flatMapIt } from 'a-iterable';
 import { compareNames, isQualifiedName, QualifiedName } from 'namespace-aliaser';
 import { isNotEmptyArray, isReadonlyArray } from '../internal';
+import { StypPureSelector } from './pure-selector';
 import { StypRuleKey } from './rule-key';
 import { StypSelector } from './selector';
+import { StypSubSelector } from './sub-selector';
 
 /**
  * @internal
@@ -16,19 +18,93 @@ export function isCombinator(
 /**
  * @internal
  */
-export function normalizeStypSelectorPart(part: StypSelector.Part): StypSelector.NormalizedPart {
-  return {
-    ns: part.ns || undefined,
-    e: normalizeElement(part.e),
-    i: part.i || undefined,
-    s: part.s || undefined,
-    c: normalizeClasses(part.c),
-    $: normalizeQualifiers(part.$),
-  };
+export function normalizeStypSelector(selector: StypPureSelector.NormalizedPart): [StypPureSelector.NormalizedPart];
+
+/**
+ * @internal
+ */
+export function normalizeStypSelector(selector: StypSelector.NormalizedPart): [StypSelector.NormalizedPart];
+
+/**
+ * @internal
+ */
+export function normalizeStypSelector(selector: StypPureSelector): StypPureSelector.Normalized;
+
+/**
+ * @internal
+ */
+export function normalizeStypSelector(selector: StypSelector): StypSelector.Normalized;
+
+/**
+ * @internal
+ */
+export function normalizeStypSelector(selector: StypSelector): StypSelector.Normalized {
+  if (!isReadonlyArray(selector)) {
+    return [normalizeKey(selector)];
+  }
+
+  const normalized: StypSelector.Mutable = [];
+  let combinator: StypSelector.Combinator | undefined;
+
+  for (const item of selector) {
+
+    const prevCombinator = combinator;
+
+    if (combinator) {
+      normalized.push(combinator);
+      combinator = undefined;
+    }
+
+    let part: StypSelector.NormalizedPart;
+
+    if (isCombinator(item)) {
+      combinator = item;
+      if (!prevCombinator) {
+        continue;
+      }
+      part = {};
+    } else {
+      part = normalizeKey(item);
+    }
+
+    normalized.push(part);
+  }
+  if (combinator) {
+    normalized.push(combinator, {});
+  }
+
+  return normalized;
 }
 
-function normalizeElement(e: QualifiedName | undefined): QualifiedName | undefined {
-  return e !== '*' && e || undefined;
+function normalizeKey(key: StypSelector.Part | string): StypSelector.NormalizedPart {
+  if (typeof key === 'string') {
+    if (!key) {
+      return {};
+    }
+    return { s: key };
+  }
+  return normalizeStypSelectorPart(key);
+}
+
+/**
+ * @internal
+ */
+export function normalizeStypSelectorPart(part: StypSelector.Part): StypSelector.NormalizedPart {
+
+  const ns = part.ns || undefined;
+  const i = part.i || undefined;
+  const c = normalizeClasses(part.c);
+  const u = normalizeSubSelectors(part.u);
+
+  return {
+    ns,
+    e: (part.e !== '*' || !ns && !i && !c && u && isPseudoSubSelector(u[0])) && part.e || undefined,
+    i,
+    c,
+    u,
+    s: part.s || undefined,
+    $: normalizeQualifiers(part.$),
+  };
 }
 
 function normalizeClasses(
@@ -46,6 +122,54 @@ function normalizeClasses(
   return isNotEmptyArray(result) ? result.sort(compareNames) : undefined;
 }
 
+function normalizeSubSelectors(
+    subs: StypSubSelector | readonly StypSubSelector[] | undefined,
+): readonly [StypSubSelector.Normalized, ...StypSubSelector.Normalized[]] | undefined {
+  if (!subs) {
+    return;
+  }
+  if (! /*#__INLINE__*/ isSubSelectorsArray(subs)) {
+    return [normalizeSubSelector(subs)];
+  }
+
+  const result = subs.map(normalizeSubSelector);
+
+  return isNotEmptyArray(result) ? result : undefined;
+}
+
+function isSubSelectorsArray(
+    subs: StypSubSelector | readonly StypSubSelector[],
+): subs is readonly StypSubSelector[] {
+  return typeof subs[0] !== 'string';
+}
+
+function normalizeSubSelector(sub: StypSubSelector): StypSubSelector.Normalized {
+  if (!isPseudoSubSelector(sub)) {
+    return sub;
+  }
+  if (sub.length < 3) {
+    return sub as StypSubSelector.Normalized;
+  }
+
+  const [prefix, name, ...params] = sub;
+
+  if (/*#__INLINE__*/ isSubSelectorParametersArray(params)) {
+    return [prefix, name, ...params.map(normalizeStypSelector)];
+  }
+
+  return [prefix, name, normalizeStypSelector(params)];
+}
+
+function isPseudoSubSelector(sub: StypSubSelector): sub is StypSubSelector.Pseudo {
+  return sub.length > 1 && (sub[0] === ':' || sub[0] === '::');
+}
+
+function isSubSelectorParametersArray(
+    param: StypSubSelector.Parameter | readonly StypSubSelector.Parameter[],
+): param is readonly StypSubSelector.Parameter[] {
+  return isReadonlyArray(param[0]);
+}
+
 function normalizeQualifiers(
     qualifiers: string | readonly string[] | undefined,
 ): readonly [string, ...string[]] | undefined {
@@ -56,13 +180,7 @@ function normalizeQualifiers(
   if (!isReadonlyArray(qualifiers)) {
     qualifiers = [...exposeQualifier(qualifiers)];
   } else {
-    qualifiers = [
-      ...itsReduction(
-          flatMapIt(qualifiers, exposeQualifier),
-          (set, qualifier) => set.add(qualifier),
-          new Set<string>(),
-      ),
-    ].sort();
+    qualifiers = [...new Set(flatMapIt(qualifiers, exposeQualifier))].sort();
   }
 
   return isNotEmptyArray(qualifiers) ? qualifiers : undefined;
@@ -102,7 +220,7 @@ const noKeyAndTail: [[]] = [[]];
  */
 export function stypRuleKeyAndTail(
     selector: StypSelector.Normalized,
-): [[]] | [StypRuleKey.Nested, StypSelector.Normalized?] {
+): readonly [[]] | readonly [StypRuleKey.Nested, StypSelector.Normalized?] {
   if (!selector.length) {
     return noKeyAndTail;
   }

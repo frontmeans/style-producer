@@ -59,7 +59,8 @@ export namespace StypPureSelector {
     /**
      * Element name.
      *
-     * This is the same as `*` when absent.
+     * This is the same as `*` when absent. Unless the part contains only sub-selectors, and the first one is either
+     * pseudo-class or pseudo-element.
      */
     readonly e?: QualifiedName;
 
@@ -93,7 +94,7 @@ export namespace StypPureSelector {
    *
    * Normalized part:
    * - does not contain empty properties,
-   * - does not contain element `*`,
+   * - does not contain unnecessary `*` element,
    * - does not contain empty class names,
    * - does not contain empty class names array,
    * - class names are sorted,

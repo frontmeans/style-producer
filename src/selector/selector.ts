@@ -73,7 +73,7 @@ export namespace StypSelector {
    *
    * Normalized part:
    * - does not contain empty properties,
-   * - does not contain element `*`,
+   * - does not contain unnecessary `*` element,
    * - does not contain empty class names,
    * - does not contain empty class names array,
    * - class names are sorted,
