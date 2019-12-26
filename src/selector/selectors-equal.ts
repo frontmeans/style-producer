@@ -4,6 +4,8 @@
 import { namesEqual, NamespaceDef, QualifiedName } from 'namespace-aliaser';
 import { StypPureSelector } from './pure-selector';
 import { StypSelector } from './selector';
+import { isPseudoSubSelector } from './selector.impl';
+import { StypSubSelector } from './sub-selector';
 
 /**
  * Tests whether two normalized structured CSS selectors equal.
@@ -38,6 +40,7 @@ function stypSelectorPartsEqual(
       && _namesEqual(first.e, second.e)
       && _namesEqual(first.i, second.i)
       && classesEqual(first.c, second.c)
+      && subSelectorListEqual(first.u, second.u)
       && qualifiersEqual(first.$, second.$);
 }
 
@@ -66,6 +69,39 @@ function classesEqual(
     return false;
   }
   return first.length === second.length && first.every((name, i) => namesEqual(name, second[i]));
+}
+
+function subSelectorListEqual(
+    first: readonly StypSubSelector.Normalized[] | undefined,
+    second: readonly StypSubSelector.Normalized[] | undefined,
+): boolean {
+  if (!first) {
+    return !second;
+  }
+  if (!second) {
+    return false;
+  }
+  return first.length === second.length && first.every((sub, i) => subSelectorsEqual(sub, second[i]));
+}
+
+function subSelectorsEqual(
+    first: StypSubSelector.Normalized,
+    second: StypSubSelector.Normalized,
+): boolean {
+  if (first.length !== second.length) {
+    return false;
+  }
+  if (isPseudoSubSelector(first)) {
+    return first.every(
+        (p, i) => i < 2
+            ? p === second[i]
+            : stypSelectorsEqual(
+                p as StypSubSelector.NormalizedParameter,
+                second[i] as StypSubSelector.NormalizedParameter,
+            ),
+    );
+  }
+  return first.every((str, i) => str === second[i]);
 }
 
 function qualifiersEqual(first: readonly string[] | undefined, second: readonly string[] | undefined): boolean {

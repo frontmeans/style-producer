@@ -160,7 +160,10 @@ function normalizeSubSelector(sub: StypSubSelector): StypSubSelector.Normalized 
   return [prefix, name, normalizeStypSelector(params)];
 }
 
-function isPseudoSubSelector(sub: StypSubSelector): sub is StypSubSelector.Pseudo {
+/**
+ * @internal
+ */
+export function isPseudoSubSelector(sub: StypSubSelector): sub is StypSubSelector.Pseudo {
   return sub.length > 1 && (sub[0] === ':' || sub[0] === '::');
 }
 
