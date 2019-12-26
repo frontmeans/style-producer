@@ -35,9 +35,6 @@ export function normalizeStypSelector(selector: StypPureSelector): StypPureSelec
  */
 export function normalizeStypSelector(selector: StypSelector): StypSelector.Normalized;
 
-/**
- * @internal
- */
 export function normalizeStypSelector(selector: StypSelector): StypSelector.Normalized {
   if (!isReadonlyArray(selector)) {
     return [normalizeKey(selector)];
@@ -163,6 +160,13 @@ function normalizeSubSelector(sub: StypSubSelector): StypSubSelector.Normalized 
 /**
  * @internal
  */
+export function isPseudoSubSelector(sub: StypSubSelector.Normalized): sub is StypSubSelector.NormalizedPseudo;
+
+/**
+ * @internal
+ */
+export function isPseudoSubSelector(sub: StypSubSelector): sub is StypSubSelector.Pseudo;
+
 export function isPseudoSubSelector(sub: StypSubSelector): sub is StypSubSelector.Pseudo {
   return sub.length > 1 && (sub[0] === ':' || sub[0] === '::');
 }
