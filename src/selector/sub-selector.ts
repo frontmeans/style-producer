@@ -1,6 +1,7 @@
 /**
  * @module style-producer
  */
+import { StypPureSelector } from './pure-selector';
 import { StypSelector } from './selector';
 
 /**
@@ -77,39 +78,21 @@ export namespace StypSubSelector {
   export type PseudoPrefix = ':' | '::';
 
   /**
-   * Structured CSS sub-selector's parameter part.
-   *
-   * This is a {@link StypSelector.Part structured CSS selector part} without qualifiers.
-   */
-  export interface Part extends StypSelector.Part {
-    readonly $?: undefined;
-  }
-
-  /**
-   * Normalized structured CSS sub-selector's parameter part.
-   *
-   * This is a {@link StypSelector.NormalizedPart normalized structured CSS selector part} without qualifiers.
-   */
-  export interface NormalizedPart extends StypSelector.NormalizedPart {
-    readonly $?: undefined;
-  }
-
-  /**
    * Structured CSS sub-selector's parameter.
    *
-   * This is a {@link StypSelector structured CSS selector} containing no qualifiers.
+   * This is a {@link StypPureSelector pure CSS selector} containing no qualifiers.
    *
    * Raw string parameter may be represented either by string, or by sub-selector part containing only `s` property.
    */
-  export type Parameter = readonly (string | Part | StypSelector.Combinator)[];
+  export type Parameter = readonly (string | StypPureSelector.Part | StypSelector.Combinator)[];
 
   /**
    * Normalized structured CSS sub-selector's parameter.
    *
-   * This is a {@link StypSelector.Normalized normalized structured CSS selector} containing no qualifiers.
+   * This is a {@link StypPureSelector.Normalized normalized pure CSS selector} containing no qualifiers.
    *
    * Raw string parameter is represented by sub-selector part containing only `s` property.
    */
-  export type NormalizedParameter = readonly (NormalizedPart | StypSelector.Combinator)[];
+  export type NormalizedParameter = readonly (StypPureSelector.NormalizedPart | StypSelector.Combinator)[];
 
 }

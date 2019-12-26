@@ -1,8 +1,7 @@
 /**
  * @module style-producer
  */
-import { NamespaceDef, QualifiedName } from 'namespace-aliaser';
-import { StypSubSelector } from './sub-selector';
+import { StypPureSelector } from './pure-selector';
 
 /**
  * Structured CSS selector.
@@ -52,42 +51,7 @@ export namespace StypSelector {
    *
    * All of the properties are optional.
    */
-  export interface Part {
-
-    /**
-     * Element namespace.
-     */
-    readonly ns?: string | NamespaceDef;
-
-    /**
-     * Element name.
-     *
-     * This is the same as `*` when absent.
-     */
-    readonly e?: QualifiedName;
-
-    /**
-     * Element identifier.
-     */
-    readonly i?: QualifiedName;
-
-    /**
-     * Element class name or names.
-     */
-    readonly c?: QualifiedName | readonly QualifiedName[];
-
-    /**
-     * Sub-selector(s) representing either attribute selector, pseudo-class, or pseudo-element.
-     */
-    readonly u?: StypSubSelector | readonly StypSubSelector[];
-
-    /**
-     * Raw CSS selector text to append to the end.
-     *
-     * When all other properties are omitted this one represents a raw CSS selector text. Otherwise it is appended
-     * to other selector parts representation.
-     */
-    readonly s?: string;
+  export interface Part extends StypPureSelector.Part {
 
     /**
      * Qualifier or qualifiers.
@@ -113,6 +77,8 @@ export namespace StypSelector {
    * - does not contain empty class names,
    * - does not contain empty class names array,
    * - class names are sorted,
+   * - does not contain empty sub-selectors array,
+   * - sub-selectors are normalized.
    * - does not contain empty qualifiers,
    * - does not contain empty qualifiers array,
    * - qualifiers are exposed, e.g. `foo:bar=baz` is exposed as three qualifiers: `foo`, `foo:bar`, and `foo:bar=baz`
@@ -120,26 +86,12 @@ export namespace StypSelector {
    *
    * The `stypSelector()` function always returns an array containing normalized parts.
    */
-  export interface NormalizedPart extends Part {
-
-    /**
-     * Array of element class names. Either absent, or non-empty and containing non-empty class names sorted
-     * alphabetically.
-     */
-    readonly c?: readonly [QualifiedName, ...QualifiedName[]];
+  export interface NormalizedPart extends StypPureSelector.NormalizedPart {
 
     /**
      * Array of qualifiers. Either absent, or non-empty and containing non-empty qualifiers sorted alphabetically.
      */
     readonly $?: readonly [string, ...string[]];
-
-    /**
-     * Array of normalized sub-selectors, each of which represents either attribute selector, pseudo-class,
-     * or pseudo-element.
-     *
-     * Either absent or non-empty.
-     */
-    readonly u?: readonly [StypSubSelector.Normalized, ...StypSubSelector.Normalized[]];
 
   }
 

@@ -2,6 +2,7 @@
  * @module style-producer
  */
 import { namesEqual, NamespaceDef, QualifiedName } from 'namespace-aliaser';
+import { StypPureSelector } from './pure-selector';
 import { StypSelector } from './selector';
 
 /**
@@ -13,7 +14,10 @@ import { StypSelector } from './selector';
  *
  * @returns `true` if selectors are equal, `false` otherwise.
  */
-export function stypSelectorsEqual(first: StypSelector.Normalized, second: StypSelector.Normalized): boolean {
+export function stypSelectorsEqual(
+    first: StypSelector.Normalized | StypPureSelector.Normalized,
+    second: StypSelector.Normalized | StypPureSelector.Normalized,
+): boolean {
   if (first.length !== second.length) {
     return false;
   }
