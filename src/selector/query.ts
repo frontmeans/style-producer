@@ -2,6 +2,7 @@
  * @module style-producer
  */
 import { namesEqual, NamespaceDef, QualifiedName } from 'namespace-aliaser';
+import { StypPureSelector } from './pure-selector';
 import { StypSelector } from './selector';
 import { normalizeStypSelectorPart } from './selector.impl';
 
@@ -69,7 +70,7 @@ export function stypQuery(query: StypQuery): StypQuery.Normalized {
 }
 
 /**
- * Checks whether the given structured CSS `selector` matches the target `query`.
+ * Checks whether the given structured CSS `selector` matches target `query`.
  *
  * @category CSS Rule
  * @param selector  Normalized structured CSS selector.
@@ -77,7 +78,10 @@ export function stypQuery(query: StypQuery): StypQuery.Normalized {
  *
  * @returns `true` if `selector` matches the `query`, or `false` otherwise.
  */
-export function stypSelectorMatches(selector: StypSelector.Normalized, query: StypQuery.Normalized): boolean {
+export function stypSelectorMatches(
+    selector: StypSelector.Normalized | StypPureSelector.Normalized,
+    query: StypQuery.Normalized,
+): boolean {
   if (!selector.length) {
     return false;
   }

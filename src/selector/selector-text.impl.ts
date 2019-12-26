@@ -1,3 +1,4 @@
+import cssesc from 'cssesc';
 import {
   css__naming,
   html__naming,
@@ -10,7 +11,8 @@ import { cssescId } from '../internal';
 import { StypRuleKey } from './rule-key';
 import { StypSelector } from './selector';
 import { StypSelectorFormat } from './selector-text';
-import { isCombinator } from './selector.impl';
+import { isCombinator, isPseudoSubSelector } from './selector.impl';
+import { StypSubSelector } from './sub-selector';
 
 const ruleKeyTextOpts: StypSelectorFormat = {
   qualify(qualifier: string) {
@@ -79,49 +81,93 @@ function formatItem(
     }: ItemFormat,
 ): string {
 
-  const { ns, e, i, c, s, $ } = item;
+  const { ns, e, i, c, s, u, $ } = item;
   let hasProperties = false;
-  let string = '';
+  let out = '';
 
   if (i) {
     hasProperties = true;
-    string += `#${cssescId(id__naming.name(i, nsAlias))}`;
+    out += `#${cssescId(id__naming.name(i, nsAlias))}`;
   }
   if (c) {
     hasProperties = true;
-    string = c.reduce<string>(
+    out = c.reduce<string>(
         (result, className) => `${result}.${cssescId(css__naming.name(className, nsAlias))}`,
-        string,
+        out,
+    );
+  }
+  if (u) {
+    hasProperties = true;
+
+    const subFormat: ItemFormat = { nsAlias };
+
+    out = u.reduce(
+        (result, sub) => formatSubSelector(result, sub, subFormat),
+        out,
     );
   }
   if (s) {
     hasProperties = true;
-    string += s;
+    out += s;
   }
   if (qualify && $) {
-    string = $.reduce((result, qualifier) => result + qualify(qualifier), string);
+    out = $.reduce((result, qualifier) => result + qualify(qualifier), out);
   }
   if (ns) {
 
     const alias = xmlNs(ns, nsAlias);
 
     if (alias) {
-      string = `${alias}|${e || '*'}${string}`;
+      out = `${alias}|${e || '*'}${out}`;
     } else {
-      string = qualifyElement();
+      out = qualifyElement();
     }
   } else {
-    string = qualifyElement();
+    out = qualifyElement();
   }
 
-  return string;
+  return out;
 
   function qualifyElement(): string {
     if (hasProperties) {
-      return `${e ? html__naming.name(e, nsAlias) : ''}${string}`;
+      return `${e ? html__naming.name(e, nsAlias) : ''}${out}`;
     }
-    return `${e ? html__naming.name(e, nsAlias) : '*'}${string}`;
+    return `${e ? html__naming.name(e, nsAlias) : '*'}${out}`;
   }
+}
+
+function formatSubSelector(
+    out: string,
+    sub: StypSubSelector.Normalized,
+    format: ItemFormat,
+): string {
+  if (isPseudoSubSelector(sub)) {
+    out += sub[0] + sub[1];
+
+    const len = sub.length;
+
+    if (len > 2) {
+      out += '(' + formatStypSelector(sub[2] as StypSubSelector.NormalizedParameter, format);
+      for (let i = 3; i < sub.length; ++i) {
+        out += ',' + formatStypSelector(sub[i] as StypSubSelector.NormalizedParameter, format);
+      }
+      out += ')';
+    }
+
+    return out;
+  }
+
+  const [attrName, attrOp, attrVal, attrFlag] = sub;
+
+  out += '[' + cssescId(attrName);
+  if (attrOp) {
+    out += attrOp + cssesc(attrVal!, { quotes: 'double', wrap: true });
+  }
+  if (attrFlag) {
+    out += ' ' + attrFlag;
+  }
+
+  return out + ']';
 }
 
 function xmlNs(ns: string | NamespaceDef, nsAlias: NamespaceAliaser): string | undefined {

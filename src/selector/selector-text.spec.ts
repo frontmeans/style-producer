@@ -55,7 +55,30 @@ describe('stypSelectorText', () => {
   it('formats classes from namespace', () => {
     expect(stypSelectorText({ c: ['foo', ['bar', ns]] })).toBe('.foo.bar\\@test');
   });
-  it('formats pseudo-items', () => {
+  it('formats attribute', () => {
+    expect(stypSelectorText({ u: ['attr'] })).toBe('[attr]');
+  });
+  it('escapes attribute name', () => {
+    expect(stypSelectorText({ u: ['test:attr'] })).toBe('[test\\:attr]');
+  });
+  it('escapes attribute value', () => {
+    expect(stypSelectorText({ u: ['attr', '=', '"value"', 'i'] })).toBe('[attr="\\"value\\"" i]');
+  });
+  it('formats pseudo-element', () => {
+    expect(stypSelectorText({ e: '*', u: ['::', 'visited'] })).toBe('*::visited');
+  });
+  it('formats pseudo-class with parameters', () => {
+    expect(stypSelectorText({
+      u: [':', 'is',
+        [{ c: 'custom' }],
+        [{ c: 'other' }],
+      ],
+    })).toBe(':is(.custom,.other)');
+  });
+  it('formats sub-selectors', () => {
+    expect(stypSelectorText({ u: [['attr'], ['::', 'after']] })).toBe('[attr]::after');
+  });
+  it('formats selector suffix', () => {
     expect(stypSelectorText({ e: 'a', s: ':hover' })).toBe('a:hover');
   });
   it('formats combinations', () => {

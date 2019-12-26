@@ -2,6 +2,7 @@
  * @module style-producer
  */
 import { NamespaceAliaser } from 'namespace-aliaser';
+import { StypPureSelector } from './pure-selector';
 import { StypSelector } from './selector';
 import { stypSelector } from './selector-constructor';
 import { formatStypSelector } from './selector-text.impl';
@@ -41,6 +42,6 @@ export interface StypSelectorFormat {
  *
  * @returns CSS selector string.
  */
-export function stypSelectorText(selector: StypSelector, format?: StypSelectorFormat): string {
+export function stypSelectorText(selector: StypSelector | StypPureSelector, format?: StypSelectorFormat): string {
   return formatStypSelector(stypSelector(selector), format);
 }

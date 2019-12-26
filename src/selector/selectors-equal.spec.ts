@@ -55,6 +55,27 @@ describe('stypSelectorsEqual', () => {
     expect(stypSelectorsEqual([{ c: ['a'] }], [{ s: 'some' }])).toBe(false);
     expect(stypSelectorsEqual([{ s: 'some' }], [{ c: ['a'] }])).toBe(false);
   });
+  it('compares attribute sub-selectors', () => {
+    expect(stypSelectorsEqual([{ u: [['attr']] }], [{ u: [['attr']] }])).toBe(true);
+    expect(stypSelectorsEqual([{ u: [['attr']] }], [{ u: [['attr2']] }])).toBe(false);
+    expect(stypSelectorsEqual([{ u: [['attr']] }], [{ u: [['attr', '=', 'value']] }])).toBe(false);
+    expect(stypSelectorsEqual([{ u: [['attr', '=', 'value']] }], [{ u: [['attr', '=', 'value2']] }])).toBe(false);
+    expect(stypSelectorsEqual([{ e: 'div', u: [['id']] }], [{ e: 'div' }])).toBe(false);
+    expect(stypSelectorsEqual([{ e: 'div' }], [{ e: 'div', u: [['id']] }])).toBe(false);
+    expect(stypSelectorsEqual([{ u: [['attr']] }], [{ u: [['attr'], ['attr2']] }])).toBe(false);
+  });
+  it('compares pseudo- sub-selectors', () => {
+    expect(stypSelectorsEqual([{ u: [[':', 'host']] }], [{ u: [[':', 'host']] }])).toBe(true);
+    expect(stypSelectorsEqual([{ u: [[':', 'before']] }], [{ u: [['::', 'before']] }])).toBe(false);
+    expect(stypSelectorsEqual(
+        [{ u: [[':', 'host', [{ c: ['active'] }]]] }],
+        [{ u: [[':', 'host', [{ c: ['active'] }]]] }],
+    )).toBe(true);
+    expect(stypSelectorsEqual(
+        [{ u: [[':', 'host', [{ c: ['active'] }]]] }],
+        [{ u: [[':', 'host', [{ c: ['inactive'] }]]] }],
+    )).toBe(false);
+  });
   it('compares qualifiers', () => {
     expect(stypSelectorsEqual([{ $: ['a'] }], [{ $: ['b'] }])).toBe(false);
     expect(stypSelectorsEqual([{ $: ['a'] }], [{ $: ['a', 'c'] }])).toBe(false);
