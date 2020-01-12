@@ -1,5 +1,6 @@
+import { immediateRenderScheduler } from 'render-scheduler';
 import { stypRoot, StypRule } from '../rule';
-import { cssStyle, removeStyleElements, scheduleNow, stylesheets } from '../spec';
+import { cssStyle, removeStyleElements, stylesheets } from '../spec';
 import { produceStyle } from './produce-style';
 import { StypRender } from './render';
 import SpyInstance = jest.SpyInstance;
@@ -40,7 +41,7 @@ describe('produceStyle', () => {
 
     const mockRender = jest.fn<void, Parameters<StypRender.Function>>();
 
-    produceStyle(root.rules, { render: mockRender, schedule: scheduleNow });
+    produceStyle(root.rules, { render: mockRender, scheduler: immediateRenderScheduler });
     expect(mockRender).toHaveBeenCalled();
   });
   it('uses the given render factory', () => {
@@ -48,7 +49,7 @@ describe('produceStyle', () => {
     const mockRender = jest.fn<void, Parameters<StypRender.Function>>();
     const mockCreate = jest.fn<StypRender.Function, [StypRule]>(() => mockRender);
 
-    produceStyle(root.rules, { render: { create: mockCreate }, schedule: scheduleNow });
+    produceStyle(root.rules, { render: { create: mockCreate }, scheduler: immediateRenderScheduler });
     expect(mockCreate).toHaveBeenCalledWith(root);
     expect(mockCreate).toHaveBeenCalledTimes(1);
     expect(mockRender).toHaveBeenCalled();
@@ -60,7 +61,7 @@ describe('produceStyle', () => {
     );
     const mockRender2 = jest.fn<void, Parameters<StypRender.Function>>();
 
-    produceStyle(root.rules, { render: [mockRender1, mockRender2], schedule: scheduleNow });
+    produceStyle(root.rules, { render: [mockRender1, mockRender2], scheduler: immediateRenderScheduler });
     expect(mockRender1).toHaveBeenCalled();
     expect(mockRender2).toHaveBeenCalled();
   });
@@ -85,12 +86,12 @@ describe('produceStyle', () => {
         { order: 2, render: mockRender1 },
         { order: 1, render: mockRender2 },
       ],
-      schedule: scheduleNow });
+      scheduler: immediateRenderScheduler });
     expect(calls).toEqual([2, 1]);
   });
   it('renders raw CSS text', () => {
     root.rules.add({ c: 'custom' }, 'font-size: 12px !important;');
-    produceStyle(root.rules, { schedule: scheduleNow });
+    produceStyle(root.rules, { scheduler: immediateRenderScheduler });
 
     const style = cssStyle('.custom');
 
@@ -99,7 +100,7 @@ describe('produceStyle', () => {
   });
   it('renders raw CSS text before CSS properties', () => {
     root.rules.add({ c: 'custom' }, { fontSize: '11px', $$css: 'font-weight: bold; font-size: 12px;' });
-    produceStyle(root.rules, { schedule: scheduleNow });
+    produceStyle(root.rules, { scheduler: immediateRenderScheduler });
 
     const style = cssStyle('.custom');
 
@@ -112,7 +113,7 @@ describe('produceStyle', () => {
       '@import:other.css': 'screen',
     });
     root.rules.add({ c: 'custom' });
-    produceStyle(root.rules, { schedule: scheduleNow });
+    produceStyle(root.rules, { scheduler: immediateRenderScheduler });
 
     stylesheets().forEach(sheet => {
       expect(sheet.cssRules[0].type).toBe(CSSRule.IMPORT_RULE);
