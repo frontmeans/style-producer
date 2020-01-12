@@ -1,7 +1,8 @@
 import { itsEmpty } from 'a-iterable';
+import { immediateRenderScheduler } from 'render-scheduler';
 import { stypRoot, StypRule } from '../rule';
 import { stypSelectorDisplayText } from '../selector/selector-text.impl';
-import { cssStyle, cssStyles, mediaRules, removeStyleElements, scheduleNow } from '../spec';
+import { cssStyle, cssStyles, mediaRules, removeStyleElements } from '../spec';
 import { produceStyle } from './produce-style';
 import { StypRender } from './render';
 import Mock = jest.Mock;
@@ -95,7 +96,7 @@ describe('stypRenderAtRules', () => {
     produceStyle(
         root.rules,
         {
-          schedule: scheduleNow,
+          scheduler: immediateRenderScheduler,
           render: [
             {
               order: -Infinity, // Before any render

@@ -5,6 +5,7 @@ import { itsEach, itsReduction, mapIt } from 'a-iterable';
 import { noop } from 'call-thru';
 import { AfterEvent, afterSupplied, eventSupply, EventSupply, onSupplied } from 'fun-events';
 import { NamespaceDef, newNamespaceAliaser } from 'namespace-aliaser';
+import { newRenderSchedule } from 'render-scheduler';
 import { StypProperties, StypRule, StypRules } from '../rule';
 import { StypSelector, stypSelector, StypSelectorFormat, stypSelectorText } from '../selector';
 import { isCombinator } from '../selector/selector.impl';
@@ -33,7 +34,7 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
     document = window.document,
     rootSelector = { e: 'body' },
     addStyleSheet = addStyleElement,
-    schedule = scheduleInAnimationFrame,
+    scheduler = newRenderSchedule,
     nsAlias = newNamespaceAliaser(),
   } = opts;
   const {
@@ -160,24 +161,13 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
 
     const [ reader, render ] = renderForRule(rule);
     let _sheetRef: StyleSheetRef | undefined;
-    let _rev = 0;
     const selector = ruleSelector(rule);
+    const schedule = scheduler({ window: view });
 
     return reader(renderProperties).whenOff(removeStyle);
 
     function renderProperties(properties: StypProperties) {
-
-      const rev = ++_rev;
-
-      schedule(renderScheduled);
-
-      function renderScheduled() {
-        if (_rev !== rev) {
-          // Properties changed since this operation scheduled.
-          // Skip their rendering.
-          return;
-        }
-
+      schedule(() => {
         if (_sheetRef) {
           clearProperties(_sheetRef.styleSheet);
         }
@@ -200,20 +190,21 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
         );
 
         producer.render(properties);
-      }
+      });
     }
 
     function removeStyle() {
-      ++_rev;
+      schedule(() => {
 
-      const sheetRef = _sheetRef;
+        const sheetRef = _sheetRef;
 
-      if (sheetRef) {
-        // Element removed before anything rendered.
-        // Should never happen for properly constructed rule.
-        _sheetRef = undefined;
-        return sheetRef.remove();
-      }
+        if (sheetRef) {
+          // Element removed before anything rendered.
+          // Should never happen for properly constructed rule.
+          _sheetRef = undefined;
+          return sheetRef.remove();
+        }
+      });
     }
 
     function clearProperties(sheet: CSSStyleSheet) {
@@ -266,10 +257,6 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
         specs[index].render(nextProducer, properties);
       };
     }
-  }
-
-  function scheduleInAnimationFrame(operation: () => void) {
-    view.requestAnimationFrame(operation);
   }
 }
 

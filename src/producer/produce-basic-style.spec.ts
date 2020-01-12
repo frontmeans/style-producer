@@ -2,9 +2,14 @@ import { itsEmpty } from 'a-iterable';
 import { noop } from 'call-thru';
 import { afterNever, trackValue } from 'fun-events';
 import { NamespaceDef } from 'namespace-aliaser';
+import {
+  immediateRenderScheduler,
+  newManualRenderScheduler,
+  ScheduledRender,
+} from 'render-scheduler';
 import { StypProperties, stypRoot, StypRule } from '../rule';
 import { stypSelector } from '../selector';
-import { cssStyle, cssStyles, removeStyleElements, scheduleNow, stylesheets } from '../spec';
+import { cssStyle, cssStyles, removeStyleElements, stylesheets } from '../spec';
 import { StypLength } from '../value/unit';
 import { produceBasicStyle } from './produce-basic-style';
 import { StypRender } from './render';
@@ -33,7 +38,7 @@ describe('produceBasicStyle', () => {
           root.rules,
           {
             render: mockRender,
-            schedule: scheduleNow,
+            scheduler: immediateRenderScheduler,
           },
       );
 
@@ -53,7 +58,7 @@ describe('produceBasicStyle', () => {
           root.rules,
           {
             render: mockRender,
-            schedule: scheduleNow,
+            scheduler: immediateRenderScheduler,
           },
       );
 
@@ -74,7 +79,7 @@ describe('produceBasicStyle', () => {
           root.rules,
           {
             nsAlias: mockNsAlias,
-            schedule: scheduleNow,
+            scheduler: immediateRenderScheduler,
             render(_producer) {
               producer = _producer;
             },
@@ -112,7 +117,7 @@ describe('produceBasicStyle', () => {
       produceBasicStyle(
           root.rules,
           {
-            schedule: scheduleNow,
+            scheduler: immediateRenderScheduler,
             addStyleSheet: mockAddStyleSheet,
           },
       );
@@ -195,7 +200,7 @@ describe('produceBasicStyle', () => {
           root.rules,
           {
             render: { order: -1, render: mockRender1, needs: mockRender2 },
-            schedule: scheduleNow,
+            scheduler: immediateRenderScheduler,
           },
       );
       expect(mockRender1).toHaveBeenCalledWith(producer, {});
@@ -223,7 +228,7 @@ describe('produceBasicStyle', () => {
               render1,
               render2,
             ],
-            schedule: scheduleNow,
+            scheduler: immediateRenderScheduler,
           },
       );
       expect(mockRender1).toHaveBeenCalledWith(producer, {});
@@ -233,7 +238,9 @@ describe('produceBasicStyle', () => {
     });
     it('handles premature rule removal', () => {
 
-      let action: () => void = noop;
+      let action: ScheduledRender = noop;
+      const scheduler = newManualRenderScheduler();
+      const schedule = scheduler();
 
       const render: StypRender.Factory = {
         create(): StypRender.Spec {
@@ -246,26 +253,27 @@ describe('produceBasicStyle', () => {
         },
       };
 
-      action();
-
+      scheduler.render();
       expect(mockRender1).not.toHaveBeenCalled();
 
       produceBasicStyle(root.rules, {
         render: render,
-        schedule(op) {
+        scheduler: () => op => {
 
           const prev = action;
 
-          action = () => {
-            prev();
-            op();
+          action = exec => {
+            prev(exec);
+            op(exec);
           };
+
+          schedule(action);
         },
       });
     });
 
     function testProduceStyle() {
-      produceBasicStyle(root.rules, { render: [mockRender1, mockRender2], schedule: scheduleNow });
+      produceBasicStyle(root.rules, { render: [mockRender1, mockRender2], scheduler: immediateRenderScheduler });
     }
   });
 
@@ -281,6 +289,9 @@ describe('produceBasicStyle', () => {
         operations.push(callback);
         return 0;
       });
+    });
+    afterEach(() => {
+      operations.forEach(o => o(0)); // Actually perform operations.
     });
 
     it('schedules in animation frame', () => {
@@ -298,27 +309,27 @@ describe('produceBasicStyle', () => {
 
   it('renders body rule by default', () => {
     root.add({ background: 'white' });
-    produceBasicStyle(root.rules, { schedule: scheduleNow });
+    produceBasicStyle(root.rules, { scheduler: immediateRenderScheduler });
     expect(cssStyle('body').background).toBe('white');
   });
   it('renders top-level rule', () => {
     root.add({ background: 'white' });
-    produceBasicStyle(root.rules, { schedule: scheduleNow, rootSelector: '.root' });
+    produceBasicStyle(root.rules, { scheduler: immediateRenderScheduler, rootSelector: '.root' });
     expect(cssStyle('.root').background).toBe('white');
   });
   it('renders root-combined rule', () => {
     root.rules.add(['>', { c: 'nested' }], { background: 'white' });
-    produceBasicStyle(root.rules, { schedule: scheduleNow, rootSelector: '.root' });
+    produceBasicStyle(root.rules, { scheduler: immediateRenderScheduler, rootSelector: '.root' });
     expect(cssStyle('.root>.nested').background).toBe('white');
   });
   it('renders rule', () => {
     root.rules.add({ c: 'custom' }, { display: 'block' });
-    produceBasicStyle(root.rules, { schedule: scheduleNow });
+    produceBasicStyle(root.rules, { scheduler: immediateRenderScheduler });
     expect(cssStyle('.custom').display).toBe('block');
   });
   it('renders prefixed properties', () => {
     root.rules.add({ c: 'custom' }, { MsCustom: 'ms', MozCustom: 'moz' });
-    produceBasicStyle(root.rules, { schedule: scheduleNow });
+    produceBasicStyle(root.rules, { scheduler: immediateRenderScheduler });
 
     const style = cssStyle('.custom');
 
@@ -327,7 +338,7 @@ describe('produceBasicStyle', () => {
   });
   it('does not render custom properties', () => {
     root.rules.add({ c: 'custom' }, { _custom: 'abstract-value.ts' });
-    produceBasicStyle(root.rules, { schedule: scheduleNow });
+    produceBasicStyle(root.rules, { scheduler: immediateRenderScheduler });
 
     const style = cssStyle('.custom');
 
@@ -335,7 +346,7 @@ describe('produceBasicStyle', () => {
   });
   it('renders important properties', () => {
     root.rules.add({ c: 'custom' }, { fontSize: '12px !important' });
-    produceBasicStyle(root.rules, { schedule: scheduleNow });
+    produceBasicStyle(root.rules, { scheduler: immediateRenderScheduler });
 
     const style = cssStyle('.custom');
 
@@ -344,7 +355,7 @@ describe('produceBasicStyle', () => {
   });
   it('renders prioritized properties', () => {
     root.rules.add({ c: 'custom' }, { fontSize: StypLength.of(12, 'px').prioritize(0.5) });
-    produceBasicStyle(root.rules, { schedule: scheduleNow });
+    produceBasicStyle(root.rules, { scheduler: immediateRenderScheduler });
 
     const style = cssStyle('.custom');
 
@@ -353,7 +364,7 @@ describe('produceBasicStyle', () => {
   });
   it('renders prioritized important properties', () => {
     root.rules.add({ c: 'custom' }, { fontSize: StypLength.of(12, 'px').prioritize(1.5) });
-    produceBasicStyle(root.rules, { schedule: scheduleNow });
+    produceBasicStyle(root.rules, { scheduler: immediateRenderScheduler });
 
     const style = cssStyle('.custom');
 
@@ -362,11 +373,11 @@ describe('produceBasicStyle', () => {
   });
   it('does not render undefined properties', () => {
     root.rules.add({ c: 'custom' }, { display: 'block', fontSize: undefined });
-    produceBasicStyle(root.rules, { schedule: scheduleNow });
+    produceBasicStyle(root.rules, { scheduler: immediateRenderScheduler });
     expect(cssStyle('.custom').fontSize).toBeUndefined();
   });
   it('appends rules', () => {
-    produceBasicStyle(root.rules, { schedule: scheduleNow });
+    produceBasicStyle(root.rules, { scheduler: immediateRenderScheduler });
     root.rules.add({ c: 'custom1' }, { display: 'block' });
     root.rules.add({ c: 'custom2' }, { display: 'inline-block' });
     expect(cssStyle('.custom1').display).toBe('block');
@@ -377,7 +388,7 @@ describe('produceBasicStyle', () => {
     const properties = trackValue<StypProperties>({ display: 'block' });
 
     root.rules.add({ c: 'custom' }, properties);
-    produceBasicStyle(root.rules, { schedule: scheduleNow });
+    produceBasicStyle(root.rules, { scheduler: immediateRenderScheduler });
     properties.it = { display: 'inline-block' };
 
     expect(cssStyle('.custom').display).toBe('inline-block');
@@ -385,7 +396,7 @@ describe('produceBasicStyle', () => {
   it('removes rule', () => {
 
     const rule = root.rules.add({ c: 'custom' }, { display: 'block' });
-    const supply = produceBasicStyle(root.rules, { schedule: scheduleNow });
+    const supply = produceBasicStyle(root.rules, { scheduler: immediateRenderScheduler });
     const onDone = jest.fn();
 
     supply.whenOff(onDone);
@@ -396,21 +407,33 @@ describe('produceBasicStyle', () => {
   });
   it('does not re-renders too often', () => {
 
-    const operations: (() => void)[] = [];
-    const mockScheduler = jest.fn<void, [() => void]>();
+    const operations: ScheduledRender[] = [];
+    const mockScheduler = jest.fn<void, [ScheduledRender]>();
 
     mockScheduler.mockImplementation(operation => operations.push(operation));
 
     const mockRender = jest.fn();
+    const scheduler = newManualRenderScheduler();
+    const schedule = scheduler();
     const properties = trackValue<StypProperties>({ display: 'block' });
     const rule = root.rules.add({ c: 'custom' }, properties);
 
-    produceBasicStyle(rule.rules, { schedule: mockScheduler, render: mockRender });
+    produceBasicStyle(
+        rule.rules,
+        {
+          scheduler: () => {
+            return jest.fn(render => {
+              operations.push(render);
+              schedule(render);
+            });
+          },
+          render: mockRender,
+        },
+    );
     properties.it = { display: 'inline-block' };
 
     expect(operations).toHaveLength(2);
-
-    operations.forEach(operation => operation());
+    scheduler.render();
     expect(mockRender).toHaveBeenCalledTimes(1);
   });
   it('removes styles when updates supply is cut off', () => {
@@ -419,7 +442,7 @@ describe('produceBasicStyle', () => {
 
     root.rules.add({ c: 'custom1' }, properties);
 
-    const supply = produceBasicStyle(root.rules, { schedule: scheduleNow });
+    const supply = produceBasicStyle(root.rules, { scheduler: immediateRenderScheduler });
 
     root.rules.add({ c: 'custom2' }, { width: '100%' });
     supply.off();

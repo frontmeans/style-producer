@@ -142,7 +142,6 @@ function onlyAtProperties(properties: StypProperties): StypProperties {
       },
       {},
   );
-
 }
 
 function isAtEntry(entry: ObjectEntry<StypProperties>): entry is ObjectEntry<StypProperties, string> {

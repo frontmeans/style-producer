@@ -2,6 +2,7 @@
  * @module style-producer
  */
 import { NamespaceAliaser, NamespaceDef } from 'namespace-aliaser';
+import { RenderScheduler } from 'render-scheduler';
 import { StypProperties, StypRule } from '../rule';
 import { StypSelector } from '../selector';
 import { StypRender } from './render';
@@ -128,15 +129,15 @@ export interface StypOptions {
   addStyleSheet?: (producer: StyleProducer) => StyleSheetRef;
 
   /**
-   * Schedules DOM operation.
+   * DOM render operations scheduler.
    *
-   * This is a function that is called each time DOM tree needs to be modified.
+   * Creates a render schedule per rule.
    *
-   * By default modifies DOM tree in batches scheduled by `window.requestAnimationFrame()` function.
+   * Uses `newRenderSchedule` by default.
    *
    * @param operation  A DOM tree manipulation operation to schedule.
    */
-  schedule?: (operation: () => void) => void;
+  scheduler?: RenderScheduler;
 
   /**
    * Render or render chain to use.
