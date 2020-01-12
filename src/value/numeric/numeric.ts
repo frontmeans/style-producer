@@ -169,7 +169,7 @@ export namespace StypDimension {
      * This method allows to use a dimension kind as {@link StypMapper.Mapping CSS property mapping}.
      *
      * Any scalar or non-numeric value is mapped to `undefined`. A numeric value is converted to this dimension by
-     * [[StypNumeric.toDim]] method.
+     * [[StypNumericStruct.toDim]] method.
      *
      * @param source  A raw property value that should be converted.
      *
