@@ -1,12 +1,7 @@
 import { itsEmpty } from 'a-iterable';
-import { noop } from 'call-thru';
 import { afterNever, trackValue } from 'fun-events';
 import { NamespaceDef } from 'namespace-aliaser';
-import {
-  immediateRenderScheduler,
-  newManualRenderScheduler,
-  ScheduledRender,
-} from 'render-scheduler';
+import { immediateRenderScheduler, newManualRenderScheduler, ScheduledRender } from 'render-scheduler';
 import { StypProperties, stypRoot, StypRule } from '../rule';
 import { stypSelector } from '../selector';
 import { cssStyle, cssStyles, removeStyleElements, stylesheets } from '../spec';
@@ -238,38 +233,24 @@ describe('produceBasicStyle', () => {
     });
     it('handles premature rule removal', () => {
 
-      let action: ScheduledRender = noop;
       const scheduler = newManualRenderScheduler();
-      const schedule = scheduler();
 
-      const render: StypRender.Factory = {
-        create(): StypRender.Spec {
-          return {
-            render: mockRender1,
-            read() {
-              return afterNever;
-            },
-          };
+      produceBasicStyle(root.rules, {
+        render: {
+          create(): StypRender.Spec {
+            return {
+              render: mockRender1,
+              read() {
+                return afterNever;
+              },
+            };
+          },
         },
-      };
+        scheduler,
+      });
 
       scheduler.render();
       expect(mockRender1).not.toHaveBeenCalled();
-
-      produceBasicStyle(root.rules, {
-        render: render,
-        scheduler: () => op => {
-
-          const prev = action;
-
-          action = exec => {
-            prev(exec);
-            op(exec);
-          };
-
-          schedule(action);
-        },
-      });
     });
 
     function testProduceStyle() {

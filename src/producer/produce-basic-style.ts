@@ -160,7 +160,7 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
   function renderRule(rule: StypRule): EventSupply {
 
     const [ reader, render ] = renderForRule(rule);
-    let _sheetRef: StyleSheetRef | undefined;
+    let sheetRef: StyleSheetRef | undefined;
     const selector = ruleSelector(rule);
     const schedule = scheduler({ window: view });
 
@@ -168,8 +168,8 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
 
     function renderProperties(properties: StypProperties) {
       schedule(() => {
-        if (_sheetRef) {
-          clearProperties(_sheetRef.styleSheet);
+        if (sheetRef) {
+          clearProperties(sheetRef.styleSheet);
         }
 
         const producer = styleProducer(
@@ -177,10 +177,10 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
             render,
             {
               get styleSheet() {
-                if (!_sheetRef) {
-                  _sheetRef = addStyleSheet(producer);
+                if (!sheetRef) {
+                  sheetRef = addStyleSheet(producer);
                 }
-                return _sheetRef.styleSheet;
+                return sheetRef.styleSheet;
               },
               get target() {
                 return this.styleSheet;
@@ -196,14 +196,14 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
     function removeStyle() {
       schedule(() => {
 
-        const sheetRef = _sheetRef;
+        const lastSheetRef = sheetRef;
 
-        if (sheetRef) {
-          // Element removed before anything rendered.
-          // Should never happen for properly constructed rule.
-          _sheetRef = undefined;
-          return sheetRef.remove();
+        if (lastSheetRef) {
+          sheetRef = undefined;
+          return lastSheetRef.remove();
         }
+        // Otherwise element is removed before anything rendered.
+        // Should never happen for properly constructed rule.
       });
     }
 
