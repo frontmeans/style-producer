@@ -139,7 +139,7 @@ function selfRuleList(rule: StypRule, all: AllRules): StypRuleList {
 }
 
 function allRules(rule: StypRule): StypRule[] {
-  return [...iterateAllRules(rule)];
+  return Array.from(iterateAllRules(rule));
 }
 
 function *iterateAllRules(rule: StypRule): IterableIterator<StypRule> {

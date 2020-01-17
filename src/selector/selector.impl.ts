@@ -186,9 +186,9 @@ function normalizeQualifiers(
   }
 
   if (!isReadonlyArray(qualifiers)) {
-    qualifiers = [...exposeQualifier(qualifiers)];
+    qualifiers = Array.from(exposeQualifier(qualifiers));
   } else {
-    qualifiers = [...new Set(flatMapIt(qualifiers, exposeQualifier))].sort();
+    qualifiers = Array.from(new Set(flatMapIt(qualifiers, exposeQualifier))).sort();
   }
 
   return isNotEmptyArray(qualifiers) ? qualifiers : undefined;
