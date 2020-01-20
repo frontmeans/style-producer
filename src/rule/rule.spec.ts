@@ -145,7 +145,7 @@ describe('StypRule', () => {
   describe('set', () => {
 
     beforeEach(() => {
-      rule = root.rules.add([ { e: 'element-1' }, '>', { e: 'element-1-1' }], { display: 'block' });
+      rule = root.rules.add([{ e: 'element-1' }, '>', { e: 'element-1-1' }], { display: 'block' });
     });
 
     it('replaces properties', async () => {
@@ -160,7 +160,7 @@ describe('StypRule', () => {
   describe('add', () => {
 
     beforeEach(() => {
-      rule = root.rules.add([ { e: 'element-1' }, '>', { e: 'element-1-1' }]);
+      rule = root.rules.add([{ e: 'element-1' }, '>', { e: 'element-1-1' }]);
     });
 
     let update: ValueTracker<StypProperties>;
@@ -171,7 +171,7 @@ describe('StypRule', () => {
     });
 
     beforeEach(() => {
-      root.rules.add([ { e: 'element-1', $: 'biz' }]);
+      root.rules.add([{ e: 'element-1', $: 'biz' }]);
     });
 
     it('applies update', async () => {

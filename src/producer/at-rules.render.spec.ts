@@ -60,7 +60,8 @@ describe('stypRenderAtRules', () => {
     expect(itsEmpty(mediaRules('screen and (max-width:620px)'))).toBe(false);
   });
   it('supports multiple at-rule qualifiers', () => {
-    root.rules.add([
+    root.rules.add(
+        [
           { c: 'screen-only', $: ['@media:scr=screen', '@media:sm=(max-width:620px)'] },
           '>',
           { c: 'nested' },

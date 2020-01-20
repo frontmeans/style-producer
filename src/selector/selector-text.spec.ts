@@ -69,7 +69,9 @@ describe('stypSelectorText', () => {
   });
   it('formats pseudo-class with parameters', () => {
     expect(stypSelectorText({
-      u: [':', 'is',
+      u: [
+        ':',
+        'is',
         [{ c: 'custom' }],
         [{ c: 'other' }],
       ],

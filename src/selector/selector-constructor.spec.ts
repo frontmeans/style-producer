@@ -89,16 +89,16 @@ describe('stypSelector', () => {
     expect(stypSelector({ e: 'span', c: ['', ''] })).toEqual([{ e: 'span' }]);
   });
   it('normalizes attribute selector', () => {
-    expect(stypSelector({ u: ['attr']})).toEqual([{ u: [['attr']]}]);
+    expect(stypSelector({ u: ['attr'] })).toEqual([{ u: [['attr']] }]);
   });
   it('normalizes attribute selector with value', () => {
-    expect(stypSelector({ u: ['attr', '^=', 'prefix', 'i']})).toEqual([{ u: [['attr', '^=', 'prefix', 'i']]}]);
+    expect(stypSelector({ u: ['attr', '^=', 'prefix', 'i'] })).toEqual([{ u: [['attr', '^=', 'prefix', 'i']] }]);
   });
   it('normalizes pseudo-class', () => {
-    expect(stypSelector({ u: [':', 'host']})).toEqual([{ u: [[':', 'host']]}]);
+    expect(stypSelector({ u: [':', 'host'] })).toEqual([{ u: [[':', 'host']] }]);
   });
   it('normalizes pseudo-element', () => {
-    expect(stypSelector({ e: 'a', u: ['::', 'before']})).toEqual([{ e: 'a', u: [['::', 'before']]}]);
+    expect(stypSelector({ e: 'a', u: ['::', 'before'] })).toEqual([{ e: 'a', u: [['::', 'before']] }]);
   });
   it('normalizes pseudo-class with raw parameter', () => {
     expect(stypSelector({
@@ -136,14 +136,18 @@ describe('stypSelector', () => {
   });
   it('normalizes pseudo-class with multiple parameters', () => {
     expect(stypSelector({
-      u: [':', 'is',
+      u: [
+        ':',
+        'is',
         [{ e: 'a', u: [':', 'active'] }],
         [{ e: 'a', u: [':', 'focus'] }],
       ],
     })).toEqual([
       {
         u: [
-          [':', 'is',
+          [
+            ':',
+            'is',
             [{ e: 'a', u: [[':', 'active']] }],
             [{ e: 'a', u: [[':', 'focus']] }],
           ],
@@ -178,14 +182,14 @@ describe('stypSelector', () => {
     expect(stypSelector({ e: 'span', s: '' })).toEqual([{ e: 'span' }]);
   });
   it('retains `*` element if only sub-selectors present and the first one is pseudo', () => {
-    expect(stypSelector({ e: '*', u: [':', 'hover'] })).toEqual([{ e: '*', u: [[':', 'hover']]}]);
+    expect(stypSelector({ e: '*', u: [':', 'hover'] })).toEqual([{ e: '*', u: [[':', 'hover']] }]);
   });
   it('removes `*` element if only sub-selectors present and the first one is attribute selector', () => {
-    expect(stypSelector({ e: '*', u: ['disabled'] })).toEqual([{ u: [['disabled']]}]);
+    expect(stypSelector({ e: '*', u: ['disabled'] })).toEqual([{ u: [['disabled']] }]);
   });
   it('removes `*` element if first sub-selector is pseudo, but other selectors present', () => {
     expect(stypSelector({ e: '*', c: 'hover', u: [':', 'hover'] })).toEqual([
-      { c: ['hover'], u: [[':', 'hover']]},
+      { c: ['hover'], u: [[':', 'hover']] },
     ]);
   });
   it('normalizes qualifiers', () => {
@@ -206,8 +210,12 @@ describe('stypSelector', () => {
   it('exposes qualifiers', () => {
     expect(stypSelector({ $: ['foo:def', 'foo:z', 'bar:abc=vvv:xxx'] })).toEqual([{
       $: [
-        'bar', 'bar:abc', 'bar:abc=vvv:xxx',
-        'foo', 'foo:def', 'foo:z',
+        'bar',
+        'bar:abc',
+        'bar:abc=vvv:xxx',
+        'foo',
+        'foo:def',
+        'foo:z',
       ],
     }]);
   });

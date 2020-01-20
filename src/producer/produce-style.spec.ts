@@ -81,12 +81,16 @@ describe('produceStyle', () => {
         },
     );
 
-    produceStyle(root.rules, {
-      render: [
-        { order: 2, render: mockRender1 },
-        { order: 1, render: mockRender2 },
-      ],
-      scheduler: immediateRenderScheduler });
+    produceStyle(
+        root.rules,
+        {
+          render: [
+            { order: 2, render: mockRender1 },
+            { order: 1, render: mockRender2 },
+          ],
+          scheduler: immediateRenderScheduler,
+        },
+    );
     expect(calls).toEqual([2, 1]);
   });
   it('renders raw CSS text', () => {

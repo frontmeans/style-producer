@@ -156,7 +156,7 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
 
   function renderRule(rule: StypRule): EventSupply {
 
-    const [ reader, render ] = renderForRule(rule);
+    const [reader, render] = renderForRule(rule);
     let sheetRef: StyleSheetRef | undefined;
     const selector = ruleSelector(rule);
     const schedule = scheduler({ window: view });

@@ -236,7 +236,7 @@ describe('StypMapper', () => {
       const mapping: StypMapper.Mappings<Result> = { $value(from) { return `${from}!`; } };
       const mapper = StypMapper.by(mapping);
 
-      expect(mapper({ $value: 'value' })).toEqual({ $value: 'value!'});
+      expect(mapper({ $value: 'value' })).toEqual({ $value: 'value!' });
     });
   });
 });
