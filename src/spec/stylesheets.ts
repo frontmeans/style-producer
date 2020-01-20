@@ -46,6 +46,6 @@ function isCSSMediaRule(rule: CSSRule): rule is CSSMediaRule {
   return rule.type === CSSRule.MEDIA_RULE;
 }
 
-export function removeStyleElements() {
+export function removeStyleElements(): void {
   AIterable.from(overArray(document.head.querySelectorAll('style'))).forEach(e => e.remove());
 }

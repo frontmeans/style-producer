@@ -22,16 +22,15 @@ export namespace StypFrequency {
 
 }
 
-export const StypFrequency: StypDimension.Kind.UnitZero<StypFrequency.Unit> =
-    /*#__PURE__*/ unitZeroDimensionKind({
+export const StypFrequency: StypDimension.Kind.UnitZero<StypFrequency.Unit> = (/*#__PURE__*/ unitZeroDimensionKind({
   zeroUnit: 'kHz',
   withPercent() {
-    return StypFrequencyPt;
+    return StypFrequencyPt;// eslint-disable-line @typescript-eslint/no-use-before-define
   },
   noPercent() {
     return StypFrequency;
   },
-});
+}));
 
 /**
  * Structured [frequency-percentage](https://developer.mozilla.org/en-US/docs/Web/CSS/frequency-percentage) CSS
@@ -52,8 +51,7 @@ export namespace StypFrequencyPt {
 
 }
 
-export const StypFrequencyPt: StypDimension.Kind.UnitZero<StypFrequencyPt.Unit> =
-    /*#__PURE__*/ unitZeroDimensionKind({
+export const StypFrequencyPt: StypDimension.Kind.UnitZero<StypFrequencyPt.Unit> = (/*#__PURE__*/ unitZeroDimensionKind({
   zeroUnit: 'kHz',
   withPercent() {
     return StypFrequencyPt;
@@ -61,4 +59,4 @@ export const StypFrequencyPt: StypDimension.Kind.UnitZero<StypFrequencyPt.Unit> 
   noPercent() {
     return StypFrequency;
   },
-});
+}));

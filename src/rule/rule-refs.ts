@@ -48,7 +48,7 @@ export class StypRuleRefs<R extends StypRuleRefs.Struct<R>> implements EventKeep
     const refs: { [K in keyof R]?: StypRuleRef<any> } = {};
 
     for (const key of Object.keys(referrers)) {
-      refs[key as keyof R] = referrers[key](root) as StypRuleRef<any>;
+      refs[key as keyof R] = referrers[key](root);
     }
 
     return new StypRuleRefs<R>(refs as { [K in keyof R]: StypRuleRef<R[K]> });

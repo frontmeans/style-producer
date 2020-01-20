@@ -122,8 +122,7 @@ export const RefStypRule = {
 
       class Ref extends StypRuleRef<T> {
 
-        // noinspection JSMethodCanBeStatic
-        get read() {
+        get read(): AfterEvent<[T]> {
           return read;
         }
 

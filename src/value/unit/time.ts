@@ -22,15 +22,14 @@ export namespace StypTime {
 
 }
 
-export const StypTime: StypDimension.Kind.UnitlessZero<StypTime.Unit> =
-    /*#__PURE__*/ unitlessZeroDimensionKind({
+export const StypTime: StypDimension.Kind.UnitlessZero<StypTime.Unit> = (/*#__PURE__*/ unitlessZeroDimensionKind({
   pt() {
-    return StypTimePt;
+    return StypTimePt;// eslint-disable-line @typescript-eslint/no-use-before-define
   },
   noPt() {
     return StypTime;
   },
-});
+}));
 
 /**
  * Structured [time-percentage](https://developer.mozilla.org/en-US/docs/Web/CSS/time-percentage) CSS property value.
@@ -50,12 +49,11 @@ export namespace StypTimePt {
 
 }
 
-export const StypTimePt: StypDimension.Kind.UnitlessZero<StypTimePt.Unit> =
-    /*#__PURE__*/ unitlessZeroDimensionKind({
+export const StypTimePt: StypDimension.Kind.UnitlessZero<StypTimePt.Unit> = (/*#__PURE__*/ unitlessZeroDimensionKind({
   pt() {
     return StypTimePt;
   },
   noPt() {
     return StypTime;
   },
-});
+}));

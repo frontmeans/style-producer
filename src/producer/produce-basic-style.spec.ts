@@ -253,7 +253,7 @@ describe('produceBasicStyle', () => {
       expect(mockRender1).not.toHaveBeenCalled();
     });
 
-    function testProduceStyle() {
+    function testProduceStyle(): void {
       produceBasicStyle(root.rules, { render: [mockRender1, mockRender2], scheduler: immediateRenderScheduler });
     }
   });
@@ -402,12 +402,10 @@ describe('produceBasicStyle', () => {
     produceBasicStyle(
         rule.rules,
         {
-          scheduler: () => {
-            return jest.fn(render => {
-              operations.push(render);
-              schedule(render);
-            });
-          },
+          scheduler: () => jest.fn(render => {
+            operations.push(render);
+            schedule(render);
+          }),
           render: mockRender,
         },
     );

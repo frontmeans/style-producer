@@ -55,38 +55,35 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
       rule: StypRule,
       render: StypRender.Function,
       production: {
-        styleSheet: CSSStyleSheet,
-        target: CSSStyleSheet | CSSRule,
-        selector: StypSelector.Normalized,
+        styleSheet: CSSStyleSheet;
+        target: CSSStyleSheet | CSSRule;
+        selector: StypSelector.Normalized;
       },
-  ) {
+  ): StyleProducer {
 
     class Styp implements StyleProducer {
 
-      constructor() {
-      }
-
-      get document() {
+      get document(): Document {
         return document;
       }
 
-      get parent() {
+      get parent(): ParentNode {
         return parent;
       }
 
-      get rule() {
+      get rule(): StypRule {
         return rule;
       }
 
-      get styleSheet() {
+      get styleSheet(): CSSStyleSheet {
         return production.styleSheet;
       }
 
-      get target() {
+      get target(): CSSStyleSheet | CSSRule {
         return production.target;
       }
 
-      get selector() {
+      get selector(): StypSelector.Normalized {
         return production.selector;
       }
 
@@ -127,7 +124,7 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
     return new Styp();
   }
 
-  function selectorText(selector: StypSelector.Normalized) {
+  function selectorText(selector: StypSelector.Normalized): string {
     return stypSelectorText(selector, format);
   }
 
@@ -166,7 +163,7 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
 
     return reader(renderProperties).whenOff(removeStyle);
 
-    function renderProperties(properties: StypProperties) {
+    function renderProperties(properties: StypProperties): void {
       schedule(() => {
         if (sheetRef) {
           clearProperties(sheetRef.styleSheet);
@@ -193,7 +190,7 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
       });
     }
 
-    function removeStyle() {
+    function removeStyle(): void {
       schedule(() => {
 
         const lastSheetRef = sheetRef;
@@ -207,7 +204,7 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
       });
     }
 
-    function clearProperties(sheet: CSSStyleSheet) {
+    function clearProperties(sheet: CSSStyleSheet): void {
       while (sheet.cssRules.length) {
         sheet.deleteRule(sheet.cssRules.length - 1);
       }

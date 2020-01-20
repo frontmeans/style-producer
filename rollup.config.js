@@ -2,7 +2,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import nodeResolve from '@rollup/plugin-node-resolve';
 import sourcemaps from 'rollup-plugin-sourcemaps';
 import ts from 'rollup-plugin-typescript2';
-import typescript from "typescript";
+import typescript from 'typescript';
 import pkg from './package.json';
 
 export default {

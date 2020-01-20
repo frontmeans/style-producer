@@ -17,7 +17,6 @@ export class StypURL extends StypValueStruct<StypURL> {
    */
   readonly url: string;
 
-  // noinspection JSMethodCanBeStatic
   /**
    * `url` value type.
    */
@@ -38,11 +37,12 @@ export class StypURL extends StypValueStruct<StypURL> {
    */
   static by(source: StypValue): StypURL | undefined {
     switch (typeof source) {
-      case 'string':
+      case 'string': {
 
         const [url, priority] = stypSplitPriority(source);
 
         return new StypURL(url, { priority });
+      }
       case 'object':
         if (source.type === 'url') {
           return source;

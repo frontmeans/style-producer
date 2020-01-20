@@ -108,6 +108,9 @@ export function stypSelectorMatches(
   return true;
 }
 
-function classesMatch(classes: readonly QualifiedName[] | undefined, query: readonly QualifiedName[]) {
+function classesMatch(
+    classes: readonly QualifiedName[] | undefined,
+    query: readonly QualifiedName[],
+): boolean | undefined {
   return classes && query.every(qClass => classes.find(mClass => namesEqual(qClass, mClass)));
 }

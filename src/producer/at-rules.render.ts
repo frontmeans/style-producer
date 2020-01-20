@@ -18,7 +18,7 @@ class AtRulesRender implements StypRender.Spec {
   constructor(private readonly _rule: StypRule) {
   }
 
-  read(properties: AfterEvent<[StypProperties]>) {
+  read(properties: AfterEvent<[StypProperties]>): AfterEvent<[StypProperties]> {
 
     let outer = this._rule.outer;
 
@@ -30,7 +30,7 @@ class AtRulesRender implements StypRender.Spec {
     return properties;
   }
 
-  render(producer: StyleProducer, properties: StypProperties) {
+  render(producer: StyleProducer, properties: StypProperties): void {
 
     const { selector } = producer;
     let { target } = producer;
@@ -69,9 +69,17 @@ class AtRulesRender implements StypRender.Spec {
 function buildAtSelector(
     properties: StypProperties,
     [key, [names, customQuery]]: [string, [Set<string>, string?]],
-) {
+): string {
 
   let query = '';
+  const addQuery = (q?: StypValue): void => {
+    if (q) {
+      if (query) {
+        query += ' and ';
+      }
+      query += q;
+    }
+  };
 
   for (const name of names) {
 
@@ -83,15 +91,6 @@ function buildAtSelector(
   addQuery(customQuery);
 
   return query ? `${key} ${query}` : key;
-
-  function addQuery(q?: StypValue) {
-    if (q) {
-      if (query) {
-        query += ' and ';
-      }
-      query += q;
-    }
-  }
 }
 
 /**
@@ -201,7 +200,7 @@ function extractPartAtSelectors(
   return { ...part, $: undefined };
 }
 
-function addAtSelector(atSelectors: Map<string, [Set<string>, string?]>, qualifier: string) {
+function addAtSelector(atSelectors: Map<string, [Set<string>, string?]>, qualifier: string): void {
 
   const eqIdx = qualifier.indexOf('=');
   let name: string;

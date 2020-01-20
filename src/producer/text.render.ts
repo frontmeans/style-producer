@@ -13,7 +13,7 @@ import { StyleProducer } from './style-producer';
  *
  * @category Rendering
  */
-export function stypRenderText(producer: StyleProducer, properties: StypProperties) {
+export function stypRenderText(producer: StyleProducer, properties: StypProperties): void {
 
   const css = properties.$$css;
 

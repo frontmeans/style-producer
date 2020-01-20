@@ -78,7 +78,7 @@ export abstract class StypNumericStruct<Self extends StypNumericStruct<Self, Uni
    */
   abstract toFormula(): string;
 
-  toString() {
+  toString(): string {
     return this.toFormula();
   }
 

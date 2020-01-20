@@ -12,14 +12,15 @@ export function unitlessZeroDimensionKind<Unit extends string>(
       pt,
       noPt,
     }: {
-      pt: () => StypDimension.Kind.UnitlessZero<Unit | '%'>,
-      noPt: () => StypDimension.Kind.UnitlessZero<Exclude<Unit, '%'>>,
+      pt: () => StypDimension.Kind.UnitlessZero<Unit | '%'>;
+      noPt: () => StypDimension.Kind.UnitlessZero<Exclude<Unit, '%'>>;
     },
 ): StypDimension.Kind.UnitlessZero<Unit> {
 
   const dimension: StypDimension.Kind.UnitlessZero<Unit> = {
 
     get zero(): StypZero<Unit> {
+      // eslint-disable-next-line @typescript-eslint/no-use-before-define
       return zero;
     },
 
@@ -32,6 +33,7 @@ export function unitlessZeroDimensionKind<Unit extends string>(
     },
 
     of(val: number, unit: Unit): StypDimension<Unit> | StypZero<Unit> {
+      // eslint-disable-next-line @typescript-eslint/no-use-before-define
       return val ? new StypDimension_(val, unit, { dim: this }) : zero;
     },
 
@@ -61,13 +63,13 @@ export function unitZeroDimensionKind<Unit extends string>(
       withPercent,
       noPercent,
     }: {
-      zeroUnit: Unit,
-      withPercent?: () => StypDimension.Kind.UnitZero<Unit | '%'>,
-      noPercent?: () => StypDimension.Kind.UnitZero<Exclude<Unit, '%'>>,
+      zeroUnit: Unit;
+      withPercent?: () => StypDimension.Kind.UnitZero<Unit | '%'>;
+      noPercent?: () => StypDimension.Kind.UnitZero<Exclude<Unit, '%'>>;
     },
 ): StypDimension.Kind.UnitZero<Unit> {
 
-  const dimension: StypDimension.Kind.UnitZero<Unit> = {
+  const dim: StypDimension.Kind.UnitZero<Unit> = {
 
     get pt() {
       return withPercent && withPercent();
@@ -78,7 +80,7 @@ export function unitZeroDimensionKind<Unit extends string>(
     },
 
     get zero(): StypDimension<Unit> {
-      return zero;
+      return zero;// eslint-disable-line @typescript-eslint/no-use-before-define
     },
 
     of(val: number, unit: Unit): StypDimension<Unit> {
@@ -97,7 +99,7 @@ export function unitZeroDimensionKind<Unit extends string>(
 
   };
 
-  const zero = new StypDimension_(0, zeroUnit, { dim: dimension });
+  const zero = new StypDimension_(0, zeroUnit, { dim });
 
-  return dimension;
+  return dim;
 }

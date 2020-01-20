@@ -185,7 +185,7 @@ describe('StypRule', () => {
 
       expect(await ruleProperties(rule)).toEqual({ ...update.it, ...update2 });
     });
-    it('sends updated properties', async () => {
+    it('sends updated properties', () => {
 
       const receiver = jest.fn();
 
@@ -244,7 +244,7 @@ describe('StypRule', () => {
     });
 
     describe('add', () => {
-      it('adds nested rule', () => {
+      it('adds nested rule with combinator', () => {
 
         const subSelector = stypSelector(['>', { c: 'nested' }]);
         const nested = rule.rules.add(subSelector);

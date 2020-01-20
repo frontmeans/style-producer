@@ -32,7 +32,7 @@ describe('stypRenderAtRules', () => {
     });
     doProduceStyle();
     expect(atSelector('.screen-only')).toBeNull();
-    expect(itsEmpty(mediaRules()));
+    expect(itsEmpty(mediaRules())).toBe(true);
   });
   it('appends at-rule to grouping target', () => {
     root.rules.add({ c: 'screen-only', $: '@media=screen' }, { display: 'block' });
@@ -89,10 +89,10 @@ describe('stypRenderAtRules', () => {
     root.rules.add({ c: 'qualified', $: ['non-at-rule'] });
     doProduceStyle();
     expect(atSelector('.qualified')).toBe('.qualified@non-at-rule');
-    expect(itsEmpty(mediaRules()));
+    expect(itsEmpty(mediaRules())).toBe(true);
   });
 
-  function doProduceStyle() {
+  function doProduceStyle(): void {
     produceStyle(
         root.rules,
         {

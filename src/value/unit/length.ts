@@ -24,15 +24,14 @@ export namespace StypLength {
 
 }
 
-export const StypLength: StypDimension.Kind.UnitlessZero<StypLength.Unit> =
-    /*#__PURE__*/ unitlessZeroDimensionKind({
+export const StypLength: StypDimension.Kind.UnitlessZero<StypLength.Unit> = (/*#__PURE__*/ unitlessZeroDimensionKind({
   pt() {
-    return StypLengthPt;
+    return StypLengthPt;// eslint-disable-line @typescript-eslint/no-use-before-define
   },
   noPt() {
     return StypLength;
   },
-});
+}));
 
 /**
  * Structured [length-percentage](https://developer.mozilla.org/en-US/docs/Web/CSS/length-percentage) CSS property
@@ -53,12 +52,13 @@ export namespace StypLengthPt {
 
 }
 
-export const StypLengthPt: StypDimension.Kind.UnitlessZero<StypLengthPt.Unit> =
+export const StypLengthPt: StypDimension.Kind.UnitlessZero<StypLengthPt.Unit> = (
     /*#__PURE__*/ unitlessZeroDimensionKind({
-  pt() {
-    return StypLengthPt;
-  },
-  noPt() {
-    return StypLength;
-  },
-});
+      pt() {
+        return StypLengthPt;
+      },
+      noPt() {
+        return StypLength;
+      },
+    })
+);

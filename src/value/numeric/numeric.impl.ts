@@ -229,7 +229,7 @@ export abstract class StypCalcBase<
 
   abstract toFormula(): string;
 
-  toString() {
+  toString(): string {
     return 'calc' + super.toString();
   }
 

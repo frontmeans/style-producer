@@ -20,7 +20,7 @@ export function stypRenderFactories(opts: StypOptions): readonly StypRenderSpecF
 
   return [...factories.values(), renderFactory(stypRenderProperties)].sort(compareRenders);
 
-  function addRenders(renders: StypRender | readonly StypRender[] | undefined) {
+  function addRenders(renders: StypRender | readonly StypRender[] | undefined): void {
     if (renders) {
       if (isReadonlyArray(renders)) {
         renders.forEach(addRender);
@@ -30,7 +30,7 @@ export function stypRenderFactories(opts: StypOptions): readonly StypRenderSpecF
     }
   }
 
-  function addRender(render: StypRender) {
+  function addRender(render: StypRender): void {
     if (factories.has(render)) {
       return;
     }

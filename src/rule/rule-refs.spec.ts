@@ -37,7 +37,7 @@ describe('StypRuleRefs', () => {
   });
 
   describe('read', () => {
-    it('reads properties', async () => {
+    it('reads properties', () => {
 
       const mockMapReceiver = jest.fn<void, [Props]>();
 

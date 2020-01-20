@@ -145,6 +145,7 @@ export class StypRGB extends StypColorStruct<StypRGB, StypRGB.Coords> implements
   }
 
   by(source: StypValue): StypColor {
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
     return StypColor.by(source) || this;
   }
 
@@ -300,6 +301,7 @@ export class StypHSL extends StypColorStruct<StypHSL, StypHSL.Coords> implements
   }
 
   by(source: StypValue): StypColor {
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
     return StypColor.by(source) || this;
   }
 
@@ -402,7 +404,7 @@ function coord(value: number, max: number): number {
   return Math.max(Math.min(value, max), 0);
 }
 
-function hueToRgb(p: number, q: number, t: number) {
+function hueToRgb(p: number, q: number, t: number): number {
 
   let newT = t;
 

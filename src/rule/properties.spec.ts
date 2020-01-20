@@ -94,7 +94,7 @@ describe('stypPropertiesBySpec', () => {
     expect(receiver).toHaveBeenCalledWith(updated);
     expect(receiver).toHaveBeenCalledTimes(2);
   });
-  it('handles raw properties', async () => {
+  it('handles raw properties', () => {
 
     const initial = { fontSize: '12px' };
     const tracker = trackValue<StypProperties | string>(initial);

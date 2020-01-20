@@ -18,13 +18,12 @@ import { StypRule } from './rule';
 /**
  * @internal
  */
-export const noStypProperties: AfterEvent<[StypProperties]> =
-    /*#__PURE__*/ afterThe({});
+export const noStypProperties: AfterEvent<[StypProperties]> = (/*#__PURE__*/ afterThe({}));
 
 /**
  * @internal
  */
-export function noStypPropertiesSpec() {
+export function noStypPropertiesSpec(): AfterEvent<[StypProperties]> {
   return noStypProperties;
 }
 

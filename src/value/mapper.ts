@@ -177,7 +177,5 @@ function mappingBy<R, K extends keyof R>(
 
   const type = typeof mapping;
 
-  return (from: StypValue): R[K] => {
-    return typeof from === type ? from as any : mapping;
-  };
+  return (from: StypValue): R[K] => typeof from === type ? from as any : mapping;
 }

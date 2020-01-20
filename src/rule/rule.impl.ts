@@ -5,6 +5,7 @@ import {
   afterEventBy,
   afterSupplied,
   EventEmitter,
+  OnEvent,
   OnEvent__symbol,
   trackValue,
   ValueTracker,
@@ -24,7 +25,7 @@ class AllRules extends StypRuleHierarchy {
   readonly self: StypRuleList;
   readonly read: AfterEvent<[AllRules]>;
 
-  get onUpdate() {
+  get onUpdate(): OnEvent<[StypRule[], StypRule[]]> {
     return this._updates.on;
   }
 
@@ -91,14 +92,14 @@ class AllRules extends StypRuleHierarchy {
     }).share();
   }
 
-  _add(rule: StypRule, sendUpdate: boolean) {
+  _add(rule: StypRule, sendUpdate: boolean): void {
     rule.rules.onUpdate((added, removed) => this._updates.send(added, removed));
     if (sendUpdate) {
       this._updates.send(allRules(rule), []);
     }
   }
 
-  _remove(reason?: any) {
+  _remove(reason?: any): void {
 
     const removed = allRules(this._root);
 
@@ -125,7 +126,7 @@ function selfRuleList(rule: StypRule, all: AllRules): StypRuleList {
 
   class Self implements StypRules {
 
-    get [OnEvent__symbol]() {
+    get [OnEvent__symbol](): OnEvent<[StypRule[], StypRule[]]> {
       return onUpdate.on;
     }
 
@@ -156,7 +157,7 @@ class NestedRules extends StypRuleList {
   private readonly _updates = new EventEmitter<[StypRule[], StypRule[]]>();
   private readonly _byKey = new Map<string, StypRule>();
 
-  get onUpdate() {
+  get onUpdate(): OnEvent<[StypRule[], StypRule[]]> {
     return this._updates.on;
   }
 
@@ -178,7 +179,7 @@ class NestedRules extends StypRuleList {
     return this._byKey.get(key);
   }
 
-  _add(key: string, rule: StypRule, sendUpdate: boolean) {
+  _add(key: string, rule: StypRule, sendUpdate: boolean): void {
     this._byKey.set(key, rule);
     rule.rules.onUpdate((_added, removed) => {
       if (removed[0] === rule) {
@@ -229,7 +230,7 @@ export class StypRule extends StypRule_ {
     return this._key;
   }
 
-  get empty() {
+  get empty(): boolean {
     return this._spec.it === noStypPropertiesSpec;
   }
 
@@ -261,7 +262,7 @@ export class StypRule extends StypRule_ {
     return this;
   }
 
-  remove(reason?: any) {
+  remove(reason?: any): this {
     this.rules._remove(reason);
     return this;
   }

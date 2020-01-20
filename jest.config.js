@@ -23,12 +23,12 @@ module.exports = {
     [
       'jest-junit',
       {
-        'suiteName': 'style-producer',
-        'outputDirectory': './target/test-results',
-        'classNameTemplate': '{classname}: {title}',
-        'titleTemplate': '{classname}: {title}',
-        'ancestorSeparator': ' › ',
-        'usePathForSuiteName': 'true',
+        suiteName: 'style-producer',
+        outputDirectory: './target/test-results',
+        classNameTemplate: '{classname}: {title}',
+        titleTemplate: '{classname}: {title}',
+        ancestorSeparator: ' › ',
+        usePathForSuiteName: 'true',
       },
     ],
   ],

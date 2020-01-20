@@ -17,7 +17,7 @@ describe('stypValuesEqual', () => {
     expect(stypValuesEqual(value, StypLength.of(1, 'em'))).toBe(false);
     expect(stypValuesEqual(value, value.important())).toBe(false);
   });
-  it('compares structured values', () => {
+  it('compares structured and unstructured values', () => {
 
     const value = StypLength.of(1, 'px');
 

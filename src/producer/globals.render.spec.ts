@@ -11,9 +11,7 @@ describe('stypRenderGlobals', () => {
 
   beforeEach(() => {
     sheet = {
-      insertRule: jest.fn((_rule: string, index: string) => {
-        return index;
-      }),
+      insertRule: jest.fn((_rule: string, index: number) => index),
     } as any;
     producer = {
       styleSheet: sheet,

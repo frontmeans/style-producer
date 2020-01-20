@@ -147,7 +147,7 @@ function formatSubSelector(
     const len = sub.length;
 
     if (len > 2) {
-      out += '(' + formatStypSelector(sub[2] as StypSubSelector.NormalizedParameter, format);
+      out += '(' + formatStypSelector(sub[2], format);
       for (let i = 3; i < sub.length; ++i) {
         out += ',' + formatStypSelector(sub[i] as StypSubSelector.NormalizedParameter, format);
       }
