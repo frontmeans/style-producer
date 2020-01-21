@@ -146,7 +146,7 @@ function allRules(rule: StypRule): StypRule[] {
 function *iterateAllRules(rule: StypRule): IterableIterator<StypRule> {
   yield rule;
   for (const nested of rule.rules.nested) {
-    yield *allRules(nested);
+    yield* allRules(nested);
   }
 }
 

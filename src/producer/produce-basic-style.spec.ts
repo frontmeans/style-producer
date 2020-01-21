@@ -211,7 +211,7 @@ describe('produceBasicStyle', () => {
         _producer.render(properties);
       });
 
-      const render1 = { order: -1, render: mockRender1, needs: [] as StypRender[]  };
+      const render1 = { order: -1, render: mockRender1, needs: [] as StypRender[] };
       const render2 = { order: 0, render: mockRender2, needs: render1 };
 
       render1.needs.push(render2);

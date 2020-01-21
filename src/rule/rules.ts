@@ -123,7 +123,7 @@ function rulesByList(sources: StypRules[]): StypRuleList {
     return source instanceof StypRuleList ? source : new Rules(source);
   }
   return new Rules({
-    * [Symbol.iterator](): IterableIterator<StypRule> {
+    *[Symbol.iterator](): IterableIterator<StypRule> {
       for (const rules of sources) {
         yield* rules;
       }
