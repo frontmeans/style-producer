@@ -1,4 +1,5 @@
 /**
+ * @packageDocumentation
  * @module style-producer
  */
 import { StypValue, StypValueStruct } from '../value';

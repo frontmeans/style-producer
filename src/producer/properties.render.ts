@@ -1,4 +1,5 @@
 /**
+ * @packageDocumentation
  * @module style-producer
  */
 import { filterIt, itsEach, ObjectEntry, overEntries } from 'a-iterable';

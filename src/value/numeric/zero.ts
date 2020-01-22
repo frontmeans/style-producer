@@ -1,4 +1,5 @@
 /**
+ * @packageDocumentation
  * @module style-producer
  */
 import { StypNumericStruct } from './';

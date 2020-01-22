@@ -1,4 +1,5 @@
 /**
+ * @packageDocumentation
  * @module style-producer
  */
 import { filterIt, itsEmpty, itsReduction, mapIt, overArray } from 'a-iterable';

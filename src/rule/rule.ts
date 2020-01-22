@@ -1,4 +1,5 @@
 /**
+ * @packageDocumentation
  * @module style-producer
  */
 import { AfterEvent, AfterEvent__symbol, EventKeeper, OnEvent, OnEvent__symbol } from 'fun-events';

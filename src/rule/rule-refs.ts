@@ -1,4 +1,5 @@
 /**
+ * @packageDocumentation
  * @module style-producer
  */
 import { afterAll, AfterEvent, AfterEvent__symbol, EventKeeper } from 'fun-events';

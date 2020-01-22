@@ -1,4 +1,5 @@
 /**
+ * @packageDocumentation
  * @module style-producer
  */
 import { NamespaceDef, QualifiedName } from 'namespace-aliaser';

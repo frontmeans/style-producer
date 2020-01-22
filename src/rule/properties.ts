@@ -1,4 +1,5 @@
 /**
+ * @packageDocumentation
  * @module style-producer
  */
 import { AfterEvent, EventKeeper, EventSender } from 'fun-events';

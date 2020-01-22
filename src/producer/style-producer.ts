@@ -1,4 +1,5 @@
 /**
+ * @packageDocumentation
  * @module style-producer
  */
 import { NamespaceAliaser, NamespaceDef } from 'namespace-aliaser';

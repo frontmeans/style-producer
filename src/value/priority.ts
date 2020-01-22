@@ -1,4 +1,5 @@
 /**
+ * @packageDocumentation
  * @module style-producer
  */
 import { IMPORTANT_CSS_SUFFIX } from '../internal';

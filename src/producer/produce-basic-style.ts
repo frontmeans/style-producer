@@ -1,4 +1,5 @@
 /**
+ * @packageDocumentation
  * @module style-producer
  */
 import { itsEach, itsReduction, mapIt } from 'a-iterable';
