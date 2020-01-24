@@ -36,4 +36,4 @@ node_modules
 !/d.ts
 # ...but exclude internals
 /d.ts/internal
-/d.ts/**/*.impl.d.ts
+/d.ts/**/*.impl.*
