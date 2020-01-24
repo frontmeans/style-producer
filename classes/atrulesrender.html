@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Coords | Style Producer</title>
+	<title>AtRulesRender | Style Producer</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,38 +54,28 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../classes/styphsl.html">StypHSL</a>
-				</li>
-				<li>
-					<a href="styphsl.coords.html">Coords</a>
+					<a href="atrulesrender.html">AtRulesRender</a>
 				</li>
 			</ul>
-			<h1>Interface Coords</h1>
+			<h1>Class AtRulesRender</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<section class="tsd-panel tsd-comment">
-				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#HSL_colors">HSL color</a> coordinates.</p>
-					</div>
-				</div>
-			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">Coords</span>
+						<span class="target">AtRulesRender</span>
 					</li>
 				</ul>
 			</section>
 			<section class="tsd-panel">
-				<h3>Implemented by</h3>
+				<h3>Implements</h3>
 				<ul class="tsd-hierarchy">
-					<li><a href="../classes/styphsl.html" class="tsd-signature-type">StypHSL</a></li>
+					<li><a href="../interfaces/styprender.spec.html" class="tsd-signature-type">Spec</a></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -93,78 +83,118 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
+							<h3>Constructors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="atrulesrender.html#constructor" class="tsd-kind-icon">constructor</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section tsd-is-private tsd-is-private-protected">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="styphsl.coords.html#a" class="tsd-kind-icon">a</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="styphsl.coords.html#h" class="tsd-kind-icon">h</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="styphsl.coords.html#l" class="tsd-kind-icon">l</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="styphsl.coords.html#s" class="tsd-kind-icon">s</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="atrulesrender.html#_rule" class="tsd-kind-icon">_rule</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Methods</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="atrulesrender.html#read" class="tsd-kind-icon">read</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="atrulesrender.html#render" class="tsd-kind-icon">render</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Constructors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
+					<a name="constructor" class="tsd-anchor"></a>
+					<h3>constructor</h3>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>AtRules<wbr>Render<span class="tsd-signature-symbol">(</span>_rule<span class="tsd-signature-symbol">: </span><a href="styprule.html" class="tsd-signature-type">StypRule</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="atrulesrender.html" class="tsd-signature-type">AtRulesRender</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/surol/style-producer/blob/52216af/src/producer/at-rules.render.ts#L17">src/producer/at-rules.render.ts:17</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>_rule: <a href="styprule.html" class="tsd-signature-type">StypRule</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="atrulesrender.html" class="tsd-signature-type">AtRulesRender</a></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group tsd-is-private tsd-is-private-protected">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="a" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> a</h3>
-					<div class="tsd-signature tsd-kind-icon">a<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="_rule" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _rule</h3>
+					<div class="tsd-signature tsd-kind-icon">_rule<span class="tsd-signature-symbol">:</span> <a href="styprule.html" class="tsd-signature-type">StypRule</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/surol/style-producer/blob/52216af/src/value/color/color.ts#L367">src/value/color/color.ts:367</a></li>
+							<li>Defined in <a href="https://github.com/surol/style-producer/blob/52216af/src/producer/at-rules.render.ts#L19">src/producer/at-rules.render.ts:19</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Alpha value between <code>0</code> and <code>1</code>. <code>1</code> (full opacity) by default.</p>
-						</div>
-					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="h" class="tsd-anchor"></a>
-					<h3>h</h3>
-					<div class="tsd-signature tsd-kind-icon">h<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/surol/style-producer/blob/52216af/src/value/color/color.ts#L352">src/value/color/color.ts:352</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Hue angle value in degrees.</p>
-						</div>
-					</div>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="read" class="tsd-anchor"></a>
+					<h3>read</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">read<span class="tsd-signature-symbol">(</span>properties<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">AfterEvent</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><a href="../modules/stypproperties.html" class="tsd-signature-type">StypProperties</a><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">AfterEvent</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><a href="../modules/stypproperties.html" class="tsd-signature-type">StypProperties</a><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/styprender.spec.html">Spec</a>.<a href="../interfaces/styprender.spec.html#read">read</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/surol/style-producer/blob/52216af/src/producer/at-rules.render.ts#L22">src/producer/at-rules.render.ts:22</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>properties: <span class="tsd-signature-type">AfterEvent</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><a href="../modules/stypproperties.html" class="tsd-signature-type">StypProperties</a><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">AfterEvent</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><a href="../modules/stypproperties.html" class="tsd-signature-type">StypProperties</a><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="l" class="tsd-anchor"></a>
-					<h3>l</h3>
-					<div class="tsd-signature tsd-kind-icon">l<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/surol/style-producer/blob/52216af/src/value/color/color.ts#L362">src/value/color/color.ts:362</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Lightness percentage.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="s" class="tsd-anchor"></a>
-					<h3>s</h3>
-					<div class="tsd-signature tsd-kind-icon">s<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/surol/style-producer/blob/52216af/src/value/color/color.ts#L357">src/value/color/color.ts:357</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Saturation percentage.</p>
-						</div>
-					</div>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="render" class="tsd-anchor"></a>
+					<h3>render</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">render<span class="tsd-signature-symbol">(</span>producer<span class="tsd-signature-symbol">: </span><a href="../interfaces/styleproducer.html" class="tsd-signature-type">StyleProducer</a>, properties<span class="tsd-signature-symbol">: </span><a href="../modules/stypproperties.html" class="tsd-signature-type">StypProperties</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/styprender.spec.html">Spec</a>.<a href="../interfaces/styprender.spec.html#render">render</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/surol/style-producer/blob/52216af/src/producer/at-rules.render.ts#L34">src/producer/at-rules.render.ts:34</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>producer: <a href="../interfaces/styleproducer.html" class="tsd-signature-type">StyleProducer</a></h5>
+								</li>
+								<li>
+									<h5>properties: <a href="../modules/stypproperties.html" class="tsd-signature-type">StypProperties</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
 				</section>
 			</section>
 		</div>
@@ -181,72 +211,19 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class">
-						<a href="../classes/styphsl.html" class="tsd-kind-icon">StypHSL</a>
+						<a href="atrulesrender.html" class="tsd-kind-icon">At<wbr>Rules<wbr>Render</a>
 						<ul>
-							<li class="current tsd-kind-interface tsd-parent-kind-class">
-								<a href="styphsl.coords.html" class="tsd-kind-icon">Coords</a>
-								<ul>
-									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="styphsl.coords.html#a" class="tsd-kind-icon">a</a>
-									</li>
-									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="styphsl.coords.html#h" class="tsd-kind-icon">h</a>
-									</li>
-									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="styphsl.coords.html#l" class="tsd-kind-icon">l</a>
-									</li>
-									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="styphsl.coords.html#s" class="tsd-kind-icon">s</a>
-									</li>
-								</ul>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class">
+								<a href="atrulesrender.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
-							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
-								<a href="../classes/styphsl.html#constructor" class="tsd-kind-icon">constructor</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="atrulesrender.html#_rule" class="tsd-kind-icon">_rule</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="../classes/styphsl.html#a" class="tsd-kind-icon">a</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="atrulesrender.html#read" class="tsd-kind-icon">read</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="../classes/styphsl.html#h" class="tsd-kind-icon">h</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="../classes/styphsl.html#l" class="tsd-kind-icon">l</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="../classes/styphsl.html#priority" class="tsd-kind-icon">priority</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="../classes/styphsl.html#s" class="tsd-kind-icon">s</a>
-							</li>
-							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-overwrite">
-								<a href="../classes/styphsl.html#hsl" class="tsd-kind-icon">hsl</a>
-							</li>
-							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-overwrite">
-								<a href="../classes/styphsl.html#rgb" class="tsd-kind-icon">rgb</a>
-							</li>
-							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-overwrite">
-								<a href="../classes/styphsl.html#type" class="tsd-kind-icon">type</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
-								<a href="../classes/styphsl.html#by" class="tsd-kind-icon">by</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="../classes/styphsl.html#important" class="tsd-kind-icon">important</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
-								<a href="../classes/styphsl.html#is" class="tsd-kind-icon">is</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
-								<a href="../classes/styphsl.html#prioritize" class="tsd-kind-icon">prioritize</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
-								<a href="../classes/styphsl.html#set" class="tsd-kind-icon">set</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
-								<a href="../classes/styphsl.html#tostring" class="tsd-kind-icon">to<wbr>String</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="../classes/styphsl.html#usual" class="tsd-kind-icon">usual</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="atrulesrender.html#render" class="tsd-kind-icon">render</a>
 							</li>
 						</ul>
 					</li>
