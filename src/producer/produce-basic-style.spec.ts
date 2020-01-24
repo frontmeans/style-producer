@@ -1,4 +1,5 @@
 import { itsEmpty } from 'a-iterable';
+import { noop } from 'call-thru';
 import { afterNever, trackValue } from 'fun-events';
 import { NamespaceDef } from 'namespace-aliaser';
 import { immediateRenderScheduler, newManualRenderScheduler, ScheduledRender } from 'render-scheduler';
@@ -283,7 +284,7 @@ describe('produceBasicStyle', () => {
 
       const doc = document.implementation.createHTMLDocument();
 
-      produceBasicStyle(root.rules, { document: doc });
+      produceBasicStyle(root.rules, { document: doc, render: noop });
       expect(rafSpy).toHaveBeenCalledWith(operations[0]);
     });
   });
