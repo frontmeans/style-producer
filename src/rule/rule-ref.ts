@@ -2,7 +2,7 @@
  * @packageDocumentation
  * @module style-producer
  */
-import { valueProvider } from 'call-thru';
+import { nextArg, valueProvider } from 'call-thru';
 import { afterAll, AfterEvent, AfterEvent__symbol, afterThe, EventKeeper, isEventKeeper } from 'fun-events';
 import { StypSelector } from '../selector';
 import { StypMapper } from '../value';
@@ -111,14 +111,14 @@ export const RefStypRule = {
 
     function ref(root: StypRule): StypRuleRef<T> {
 
-      const read = afterAll({
+      const read: AfterEvent<[T]> = afterAll({
         ms: createMappings(root),
         ps: root.rules.watch(selector),
       }).keep.thru(
           ({
             ms: [_mappings],
             ps: [_properties],
-          }) => StypMapper.map(_mappings, _properties),
+          }) => nextArg<T>(StypMapper.map<T>(_mappings, _properties)),
       );
 
       class Ref extends StypRuleRef<T> {

@@ -73,7 +73,7 @@ function preventDuplicates(properties: EventKeeper<[string | StypProperties]>): 
   );
 }
 
-function passNonDuplicate(): (update: StypProperties) => StypProperties | NextSkip<[StypProperties], StypProperties> {
+function passNonDuplicate(): (update: StypProperties) => StypProperties | NextSkip {
 
   let stored: StypProperties | undefined;
 
