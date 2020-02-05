@@ -24,9 +24,9 @@
     "hyphenate-style-name": "^1.0.3"
   },
   "peerDependencies": {
-    "a-iterable": "^2.5.0-dev.1",
-    "call-thru": "^3.0.0-dev.1",
-    "fun-events": "^7.3.0-dev.1",
+    "a-iterable": "^2.5.0",
+    "call-thru": "^3.0.0",
+    "fun-events": "^7.3.0",
     "namespace-aliaser": "^2.0.3",
     "render-scheduler": "^1.0.6"
   },
