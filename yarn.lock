@@ -1705,10 +1705,10 @@ fsevents@^2.1.2:
   resolved "https://registry.yarnpkg.com/fsevents/-/fsevents-2.1.2.tgz#4c0a1fb34bc68e543b4b82a9ec392bfbda840805"
   integrity sha512-R4wDiBwZ0KzpgOWetKDug1FZcYhqYnUYKtfZYt4mD5SBz76q0KR4Q9o7GIPamsVPGmW3EYPPJ0dOOjvx32ldZA==
 
-fun-events@^7.3.0:
-  version "7.3.0"
-  resolved "https://registry.yarnpkg.com/fun-events/-/fun-events-7.3.0.tgz#d468556ca1d01c86950a217c1dd6e77bcbf1db13"
-  integrity sha512-qPwloPVbjNNnVUgPVB3oGX3+gIpYXygti7lKQ6+oVU2WnLd4zIOGRzn/LLJbPmGpzIbWsiavnRipMTS/yRz+4w==
+fun-events@^7.3.1:
+  version "7.3.1"
+  resolved "https://registry.yarnpkg.com/fun-events/-/fun-events-7.3.1.tgz#c84c64c4eaaafa4b4aea7c40a162793c15e9ff66"
+  integrity sha512-HSdMKfr77L+VI3KajR4R6FFYawc95dQkClkb4cwsv0q0gu3y3eHy8v9GKYfzcY8DoUFonoX0cJMSOCXddaeD9Q==
 
 function-bind@^1.1.1:
   version "1.1.1"

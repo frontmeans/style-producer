@@ -5,7 +5,7 @@ import {
   afterEventBy,
   afterSupplied,
   EventEmitter,
-  nextOnEvent,
+  nextAfterEvent,
   OnEvent,
   OnEvent__symbol,
   trackValue,
@@ -254,7 +254,7 @@ export class StypRule extends StypRule_ {
     this._selector = selector;
     this._key = key;
     this._spec = trackValue(spec);
-    this._read = this._spec.read.keep.thru(builder => nextOnEvent(builder(this)));
+    this._read = this._spec.read.keep.thru(builder => nextAfterEvent(builder(this)));
     this._nested = new NestedRules(this);
   }
 
