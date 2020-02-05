@@ -1,7 +1,13 @@
 {
   "categorizeByGroup": true,
   "categoryOrder": ["CSS Rule", "CSS Value", "Rendering", "*"],
-  "exclude": ["**/spec/**/*.ts", "**/internal/**/*.ts", "**/*.impl.ts"],
+  "exclude": [
+    "**/index.ts",
+    "**/spec/**/*.ts",
+    "**/internal/**/*.ts",
+    "**/*.impl.ts",
+    "**/*.spec.ts",
+  ],
   "excludeNotExported": true,
   "mode": "file",
   "name": "Style Producer",
