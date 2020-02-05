@@ -545,10 +545,10 @@
     semver "^6.3.0"
     tsutils "^3.17.1"
 
-a-iterable@^2.4.5:
-  version "2.4.5"
-  resolved "https://registry.yarnpkg.com/a-iterable/-/a-iterable-2.4.5.tgz#7792acf5287cd8088816368f6a2a065026de4f86"
-  integrity sha512-zwDBMdyW3IdPAUZ1vwm6Hx1ZP86wKpMz/4EdCYKp/YInQQ4RS3i2dk5UEkPWFw2NvfFpcP7O9kvs1c1s/ip3rQ==
+a-iterable@^2.5.0:
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/a-iterable/-/a-iterable-2.5.0.tgz#5444a5b2f3c02c89b256ba5bff195bf74e306060"
+  integrity sha512-pTfVGVK+DN1Aq5HGRPtaiChkBKVytagA7L7DApw8sBB0a7QhXygLdkTtwmIp2yEVi0Yu/yP9sOgfH67D1ZnPcA==
 
 abab@^2.0.0:
   version "2.0.3"
@@ -905,10 +905,10 @@ cache-base@^1.0.1:
     union-value "^1.0.0"
     unset-value "^1.0.0"
 
-call-thru@^2.5.4:
-  version "2.5.4"
-  resolved "https://registry.yarnpkg.com/call-thru/-/call-thru-2.5.4.tgz#757e9d1fbc122d3ec2f08ae3500c3fb9c64d185a"
-  integrity sha512-XXooAz6cozDtII6R6xd4vhWJAlnPb5rBoOUoRgEpaV9K6SrloPy8wd6WUrrRBhcJ6kFdyY0ltVTFfzVXB6oIjw==
+call-thru@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/call-thru/-/call-thru-3.0.0.tgz#d680c27a87a83ae200dd1b055e09010864a175b8"
+  integrity sha512-zjNjjwHMhrB21laFW4hV/YEpGUAVFOdcAGPNDVhjkuqhI8a4eurRyFwJ3aoHBf4BLW4Uu8alJ4V0w5byioGFbg==
 
 callsites@^3.0.0:
   version "3.1.0"
@@ -1705,10 +1705,10 @@ fsevents@^2.1.2:
   resolved "https://registry.yarnpkg.com/fsevents/-/fsevents-2.1.2.tgz#4c0a1fb34bc68e543b4b82a9ec392bfbda840805"
   integrity sha512-R4wDiBwZ0KzpgOWetKDug1FZcYhqYnUYKtfZYt4mD5SBz76q0KR4Q9o7GIPamsVPGmW3EYPPJ0dOOjvx32ldZA==
 
-fun-events@^7.2.2:
-  version "7.2.2"
-  resolved "https://registry.yarnpkg.com/fun-events/-/fun-events-7.2.2.tgz#1f085bb9ad75239c1adce1efeca96a43447b1514"
-  integrity sha512-IXQ308AmrCd+M0oHwty6wu/uFA4yvBQ4yXASgFTQMPk3nOZtGmnuWV8KwmUyj6WPbb7gw/iypZladdQoC5F+2Q==
+fun-events@^7.3.0:
+  version "7.3.0"
+  resolved "https://registry.yarnpkg.com/fun-events/-/fun-events-7.3.0.tgz#d468556ca1d01c86950a217c1dd6e77bcbf1db13"
+  integrity sha512-qPwloPVbjNNnVUgPVB3oGX3+gIpYXygti7lKQ6+oVU2WnLd4zIOGRzn/LLJbPmGpzIbWsiavnRipMTS/yRz+4w==
 
 function-bind@^1.1.1:
   version "1.1.1"

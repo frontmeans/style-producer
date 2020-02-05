@@ -11,7 +11,7 @@ const externals = [
 ];
 
 function external(id) {
-  return externals.some(ext => id === ext || id.startsWith(ext + '/'));
+  return externals.some(ext => (id + '/').startsWith(ext + '/'));
 }
 
 export default {
