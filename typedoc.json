@@ -6,7 +6,7 @@
     "**/spec/**/*.ts",
     "**/internal/**/*.ts",
     "**/*.impl.ts",
-    "**/*.spec.ts",
+    "**/*.spec.ts"
   ],
   "excludeNotExported": true,
   "mode": "file",
