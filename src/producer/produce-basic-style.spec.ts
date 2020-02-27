@@ -2,7 +2,7 @@ import { itsEmpty } from 'a-iterable';
 import { noop } from 'call-thru';
 import { afterNever, trackValue } from 'fun-events';
 import { NamespaceDef } from 'namespace-aliaser';
-import { immediateRenderScheduler, newManualRenderScheduler, ScheduledRender } from 'render-scheduler';
+import { immediateRenderScheduler, newManualRenderScheduler, RenderShot } from 'render-scheduler';
 import { StypProperties, stypRoot, StypRule } from '../rule';
 import { stypSelector } from '../selector';
 import { cssStyle, cssStyles, removeStyleElements, stylesheets } from '../spec';
@@ -389,8 +389,8 @@ describe('produceBasicStyle', () => {
   });
   it('does not re-renders too often', () => {
 
-    const operations: ScheduledRender[] = [];
-    const mockScheduler = jest.fn<void, [ScheduledRender]>();
+    const operations: RenderShot[] = [];
+    const mockScheduler = jest.fn<void, [RenderShot]>();
 
     mockScheduler.mockImplementation(operation => operations.push(operation));
 
