@@ -28,7 +28,7 @@
     "call-thru": "^3.0.0",
     "fun-events": "^7.4.4",
     "namespace-aliaser": "^2.0.3",
-    "render-scheduler": "^1.0.6"
+    "render-scheduler": "^1.1.0"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^11.0.2",
