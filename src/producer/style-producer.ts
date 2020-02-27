@@ -6,7 +6,7 @@ import { NamespaceAliaser, NamespaceDef } from 'namespace-aliaser';
 import { RenderScheduler } from 'render-scheduler';
 import { StypProperties, StypRule } from '../rule';
 import { StypSelector } from '../selector';
-import { StypRender } from './render';
+import { StypRenderer } from './renderer';
 
 /**
  * CSS styles producer.
@@ -65,12 +65,12 @@ export interface StyleProducer {
   /**
    * Appends CSS rule to stylesheet.
    *
-   * This method relies on renders chain. For each render in chain this method calls the next one.
+   * This method relies on renderers chain. For each renderer in chain this method calls the next one.
    *
    * @param properties  CSS properties to render.
    * @param options  Rendering options.
    */
-  render(properties: StypProperties, options?: StypRender.Options): void;
+  render(properties: StypProperties, options?: StypRenderer.Options): void;
 
   /**
    * Tries to append CSS rule to `target` CSS stylesheet or rule.
@@ -130,20 +130,18 @@ export interface StypOptions {
   addStyleSheet?: (producer: StyleProducer) => StyleSheetRef;
 
   /**
-   * DOM render operations scheduler.
+   * DOM rendering operations scheduler.
    *
    * Creates a render schedule per rule.
    *
    * Uses `newRenderSchedule` by default.
-   *
-   * @param operation  A DOM tree manipulation operation to schedule.
    */
   scheduler?: RenderScheduler;
 
   /**
-   * Render or render chain to use.
+   * Renderer or renderer chain to use.
    */
-  render?: StypRender | readonly StypRender[];
+  renderer?: StypRenderer | readonly StypRenderer[];
 
   /**
    * Namespace aliaser to use.

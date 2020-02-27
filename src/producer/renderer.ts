@@ -8,21 +8,21 @@ import { StypSelector } from '../selector';
 import { StyleProducer } from './style-producer';
 
 /**
- * CSS stylesheet render interface.
+ * CSS stylesheet renderer interface.
  *
- * A render may be supplied to style producer to perform additional rendering tasks. E.g. to render raw CSS text,
+ * A renderer may be supplied to style producer to perform additional rendering tasks. E.g. to render raw CSS text,
  * or add media queries support.
  *
- * Renders are chained in order. When render calls [[StyleProducer.render]] method it actually calls the next
- * render in chain to render properties. Thus it may alter properties, CSS selector, or target stylesheet.
+ * Renderers are chained in order. When renderer calls [[StyleProducer.render]] method it actually calls the next
+ * renderer in chain to render properties. Thus it may alter properties, CSS selector, or target stylesheet.
  *
- * Render is either a function, a descriptor object, or render factory.
+ * Renderer is either a function, a descriptor object, or renderer factory.
  *
  * @category Rendering
  */
-export type StypRender = StypRender.Function | StypRender.Descriptor | StypRender.Factory;
+export type StypRenderer = StypRenderer.Function | StypRenderer.Descriptor | StypRenderer.Factory;
 
-export namespace StypRender {
+export namespace StypRenderer {
 
   /**
    * CSS rendering options.
@@ -48,9 +48,9 @@ export namespace StypRender {
   }
 
   /**
-   * CSS stylesheet render function.
+   * CSS stylesheet renderer function signature.
    *
-   * It should normally call a [[StyleProducer.render]] method as the last operation to allow other renders in chain
+   * It should normally call a [[StyleProducer.render]] method as the last operation to allow other renderers in chain
    * to do their job.
    */
   export type Function =
@@ -61,27 +61,27 @@ export namespace StypRender {
       (this: void, producer: StyleProducer, properties: StypProperties) => void;
 
   /**
-   * CSS stylesheet render descriptor.
+   * CSS stylesheet renderer descriptor.
    */
   export interface Descriptor {
 
     /**
-     * Render order.
+     * Rendering order.
      *
-     * Equals to zero when not specified, which means it will be invoked right before the basic render that renders CSS
-     * properties.
+     * Equals to zero when not specified, which means it will be invoked right before the basic renderer that renders
+     * CSS properties.
      */
     readonly order?: number;
 
     /**
-     * A render or renders this one requires.
+     * A renderer or renderers this one requires.
      */
-    readonly needs?: StypRender | StypRender[];
+    readonly needs?: StypRenderer | StypRenderer[];
 
     /**
-     * CSS stylesheet render method.
+     * Renders CSS stylesheet.
      *
-     * It should normally call a [[StyleProducer.render]] method as the last operation to allow other renders in chain
+     * It should normally call a [[StyleProducer.render]] method as the last operation to allow other renderers in chain
      * to do their job.
      *
      * @param producer  Style producer instance.
@@ -92,46 +92,46 @@ export namespace StypRender {
   }
 
   /**
-   * CSS stylesheet render factory.
+   * CSS stylesheet renderer factory.
    */
   export interface Factory {
 
     /**
-     * Render order.
+     * Rendering order.
      *
-     * Equals to zero when not specified, which means it will be invoked right before the basic render that renders CSS
-     * properties.
+     * Equals to zero when not specified, which means it will be invoked right before the basic renderer that renders
+     * CSS properties.
      */
     readonly order?: number;
 
     /**
-     * A render or renders this one requires.
+     * A renderer or renderers this one requires.
      */
-    readonly needs?: StypRender | StypRender[];
+    readonly needs?: StypRenderer | StypRenderer[];
 
     /**
-     * Creates CSS stylesheet render function.
+     * Creates CSS stylesheet renderer function.
      *
-     * This is called once per rule. The returned render function is used then to render and update a style for the
+     * This is called once per rule. The returned renderer function is used then to render and update a style for the
      * `rule`.
      *
-     * @param rule  CSS rule to create render for.
+     * @param rule  CSS rule to create renderer for.
      *
-     * @returns A render function or specifier to use.
+     * @returns A renderer function or specifier to use.
      */
     create(rule: StypRule): Function | Spec;
 
   }
 
   /**
-   * CSS stylesheet render specifier.
+   * CSS stylesheet renderer specifier.
    */
   export interface Spec {
 
     /**
-     * CSS stylesheet render method.
+     * Renders CSS stylesheet.
      *
-     * It should normally call a [[StyleProducer.render]] method as the last operation to allow other renders in chain
+     * It should normally call a [[StyleProducer.render]] method as the last operation to allow other renderers in chain
      * to do their job.
      *
      * @param producer  Style producer instance.
@@ -146,8 +146,8 @@ export namespace StypRender {
      *
      * When omitted the original properties will be used instead.
      *
-     * @param properties  `AfterEvent` registrar of CSS rule properties receivers. This is either the one from CSS rule,
-     * or the one returned from previous render specifier in render chain.
+     * @param properties  `AfterEvent` keeper of CSS rule properties. This is either the one from CSS rule,
+     * or the one returned from previous renderer specifier in renderers chain.
      *
      * @returns CSS properties event keeper.
      */

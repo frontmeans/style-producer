@@ -8,7 +8,7 @@ import { stypSelector } from '../selector';
 import { cssStyle, cssStyles, removeStyleElements, stylesheets } from '../spec';
 import { StypLength } from '../value/unit';
 import { produceBasicStyle } from './produce-basic-style';
-import { StypRender } from './render';
+import { StypRenderer } from './renderer';
 import { StyleProducer } from './style-producer';
 import Mock = jest.Mock;
 import SpyInstance = jest.SpyInstance;
@@ -28,17 +28,17 @@ describe('produceBasicStyle', () => {
   describe('document', () => {
     it('is current one by default', () => {
 
-      const mockRender = jest.fn();
+      const mockRenderer = jest.fn();
 
       produceBasicStyle(
           root.rules,
           {
-            render: mockRender,
+            renderer: mockRenderer,
             scheduler: immediateRenderScheduler,
           },
       );
 
-      expect(mockRender).toHaveBeenCalledWith(
+      expect(mockRenderer).toHaveBeenCalledWith(
           expect.objectContaining({ document }),
           expect.anything(),
       );
@@ -48,17 +48,17 @@ describe('produceBasicStyle', () => {
   describe('parent', () => {
     it('is document head by default', () => {
 
-      const mockRender = jest.fn();
+      const mockRenderer = jest.fn();
 
       produceBasicStyle(
           root.rules,
           {
-            render: mockRender,
+            renderer: mockRenderer,
             scheduler: immediateRenderScheduler,
           },
       );
 
-      expect(mockRender).toHaveBeenCalledWith(
+      expect(mockRenderer).toHaveBeenCalledWith(
           expect.objectContaining({ parent: document.head }),
           expect.anything(),
       );
@@ -76,7 +76,7 @@ describe('produceBasicStyle', () => {
           {
             nsAlias: mockNsAlias,
             scheduler: immediateRenderScheduler,
-            render(_producer) {
+            renderer(_producer) {
               producer = _producer;
             },
           },
@@ -122,72 +122,72 @@ describe('produceBasicStyle', () => {
     });
   });
 
-  describe('render', () => {
+  describe('renderer', () => {
 
-    let mockRender1: Mock<void, Parameters<StypRender.Function>>;
-    let mockRender2: Mock<void, Parameters<StypRender.Function>>;
+    let mockRenderer1: Mock<void, Parameters<StypRenderer.Function>>;
+    let mockRenderer2: Mock<void, Parameters<StypRenderer.Function>>;
 
     beforeEach(() => {
-      mockRender1 = jest.fn();
-      mockRender2 = jest.fn();
+      mockRenderer1 = jest.fn();
+      mockRenderer2 = jest.fn();
     });
 
-    it('passes properties to next render', () => {
+    it('passes properties to next renderer', () => {
 
       const properties: StypProperties = { $name: 'next' };
       let producer: StyleProducer = null!;
 
-      mockRender1.mockImplementation(_producer => {
+      mockRenderer1.mockImplementation(_producer => {
         producer = _producer;
         _producer.render(properties);
       });
 
       testProduceStyle();
-      expect(mockRender1).toHaveBeenCalledWith(producer, {});
-      expect(mockRender2).toHaveBeenCalledWith(producer, properties);
+      expect(mockRenderer1).toHaveBeenCalledWith(producer, {});
+      expect(mockRenderer2).toHaveBeenCalledWith(producer, properties);
     });
-    it('passes selector to next render', () => {
+    it('passes selector to next renderer', () => {
 
       const selector = stypSelector('test');
       let properties: StypProperties = {};
       let producer: StyleProducer = null!;
 
-      mockRender1.mockImplementation((_producer, _properties) => {
+      mockRenderer1.mockImplementation((_producer, _properties) => {
         producer = _producer;
         _producer.render(properties = _properties, { selector });
       });
 
       testProduceStyle();
-      expect(mockRender1).toHaveBeenCalledWith(producer, {});
-      expect(mockRender2).toHaveBeenCalledWith(
+      expect(mockRenderer1).toHaveBeenCalledWith(producer, {});
+      expect(mockRenderer2).toHaveBeenCalledWith(
           expect.objectContaining({ selector, target: producer.target }),
           properties,
       );
     });
-    it('passes target to next render', () => {
+    it('passes target to next renderer', () => {
 
       const target: CSSStyleSheet = { name: 'stylesheet' } as any;
       let properties: StypProperties = {};
       let producer: StyleProducer = null!;
 
-      mockRender1.mockImplementation((_producer, _properties) => {
+      mockRenderer1.mockImplementation((_producer, _properties) => {
         producer = _producer;
         _producer.render(properties = _properties, { target });
       });
 
       testProduceStyle();
-      expect(mockRender1).toHaveBeenCalledWith(producer, {});
-      expect(mockRender2).toHaveBeenCalledWith(
+      expect(mockRenderer1).toHaveBeenCalledWith(producer, {});
+      expect(mockRenderer2).toHaveBeenCalledWith(
           expect.objectContaining({ selector: producer.selector, target }),
           properties,
       );
     });
-    it('fulfills render requirements', () => {
+    it('fulfills renderer requirements', () => {
 
       const properties: StypProperties = { $name: 'next' };
       let producer: StyleProducer = null!;
 
-      mockRender1.mockImplementation(_producer => {
+      mockRenderer1.mockImplementation(_producer => {
         producer = _producer;
         _producer.render(properties);
       });
@@ -195,52 +195,52 @@ describe('produceBasicStyle', () => {
       produceBasicStyle(
           root.rules,
           {
-            render: { order: -1, render: mockRender1, needs: mockRender2 },
+            renderer: { order: -1, render: mockRenderer1, needs: mockRenderer2 },
             scheduler: immediateRenderScheduler,
           },
       );
-      expect(mockRender1).toHaveBeenCalledWith(producer, {});
-      expect(mockRender2).toHaveBeenCalledWith(producer, properties);
+      expect(mockRenderer1).toHaveBeenCalledWith(producer, {});
+      expect(mockRenderer2).toHaveBeenCalledWith(producer, properties);
     });
-    it('handles cyclic render requirements', () => {
+    it('handles cyclic renderer requirements', () => {
 
       const properties: StypProperties = { $name: 'next' };
       let producer: StyleProducer = null!;
 
-      mockRender1.mockImplementation(_producer => {
+      mockRenderer1.mockImplementation(_producer => {
         producer = _producer;
         _producer.render(properties);
       });
 
-      const render1 = { order: -1, render: mockRender1, needs: [] as StypRender[] };
-      const render2 = { order: 0, render: mockRender2, needs: render1 };
+      const renderer1 = { order: -1, render: mockRenderer1, needs: [] as StypRenderer[] };
+      const render2 = { order: 0, render: mockRenderer2, needs: renderer1 };
 
-      render1.needs.push(render2);
+      renderer1.needs.push(render2);
 
       produceBasicStyle(
           root.rules,
           {
-            render: [
-              render1,
+            renderer: [
+              renderer1,
               render2,
             ],
             scheduler: immediateRenderScheduler,
           },
       );
-      expect(mockRender1).toHaveBeenCalledWith(producer, {});
-      expect(mockRender1).toHaveBeenCalledTimes(1);
-      expect(mockRender2).toHaveBeenCalledWith(producer, properties);
-      expect(mockRender2).toHaveBeenCalledTimes(1);
+      expect(mockRenderer1).toHaveBeenCalledWith(producer, {});
+      expect(mockRenderer1).toHaveBeenCalledTimes(1);
+      expect(mockRenderer2).toHaveBeenCalledWith(producer, properties);
+      expect(mockRenderer2).toHaveBeenCalledTimes(1);
     });
     it('handles premature rule removal', () => {
 
       const scheduler = newManualRenderScheduler();
 
       produceBasicStyle(root.rules, {
-        render: {
-          create(): StypRender.Spec {
+        renderer: {
+          create(): StypRenderer.Spec {
             return {
-              render: mockRender1,
+              render: mockRenderer1,
               read() {
                 return afterNever;
               },
@@ -251,11 +251,11 @@ describe('produceBasicStyle', () => {
       });
 
       scheduler.render();
-      expect(mockRender1).not.toHaveBeenCalled();
+      expect(mockRenderer1).not.toHaveBeenCalled();
     });
 
     function testProduceStyle(): void {
-      produceBasicStyle(root.rules, { render: [mockRender1, mockRender2], scheduler: immediateRenderScheduler });
+      produceBasicStyle(root.rules, { renderer: [mockRenderer1, mockRenderer2], scheduler: immediateRenderScheduler });
     }
   });
 
@@ -284,7 +284,7 @@ describe('produceBasicStyle', () => {
 
       const doc = document.implementation.createHTMLDocument();
 
-      produceBasicStyle(root.rules, { document: doc, render: noop });
+      produceBasicStyle(root.rules, { document: doc, renderer: noop });
       expect(rafSpy).toHaveBeenCalledWith(operations[0]);
     });
   });
@@ -387,14 +387,14 @@ describe('produceBasicStyle', () => {
     expect(onDone).not.toHaveBeenCalled();
     expect(itsEmpty(cssStyles('.custom'))).toBe(true);
   });
-  it('does not re-renders too often', () => {
+  it('does not re-render too often', () => {
 
     const operations: RenderShot[] = [];
     const mockScheduler = jest.fn<void, [RenderShot]>();
 
     mockScheduler.mockImplementation(operation => operations.push(operation));
 
-    const mockRender = jest.fn();
+    const mockRenderer = jest.fn();
     const scheduler = newManualRenderScheduler();
     const schedule = scheduler();
     const properties = trackValue<StypProperties>({ display: 'block' });
@@ -403,18 +403,18 @@ describe('produceBasicStyle', () => {
     produceBasicStyle(
         rule.rules,
         {
-          scheduler: () => jest.fn(render => {
-            operations.push(render);
-            schedule(render);
+          scheduler: () => jest.fn(shot => {
+            operations.push(shot);
+            schedule(shot);
           }),
-          render: mockRender,
+          renderer: mockRenderer,
         },
     );
     properties.it = { display: 'inline-block' };
 
     expect(operations).toHaveLength(2);
     scheduler.render();
-    expect(mockRender).toHaveBeenCalledTimes(1);
+    expect(mockRenderer).toHaveBeenCalledTimes(1);
   });
   it('removes styles when updates supply is cut off', () => {
 

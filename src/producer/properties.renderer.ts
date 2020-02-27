@@ -11,7 +11,7 @@ import { StyleProducer } from './style-producer';
 /**
  * Renders CSS properties.
  *
- * This render is always present, so there is typically no need to use it explicitly.
+ * This renderer is always present, so there is typically no need to use it explicitly.
  *
  * @category Rendering
  */

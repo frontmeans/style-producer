@@ -10,11 +10,11 @@ import { mergeStypProperties } from '../rule/properties.impl';
 import { StypSelector, stypSelector } from '../selector';
 import { isCombinator } from '../selector/selector.impl';
 import { stypSplitPriority, StypValue } from '../value';
-import { StypRender } from './render';
-import { FIRST_RENDER_ORDER, isCSSRuleGroup } from './render.impl';
+import { StypRenderer } from './renderer';
+import { FIRST_RENDER_ORDER, isCSSRuleGroup } from './renderer.impl';
 import { StyleProducer } from './style-producer';
 
-class AtRulesRender implements StypRender.Spec {
+class AtRulesRenderer implements StypRenderer.Spec {
 
   constructor(private readonly _rule: StypRule) {
   }
@@ -95,7 +95,7 @@ function buildAtSelector(
 }
 
 /**
- * CSS stylesheet render of at-rules like `@media` queries.
+ * CSS stylesheet renderer of at-rules like `@media` queries.
  *
  * At-rules are represented by qualifiers which names start with `@` symbol. Qualifier names are used as at-rules keys,
  * and their values - as queries. If the rest of the selector is not empty, then properties are rendered in CSS
@@ -120,12 +120,12 @@ function buildAtSelector(
  *
  * @category Rendering
  */
-export const stypRenderAtRules: StypRender = {
+export const stypRenderAtRules: StypRenderer = {
 
   order: FIRST_RENDER_ORDER,
 
   create(rule) {
-    return new AtRulesRender(rule);
+    return new AtRulesRenderer(rule);
   },
 
 };

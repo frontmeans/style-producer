@@ -9,13 +9,13 @@ import { StypProperties } from '../rule';
 import { StypSelector } from '../selector';
 import { isCombinator } from '../selector/selector.impl';
 import { StypURL } from '../value';
-import { stypRenderGlobals } from './globals.render';
-import { StypRender } from './render';
-import { FIRST_RENDER_ORDER } from './render.impl';
+import { stypRenderGlobals } from './globals.renderer';
+import { StypRenderer } from './renderer';
+import { FIRST_RENDER_ORDER } from './renderer.impl';
 import { StyleProducer } from './style-producer';
 
 /**
- * CSS stylesheet render of global XML namespace definitions.
+ * CSS stylesheet renderer of global XML namespace definitions.
  *
  * Renders `@namespace` declarations for CSS selectors containing namespace definitions.
  *
@@ -23,7 +23,7 @@ import { StyleProducer } from './style-producer';
  *
  * @category Rendering
  */
-export const stypRenderXmlNs: StypRender = {
+export const stypRenderXmlNs: StypRenderer = {
 
   order: FIRST_RENDER_ORDER,
 

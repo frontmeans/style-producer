@@ -2,7 +2,7 @@ import { immediateRenderScheduler } from 'render-scheduler';
 import { stypRoot, StypRule } from '../rule';
 import { cssStyle, removeStyleElements, stylesheets } from '../spec';
 import { produceStyle } from './produce-style';
-import { StypRender } from './render';
+import { StypRenderer } from './renderer';
 import SpyInstance = jest.SpyInstance;
 
 describe('produceStyle', () => {
@@ -37,44 +37,44 @@ describe('produceStyle', () => {
     });
   });
 
-  it('uses the given render', () => {
+  it('uses the given renderer', () => {
 
-    const mockRender = jest.fn<void, Parameters<StypRender.Function>>();
+    const mockRenderer = jest.fn<void, Parameters<StypRenderer.Function>>();
 
-    produceStyle(root.rules, { render: mockRender, scheduler: immediateRenderScheduler });
-    expect(mockRender).toHaveBeenCalled();
+    produceStyle(root.rules, { renderer: mockRenderer, scheduler: immediateRenderScheduler });
+    expect(mockRenderer).toHaveBeenCalled();
   });
-  it('uses the given render factory', () => {
+  it('uses the given renderer factory', () => {
 
-    const mockRender = jest.fn<void, Parameters<StypRender.Function>>();
-    const mockCreate = jest.fn<StypRender.Function, [StypRule]>(() => mockRender);
+    const mockRenderer = jest.fn<void, Parameters<StypRenderer.Function>>();
+    const mockCreate = jest.fn<StypRenderer.Function, [StypRule]>(() => mockRenderer);
 
-    produceStyle(root.rules, { render: { create: mockCreate }, scheduler: immediateRenderScheduler });
+    produceStyle(root.rules, { renderer: { create: mockCreate }, scheduler: immediateRenderScheduler });
     expect(mockCreate).toHaveBeenCalledWith(root);
     expect(mockCreate).toHaveBeenCalledTimes(1);
-    expect(mockRender).toHaveBeenCalled();
+    expect(mockRenderer).toHaveBeenCalled();
   });
-  it('uses the given renders', () => {
+  it('uses the given renderers', () => {
 
-    const mockRender1 = jest.fn<void, Parameters<StypRender.Function>>(
+    const mockRender1 = jest.fn<void, Parameters<StypRenderer.Function>>(
         (producer, properties) => producer.render(properties),
     );
-    const mockRender2 = jest.fn<void, Parameters<StypRender.Function>>();
+    const mockRender2 = jest.fn<void, Parameters<StypRenderer.Function>>();
 
-    produceStyle(root.rules, { render: [mockRender1, mockRender2], scheduler: immediateRenderScheduler });
+    produceStyle(root.rules, { renderer: [mockRender1, mockRender2], scheduler: immediateRenderScheduler });
     expect(mockRender1).toHaveBeenCalled();
     expect(mockRender2).toHaveBeenCalled();
   });
-  it('orders renders', () => {
+  it('orders renderers', () => {
 
     const calls: number[] = [];
-    const mockRender1 = jest.fn<void, Parameters<StypRender.Function>>(
+    const mockRender1 = jest.fn<void, Parameters<StypRenderer.Function>>(
         (producer, properties) => {
           calls.push(1);
           producer.render(properties);
         },
     );
-    const mockRender2 = jest.fn<void, Parameters<StypRender.Function>>(
+    const mockRender2 = jest.fn<void, Parameters<StypRenderer.Function>>(
         (producer, properties) => {
           calls.push(2);
           producer.render(properties);
@@ -84,7 +84,7 @@ describe('produceStyle', () => {
     produceStyle(
         root.rules,
         {
-          render: [
+          renderer: [
             { order: 2, render: mockRender1 },
             { order: 1, render: mockRender2 },
           ],

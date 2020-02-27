@@ -1,81 +1,84 @@
 import { isReadonlyArray } from '../internal';
 import { StypRule } from '../rule';
-import { stypRenderProperties } from './properties.render';
-import { StypRender } from './render';
+import { stypRenderProperties } from './properties.renderer';
+import { StypRenderer } from './renderer';
 import { StypOptions } from './style-producer';
 
-export interface StypRenderSpecFactory extends StypRender.Factory {
-  create(rule: StypRule): StypRender.Spec;
+/**
+ * @internal
+ */
+export interface StypRendererSpecFactory extends StypRenderer.Factory {
+  create(rule: StypRule): StypRenderer.Spec;
 }
 
 /**
  * @internal
  */
-export function stypRenderFactories(opts: StypOptions): readonly StypRenderSpecFactory[] {
+export function stypRenderFactories(opts: StypOptions): readonly StypRendererSpecFactory[] {
 
-  const factories = new Map<StypRender, StypRenderSpecFactory>();
+  const factories = new Map<StypRenderer, StypRendererSpecFactory>();
 
-  addRenders(opts.render);
+  addRenderers(opts.renderer);
   factories.delete(stypRenderProperties);
 
-  return [...factories.values(), renderFactory(stypRenderProperties)].sort(compareRenders);
+  return [...factories.values(), rendererFactory(stypRenderProperties)].sort(compareRenderers);
 
-  function addRenders(renders: StypRender | readonly StypRender[] | undefined): void {
-    if (renders) {
-      if (isReadonlyArray(renders)) {
-        renders.forEach(addRender);
+  function addRenderers(renderers: StypRenderer | readonly StypRenderer[] | undefined): void {
+    if (renderers) {
+      if (isReadonlyArray(renderers)) {
+        renderers.forEach(addRenderer);
       } else {
-        addRender(renders);
+        addRenderer(renderers);
       }
     }
   }
 
-  function addRender(render: StypRender): void {
-    if (factories.has(render)) {
+  function addRenderer(renderer: StypRenderer): void {
+    if (factories.has(renderer)) {
       return;
     }
 
-    const factory = renderFactory(render);
+    const factory = rendererFactory(renderer);
 
-    factories.set(render, factory);
-    addRenders(factory.needs);
+    factories.set(renderer, factory);
+    addRenderers(factory.needs);
   }
 }
 
-function renderFactory(render: StypRender): StypRenderSpecFactory {
-  if (typeof render === 'function') {
+function rendererFactory(renderer: StypRenderer): StypRendererSpecFactory {
+  if (typeof renderer === 'function') {
     return {
       create() {
-        return { render };
+        return { render: renderer };
       },
     };
   }
-  if (isFactory(render)) {
+  if (isRendererFactory(renderer)) {
     return {
-      order: render.order,
-      needs: render.needs,
+      order: renderer.order,
+      needs: renderer.needs,
       create(rule) {
-        return renderSpec(render.create(rule));
+        return rendererSpec(renderer.create(rule));
       },
     };
   }
 
-  const doRender = render.render.bind(render);
+  const render = renderer.render.bind(renderer);
 
   return {
-    order: render.order,
-    needs: render.needs,
+    order: renderer.order,
+    needs: renderer.needs,
     create() {
-      return { render: doRender };
+      return { render };
     },
   };
 }
 
-function isFactory(render: StypRender): render is StypRender.Factory {
-  return 'create' in render;
+function isRendererFactory(renderer: StypRenderer): renderer is StypRenderer.Factory {
+  return 'create' in renderer;
 }
 
-function compareRenders(first: StypRender.Factory, second: StypRender.Factory): number {
+function compareRenderers(first: StypRenderer.Factory, second: StypRenderer.Factory): number {
 
   const firstOrder = first.order || 0;
   const secondOrder = second.order || 0;
@@ -83,6 +86,6 @@ function compareRenders(first: StypRender.Factory, second: StypRender.Factory): 
   return firstOrder > secondOrder ? 1 : firstOrder < secondOrder ? -1 : 0;
 }
 
-function renderSpec(render: ReturnType<StypRender.Factory['create']>): StypRender.Spec {
-  return typeof render === 'function' ? { render } : render;
+function rendererSpec(renderer: ReturnType<StypRenderer.Factory['create']>): StypRenderer.Spec {
+  return typeof renderer === 'function' ? { render: renderer } : renderer;
 }

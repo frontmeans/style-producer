@@ -167,7 +167,7 @@ order of properties is meaningful. But important property values are always take
 CSS rule properties may be defined by `EventKeeper` instance that may update properties dynamically.
 
 
-### Type-safe CSS Properties
+### Type-Safe CSS Properties
 
 Apart from being scalars and strings, CSS property values may be structured. I.e represented by objects implementing
 `StypValueStruct` interface.
@@ -266,37 +266,37 @@ mySettingsRef.set({
 Producing CSS
 -------------
 
-Stylesheets may be produced using a `produceStyle()` function. It accepts a dynamically updated list of CSS rules
+Stylesheets can be produced by `produceStyle()` function. It accepts a dynamically updated list of CSS rules
 (e.g. `StypRules.rules`) and optional set of options.
 
 By default, this function creates a `<style>` element per CSS rule inside a document head. This element's stylesheet
 is filled and updated with that rule contents. Once the rule is removed the corresponding `<style>` element is removed
 too.
 
-When CSS is no longer needed an `off()` method of the `EventInterest` instance returned from `produceStyle()` function
+When CSS is no longer needed an `off()` method of the `EventSupply` instance returned from `produceStyle()` function
 may be called. That would remove all `<style>` elements.
 
 
-### CSS Renders
+### CSS Renderers
 
-Style production is performed by CSS renders that may be specified as `render` option passed to `produceStyle()`.
+Style production is performed by CSS renderers that may be specified as `renderer` option passed to `produceStyle()`.
 
-By default all renders are enabled. This may be not what you need. In that case you can use a `produceBasicStyle()`
-function instead. The latter enables CSS properties rendering only. The rest of the necessary renders may be specified
-with the `render` option. This may reduce the final bundle size a little bit. 
+By default all renderers are enabled. This may be not what you need. In that case you can use a `produceBasicStyle()`
+function instead. The latter enables CSS properties rendering only. The rest of the necessary renderers may be specified
+with the `renderer` option. This may reduce the final bundle size a little bit. 
 
 
 ### Raw CSS Text
 
 CSS rule properties may be specified as raw text. This is the same as specifying a special `$$css` property.
 
-The `stypRenderText` render treats this text as plain CSS. This text is rendered before the rest of the properties,
+The `stypRenderText` renderer treats this text as plain CSS. This text is rendered before the rest of the properties,
 so the latter take precedence.
 
 
 ### [@media] and other [at-rules]
 
-There is no dedicated `@media` properties in structured CSS selector. However, a `stypRenderAtRules` render recognizes
+There is no dedicated `@media` properties in structured CSS selector. However, a `stypRenderAtRules` renderer recognizes
 selector qualifiers as [at-rules] and renders corresponding rules. So, CSS rule with selector like this:
 `{ c: 'screen-only', $: '@media=screen' }` would be rendered as
 ```css
@@ -307,7 +307,7 @@ selector qualifiers as [at-rules] and renders corresponding rules. So, CSS rule 
 }
 ``` 
 
-`stypRenderAtRules` render treats all qualifiers starting with `@` as at-rule qualifiers. So the qualifier name may
+`stypRenderAtRules` renderer treats all qualifiers starting with `@` as at-rule qualifiers. So the qualifier name may
 be e.g. [@keyframes]. The value of qualifier (if present) is used as at-rule query.
 
 It is also possible to specify at-rule query as CSS property. For that the property name should be the same as qualifier
@@ -323,8 +323,8 @@ dynamically update the at-rule queries.
 
 ### [@import] and [@namespace] rules
 
-These rules are rendered by `stypRenderGlobals` render. This render interprets properly named CSS properties and renders
-corresponding CSS rules. 
+These rules are rendered by `stypRenderGlobals` renderer. This renderer interprets properly named CSS properties and
+renders corresponding CSS rules. 
 
 **`@import:url`** property value is treated as media query and appended after stylesheet URL. I.e.
 ```json
@@ -399,4 +399,4 @@ The code above would add a unique prefix to the `button` element. E.g. by making
 The `i` (element identifier) and `c` (element class name(s)) properties accept namespaced values too.
 
 The `ns` (XML namespace) property accepts namespace (`NamespaceDef`) value instead of plain string. The corresponding
-[@namespace] rule would be rendered automatically by `stypRenderXmlNs` render.
+[@namespace] rule would be rendered automatically by `stypRenderXmlNs` renderer.

@@ -5,13 +5,13 @@
 import { EventSupply } from 'fun-events';
 import { isReadonlyArray } from '../internal';
 import { StypRules } from '../rule';
-import { stypRenderAtRules } from './at-rules.render';
-import { stypRenderGlobals } from './globals.render';
+import { stypRenderAtRules } from './at-rules.renderer';
+import { stypRenderGlobals } from './globals.renderer';
 import { produceBasicStyle } from './produce-basic-style';
-import { StypRender } from './render';
+import { StypRenderer } from './renderer';
 import { StypOptions } from './style-producer';
-import { stypRenderText } from './text.render';
-import { stypRenderXmlNs } from './xml-ns.render';
+import { stypRenderText } from './text.renderer';
+import { stypRenderXmlNs } from './xml-ns.renderer';
 
 /**
  * Produces and dynamically updates CSS stylesheets based on the given CSS rules.
@@ -19,8 +19,8 @@ import { stypRenderXmlNs } from './xml-ns.render';
  * Appends `<style>` element(s) to the given parent DOM node (`document.head` by default) and updates them when CSS
  * rules change.
  *
- * This function enables all default renders. E.g. the one supporting raw CSS text rules. If you don't need all of them
- * you may prefer a [[produceBasicStyle]] variant of this function.
+ * This function enables all default renderers. E.g. the one supporting raw CSS text rules. If some of them are not
+ * needed a [[produceBasicStyle]] variant of this function may be used instead.
  *
  * @category Rendering
  * @param rules  CSS rules to produce stylesheets for. This can be e.g. a [[StypRule.rules]] to render all rules,
@@ -30,23 +30,23 @@ import { stypRenderXmlNs } from './xml-ns.render';
  * @returns Styles supply. Once cut off (i.e. its `off()` method is called) the produced stylesheets are removed.
  */
 export function produceStyle(rules: StypRules, opts: StypOptions = {}): EventSupply {
-  return produceBasicStyle(rules, { ...opts, render: defaultRenders(opts.render) });
+  return produceBasicStyle(rules, { ...opts, renderer: defaultRenderers(opts.renderer) });
 }
 
-function defaultRenders(render: StypRender | readonly StypRender[] | undefined): readonly StypRender[] {
+function defaultRenderers(renderer: StypRenderer | readonly StypRenderer[] | undefined): readonly StypRenderer[] {
 
-  const result: StypRender[] = [
+  const result: StypRenderer[] = [
     stypRenderAtRules,
     stypRenderXmlNs,
     stypRenderGlobals,
     stypRenderText,
   ];
 
-  if (render) {
-    if (isReadonlyArray(render)) {
-      result.push(...render);
+  if (renderer) {
+    if (isReadonlyArray(renderer)) {
+      result.push(...renderer);
     } else {
-      result.push(render);
+      result.push(renderer);
     }
   }
 

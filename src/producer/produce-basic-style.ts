@@ -11,16 +11,15 @@ import { StypProperties, StypRule, StypRules } from '../rule';
 import { StypSelector, stypSelector, StypSelectorFormat, stypSelectorText } from '../selector';
 import { isCombinator } from '../selector/selector.impl';
 import { stypRenderFactories } from './options.impl';
-import { StypRender } from './render';
-import { isCSSRuleGroup } from './render.impl';
+import { isCSSRuleGroup } from './renderer.impl';
+import { StypRenderer } from './renderer';
 import { StyleProducer, StyleSheetRef, StypOptions } from './style-producer';
 
 /**
  * Produces and dynamically updates basic CSS stylesheets based on the given CSS rules.
  *
- * Unlike [[produceStyle]], this function does not enable renders but the basic one which just renders CSS properties.
- * You can enable only renders you need. This is useful only if you are not going to use all of them and want to save
- * the bundle size.
+ * Unlike [[produceStyle]], this function does not enable renderers but the basic one which just renders CSS properties.
+ * Only select renderers can be enabled. This can be used to save a bundle size.
  *
  * @category Rendering
  * @param rules  CSS rules to produce stylesheets for. This can be e.g. a [[StypRule.rules]] to render all rules,
@@ -54,7 +53,7 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
 
   function styleProducer(
       rule: StypRule,
-      render: StypRender.Function,
+      renderer: StypRenderer.Function,
       production: {
         styleSheet: CSSStyleSheet;
         target: CSSStyleSheet | CSSRule;
@@ -92,16 +91,20 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
         return nsAlias(ns);
       }
 
-      render(properties: StypProperties, options?: StypRender.Options): void {
+      render(properties: StypProperties, options?: StypRenderer.Options): void {
         if (!options) {
-          render(this, properties);
+          renderer(this, properties);
         } else {
-          render(
-              styleProducer(rule, render, {
-                styleSheet: production.styleSheet,
-                target: options.target || production.target,
-                selector: options.selector || production.selector,
-              }),
+          renderer(
+              styleProducer(
+                  rule,
+                  renderer,
+                  {
+                    styleSheet: production.styleSheet,
+                    target: options.target || production.target,
+                    selector: options.selector || production.selector,
+                  },
+              ),
               properties,
           );
         }
@@ -157,7 +160,7 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
 
   function renderRule(rule: StypRule): EventSupply {
 
-    const [reader, render] = renderForRule(rule);
+    const [reader, renderer] = rendererForRule(rule);
     let sheetRef: StyleSheetRef | undefined;
     const selector = ruleSelector(rule);
     const schedule = scheduler({ window: view });
@@ -172,7 +175,7 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
 
         const producer = styleProducer(
             rule,
-            render,
+            renderer,
             {
               get styleSheet() {
                 if (!sheetRef) {
@@ -228,7 +231,7 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
     return selector;
   }
 
-  function renderForRule(rule: StypRule): [AfterEvent<[StypProperties]>, StypRender.Function] {
+  function rendererForRule(rule: StypRule): [AfterEvent<[StypProperties]>, StypRenderer.Function] {
 
     const specs = factories.map(factory => factory.create(rule));
     const reader = specs.reduce(
@@ -238,19 +241,19 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
 
     return [reader, renderAt(0)];
 
-    function renderAt(index: number): StypRender.Function {
+    function renderAt(index: number): StypRenderer.Function {
       return (producer, properties) => {
 
         const nextIndex = index + 1;
-        let nextRender: StypRender.Function;
+        let nextRenderer: StypRenderer.Function;
 
         if (nextIndex === factories.length) {
-          nextRender = noop;
+          nextRenderer = noop;
         } else {
-          nextRender = renderAt(nextIndex);
+          nextRenderer = renderAt(nextIndex);
         }
 
-        const nextProducer = styleProducer(producer.rule, nextRender, producer);
+        const nextProducer = styleProducer(producer.rule, nextRenderer, producer);
 
         specs[index].render(nextProducer, properties);
       };

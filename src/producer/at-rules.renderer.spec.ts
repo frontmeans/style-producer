@@ -4,7 +4,7 @@ import { stypRoot, StypRule } from '../rule';
 import { stypSelectorDisplayText } from '../selector/selector-text.impl';
 import { cssStyle, cssStyles, mediaRules, removeStyleElements } from '../spec';
 import { produceStyle } from './produce-style';
-import { StypRender } from './render';
+import { StypRenderer } from './renderer';
 import Mock = jest.Mock;
 
 describe('stypRenderAtRules', () => {
@@ -15,10 +15,10 @@ describe('stypRenderAtRules', () => {
     root = stypRoot();
   });
 
-  let mockRender: Mock<void, Parameters<StypRender.Function>>;
+  let mockRenderer: Mock<void, Parameters<StypRenderer.Function>>;
 
   beforeEach(() => {
-    mockRender = jest.fn((producer, properties) => producer.render(properties));
+    mockRenderer = jest.fn((producer, properties) => producer.render(properties));
   });
 
   afterEach(() => {
@@ -27,7 +27,7 @@ describe('stypRenderAtRules', () => {
 
   it('does not append at-rules to non-grouping target', () => {
     root.rules.add({ c: 'screen-only', $: '@media=screen' }, { display: 'block' });
-    mockRender.mockImplementation((producer, properties) => {
+    mockRenderer.mockImplementation((producer, properties) => {
       producer.render(properties, { target: producer.addRule() });
     });
     doProduceStyle();
@@ -98,10 +98,10 @@ describe('stypRenderAtRules', () => {
         root.rules,
         {
           scheduler: immediateRenderScheduler,
-          render: [
+          renderer: [
             {
-              order: -Infinity, // Before any render
-              render: mockRender,
+              order: -Infinity, // Before any renderer
+              render: mockRenderer,
             },
             {
               order: -1,

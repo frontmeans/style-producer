@@ -1,9 +1,9 @@
 import { NamespaceAliaser, NamespaceDef, newNamespaceAliaser } from 'namespace-aliaser';
 import { StypSelector } from '../selector';
 import { StypURL } from '../value';
-import { StypRender } from './render';
+import { StypRenderer } from './renderer';
 import { StyleProducer } from './style-producer';
-import { stypRenderXmlNs } from './xml-ns.render';
+import { stypRenderXmlNs } from './xml-ns.renderer';
 import Mocked = jest.Mocked;
 
 describe('stypRenderXmlNs', () => {
@@ -29,13 +29,13 @@ describe('stypRenderXmlNs', () => {
     } as any;
   });
 
-  let render: StypRender.Function;
+  let renderer: StypRenderer.Function;
 
   beforeEach(() => {
 
-    const renderDesc = stypRenderXmlNs as StypRender.Descriptor;
+    const renderDesc = stypRenderXmlNs as StypRenderer.Descriptor;
 
-    render = renderDesc.render.bind(renderDesc);
+    renderer = renderDesc.render.bind(renderDesc);
   });
 
   it('renders XML namespaces', () => {
@@ -44,7 +44,7 @@ describe('stypRenderXmlNs', () => {
 
     selector = [{ ns: ns, e: 'some' }];
 
-    render(producer, { property: 'abstract-value.ts' });
+    renderer(producer, { property: 'abstract-value.ts' });
     expect(producer.render).toHaveBeenCalledWith({
       '@namespace:test': new StypURL('test/ns'),
       property: 'abstract-value.ts',

@@ -5,13 +5,13 @@
 import { overEntries } from 'a-iterable';
 import { StypProperties } from '../rule';
 import { stypSplitPriority, StypURL, StypValue } from '../value';
-import { stypRenderAtRules } from './at-rules.render';
-import { StypRender } from './render';
-import { FIRST_RENDER_ORDER } from './render.impl';
+import { stypRenderAtRules } from './at-rules.renderer';
+import { StypRenderer } from './renderer';
+import { FIRST_RENDER_ORDER } from './renderer.impl';
 import { StyleProducer } from './style-producer';
 
 /**
- * CSS stylesheet render of global at-rules.
+ * CSS stylesheet renderer of global at-rules.
  *
  * It renders at-rules that should stay at the top level:
  * - `@namespace`
@@ -56,7 +56,7 @@ import { StyleProducer } from './style-producer';
  *
  * @category Rendering
  */
-export const stypRenderGlobals: StypRender = {
+export const stypRenderGlobals: StypRenderer = {
 
   order: FIRST_RENDER_ORDER + 1,
 
