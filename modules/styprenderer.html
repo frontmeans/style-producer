@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Options | Style Producer</title>
+	<title>StypRenderer | Style Producer</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,13 +54,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/styprender.html">StypRender</a>
-				</li>
-				<li>
-					<a href="styprender.options.html">Options</a>
+					<a href="styprenderer.html">StypRenderer</a>
 				</li>
 			</ul>
-			<h1>Interface Options</h1>
+			<h1>Module StypRenderer</h1>
 		</div>
 	</div>
 </header>
@@ -70,65 +67,93 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>CSS rendering options.</p>
+						<p>CSS stylesheet renderer interface.</p>
 					</div>
-					<p>These are the options passed to <a href="styleproducer.html#render">StyleProducer.render</a> method.</p>
+					<p>A renderer may be supplied to style producer to perform additional rendering tasks. E.g. to render raw CSS text,
+					or add media queries support.</p>
+					<p>Renderers are chained in order. When renderer calls <a href="../interfaces/styleproducer.html#render">StyleProducer.render</a> method it actually calls the next
+					renderer in chain to render properties. Thus it may alter properties, CSS selector, or target stylesheet.</p>
+					<p>Renderer is either a function, a descriptor object, or renderer factory.</p>
 				</div>
-			</section>
-			<section class="tsd-panel tsd-hierarchy">
-				<h3>Hierarchy</h3>
-				<ul class="tsd-hierarchy">
-					<li>
-						<span class="target">Options</span>
-					</li>
-				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Properties</h3>
+							<h3>Interfaces</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="styprender.options.html#selector" class="tsd-kind-icon">selector</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="styprender.options.html#target" class="tsd-kind-icon">target</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/styprenderer.descriptor.html" class="tsd-kind-icon">Descriptor</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/styprenderer.factory.html" class="tsd-kind-icon">Factory</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/styprenderer.options.html" class="tsd-kind-icon">Options</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/styprenderer.spec.html" class="tsd-kind-icon">Spec</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Type aliases</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="styprenderer.html#function" class="tsd-kind-icon">Function</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="selector" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> selector</h3>
-					<div class="tsd-signature tsd-kind-icon">selector<span class="tsd-signature-symbol">:</span> <a href="../modules/stypselector.html#normalized" class="tsd-signature-type">Normalized</a></div>
+				<h2>Type aliases</h2>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
+					<a name="function" class="tsd-anchor"></a>
+					<h3>Function</h3>
+					<div class="tsd-signature tsd-kind-icon">Function<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, producer<span class="tsd-signature-symbol">: </span><a href="../interfaces/styleproducer.html" class="tsd-signature-type">StyleProducer</a>, properties<span class="tsd-signature-symbol">: </span><a href="stypproperties.html" class="tsd-signature-type">StypProperties</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/surol/style-producer/blob/4b29bdf/src/producer/render.ts#L46">src/producer/render.ts:46</a></li>
+							<li>Defined in <a href="https://github.com/surol/style-producer/blob/093a249/src/producer/renderer.ts#L56">src/producer/renderer.ts:56</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Normalized CSS selector of the rule to render.</p>
+							<p>CSS stylesheet renderer function signature.</p>
 						</div>
-						<p>When omitted the one from style producer is used.</p>
+						<p>It should normally call a <a href="../interfaces/styleproducer.html#render">StyleProducer.render</a> method as the last operation to allow other renderers in chain
+						to do their job.</p>
 					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="target" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> target</h3>
-					<div class="tsd-signature tsd-kind-icon">target<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">CSSStyleSheet</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">CSSRule</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/surol/style-producer/blob/4b29bdf/src/producer/render.ts#L39">src/producer/render.ts:39</a></li>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-siganture">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-alias">
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, producer<span class="tsd-signature-symbol">: </span><a href="../interfaces/styleproducer.html" class="tsd-signature-type">StyleProducer</a>, properties<span class="tsd-signature-symbol">: </span><a href="stypproperties.html" class="tsd-signature-type">StypProperties</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<div class="tsd-comment tsd-typography">
+										</div>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>this: <span class="tsd-signature-type">void</span></h5>
+											</li>
+											<li>
+												<h5>producer: <a href="../interfaces/styleproducer.html" class="tsd-signature-type">StyleProducer</a></h5>
+												<div class="tsd-comment tsd-typography">
+													<div class="lead">
+														<p>Style producer instance.</p>
+													</div>
+												</div>
+											</li>
+											<li>
+												<h5>properties: <a href="stypproperties.html" class="tsd-signature-type">StypProperties</a></h5>
+												<div class="tsd-comment tsd-typography">
+													<div class="lead">
+														<p>CSS properties to render.</p>
+													</div>
+												</div>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+									</li>
+								</ul>
+							</li>
 						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>CSS stylesheet or rule to add properties to.</p>
-						</div>
-						<p>When omitted the one from style producer is used.</p>
 					</div>
 				</section>
 			</section>
@@ -140,92 +165,80 @@
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="../modules/stypangle.html">Styp<wbr>Angle</a>
+						<a href="stypangle.html">Styp<wbr>Angle</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="../modules/stypanglept.html">Styp<wbr>Angle<wbr>Pt</a>
+						<a href="stypanglept.html">Styp<wbr>Angle<wbr>Pt</a>
 					</li>
 					<li class=" tsd-kind-module tsd-has-type-parameter">
-						<a href="../modules/stypdimension.html">Styp<wbr>Dimension</a>
+						<a href="stypdimension.html">Styp<wbr>Dimension</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="../modules/stypfrequency.html">Styp<wbr>Frequency</a>
+						<a href="stypfrequency.html">Styp<wbr>Frequency</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="../modules/stypfrequencypt.html">Styp<wbr>Frequency<wbr>Pt</a>
+						<a href="stypfrequencypt.html">Styp<wbr>Frequency<wbr>Pt</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="../modules/styplength.html">Styp<wbr>Length</a>
+						<a href="styplength.html">Styp<wbr>Length</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="../modules/styplengthpt.html">Styp<wbr>Length<wbr>Pt</a>
+						<a href="styplengthpt.html">Styp<wbr>Length<wbr>Pt</a>
 					</li>
 					<li class=" tsd-kind-module tsd-has-type-parameter">
-						<a href="../modules/stypproperties.html">Styp<wbr>Properties</a>
+						<a href="stypproperties.html">Styp<wbr>Properties</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="../modules/styppureselector.html">Styp<wbr>Pure<wbr>Selector</a>
+						<a href="styppureselector.html">Styp<wbr>Pure<wbr>Selector</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="../modules/stypquery.html">Styp<wbr>Query</a>
+						<a href="stypquery.html">Styp<wbr>Query</a>
 					</li>
 					<li class="current tsd-kind-module">
-						<a href="../modules/styprender.html">Styp<wbr>Render</a>
+						<a href="styprenderer.html">Styp<wbr>Renderer</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="../modules/stypresolution.html">Styp<wbr>Resolution</a>
+						<a href="stypresolution.html">Styp<wbr>Resolution</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="../modules/styprulekey.html">Styp<wbr>Rule<wbr>Key</a>
+						<a href="styprulekey.html">Styp<wbr>Rule<wbr>Key</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="../modules/styprules.html">Styp<wbr>Rules</a>
+						<a href="styprules.html">Styp<wbr>Rules</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="../modules/stypselector.html">Styp<wbr>Selector</a>
+						<a href="stypselector.html">Styp<wbr>Selector</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="../modules/stypsubselector.html">Styp<wbr>Sub<wbr>Selector</a>
+						<a href="stypsubselector.html">Styp<wbr>Sub<wbr>Selector</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="../modules/styptime.html">Styp<wbr>Time</a>
+						<a href="styptime.html">Styp<wbr>Time</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="../modules/styptimept.html">Styp<wbr>Time<wbr>Pt</a>
+						<a href="styptimept.html">Styp<wbr>Time<wbr>Pt</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="../modules/stypvalue.html">Styp<wbr>Value</a>
+						<a href="stypvalue.html">Styp<wbr>Value</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<li class=" tsd-kind-interface tsd-parent-kind-module">
-						<a href="styprender.descriptor.html" class="tsd-kind-icon">Descriptor</a>
+						<a href="../interfaces/styprenderer.descriptor.html" class="tsd-kind-icon">Descriptor</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-module">
-						<a href="styprender.factory.html" class="tsd-kind-icon">Factory</a>
+						<a href="../interfaces/styprenderer.factory.html" class="tsd-kind-icon">Factory</a>
 					</li>
-				</ul>
-				<ul class="current">
-					<li class="current tsd-kind-interface tsd-parent-kind-module">
-						<a href="styprender.options.html" class="tsd-kind-icon">Options</a>
-						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="styprender.options.html#selector" class="tsd-kind-icon">selector</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="styprender.options.html#target" class="tsd-kind-icon">target</a>
-							</li>
-						</ul>
-					</li>
-				</ul>
-				<ul class="after-current">
 					<li class=" tsd-kind-interface tsd-parent-kind-module">
-						<a href="styprender.spec.html" class="tsd-kind-icon">Spec</a>
+						<a href="../interfaces/styprenderer.options.html" class="tsd-kind-icon">Options</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/styprenderer.spec.html" class="tsd-kind-icon">Spec</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
-						<a href="../modules/styprender.html#function" class="tsd-kind-icon">Function</a>
+						<a href="styprenderer.html#function" class="tsd-kind-icon">Function</a>
 					</li>
 				</ul>
 			</nav>

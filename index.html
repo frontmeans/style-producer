@@ -186,7 +186,7 @@ supply.off(); <span class="hljs-comment">// Remove produced stylesheets  </span>
 				order of properties is meaningful. But important property values are always take precedence over non-important ones.   </p>
 				<p>CSS rule properties may be defined by <code>EventKeeper</code> instance that may update properties dynamically.</p>
 				<a href="#type-safe-css-properties" id="type-safe-css-properties" style="color: inherit; text-decoration: none;">
-					<h3>Type-safe CSS Properties</h3>
+					<h3>Type-Safe CSS Properties</h3>
 				</a>
 				<p>Apart from being scalars and strings, CSS property values may be structured. I.e represented by objects implementing
 				<code>StypValueStruct</code> interface.</p>
@@ -266,30 +266,30 @@ mySettingsRef.set({
 				<a href="#producing-css" id="producing-css" style="color: inherit; text-decoration: none;">
 					<h2>Producing CSS</h2>
 				</a>
-				<p>Stylesheets may be produced using a <code>produceStyle()</code> function. It accepts a dynamically updated list of CSS rules
+				<p>Stylesheets can be produced by <code>produceStyle()</code> function. It accepts a dynamically updated list of CSS rules
 				(e.g. <code>StypRules.rules</code>) and optional set of options.</p>
 				<p>By default, this function creates a <code>&lt;style&gt;</code> element per CSS rule inside a document head. This element&#39;s stylesheet
 					is filled and updated with that rule contents. Once the rule is removed the corresponding <code>&lt;style&gt;</code> element is removed
 				too.</p>
-				<p>When CSS is no longer needed an <code>off()</code> method of the <code>EventInterest</code> instance returned from <code>produceStyle()</code> function
+				<p>When CSS is no longer needed an <code>off()</code> method of the <code>EventSupply</code> instance returned from <code>produceStyle()</code> function
 				may be called. That would remove all <code>&lt;style&gt;</code> elements.</p>
-				<a href="#css-renders" id="css-renders" style="color: inherit; text-decoration: none;">
-					<h3>CSS Renders</h3>
+				<a href="#css-renderers" id="css-renderers" style="color: inherit; text-decoration: none;">
+					<h3>CSS Renderers</h3>
 				</a>
-				<p>Style production is performed by CSS renders that may be specified as <code>render</code> option passed to <code>produceStyle()</code>.</p>
-				<p>By default all renders are enabled. This may be not what you need. In that case you can use a <code>produceBasicStyle()</code>
-					function instead. The latter enables CSS properties rendering only. The rest of the necessary renders may be specified
-				with the <code>render</code> option. This may reduce the final bundle size a little bit. </p>
+				<p>Style production is performed by CSS renderers that may be specified as <code>renderer</code> option passed to <code>produceStyle()</code>.</p>
+				<p>By default all renderers are enabled. This may be not what you need. In that case you can use a <code>produceBasicStyle()</code>
+					function instead. The latter enables CSS properties rendering only. The rest of the necessary renderers may be specified
+				with the <code>renderer</code> option. This may reduce the final bundle size a little bit. </p>
 				<a href="#raw-css-text" id="raw-css-text" style="color: inherit; text-decoration: none;">
 					<h3>Raw CSS Text</h3>
 				</a>
 				<p>CSS rule properties may be specified as raw text. This is the same as specifying a special <code>$$css</code> property.</p>
-				<p>The <code>stypRenderText</code> render treats this text as plain CSS. This text is rendered before the rest of the properties,
+				<p>The <code>stypRenderText</code> renderer treats this text as plain CSS. This text is rendered before the rest of the properties,
 				so the latter take precedence.</p>
 				<a href="#a-hrefhttpsdevelopermozillaorgen-usdocswebcssmediamediaa-and-other-a-hrefhttpsdevelopermozillaorgen-usdocswebcssat-ruleat-rulesa" id="a-hrefhttpsdevelopermozillaorgen-usdocswebcssmediamediaa-and-other-a-hrefhttpsdevelopermozillaorgen-usdocswebcssat-ruleat-rulesa" style="color: inherit; text-decoration: none;">
 					<h3><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media">@media</a> and other <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule">at-rules</a></h3>
 				</a>
-				<p>There is no dedicated <code>@media</code> properties in structured CSS selector. However, a <code>stypRenderAtRules</code> render recognizes
+				<p>There is no dedicated <code>@media</code> properties in structured CSS selector. However, a <code>stypRenderAtRules</code> renderer recognizes
 					selector qualifiers as <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule">at-rules</a> and renders corresponding rules. So, CSS rule with selector like this:
 				<code>{ c: &#39;screen-only&#39;, $: &#39;@media=screen&#39; }</code> would be rendered as</p>
 				<pre><code class="language-css"><span class="hljs-keyword">@media</span> screen {
@@ -297,7 +297,7 @@ mySettingsRef.set({
     <span class="hljs-comment">/* CSS properties */</span>
   }
 }</code></pre>
-				<p><code>stypRenderAtRules</code> render treats all qualifiers starting with <code>@</code> as at-rule qualifiers. So the qualifier name may
+				<p><code>stypRenderAtRules</code> renderer treats all qualifiers starting with <code>@</code> as at-rule qualifiers. So the qualifier name may
 				be e.g. <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@keyframes">@keyframes</a>. The value of qualifier (if present) is used as at-rule query.</p>
 				<p>It is also possible to specify at-rule query as CSS property. For that the property name should be the same as qualifier
 					one. E.g. if CSS rule selector is <code>{ c: &#39;screen-only&#39;, $: &#39;@media:sr&#39; }</code> and CSS rule properties contain
@@ -306,8 +306,8 @@ mySettingsRef.set({
 				<a href="#a-hrefhttpsdevelopermozillaorgen-usdocswebcssimportimporta-and-a-hrefhttpsdevelopermozillaorgen-usdocswebcssnamespacenamespacea-rules" id="a-hrefhttpsdevelopermozillaorgen-usdocswebcssimportimporta-and-a-hrefhttpsdevelopermozillaorgen-usdocswebcssnamespacenamespacea-rules" style="color: inherit; text-decoration: none;">
 					<h3><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@import">@import</a> and <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@namespace">@namespace</a> rules</h3>
 				</a>
-				<p>These rules are rendered by <code>stypRenderGlobals</code> render. This render interprets properly named CSS properties and renders
-				corresponding CSS rules. </p>
+				<p>These rules are rendered by <code>stypRenderGlobals</code> renderer. This renderer interprets properly named CSS properties and
+				renders corresponding CSS rules. </p>
 				<p><strong><code>@import:url</code></strong> property value is treated as media query and appended after stylesheet URL. I.e.</p>
 				<pre><code class="language-json">{
      <span class="hljs-attr">"@import:path/to/included.css"</span>: <span class="hljs-string">"screen"</span>
@@ -355,7 +355,7 @@ mySettingsRef.set({
 				<p>The code above would add a unique prefix to the <code>button</code> element. E.g. by making it <code>b-button</code>.</p>
 				<p>The <code>i</code> (element identifier) and <code>c</code> (element class name(s)) properties accept namespaced values too.</p>
 				<p>The <code>ns</code> (XML namespace) property accepts namespace (<code>NamespaceDef</code>) value instead of plain string. The corresponding
-				<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@namespace">@namespace</a> rule would be rendered automatically by <code>stypRenderXmlNs</code> render.</p>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@namespace">@namespace</a> rule would be rendered automatically by <code>stypRenderXmlNs</code> renderer.</p>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
@@ -395,7 +395,7 @@ mySettingsRef.set({
 						<a href="modules/stypquery.html">Styp<wbr>Query</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/styprender.html">Styp<wbr>Render</a>
+						<a href="modules/styprenderer.html">Styp<wbr>Renderer</a>
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="modules/stypresolution.html">Styp<wbr>Resolution</a>
@@ -429,7 +429,7 @@ mySettingsRef.set({
 						<a href="enums/styppriority.html" class="tsd-kind-icon">Styp<wbr>Priority</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="classes/atrulesrender.html" class="tsd-kind-icon">At<wbr>Rules<wbr>Render</a>
+						<a href="classes/atrulesrenderer.html" class="tsd-kind-icon">At<wbr>Rules<wbr>Renderer</a>
 					</li>
 					<li class=" tsd-kind-class tsd-has-type-parameter">
 						<a href="classes/stypcolorstruct.html" class="tsd-kind-icon">Styp<wbr>Color<wbr>Struct</a>
@@ -531,7 +531,7 @@ mySettingsRef.set({
 						<a href="globals.html#coord" class="tsd-kind-icon">coord</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="globals.html#defaultrenders" class="tsd-kind-icon">default<wbr>Renders</a>
+						<a href="globals.html#defaultrenderers" class="tsd-kind-icon">default<wbr>Renderers</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#extractatselectors" class="tsd-kind-icon">extract<wbr>AtSelectors</a>
