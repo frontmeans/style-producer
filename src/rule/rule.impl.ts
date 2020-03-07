@@ -85,11 +85,7 @@ class AllRules extends StypRuleHierarchy {
             .whenOff(() => tracker.it = {});
       });
 
-      const supply = tracker.read(receiver);
-
-      propertiesSupply.needs(supply);
-
-      return supply;
+      return tracker.read(receiver).cuts(propertiesSupply);
     }).share();
   }
 
@@ -123,7 +119,7 @@ function selfRuleList(rule: StypRule, all: AllRules): StypRuleList {
       rules.length = 0;
       onUpdate.send([], [rule]);
     }
-  }).whenOff(reason => onUpdate.done(reason));
+  }).cuts(onUpdate);
 
   class Self implements StypRules {
 

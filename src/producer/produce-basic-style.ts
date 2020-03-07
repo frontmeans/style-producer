@@ -2,7 +2,7 @@
  * @packageDocumentation
  * @module style-producer
  */
-import { itsEach, itsReduction, mapIt } from 'a-iterable';
+import { itsReduction, mapIt } from 'a-iterable';
 import { noop } from 'call-thru';
 import { AfterEvent, afterSupplied, eventSupply, EventSupply, onSupplied } from 'fun-events';
 import { NamespaceDef, newNamespaceAliaser } from 'namespace-aliaser';
@@ -11,8 +11,8 @@ import { StypProperties, StypRule, StypRules } from '../rule';
 import { StypSelector, stypSelector, StypSelectorFormat, stypSelectorText } from '../selector';
 import { isCombinator } from '../selector/selector.impl';
 import { stypRenderFactories } from './options.impl';
-import { isCSSRuleGroup } from './renderer.impl';
 import { StypRenderer } from './renderer';
+import { isCSSRuleGroup } from './renderer.impl';
 import { StyleProducer, StyleSheetRef, StypOptions } from './style-producer';
 
 /**
@@ -46,10 +46,11 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
   const renderSupply = renderRules(rules);
   const trackSupply = trackRules();
 
-  return eventSupply(reason => {
-    trackSupply.off(reason);
-    renderSupply.off(reason);
-  }).needs(renderSupply).needs(trackSupply);
+  return eventSupply()
+      .needs(renderSupply)
+      .needs(trackSupply)
+      .cuts(renderSupply)
+      .cuts(trackSupply);
 
   function styleProducer(
       rule: StypRule,
@@ -135,27 +136,21 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
   function renderRules(rulesToRender: Iterable<StypRule>): EventSupply {
     return itsReduction<EventSupply, EventSupply>(
         mapIt(rulesToRender, renderRule),
-        (prev, supply) => eventSupply(reason => {
-          supply.off(reason);
-          prev.off(reason);
-        }),
+        (prev, supply) => eventSupply().cuts(supply).cuts(prev),
         eventSupply(),
     );
   }
 
   function trackRules(): EventSupply {
 
-    const tracked = new Map<StypRule, EventSupply>();
-    const supply = onSupplied(rules)((added, removed) => {
-      added.forEach(r => tracked.set(r, renderRule(r)));
-      removed.forEach(r => tracked.delete(r));
-    });
+    const supply = eventSupply();
 
-    return eventSupply(reason => {
-      supply.off(reason);
-      itsEach(tracked.values(), i => i.off(reason));
-      tracked.clear();
-    }).needs(supply);
+    return onSupplied(rules)({
+      supply,
+      receive: (_ctx, added) => {
+        added.forEach(r => renderRule(r).needs(supply));
+      },
+    });
   }
 
   function renderRule(rule: StypRule): EventSupply {

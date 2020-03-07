@@ -12,7 +12,8 @@ import {
   noEventSupply,
   OnEvent,
   OnEvent__symbol,
-  onEventBy, onNever,
+  onEventBy,
+  onNever,
   onSupplied,
 } from 'fun-events';
 import { StypRule, StypRuleList } from './rule';
@@ -210,10 +211,8 @@ function asyncRules(source: Promise<StypRule | StypRules>): StypRules {
     let sourceSupply = noEventSupply();
     const { supply } = receiver;
 
-    supply.whenOff(reason => {
-      sourceSupply.off(reason);
-      ruleSet.clear();
-    });
+    supply.cuts(sourceSupply)
+        .whenOff(() => ruleSet.clear());
 
     source.then(resolution => {
       if (!supply.isOff) {
