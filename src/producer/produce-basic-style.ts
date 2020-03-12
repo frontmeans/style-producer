@@ -145,7 +145,7 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
 
     const supply = eventSupply();
 
-    return onSupplied(rules)({
+    return onSupplied(rules).to({
       supply,
       receive: (_ctx, added) => {
         added.forEach(r => renderRule(r).needs(supply));
@@ -160,7 +160,7 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
     const selector = ruleSelector(rule);
     const schedule = scheduler({ window: view });
 
-    return reader(renderProperties).whenOff(removeStyle);
+    return reader.to(renderProperties).whenOff(removeStyle);
 
     function renderProperties(properties: StypProperties): void {
       schedule(() => {
@@ -231,7 +231,7 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
     const specs = factories.map(factory => factory.create(rule));
     const reader = specs.reduce(
         (read, spec) => spec.read ? afterSupplied(spec.read(read)) : read,
-        rule.read,
+        rule.read(),
     );
 
     return [reader, renderAt(0)];

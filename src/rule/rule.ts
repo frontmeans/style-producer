@@ -2,7 +2,15 @@
  * @packageDocumentation
  * @module style-producer
  */
-import { AfterEvent, AfterEvent__symbol, EventKeeper, OnEvent, OnEvent__symbol } from 'fun-events';
+import {
+  AfterEvent,
+  AfterEvent__symbol,
+  EventKeeper,
+  EventReceiver,
+  EventSupply,
+  OnEvent,
+  OnEvent__symbol,
+} from 'fun-events';
 import { StypQuery, StypRuleKey, StypSelector } from '../selector';
 import { StypProperties } from './properties';
 import { StypRules } from './rules';
@@ -51,18 +59,31 @@ export abstract class StypRule implements EventKeeper<[StypProperties]> {
   abstract readonly empty: boolean;
 
   /**
-   * `AfterEvent` CSS properties receiver registrar.
-   */
-  abstract readonly read: AfterEvent<[StypProperties]>;
-
-  get [AfterEvent__symbol](): AfterEvent<[StypProperties]> {
-    return this.read;
-  }
-
-  /**
    * Dynamic list of all CSS rules in hierarchy starting from this one.
    */
   abstract readonly rules: StypRuleHierarchy;
+
+  /**
+   * Build `AfterEvent` keeper of CSS properties of this rule.
+   *
+   * The `[AfterEvent__symbol]` property is an alias of this one.
+   *
+   * @returns `AfterEvent` keeper of CSS properties map.
+   */
+  abstract read(): AfterEvent<[StypProperties]>;
+
+  /**
+   * Starts sending CSS properties of this rule and their updates to the given `receiver`.
+   *
+   * @param receiver  Target receiver of CSS properties map.
+   *
+   * @returns CSS properties supply.
+   */
+  abstract read(receiver: EventReceiver<[StypProperties]>): EventSupply;
+
+  [AfterEvent__symbol](): AfterEvent<[StypProperties]> {
+    return this.read();
+  }
 
   /**
    * Sets CSS properties of this rule.
@@ -116,29 +137,51 @@ export abstract class StypRule implements EventKeeper<[StypProperties]> {
 export abstract class StypRuleList implements StypRules, EventKeeper<[StypRuleList]> {
 
   /**
-   * An `AfterEvent` registrar of rule list receiver.
+   * Builds an `AfterEvent` keeper of rule list.
    *
-   * An `[AfterEvent__symbol]` property is just an alias of this one.
+   * The `[AfterEvent__symbol]` property is an alias of this one.
+   *
+   * @returns `AfterEvent` keeper of this rule list.
    */
-  abstract readonly read: AfterEvent<[StypRuleList]>;
+  abstract read(): AfterEvent<[StypRuleList]>;
 
-  get [AfterEvent__symbol](): AfterEvent<[StypRuleList]> {
-    return this.read;
+  /**
+   * Starts sending rule list and updates to the given `receiver`.
+   *
+   * @param receiver  Target receiver of this rule list.
+   *
+   * @returns Rule list supply.
+   */
+  abstract read(receiver: EventReceiver<[StypRuleList]>): EventSupply;
+
+  [AfterEvent__symbol](): AfterEvent<[StypRuleList]> {
+    return this.read();
   }
 
   /**
-   * An `OnEvent` registrar of list updates receiver.
+   * Builds an `OnEvent` sender of this rule list updates.
    *
    * The list updates receiver accepts two arguments:
    * - An array of added rules
    * - An array of removed rules.
    *
-   * An `[OnEvent__symbol]` property is just an alias of this one.
+   * The `[OnEvent__symbol]` property is an alias of this one.
+   *
+   * @returns `OnEvent` sender of rule list updates.
    */
-  abstract readonly onUpdate: OnEvent<[StypRule[], StypRule[]]>;
+  abstract onUpdate(): OnEvent<[StypRule[], StypRule[]]>;
 
-  get [OnEvent__symbol](): OnEvent<[StypRule[], StypRule[]]> {
-    return this.onUpdate;
+  /**
+   * Starts sending updates to this rule list to the given `receiver`.
+   *
+   * @param receiver  Target receiver of updates to this rule list.
+   *
+   * @returns Rule list updates supply.
+   */
+  abstract onUpdate(receiver: EventReceiver<[StypRule[], StypRule[]]>): EventSupply;
+
+  [OnEvent__symbol](): OnEvent<[StypRule[], StypRule[]]> {
+    return this.onUpdate();
   }
 
   abstract [Symbol.iterator](): IterableIterator<StypRule>;

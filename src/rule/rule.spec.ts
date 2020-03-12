@@ -1,14 +1,6 @@
 import { itsEmpty } from 'a-iterable';
 import { noop } from 'call-thru';
-import {
-  AfterEvent,
-  AfterEvent__symbol,
-  afterSupplied,
-  afterThe,
-  onSupplied,
-  trackValue,
-  ValueTracker,
-} from 'fun-events';
+import { AfterEvent, afterSupplied, afterThe, onSupplied, trackValue, ValueTracker } from 'fun-events';
 import { NamespaceDef } from 'namespace-aliaser';
 import { StypSelector, stypSelector } from '../selector';
 import { readProperties, ruleProperties } from '../spec';
@@ -138,7 +130,7 @@ describe('StypRule', () => {
 
   describe('[AfterEvent__symbol]', () => {
     it('is the same as `read`', () => {
-      expect(rule[AfterEvent__symbol]).toBe(rule.read);
+      expect(afterSupplied(rule)).toBe(rule.read());
     });
   });
 
@@ -260,7 +252,7 @@ describe('StypRule', () => {
 
         const initial = { $init: 'abstract-value.ts' };
 
-        mockSpec.mockImplementation(() => trackValue(initial).read);
+        mockSpec.mockImplementation(() => trackValue(initial).read());
 
         const update: StypProperties = { width: '100%' };
 
@@ -500,7 +492,7 @@ describe('StypRule', () => {
         const watch = rule.rules.watch(sel);
         const receiver = jest.fn();
 
-        watch(receiver);
+        watch.to(receiver);
         watched.remove();
 
         expect(receiver).toHaveBeenCalledWith({});
@@ -514,7 +506,7 @@ describe('StypRule', () => {
 
         const watch = rule.rules.watch(sel);
         const receiver = jest.fn();
-        const supply = watch(receiver);
+        const supply = watch.to(receiver);
 
         expect(receiver).toHaveBeenCalledWith({ $name: 'watched' });
 
@@ -539,8 +531,8 @@ describe('StypRule', () => {
       const updateReceiver = jest.fn();
       const rootUpdateReceiver = jest.fn();
 
-      onSupplied(rule.rules)(updateReceiver);
-      onSupplied(root.rules)(rootUpdateReceiver);
+      onSupplied(rule.rules).to(updateReceiver);
+      onSupplied(root.rules).to(rootUpdateReceiver);
 
       rule.rules.get(subSelector[0])!.remove();
 
@@ -560,8 +552,8 @@ describe('StypRule', () => {
       const updateReceiver = jest.fn();
       const rootUpdateReceiver = jest.fn();
 
-      onSupplied(rule.rules.nested)(updateReceiver);
-      onSupplied(root.rules.nested)(rootUpdateReceiver);
+      onSupplied(rule.rules.nested).to(updateReceiver);
+      onSupplied(root.rules.nested).to(rootUpdateReceiver);
 
       rule.rules.get(subSelector[0])!.remove();
 
@@ -579,7 +571,7 @@ describe('StypRule', () => {
       const rootUpdateReceiver = jest.fn();
 
       rule.rules.self.onUpdate(updateReceiver);
-      onSupplied(root.rules.self)(rootUpdateReceiver);
+      onSupplied(root.rules.self).to(rootUpdateReceiver);
 
       rule.remove();
 
@@ -597,9 +589,9 @@ describe('StypRule', () => {
       const listReceiver = jest.fn();
       const rootListReceiver = jest.fn();
 
-      afterSupplied(rule.rules)(listReceiver);
+      afterSupplied(rule.rules).to(listReceiver);
       listReceiver.mockClear();
-      afterSupplied(root.rules)(rootListReceiver);
+      afterSupplied(root.rules).to(rootListReceiver);
       rootListReceiver.mockClear();
 
       rule.rules.get(subSelector[0])!.remove();
@@ -613,9 +605,9 @@ describe('StypRule', () => {
       const listReceiver = jest.fn();
       const rootListReceiver = jest.fn();
 
-      afterSupplied(rule.rules.nested)(listReceiver);
+      afterSupplied(rule.rules.nested).to(listReceiver);
       listReceiver.mockClear();
-      afterSupplied(root.rules.nested)(rootListReceiver);
+      afterSupplied(root.rules.nested).to(rootListReceiver);
       rootListReceiver.mockClear();
 
       rule.rules.get(subSelector[0])!.remove();

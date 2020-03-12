@@ -1,4 +1,4 @@
-import { AfterEvent__symbol } from 'fun-events';
+import { afterSupplied } from 'fun-events';
 import { readProperties } from '../spec';
 import { StypAngle, StypLength } from '../value';
 import { stypRoot } from './root';
@@ -41,7 +41,7 @@ describe('StypRuleRefs', () => {
 
       const mockMapReceiver = jest.fn<void, [Props]>();
 
-      refs.read.once(mockMapReceiver);
+      refs.read().once(mockMapReceiver);
 
       expect(mockMapReceiver).toHaveBeenCalledWith({
         first: { $length: StypLength.zero },
@@ -52,7 +52,7 @@ describe('StypRuleRefs', () => {
 
   describe('[AfterEvent__symbol]', () => {
     it('is the same as `read`', () => {
-      expect(refs[AfterEvent__symbol]).toBe(refs.read);
+      expect(afterSupplied(refs)).toBe(refs.read());
     });
   });
 });

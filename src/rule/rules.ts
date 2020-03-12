@@ -64,7 +64,9 @@ export namespace StypRules {
  * @internal
  */
 const noStypRules: StypRuleList = (/*#__PURE__*/ new Rules({
-  [OnEvent__symbol]: onNever,
+  [OnEvent__symbol]() {
+    return onNever;
+  },
   [Symbol.iterator](): IterableIterator<StypRule> {
     return [][Symbol.iterator]();
   },
@@ -130,9 +132,9 @@ function rulesByList(sources: StypRules[]): StypRuleList {
         yield* rules;
       }
     },
-    get [OnEvent__symbol](): OnEvent<[StypRule[], StypRule[]]> {
+    [OnEvent__symbol](): OnEvent<[StypRule[], StypRule[]]> {
       return onEventBy<[StypRule[], StypRule[]]>(receiver => {
-        sources.forEach(source => onSupplied(source)({
+        sources.forEach(source => onSupplied(source).to({
           supply: eventSupply().needs(receiver.supply),
           receive(context, added, removed) {
             receiver.receive(context, added, removed);
@@ -154,8 +156,8 @@ function evalRules(source: (this: void) => StypRule | StypRules | Promise<StypRu
     [Symbol.iterator](): IterableIterator<StypRule> {
       return rules()[Symbol.iterator]();
     },
-    get [OnEvent__symbol]() {
-      return rules()[OnEvent__symbol];
+    [OnEvent__symbol]() {
+      return rules()[OnEvent__symbol]();
     },
   };
 
@@ -175,7 +177,7 @@ function lazyRules(source: (this: void) => StypRule | StypRules | Promise<StypRu
     const rules = rulesByValue(source());
 
     reportExistingRules(rules, ruleSet, receiver);
-    rules[OnEvent__symbol]({
+    rules[OnEvent__symbol]().to({
       supply: receiver.supply.whenOff(() => ruleSet.clear()),
       receive(context, added, removed) {
         removed.forEach(rule => ruleSet.delete(rule));
@@ -186,7 +188,9 @@ function lazyRules(source: (this: void) => StypRule | StypRules | Promise<StypRu
   }).share();
 
   return {
-    [OnEvent__symbol]: onEvent,
+    [OnEvent__symbol]() {
+      return onEvent;
+    },
     [Symbol.iterator](): IterableIterator<StypRule> {
       return ruleSet.values();
     },
@@ -221,7 +225,7 @@ function asyncRules(source: Promise<StypRule | StypRules>): StypRules {
 
         reportExistingRules(rules, ruleSet, receiver);
 
-        sourceSupply = onSupplied(rules)({
+        sourceSupply = onSupplied(rules).to({
           receive(context, added, removed) {
             removed.forEach(rule => ruleSet.delete(rule));
             added.forEach(rule => ruleSet.add(rule));
@@ -233,7 +237,9 @@ function asyncRules(source: Promise<StypRule | StypRules>): StypRules {
   }).share();
 
   return {
-    [OnEvent__symbol]: onEvent,
+    [OnEvent__symbol]() {
+      return onEvent;
+    },
     [Symbol.iterator](): IterableIterator<StypRule> {
       return ruleSet.values();
     },

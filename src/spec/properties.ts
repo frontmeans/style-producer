@@ -6,5 +6,5 @@ export async function readProperties(keeper: EventKeeper<[StypProperties]>): Pro
 }
 
 export function ruleProperties(rule: StypRule): Promise<StypProperties> {
-  return new Promise(resolve => rule.read.once(resolve));
+  return new Promise(resolve => rule.read().once(resolve));
 }

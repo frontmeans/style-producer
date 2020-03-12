@@ -1,6 +1,16 @@
 import { filterIt, itsIterable } from 'a-iterable';
 import { asis, valueProvider, valuesProvider } from 'call-thru';
-import { AfterEvent, afterSupplied, OnEvent, onEventBy, onSupplied } from 'fun-events';
+import {
+  AfterEvent,
+  afterSent,
+  EventReceiver,
+  EventSupply,
+  OnEvent,
+  onEventBy,
+  onSupplied,
+  receiveAfterEvent,
+  receiveOnEvent,
+} from 'fun-events';
 import { stypQuery, StypQuery, stypSelectorMatches } from '../selector';
 import { StypRule, StypRuleList } from './rule';
 import { StypRules } from './rules';
@@ -10,35 +20,43 @@ import { StypRules } from './rules';
  */
 export class Rules extends StypRuleList {
 
-  readonly onUpdate: OnEvent<[StypRule[], StypRule[]]>;
-  readonly read: AfterEvent<[Rules]>;
-  readonly [Symbol.iterator]: () => IterableIterator<StypRule>;
+  private readonly _buildList: () => Iterable<StypRule>;
+  private readonly _filterArray: (rules: StypRule[]) => StypRule[];
+  // noinspection JSMismatchedCollectionQueryUpdate
+  private _ruleSet?: Set<StypRule>; // `undefined` updates are not tracked
 
-  constructor(list: StypRules, ruleMatches?: (rule: StypRule) => boolean) {
+  constructor(private readonly _list: StypRules, ruleMatches?: (rule: StypRule) => boolean) {
     super();
-
-    let buildList: () => Iterable<StypRule>;
-    let filterArray: (rules: StypRule[]) => StypRule[];
-
     if (ruleMatches) {
-      buildList = () => filterIt(list, ruleMatches);
-      filterArray = rules => rules.filter(ruleMatches);
+      this._buildList = () => filterIt(_list, ruleMatches);
+      this._filterArray = rules => rules.filter(ruleMatches);
     } else {
-      buildList = () => list;
-      filterArray = asis;
+      this._buildList = () => _list;
+      this._filterArray = asis;
     }
+  }
 
-    let ruleSet: Set<StypRule> | undefined; // `undefined` updates are not tracked
+  read(): AfterEvent<[StypRuleList]>;
+  read(receiver: EventReceiver<[StypRuleList]>): EventSupply;
+  read(receiver?: EventReceiver<[StypRuleList]>): AfterEvent<[StypRuleList]> | EventSupply {
+    return (this.read = receiveAfterEvent(afterSent<[Rules]>(
+        this.onUpdate().thru(valueProvider(this)),
+        valuesProvider(this),
+    )))(receiver);
+  }
 
-    this.onUpdate = onEventBy<[StypRule[], StypRule[]]>(receiver => {
+  onUpdate(): OnEvent<[StypRule[], StypRule[]]>;
+  onUpdate(receiver: EventReceiver<[StypRule[], StypRule[]]>): EventSupply;
+  onUpdate(receiver?: EventReceiver<[StypRule[], StypRule[]]>): OnEvent<[StypRule[], StypRule[]]> | EventSupply {
+    return (this.onUpdate = receiveOnEvent(onEventBy<[StypRule[], StypRule[]]>(receiver => {
 
-      const rules = ruleSet || (ruleSet = new Set(buildList()));
+      const rules = this._ruleSet || (this._ruleSet = new Set(this._buildList()));
 
-      onSupplied(list)({
-        supply: receiver.supply.whenOff(() => ruleSet = undefined),
-        receive(context, added, removed) {
-          added = filterArray(added);
-          removed = filterArray(removed);
+      onSupplied(this._list).to({
+        supply: receiver.supply.whenOff(() => this._ruleSet = undefined),
+        receive: (context, added, removed) => {
+          added = this._filterArray(added);
+          removed = this._filterArray(removed);
           if (removed.length || added.length) {
             removed.forEach(rule => rules.delete(rule));
             added.forEach(rule => rules.add(rule));
@@ -46,20 +64,17 @@ export class Rules extends StypRuleList {
           }
         },
       });
-    }).share();
+    }).share()))(receiver);
+  }
 
-    this.read = afterSupplied<[Rules]>(this.onUpdate.thru(valueProvider(this)), valuesProvider(this));
-
-    this[Symbol.iterator] = () => {
-      if (ruleSet) {
-        // List changes are tracked.
-        return ruleSet.values();
-      }
-      // List changes are not currently tracked.
-      // Request the rules explicitly.
-      return itsIterable(buildList());
-    };
-
+  [Symbol.iterator](): IterableIterator<StypRule> {
+    if (this._ruleSet) {
+      // List changes are tracked.
+      return this._ruleSet.values();
+    }
+    // List changes are not currently tracked.
+    // Request the rules explicitly.
+    return itsIterable(this._buildList());
   }
 
   grab(query: StypQuery): StypRuleList {
