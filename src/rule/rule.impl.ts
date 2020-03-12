@@ -10,8 +10,6 @@ import {
   nextAfterEvent,
   OnEvent,
   OnEvent__symbol,
-  receiveAfterEvent,
-  receiveOnEvent,
   trackValue,
   ValueTracker,
 } from 'fun-events';
@@ -37,16 +35,16 @@ class AllRules extends StypRuleHierarchy {
   read(): AfterEvent<[AllRules]>;
   read(receiver: EventReceiver<[AllRules]>): EventSupply;
   read(receiver?: EventReceiver<[AllRules]>): AfterEvent<[AllRules]> | EventSupply {
-    return (this.read = receiveAfterEvent(afterSent<[AllRules]>(
+    return (this.read = afterSent<[AllRules]>(
         this._updates.on().thru(valueProvider(this)),
         valuesProvider(this),
-    )))(receiver);
+    ).F)(receiver);
   }
 
   onUpdate(): OnEvent<[StypRule$[], StypRule$[]]>;
   onUpdate(receiver: EventReceiver<[StypRule$[], StypRule$[]]>): EventSupply;
   onUpdate(receiver?: EventReceiver<[StypRule$[], StypRule$[]]>): OnEvent<[StypRule$[], StypRule$[]]> | EventSupply {
-    return (this.onUpdate = receiveOnEvent(this._updates.on()))(receiver);
+    return (this.onUpdate = this._updates.on().F)(receiver);
   }
 
   [Symbol.iterator](): IterableIterator<StypRule$> {
@@ -174,16 +172,16 @@ class NestedRules extends StypRuleList {
   read(): AfterEvent<[NestedRules]>;
   read(receiver: EventReceiver<[NestedRules]>): EventSupply;
   read(receiver?: EventReceiver<[NestedRules]>): AfterEvent<[NestedRules]> | EventSupply {
-    return (this.read = receiveAfterEvent(afterSent<[NestedRules]>(
+    return (this.read = afterSent<[NestedRules]>(
         this._updates.on().thru(valueProvider(this)),
         valuesProvider(this),
-    )))(receiver);
+    ).F)(receiver);
   }
 
   onUpdate(): OnEvent<[StypRule[], StypRule[]]>;
   onUpdate(receiver: EventReceiver<[StypRule[], StypRule[]]>): EventSupply;
   onUpdate(receiver?: EventReceiver<[StypRule[], StypRule[]]>): OnEvent<[StypRule[], StypRule[]]> | EventSupply {
-    return (this.onUpdate = receiveOnEvent(this._updates.on()))(receiver);
+    return (this.onUpdate = this._updates.on().F)(receiver);
   }
 
   [Symbol.iterator](): IterableIterator<StypRule$> {
@@ -273,9 +271,7 @@ export class StypRule$ extends StypRule {
   read(): AfterEvent<[StypProperties]>;
   read(receiver: EventReceiver<[StypProperties]>): EventSupply;
   read(receiver?: EventReceiver<[StypProperties]>): AfterEvent<[StypProperties]> | EventSupply {
-    return (this.read = receiveAfterEvent(
-        this._spec.read().keepThru(builder => nextAfterEvent(builder(this))),
-    ))(receiver);
+    return (this.read = this._spec.read().keepThru(builder => nextAfterEvent(builder(this))).F)(receiver);
   }
 
   set(properties?: StypProperties.Spec): this {

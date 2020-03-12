@@ -9,8 +9,9 @@ import {
   AfterEvent__symbol,
   afterThe,
   EventKeeper,
-  EventReceiver, EventSupply,
-  isEventKeeper, receiveAfterEvent,
+  EventReceiver,
+  EventSupply,
+  isEventKeeper,
 } from 'fun-events';
 import { StypSelector } from '../selector';
 import { StypMapper } from '../value';
@@ -110,7 +111,7 @@ class StypRuleRef$<T extends StypProperties<T>> extends StypRuleRef<T> {
   read(): AfterEvent<[T]>;
   read(receiver: EventReceiver<[T]>): EventSupply;
   read(receiver?: EventReceiver<[T]>): AfterEvent<[T]> | EventSupply {
-    return (this.read = receiveAfterEvent(afterAll({
+    return (this.read = afterAll({
       ms: this._map(this._root),
       ps: this._root.rules.watch(this._selector),
     }).keepThru(
@@ -118,7 +119,7 @@ class StypRuleRef$<T extends StypProperties<T>> extends StypRuleRef<T> {
           ms: [_mappings],
           ps: [_properties],
         }) => nextArg<T>(StypMapper.map<T>(_mappings, _properties)),
-    )))(receiver);
+    ).F)(receiver);
   }
 
   add(properties: EventKeeper<[Partial<StypProperties<T>>]> | Partial<StypProperties<T>>): this {

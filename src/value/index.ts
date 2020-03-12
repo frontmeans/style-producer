@@ -1,7 +1,3 @@
-/**
- * @packageDocumentation
- * @module style-producer
- */
 export * from './color';
 export * from './numeric';
 export * from './mapper';

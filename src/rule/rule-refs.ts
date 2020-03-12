@@ -2,15 +2,7 @@
  * @packageDocumentation
  * @module style-producer
  */
-import {
-  afterAll,
-  AfterEvent,
-  AfterEvent__symbol,
-  EventKeeper,
-  EventReceiver,
-  EventSupply,
-  receiveAfterEvent,
-} from 'fun-events';
+import { afterAll, AfterEvent, AfterEvent__symbol, EventKeeper, EventReceiver, EventSupply } from 'fun-events';
 import { StypProperties } from './properties';
 import { StypRule } from './rule';
 import { RefStypRule, StypRuleRef } from './rule-ref';
@@ -91,9 +83,7 @@ export class StypRuleRefs<R extends StypRuleRefs.Struct<R>> implements EventKeep
 
     const fromAll: AfterEvent<[{ [K in keyof R]: [StypProperties<any>] }]> = afterAll(this.refs);
 
-    return (this.read = receiveAfterEvent(
-        fromAll.keepThru(flattenProperties) as AfterEvent<[R]>,
-    ))(receiver);
+    return (this.read = (fromAll.keepThru(flattenProperties) as AfterEvent<[R]>).F)(receiver);
   }
 
   [AfterEvent__symbol](): AfterEvent<[R]> {
