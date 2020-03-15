@@ -3,7 +3,16 @@
  * @module style-producer
  */
 import { nextArg, valueProvider } from 'call-thru';
-import { afterAll, AfterEvent, AfterEvent__symbol, afterThe, EventKeeper, isEventKeeper } from 'fun-events';
+import {
+  afterAll,
+  AfterEvent,
+  AfterEvent__symbol,
+  afterThe,
+  EventKeeper,
+  EventReceiver,
+  EventSupply,
+  isEventKeeper,
+} from 'fun-events';
 import { StypSelector } from '../selector';
 import { StypMapper } from '../value';
 import { StypProperties } from './properties';
@@ -20,12 +29,25 @@ import { StypRule } from './rule';
 export abstract class StypRuleRef<T extends StypProperties<T>> implements EventKeeper<[T]> {
 
   /**
-   * `AfterEvent` CSS properties receiver registrar.
+   * Builds an `AfterEvent` keeper of CSS properties.
+   *
+   * The `[AfterEvent__symbol]` property is an alias of this one.
+   *
+   * @returns `AfterEvent` keeper of typed CSS properties map.
    */
-  abstract readonly read: AfterEvent<[T]>;
+  abstract read(): AfterEvent<[T]>;
 
-  get [AfterEvent__symbol](): AfterEvent<[T]> {
-    return this.read;
+  /**
+   * Starts sending CSS properties and updates to the given `receiver`.
+   *
+   * @param receiver  Target receiver of types CSS properties map.
+   *
+   * @returns CSS properties supply.
+   */
+  abstract read(receiver: EventReceiver<[T]>): EventSupply;
+
+  [AfterEvent__symbol](): AfterEvent<[T]> {
+    return this.read();
   }
 
   /**
@@ -75,6 +97,43 @@ export type RefStypRule<T extends StypProperties<T>> =
  */
     (this: void, root: StypRule) => StypRuleRef<T>;
 
+
+class StypRuleRef$<T extends StypProperties<T>> extends StypRuleRef<T> {
+
+  constructor(
+      private readonly _root: StypRule,
+      private readonly _selector: StypSelector,
+      private readonly _map: (root: StypRule) => EventKeeper<[StypMapper.Mappings<T>]>,
+  ) {
+    super();
+  }
+
+  read(): AfterEvent<[T]>;
+  read(receiver: EventReceiver<[T]>): EventSupply;
+  read(receiver?: EventReceiver<[T]>): AfterEvent<[T]> | EventSupply {
+    return (this.read = afterAll({
+      ms: this._map(this._root),
+      ps: this._root.rules.watch(this._selector),
+    }).keepThru(
+        ({
+          ms: [_mappings],
+          ps: [_properties],
+        }) => nextArg<T>(StypMapper.map<T>(_mappings, _properties)),
+    ).F)(receiver);
+  }
+
+  add(properties: EventKeeper<[Partial<StypProperties<T>>]> | Partial<StypProperties<T>>): this {
+    this._root.rules.add(this._selector, properties);
+    return this;
+  }
+
+  set(properties?: EventKeeper<[Partial<StypProperties<T>>]> | Partial<StypProperties<T>>): this {
+    this._root.rules.add(this._selector).set(properties);
+    return this;
+  }
+
+}
+
 /**
  * @category CSS Rule
  */
@@ -99,48 +158,15 @@ export const RefStypRule = {
           | ((this: void, root: StypRule) => StypMapper.Mappings<T> | EventKeeper<[StypMapper.Mappings<T>]>),
   ): RefStypRule<T> {
 
-    let createMappings: (root: StypRule) => EventKeeper<[StypMapper.Mappings<T>]>;
+    let map: (root: StypRule) => EventKeeper<[StypMapper.Mappings<T>]>;
 
     if (typeof mappings === 'function') {
-      createMappings = root => mappingsKeeper(mappings(root));
+      map = root => mappingsKeeper(mappings(root));
     } else {
-      createMappings = valueProvider(mappingsKeeper(mappings));
+      map = valueProvider(mappingsKeeper(mappings));
     }
 
-    return ref;
-
-    function ref(root: StypRule): StypRuleRef<T> {
-
-      const read: AfterEvent<[T]> = afterAll({
-        ms: createMappings(root),
-        ps: root.rules.watch(selector),
-      }).keep.thru(
-          ({
-            ms: [_mappings],
-            ps: [_properties],
-          }) => nextArg<T>(StypMapper.map<T>(_mappings, _properties)),
-      );
-
-      class Ref extends StypRuleRef<T> {
-
-        get read(): AfterEvent<[T]> {
-          return read;
-        }
-
-        add(properties: EventKeeper<[Partial<StypProperties<T>>]> | Partial<StypProperties<T>>): this {
-          root.rules.add(selector, properties);
-          return this;
-        }
-
-        set(properties?: EventKeeper<[Partial<StypProperties<T>>]> | Partial<StypProperties<T>>): this {
-          root.rules.add(selector).set(properties);
-          return this;
-        }
-
-      }
-
-      return new Ref();
-    }
+    return root => new StypRuleRef$(root, selector, map);
   },
 
 };

@@ -20,7 +20,7 @@ describe('stypRules', () => {
     const rules = stypRules();
 
     expect(itsEmpty(rules)).toBe(true);
-    expect(onSupplied(rules)(noop).isOff).toBe(true);
+    expect(onSupplied(rules).to(noop).isOff).toBe(true);
   });
   it('returns self rule list for single rule', () => {
     expect(stypRules(root)).toBe(root.rules.self);
@@ -38,7 +38,7 @@ describe('stypRules', () => {
       const rules = stypRules(() => root.rules);
       const receiver = jest.fn();
 
-      onSupplied(rules)(receiver);
+      onSupplied(rules).to(receiver);
 
       const added = root.rules.add({ c: 'added' });
 
@@ -50,7 +50,7 @@ describe('stypRules', () => {
       const rules = stypRules(() => root.rules);
       const receiver = jest.fn();
 
-      onSupplied(rules)(receiver);
+      onSupplied(rules).to(receiver);
       rule.remove();
 
       expect(receiver).toHaveBeenCalledWith([], [rule]);
@@ -69,7 +69,7 @@ describe('stypRules', () => {
 
       await new Promise(resolve => {
         receiver.mockImplementation(resolve);
-        onSupplied(rules)(receiver);
+        onSupplied(rules).to(receiver);
       });
 
       expect(receiver).toHaveBeenCalledWith([...root.rules], []);
@@ -83,7 +83,7 @@ describe('stypRules', () => {
         receiver.mockImplementation(resolve);
       });
 
-      onSupplied(rules)(receiver);
+      onSupplied(rules).to(receiver);
       receiver.mockClear();
       await promise;
 
@@ -100,7 +100,7 @@ describe('stypRules', () => {
         receiver.mockImplementation(resolve);
       });
 
-      onSupplied(rules)(receiver);
+      onSupplied(rules).to(receiver);
       receiver.mockClear();
       await promise;
 
@@ -114,7 +114,7 @@ describe('stypRules', () => {
       const rules = stypRules(new Promise(resolve => resolution = resolve));
       const receiver = jest.fn();
 
-      onSupplied(rules)(receiver).off();
+      onSupplied(rules).to(receiver).off();
       rule.remove();
       resolution(root.rules);
       await Promise.resolve();
@@ -131,8 +131,8 @@ describe('stypRules', () => {
         receiver1.mockImplementation(resolve);
       });
 
-      const supply1 = onSupplied(rules)(receiver1);
-      const supply2 = onSupplied(rules)(receiver2);
+      const supply1 = onSupplied(rules).to(receiver1);
+      const supply2 = onSupplied(rules).to(receiver2);
 
       await promise;
 
@@ -169,7 +169,7 @@ describe('stypRules', () => {
       const rules = stypRules(root, root2.rules);
       const receiver = jest.fn();
 
-      onSupplied(rules)(receiver);
+      onSupplied(rules).to(receiver);
 
       const added = root2.rules.add({ c: 'added' });
 
@@ -181,7 +181,7 @@ describe('stypRules', () => {
       const rules = stypRules(root, root2.rules);
       const receiver = jest.fn();
 
-      onSupplied(rules)(receiver);
+      onSupplied(rules).to(receiver);
       rule2.remove();
 
       expect(receiver).toHaveBeenCalledWith([], [rule2]);
@@ -192,7 +192,7 @@ describe('stypRules', () => {
       const rules = stypRules(root, root2.rules);
       const receiver = jest.fn();
 
-      onSupplied(rules)(receiver).off();
+      onSupplied(rules).to(receiver).off();
       rule2.remove();
 
       expect(receiver).not.toHaveBeenCalled();
@@ -216,7 +216,7 @@ describe('lazyStypRules', () => {
     const rules = lazyStypRules();
 
     expect(itsEmpty(rules)).toBe(true);
-    expect(onSupplied(rules)(noop).isOff).toBe(true);
+    expect(onSupplied(rules).to(noop).isOff).toBe(true);
   });
   it('returns self rule list for single rule', () => {
     expect(lazyStypRules(root)).toBe(root.rules.self);
@@ -234,7 +234,7 @@ describe('lazyStypRules', () => {
       const rules = lazyStypRules(() => root.rules);
       const receiver = jest.fn();
 
-      onSupplied(rules)(receiver);
+      onSupplied(rules).to(receiver);
       expect(receiver).toHaveBeenCalledWith([...root.rules], []);
       expect([...rules]).toEqual([...root.rules]);
     });
@@ -243,7 +243,7 @@ describe('lazyStypRules', () => {
       const rules = lazyStypRules(() => rule.rules.nested);
       const receiver = jest.fn();
 
-      onSupplied(rules)(receiver);
+      onSupplied(rules).to(receiver);
       expect(receiver).not.toHaveBeenCalled();
       expect(itsEmpty(rules)).toBe(true);
     });
@@ -252,7 +252,7 @@ describe('lazyStypRules', () => {
       const rules = lazyStypRules(() => root.rules);
       const receiver = jest.fn();
 
-      onSupplied(rules)(receiver);
+      onSupplied(rules).to(receiver);
 
       const added = root.rules.add({ c: 'added' });
 
@@ -264,7 +264,7 @@ describe('lazyStypRules', () => {
       const rules = lazyStypRules(() => root.rules);
       const receiver = jest.fn();
 
-      onSupplied(rules)(receiver);
+      onSupplied(rules).to(receiver);
       rule.remove();
 
       expect(receiver).toHaveBeenCalledWith([], [rule]);
@@ -276,8 +276,8 @@ describe('lazyStypRules', () => {
       const receiver1 = jest.fn();
       const receiver2 = jest.fn();
 
-      const supply1 = onSupplied(rules)(receiver1);
-      const supply2 = onSupplied(rules)(receiver2);
+      const supply1 = onSupplied(rules).to(receiver1);
+      const supply2 = onSupplied(rules).to(receiver2);
 
       supply1.off();
       expect([...rules]).toHaveLength(2);

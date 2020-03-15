@@ -24,7 +24,7 @@ class AtRulesRenderer implements StypRenderer.Spec {
     let outer = this._rule.outer;
 
     while (outer) {
-      properties = mergeStypProperties(outer.read.keep.thru(onlyAtProperties), properties);
+      properties = mergeStypProperties(outer.read().keepThru(onlyAtProperties), properties);
       outer = outer.outer;
     }
 

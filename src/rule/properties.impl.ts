@@ -66,7 +66,7 @@ function propertiesKeeper(sender: EventSender<[string | StypProperties]>): After
 }
 
 function preventDuplicates(properties: EventKeeper<[string | StypProperties]>): AfterEvent<[StypProperties]> {
-  return afterSupplied(properties).keep.thru(
+  return afterSupplied(properties).keepThru(
       propertiesMap,
       passNonDuplicate(),
       asis as (props: StypProperties) => StypProperties, // Needed to satisfy signature
@@ -117,7 +117,7 @@ export function mergeStypProperties(
     addendum: AfterEvent<[StypProperties]>,
 ): AfterEvent<[StypProperties]> {
   return preventDuplicates(
-      afterAll({ base, addendum }).keep.thru(
+      afterAll({ base, addendum }).keepThru(
           ({ base: [baseProperties], addendum: [addendumProperties] }) => addValues(baseProperties, addendumProperties),
       ),
   );

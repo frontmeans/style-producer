@@ -67,7 +67,7 @@ describe('stypPropertiesBySpec', () => {
     const spec = trackSpec(stypPropertiesBySpec(rule, tracker));
     const receiver = jest.fn();
 
-    spec(receiver);
+    spec.to(receiver);
     expect(receiver).toHaveBeenCalledWith(initial);
 
     const updated = { fontSize: '13px' };
@@ -85,7 +85,7 @@ describe('stypPropertiesBySpec', () => {
     const spec = trackSpec(stypPropertiesBySpec(rule, tracker));
     const receiver = jest.fn();
 
-    spec(receiver);
+    spec.to(receiver);
     expect(receiver).toHaveBeenCalledWith(initial);
 
     const updated = { borderWidth: '2px', border: '1px solid white' };
@@ -101,7 +101,7 @@ describe('stypPropertiesBySpec', () => {
     const spec = trackSpec(stypPropertiesBySpec(rule, tracker));
     const receiver = jest.fn();
 
-    spec(receiver);
+    spec.to(receiver);
     expect(receiver).toHaveBeenCalledWith(initial);
 
     const raw = 'font-size: 13px';
@@ -163,7 +163,7 @@ describe('stypPropertiesBySpec', () => {
     const spec = trackSpec(stypPropertiesBySpec(rule, () => tracker));
     const receiver = jest.fn();
 
-    spec(receiver);
+    spec.to(receiver);
 
     properties.fontSize = updated.fontSize;
     emitter.send(properties);
@@ -173,7 +173,7 @@ describe('stypPropertiesBySpec', () => {
 });
 
 function trackSpec(spec: AfterEvent<[StypProperties]>): AfterEvent<[StypProperties]> {
-  spec(noop); // Need this to keep updating properties
+  spec.to(noop); // Need this to keep updating properties
   return spec;
 }
 
@@ -200,7 +200,7 @@ describe('mergeStypProperties', () => {
   let merged: AfterEvent<[StypProperties]>;
 
   beforeEach(() => {
-    merged = mergeStypProperties(base.read, addendum.read);
+    merged = mergeStypProperties(base.read(), addendum.read());
   });
 
   it('keeps initial properties', () => {
@@ -222,7 +222,7 @@ describe('mergeStypProperties', () => {
 
     beforeEach(() => {
       mockReceiver = jest.fn();
-      supply = merged(mockReceiver);
+      supply = merged.to(mockReceiver);
       mockReceiver.mockClear();
     });
 

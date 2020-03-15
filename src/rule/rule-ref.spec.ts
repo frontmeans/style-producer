@@ -1,5 +1,5 @@
 import { valueProvider } from 'call-thru';
-import { AfterEvent__symbol, trackValue } from 'fun-events';
+import { afterSupplied, trackValue } from 'fun-events';
 import { StypSelector } from '../selector';
 import { StypAnglePt, StypLength, StypMapper } from '../value';
 import { stypRoot } from './root';
@@ -127,7 +127,7 @@ describe('RefStypRule', () => {
 
   describe('[AfterEvent__symbol]', () => {
     it('is an alias of `read`', () => {
-      expect(ref[AfterEvent__symbol]).toBe(ref.read);
+      expect(afterSupplied(ref)).toBe(ref.read());
     });
   });
 

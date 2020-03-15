@@ -2,7 +2,7 @@
  * @packageDocumentation
  * @module style-producer
  */
-import { afterAll, AfterEvent, AfterEvent__symbol, EventKeeper } from 'fun-events';
+import { afterAll, AfterEvent, AfterEvent__symbol, EventKeeper, EventReceiver, EventSupply } from 'fun-events';
 import { StypProperties } from './properties';
 import { StypRule } from './rule';
 import { RefStypRule, StypRuleRef } from './rule-ref';
@@ -16,8 +16,6 @@ import { RefStypRule, StypRuleRef } from './rule-ref';
  * @typeparam R  A type of target map of named CSS properties structures.
  */
 export class StypRuleRefs<R extends StypRuleRefs.Struct<R>> implements EventKeeper<[R]> {
-
-  private _read?: AfterEvent<[R]>;
 
   /**
    * CSS rule references by name.
@@ -65,20 +63,31 @@ export class StypRuleRefs<R extends StypRuleRefs.Struct<R>> implements EventKeep
   }
 
   /**
-   * An `AfterEvent` registrar of the receivers of named CSS properties structures for each CSS rule reference.
+   * Builds an `AfterEvent` keeper of named CSS properties structures for each CSS rule reference.
+   *
+   * The `[AfterEvent__symbol]` property is an alias of this one.
+   *
+   * @returns `AfterEvent` keeper of map of named CSS properties structures.
    */
-  get read(): AfterEvent<[R]> {
-    if (this._read) {
-      return this._read;
-    }
+  read(): AfterEvent<[R]>;
+
+  /**
+   * Starts sending named CSS properties structures for each CSS rule reference and updates to the given `receiver`.
+   *
+   * @param receiver Target receiver of map of named CSS properties structures.
+   *
+   * @returns Supply of maps of named CSS properties structures.
+   */
+  read(receiver: EventReceiver<[R]>): EventSupply;
+  read(receiver?: EventReceiver<[R]>): AfterEvent<[R]> | EventSupply {
 
     const fromAll: AfterEvent<[{ [K in keyof R]: [StypProperties<any>] }]> = afterAll(this.refs);
 
-    return this._read = fromAll.keep.thru(flattenProperties) as AfterEvent<[R]>;
+    return (this.read = (fromAll.keepThru(flattenProperties) as AfterEvent<[R]>).F)(receiver);
   }
 
-  get [AfterEvent__symbol](): AfterEvent<[R]> {
-    return this.read;
+  [AfterEvent__symbol](): AfterEvent<[R]> {
+    return this.read();
   }
 
 }
