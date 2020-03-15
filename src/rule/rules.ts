@@ -172,7 +172,7 @@ function evalRules(source: (this: void) => StypRule | StypRules | Promise<StypRu
 function lazyRules(source: (this: void) => StypRule | StypRules | Promise<StypRule | StypRules>): StypRules {
 
   const ruleSet = new Set<StypRule>();
-  const onEvent = onEventBy(receiver => {
+  const onEvent = onEventBy<[StypRule[], StypRule[]]>(receiver => {
 
     const rules = rulesByValue(source());
 
