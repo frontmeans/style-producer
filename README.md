@@ -11,7 +11,7 @@ Produces and dynamically updates stylesheets right in the browser.
 
 Usage example:
 ```typescript
-import { produceStyle, stypRoot } from 'style-producer';
+import { produceStyle, stypRoot } from '@proc7ts/style-producer';
 
 const root = stypRoot(); // Create root CSS rule
 const h1 = root.rules.add(
@@ -35,16 +35,16 @@ supply.off(); // Remove produced stylesheets
 ```
 
 
-[npm-image]: https://img.shields.io/npm/v/style-producer.svg?logo=npm
-[npm-url]: https://www.npmjs.com/package/style-producer
-[ci-image]: https://img.shields.io/circleci/build/github/surol/style-producer?logo=circleci
-[ci-url]: https://circleci.com/gh/surol/style-producer
-[codecov-image]: https://codecov.io/gh/surol/style-producer/branch/master/graph/badge.svg
-[codecov-url]: https://codecov.io/gh/surol/style-producer
+[npm-image]: https://img.shields.io/npm/v/@proc7ts/style-producer.svg?logo=npm
+[npm-url]: https://www.npmjs.com/package/@proc7ts/style-producer
+[ci-image]: https://img.shields.io/circleci/build/github/proc7ts/style-producer?logo=circleci
+[ci-url]: https://circleci.com/gh/proc7ts/style-producer
+[codecov-image]: https://codecov.io/gh/proc7ts/style-producer/branch/master/graph/badge.svg
+[codecov-url]: https://codecov.io/gh/proc7ts/style-producer
 [github-image]: https://img.shields.io/static/v1?logo=github&label=GitHub&message=project&color=informational
-[github-url]: https://github.com/surol/style-producer
+[github-url]: https://github.com/proc7ts/style-producer
 [api-docs-image]: https://img.shields.io/static/v1?logo=typescript&label=API&message=docs&color=informational
-[api-docs-url]: https://surol.github.io/style-producer/
+[api-docs-url]: https://proc7ts.github.io/style-producer/
 
 
 Structured CSS Selectors
@@ -192,7 +192,7 @@ interface and use `StypMapper` to map arbitrary CSS properties to that interface
 in type safe manner:
 
 ```typescript
-import { RefStypRule, StypColor, StypLengthPt, StypRGB, stypRoot } from 'style-producer';
+import { RefStypRule, StypColor, StypLengthPt, StypRGB, stypRoot } from '@proc7ts/style-producer';
 
 // Type-safe CSS properties representing custom settings
 interface MySettings {
@@ -374,8 +374,8 @@ conflicts.
 
 Example:
 ```typescript
-import { NamespaceDef } from 'namespace-aliaser';
-import { stypRoot } from 'style-producer';
+import { NamespaceDef } from '@proc7ts/namespace-aliaser';
+import { stypRoot } from '@proc7ts/style-producer';
 
 // Declare custom namespace
 const customNs = new NamespaceDef(
