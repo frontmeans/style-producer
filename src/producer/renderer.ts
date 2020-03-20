@@ -2,7 +2,7 @@
  * @packageDocumentation
  * @module style-producer
  */
-import { AfterEvent, EventKeeper } from 'fun-events';
+import { AfterEvent, EventKeeper } from '@proc7ts/fun-events';
 import { StypProperties, StypRule } from '../rule';
 import { StypSelector } from '../selector';
 import { StyleProducer } from './style-producer';

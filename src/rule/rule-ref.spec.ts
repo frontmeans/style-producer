@@ -1,5 +1,5 @@
-import { valueProvider } from 'call-thru';
-import { afterSupplied, trackValue } from 'fun-events';
+import { valueProvider } from '@proc7ts/call-thru';
+import { afterSupplied, trackValue } from '@proc7ts/fun-events';
 import { StypSelector } from '../selector';
 import { StypAnglePt, StypLength, StypMapper } from '../value';
 import { stypRoot } from './root';

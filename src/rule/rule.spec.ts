@@ -1,7 +1,7 @@
-import { itsEmpty } from 'a-iterable';
-import { noop } from 'call-thru';
-import { AfterEvent, afterSupplied, afterThe, onSupplied, trackValue, ValueTracker } from 'fun-events';
-import { NamespaceDef } from 'namespace-aliaser';
+import { itsEmpty } from '@proc7ts/a-iterable';
+import { noop } from '@proc7ts/call-thru';
+import { AfterEvent, afterSupplied, afterThe, onSupplied, trackValue, ValueTracker } from '@proc7ts/fun-events';
+import { NamespaceDef } from '@proc7ts/namespace-aliaser';
 import { StypSelector, stypSelector } from '../selector';
 import { readProperties, ruleProperties } from '../spec';
 import { StypProperties } from './properties';

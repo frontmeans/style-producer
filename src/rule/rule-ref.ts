@@ -2,7 +2,7 @@
  * @packageDocumentation
  * @module style-producer
  */
-import { nextArg, valueProvider } from 'call-thru';
+import { nextArg, valueProvider } from '@proc7ts/call-thru';
 import {
   afterAll,
   AfterEvent,
@@ -12,7 +12,7 @@ import {
   EventReceiver,
   EventSupply,
   isEventKeeper,
-} from 'fun-events';
+} from '@proc7ts/fun-events';
 import { StypSelector } from '../selector';
 import { StypMapper } from '../value';
 import { StypProperties } from './properties';

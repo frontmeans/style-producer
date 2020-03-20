@@ -2,9 +2,9 @@
  * @packageDocumentation
  * @module style-producer
  */
-import { filterIt, itsEmpty, itsReduction, mapIt, overArray } from 'a-iterable';
-import { isPresent } from 'call-thru';
-import { NamespaceDef } from 'namespace-aliaser';
+import { filterIt, itsEmpty, itsReduction, mapIt, overArray } from '@proc7ts/a-iterable';
+import { isPresent } from '@proc7ts/call-thru';
+import { NamespaceDef } from '@proc7ts/namespace-aliaser';
 import { StypProperties } from '../rule';
 import { StypSelector } from '../selector';
 import { isCombinator } from '../selector/selector.impl';

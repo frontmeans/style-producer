@@ -1,4 +1,4 @@
-import { afterSupplied, EventKeeper } from 'fun-events';
+import { afterSupplied, EventKeeper } from '@proc7ts/fun-events';
 import { StypProperties, StypRule } from '../rule';
 
 export async function readProperties(keeper: EventKeeper<[StypProperties]>): Promise<StypProperties> {

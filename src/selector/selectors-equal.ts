@@ -2,7 +2,7 @@
  * @packageDocumentation
  * @module style-producer
  */
-import { namesEqual, NamespaceDef, QualifiedName } from 'namespace-aliaser';
+import { namesEqual, NamespaceDef, QualifiedName } from '@proc7ts/namespace-aliaser';
 import { StypPureSelector } from './pure-selector';
 import { StypSelector } from './selector';
 import { isPseudoSubSelector } from './selector.impl';

@@ -10,7 +10,7 @@ import {
   EventSupply,
   OnEvent,
   OnEvent__symbol,
-} from 'fun-events';
+} from '@proc7ts/fun-events';
 import { StypQuery, StypRuleKey, StypSelector } from '../selector';
 import { StypProperties } from './properties';
 import { StypRules } from './rules';

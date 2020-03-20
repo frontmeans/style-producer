@@ -1,4 +1,4 @@
-import { DEFAULT__NS, NamespaceDef } from 'namespace-aliaser';
+import { DEFAULT__NS, NamespaceDef } from '@proc7ts/namespace-aliaser';
 import { stypSelectorsEqual } from './selectors-equal';
 
 describe('stypSelectorsEqual', () => {

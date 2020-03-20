@@ -1,4 +1,4 @@
-import { DEFAULT__NS, NamespaceDef } from 'namespace-aliaser';
+import { DEFAULT__NS, NamespaceDef } from '@proc7ts/namespace-aliaser';
 import { stypSelectorText } from './selector-text';
 import { stypRuleKeyText, stypSelectorDisplayText } from './selector-text.impl';
 

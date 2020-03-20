@@ -1,5 +1,5 @@
-import { filterIt, itsIterator, itsReduction, overEntries } from 'a-iterable';
-import { asis, isPresent, nextSkip, NextSkip, valuesProvider } from 'call-thru';
+import { filterIt, itsIterator, itsReduction, overEntries } from '@proc7ts/a-iterable';
+import { asis, isPresent, nextSkip, NextSkip, valuesProvider } from '@proc7ts/call-thru';
 import {
   afterAll,
   AfterEvent,
@@ -9,7 +9,7 @@ import {
   EventSender,
   isEventKeeper,
   isEventSender,
-} from 'fun-events';
+} from '@proc7ts/fun-events';
 import { IMPORTANT_CSS_SUFFIX } from '../internal';
 import { StypValue, stypValuesEqual } from '../value';
 import { StypProperties } from './properties';

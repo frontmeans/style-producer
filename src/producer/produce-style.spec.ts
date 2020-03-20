@@ -1,4 +1,4 @@
-import { immediateRenderScheduler } from 'render-scheduler';
+import { immediateRenderScheduler } from '@proc7ts/render-scheduler';
 import { stypRoot, StypRule } from '../rule';
 import { cssStyle, removeStyleElements, stylesheets } from '../spec';
 import { produceStyle } from './produce-style';

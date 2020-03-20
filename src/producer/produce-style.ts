@@ -2,7 +2,7 @@
  * @packageDocumentation
  * @module style-producer
  */
-import { EventSupply } from 'fun-events';
+import { EventSupply } from '@proc7ts/fun-events';
 import { isReadonlyArray } from '../internal';
 import { StypRules } from '../rule';
 import { stypRenderAtRules } from './at-rules.renderer';

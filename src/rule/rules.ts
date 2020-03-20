@@ -2,7 +2,7 @@
  * @packageDocumentation
  * @module style-producer
  */
-import { itsEach } from 'a-iterable';
+import { itsEach } from '@proc7ts/a-iterable';
 import {
   EventNotifier,
   EventReceiver,
@@ -15,7 +15,7 @@ import {
   onEventBy,
   onNever,
   onSupplied,
-} from 'fun-events';
+} from '@proc7ts/fun-events';
 import { StypRule, StypRuleList } from './rule';
 import { Rules } from './rules.impl';
 

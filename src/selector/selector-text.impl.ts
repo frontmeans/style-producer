@@ -1,4 +1,3 @@
-import cssesc from 'cssesc';
 import {
   css__naming,
   html__naming,
@@ -6,7 +5,8 @@ import {
   NamespaceAliaser,
   NamespaceDef,
   newNamespaceAliaser,
-} from 'namespace-aliaser';
+} from '@proc7ts/namespace-aliaser';
+import cssesc from 'cssesc';
 import { cssescId } from '../internal';
 import { StypRuleKey } from './rule-key';
 import { StypSelector } from './selector';

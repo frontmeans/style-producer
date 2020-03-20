@@ -2,8 +2,8 @@
  * @packageDocumentation
  * @module style-producer
  */
-import { NamespaceAliaser, NamespaceDef } from 'namespace-aliaser';
-import { RenderScheduler } from 'render-scheduler';
+import { NamespaceAliaser, NamespaceDef } from '@proc7ts/namespace-aliaser';
+import { RenderScheduler } from '@proc7ts/render-scheduler';
 import { StypProperties, StypRule } from '../rule';
 import { StypSelector } from '../selector';
 import { StypRenderer } from './renderer';

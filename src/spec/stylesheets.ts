@@ -1,4 +1,4 @@
-import { AIterable, itsFirst, overArray } from 'a-iterable';
+import { AIterable, itsFirst, overArray } from '@proc7ts/a-iterable';
 
 export function cssStyle(selector?: string): CSSStyleDeclaration {
 

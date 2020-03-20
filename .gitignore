@@ -8,6 +8,10 @@ node_modules
 # Logs
 *.log
 
+# Yarn cache
+/.yarn/cache
+/.yarn/unplugged
+
 # Package archive
 *.tgz
 

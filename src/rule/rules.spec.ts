@@ -1,6 +1,6 @@
-import { itsEmpty } from 'a-iterable';
-import { noop } from 'call-thru';
-import { onSupplied } from 'fun-events';
+import { itsEmpty } from '@proc7ts/a-iterable';
+import { noop } from '@proc7ts/call-thru';
+import { onSupplied } from '@proc7ts/fun-events';
 import { stypRoot } from './root';
 import { StypRule } from './rule';
 import { lazyStypRules, StypRules, stypRules } from './rules';

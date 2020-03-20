@@ -1,8 +1,8 @@
-import { itsEmpty } from 'a-iterable';
-import { noop } from 'call-thru';
-import { afterNever, trackValue } from 'fun-events';
-import { NamespaceDef } from 'namespace-aliaser';
-import { immediateRenderScheduler, newManualRenderScheduler, RenderShot } from 'render-scheduler';
+import { itsEmpty } from '@proc7ts/a-iterable';
+import { noop } from '@proc7ts/call-thru';
+import { afterNever, trackValue } from '@proc7ts/fun-events';
+import { NamespaceDef } from '@proc7ts/namespace-aliaser';
+import { immediateRenderScheduler, newManualRenderScheduler, RenderShot } from '@proc7ts/render-scheduler';
 import { StypProperties, stypRoot, StypRule } from '../rule';
 import { stypSelector } from '../selector';
 import { cssStyle, cssStyles, removeStyleElements, stylesheets } from '../spec';

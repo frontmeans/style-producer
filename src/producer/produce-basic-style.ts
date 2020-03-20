@@ -2,11 +2,11 @@
  * @packageDocumentation
  * @module style-producer
  */
-import { itsReduction, mapIt } from 'a-iterable';
-import { noop } from 'call-thru';
-import { AfterEvent, afterSupplied, eventSupply, EventSupply, onSupplied } from 'fun-events';
-import { NamespaceDef, newNamespaceAliaser } from 'namespace-aliaser';
-import { newRenderSchedule } from 'render-scheduler';
+import { itsReduction, mapIt } from '@proc7ts/a-iterable';
+import { noop } from '@proc7ts/call-thru';
+import { AfterEvent, afterSupplied, eventSupply, EventSupply, onSupplied } from '@proc7ts/fun-events';
+import { NamespaceDef, newNamespaceAliaser } from '@proc7ts/namespace-aliaser';
+import { newRenderSchedule } from '@proc7ts/render-scheduler';
 import { StypProperties, StypRule, StypRules } from '../rule';
 import { StypSelector, stypSelector, StypSelectorFormat, stypSelectorText } from '../selector';
 import { isCombinator } from '../selector/selector.impl';

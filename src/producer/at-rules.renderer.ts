@@ -2,8 +2,8 @@
  * @packageDocumentation
  * @module style-producer
  */
-import { filterIt, itsReduction, ObjectEntry, overEntries } from 'a-iterable';
-import { AfterEvent } from 'fun-events';
+import { filterIt, itsReduction, ObjectEntry, overEntries } from '@proc7ts/a-iterable';
+import { AfterEvent } from '@proc7ts/fun-events';
 import { isNotEmptyArray } from '../internal';
 import { StypProperties, StypRule } from '../rule';
 import { mergeStypProperties } from '../rule/properties.impl';

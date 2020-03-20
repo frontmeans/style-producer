@@ -1,5 +1,5 @@
-import { itsIterable } from 'a-iterable';
-import { valueProvider, valuesProvider } from 'call-thru';
+import { itsIterable } from '@proc7ts/a-iterable';
+import { valueProvider, valuesProvider } from '@proc7ts/call-thru';
 import {
   AfterEvent,
   afterEventBy,
@@ -12,7 +12,7 @@ import {
   OnEvent__symbol,
   trackValue,
   ValueTracker,
-} from 'fun-events';
+} from '@proc7ts/fun-events';
 import { StypQuery, StypRuleKey, stypSelector, StypSelector } from '../selector';
 import { stypRuleKeyText } from '../selector/selector-text.impl';
 import { stypOuterSelector, stypRuleKeyAndTail } from '../selector/selector.impl';

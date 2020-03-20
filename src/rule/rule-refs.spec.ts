@@ -1,4 +1,4 @@
-import { afterSupplied } from 'fun-events';
+import { afterSupplied } from '@proc7ts/fun-events';
 import { readProperties } from '../spec';
 import { StypAngle, StypLength } from '../value';
 import { stypRoot } from './root';
