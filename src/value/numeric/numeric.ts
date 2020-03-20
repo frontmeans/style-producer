@@ -1,6 +1,6 @@
 /**
  * @packageDocumentation
- * @module style-producer
+ * @module @proc7ts/style-producer
  */
 import { StypValue, StypValueStruct } from '../value';
 import { StypZero } from './zero';

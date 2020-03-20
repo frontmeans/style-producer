@@ -1,6 +1,6 @@
 /**
  * @packageDocumentation
- * @module style-producer
+ * @module @proc7ts/style-producer
  */
 import { itsReduction, mapIt } from '@proc7ts/a-iterable';
 import { noop } from '@proc7ts/call-thru';

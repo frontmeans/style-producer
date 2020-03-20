@@ -1,6 +1,6 @@
 /**
  * @packageDocumentation
- * @module style-producer
+ * @module @proc7ts/style-producer
  */
 import { namesEqual, NamespaceDef, QualifiedName } from '@proc7ts/namespace-aliaser';
 import { StypPureSelector } from './pure-selector';

@@ -1,6 +1,6 @@
 /**
  * @packageDocumentation
- * @module style-producer
+ * @module @proc7ts/style-producer
  */
 import { NamespaceAliaser, NamespaceDef } from '@proc7ts/namespace-aliaser';
 import { RenderScheduler } from '@proc7ts/render-scheduler';

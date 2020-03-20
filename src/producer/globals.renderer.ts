@@ -1,6 +1,6 @@
 /**
  * @packageDocumentation
- * @module style-producer
+ * @module @proc7ts/style-producer
  */
 import { overEntries } from '@proc7ts/a-iterable';
 import { StypProperties } from '../rule';

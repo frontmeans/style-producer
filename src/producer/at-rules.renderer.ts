@@ -1,6 +1,6 @@
 /**
  * @packageDocumentation
- * @module style-producer
+ * @module @proc7ts/style-producer
  */
 import { filterIt, itsReduction, ObjectEntry, overEntries } from '@proc7ts/a-iterable';
 import { AfterEvent } from '@proc7ts/fun-events';

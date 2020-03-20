@@ -1,7 +1,3 @@
-/**
- * @packageDocumentation
- * @module style-producer
- */
 export * from './pure-selector';
 export * from './query';
 export * from './rule-key';

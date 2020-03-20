@@ -1,6 +1,6 @@
 /**
  * @packageDocumentation
- * @module style-producer
+ * @module @proc7ts/style-producer
  */
 import { nextArg, valueProvider } from '@proc7ts/call-thru';
 import {

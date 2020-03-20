@@ -1,6 +1,6 @@
 /**
  * @packageDocumentation
- * @module style-producer
+ * @module @proc7ts/style-producer
  */
 import { IMPORTANT_CSS_SUFFIX } from '../internal';
 import { StypValue } from './value';

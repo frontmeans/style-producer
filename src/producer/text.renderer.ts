@@ -1,6 +1,6 @@
 /**
  * @packageDocumentation
- * @module style-producer
+ * @module @proc7ts/style-producer
  */
 import { StypProperties } from '../rule';
 import { StyleProducer } from './style-producer';

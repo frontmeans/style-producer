@@ -1,6 +1,6 @@
 /**
  * @packageDocumentation
- * @module style-producer
+ * @module @proc7ts/style-producer
  */
 import { EventSupply } from '@proc7ts/fun-events';
 import { isReadonlyArray } from '../internal';

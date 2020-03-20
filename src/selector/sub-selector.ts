@@ -1,6 +1,6 @@
 /**
  * @packageDocumentation
- * @module style-producer
+ * @module @proc7ts/style-producer
  */
 import { StypPureSelector } from './pure-selector';
 import { StypSelector } from './selector';

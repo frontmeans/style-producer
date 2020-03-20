@@ -1,6 +1,6 @@
 /**
  * @packageDocumentation
- * @module style-producer
+ * @module @proc7ts/style-producer
  */
 import { AfterEvent, EventKeeper, EventSender } from '@proc7ts/fun-events';
 import { StypValue } from '../value';

@@ -1,7 +1,3 @@
-/**
- * @packageDocumentation
- * @module style-producer
- */
 export * from './at-rules.renderer';
 export * from './globals.renderer';
 export * from './produce-basic-style';
