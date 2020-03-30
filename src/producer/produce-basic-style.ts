@@ -62,7 +62,7 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
       },
   ): StyleProducer {
 
-    class Styp implements StyleProducer {
+    class StyleProducer$ implements StyleProducer {
 
       get document(): Document {
         return document;
@@ -126,7 +126,7 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
 
     }
 
-    return new Styp();
+    return new StyleProducer$();
   }
 
   function selectorText(selector: StypSelector.Normalized): string {
@@ -269,7 +269,7 @@ function addStyleElement(producer: StyleProducer): StyleSheetRef {
   return {
     styleSheet: element.sheet as CSSStyleSheet,
     remove() {
-      element.parentElement!.removeChild(element);
+      element.parentNode!.removeChild(element);
     },
   };
 }
