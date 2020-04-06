@@ -1,0 +1,371 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>NormalizedPart | Style Producer</title>
+	<meta name="description" content="Documentation for Style Producer">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">Style Producer</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../globals.html">Globals</a>
+				</li>
+				<li>
+					<a href="../modules/StypPureSelector.html">StypPureSelector</a>
+				</li>
+				<li>
+					<a href="StypPureSelector.NormalizedPart.html">NormalizedPart</a>
+				</li>
+			</ul>
+			<h1>Interface NormalizedPart</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Normalized part of pure CSS selector.</p>
+					</div>
+					<p>Normalized part:</p>
+					<ul>
+						<li>does not contain empty properties,</li>
+						<li>does not contain unnecessary <code>*</code> element,</li>
+						<li>does not contain empty class names,</li>
+						<li>does not contain empty class names array,</li>
+						<li>class names are sorted,</li>
+						<li>does not contain empty sub-selectors array,</li>
+						<li>sub-selectors are normalized.</li>
+					</ul>
+					<p>The <code>stypSelector()</code> function always returns an array containing normalized parts.</p>
+					<p>This is the base of <a href="StypSelector.NormalizedPart.html">normalized part of structured CSS selector</a>. In contrast to
+					the latter it does not support qualifiers.</p>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<a href="StypPureSelector.Part.html" class="tsd-signature-type">Part</a>
+						<ul class="tsd-hierarchy">
+							<li>
+								<span class="target">NormalizedPart</span>
+								<ul class="tsd-hierarchy">
+									<li>
+										<a href="StypSelector.NormalizedPart.html" class="tsd-signature-type">NormalizedPart</a>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Properties</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite"><a href="StypPureSelector.NormalizedPart.html#c" class="tsd-kind-icon">c</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="StypPureSelector.NormalizedPart.html#e" class="tsd-kind-icon">e</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="StypPureSelector.NormalizedPart.html#i" class="tsd-kind-icon">i</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="StypPureSelector.NormalizedPart.html#ns" class="tsd-kind-icon">ns</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="StypPureSelector.NormalizedPart.html#s" class="tsd-kind-icon">s</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite"><a href="StypPureSelector.NormalizedPart.html#u" class="tsd-kind-icon">u</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
+					<a name="c" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> c</h3>
+					<div class="tsd-signature tsd-kind-icon">c<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">QualifiedName</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">NamespaceDef</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">]</span></div>
+					<aside class="tsd-sources">
+						<p>Overrides <a href="StypSelector.Part.html">Part</a>.<a href="StypSelector.Part.html#c">c</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/8975315/src/selector/pure-selector.ts#L116">style-producer/src/selector/pure-selector.ts:116</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Array of element class names. Either absent, or non-empty and containing non-empty class names sorted
+							alphabetically.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="e" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> e</h3>
+					<div class="tsd-signature tsd-kind-icon">e<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">QualifiedName</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="StypSelector.Part.html">Part</a>.<a href="StypSelector.Part.html#e">e</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/8975315/src/selector/pure-selector.ts#L66">style-producer/src/selector/pure-selector.ts:66</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Element name.</p>
+						</div>
+						<p>This is the same as <code>*</code> when absent. Unless the part contains only sub-selectors, and the first one is either
+						pseudo-class or pseudo-element.</p>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="i" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> i</h3>
+					<div class="tsd-signature tsd-kind-icon">i<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">QualifiedName</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="StypSelector.Part.html">Part</a>.<a href="StypSelector.Part.html#i">i</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/8975315/src/selector/pure-selector.ts#L71">style-producer/src/selector/pure-selector.ts:71</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Element identifier.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="ns" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> ns</h3>
+					<div class="tsd-signature tsd-kind-icon">ns<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">NamespaceDef</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="StypSelector.Part.html">Part</a>.<a href="StypSelector.Part.html#ns">ns</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/8975315/src/selector/pure-selector.ts#L58">style-producer/src/selector/pure-selector.ts:58</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Element namespace.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="s" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> s</h3>
+					<div class="tsd-signature tsd-kind-icon">s<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="StypSelector.Part.html">Part</a>.<a href="StypSelector.Part.html#s">s</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/8975315/src/selector/pure-selector.ts#L89">style-producer/src/selector/pure-selector.ts:89</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Raw CSS selector text to append to the end.</p>
+						</div>
+						<p>When all other properties are omitted this one represents a raw CSS selector text. Otherwise it is appended
+						to other selector parts representation.</p>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
+					<a name="u" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> u</h3>
+					<div class="tsd-signature tsd-kind-icon">u<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-symbol">[</span><a href="../modules/StypSubSelector.html#Normalized" class="tsd-signature-type">Normalized</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">"&#x3D;"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"~&#x3D;"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"|&#x3D;"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"^&#x3D;"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"$&#x3D;"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"*&#x3D;"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"i"</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">":"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"::"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">ReadonlyArray</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"+"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"&gt;"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"~"</span><span class="tsd-signature-symbol"> | </span><a href="StypPureSelector.NormalizedPart.html" class="tsd-signature-type">NormalizedPart</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">]</span></div>
+					<aside class="tsd-sources">
+						<p>Overrides <a href="StypSelector.Part.html">Part</a>.<a href="StypSelector.Part.html#u">u</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/8975315/src/selector/pure-selector.ts#L124">style-producer/src/selector/pure-selector.ts:124</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Array of normalized sub-selectors, each of which represents either attribute selector, pseudo-class,
+							or pseudo-element.</p>
+						</div>
+						<p>Either absent or non-empty.</p>
+					</div>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="../globals.html"><em>Globals</em></a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="../modules/StypAngle.html">Styp<wbr>Angle</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="../modules/StypAnglePt.html">Styp<wbr>Angle<wbr>Pt</a>
+					</li>
+					<li class=" tsd-kind-namespace tsd-has-type-parameter">
+						<a href="../modules/StypDimension.html">Styp<wbr>Dimension</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="../modules/StypFrequency.html">Styp<wbr>Frequency</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="../modules/StypFrequencyPt.html">Styp<wbr>Frequency<wbr>Pt</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="../modules/StypLength.html">Styp<wbr>Length</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="../modules/StypLengthPt.html">Styp<wbr>Length<wbr>Pt</a>
+					</li>
+					<li class=" tsd-kind-namespace tsd-has-type-parameter">
+						<a href="../modules/StypProperties.html">Styp<wbr>Properties</a>
+					</li>
+					<li class="current tsd-kind-namespace">
+						<a href="../modules/StypPureSelector.html">Styp<wbr>Pure<wbr>Selector</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="../modules/StypQuery.html">Styp<wbr>Query</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="../modules/StypRenderer.html">Styp<wbr>Renderer</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="../modules/StypResolution.html">Styp<wbr>Resolution</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="../modules/StypRuleKey.html">Styp<wbr>Rule<wbr>Key</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="../modules/StypRules.html">Styp<wbr>Rules</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="../modules/StypSelector.html">Styp<wbr>Selector</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="../modules/StypSubSelector.html">Styp<wbr>Sub<wbr>Selector</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="../modules/StypTime.html">Styp<wbr>Time</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="../modules/StypTimePt.html">Styp<wbr>Time<wbr>Pt</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="../modules/StypValue.html">Styp<wbr>Value</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-interface tsd-parent-kind-namespace">
+						<a href="StypPureSelector.NormalizedPart.html" class="tsd-kind-icon">Normalized<wbr>Part</a>
+						<ul>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
+								<a href="StypPureSelector.NormalizedPart.html#c" class="tsd-kind-icon">c</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="StypPureSelector.NormalizedPart.html#e" class="tsd-kind-icon">e</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="StypPureSelector.NormalizedPart.html#i" class="tsd-kind-icon">i</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="StypPureSelector.NormalizedPart.html#ns" class="tsd-kind-icon">ns</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="StypPureSelector.NormalizedPart.html#s" class="tsd-kind-icon">s</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
+								<a href="StypPureSelector.NormalizedPart.html#u" class="tsd-kind-icon">u</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
+					<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+						<a href="StypPureSelector.Part.html" class="tsd-kind-icon">Part</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-namespace">
+						<a href="../modules/StypPureSelector.html#Normalized" class="tsd-kind-icon">Normalized</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
+</body>
+</html>
