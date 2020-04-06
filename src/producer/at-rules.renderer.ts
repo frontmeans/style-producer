@@ -14,6 +14,9 @@ import { StypRenderer } from './renderer';
 import { FIRST_RENDER_ORDER, isCSSRuleGroup } from './renderer.impl';
 import { StyleProducer } from './style-producer';
 
+/**
+ * @internal
+ */
 class AtRulesRenderer implements StypRenderer.Spec {
 
   constructor(private readonly _rule: StypRule) {
@@ -67,6 +70,9 @@ class AtRulesRenderer implements StypRenderer.Spec {
 
 }
 
+/**
+ * @internal
+ */
 function buildAtSelector(
     properties: StypProperties,
     [key, [names, customQuery]]: [string, [Set<string>, string?]],
@@ -130,6 +136,9 @@ export const stypRenderAtRules: StypRenderer = {
 
 };
 
+/**
+ * @internal
+ */
 function onlyAtProperties(properties: StypProperties): StypProperties {
   return itsReduction(
       filterIt<ObjectEntry<StypProperties>, ObjectEntry<StypProperties, string>>(
@@ -144,10 +153,16 @@ function onlyAtProperties(properties: StypProperties): StypProperties {
   );
 }
 
+/**
+ * @internal
+ */
 function isAtEntry(entry: ObjectEntry<StypProperties>): entry is ObjectEntry<StypProperties, string> {
   return String(entry[0])[0] === '@';
 }
 
+/**
+ * @internal
+ */
 function extractAtSelectors(
     selector: StypSelector.Normalized,
 ): [Map<string, [Set<string>, string?]>, StypSelector.Normalized] | undefined {
@@ -170,6 +185,9 @@ function extractAtSelectors(
   return [atSelectors, stypSelector(rest)];
 }
 
+/**
+ * @internal
+ */
 function extractPartAtSelectors(
     part: StypSelector.NormalizedPart,
     atSelectors: Map<string, [Set<string>, string?]>,
@@ -201,6 +219,9 @@ function extractPartAtSelectors(
   return { ...part, $: undefined };
 }
 
+/**
+ * @internal
+ */
 function addAtSelector(atSelectors: Map<string, [Set<string>, string?]>, qualifier: string): void {
 
   const eqIdx = qualifier.indexOf('=');

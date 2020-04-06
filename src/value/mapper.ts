@@ -166,6 +166,9 @@ export const StypMapper = {
 
 };
 
+/**
+ * @internal
+ */
 function mappingBy<R, K extends keyof R>(
     mapping: StypMapper.Mapping<R, K> | undefined,
 ): StypMapper.MappingFunction<R, K> {

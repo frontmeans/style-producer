@@ -8,6 +8,9 @@ import { stypPropertiesBySpec } from './properties.impl';
 import { StypRule } from './rule';
 import { StypRule$ as StypRule_ } from './rule.impl';
 
+/**
+ * @internal
+ */
 const rootSelector: StypSelector.Normalized = [];
 
 /**

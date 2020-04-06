@@ -98,6 +98,9 @@ export type RefStypRule<T extends StypProperties<T>> =
     (this: void, root: StypRule) => StypRuleRef<T>;
 
 
+/**
+ * @internal
+ */
 class StypRuleRef$<T extends StypProperties<T>> extends StypRuleRef<T> {
 
   constructor(
@@ -171,6 +174,9 @@ export const RefStypRule = {
 
 };
 
+/**
+ * @internal
+ */
 function mappingsKeeper<T extends StypProperties<T>>(
     mappings: StypMapper.Mappings<T> | EventKeeper<[StypMapper.Mappings<T>]>,
 ): EventKeeper<[StypMapper.Mappings<T>]> {

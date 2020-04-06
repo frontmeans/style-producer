@@ -40,6 +40,9 @@ export function stypRenderProperties(producer: StyleProducer, properties: StypPr
   producer.render(properties, { target: cssRule });
 }
 
+/**
+ * @internal
+ */
 function notCustomProperty(entry: ObjectEntry<StypProperties>): entry is ObjectEntry<Required<StypProperties>, string> {
 
   const [key, value] = entry;

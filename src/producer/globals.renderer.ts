@@ -94,8 +94,14 @@ export const stypRenderGlobals: StypRenderer = {
 
 };
 
+/**
+ * @internal
+ */
 const IMPORT_PREFIX = '@import:';
 
+/**
+ * @internal
+ */
 function renderImport(
     sheet: CSSStyleSheet,
     index: number,
@@ -118,6 +124,9 @@ function renderImport(
   return 1;
 }
 
+/**
+ * @internal
+ */
 function renderDefaultNamespace(
     sheet: CSSStyleSheet,
     index: number,
@@ -133,8 +142,14 @@ function renderDefaultNamespace(
   return 1;
 }
 
+/**
+ * @internal
+ */
 const NS_PREFIX = '@namespace:';
 
+/**
+ * @internal
+ */
 function renderNamespacePrefix(
     sheet: CSSStyleSheet,
     index: number,

@@ -392,19 +392,31 @@ export const StypColor = {
 
 };
 
+/**
+ * @internal
+ */
 function angleCoord(value: number): number {
   value = value % 360;
   return value < 0 ? 360 + value : value;
 }
 
+/**
+ * @internal
+ */
 function intCoord(value: number, max: number): number {
   return coord(Math.round(value), max);
 }
 
+/**
+ * @internal
+ */
 function coord(value: number, max: number): number {
   return Math.max(Math.min(value, max), 0);
 }
 
+/**
+ * @internal
+ */
 function hueToRgb(p: number, q: number, t: number): number {
 
   let newT = t;

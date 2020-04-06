@@ -109,6 +109,9 @@ export function stypSelectorMatches(
   return true;
 }
 
+/**
+ * @internal
+ */
 function classesMatch(
     classes: readonly QualifiedName[] | undefined,
     query: readonly QualifiedName[],

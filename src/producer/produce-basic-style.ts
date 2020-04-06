@@ -256,6 +256,9 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
   }
 }
 
+/**
+ * @internal
+ */
 function addStyleElement(producer: StyleProducer): StyleSheetRef {
 
   const { document, parent } = producer;

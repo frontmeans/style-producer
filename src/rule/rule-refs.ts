@@ -92,6 +92,9 @@ export class StypRuleRefs<R extends StypRuleRefs.Struct<R>> implements EventKeep
 
 }
 
+/**
+ * @internal
+ */
 function flattenProperties<R extends StypRuleRefs.Struct<R>>(
     propertiesMap: { readonly [name: string]: [StypProperties<any>] },
 ): R {

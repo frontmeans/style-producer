@@ -51,6 +51,9 @@ export const stypRenderXmlNs: StypRenderer = {
 
 };
 
+/**
+ * @internal
+ */
 function extractXmlNsDefs(selector: StypSelector.Normalized): Iterable<NamespaceDef> {
   return filterIt<NamespaceDef | null, NamespaceDef>(
       mapIt(

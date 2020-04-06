@@ -27,6 +27,9 @@ export function stypSelectorsEqual(
   return first.every((part, i) => stypSelectorPartsEqual(part, second[i]));
 }
 
+/**
+ * @internal
+ */
 function stypSelectorPartsEqual(
     first: StypSelector.NormalizedPart | StypSelector.Combinator,
     second: StypSelector.NormalizedPart | StypSelector.Combinator,
@@ -45,6 +48,9 @@ function stypSelectorPartsEqual(
       && qualifiersEqual(first.$, second.$);
 }
 
+/**
+ * @internal
+ */
 function namespacesEqual(first: string | NamespaceDef | undefined, second: string | NamespaceDef | undefined): boolean {
   if (!first || typeof first === 'string') {
     return first === second;
@@ -55,10 +61,16 @@ function namespacesEqual(first: string | NamespaceDef | undefined, second: strin
   return first.url === second.url;
 }
 
+/**
+ * @internal
+ */
 function _namesEqual(first: QualifiedName | undefined, second: QualifiedName | undefined): boolean {
   return first == null ? second == null : second != null && namesEqual(first, second);
 }
 
+/**
+ * @internal
+ */
 function classesEqual(
     first: readonly QualifiedName[] | undefined,
     second: readonly QualifiedName[] | undefined,
@@ -72,6 +84,9 @@ function classesEqual(
   return first.length === second.length && first.every((name, i) => namesEqual(name, second[i]));
 }
 
+/**
+ * @internal
+ */
 function subSelectorListEqual(
     first: readonly StypSubSelector.Normalized[] | undefined,
     second: readonly StypSubSelector.Normalized[] | undefined,
@@ -85,6 +100,9 @@ function subSelectorListEqual(
   return first.length === second.length && first.every((sub, i) => subSelectorsEqual(sub, second[i]));
 }
 
+/**
+ * @internal
+ */
 function subSelectorsEqual(
     first: StypSubSelector.Normalized,
     second: StypSubSelector.Normalized,
@@ -105,6 +123,9 @@ function subSelectorsEqual(
   return first.every((str, i) => str === second[i]);
 }
 
+/**
+ * @internal
+ */
 function qualifiersEqual(first: readonly string[] | undefined, second: readonly string[] | undefined): boolean {
   if (!first) {
     return !second;

@@ -33,6 +33,9 @@ export function produceStyle(rules: StypRules, opts: StypOptions = {}): EventSup
   return produceBasicStyle(rules, { ...opts, renderer: defaultRenderers(opts.renderer) });
 }
 
+/**
+ * @internal
+ */
 function defaultRenderers(renderer: StypRenderer | readonly StypRenderer[] | undefined): readonly StypRenderer[] {
 
   const result: StypRenderer[] = [
