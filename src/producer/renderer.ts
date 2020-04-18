@@ -6,6 +6,7 @@ import { AfterEvent, EventKeeper } from '@proc7ts/fun-events';
 import { StypProperties, StypRule } from '../rule';
 import { StypSelector } from '../selector';
 import { StyleProducer } from './style-producer';
+import { StypWriter } from './writer';
 
 /**
  * CSS stylesheet renderer interface.
@@ -32,11 +33,11 @@ export namespace StypRenderer {
   export interface Options {
 
     /**
-     * CSS stylesheet or rule to add properties to.
+     * CSS style sheet or rule writer to add declarations to.
      *
      * When omitted the one from style producer is used.
      */
-    target?: CSSStyleSheet | CSSRule;
+    writer?: StypWriter;
 
     /**
      * Normalized CSS selector of the rule to render.

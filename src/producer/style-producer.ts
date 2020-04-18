@@ -6,6 +6,7 @@ import { NamespaceDef } from '@proc7ts/namespace-aliaser';
 import { StypProperties, StypRule } from '../rule';
 import { StypSelector } from '../selector';
 import { StypRenderer } from './renderer';
+import { StypWriter } from './writer';
 
 /**
  * CSS styles producer.
@@ -28,7 +29,7 @@ export interface StyleProducer {
    *
    * The value of corresponding style production option.
    */
-  readonly parent: ParentNode;
+  readonly parent: Node & ParentNode;
 
   /**
    * CSS rule to produce styles for.
@@ -36,14 +37,14 @@ export interface StyleProducer {
   readonly rule: StypRule;
 
   /**
-   * CSS stylesheet to add CSS rules to.
+   * CSS style sheet writer to add CSS rules to.
    */
-  readonly styleSheet: CSSStyleSheet;
+  readonly sheet: StypWriter.Sheet;
 
   /**
-   * CSS stylesheet or rule to add properties to.
+   * CSS style sheet or rule writer to add declarations to.
    */
-  readonly target: CSSStyleSheet | CSSRule;
+  readonly writer: StypWriter;
 
   /**
    * Rendered CSS rule selector.
@@ -72,15 +73,15 @@ export interface StyleProducer {
   render(properties: StypProperties, options?: StypRenderer.Options): void;
 
   /**
-   * Tries to append CSS rule to `target` CSS stylesheet or rule.
+   * Tries to append CSS style declarations writer {@link writer target} CSS style sheet or rule.
    *
-   * If `target` is stylesheet or grouping rule, then inserts the last rule.
+   * If {@link writer target} target is style sheet or grouping rule, then inserts the last style rule.
    * Otherwise just returns `target`.
    *
    * @param selector  Appended CSS rule selector. Equals to the one from this producer when omitted.
    *
    * @returns Either appended empty CSS rule, or `target`.
    */
-  addRule(selector?: StypSelector.Normalized): CSSRule;
+  addStyle(selector?: StypSelector.Normalized): StypWriter.Style;
 
 }

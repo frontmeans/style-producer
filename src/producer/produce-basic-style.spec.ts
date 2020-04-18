@@ -10,6 +10,8 @@ import { StypLength } from '../value/unit';
 import { produceBasicStyle } from './produce-basic-style';
 import { StypRenderer } from './renderer';
 import { StyleProducer } from './style-producer';
+import { StypWriter } from './writer';
+import { addStyleElementSheet } from './writer.impl';
 import Mock = jest.Mock;
 import SpyInstance = jest.SpyInstance;
 
@@ -92,23 +94,7 @@ describe('produceBasicStyle', () => {
   describe('addSheet option', () => {
     it('is used for CSS  stylesheet creation', () => {
 
-      const mockAddSheet = jest.fn((producer: StyleProducer) => {
-
-        const { document, parent } = producer;
-        const element = document.createElement('style');
-
-        element.setAttribute('type', 'text/css');
-        element.append(document.createTextNode(''));
-
-        parent.append(element);
-
-        return {
-          styleSheet: element.sheet as CSSStyleSheet,
-          remove() {
-            element.remove();
-          },
-        };
-      });
+      const mockAddSheet = jest.fn(addStyleElementSheet);
 
       produceBasicStyle(
           root.rules,
@@ -160,25 +146,25 @@ describe('produceBasicStyle', () => {
       testProduceStyle();
       expect(mockRenderer1).toHaveBeenCalledWith(producer, {});
       expect(mockRenderer2).toHaveBeenCalledWith(
-          expect.objectContaining({ selector, target: producer.target }),
+          expect.objectContaining({ selector, writer: producer.writer }),
           properties,
       );
     });
     it('passes target to next renderer', () => {
 
-      const target: CSSStyleSheet = { name: 'stylesheet' } as any;
+      const writer: StypWriter = { name: 'stylesheet writer' } as any;
       let properties: StypProperties = {};
       let producer: StyleProducer = null!;
 
       mockRenderer1.mockImplementation((_producer, _properties) => {
         producer = _producer;
-        _producer.render(properties = _properties, { target });
+        _producer.render(properties = _properties, { writer });
       });
 
       testProduceStyle();
       expect(mockRenderer1).toHaveBeenCalledWith(producer, {});
       expect(mockRenderer2).toHaveBeenCalledWith(
-          expect.objectContaining({ selector: producer.selector, target }),
+          expect.objectContaining({ selector: producer.selector, writer }),
           properties,
       );
     });

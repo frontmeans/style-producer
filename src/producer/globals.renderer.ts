@@ -9,6 +9,7 @@ import { stypRenderAtRules } from './at-rules.renderer';
 import { StypRenderer } from './renderer';
 import { FIRST_RENDER_ORDER } from './renderer.impl';
 import { StyleProducer } from './style-producer';
+import { StypWriter } from './writer';
 
 /**
  * CSS stylesheet renderer of global at-rules.
@@ -64,7 +65,7 @@ export const stypRenderGlobals: StypRenderer = {
 
   render(producer: StyleProducer, properties: StypProperties) {
 
-    const sheet = producer.styleSheet;
+    const { sheet } = producer;
     let importIndex = 0;
     let nsIndex = 0;
 
@@ -103,7 +104,7 @@ const IMPORT_PREFIX = '@import:';
  * @internal
  */
 function renderImport(
-    sheet: CSSStyleSheet,
+    sheet: StypWriter.Sheet,
     index: number,
     key: string,
     value: StypValue,
@@ -113,13 +114,13 @@ function renderImport(
   }
 
   const url = new StypURL(key.substring(IMPORT_PREFIX.length));
-  let css = `@import ${url}`;
+  let css = String(url);
 
   if (value) {
     css += ' ' + value;
   }
 
-  sheet.insertRule(css + ';', index);
+  sheet.addGlobal('@import', css, index);
 
   return 1;
 }
@@ -128,7 +129,7 @@ function renderImport(
  * @internal
  */
 function renderDefaultNamespace(
-    sheet: CSSStyleSheet,
+    sheet: StypWriter.Sheet,
     index: number,
     key: string,
     url: StypURL,
@@ -137,7 +138,7 @@ function renderDefaultNamespace(
     return 0;
   }
 
-  sheet.insertRule(`@namespace ${url};`, index);
+  sheet.addGlobal('@namespace', String(url), index);
 
   return 1;
 }
@@ -151,7 +152,7 @@ const NS_PREFIX = '@namespace:';
  * @internal
  */
 function renderNamespacePrefix(
-    sheet: CSSStyleSheet,
+    sheet: StypWriter.Sheet,
     index: number,
     key: string,
     url: StypURL,
@@ -162,7 +163,7 @@ function renderNamespacePrefix(
 
   const prefix = key.substring(NS_PREFIX.length);
 
-  sheet.insertRule(`@namespace ${prefix} ${url};`, index);
+  sheet.addGlobal('@namespace', `${prefix} ${url}`, index);
 
   return 1;
 }

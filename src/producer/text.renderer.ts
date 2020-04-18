@@ -22,9 +22,9 @@ export function stypRenderText(producer: StyleProducer, properties: StypProperti
     producer.render(properties);
   } else {
 
-    const cssRule = producer.addRule() as CSSStyleRule;
+    const style = producer.addStyle();
 
-    cssRule.style.cssText = css;
-    producer.render(properties, { target: cssRule });
+    style.replace(css);
+    producer.render(properties, { writer: style });
   }
 }

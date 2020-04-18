@@ -5,9 +5,9 @@
 import { NamespaceAliaser } from '@proc7ts/namespace-aliaser';
 import { RenderScheduler } from '@proc7ts/render-scheduler';
 import { StypSelector } from '../selector';
-import { StypOutput } from './output';
 import { StypRenderer } from './renderer';
 import { StyleProducer } from './style-producer';
+import { StypWriter } from './writer';
 
 /**
  * CSS styles production options.
@@ -30,7 +30,7 @@ export interface StypOptions {
    *
    * `document.head` by default.
    */
-  parent?: ParentNode;
+  parent?: Node & ParentNode;
 
   /**
    * A selector to use for root CSS rule.
@@ -42,15 +42,15 @@ export interface StypOptions {
   rootSelector?: StypSelector;
 
   /**
-   * Creates CSS stylesheet for each CSS rule.
+   * Creates CSS style sheet writer per each CSS rule.
    *
    * By default appends `<style>` element to `parent`.
    *
    * @param producer  Style producer instance.
    *
-   * @returns CSS stylesheet reference.
+   * @returns CSS style sheet writer.
    */
-  addSheet?: (producer: StyleProducer) => StypOutput.Sheet;
+  addSheet?: (producer: StyleProducer) => StypWriter.Sheet;
 
   /**
    * DOM rendering operations scheduler.

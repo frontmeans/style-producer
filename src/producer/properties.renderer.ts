@@ -5,7 +5,7 @@
 import { filterIt, itsEach, ObjectEntry, overEntries } from '@proc7ts/a-iterable';
 import hyphenateStyleName from 'hyphenate-style-name';
 import { StypProperties } from '../rule';
-import { StypPriority, stypSplitPriority } from '../value';
+import { stypSplitPriority } from '../value';
 import { StyleProducer } from './style-producer';
 
 /**
@@ -17,8 +17,7 @@ import { StyleProducer } from './style-producer';
  */
 export function stypRenderProperties(producer: StyleProducer, properties: StypProperties): void {
 
-  const cssRule = producer.addRule() as CSSStyleRule;
-  const { style } = cssRule;
+  const style = producer.addStyle();
 
   itsEach(
       filterIt<ObjectEntry<StypProperties>, ObjectEntry<StypProperties, string>>(
@@ -29,21 +28,19 @@ export function stypRenderProperties(producer: StyleProducer, properties: StypPr
 
         const [value, priority] = stypSplitPriority(v);
 
-        style.setProperty(
-            hyphenateStyleName(k),
-            `${value}`,
-            priority >= StypPriority.Important ? 'important' : undefined,
-        );
+        style.set(hyphenateStyleName(k), `${value}`, priority);
       },
   );
 
-  producer.render(properties, { target: cssRule });
+  producer.render(properties, { writer: style });
 }
 
 /**
  * @internal
  */
-function notCustomProperty(entry: ObjectEntry<StypProperties>): entry is ObjectEntry<Required<StypProperties>, string> {
+function notCustomProperty(
+    entry: ObjectEntry<StypProperties>,
+): entry is ObjectEntry<Required<StypProperties>, string> {
 
   const [key, value] = entry;
 
