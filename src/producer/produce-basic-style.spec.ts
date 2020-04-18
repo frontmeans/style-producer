@@ -89,10 +89,10 @@ describe('produceBasicStyle', () => {
     });
   });
 
-  describe('addStyleSheet option', () => {
+  describe('addSheet option', () => {
     it('is used for CSS  stylesheet creation', () => {
 
-      const mockAddStyleSheet = jest.fn((producer: StyleProducer) => {
+      const mockAddSheet = jest.fn((producer: StyleProducer) => {
 
         const { document, parent } = producer;
         const element = document.createElement('style');
@@ -114,11 +114,11 @@ describe('produceBasicStyle', () => {
           root.rules,
           {
             scheduler: immediateRenderScheduler,
-            addStyleSheet: mockAddStyleSheet,
+            addSheet: mockAddSheet,
           },
       );
 
-      expect(mockAddStyleSheet).toHaveBeenCalled();
+      expect(mockAddSheet).toHaveBeenCalled();
     });
   });
 

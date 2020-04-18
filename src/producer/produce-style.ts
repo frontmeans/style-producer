@@ -7,9 +7,9 @@ import { isReadonlyArray } from '../internal';
 import { StypRules } from '../rule';
 import { stypRenderAtRules } from './at-rules.renderer';
 import { stypRenderGlobals } from './globals.renderer';
+import { StypOptions } from './options';
 import { produceBasicStyle } from './produce-basic-style';
 import { StypRenderer } from './renderer';
-import { StypOptions } from './style-producer';
 import { stypRenderText } from './text.renderer';
 import { stypRenderXmlNs } from './xml-ns.renderer';
 

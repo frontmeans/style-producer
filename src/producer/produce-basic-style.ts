@@ -10,10 +10,12 @@ import { newRenderSchedule } from '@proc7ts/render-scheduler';
 import { StypProperties, StypRule, StypRules } from '../rule';
 import { StypSelector, stypSelector, StypSelectorFormat, stypSelectorText } from '../selector';
 import { isCombinator } from '../selector/selector.impl';
+import { StypOptions } from './options';
 import { stypRenderFactories } from './options.impl';
+import { StypOutput } from './output';
 import { StypRenderer } from './renderer';
 import { isCSSRuleGroup } from './renderer.impl';
-import { StyleProducer, StyleSheetRef, StypOptions } from './style-producer';
+import { StyleProducer } from './style-producer';
 
 /**
  * Produces and dynamically updates basic CSS stylesheets based on the given CSS rules.
@@ -33,7 +35,7 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
   const {
     document = window.document,
     rootSelector = { e: 'body' },
-    addStyleSheet = addStyleElement,
+    addSheet = addStyleElement,
     scheduler = newRenderSchedule,
     nsAlias = newNamespaceAliaser(),
   } = opts;
@@ -156,7 +158,7 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
   function renderRule(rule: StypRule): EventSupply {
 
     const [reader, renderer] = rendererForRule(rule);
-    let sheetRef: StyleSheetRef | undefined;
+    let sheet: StypOutput.Sheet | undefined;
     const selector = ruleSelector(rule);
     const schedule = scheduler({ window: view });
 
@@ -164,8 +166,8 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
 
     function renderProperties(properties: StypProperties): void {
       schedule(() => {
-        if (sheetRef) {
-          clearProperties(sheetRef.styleSheet);
+        if (sheet) {
+          clearProperties(sheet.styleSheet);
         }
 
         const producer = styleProducer(
@@ -173,10 +175,10 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
             renderer,
             {
               get styleSheet() {
-                if (!sheetRef) {
-                  sheetRef = addStyleSheet(producer);
+                if (!sheet) {
+                  sheet = addSheet(producer);
                 }
-                return sheetRef.styleSheet;
+                return sheet.styleSheet;
               },
               get target() {
                 return this.styleSheet;
@@ -192,10 +194,10 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
     function removeStyle(): void {
       schedule(() => {
 
-        const lastSheetRef = sheetRef;
+        const lastSheetRef = sheet;
 
         if (lastSheetRef) {
-          sheetRef = undefined;
+          sheet = undefined;
           return lastSheetRef.remove();
         }
         // Otherwise element is removed before anything rendered.
@@ -259,7 +261,7 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
 /**
  * @internal
  */
-function addStyleElement(producer: StyleProducer): StyleSheetRef {
+function addStyleElement(producer: StyleProducer): StypOutput.Sheet {
 
   const { document, parent } = producer;
   const element = document.createElement('style');
