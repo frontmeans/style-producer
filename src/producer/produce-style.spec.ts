@@ -1,9 +1,9 @@
 import { immediateRenderScheduler } from '@proc7ts/render-scheduler';
 import { stypRoot, StypRule } from '../rule';
 import { cssStyle, removeStyleElements, stylesheets } from '../spec';
+import { stypCSSOMWriter } from './cssom-writer';
 import { produceStyle } from './produce-style';
 import { StypRenderer } from './renderer';
-import { stypStyleElementWriter } from './style-element-writer';
 import SpyInstance = jest.SpyInstance;
 
 describe('produceStyle', () => {
@@ -33,7 +33,7 @@ describe('produceStyle', () => {
     });
 
     it('schedules in animation frame', () => {
-      produceStyle(root.rules, { addSheet: stypStyleElementWriter() });
+      produceStyle(root.rules, { addSheet: stypCSSOMWriter() });
       expect(rafSpy).toHaveBeenCalledWith(operations[0]);
     });
   });
@@ -45,7 +45,7 @@ describe('produceStyle', () => {
     produceStyle(
         root.rules,
         {
-          addSheet: stypStyleElementWriter(),
+          addSheet: stypCSSOMWriter(),
           renderer: mockRenderer,
           scheduler: immediateRenderScheduler,
         },
@@ -60,7 +60,7 @@ describe('produceStyle', () => {
     produceStyle(
         root.rules,
         {
-          addSheet: stypStyleElementWriter(),
+          addSheet: stypCSSOMWriter(),
           renderer: { create: mockCreate },
           scheduler: immediateRenderScheduler,
         },
@@ -79,7 +79,7 @@ describe('produceStyle', () => {
     produceStyle(
         root.rules,
         {
-          addSheet: stypStyleElementWriter(),
+          addSheet: stypCSSOMWriter(),
           renderer: [mockRender1, mockRender2],
           scheduler: immediateRenderScheduler,
         },
@@ -106,7 +106,7 @@ describe('produceStyle', () => {
     produceStyle(
         root.rules,
         {
-          addSheet: stypStyleElementWriter(),
+          addSheet: stypCSSOMWriter(),
           renderer: [
             { order: 2, render: mockRender1 },
             { order: 1, render: mockRender2 },
@@ -121,7 +121,7 @@ describe('produceStyle', () => {
     produceStyle(
         root.rules,
         {
-          addSheet: stypStyleElementWriter(),
+          addSheet: stypCSSOMWriter(),
           scheduler: immediateRenderScheduler,
         },
     );
@@ -136,7 +136,7 @@ describe('produceStyle', () => {
     produceStyle(
         root.rules,
         {
-          addSheet: stypStyleElementWriter(),
+          addSheet: stypCSSOMWriter(),
           scheduler: immediateRenderScheduler,
         },
     );
@@ -155,7 +155,7 @@ describe('produceStyle', () => {
     produceStyle(
         root.rules,
         {
-          addSheet: stypStyleElementWriter(),
+          addSheet: stypCSSOMWriter(),
           scheduler: immediateRenderScheduler,
         },
     );

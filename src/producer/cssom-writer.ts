@@ -106,7 +106,7 @@ class CSSOMSheetWriter extends CSSOMGroupWriter implements StypWriter.Sheet {
  * @returns  A function returning {@link StypWriter.Sheet style sheet writer} accepting a {@link StyleProducer}
  * as its only parameter.
  */
-export function stypStyleElementWriter(
+export function stypCSSOMWriter(
     parent: Node & ParentNode = document.head,
 ): (this: void, producer: StyleProducer) => StypWriter.Sheet {
   return () => {

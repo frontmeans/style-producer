@@ -54,7 +54,7 @@ export interface StypOptions {
    * This method is called once per each CSS rule.
    *
    * This option is required. The `style-producer` has the following implementations bundled:
-   * - `stypStyleElementWriter()` - creates a `<style>` element per CSS rule.
+   * - {@link stypCSSOMWriter} - creates a `<style>` element per CSS rule and utilizes CSSOM to build its style sheet.
    *
    * @param producer  Style producer instance.
    *
