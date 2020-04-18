@@ -5,6 +5,7 @@ export * from './produce-basic-style';
 export * from './produce-style';
 export * from './properties.renderer';
 export * from './renderer';
+export * from './style-element-writer';
 export * from './style-producer';
 export * from './writer';
 export * from './text.renderer';

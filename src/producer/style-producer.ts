@@ -18,20 +18,6 @@ import { StypWriter } from './writer';
 export interface StyleProducer {
 
   /**
-   * A document to produce styles for.
-   *
-   * The value of corresponding style production option.
-   */
-  readonly document: Document;
-
-  /**
-   * Parent DOM node to add stylesheets to.
-   *
-   * The value of corresponding style production option.
-   */
-  readonly parent: Node & ParentNode;
-
-  /**
    * CSS rule to produce styles for.
    */
   readonly rule: StypRule;

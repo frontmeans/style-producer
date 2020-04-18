@@ -19,20 +19,6 @@ import { StypWriter } from './writer';
 export interface StypOptions {
 
   /**
-   * A document to produce styles for.
-   *
-   * `window.document` by default.
-   */
-  document?: Document;
-
-  /**
-   * Parent DOM node to add stylesheets to.
-   *
-   * `document.head` by default.
-   */
-  parent?: Node & ParentNode;
-
-  /**
    * A selector to use for root CSS rule.
    *
    * `body` by default.
@@ -40,17 +26,6 @@ export interface StypOptions {
    * For custom elements a `:host` selector would be more appropriate.
    */
   rootSelector?: StypSelector;
-
-  /**
-   * Creates CSS style sheet writer per each CSS rule.
-   *
-   * By default appends `<style>` element to `parent`.
-   *
-   * @param producer  Style producer instance.
-   *
-   * @returns CSS style sheet writer.
-   */
-  addSheet?: (producer: StyleProducer) => StypWriter.Sheet;
 
   /**
    * DOM rendering operations scheduler.
@@ -72,5 +47,19 @@ export interface StypOptions {
    * New instance will be created if not specified.
    */
   nsAlias?: NamespaceAliaser;
+
+  /**
+   * Creates CSS style sheet writer.
+   *
+   * This method is called once per each CSS rule.
+   *
+   * This option is required. The `style-producer` has the following implementations bundled:
+   * - `stypStyleElementWriter()` - creates a `<style>` element per CSS rule.
+   *
+   * @param producer  Style producer instance.
+   *
+   * @returns CSS style sheet writer.
+   */
+  addSheet(producer: StyleProducer): StypWriter.Sheet;
 
 }

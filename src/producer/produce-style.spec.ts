@@ -3,6 +3,7 @@ import { stypRoot, StypRule } from '../rule';
 import { cssStyle, removeStyleElements, stylesheets } from '../spec';
 import { produceStyle } from './produce-style';
 import { StypRenderer } from './renderer';
+import { stypStyleElementWriter } from './style-element-writer';
 import SpyInstance = jest.SpyInstance;
 
 describe('produceStyle', () => {
@@ -32,7 +33,7 @@ describe('produceStyle', () => {
     });
 
     it('schedules in animation frame', () => {
-      produceStyle(root.rules);
+      produceStyle(root.rules, { addSheet: stypStyleElementWriter() });
       expect(rafSpy).toHaveBeenCalledWith(operations[0]);
     });
   });
@@ -41,7 +42,14 @@ describe('produceStyle', () => {
 
     const mockRenderer = jest.fn<void, Parameters<StypRenderer.Function>>();
 
-    produceStyle(root.rules, { renderer: mockRenderer, scheduler: immediateRenderScheduler });
+    produceStyle(
+        root.rules,
+        {
+          addSheet: stypStyleElementWriter(),
+          renderer: mockRenderer,
+          scheduler: immediateRenderScheduler,
+        },
+    );
     expect(mockRenderer).toHaveBeenCalled();
   });
   it('uses the given renderer factory', () => {
@@ -49,7 +57,14 @@ describe('produceStyle', () => {
     const mockRenderer = jest.fn<void, Parameters<StypRenderer.Function>>();
     const mockCreate = jest.fn<StypRenderer.Function, [StypRule]>(() => mockRenderer);
 
-    produceStyle(root.rules, { renderer: { create: mockCreate }, scheduler: immediateRenderScheduler });
+    produceStyle(
+        root.rules,
+        {
+          addSheet: stypStyleElementWriter(),
+          renderer: { create: mockCreate },
+          scheduler: immediateRenderScheduler,
+        },
+    );
     expect(mockCreate).toHaveBeenCalledWith(root);
     expect(mockCreate).toHaveBeenCalledTimes(1);
     expect(mockRenderer).toHaveBeenCalled();
@@ -61,7 +76,14 @@ describe('produceStyle', () => {
     );
     const mockRender2 = jest.fn<void, Parameters<StypRenderer.Function>>();
 
-    produceStyle(root.rules, { renderer: [mockRender1, mockRender2], scheduler: immediateRenderScheduler });
+    produceStyle(
+        root.rules,
+        {
+          addSheet: stypStyleElementWriter(),
+          renderer: [mockRender1, mockRender2],
+          scheduler: immediateRenderScheduler,
+        },
+    );
     expect(mockRender1).toHaveBeenCalled();
     expect(mockRender2).toHaveBeenCalled();
   });
@@ -84,6 +106,7 @@ describe('produceStyle', () => {
     produceStyle(
         root.rules,
         {
+          addSheet: stypStyleElementWriter(),
           renderer: [
             { order: 2, render: mockRender1 },
             { order: 1, render: mockRender2 },
@@ -95,7 +118,13 @@ describe('produceStyle', () => {
   });
   it('renders raw CSS text', () => {
     root.rules.add({ c: 'custom' }, 'font-size: 12px !important;');
-    produceStyle(root.rules, { scheduler: immediateRenderScheduler });
+    produceStyle(
+        root.rules,
+        {
+          addSheet: stypStyleElementWriter(),
+          scheduler: immediateRenderScheduler,
+        },
+    );
 
     const style = cssStyle('.custom');
 
@@ -104,7 +133,13 @@ describe('produceStyle', () => {
   });
   it('renders raw CSS text before CSS properties', () => {
     root.rules.add({ c: 'custom' }, { fontSize: '11px', $$css: 'font-weight: bold; font-size: 12px;' });
-    produceStyle(root.rules, { scheduler: immediateRenderScheduler });
+    produceStyle(
+        root.rules,
+        {
+          addSheet: stypStyleElementWriter(),
+          scheduler: immediateRenderScheduler,
+        },
+    );
 
     const style = cssStyle('.custom');
 
@@ -117,7 +152,13 @@ describe('produceStyle', () => {
       '@import:other.css': 'screen',
     });
     root.rules.add({ c: 'custom' });
-    produceStyle(root.rules, { scheduler: immediateRenderScheduler });
+    produceStyle(
+        root.rules,
+        {
+          addSheet: stypStyleElementWriter(),
+          scheduler: immediateRenderScheduler,
+        },
+    );
 
     stylesheets().forEach(sheet => {
       expect(sheet.cssRules[0].type).toBe(CSSRule.IMPORT_RULE);

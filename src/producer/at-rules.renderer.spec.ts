@@ -5,6 +5,7 @@ import { stypSelectorDisplayText } from '../selector/selector-text.impl';
 import { cssStyle, cssStyles, mediaRules, removeStyleElements } from '../spec';
 import { produceStyle } from './produce-style';
 import { StypRenderer } from './renderer';
+import { stypStyleElementWriter } from './style-element-writer';
 import Mock = jest.Mock;
 
 describe('stypRenderAtRules', () => {
@@ -96,6 +97,7 @@ describe('stypRenderAtRules', () => {
     produceStyle(
         root.rules,
         {
+          addSheet: stypStyleElementWriter(),
           scheduler: immediateRenderScheduler,
           renderer: [
             {

@@ -15,7 +15,6 @@ import { stypRenderFactories } from './options.impl';
 import { StypRenderer } from './renderer';
 import { StyleProducer } from './style-producer';
 import { StypWriter } from './writer';
-import { addStyleElementSheet } from './writer.impl';
 
 /**
  * Produces and dynamically updates basic CSS stylesheets based on the given CSS rules.
@@ -30,19 +29,13 @@ import { addStyleElementSheet } from './writer.impl';
  *
  * @returns Styles supply. Once cut off (i.e. its `off()` method is called) the produced stylesheets are removed.
  */
-export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): EventSupply {
+export function produceBasicStyle(rules: StypRules, opts: StypOptions): EventSupply {
 
   const {
-    document = window.document,
     rootSelector = { e: 'body' },
-    addSheet = addStyleElementSheet,
     scheduler = newRenderSchedule,
     nsAlias = newNamespaceAliaser(),
   } = opts;
-  const {
-    parent = document.head,
-  } = opts;
-  const view = document.defaultView || window;
   const format: StypSelectorFormat = { nsAlias };
   const factories = stypRenderFactories(opts);
   const renderSupply = renderRules(rules);
@@ -65,14 +58,6 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
   ): StyleProducer {
 
     class StyleProducer$ implements StyleProducer {
-
-      get document(): Document {
-        return document;
-      }
-
-      get parent(): Node & ParentNode {
-        return parent;
-      }
 
       get rule(): StypRule {
         return rule;
@@ -158,7 +143,7 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
     const [reader, renderer] = rendererForRule(rule);
     let sheet: StypWriter.Sheet | undefined;
     const selector = ruleSelector(rule);
-    const schedule = scheduler({ window: view });
+    const schedule = scheduler();
 
     return reader.to(renderProperties).whenOff(removeStyle);
 
@@ -174,7 +159,7 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
             {
               get sheet() {
                 if (!sheet) {
-                  sheet = addSheet(producer);
+                  sheet = opts.addSheet(producer);
                 }
                 return sheet;
               },

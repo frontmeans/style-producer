@@ -29,7 +29,7 @@ import { stypRenderXmlNs } from './xml-ns.renderer';
  *
  * @returns Styles supply. Once cut off (i.e. its `off()` method is called) the produced stylesheets are removed.
  */
-export function produceStyle(rules: StypRules, opts: StypOptions = {}): EventSupply {
+export function produceStyle(rules: StypRules, opts: StypOptions): EventSupply {
   return produceBasicStyle(rules, { ...opts, renderer: defaultRenderers(opts.renderer) });
 }
 
