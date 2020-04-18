@@ -2,11 +2,11 @@
  * @packageDocumentation
  * @module @proc7ts/style-producer
  */
-import { NamespaceAliaser, NamespaceDef } from '@proc7ts/namespace-aliaser';
-import { RenderScheduler } from '@proc7ts/render-scheduler';
+import { NamespaceDef } from '@proc7ts/namespace-aliaser';
 import { StypProperties, StypRule } from '../rule';
 import { StypSelector } from '../selector';
 import { StypRenderer } from './renderer';
+import { StypWriter } from './writer';
 
 /**
  * CSS styles producer.
@@ -18,33 +18,19 @@ import { StypRenderer } from './renderer';
 export interface StyleProducer {
 
   /**
-   * A document to produce styles for.
-   *
-   * The value of corresponding style production option.
-   */
-  readonly document: Document;
-
-  /**
-   * Parent DOM node to add stylesheets to.
-   *
-   * The value of corresponding style production option.
-   */
-  readonly parent: ParentNode;
-
-  /**
    * CSS rule to produce styles for.
    */
   readonly rule: StypRule;
 
   /**
-   * CSS stylesheet to add CSS rules to.
+   * CSS style sheet writer to add CSS rules to.
    */
-  readonly styleSheet: CSSStyleSheet;
+  readonly sheet: StypWriter.Sheet;
 
   /**
-   * CSS stylesheet or rule to add properties to.
+   * CSS style sheet or rule writer to add declarations to.
    */
-  readonly target: CSSStyleSheet | CSSRule;
+  readonly writer: StypWriter;
 
   /**
    * Rendered CSS rule selector.
@@ -73,102 +59,15 @@ export interface StyleProducer {
   render(properties: StypProperties, options?: StypRenderer.Options): void;
 
   /**
-   * Tries to append CSS rule to `target` CSS stylesheet or rule.
+   * Tries to append CSS style declarations writer {@link writer target} CSS style sheet or rule.
    *
-   * If `target` is stylesheet or grouping rule, then inserts the last rule.
+   * If {@link writer target} target is style sheet or grouping rule, then inserts the last style rule.
    * Otherwise just returns `target`.
    *
    * @param selector  Appended CSS rule selector. Equals to the one from this producer when omitted.
    *
    * @returns Either appended empty CSS rule, or `target`.
    */
-  addRule(selector?: StypSelector.Normalized): CSSRule;
-
-}
-
-/**
- * CSS styles production options.
- *
- * This options are accepted by [[produceStyle]] function.
- *
- * @category Rendering
- */
-export interface StypOptions {
-
-  /**
-   * A document to produce styles for.
-   *
-   * `window.document` by default.
-   */
-  document?: Document;
-
-  /**
-   * Parent DOM node to add stylesheets to.
-   *
-   * `document.head` by default.
-   */
-  parent?: ParentNode;
-
-  /**
-   * A selector to use for root CSS rule.
-   *
-   * `body` by default.
-   *
-   * For custom elements a `:host` selector would be more appropriate.
-   */
-  rootSelector?: StypSelector;
-
-  /**
-   * Creates CSS stylesheet for each CSS rule.
-   *
-   * By default appends `<style>` element to `parent`.
-   *
-   * @param producer  Style producer instance.
-   *
-   * @returns CSS stylesheet reference.
-   */
-  addStyleSheet?: (producer: StyleProducer) => StyleSheetRef;
-
-  /**
-   * DOM rendering operations scheduler.
-   *
-   * Creates a render schedule per rule.
-   *
-   * Uses `newRenderSchedule` by default.
-   */
-  scheduler?: RenderScheduler;
-
-  /**
-   * Renderer or renderer chain to use.
-   */
-  renderer?: StypRenderer | readonly StypRenderer[];
-
-  /**
-   * Namespace aliaser to use.
-   *
-   * New instance will be created if not specified.
-   */
-  nsAlias?: NamespaceAliaser;
-
-}
-
-/**
- * CSS stylesheet reference.
- *
- * It is an object created by [[StypOptions.addStyleSheet]] option.
- *
- * @category Rendering
- */
-export interface StyleSheetRef {
-
-  /**
-   * CSS stylesheet reference.
-   */
-  readonly styleSheet: CSSStyleSheet;
-
-  /**
-   * Remoives stylesheet from the document.
-   */
-  remove(): void;
+  addStyle(selector?: StypSelector.Normalized): StypWriter.Style;
 
 }

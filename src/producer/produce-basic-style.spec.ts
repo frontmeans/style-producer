@@ -9,7 +9,9 @@ import { cssStyle, cssStyles, removeStyleElements, stylesheets } from '../spec';
 import { StypLength } from '../value/unit';
 import { produceBasicStyle } from './produce-basic-style';
 import { StypRenderer } from './renderer';
+import { stypStyleElementWriter } from './style-element-writer';
 import { StyleProducer } from './style-producer';
+import { StypWriter } from './writer';
 import Mock = jest.Mock;
 import SpyInstance = jest.SpyInstance;
 
@@ -25,46 +27,6 @@ describe('produceBasicStyle', () => {
     removeStyleElements();
   });
 
-  describe('document', () => {
-    it('is current one by default', () => {
-
-      const mockRenderer = jest.fn();
-
-      produceBasicStyle(
-          root.rules,
-          {
-            renderer: mockRenderer,
-            scheduler: immediateRenderScheduler,
-          },
-      );
-
-      expect(mockRenderer).toHaveBeenCalledWith(
-          expect.objectContaining({ document }),
-          expect.anything(),
-      );
-    });
-  });
-
-  describe('parent', () => {
-    it('is document head by default', () => {
-
-      const mockRenderer = jest.fn();
-
-      produceBasicStyle(
-          root.rules,
-          {
-            renderer: mockRenderer,
-            scheduler: immediateRenderScheduler,
-          },
-      );
-
-      expect(mockRenderer).toHaveBeenCalledWith(
-          expect.objectContaining({ parent: document.head }),
-          expect.anything(),
-      );
-    });
-  });
-
   describe('nsAlias', () => {
     it('is `nsAlias` option', () => {
 
@@ -74,6 +36,7 @@ describe('produceBasicStyle', () => {
       produceBasicStyle(
           root.rules,
           {
+            addSheet: stypStyleElementWriter(),
             nsAlias: mockNsAlias,
             scheduler: immediateRenderScheduler,
             renderer(_producer) {
@@ -89,36 +52,21 @@ describe('produceBasicStyle', () => {
     });
   });
 
-  describe('addStyleSheet option', () => {
+  describe('addSheet option', () => {
     it('is used for CSS  stylesheet creation', () => {
 
-      const mockAddStyleSheet = jest.fn((producer: StyleProducer) => {
-
-        const { document, parent } = producer;
-        const element = document.createElement('style');
-
-        element.setAttribute('type', 'text/css');
-        element.append(document.createTextNode(''));
-
-        parent.append(element);
-
-        return {
-          styleSheet: element.sheet as CSSStyleSheet,
-          remove() {
-            element.remove();
-          },
-        };
-      });
+      const cssomWriter = stypStyleElementWriter();
+      const mockAddSheet = jest.fn(cssomWriter);
 
       produceBasicStyle(
           root.rules,
           {
             scheduler: immediateRenderScheduler,
-            addStyleSheet: mockAddStyleSheet,
+            addSheet: mockAddSheet,
           },
       );
 
-      expect(mockAddStyleSheet).toHaveBeenCalled();
+      expect(mockAddSheet).toHaveBeenCalled();
     });
   });
 
@@ -160,25 +108,25 @@ describe('produceBasicStyle', () => {
       testProduceStyle();
       expect(mockRenderer1).toHaveBeenCalledWith(producer, {});
       expect(mockRenderer2).toHaveBeenCalledWith(
-          expect.objectContaining({ selector, target: producer.target }),
+          expect.objectContaining({ selector, writer: producer.writer }),
           properties,
       );
     });
     it('passes target to next renderer', () => {
 
-      const target: CSSStyleSheet = { name: 'stylesheet' } as any;
+      const writer: StypWriter = { name: 'stylesheet writer' } as any;
       let properties: StypProperties = {};
       let producer: StyleProducer = null!;
 
       mockRenderer1.mockImplementation((_producer, _properties) => {
         producer = _producer;
-        _producer.render(properties = _properties, { target });
+        _producer.render(properties = _properties, { writer });
       });
 
       testProduceStyle();
       expect(mockRenderer1).toHaveBeenCalledWith(producer, {});
       expect(mockRenderer2).toHaveBeenCalledWith(
-          expect.objectContaining({ selector: producer.selector, target }),
+          expect.objectContaining({ selector: producer.selector, writer }),
           properties,
       );
     });
@@ -195,6 +143,7 @@ describe('produceBasicStyle', () => {
       produceBasicStyle(
           root.rules,
           {
+            addSheet: stypStyleElementWriter(),
             renderer: { order: -1, render: mockRenderer1, needs: mockRenderer2 },
             scheduler: immediateRenderScheduler,
           },
@@ -220,6 +169,7 @@ describe('produceBasicStyle', () => {
       produceBasicStyle(
           root.rules,
           {
+            addSheet: stypStyleElementWriter(),
             renderer: [
               renderer1,
               render2,
@@ -237,6 +187,7 @@ describe('produceBasicStyle', () => {
       const scheduler = newManualRenderScheduler();
 
       produceBasicStyle(root.rules, {
+        addSheet: stypStyleElementWriter(),
         renderer: {
           create(): StypRenderer.Spec {
             return {
@@ -255,7 +206,14 @@ describe('produceBasicStyle', () => {
     });
 
     function testProduceStyle(): void {
-      produceBasicStyle(root.rules, { renderer: [mockRenderer1, mockRenderer2], scheduler: immediateRenderScheduler });
+      produceBasicStyle(
+          root.rules,
+          {
+            addSheet: stypStyleElementWriter(),
+            renderer: [mockRenderer1, mockRenderer2],
+            scheduler: immediateRenderScheduler,
+          },
+      );
     }
   });
 
@@ -277,41 +235,64 @@ describe('produceBasicStyle', () => {
     });
 
     it('schedules in animation frame', () => {
-      produceBasicStyle(root.rules);
+      produceBasicStyle(root.rules, { addSheet: stypStyleElementWriter() });
       expect(rafSpy).toHaveBeenCalledWith(operations[0]);
     });
     it('schedules in current window animation frame for detached document', () => {
-
-      const doc = document.implementation.createHTMLDocument();
-
-      produceBasicStyle(root.rules, { document: doc, renderer: noop });
+      produceBasicStyle(root.rules, { addSheet: stypStyleElementWriter(), renderer: noop });
       expect(rafSpy).toHaveBeenCalledWith(operations[0]);
     });
   });
 
   it('renders body rule by default', () => {
     root.add({ background: 'white' });
-    produceBasicStyle(root.rules, { scheduler: immediateRenderScheduler });
+    produceBasicStyle(root.rules, { addSheet: stypStyleElementWriter(), scheduler: immediateRenderScheduler });
     expect(cssStyle('body').background).toBe('white');
   });
   it('renders top-level rule', () => {
     root.add({ background: 'white' });
-    produceBasicStyle(root.rules, { scheduler: immediateRenderScheduler, rootSelector: '.root' });
+    produceBasicStyle(
+        root.rules,
+        {
+          addSheet: stypStyleElementWriter(),
+          scheduler: immediateRenderScheduler,
+          rootSelector: '.root',
+        },
+    );
     expect(cssStyle('.root').background).toBe('white');
   });
   it('renders root-combined rule', () => {
     root.rules.add(['>', { c: 'nested' }], { background: 'white' });
-    produceBasicStyle(root.rules, { scheduler: immediateRenderScheduler, rootSelector: '.root' });
+    produceBasicStyle(
+        root.rules,
+        {
+          addSheet: stypStyleElementWriter(),
+          scheduler: immediateRenderScheduler,
+          rootSelector: '.root',
+        },
+    );
     expect(cssStyle('.root>.nested').background).toBe('white');
   });
   it('renders rule', () => {
     root.rules.add({ c: 'custom' }, { display: 'block' });
-    produceBasicStyle(root.rules, { scheduler: immediateRenderScheduler });
+    produceBasicStyle(
+        root.rules,
+        {
+          addSheet: stypStyleElementWriter(),
+          scheduler: immediateRenderScheduler,
+        },
+    );
     expect(cssStyle('.custom').display).toBe('block');
   });
   it('renders prefixed properties', () => {
     root.rules.add({ c: 'custom' }, { MsCustom: 'ms', MozCustom: 'moz' });
-    produceBasicStyle(root.rules, { scheduler: immediateRenderScheduler });
+    produceBasicStyle(
+        root.rules,
+        {
+          addSheet: stypStyleElementWriter(),
+          scheduler: immediateRenderScheduler,
+        },
+    );
 
     const style = cssStyle('.custom');
 
@@ -320,7 +301,13 @@ describe('produceBasicStyle', () => {
   });
   it('does not render custom properties', () => {
     root.rules.add({ c: 'custom' }, { _custom: 'abstract-value.ts' });
-    produceBasicStyle(root.rules, { scheduler: immediateRenderScheduler });
+    produceBasicStyle(
+        root.rules,
+        {
+          addSheet: stypStyleElementWriter(),
+          scheduler: immediateRenderScheduler,
+        },
+    );
 
     const style = cssStyle('.custom');
 
@@ -328,7 +315,13 @@ describe('produceBasicStyle', () => {
   });
   it('renders important properties', () => {
     root.rules.add({ c: 'custom' }, { fontSize: '12px !important' });
-    produceBasicStyle(root.rules, { scheduler: immediateRenderScheduler });
+    produceBasicStyle(
+        root.rules,
+        {
+          addSheet: stypStyleElementWriter(),
+          scheduler: immediateRenderScheduler,
+        },
+    );
 
     const style = cssStyle('.custom');
 
@@ -337,7 +330,13 @@ describe('produceBasicStyle', () => {
   });
   it('renders prioritized properties', () => {
     root.rules.add({ c: 'custom' }, { fontSize: StypLength.of(12, 'px').prioritize(0.5) });
-    produceBasicStyle(root.rules, { scheduler: immediateRenderScheduler });
+    produceBasicStyle(
+        root.rules,
+        {
+          addSheet: stypStyleElementWriter(),
+          scheduler: immediateRenderScheduler,
+        },
+    );
 
     const style = cssStyle('.custom');
 
@@ -346,7 +345,13 @@ describe('produceBasicStyle', () => {
   });
   it('renders prioritized important properties', () => {
     root.rules.add({ c: 'custom' }, { fontSize: StypLength.of(12, 'px').prioritize(1.5) });
-    produceBasicStyle(root.rules, { scheduler: immediateRenderScheduler });
+    produceBasicStyle(
+        root.rules,
+        {
+          addSheet: stypStyleElementWriter(),
+          scheduler: immediateRenderScheduler,
+        },
+    );
 
     const style = cssStyle('.custom');
 
@@ -355,11 +360,23 @@ describe('produceBasicStyle', () => {
   });
   it('does not render undefined properties', () => {
     root.rules.add({ c: 'custom' }, { display: 'block', fontSize: undefined });
-    produceBasicStyle(root.rules, { scheduler: immediateRenderScheduler });
+    produceBasicStyle(
+        root.rules,
+        {
+          addSheet: stypStyleElementWriter(),
+          scheduler: immediateRenderScheduler,
+        },
+    );
     expect(cssStyle('.custom').fontSize).toBeUndefined();
   });
   it('appends rules', () => {
-    produceBasicStyle(root.rules, { scheduler: immediateRenderScheduler });
+    produceBasicStyle(
+        root.rules,
+        {
+          addSheet: stypStyleElementWriter(),
+          scheduler: immediateRenderScheduler,
+        },
+    );
     root.rules.add({ c: 'custom1' }, { display: 'block' });
     root.rules.add({ c: 'custom2' }, { display: 'inline-block' });
     expect(cssStyle('.custom1').display).toBe('block');
@@ -370,7 +387,13 @@ describe('produceBasicStyle', () => {
     const properties = trackValue<StypProperties>({ display: 'block' });
 
     root.rules.add({ c: 'custom' }, properties);
-    produceBasicStyle(root.rules, { scheduler: immediateRenderScheduler });
+    produceBasicStyle(
+        root.rules,
+        {
+          addSheet: stypStyleElementWriter(),
+          scheduler: immediateRenderScheduler,
+        },
+    );
     properties.it = { display: 'inline-block' };
 
     expect(cssStyle('.custom').display).toBe('inline-block');
@@ -378,7 +401,13 @@ describe('produceBasicStyle', () => {
   it('removes rule', () => {
 
     const rule = root.rules.add({ c: 'custom' }, { display: 'block' });
-    const supply = produceBasicStyle(root.rules, { scheduler: immediateRenderScheduler });
+    const supply = produceBasicStyle(
+        root.rules,
+        {
+          addSheet: stypStyleElementWriter(),
+          scheduler: immediateRenderScheduler,
+        },
+    );
     const onDone = jest.fn();
 
     supply.whenOff(onDone);
@@ -403,6 +432,7 @@ describe('produceBasicStyle', () => {
     produceBasicStyle(
         rule.rules,
         {
+          addSheet: stypStyleElementWriter(),
           scheduler: () => jest.fn(shot => {
             operations.push(shot);
             schedule(shot);
@@ -422,7 +452,13 @@ describe('produceBasicStyle', () => {
 
     root.rules.add({ c: 'custom1' }, properties);
 
-    const supply = produceBasicStyle(root.rules, { scheduler: immediateRenderScheduler });
+    const supply = produceBasicStyle(
+        root.rules,
+        {
+          addSheet: stypStyleElementWriter(),
+          scheduler: immediateRenderScheduler,
+        },
+    );
 
     root.rules.add({ c: 'custom2' }, { width: '100%' });
     supply.off();

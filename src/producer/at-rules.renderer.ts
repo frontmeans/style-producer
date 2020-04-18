@@ -11,7 +11,7 @@ import { StypSelector, stypSelector } from '../selector';
 import { isCombinator } from '../selector/selector.impl';
 import { stypSplitPriority, StypValue } from '../value';
 import { StypRenderer } from './renderer';
-import { FIRST_RENDER_ORDER, isCSSRuleGroup } from './renderer.impl';
+import { FIRST_RENDER_ORDER } from './renderer.impl';
 import { StyleProducer } from './style-producer';
 
 /**
@@ -37,14 +37,14 @@ class AtRulesRenderer implements StypRenderer.Spec {
   render(producer: StyleProducer, properties: StypProperties): void {
 
     const { selector } = producer;
-    let { target } = producer;
+    const { writer } = producer;
 
-    if (!isCSSRuleGroup(target)) {
+    if (!writer.isGroup) {
       producer.render(properties);
       return;
     }
 
-    let sheet: CSSGroupingRule | CSSStyleSheet = target;
+    let sheet = writer;
     const extracted = extractAtSelectors(selector);
 
     if (!extracted) {
@@ -56,16 +56,12 @@ class AtRulesRenderer implements StypRenderer.Spec {
 
     for (const atSelector of atSelectors) {
 
-      const ruleIdx = sheet.insertRule(`${buildAtSelector(properties, atSelector)}{}`, sheet.cssRules.length);
-      const nested: CSSRule = sheet.cssRules[ruleIdx];
+      const [name, params] = buildAtSelector(properties, atSelector);
 
-      target = nested;
-      if (isCSSRuleGroup(nested)) {
-        sheet = nested;
-      }
+      sheet = sheet.addGroup(name, params);
     }
 
-    producer.render(properties, { target, selector: restSelector });
+    producer.render(properties, { writer: sheet, selector: restSelector });
   }
 
 }
@@ -76,7 +72,7 @@ class AtRulesRenderer implements StypRenderer.Spec {
 function buildAtSelector(
     properties: StypProperties,
     [key, [names, customQuery]]: [string, [Set<string>, string?]],
-): string {
+): [string, string?] {
 
   let query = '';
   const addQuery = (q?: StypValue): void => {
@@ -97,7 +93,7 @@ function buildAtSelector(
 
   addQuery(customQuery);
 
-  return query ? `${key} ${query}` : key;
+  return query ? [key, query] : [key];
 }
 
 /**

@@ -1,8 +1,8 @@
 import { isReadonlyArray } from '../internal';
 import { StypRule } from '../rule';
+import { StypOptions } from './options';
 import { stypRenderProperties } from './properties.renderer';
 import { StypRenderer } from './renderer';
-import { StypOptions } from './style-producer';
 
 /**
  * @internal

@@ -10,10 +10,11 @@ import { newRenderSchedule } from '@proc7ts/render-scheduler';
 import { StypProperties, StypRule, StypRules } from '../rule';
 import { StypSelector, stypSelector, StypSelectorFormat, stypSelectorText } from '../selector';
 import { isCombinator } from '../selector/selector.impl';
+import { StypOptions } from './options';
 import { stypRenderFactories } from './options.impl';
 import { StypRenderer } from './renderer';
-import { isCSSRuleGroup } from './renderer.impl';
-import { StyleProducer, StyleSheetRef, StypOptions } from './style-producer';
+import { StyleProducer } from './style-producer';
+import { StypWriter } from './writer';
 
 /**
  * Produces and dynamically updates basic CSS stylesheets based on the given CSS rules.
@@ -28,19 +29,13 @@ import { StyleProducer, StyleSheetRef, StypOptions } from './style-producer';
  *
  * @returns Styles supply. Once cut off (i.e. its `off()` method is called) the produced stylesheets are removed.
  */
-export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): EventSupply {
+export function produceBasicStyle(rules: StypRules, opts: StypOptions): EventSupply {
 
   const {
-    document = window.document,
     rootSelector = { e: 'body' },
-    addStyleSheet = addStyleElement,
     scheduler = newRenderSchedule,
     nsAlias = newNamespaceAliaser(),
   } = opts;
-  const {
-    parent = document.head,
-  } = opts;
-  const view = document.defaultView || window;
   const format: StypSelectorFormat = { nsAlias };
   const factories = stypRenderFactories(opts);
   const renderSupply = renderRules(rules);
@@ -56,32 +51,24 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
       rule: StypRule,
       renderer: StypRenderer.Function,
       production: {
-        styleSheet: CSSStyleSheet;
-        target: CSSStyleSheet | CSSRule;
+        sheet: StypWriter.Sheet;
+        writer: StypWriter;
         selector: StypSelector.Normalized;
       },
   ): StyleProducer {
 
     class StyleProducer$ implements StyleProducer {
 
-      get document(): Document {
-        return document;
-      }
-
-      get parent(): ParentNode {
-        return parent;
-      }
-
       get rule(): StypRule {
         return rule;
       }
 
-      get styleSheet(): CSSStyleSheet {
-        return production.styleSheet;
+      get sheet(): StypWriter.Sheet {
+        return production.sheet;
       }
 
-      get target(): CSSStyleSheet | CSSRule {
-        return production.target;
+      get writer(): StypWriter {
+        return production.writer;
       }
 
       get selector(): StypSelector.Normalized {
@@ -101,8 +88,8 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
                   rule,
                   renderer,
                   {
-                    styleSheet: production.styleSheet,
-                    target: options.target || production.target,
+                    sheet: production.sheet,
+                    writer: options.writer || production.writer,
                     selector: options.selector || production.selector,
                   },
               ),
@@ -111,17 +98,15 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
         }
       }
 
-      addRule(_selector: StypSelector.Normalized = production.selector): CSSRule {
+      addStyle(_selector: StypSelector.Normalized = production.selector): StypWriter.Style {
 
-        const target = production.target;
+        const { writer } = production;
 
-        if (!isCSSRuleGroup(target)) {
-          return target;
+        if (!writer.isGroup) {
+          return writer;
         }
 
-        const ruleIndex = target.insertRule(`${selectorText(_selector)}{}`, target.cssRules.length);
-
-        return target.cssRules[ruleIndex];
+        return writer.addStyle(selectorText(_selector));
       }
 
     }
@@ -156,30 +141,30 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
   function renderRule(rule: StypRule): EventSupply {
 
     const [reader, renderer] = rendererForRule(rule);
-    let sheetRef: StyleSheetRef | undefined;
+    let sheet: StypWriter.Sheet | undefined;
     const selector = ruleSelector(rule);
-    const schedule = scheduler({ window: view });
+    const schedule = scheduler();
 
     return reader.to(renderProperties).whenOff(removeStyle);
 
     function renderProperties(properties: StypProperties): void {
       schedule(() => {
-        if (sheetRef) {
-          clearProperties(sheetRef.styleSheet);
+        if (sheet) {
+          sheet.clear();
         }
 
         const producer = styleProducer(
             rule,
             renderer,
             {
-              get styleSheet() {
-                if (!sheetRef) {
-                  sheetRef = addStyleSheet(producer);
+              get sheet() {
+                if (!sheet) {
+                  sheet = opts.addSheet(producer);
                 }
-                return sheetRef.styleSheet;
+                return sheet;
               },
-              get target() {
-                return this.styleSheet;
+              get writer() {
+                return this.sheet;
               },
               selector,
             },
@@ -192,21 +177,15 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
     function removeStyle(): void {
       schedule(() => {
 
-        const lastSheetRef = sheetRef;
+        const lastSheet = sheet;
 
-        if (lastSheetRef) {
-          sheetRef = undefined;
-          return lastSheetRef.remove();
+        if (lastSheet) {
+          sheet = undefined;
+          return lastSheet.remove();
         }
         // Otherwise element is removed before anything rendered.
         // Should never happen for properly constructed rule.
       });
-    }
-
-    function clearProperties(sheet: CSSStyleSheet): void {
-      while (sheet.cssRules.length) {
-        sheet.deleteRule(sheet.cssRules.length - 1);
-      }
     }
   }
 
@@ -254,25 +233,4 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions = {}): Eve
       };
     }
   }
-}
-
-/**
- * @internal
- */
-function addStyleElement(producer: StyleProducer): StyleSheetRef {
-
-  const { document, parent } = producer;
-  const element = document.createElement('style');
-
-  element.setAttribute('type', 'text/css');
-  element.append(document.createTextNode(''));
-
-  parent.append(element);
-
-  return {
-    styleSheet: element.sheet as CSSStyleSheet,
-    remove() {
-      element.parentNode!.removeChild(element);
-    },
-  };
 }

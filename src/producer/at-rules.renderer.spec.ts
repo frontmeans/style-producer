@@ -5,6 +5,7 @@ import { stypSelectorDisplayText } from '../selector/selector-text.impl';
 import { cssStyle, cssStyles, mediaRules, removeStyleElements } from '../spec';
 import { produceStyle } from './produce-style';
 import { StypRenderer } from './renderer';
+import { stypStyleElementWriter } from './style-element-writer';
 import Mock = jest.Mock;
 
 describe('stypRenderAtRules', () => {
@@ -28,10 +29,9 @@ describe('stypRenderAtRules', () => {
   it('does not append at-rules to non-grouping target', () => {
     root.rules.add({ c: 'screen-only', $: '@media=screen' }, { display: 'block' });
     mockRenderer.mockImplementation((producer, properties) => {
-      producer.render(properties, { target: producer.addRule() });
+      producer.render(properties, { writer: producer.addStyle() });
     });
     doProduceStyle();
-    expect(atSelector('.screen-only')).toBeNull();
     expect(itsEmpty(mediaRules())).toBe(true);
   });
   it('appends at-rule to grouping target', () => {
@@ -83,13 +83,13 @@ describe('stypRenderAtRules', () => {
   it('respects non-at-rule qualifiers', () => {
     root.rules.add({ c: 'qualified', $: ['@media=print', 'other'] });
     doProduceStyle();
-    expect(atSelector('.qualified')).toBe('.qualified@other');
+    expect(atSelector('.qualified-Q-other')).toBe('.qualified@other');
     expect(itsEmpty(mediaRules('print'))).toBe(false);
   });
   it('does not append at-rules to non-at-rules qualified rules', () => {
     root.rules.add({ c: 'qualified', $: ['non-at-rule'] });
     doProduceStyle();
-    expect(atSelector('.qualified')).toBe('.qualified@non-at-rule');
+    expect(atSelector('.qualified-Q-non-at-rule')).toBe('.qualified@non-at-rule');
     expect(itsEmpty(mediaRules())).toBe(true);
   });
 
@@ -97,6 +97,7 @@ describe('stypRenderAtRules', () => {
     produceStyle(
         root.rules,
         {
+          addSheet: stypStyleElementWriter(),
           scheduler: immediateRenderScheduler,
           renderer: [
             {
@@ -108,22 +109,19 @@ describe('stypRenderAtRules', () => {
               render(producer, properties) {
                 // Insert into new stylesheet instead of at-rule rule as CSSOM does not implement the latter.
 
-                const element = document.createElement('style');
-
-                element.setAttribute('type', 'text/css');
-
                 const selector = stypSelectorDisplayText(producer.selector);
+                const writer = producer.sheet.addStyle(selector.replace(/@/g, '-Q-'));
+
+                const styles = document.head.querySelectorAll('style');
+                const element = styles[styles.length - 1];
 
                 element.setAttribute('data-at-selector', selector);
-                element.innerText = '';
-
-                document.head.append(element);
 
                 const atStylesheet = element.sheet as CSSStyleSheet;
 
                 (atStylesheet as any)._atSelector = selector;
 
-                producer.render(properties, { target: atStylesheet });
+                producer.render(properties, { writer });
               },
             },
           ],
