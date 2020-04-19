@@ -1,9 +1,9 @@
 import { noop } from '@proc7ts/call-thru';
 import { immediateRenderScheduler } from '@proc7ts/render-scheduler';
-import { stypRoot, StypRule } from '../rule';
-import { removeStyleElements } from '../spec';
+import { stypRoot, StypRule } from '../../rule';
+import { removeStyleElements } from '../../spec';
+import { produceBasicStyle } from '../produce-basic-style';
 import { stypObjectFormat } from './object.format';
-import { produceBasicStyle } from './produce-basic-style';
 
 describe('stypObjectFormat', () => {
 

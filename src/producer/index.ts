@@ -1,5 +1,5 @@
 export * from './format';
-export * from './object.format';
+export * from './formats';
 export * from './produce-basic-style';
 export * from './produce-style';
 export * from './renderer';

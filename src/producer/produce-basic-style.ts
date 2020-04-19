@@ -11,7 +11,7 @@ import { StypProperties, StypRule, StypRules } from '../rule';
 import { StypSelector, stypSelector, StypSelectorFormat, stypSelectorText } from '../selector';
 import { isCombinator } from '../selector/selector.impl';
 import { StypFormat } from './format';
-import { stypRenderFactories } from './format.impl';
+import { stypRenderFactories } from './formats/format.impl';
 import { StypRenderer } from './renderer';
 import { StyleProducer } from './style-producer';
 import { StypWriter } from './writer';

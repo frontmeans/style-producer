@@ -1,8 +1,8 @@
-import { isReadonlyArray } from '../internal';
-import { StypRule } from '../rule';
-import { StypFormat } from './format';
-import { StypRenderer } from './renderer';
-import { stypRenderProperties } from './renderers/properties.renderer';
+import { isReadonlyArray } from '../../internal';
+import { StypRule } from '../../rule';
+import { StypFormat } from '../format';
+import { StypRenderer } from '../renderer';
+import { stypRenderProperties } from '../renderers';
 
 /**
  * @internal

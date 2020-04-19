@@ -3,9 +3,9 @@
  * @module @proc7ts/style-producer
  */
 import { newRenderSchedule, RenderScheduler } from '@proc7ts/render-scheduler';
-import { StypPriority } from '../value';
-import { StypFormat, StypFormatOptions } from './format';
-import { StypWriter } from './writer';
+import { StypPriority } from '../../value';
+import { StypFormat, StypFormatOptions } from '../format';
+import { StypWriter } from '../writer';
 
 /**
  * @internal

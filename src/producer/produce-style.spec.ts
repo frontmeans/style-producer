@@ -1,7 +1,7 @@
 import { immediateRenderScheduler } from '@proc7ts/render-scheduler';
 import { stypRoot, StypRule } from '../rule';
 import { cssStyle, removeStyleElements, stylesheets } from '../spec';
-import { stypObjectFormat } from './object.format';
+import { stypObjectFormat } from './formats';
 import { produceStyle } from './produce-style';
 import { StypRenderer } from './renderer';
 import SpyInstance = jest.SpyInstance;

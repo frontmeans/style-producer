@@ -7,7 +7,7 @@ import { StypProperties, stypRoot, StypRule } from '../rule';
 import { stypSelector } from '../selector';
 import { cssStyle, cssStyles, removeStyleElements, stylesheets } from '../spec';
 import { StypLength } from '../value/unit';
-import { stypObjectFormat } from './object.format';
+import { stypObjectFormat } from './formats';
 import { produceBasicStyle } from './produce-basic-style';
 import { StypRenderer } from './renderer';
 import { StyleProducer } from './style-producer';
