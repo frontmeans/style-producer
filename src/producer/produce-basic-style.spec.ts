@@ -2,7 +2,13 @@ import { itsEmpty } from '@proc7ts/a-iterable';
 import { noop } from '@proc7ts/call-thru';
 import { afterNever, trackValue } from '@proc7ts/fun-events';
 import { NamespaceDef } from '@proc7ts/namespace-aliaser';
-import { immediateRenderScheduler, newManualRenderScheduler, RenderShot } from '@proc7ts/render-scheduler';
+import {
+  immediateRenderScheduler,
+  newManualRenderScheduler,
+  noopRenderScheduler,
+  RenderShot,
+  setRenderScheduler,
+} from '@proc7ts/render-scheduler';
 import { StypProperties, stypRoot, StypRule } from '../rule';
 import { stypSelector } from '../selector';
 import { cssStyle, cssStyles, removeStyleElements, stylesheets } from '../spec';
@@ -239,6 +245,18 @@ describe('produceBasicStyle', () => {
     it('schedules in current window animation frame for detached document', () => {
       produceBasicStyle(root.rules, stypObjectFormat({ renderer: noop }));
       expect(rafSpy).toHaveBeenCalledWith(operations[0]);
+    });
+    it('uses default render scheduler', () => {
+
+      const scheduler = jest.fn(noopRenderScheduler);
+
+      setRenderScheduler(scheduler);
+      try {
+        produceBasicStyle(root.rules, { addSheet() { throw new Error('should never be called'); } });
+        expect(scheduler).toHaveBeenCalled();
+      } finally {
+        setRenderScheduler();
+      }
     });
   });
 
