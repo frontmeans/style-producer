@@ -11,7 +11,7 @@ Produces and dynamically updates stylesheets right in the browser.
 
 Usage example:
 ```typescript
-import { produceStyle, stypRoot } from '@proc7ts/style-producer';
+import { produceStyle, stypObjectFormat, stypRoot } from '@proc7ts/style-producer';
 
 const root = stypRoot(); // Create root CSS rule
 const h1 = root.rules.add(
@@ -23,7 +23,7 @@ const h1 = root.rules.add(
 
 // ...add more CSS rules
 
-const supply = produceStyle(root.rules); // Produce stylesheets
+const supply = produceStyle(root.rules, stypObjectFormat()); // Produce stylesheets
 
 // Update CSS rule. Stylesheet will be updated automatically
 h1.add({
@@ -267,10 +267,11 @@ Producing CSS
 -------------
 
 Stylesheets can be produced by `produceStyle()` function. It accepts a dynamically updated list of CSS rules
-(e.g. `StypRules.rules`) and optional set of options.
+(e.g. `StypRules.rules`) and production format.
 
-By default, this function creates a `<style>` element per CSS rule inside a document head. This element's stylesheet
-is filled and updated with that rule contents. Once the rule removed the corresponding `<style>` element removed too.
+The `stypObjectFormat()` format creates a `<style>` element per CSS rule inside a document head. This element's
+stylesheet is filled and updated with that rule contents. Once the rule is removed the corresponding `<style>` element
+is removed too.
 
 When CSS is no longer needed an `off()` method of the `EventSupply` instance returned from `produceStyle()` function
 may be called. That would remove all `<style>` elements.
@@ -278,11 +279,11 @@ may be called. That would remove all `<style>` elements.
 
 ### CSS Renderers
 
-Style production is performed by CSS renderers that may be specified as `renderer` option passed to `produceStyle()`.
+Style production is performed by CSS renderers that may be specified as `renderer` production format option.
 
-By default, all renderers are enabled. This may be not what you need. In that case you can use a `produceBasicStyle()`
-function instead. The latter enables CSS properties rendering only. The rest of the necessary renderers may be specified
-with the `renderer` option. This may reduce the final bundle size a bit. 
+By default, all renderers are enabled. This may be not what is needed. In that case a `produceBasicStyle()` function
+can be called instead. The latter enables CSS properties rendering only. The rest of the necessary renderers may be
+specified with the `renderer` production format option. This may reduce the final bundle size a bit. 
 
 
 ### Raw CSS Text

@@ -3,7 +3,7 @@ import { immediateRenderScheduler } from '@proc7ts/render-scheduler';
 import { stypRoot, StypRule } from '../rule';
 import { stypSelectorDisplayText } from '../selector/selector-text.impl';
 import { cssStyle, cssStyles, mediaRules, removeStyleElements } from '../spec';
-import { stypCSSOMWriter } from './cssom-writer';
+import { stypObjectFormat } from './object.format';
 import { produceStyle } from './produce-style';
 import { StypRenderer } from './renderer';
 import Mock = jest.Mock;
@@ -96,8 +96,7 @@ describe('stypRenderAtRules', () => {
   function doProduceStyle(): void {
     produceStyle(
         root.rules,
-        {
-          addSheet: stypCSSOMWriter(),
+        stypObjectFormat({
           scheduler: immediateRenderScheduler,
           renderer: [
             {
@@ -125,7 +124,7 @@ describe('stypRenderAtRules', () => {
               },
             },
           ],
-        },
+        }),
     );
   }
 

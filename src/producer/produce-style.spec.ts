@@ -1,7 +1,7 @@
 import { immediateRenderScheduler } from '@proc7ts/render-scheduler';
 import { stypRoot, StypRule } from '../rule';
 import { cssStyle, removeStyleElements, stylesheets } from '../spec';
-import { stypCSSOMWriter } from './cssom-writer';
+import { stypObjectFormat } from './object.format';
 import { produceStyle } from './produce-style';
 import { StypRenderer } from './renderer';
 import SpyInstance = jest.SpyInstance;
@@ -33,7 +33,7 @@ describe('produceStyle', () => {
     });
 
     it('schedules in animation frame', () => {
-      produceStyle(root.rules, { addSheet: stypCSSOMWriter() });
+      produceStyle(root.rules, stypObjectFormat());
       expect(rafSpy).toHaveBeenCalledWith(operations[0]);
     });
   });
@@ -44,11 +44,10 @@ describe('produceStyle', () => {
 
     produceStyle(
         root.rules,
-        {
-          addSheet: stypCSSOMWriter(),
+        stypObjectFormat({
           renderer: mockRenderer,
           scheduler: immediateRenderScheduler,
-        },
+        }),
     );
     expect(mockRenderer).toHaveBeenCalled();
   });
@@ -59,11 +58,10 @@ describe('produceStyle', () => {
 
     produceStyle(
         root.rules,
-        {
-          addSheet: stypCSSOMWriter(),
+        stypObjectFormat({
           renderer: { create: mockCreate },
           scheduler: immediateRenderScheduler,
-        },
+        }),
     );
     expect(mockCreate).toHaveBeenCalledWith(root);
     expect(mockCreate).toHaveBeenCalledTimes(1);
@@ -78,11 +76,10 @@ describe('produceStyle', () => {
 
     produceStyle(
         root.rules,
-        {
-          addSheet: stypCSSOMWriter(),
+        stypObjectFormat({
           renderer: [mockRender1, mockRender2],
           scheduler: immediateRenderScheduler,
-        },
+        }),
     );
     expect(mockRender1).toHaveBeenCalled();
     expect(mockRender2).toHaveBeenCalled();
@@ -105,14 +102,13 @@ describe('produceStyle', () => {
 
     produceStyle(
         root.rules,
-        {
-          addSheet: stypCSSOMWriter(),
+        stypObjectFormat({
           renderer: [
             { order: 2, render: mockRender1 },
             { order: 1, render: mockRender2 },
           ],
           scheduler: immediateRenderScheduler,
-        },
+        }),
     );
     expect(calls).toEqual([2, 1]);
   });
@@ -120,10 +116,9 @@ describe('produceStyle', () => {
     root.rules.add({ c: 'custom' }, 'font-size: 12px !important;');
     produceStyle(
         root.rules,
-        {
-          addSheet: stypCSSOMWriter(),
+        stypObjectFormat({
           scheduler: immediateRenderScheduler,
-        },
+        }),
     );
 
     const style = cssStyle('.custom');
@@ -135,10 +130,9 @@ describe('produceStyle', () => {
     root.rules.add({ c: 'custom' }, { fontSize: '11px', $$css: 'font-weight: bold; font-size: 12px;' });
     produceStyle(
         root.rules,
-        {
-          addSheet: stypCSSOMWriter(),
+        stypObjectFormat({
           scheduler: immediateRenderScheduler,
-        },
+        }),
     );
 
     const style = cssStyle('.custom');
@@ -154,10 +148,9 @@ describe('produceStyle', () => {
     root.rules.add({ c: 'custom' });
     produceStyle(
         root.rules,
-        {
-          addSheet: stypCSSOMWriter(),
+        stypObjectFormat({
           scheduler: immediateRenderScheduler,
-        },
+        }),
     );
 
     stylesheets().forEach(sheet => {

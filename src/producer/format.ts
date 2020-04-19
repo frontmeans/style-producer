@@ -10,13 +10,11 @@ import { StyleProducer } from './style-producer';
 import { StypWriter } from './writer';
 
 /**
- * CSS styles production format.
- *
- * Accepted by {@link produceStyle} function.
+ * Options for {@link StypFormat CSS style production format}.
  *
  * @category Rendering
  */
-export interface StypFormat {
+export interface StypFormatOptions {
 
   /**
    * A selector to use for root CSS rule.
@@ -25,7 +23,7 @@ export interface StypFormat {
    *
    * For custom elements a `:host` selector would be more appropriate.
    */
-  rootSelector?: StypSelector;
+  readonly rootSelector?: StypSelector;
 
   /**
    * DOM rendering operations scheduler.
@@ -34,27 +32,39 @@ export interface StypFormat {
    *
    * Uses `newRenderSchedule` by default.
    */
-  scheduler?: RenderScheduler;
+  readonly scheduler?: RenderScheduler;
 
   /**
    * Renderer or renderer chain to use.
    */
-  renderer?: StypRenderer | readonly StypRenderer[];
+  readonly renderer?: StypRenderer | readonly StypRenderer[];
 
   /**
    * Namespace aliaser to use.
    *
    * New instance will be created if not specified.
    */
-  nsAlias?: NamespaceAliaser;
+  readonly nsAlias?: NamespaceAliaser;
+
+}
+
+/**
+ * CSS styles production format.
+ *
+ * Accepted by {@link produceStyle} function.
+ *
+ * The following formats supported by `style-producer`:
+ * - {@link stypObjectFormat} - creates a `<style>` element per CSS rule and utilizes CSS object model to build its
+ *   style sheet.
+ *
+ * @category Rendering
+ */
+export interface StypFormat extends StypFormatOptions {
 
   /**
    * Creates CSS style sheet writer.
    *
    * This method is called once per each CSS rule.
-   *
-   * This option is required. The `style-producer` has the following implementations bundled:
-   * - {@link stypCSSOMWriter} - creates a `<style>` element per CSS rule and utilizes CSSOM to build its style sheet.
    *
    * @param producer  Style producer instance.
    *
