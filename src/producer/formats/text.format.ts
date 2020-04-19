@@ -187,18 +187,32 @@ class StypStyleTextWriter implements StypWriter.Style {
     const p = priority >= StypPriority.Important ? ' !important' : '';
     const { pre, nv, eol } = this.nf;
 
-    this.body += `${pre}${name}:${nv}${value}${p};${eol}`;
+    if (this.body) {
+      this.body += `;${eol}`;
+    }
+
+    this.body += `${pre}${name}:${nv}${value}${p}`;
   }
 
   replace(css: string): void {
-    this.body = css;
+    this.body = css.trim();
+    if (this.body.endsWith(';')) {
+      this.body = this.body.substr(0, this.body.length - 1);
+    }
   }
 
   toString(): string {
 
     const { pre, nv, eol } = this.f;
 
-    return `${pre}${this.selector}${nv}{${eol}${this.body}${pre}}${eol}`;
+    if (this.body) {
+
+      const afterBody = eol ? `;${eol}` : '';
+
+      return `${pre}${this.selector}${nv}{${eol}${this.body}${afterBody}${pre}}`;
+    }
+
+    return `${pre}${this.selector}${nv}{}`;
   }
 
 }
@@ -226,7 +240,7 @@ abstract class AbstractStypGroupTextWriter implements StypWriter.Group {
   }
 
   toString(): string {
-    return this._nested.join('');
+    return this._nested.join(this.nf.eol);
   }
 
   protected _add<N>(nested: N, index = this._nested.length): N {
@@ -249,7 +263,7 @@ class StypGroupTextWriter extends AbstractStypGroupTextWriter implements StypWri
 
     const { pre, nv, eol } = this.f;
 
-    return `${pre}${this.name} ${this.params}${nv}{${eol}${super.toString()}${pre}}${eol}`;
+    return `${pre}${this.name} ${this.params}${nv}{${eol}${super.toString()}${eol}${pre}}`;
   }
 
 }
@@ -268,10 +282,7 @@ class StypSheetTextWriter extends AbstractStypGroupTextWriter implements StypWri
   }
 
   addGlobal(name: string, value: string, index?: number): void {
-
-    const { pre, eol } = this.f;
-
-    this._add(`${pre}${name} ${value};${eol}`, index);
+    this._add(`${this.f.pre}${name} ${value};`, index);
   }
 
   clear(): void {
