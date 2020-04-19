@@ -41,10 +41,10 @@ class StypGroupObjectWriter implements StypWriter.Group {
     return true;
   }
 
-  addGroup(name: string, params?: string, index?: number): StypWriter.Group {
+  addGroup(name: string, params: string, index?: number): StypWriter.Group {
     return new StypGroupObjectWriter(
         this._add(
-            params ? `${name} ${params}{}` : `${name}{}`,
+            `${name} ${params}{}`,
             index,
         ) as CSSGroupingRule,
     );
@@ -90,6 +90,10 @@ class StypSheetObjectWriter extends StypGroupObjectWriter implements StypWriter.
 
   remove(): void {
     this._element.parentNode!.removeChild(this._element);
+  }
+
+  done(): void {
+    /* do nothing */
   }
 
 }

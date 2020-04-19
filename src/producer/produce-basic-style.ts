@@ -149,9 +149,7 @@ export function produceBasicStyle(rules: StypRules, format: StypFormat): EventSu
 
     function renderProperties(properties: StypProperties): void {
       schedule(() => {
-        if (sheet) {
-          sheet.clear();
-        }
+        sheet?.clear();
 
         const producer = styleProducer(
             rule,
@@ -171,6 +169,7 @@ export function produceBasicStyle(rules: StypRules, format: StypFormat): EventSu
         );
 
         producer.render(properties);
+        sheet?.done();
       });
     }
 

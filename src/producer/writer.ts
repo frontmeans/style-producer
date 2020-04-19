@@ -20,7 +20,7 @@ export namespace StypWriter {
   /**
    * CSS style sheet writer to add CSS rules to.
    *
-   * It is an object created by {@link StypOptions.addSheet} option.
+   * It is an object created by {@link StypFormat.addSheet} style production format method.
    */
   export interface Sheet {
 
@@ -46,7 +46,7 @@ export namespace StypWriter {
      *
      * @returns  Inserted CSS style declarations writer.
      */
-    addGroup(name: string, params?: string, index?: number): Group;
+    addGroup(name: string, params: string, index?: number): Group;
 
     /**
      * Inserts a new empty CSS style declarations rule into target style sheet, with some restrictions.
@@ -68,6 +68,11 @@ export namespace StypWriter {
      * Removes this stylesheet from the document.
      */
     remove(): void;
+
+    /**
+     * Called by style producer after updates done to the style sheet.
+     */
+    done(): void;
 
   }
 

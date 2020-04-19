@@ -72,7 +72,7 @@ class AtRulesRenderer implements StypRenderer.Spec {
 function buildAtSelector(
     properties: StypProperties,
     [key, [names, customQuery]]: [string, [Set<string>, string?]],
-): [string, string?] {
+): [string, string] {
 
   let query = '';
   const addQuery = (q?: StypValue): void => {
@@ -93,7 +93,7 @@ function buildAtSelector(
 
   addQuery(customQuery);
 
-  return query ? [key, query] : [key];
+  return [key, query];
 }
 
 /**
