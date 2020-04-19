@@ -4,7 +4,7 @@
  */
 import { newRenderSchedule, RenderScheduler } from '@proc7ts/render-scheduler';
 import { StypPriority } from '../../value';
-import { StypFormat, StypFormatOptions } from '../format';
+import { StypFormat, StypFormatConfig } from '../format';
 import { StypWriter } from '../writer';
 
 /**
@@ -95,11 +95,11 @@ class StypSheetObjectWriter extends StypGroupObjectWriter implements StypWriter.
 }
 
 /**
- * Options for {@link stypObjectFormat CSS object model production format}.
+ * Configuration of {@link stypObjectFormat CSS object model production format}.
  *
  * @category Rendering
  */
-export interface StypObjectFormatOptions extends StypFormatOptions {
+export interface StypObjectFormatConfig extends StypFormatConfig {
 
   /**
    * Parent DOM node to add stylesheets to.
@@ -139,24 +139,24 @@ function stypObjectScheduler(
 }
 
 /**
- * Creates CSS object model production format.
+ * Builds CSS object model production format.
  *
  * The sheet writer creates a `<style>` element inside the `parent` node per CSS rule.
  *
  * @category Rendering
- * @param options  Options for created production format.
+ * @param config  Object format configuration.
  *
- * @returns New CSS object model production format.
+ * @returns CSS production format.
  */
 export function stypObjectFormat(
-    options: StypObjectFormatOptions = {},
+    config: StypObjectFormatConfig = {},
 ): StypFormat {
 
-  const { parent = document.head } = options;
+  const { parent = document.head } = config;
 
   return {
-    ...options,
-    scheduler: stypObjectScheduler(parent, options.scheduler),
+    ...config,
+    scheduler: stypObjectScheduler(parent, config.scheduler),
     addSheet() {
 
       const element = document.createElement('style');

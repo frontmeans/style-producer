@@ -10,11 +10,11 @@ import { StyleProducer } from './style-producer';
 import { StypWriter } from './writer';
 
 /**
- * Options for {@link StypFormat CSS style production format}.
+ * Configuration for {@link StypFormat CSS style production format}.
  *
  * @category Rendering
  */
-export interface StypFormatOptions {
+export interface StypFormatConfig {
 
   /**
    * A selector to use for root CSS rule.
@@ -56,10 +56,11 @@ export interface StypFormatOptions {
  * The following formats supported by `style-producer`:
  * - {@link stypObjectFormat} - creates a `<style>` element per CSS rule and utilizes CSS object model to build its
  *   style sheet.
+ * - {@link stypTextFormat} - reports style sheets as formatted CSS text.
  *
  * @category Rendering
  */
-export interface StypFormat extends StypFormatOptions {
+export interface StypFormat extends StypFormatConfig {
 
   /**
    * Creates CSS style sheet writer.
