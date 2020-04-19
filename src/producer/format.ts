@@ -10,13 +10,13 @@ import { StyleProducer } from './style-producer';
 import { StypWriter } from './writer';
 
 /**
- * CSS styles production options.
+ * CSS styles production format.
  *
- * This options are accepted by [[produceStyle]] function.
+ * Accepted by {@link produceStyle} function.
  *
  * @category Rendering
  */
-export interface StypOptions {
+export interface StypFormat {
 
   /**
    * A selector to use for root CSS rule.

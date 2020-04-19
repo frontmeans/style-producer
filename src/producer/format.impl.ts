@@ -1,6 +1,6 @@
 import { isReadonlyArray } from '../internal';
 import { StypRule } from '../rule';
-import { StypOptions } from './options';
+import { StypFormat } from './format';
 import { stypRenderProperties } from './properties.renderer';
 import { StypRenderer } from './renderer';
 
@@ -14,11 +14,11 @@ export interface StypRendererSpecFactory extends StypRenderer.Factory {
 /**
  * @internal
  */
-export function stypRenderFactories(opts: StypOptions): readonly StypRendererSpecFactory[] {
+export function stypRenderFactories(format: StypFormat): readonly StypRendererSpecFactory[] {
 
   const factories = new Map<StypRenderer, StypRendererSpecFactory>();
 
-  addRenderers(opts.renderer);
+  addRenderers(format.renderer);
   factories.delete(stypRenderProperties);
 
   return [...factories.values(), rendererFactory(stypRenderProperties)].sort(compareRenderers);

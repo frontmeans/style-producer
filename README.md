@@ -270,8 +270,7 @@ Stylesheets can be produced by `produceStyle()` function. It accepts a dynamical
 (e.g. `StypRules.rules`) and optional set of options.
 
 By default, this function creates a `<style>` element per CSS rule inside a document head. This element's stylesheet
-is filled and updated with that rule contents. Once the rule is removed the corresponding `<style>` element is removed
-too.
+is filled and updated with that rule contents. Once the rule removed the corresponding `<style>` element removed too.
 
 When CSS is no longer needed an `off()` method of the `EventSupply` instance returned from `produceStyle()` function
 may be called. That would remove all `<style>` elements.
@@ -281,9 +280,9 @@ may be called. That would remove all `<style>` elements.
 
 Style production is performed by CSS renderers that may be specified as `renderer` option passed to `produceStyle()`.
 
-By default all renderers are enabled. This may be not what you need. In that case you can use a `produceBasicStyle()`
+By default, all renderers are enabled. This may be not what you need. In that case you can use a `produceBasicStyle()`
 function instead. The latter enables CSS properties rendering only. The rest of the necessary renderers may be specified
-with the `renderer` option. This may reduce the final bundle size a little bit. 
+with the `renderer` option. This may reduce the final bundle size a bit. 
 
 
 ### Raw CSS Text

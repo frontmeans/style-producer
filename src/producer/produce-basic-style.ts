@@ -10,8 +10,8 @@ import { newRenderSchedule } from '@proc7ts/render-scheduler';
 import { StypProperties, StypRule, StypRules } from '../rule';
 import { StypSelector, stypSelector, StypSelectorFormat, stypSelectorText } from '../selector';
 import { isCombinator } from '../selector/selector.impl';
-import { StypOptions } from './options';
-import { stypRenderFactories } from './options.impl';
+import { StypFormat } from './format';
+import { stypRenderFactories } from './format.impl';
 import { StypRenderer } from './renderer';
 import { StyleProducer } from './style-producer';
 import { StypWriter } from './writer';
@@ -25,19 +25,19 @@ import { StypWriter } from './writer';
  * @category Rendering
  * @param rules  CSS rules to produce stylesheets for. This can be e.g. a [[StypRule.rules]] to render all rules,
  * or a result of [[StypRuleList.grab]] method call to render only matching ones.
- * @param opts  Production options.
+ * @param format  Production options.
  *
  * @returns Styles supply. Once cut off (i.e. its `off()` method is called) the produced stylesheets are removed.
  */
-export function produceBasicStyle(rules: StypRules, opts: StypOptions): EventSupply {
+export function produceBasicStyle(rules: StypRules, format: StypFormat): EventSupply {
 
   const {
     rootSelector = { e: 'body' },
     scheduler = newRenderSchedule,
     nsAlias = newNamespaceAliaser(),
-  } = opts;
-  const format: StypSelectorFormat = { nsAlias };
-  const factories = stypRenderFactories(opts);
+  } = format;
+  const selectorFormat: StypSelectorFormat = { nsAlias };
+  const factories = stypRenderFactories(format);
   const renderSupply = renderRules(rules);
   const trackSupply = trackRules();
 
@@ -115,7 +115,7 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions): EventSup
   }
 
   function selectorText(selector: StypSelector.Normalized): string {
-    return stypSelectorText(selector, format);
+    return stypSelectorText(selector, selectorFormat);
   }
 
   function renderRules(rulesToRender: Iterable<StypRule>): EventSupply {
@@ -159,7 +159,7 @@ export function produceBasicStyle(rules: StypRules, opts: StypOptions): EventSup
             {
               get sheet() {
                 if (!sheet) {
-                  sheet = opts.addSheet(producer);
+                  sheet = format.addSheet(producer);
                 }
                 return sheet;
               },
