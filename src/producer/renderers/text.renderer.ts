@@ -2,8 +2,8 @@
  * @packageDocumentation
  * @module @proc7ts/style-producer
  */
-import { StypProperties } from '../rule';
-import { StyleProducer } from './style-producer';
+import { StypProperties } from '../../rule';
+import { StyleProducer } from '../style-producer';
 
 /**
  * Renders raw CSS text. I.e. the contents of [[StypProperties.Generic.$$css]] property.

@@ -1,9 +1,9 @@
 import Mocked = jest.Mocked;
-import { StypLength, StypURL } from '../value';
+import { StypLength, StypURL } from '../../value';
+import { StypRenderer } from '../renderer';
+import { StyleProducer } from '../style-producer';
+import { StypWriter } from '../writer';
 import { stypRenderGlobals } from './globals.renderer';
-import { StypRenderer } from './renderer';
-import { StyleProducer } from './style-producer';
-import { StypWriter } from './writer';
 
 describe('stypRenderGlobals', () => {
 

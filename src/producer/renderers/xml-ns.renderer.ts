@@ -5,14 +5,14 @@
 import { filterIt, itsEmpty, itsReduction, mapIt, overArray } from '@proc7ts/a-iterable';
 import { isPresent } from '@proc7ts/call-thru';
 import { NamespaceDef } from '@proc7ts/namespace-aliaser';
-import { StypProperties } from '../rule';
-import { StypSelector } from '../selector';
-import { isCombinator } from '../selector/selector.impl';
-import { StypURL } from '../value';
+import { StypProperties } from '../../rule';
+import { StypSelector } from '../../selector';
+import { isCombinator } from '../../selector/selector.impl';
+import { StypURL } from '../../value';
+import { StypRenderer } from '../renderer';
+import { StyleProducer } from '../style-producer';
 import { stypRenderGlobals } from './globals.renderer';
-import { StypRenderer } from './renderer';
 import { FIRST_RENDER_ORDER } from './renderer.impl';
-import { StyleProducer } from './style-producer';
 
 /**
  * CSS stylesheet renderer of global XML namespace definitions.

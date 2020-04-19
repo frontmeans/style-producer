@@ -4,15 +4,15 @@
  */
 import { filterIt, itsReduction, ObjectEntry, overEntries } from '@proc7ts/a-iterable';
 import { AfterEvent } from '@proc7ts/fun-events';
-import { isNotEmptyArray } from '../internal';
-import { StypProperties, StypRule } from '../rule';
-import { mergeStypProperties } from '../rule/properties.impl';
-import { StypSelector, stypSelector } from '../selector';
-import { isCombinator } from '../selector/selector.impl';
-import { stypSplitPriority, StypValue } from '../value';
-import { StypRenderer } from './renderer';
+import { isNotEmptyArray } from '../../internal';
+import { StypProperties, StypRule } from '../../rule';
+import { mergeStypProperties } from '../../rule/properties.impl';
+import { StypSelector, stypSelector } from '../../selector';
+import { isCombinator } from '../../selector/selector.impl';
+import { stypSplitPriority, StypValue } from '../../value';
+import { StypRenderer } from '../renderer';
+import { StyleProducer } from '../style-producer';
 import { FIRST_RENDER_ORDER } from './renderer.impl';
-import { StyleProducer } from './style-producer';
 
 /**
  * @internal

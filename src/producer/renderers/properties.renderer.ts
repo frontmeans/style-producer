@@ -4,9 +4,9 @@
  */
 import { filterIt, itsEach, ObjectEntry, overEntries } from '@proc7ts/a-iterable';
 import hyphenateStyleName from 'hyphenate-style-name';
-import { StypProperties } from '../rule';
-import { stypSplitPriority } from '../value';
-import { StyleProducer } from './style-producer';
+import { StypProperties } from '../../rule';
+import { stypSplitPriority } from '../../value';
+import { StyleProducer } from '../style-producer';
 
 /**
  * Renders CSS properties.

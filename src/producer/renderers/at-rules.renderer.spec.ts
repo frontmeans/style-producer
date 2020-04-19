@@ -1,11 +1,11 @@
 import { itsEmpty } from '@proc7ts/a-iterable';
 import { immediateRenderScheduler } from '@proc7ts/render-scheduler';
-import { stypRoot, StypRule } from '../rule';
-import { stypSelectorDisplayText } from '../selector/selector-text.impl';
-import { cssStyle, cssStyles, mediaRules, removeStyleElements } from '../spec';
-import { stypObjectFormat } from './object.format';
-import { produceStyle } from './produce-style';
-import { StypRenderer } from './renderer';
+import { stypRoot, StypRule } from '../../rule';
+import { stypSelectorDisplayText } from '../../selector/selector-text.impl';
+import { cssStyle, cssStyles, mediaRules, removeStyleElements } from '../../spec';
+import { stypObjectFormat } from '../object.format';
+import { produceStyle } from '../produce-style';
+import { StypRenderer } from '../renderer';
 import Mock = jest.Mock;
 
 describe('stypRenderAtRules', () => {

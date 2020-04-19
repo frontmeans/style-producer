@@ -3,13 +3,13 @@
  * @module @proc7ts/style-producer
  */
 import { overEntries } from '@proc7ts/a-iterable';
-import { StypProperties } from '../rule';
-import { stypSplitPriority, StypURL, StypValue } from '../value';
+import { StypProperties } from '../../rule';
+import { stypSplitPriority, StypURL, StypValue } from '../../value';
+import { StypRenderer } from '../renderer';
+import { StyleProducer } from '../style-producer';
+import { StypWriter } from '../writer';
 import { stypRenderAtRules } from './at-rules.renderer';
-import { StypRenderer } from './renderer';
 import { FIRST_RENDER_ORDER } from './renderer.impl';
-import { StyleProducer } from './style-producer';
-import { StypWriter } from './writer';
 
 /**
  * CSS stylesheet renderer of global at-rules.

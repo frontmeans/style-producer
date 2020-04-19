@@ -1,8 +1,8 @@
 import { NamespaceAliaser, NamespaceDef, newNamespaceAliaser } from '@proc7ts/namespace-aliaser';
-import { StypSelector } from '../selector';
-import { StypURL } from '../value';
-import { StypRenderer } from './renderer';
-import { StyleProducer } from './style-producer';
+import { StypSelector } from '../../selector';
+import { StypURL } from '../../value';
+import { StypRenderer } from '../renderer';
+import { StyleProducer } from '../style-producer';
 import { stypRenderXmlNs } from './xml-ns.renderer';
 import Mocked = jest.Mocked;
 
