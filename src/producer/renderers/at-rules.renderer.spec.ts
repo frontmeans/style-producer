@@ -1,63 +1,76 @@
-import { itsEmpty } from '@proc7ts/a-iterable';
-import { immediateRenderScheduler } from '@proc7ts/render-scheduler';
+import { EventSupply, eventSupply } from '@proc7ts/fun-events';
 import { stypRoot, StypRule } from '../../rule';
-import { stypSelectorDisplayText } from '../../selector/selector-text.impl';
-import { cssStyle, cssStyles, mediaRules, removeStyleElements } from '../../spec';
-import { stypObjectFormat } from '../formats';
+import { stypTextFormat, StypTextFormatConfig } from '../formats';
 import { produceStyle } from '../produce-style';
 import { StypRenderer } from '../renderer';
-import Mock = jest.Mock;
 
 describe('stypRenderAtRules', () => {
 
   let root: StypRule;
+  let done: EventSupply;
 
   beforeEach(() => {
     root = stypRoot();
+    done = eventSupply();
   });
-
-  let mockRenderer: Mock<void, Parameters<StypRenderer.Function>>;
-
-  beforeEach(() => {
-    mockRenderer = jest.fn((producer, properties) => producer.render(properties));
-  });
-
   afterEach(() => {
-    removeStyleElements();
+    done.off();
   });
 
   it('does not append at-rules to non-grouping target', () => {
+
+    const renderer: StypRenderer = {
+      order: -Infinity,
+      render(producer, properties) {
+        producer.render(properties, { writer: producer.addStyle() });
+      },
+    };
+
     root.rules.add({ c: 'screen-only', $: '@media=screen' }, { display: 'block' });
-    mockRenderer.mockImplementation((producer, properties) => {
-      producer.render(properties, { writer: producer.addStyle() });
-    });
-    doProduceStyle();
-    expect(itsEmpty(mediaRules())).toBe(true);
+    expect(printCSS({ renderer })).toEqual([
+      '.screen-only {',
+      '  display: block;',
+      '}',
+    ]);
   });
   it('appends at-rule to grouping target', () => {
     root.rules.add({ c: 'screen-only', $: '@media=screen' }, { display: 'block' });
-    doProduceStyle();
-    expect(atSelector('.screen-only')).toBe('.screen-only');
-    expect(cssStyle('.screen-only').display).toBe('block');
-    expect(itsEmpty(mediaRules('screen'))).toBe(false);
+    expect(printCSS()).toEqual([
+      '@media screen {',
+      '  .screen-only {',
+      '    display: block;',
+      '  }',
+      '}',
+    ]);
   });
   it('recognizes qualified at-rule qualifiers', () => {
     root.rules.add({ c: 'screen-only', $: '@media:scr:sm=screen' }, { display: 'block' });
-    doProduceStyle();
-    expect(atSelector('.screen-only')).toBe('.screen-only');
-    expect(cssStyle('.screen-only').display).toBe('block');
-    expect(itsEmpty(mediaRules('screen'))).toBe(false);
+    expect(printCSS()).toEqual([
+      '@media screen {',
+      '  .screen-only {',
+      '    display: block;',
+      '  }',
+      '}',
+    ]);
   });
   it('handles named at-rule qualifiers', () => {
 
-    const rule = root.rules.add({ c: 'screen-only', $: '@media:scr' }, { '@media:scr': 'screen' });
+    const rule = root.rules.add({ c: 'screen-only', $: '@media:scr' }, { '@media:scr': 'screen', margin: '10px' });
 
-    rule.rules.add({ c: 'small', $: '@media:scr=(max-width:620px)' }, { display: 'block' });
+    rule.rules.add({ c: 'small', $: '@media:scr=(max-width:620px)' }, { margin: 0 });
 
-    doProduceStyle();
-    expect(atSelector('.screen-only .small')).toBe('.screen-only .small');
-    expect(cssStyle('.screen-only .small').display).toBe('block');
-    expect(itsEmpty(mediaRules('screen and (max-width:620px)'))).toBe(false);
+    expect(printCSS()).toEqual([
+      '@media screen {',
+      '  .screen-only {',
+      '    margin: 10px;',
+      '  }',
+      '}',
+      '@media screen and (max-width:620px) {',
+      '  .screen-only .small {',
+      '    margin: 0;',
+      '  }',
+      '}',
+    ]);
   });
   it('supports multiple at-rule qualifiers', () => {
     root.rules.add(
@@ -68,71 +81,56 @@ describe('stypRenderAtRules', () => {
         ],
         { display: 'block' },
     );
-    doProduceStyle();
-    expect(atSelector('.screen-only>.nested')).toBe('.screen-only>.nested');
-    expect(cssStyle('.screen-only>.nested').display).toBe('block');
-    expect(itsEmpty(mediaRules('screen and (max-width:620px)'))).toBe(false);
+    expect(printCSS()).toEqual([
+      '@media screen and (max-width:620px) {',
+      '  .screen-only>.nested {',
+      '    display: block;',
+      '  }',
+      '}',
+    ]);
   });
   it('supports at-rule qualifiers without values', () => {
     root.rules.add({ c: 'paged', $: '@page' }, { display: 'block' });
-    doProduceStyle();
-    expect(atSelector('.paged')).toBe('.paged');
-    expect(cssStyle('.paged').display).toBe('block');
-    expect(itsEmpty(cssStyles('@page'))).toBe(false);
+    expect(printCSS()).toEqual([
+      '@page {',
+      '  display: block;',
+      '}',
+    ]);
   });
   it('respects non-at-rule qualifiers', () => {
-    root.rules.add({ c: 'qualified', $: ['@media=print', 'other'] });
-    doProduceStyle();
-    expect(atSelector('.qualified-Q-other')).toBe('.qualified@other');
-    expect(itsEmpty(mediaRules('print'))).toBe(false);
+    root.rules.add({ c: 'qualified', $: ['@media=print', 'other'] }, { display: 'block' });
+    expect(printCSS()).toEqual([
+      '@media print {',
+      '  .qualified {',
+      '    display: block;',
+      '  }',
+      '}',
+    ]);
   });
   it('does not append at-rules to non-at-rules qualified rules', () => {
-    root.rules.add({ c: 'qualified', $: ['non-at-rule'] });
-    doProduceStyle();
-    expect(atSelector('.qualified-Q-non-at-rule')).toBe('.qualified@non-at-rule');
-    expect(itsEmpty(mediaRules())).toBe(true);
+    root.rules.add({ c: 'qualified', $: ['non-at-rule'] }, { display: 'block' });
+    expect(printCSS()).toEqual([
+      '.qualified {',
+      '  display: block;',
+      '}',
+    ]);
   });
 
-  function doProduceStyle(): void {
-    produceStyle(
-        root.rules,
-        stypObjectFormat({
-          scheduler: immediateRenderScheduler,
-          renderer: [
-            {
-              order: -Infinity, // Before any renderer
-              render: mockRenderer,
-            },
-            {
-              order: -1,
-              render(producer, properties) {
-                // Insert into new stylesheet instead of at-rule rule as CSSOM does not implement the latter.
+  function printCSS(config?: StypTextFormatConfig): string[] {
 
-                const selector = stypSelectorDisplayText(producer.selector);
-                const writer = producer.sheet.addStyle(selector.replace(/@/g, '-Q-'));
+    const format = stypTextFormat(config);
+    const sheets = new Map<string, string>();
 
-                const styles = document.head.querySelectorAll('style');
-                const element = styles[styles.length - 1];
+    format.onSheet(({ id, css }) => {
+      if (css) {
+        sheets.set(id, css);
+      } else {
+        sheets.delete(id);
+      }
+    }).needs(done);
 
-                element.setAttribute('data-at-selector', selector);
+    produceStyle(root.rules, format).needs(done);
 
-                const atStylesheet = element.sheet as CSSStyleSheet;
-
-                (atStylesheet as any)._atSelector = selector;
-
-                producer.render(properties, { writer });
-              },
-            },
-          ],
-        }),
-    );
-  }
-
-  function atSelector(selector: string): string | null {
-
-    const parentRule = cssStyle(selector).parentRule;
-    const stylesheet = parentRule.parentStyleSheet as CSSStyleSheet;
-
-    return (stylesheet as any)._atSelector || null;
+    return Array.from(sheets.values()).join('\n').split('\n');
   }
 });

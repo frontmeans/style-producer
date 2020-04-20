@@ -37,7 +37,7 @@ class AtRulesRenderer implements StypRenderer.Spec {
   render(producer: StyleProducer, properties: StypProperties): void {
 
     const { selector } = producer;
-    const { writer } = producer;
+    let { writer } = producer;
 
     if (!writer.isGroup) {
       producer.render(properties);
@@ -58,10 +58,15 @@ class AtRulesRenderer implements StypRenderer.Spec {
 
       const [name, params] = buildAtSelector(properties, atSelector);
 
-      sheet = sheet.addGroup(name, params);
+      if (params) {
+        writer = sheet = sheet.addGroup(name, params);
+      } else {
+        writer = sheet.addStyle(name);
+        break;
+      }
     }
 
-    producer.render(properties, { writer: sheet, selector: restSelector });
+    producer.render(properties, { writer, selector: restSelector });
   }
 
 }
@@ -72,7 +77,7 @@ class AtRulesRenderer implements StypRenderer.Spec {
 function buildAtSelector(
     properties: StypProperties,
     [key, [names, customQuery]]: [string, [Set<string>, string?]],
-): [string, string] {
+): [string, string?] {
 
   let query = '';
   const addQuery = (q?: StypValue): void => {
@@ -93,7 +98,7 @@ function buildAtSelector(
 
   addQuery(customQuery);
 
-  return [key, query];
+  return query ? [key, query] : [key];
 }
 
 /**
