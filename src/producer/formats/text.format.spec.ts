@@ -1,3 +1,4 @@
+import { EventSupply, eventSupply } from '@proc7ts/fun-events';
 import { stypRoot, StypRule } from '../../rule';
 import { StypRGB } from '../../value/color';
 import { produceStyle } from '../produce-style';
@@ -6,18 +7,23 @@ import { stypTextFormat, StypTextFormatConfig } from './text.format';
 describe('stypTextFormat', () => {
 
   let root: StypRule;
+  let done: EventSupply;
 
   beforeEach(() => {
     root = stypRoot();
+    done = eventSupply();
+  });
+  afterEach(() => {
+    done.off();
   });
 
   it('pretty prints by default', () => {
     root.rules.add({ c: 'test' }, { display: 'block' });
     expect(printCSS()).toEqual([
-        'body {}',
-        '.test {\n'
-        + '  display: block;\n'
-        + '}',
+      'body {}',
+      '.test {\n'
+      + '  display: block;\n'
+      + '}',
     ]);
   });
   it('pretty prints when `pretty` set to `true`', () => {
@@ -102,14 +108,26 @@ describe('stypTextFormat', () => {
       + '}',
     ]);
   });
+  it('informs on rule removal', () => {
+    root.rules.add({ c: 'test' }, { display: 'block' }).remove();
+    expect(printCSS()).toEqual([
+      'body {}',
+    ]);
+  });
 
   function printCSS(config?: StypTextFormatConfig): string[] {
 
     const sheets = new Map<string, string>();
     const format = stypTextFormat(config);
-    const supply = format.onSheet(({ id, css }) => sheets.set(id, css));
 
-    produceStyle(root.rules, format).cuts(supply).off();
+    format.onSheet(({ id, css }) => {
+      if (css != null) {
+        sheets.set(id, css);
+      } else {
+        sheets.delete(id);
+      }
+    }).needs(done);
+    produceStyle(root.rules, format).needs(done);
 
     return Array.from(sheets.values());
   }

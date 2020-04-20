@@ -103,9 +103,10 @@ export interface StypSheetText {
   readonly id: string;
 
   /**
-   * The textual representation of style sheet formatted accordingly to {@link StypTextFormatConfig options}.
+   * The textual representation of style sheet formatted accordingly to {@link StypTextFormatConfig options},
+   * or `undefined` to inform that corresponding style sheet have been removed.
    */
-  readonly css: string;
+  readonly css?: string;
 
 }
 
@@ -291,6 +292,7 @@ class StypSheetTextWriter extends AbstractStypGroupTextWriter implements StypWri
 
   remove(): void {
     this.clear();
+    this.sender.send({ id: this.id });
   }
 
   done(): void {
