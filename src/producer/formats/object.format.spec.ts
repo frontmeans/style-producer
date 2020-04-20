@@ -3,6 +3,7 @@ import { immediateRenderScheduler } from '@proc7ts/render-scheduler';
 import { stypRoot, StypRule } from '../../rule';
 import { removeStyleElements } from '../../spec';
 import { produceBasicStyle } from '../produce-basic-style';
+import { produceStyle } from '../produce-style';
 import { stypObjectFormat } from './object.format';
 
 describe('stypObjectFormat', () => {
@@ -51,5 +52,19 @@ describe('stypObjectFormat', () => {
 
     expect(scheduleOpts.error).toHaveBeenCalledWith(error);
     expect(scheduleOpts.error.mock.instances[0]).toBe(scheduleOpts);
+  });
+  it('renders at-rule', () => {
+
+    // Media rules are not fully implemented in CSSOM
+    const setProperty = jest.fn();
+
+    CSSMediaRule.prototype.insertRule = function (this: any) {
+      this.cssRules = [{ style: { setProperty } }];
+      return 0;
+    };
+    root.rules.add({ c: 'screen-only', $: '@media=screen' }, { display: 'block' });
+    produceStyle(root.rules, stypObjectFormat({ scheduler: immediateRenderScheduler }));
+
+    expect(setProperty).toHaveBeenCalledWith('display', 'block', null);
   });
 });
