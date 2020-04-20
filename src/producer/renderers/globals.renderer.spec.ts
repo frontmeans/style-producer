@@ -15,6 +15,9 @@ describe('stypRenderGlobals', () => {
       addGlobal: jest.fn((name: string, value: string, index?: number) => ({ name, value, index })),
     } as any;
     producer = {
+      rule: {
+        selector: [],
+      },
       sheet,
       render: jest.fn(),
     } as any;

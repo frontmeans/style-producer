@@ -18,7 +18,7 @@ import { FIRST_RENDER_ORDER } from './renderer.impl';
  * - `@namespace`
  * - `@import`
  *
- * At-rule parameters are taken from root CSS rule properties and treated as following rules.
+ * At-rule parameters are taken from root CSS rule properties and treated as following.
  *
  * **`@import:url`** property value is treated as media query and appended after stylesheet URL. I.e.
  * ```json
@@ -64,28 +64,30 @@ export const stypRenderGlobals: StypRenderer = {
   needs: stypRenderAtRules,
 
   render(producer: StyleProducer, properties: StypProperties) {
+    if (!producer.rule.selector.length) { // Applicable to root rule only
 
-    const { sheet } = producer;
-    let importIndex = 0;
-    let nsIndex = 0;
+      const { sheet } = producer;
+      let importIndex = 0;
+      let nsIndex = 0;
 
-    for (const [k, v] of overEntries(properties)) {
+      for (const [k, v] of overEntries(properties)) {
 
-      const key = String(k);
+        const key = String(k);
 
-      if (key[0] === '@') {
+        if (key[0] === '@') {
 
-        const [value] = stypSplitPriority(v);
-        const importDelta = renderImport(sheet, importIndex, key, value);
+          const [value] = stypSplitPriority(v);
+          const importDelta = renderImport(sheet, importIndex, key, value);
 
-        importIndex += importDelta;
-        nsIndex += importDelta;
+          importIndex += importDelta;
+          nsIndex += importDelta;
 
-        const url = StypURL.by(value);
+          const url = StypURL.by(value);
 
-        if (url) {
-          nsIndex += renderDefaultNamespace(sheet, nsIndex, key, url);
-          nsIndex += renderNamespacePrefix(sheet, nsIndex, key, url);
+          if (url) {
+            nsIndex += renderDefaultNamespace(sheet, nsIndex, key, url);
+            nsIndex += renderNamespacePrefix(sheet, nsIndex, key, url);
+          }
         }
       }
     }
