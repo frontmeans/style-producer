@@ -1,7 +1,8 @@
+import { itsFirst } from '@proc7ts/a-iterable';
 import { noop } from '@proc7ts/call-thru';
 import { immediateRenderScheduler } from '@proc7ts/render-scheduler';
 import { stypRoot, StypRule } from '../../rule';
-import { removeStyleElements } from '../../spec';
+import { removeStyleElements, stylesheets } from '../../spec';
 import { produceBasicStyle } from '../produce-basic-style';
 import { produceStyle } from '../produce-style';
 import { stypObjectFormat } from './object.format';
@@ -52,6 +53,24 @@ describe('stypObjectFormat', () => {
 
     expect(scheduleOpts.error).toHaveBeenCalledWith(error);
     expect(scheduleOpts.error.mock.instances[0]).toBe(scheduleOpts);
+  });
+  it('renders global at-rule', () => {
+    root.set({ '@import:some.css': '', '@import:screen.css': 'screen' });
+    produceStyle(root.rules, stypObjectFormat({ scheduler: immediateRenderScheduler }));
+
+    const sheet = itsFirst(stylesheets())!;
+
+    expect(sheet.cssRules[0].type).toBe(CSSRule.IMPORT_RULE);
+
+    const rule0 = sheet.cssRules[0] as CSSImportRule;
+
+    expect(rule0.href).toBe('some.css');
+    expect(rule0.media).toHaveLength(0);
+
+    const rule1 = sheet.cssRules[1] as CSSImportRule;
+
+    expect(rule1.href).toBe('screen.css');
+    expect(rule1.media.mediaText).toBe('screen');
   });
   it('renders at-rule', () => {
 

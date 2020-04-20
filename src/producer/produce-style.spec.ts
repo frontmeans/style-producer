@@ -1,6 +1,6 @@
 import { immediateRenderScheduler } from '@proc7ts/render-scheduler';
 import { stypRoot, StypRule } from '../rule';
-import { cssStyle, removeStyleElements, stylesheets } from '../spec';
+import { cssStyle, removeStyleElements } from '../spec';
 import { stypObjectFormat } from './formats';
 import { produceStyle } from './produce-style';
 import { StypRenderer } from './renderer';
@@ -139,36 +139,5 @@ describe('produceStyle', () => {
 
     expect(style.getPropertyValue('font-size')).toBe('11px');
     expect(style.getPropertyValue('font-weight')).toBe('bold');
-  });
-  it('renders imports for root style sheet only', () => {
-    root.add({
-      '@import:some.css': '',
-      '@import:other.css': 'screen',
-    });
-    root.rules.add({ c: 'custom' });
-    produceStyle(
-        root.rules,
-        stypObjectFormat({
-          scheduler: immediateRenderScheduler,
-        }),
-    );
-
-    const sheets = Array.from(stylesheets());
-
-    expect(sheets[0].cssRules[0].type).toBe(CSSRule.IMPORT_RULE);
-    expect(sheets[0].cssRules[1].type).toBe(CSSRule.IMPORT_RULE);
-    expect(sheets[0].cssRules[2].type).toBe(CSSRule.STYLE_RULE);
-
-    const rule0 = sheets[0].cssRules[0] as CSSImportRule;
-
-    expect(rule0.href).toBe('some.css');
-    expect(rule0.media).toHaveLength(0);
-
-    const rule1 = sheets[0].cssRules[1] as CSSImportRule;
-
-    expect(rule1.href).toBe('other.css');
-    expect(rule1.media.mediaText).toBe('screen');
-
-    expect(sheets[1].cssRules[0].type).toBe(CSSRule.STYLE_RULE);
   });
 });

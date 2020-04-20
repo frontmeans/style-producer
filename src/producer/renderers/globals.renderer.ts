@@ -64,30 +64,30 @@ export const stypRenderGlobals: StypRenderer = {
   needs: stypRenderAtRules,
 
   render(producer: StyleProducer, properties: StypProperties) {
-    if (!producer.rule.selector.length) { // Applicable to root rule only
 
-      const { sheet } = producer;
-      let importIndex = 0;
-      let nsIndex = 0;
+    const rootRule = !producer.rule.selector.length;
 
-      for (const [k, v] of overEntries(properties)) {
+    const { sheet } = producer;
+    let importIndex = 0;
+    let nsIndex = 0;
 
-        const key = String(k);
+    for (const [k, v] of overEntries(properties)) {
 
-        if (key[0] === '@') {
+      const key = String(k);
 
-          const [value] = stypSplitPriority(v);
-          const importDelta = renderImport(sheet, importIndex, key, value);
+      if (key[0] === '@') {
 
-          importIndex += importDelta;
-          nsIndex += importDelta;
+        const [value] = stypSplitPriority(v);
+        const importDelta = rootRule ? renderImport(sheet, importIndex, key, value) : 0;
 
-          const url = StypURL.by(value);
+        importIndex += importDelta;
+        nsIndex += importDelta;
 
-          if (url) {
-            nsIndex += renderDefaultNamespace(sheet, nsIndex, key, url);
-            nsIndex += renderNamespacePrefix(sheet, nsIndex, key, url);
-          }
+        const url = StypURL.by(value);
+
+        if (url) {
+          nsIndex += renderDefaultNamespace(sheet, nsIndex, key, url);
+          nsIndex += renderNamespacePrefix(sheet, nsIndex, key, url);
         }
       }
     }

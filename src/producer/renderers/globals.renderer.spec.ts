@@ -1,5 +1,10 @@
 import Mocked = jest.Mocked;
+import { flatMapIt } from '@proc7ts/a-iterable';
+import { EventSupply, eventSupply } from '@proc7ts/fun-events';
+import { stypRoot, StypRule } from '../../rule';
 import { StypLength, StypURL } from '../../value';
+import { stypTextFormat, StypTextFormatConfig } from '../formats';
+import { produceStyle } from '../produce-style';
 import { StypRenderer } from '../renderer';
 import { StyleProducer } from '../style-producer';
 import { StypWriter } from '../writer';
@@ -66,4 +71,68 @@ describe('stypRenderGlobals', () => {
     expect(sheet.addGlobal).toHaveBeenCalledWith('@import', 'url(\'some.css\')', 0);
     expect(sheet.addGlobal).toHaveBeenCalledWith('@namespace', 'svg url(\'http://www.w3.org/2000/svg\')', 2);
   });
+
+  let root: StypRule;
+  let done: EventSupply;
+
+  beforeEach(() => {
+    root = stypRoot();
+    done = eventSupply();
+  });
+  afterEach(() => {
+    done.off();
+  });
+
+  it('renders imports for root style sheet only', () => {
+    root.add({
+      '@import:some.css': '',
+      '@import:other.css': 'screen',
+    });
+    root.rules.add({ c: 'custom' }, { color: 'black' });
+    expect(printCSS()).toEqual([
+      '/***/',
+      '@import url(\'some.css\');',
+      '@import url(\'other.css\') screen;',
+      '/***/',
+      '.custom {',
+      '  color: black;',
+      '}',
+    ]);
+  });
+  it('renders namespace declarations in each style sheet', () => {
+    root.add({
+      '@namespace:ns1': 'http://localhost/test/ns1',
+      '@namespace:ns2': 'http://localhost/test/ns2',
+    });
+    root.rules.add({ c: 'custom' }, { color: 'black' });
+    expect(printCSS()).toEqual([
+      '/***/',
+      '@namespace ns1 url(\'http://localhost/test/ns1\');',
+      '@namespace ns2 url(\'http://localhost/test/ns2\');',
+      '/***/',
+      '@namespace ns1 url(\'http://localhost/test/ns1\');',
+      '@namespace ns2 url(\'http://localhost/test/ns2\');',
+      '.custom {',
+      '  color: black;',
+      '}',
+    ]);
+  });
+
+  function printCSS(config?: StypTextFormatConfig): string[] {
+
+    const format = stypTextFormat(config);
+    const sheets = new Map<string, string>();
+
+    format.onSheet(({ id, css }) => {
+      if (css) {
+        sheets.set(id, css);
+      } else {
+        sheets.delete(id);
+      }
+    }).needs(done);
+
+    produceStyle(root.rules, format).needs(done);
+
+    return Array.from(flatMapIt(sheets.values(), css => ['/***/', ...css.split('\n')]));
+  }
 });
