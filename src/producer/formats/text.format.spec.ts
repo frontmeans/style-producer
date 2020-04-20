@@ -20,7 +20,6 @@ describe('stypTextFormat', () => {
   it('pretty prints by default', () => {
     root.rules.add({ c: 'test' }, { display: 'block' });
     expect(printCSS()).toEqual([
-      'body {}',
       '.test {\n'
       + '  display: block;\n'
       + '}',
@@ -29,7 +28,6 @@ describe('stypTextFormat', () => {
   it('pretty prints when `pretty` set to `true`', () => {
     root.rules.add({ c: 'test' }, { display: 'block', color: 'white' });
     expect(printCSS({ pretty: true })).toEqual([
-      'body {}',
       '.test {\n'
       + '  display: block;\n'
       + '  color: white;\n'
@@ -39,21 +37,27 @@ describe('stypTextFormat', () => {
   it('compacts output when `pretty` set to `false`', () => {
     root.rules.add({ c: 'test' }, { display: 'block', color: 'white' });
     expect(printCSS({ pretty: false })).toEqual([
-      'body{}',
       '.test{display:block;color:white}',
     ]);
   });
   it('renders global at-rules', () => {
     root.set({ '@import:path/to/included.css': '' });
     expect(printCSS()).toEqual([
+      '@import url(\'path/to/included.css\');',
+    ]);
+  });
+  it('renders global at-rules before others', () => {
+    root.set({ '@import:path/to/included.css': '', margin: '10px' });
+    expect(printCSS()).toEqual([
       '@import url(\'path/to/included.css\');\n'
-      + 'body {}',
+      + 'body {\n'
+      + '  margin: 10px;\n'
+      + '}',
     ]);
   });
   it('renders grouping at-rule with the given indentation', () => {
     root.rules.add({ c: 'test', $: '@media=screen' }, { display: 'block' });
     expect(printCSS({ pretty: { indent: ' ' } })).toEqual([
-      'body {}',
       '@media screen {\n'
       + ' .test {\n'
       + '  display: block;\n'
@@ -64,7 +68,6 @@ describe('stypTextFormat', () => {
   it('renders plain CSS', () => {
     root.rules.add({ c: 'test' }, 'display: block;');
     expect(printCSS()).toEqual([
-      'body {}',
       '.test {\n'
       + 'display: block;\n'
       + '}',
@@ -73,7 +76,6 @@ describe('stypTextFormat', () => {
   it('renders plain CSS and indents the following property', () => {
     root.rules.add({ c: 'test' }, '  display: block;  ').add({ color: 'white' });
     expect(printCSS()).toEqual([
-      'body {}',
       '.test {\n'
       + 'display: block;\n'
       + '  color: white;\n'
@@ -83,7 +85,6 @@ describe('stypTextFormat', () => {
   it('renders plain CSS without closing semicolon', () => {
     root.rules.add({ c: 'test' }, ' display: block\n');
     expect(printCSS()).toEqual([
-      'body {}',
       '.test {\n'
       + 'display: block;\n'
       + '}',
@@ -92,7 +93,6 @@ describe('stypTextFormat', () => {
   it('renders plain CSS without closing semicolon and indents the following property', () => {
     root.rules.add({ c: 'test' }, '   display: block').add({ color: 'white' });
     expect(printCSS()).toEqual([
-      'body {}',
       '.test {\n'
       + 'display: block;\n'
       + '  color: white;\n'
@@ -102,7 +102,6 @@ describe('stypTextFormat', () => {
   it('renders priority', () => {
     root.rules.add({ c: 'test' }, { color: new StypRGB({ r: 0, g: 255, b: 0, a: 0.5 }).prioritize(10) });
     expect(printCSS()).toEqual([
-      'body {}',
       '.test {\n'
       + '  color: rgba(0, 255, 0, 0.5) !important;\n'
       + '}',
@@ -110,9 +109,7 @@ describe('stypTextFormat', () => {
   });
   it('informs on rule removal', () => {
     root.rules.add({ c: 'test' }, { display: 'block' }).remove();
-    expect(printCSS()).toEqual([
-      'body {}',
-    ]);
+    expect(printCSS()).toEqual([]);
   });
 
   function printCSS(config?: StypTextFormatConfig): string[] {
@@ -121,7 +118,7 @@ describe('stypTextFormat', () => {
     const format = stypTextFormat(config);
 
     format.onSheet(({ id, css }) => {
-      if (css != null) {
+      if (css) {
         sheets.set(id, css);
       } else {
         sheets.delete(id);

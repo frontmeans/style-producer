@@ -213,7 +213,7 @@ class StypStyleTextWriter implements StypWriter.Style {
       return `${pre}${this.selector}${nv}{${eol}${this.body}${afterBody}${pre}}`;
     }
 
-    return `${pre}${this.selector}${nv}{}`;
+    return '';
   }
 
 }
@@ -241,7 +241,22 @@ abstract class AbstractStypGroupTextWriter implements StypWriter.Group {
   }
 
   toString(): string {
-    return this._nested.join(this.nf.eol);
+
+    let out = '';
+
+    for (const nested of this._nested) {
+
+      const text = String(nested);
+
+      if (text) {
+        if (out) {
+          out += this.nf.eol;
+        }
+        out += text;
+      }
+    }
+
+    return out;
   }
 
   protected _add<N>(nested: N, index = this._nested.length): N {
@@ -262,9 +277,15 @@ class StypGroupTextWriter extends AbstractStypGroupTextWriter implements StypWri
 
   toString(): string {
 
+    const body = super.toString();
+
+    if (!body) {
+      return '';
+    }
+
     const { pre, nv, eol } = this.f;
 
-    return `${pre}${this.name} ${this.params}${nv}{${eol}${super.toString()}${eol}${pre}}`;
+    return `${pre}${this.name} ${this.params}${nv}{${eol}${body}${eol}${pre}}`;
   }
 
 }
