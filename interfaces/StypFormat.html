@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>StypOptions | Style Producer</title>
+	<title>StypFormat | Style Producer</title>
 	<meta name="description" content="Documentation for Style Producer">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,10 +54,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="StypOptions.html">StypOptions</a>
+					<a href="StypFormat.html">StypFormat</a>
 				</li>
 			</ul>
-			<h1>Interface StypOptions</h1>
+			<h1>Interface StypFormat</h1>
 		</div>
 	</div>
 </header>
@@ -67,16 +67,34 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>CSS styles production options.</p>
+						<p>CSS styles production format.</p>
 					</div>
-					<p>This options are accepted by <a href="../globals.html#produceStyle">produceStyle</a> function.</p>
+					<p>Accepted by <a href="../globals.html#produceStyle">produceStyle</a> function.</p>
+					<p>The following formats supported by <code>style-producer</code>:</p>
+					<ul>
+						<li><a href="../globals.html#stypObjectFormat">stypObjectFormat</a> - creates a <code>&lt;style&gt;</code> element per CSS rule and utilizes CSS object model to build its
+						style sheet.</li>
+						<li><a href="../globals.html#stypDomFormat">stypDomFormat</a> - the same as above, but fills created <code>&lt;style&gt;</code> element with CSS text content generated
+						by <a href="../globals.html#stypTextFormat">stypTextFormat</a>. This is slower, but allows to generate styles <em>before</em> adding them to document.</li>
+						<li><a href="../globals.html#stypTextFormat">stypTextFormat</a> - reports style sheets as formatted CSS text.</li>
+					</ul>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">StypOptions</span>
+						<a href="StypFormatConfig.html" class="tsd-signature-type">StypFormatConfig</a>
+						<ul class="tsd-hierarchy">
+							<li>
+								<span class="target">StypFormat</span>
+								<ul class="tsd-hierarchy">
+									<li>
+										<a href="StypTextFormat.html" class="tsd-signature-type">StypTextFormat</a>
+									</li>
+								</ul>
+							</li>
+						</ul>
 					</li>
 				</ul>
 			</section>
@@ -84,70 +102,34 @@
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
-						<section class="tsd-index-section ">
+						<section class="tsd-index-section tsd-is-inherited">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="StypOptions.html#addStyleSheet" class="tsd-kind-icon">add<wbr>Style<wbr>Sheet</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="StypOptions.html#document" class="tsd-kind-icon">document</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="StypOptions.html#nsAlias" class="tsd-kind-icon">ns<wbr>Alias</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="StypOptions.html#parent" class="tsd-kind-icon">parent</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="StypOptions.html#renderer" class="tsd-kind-icon">renderer</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="StypOptions.html#rootSelector" class="tsd-kind-icon">root<wbr>Selector</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="StypOptions.html#scheduler" class="tsd-kind-icon">scheduler</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="StypFormat.html#nsAlias" class="tsd-kind-icon">ns<wbr>Alias</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="StypFormat.html#renderer" class="tsd-kind-icon">renderer</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="StypFormat.html#rootSelector" class="tsd-kind-icon">root<wbr>Selector</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="StypFormat.html#scheduler" class="tsd-kind-icon">scheduler</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Methods</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="StypFormat.html#addSheet" class="tsd-kind-icon">add<wbr>Sheet</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group ">
+			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="addStyleSheet" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> add<wbr>Style<wbr>Sheet</h3>
-					<div class="tsd-signature tsd-kind-icon">add<wbr>Style<wbr>Sheet<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>producer<span class="tsd-signature-symbol">: </span><a href="StyleProducer.html" class="tsd-signature-type">StyleProducer</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="StyleSheetRef.html" class="tsd-signature-type">StyleSheetRef</a><span class="tsd-signature-symbol">)</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/745abca/src/producer/style-producer.ts#L130">style-producer/src/producer/style-producer.ts:130</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Creates CSS stylesheet for each CSS rule.</p>
-						</div>
-						<p>By default appends <code>&lt;style&gt;</code> element to <code>parent</code>.</p>
-						<dl class="tsd-comment-tags">
-							<dt>param</dt>
-							<dd><p>Style producer instance.</p>
-							</dd>
-							<dt>returns</dt>
-							<dd><p>CSS stylesheet reference.</p>
-							</dd>
-						</dl>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="document" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> document</h3>
-					<div class="tsd-signature tsd-kind-icon">document<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Document</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/745abca/src/producer/style-producer.ts#L103">style-producer/src/producer/style-producer.ts:103</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>A document to produce styles for.</p>
-						</div>
-						<p><code>window.document</code> by default.</p>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="nsAlias" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> ns<wbr>Alias</h3>
 					<div class="tsd-signature tsd-kind-icon">ns<wbr>Alias<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">NamespaceAliaser</span></div>
 					<aside class="tsd-sources">
+						<p>Inherited from <a href="StypFormatConfig.html">StypFormatConfig</a>.<a href="StypFormatConfig.html#nsAlias">nsAlias</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/745abca/src/producer/style-producer.ts#L151">style-producer/src/producer/style-producer.ts:151</a></li>
+							<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/5b02fc0/src/producer/format.ts#L47">style-producer/src/producer/format.ts:47</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -157,29 +139,14 @@
 						<p>New instance will be created if not specified.</p>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="parent" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> parent</h3>
-					<div class="tsd-signature tsd-kind-icon">parent<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ParentNode</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/745abca/src/producer/style-producer.ts#L110">style-producer/src/producer/style-producer.ts:110</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Parent DOM node to add stylesheets to.</p>
-						</div>
-						<p><code>document.head</code> by default.</p>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="renderer" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> renderer</h3>
 					<div class="tsd-signature tsd-kind-icon">renderer<span class="tsd-signature-symbol">:</span> <a href="../modules/StypRenderer.html" class="tsd-signature-type">StypRenderer</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">keyof </span><a href="../modules/StypRenderer.html" class="tsd-signature-type">StypRenderer</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
+						<p>Inherited from <a href="StypFormatConfig.html">StypFormatConfig</a>.<a href="StypFormatConfig.html#renderer">renderer</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/745abca/src/producer/style-producer.ts#L144">style-producer/src/producer/style-producer.ts:144</a></li>
+							<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/5b02fc0/src/producer/format.ts#L40">style-producer/src/producer/format.ts:40</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -188,13 +155,14 @@
 						</div>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="rootSelector" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> root<wbr>Selector</h3>
 					<div class="tsd-signature tsd-kind-icon">root<wbr>Selector<span class="tsd-signature-symbol">:</span> <a href="../modules/StypSelector.html" class="tsd-signature-type">StypSelector</a></div>
 					<aside class="tsd-sources">
+						<p>Inherited from <a href="StypFormatConfig.html">StypFormatConfig</a>.<a href="StypFormatConfig.html#rootSelector">rootSelector</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/745abca/src/producer/style-producer.ts#L119">style-producer/src/producer/style-producer.ts:119</a></li>
+							<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/5b02fc0/src/producer/format.ts#L26">style-producer/src/producer/format.ts:26</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -205,13 +173,14 @@
 						<p>For custom elements a <code>:host</code> selector would be more appropriate.</p>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="scheduler" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> scheduler</h3>
 					<div class="tsd-signature tsd-kind-icon">scheduler<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">RenderScheduler</span></div>
 					<aside class="tsd-sources">
+						<p>Inherited from <a href="StypFormatConfig.html">StypFormatConfig</a>.<a href="StypFormatConfig.html#scheduler">scheduler</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/745abca/src/producer/style-producer.ts#L139">style-producer/src/producer/style-producer.ts:139</a></li>
+							<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/5b02fc0/src/producer/format.ts#L35">style-producer/src/producer/format.ts:35</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -219,8 +188,44 @@
 							<p>DOM rendering operations scheduler.</p>
 						</div>
 						<p>Creates a render schedule per rule.</p>
-						<p>Uses <code>newRenderSchedule</code> by default.</p>
+						<p><code>newRenderSchedule</code> is used when omitted.</p>
 					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="addSheet" class="tsd-anchor"></a>
+					<h3>add<wbr>Sheet</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Sheet<span class="tsd-signature-symbol">(</span>producer<span class="tsd-signature-symbol">: </span><a href="StyleProducer.html" class="tsd-signature-type">StyleProducer</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="StypWriter.Sheet.html" class="tsd-signature-type">Sheet</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/5b02fc0/src/producer/format.ts#L76">style-producer/src/producer/format.ts:76</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Creates CSS style sheet writer.</p>
+								</div>
+								<p>This method is called once per each CSS rule.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>producer: <a href="StyleProducer.html" class="tsd-signature-type">StyleProducer</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Style producer instance.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="StypWriter.Sheet.html" class="tsd-signature-type">Sheet</a></h4>
+							<p>CSS style sheet writer.</p>
+						</li>
+					</ul>
 				</section>
 			</section>
 		</div>
@@ -237,28 +242,22 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="StypOptions.html" class="tsd-kind-icon">Styp<wbr>Options</a>
+						<a href="StypFormat.html" class="tsd-kind-icon">Styp<wbr>Format</a>
 						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="StypOptions.html#addStyleSheet" class="tsd-kind-icon">add<wbr>Style<wbr>Sheet</a>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="StypFormat.html#nsAlias" class="tsd-kind-icon">ns<wbr>Alias</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="StypOptions.html#document" class="tsd-kind-icon">document</a>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="StypFormat.html#renderer" class="tsd-kind-icon">renderer</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="StypOptions.html#nsAlias" class="tsd-kind-icon">ns<wbr>Alias</a>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="StypFormat.html#rootSelector" class="tsd-kind-icon">root<wbr>Selector</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="StypOptions.html#parent" class="tsd-kind-icon">parent</a>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="StypFormat.html#scheduler" class="tsd-kind-icon">scheduler</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="StypOptions.html#renderer" class="tsd-kind-icon">renderer</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="StypOptions.html#rootSelector" class="tsd-kind-icon">root<wbr>Selector</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="StypOptions.html#scheduler" class="tsd-kind-icon">scheduler</a>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="StypFormat.html#addSheet" class="tsd-kind-icon">add<wbr>Sheet</a>
 							</li>
 						</ul>
 					</li>

@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>StypSelectorFormat | Style Producer</title>
+	<title>StypFormatConfig | Style Producer</title>
 	<meta name="description" content="Documentation for Style Producer">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,10 +54,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="StypSelectorFormat.html">StypSelectorFormat</a>
+					<a href="StypFormatConfig.html">StypFormatConfig</a>
 				</li>
 			</ul>
-			<h1>Interface StypSelectorFormat</h1>
+			<h1>Interface StypFormatConfig</h1>
 		</div>
 	</div>
 </header>
@@ -67,7 +67,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Structured CSS selector textual format.</p>
+						<p>Configuration for <a href="StypFormat.html">CSS style production format</a>.</p>
 					</div>
 				</div>
 			</section>
@@ -75,7 +75,15 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">StypSelectorFormat</span>
+						<span class="target">StypFormatConfig</span>
+						<ul class="tsd-hierarchy">
+							<li>
+								<a href="StypFormat.html" class="tsd-signature-type">StypFormat</a>
+							</li>
+							<li>
+								<a href="StypObjectFormatConfig.html" class="tsd-signature-type">StypObjectFormatConfig</a>
+							</li>
+						</ul>
 					</li>
 				</ul>
 			</section>
@@ -86,8 +94,10 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="StypSelectorFormat.html#nsAlias" class="tsd-kind-icon">ns<wbr>Alias</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="StypSelectorFormat.html#qualify" class="tsd-kind-icon">qualify</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="StypFormatConfig.html#nsAlias" class="tsd-kind-icon">ns<wbr>Alias</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="StypFormatConfig.html#renderer" class="tsd-kind-icon">renderer</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="StypFormatConfig.html#rootSelector" class="tsd-kind-icon">root<wbr>Selector</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="StypFormatConfig.html#scheduler" class="tsd-kind-icon">scheduler</a></li>
 							</ul>
 						</section>
 					</div>
@@ -101,7 +111,7 @@
 					<div class="tsd-signature tsd-kind-icon">ns<wbr>Alias<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">NamespaceAliaser</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/5b02fc0/src/selector/selector-text.ts#L33">style-producer/src/selector/selector-text.ts:33</a></li>
+							<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/5b02fc0/src/producer/format.ts#L47">style-producer/src/producer/format.ts:47</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -112,27 +122,52 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="qualify" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> qualify</h3>
-					<div class="tsd-signature tsd-kind-icon">qualify<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>qualifier<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span></div>
+					<a name="renderer" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> renderer</h3>
+					<div class="tsd-signature tsd-kind-icon">renderer<span class="tsd-signature-symbol">:</span> <a href="../modules/StypRenderer.html" class="tsd-signature-type">StypRenderer</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">keyof </span><a href="../modules/StypRenderer.html" class="tsd-signature-type">StypRenderer</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/5b02fc0/src/selector/selector-text.ts#L26">style-producer/src/selector/selector-text.ts:26</a></li>
+							<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/5b02fc0/src/producer/format.ts#L40">style-producer/src/producer/format.ts:40</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Qualifier formatting function. When present, it is called for each qualifier to build its
-							textual representation. When unspecified, the qualifiers won&#39;t be attached to resulting CSS selector text.</p>
+							<p>Renderer or renderer chain to use.</p>
 						</div>
-						<dl class="tsd-comment-tags">
-							<dt>param</dt>
-							<dd><p>Qualifier to format.</p>
-							</dd>
-							<dt>returns</dt>
-							<dd><p>Textual representation of <code>qualifier</code>.</p>
-							</dd>
-						</dl>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="rootSelector" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> root<wbr>Selector</h3>
+					<div class="tsd-signature tsd-kind-icon">root<wbr>Selector<span class="tsd-signature-symbol">:</span> <a href="../modules/StypSelector.html" class="tsd-signature-type">StypSelector</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/5b02fc0/src/producer/format.ts#L26">style-producer/src/producer/format.ts:26</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A selector to use for root CSS rule.</p>
+						</div>
+						<p><code>body</code> by default.</p>
+						<p>For custom elements a <code>:host</code> selector would be more appropriate.</p>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="scheduler" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> scheduler</h3>
+					<div class="tsd-signature tsd-kind-icon">scheduler<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">RenderScheduler</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/5b02fc0/src/producer/format.ts#L35">style-producer/src/producer/format.ts:35</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>DOM rendering operations scheduler.</p>
+						</div>
+						<p>Creates a render schedule per rule.</p>
+						<p><code>newRenderSchedule</code> is used when omitted.</p>
 					</div>
 				</section>
 			</section>
@@ -150,13 +185,19 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="StypSelectorFormat.html" class="tsd-kind-icon">Styp<wbr>Selector<wbr>Format</a>
+						<a href="StypFormatConfig.html" class="tsd-kind-icon">Styp<wbr>Format<wbr>Config</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="StypSelectorFormat.html#nsAlias" class="tsd-kind-icon">ns<wbr>Alias</a>
+								<a href="StypFormatConfig.html#nsAlias" class="tsd-kind-icon">ns<wbr>Alias</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="StypSelectorFormat.html#qualify" class="tsd-kind-icon">qualify</a>
+								<a href="StypFormatConfig.html#renderer" class="tsd-kind-icon">renderer</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="StypFormatConfig.html#rootSelector" class="tsd-kind-icon">root<wbr>Selector</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="StypFormatConfig.html#scheduler" class="tsd-kind-icon">scheduler</a>
 							</li>
 						</ul>
 					</li>

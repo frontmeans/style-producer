@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>StyleSheetRef | Style Producer</title>
+	<title>StypWriter | Style Producer</title>
 	<meta name="description" content="Documentation for Style Producer">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,10 +54,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="StyleSheetRef.html">StyleSheetRef</a>
+					<a href="StypWriter.html">StypWriter</a>
 				</li>
 			</ul>
-			<h1>Interface StyleSheetRef</h1>
+			<h1>Namespace StypWriter</h1>
 		</div>
 	</div>
 </header>
@@ -67,79 +67,24 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>CSS stylesheet reference.</p>
+						<p>CSS writer.</p>
 					</div>
-					<p>It is an object created by <a href="StypOptions.html#addStyleSheet">StypOptions.addStyleSheet</a> option.</p>
+					<p>Either style sheet writer, grouping at-rule writer, or CSS style declarations writer.</p>
 				</div>
-			</section>
-			<section class="tsd-panel tsd-hierarchy">
-				<h3>Hierarchy</h3>
-				<ul class="tsd-hierarchy">
-					<li>
-						<span class="target">StyleSheetRef</span>
-					</li>
-				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Properties</h3>
+							<h3>Interfaces</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="StyleSheetRef.html#styleSheet" class="tsd-kind-icon">style<wbr>Sheet</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
-							<h3>Methods</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="StyleSheetRef.html#remove" class="tsd-kind-icon">remove</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-namespace"><a href="../interfaces/StypWriter.Group.html" class="tsd-kind-icon">Group</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-namespace"><a href="../interfaces/StypWriter.Sheet.html" class="tsd-kind-icon">Sheet</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-namespace"><a href="../interfaces/StypWriter.Style.html" class="tsd-kind-icon">Style</a></li>
 							</ul>
 						</section>
 					</div>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="styleSheet" class="tsd-anchor"></a>
-					<h3>style<wbr>Sheet</h3>
-					<div class="tsd-signature tsd-kind-icon">style<wbr>Sheet<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">CSSStyleSheet</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/745abca/src/producer/style-producer.ts#L167">style-producer/src/producer/style-producer.ts:167</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>CSS stylesheet reference.</p>
-						</div>
-					</div>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
-					<a name="remove" class="tsd-anchor"></a>
-					<h3>remove</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">remove<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/745abca/src/producer/style-producer.ts#L172">style-producer/src/producer/style-producer.ts:172</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Remoives stylesheet from the document.</p>
-								</div>
-							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-						</li>
-					</ul>
 				</section>
 			</section>
 		</div>
@@ -149,25 +94,82 @@
 					<li class="globals  ">
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="StypAngle.html">Styp<wbr>Angle</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="StypAnglePt.html">Styp<wbr>Angle<wbr>Pt</a>
+					</li>
+					<li class=" tsd-kind-namespace tsd-has-type-parameter">
+						<a href="StypDimension.html">Styp<wbr>Dimension</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="StypFrequency.html">Styp<wbr>Frequency</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="StypFrequencyPt.html">Styp<wbr>Frequency<wbr>Pt</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="StypLength.html">Styp<wbr>Length</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="StypLengthPt.html">Styp<wbr>Length<wbr>Pt</a>
+					</li>
+					<li class=" tsd-kind-namespace tsd-has-type-parameter">
+						<a href="StypProperties.html">Styp<wbr>Properties</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="StypPureSelector.html">Styp<wbr>Pure<wbr>Selector</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="StypQuery.html">Styp<wbr>Query</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="StypRenderer.html">Styp<wbr>Renderer</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="StypResolution.html">Styp<wbr>Resolution</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="StypRuleKey.html">Styp<wbr>Rule<wbr>Key</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="StypRules.html">Styp<wbr>Rules</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="StypSelector.html">Styp<wbr>Selector</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="StypSubSelector.html">Styp<wbr>Sub<wbr>Selector</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="StypTextFormatConfig.html">Styp<wbr>Text<wbr>Format<wbr>Config</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="StypTime.html">Styp<wbr>Time</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="StypTimePt.html">Styp<wbr>Time<wbr>Pt</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="StypValue.html">Styp<wbr>Value</a>
+					</li>
+					<li class="current tsd-kind-namespace">
+						<a href="StypWriter.html">Styp<wbr>Writer</a>
+					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-				</ul>
-				<ul class="current">
-					<li class="current tsd-kind-interface">
-						<a href="StyleSheetRef.html" class="tsd-kind-icon">Style<wbr>Sheet<wbr>Ref</a>
-						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="StyleSheetRef.html#styleSheet" class="tsd-kind-icon">style<wbr>Sheet</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-interface">
-								<a href="StyleSheetRef.html#remove" class="tsd-kind-icon">remove</a>
-							</li>
-						</ul>
+					<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+						<a href="../interfaces/StypWriter.Group.html" class="tsd-kind-icon">Group</a>
 					</li>
-				</ul>
-				<ul class="after-current">
+					<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+						<a href="../interfaces/StypWriter.Sheet.html" class="tsd-kind-icon">Sheet</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+						<a href="../interfaces/StypWriter.Style.html" class="tsd-kind-icon">Style</a>
+					</li>
 				</ul>
 			</nav>
 		</div>

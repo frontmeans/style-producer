@@ -72,7 +72,7 @@
 				<a href="https://proc7ts.github.io/style-producer/"><img src="https://img.shields.io/static/v1?logo=typescript&label=API&message=docs&color=informational" alt="API Documentation"></a></p>
 				<p>Produces and dynamically updates stylesheets right in the browser.</p>
 				<p>Usage example:</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { produceStyle, stypRoot } <span class="hljs-keyword">from</span> <span class="hljs-string">'@proc7ts/style-producer'</span>;
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { produceStyle, stypObjectFormat, stypRoot } <span class="hljs-keyword">from</span> <span class="hljs-string">'@proc7ts/style-producer'</span>;
 
 <span class="hljs-keyword">const</span> root = stypRoot(); <span class="hljs-comment">// Create root CSS rule</span>
 <span class="hljs-keyword">const</span> h1 = root.rules.add(
@@ -84,7 +84,7 @@
 
 <span class="hljs-comment">// ...add more CSS rules</span>
 
-<span class="hljs-keyword">const</span> supply = produceStyle(root.rules); <span class="hljs-comment">// Produce stylesheets</span>
+<span class="hljs-keyword">const</span> supply = produceStyle(root.rules, stypObjectFormat()); <span class="hljs-comment">// Produce stylesheets</span>
 
 <span class="hljs-comment">// Update CSS rule. Stylesheet will be updated automatically</span>
 h1.add({
@@ -267,19 +267,19 @@ mySettingsRef.set({
 					<h2>Producing CSS</h2>
 				</a>
 				<p>Stylesheets can be produced by <code>produceStyle()</code> function. It accepts a dynamically updated list of CSS rules
-				(e.g. <code>StypRules.rules</code>) and optional set of options.</p>
-				<p>By default, this function creates a <code>&lt;style&gt;</code> element per CSS rule inside a document head. This element&#39;s stylesheet
-					is filled and updated with that rule contents. Once the rule is removed the corresponding <code>&lt;style&gt;</code> element is removed
-				too.</p>
+				(e.g. <code>StypRules.rules</code>) and production format.</p>
+				<p>The <code>stypObjectFormat()</code> format creates a <code>&lt;style&gt;</code> element per CSS rule inside a document head. This element&#39;s
+					stylesheet is filled and updated with that rule contents. Once the rule is removed the corresponding <code>&lt;style&gt;</code> element
+				is removed too.</p>
 				<p>When CSS is no longer needed an <code>off()</code> method of the <code>EventSupply</code> instance returned from <code>produceStyle()</code> function
 				may be called. That would remove all <code>&lt;style&gt;</code> elements.</p>
 				<a href="#css-renderers" id="css-renderers" style="color: inherit; text-decoration: none;">
 					<h3>CSS Renderers</h3>
 				</a>
-				<p>Style production is performed by CSS renderers that may be specified as <code>renderer</code> option passed to <code>produceStyle()</code>.</p>
-				<p>By default all renderers are enabled. This may be not what you need. In that case you can use a <code>produceBasicStyle()</code>
-					function instead. The latter enables CSS properties rendering only. The rest of the necessary renderers may be specified
-				with the <code>renderer</code> option. This may reduce the final bundle size a little bit. </p>
+				<p>Style production is performed by CSS renderers that may be specified as <code>renderer</code> production format option.</p>
+				<p>By default, all renderers are enabled. This may be not what is needed. In that case a <code>produceBasicStyle()</code> function
+					can be called instead. The latter enables CSS properties rendering only. The rest of the necessary renderers may be
+				specified with the <code>renderer</code> production format option. This may reduce the final bundle size a bit. </p>
 				<a href="#raw-css-text" id="raw-css-text" style="color: inherit; text-decoration: none;">
 					<h3>Raw CSS Text</h3>
 				</a>
@@ -413,6 +413,9 @@ mySettingsRef.set({
 						<a href="modules/StypSubSelector.html">Styp<wbr>Sub<wbr>Selector</a>
 					</li>
 					<li class=" tsd-kind-namespace">
+						<a href="modules/StypTextFormatConfig.html">Styp<wbr>Text<wbr>Format<wbr>Config</a>
+					</li>
+					<li class=" tsd-kind-namespace">
 						<a href="modules/StypTime.html">Styp<wbr>Time</a>
 					</li>
 					<li class=" tsd-kind-namespace">
@@ -420,6 +423,9 @@ mySettingsRef.set({
 					</li>
 					<li class=" tsd-kind-namespace">
 						<a href="modules/StypValue.html">Styp<wbr>Value</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="modules/StypWriter.html">Styp<wbr>Writer</a>
 					</li>
 				</ul>
 			</nav>
@@ -464,20 +470,32 @@ mySettingsRef.set({
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/StyleProducer.html" class="tsd-kind-icon">Style<wbr>Producer</a>
 					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/StyleSheetRef.html" class="tsd-kind-icon">Style<wbr>Sheet<wbr>Ref</a>
-					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
 						<a href="interfaces/StypAddSub.html" class="tsd-kind-icon">Styp<wbr>Add<wbr>Sub</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/StypDomFormatConfig.html" class="tsd-kind-icon">Styp<wbr>Dom<wbr>Format<wbr>Config</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/StypFormat.html" class="tsd-kind-icon">Styp<wbr>Format</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/StypFormatConfig.html" class="tsd-kind-icon">Styp<wbr>Format<wbr>Config</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
 						<a href="interfaces/StypMulDiv.html" class="tsd-kind-icon">Styp<wbr>Mul<wbr>Div</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="interfaces/StypOptions.html" class="tsd-kind-icon">Styp<wbr>Options</a>
+						<a href="interfaces/StypObjectFormatConfig.html" class="tsd-kind-icon">Styp<wbr>Object<wbr>Format<wbr>Config</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/StypSelectorFormat.html" class="tsd-kind-icon">Styp<wbr>Selector<wbr>Format</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/StypSheetText.html" class="tsd-kind-icon">Styp<wbr>Sheet<wbr>Text</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/StypTextFormat.html" class="tsd-kind-icon">Styp<wbr>Text<wbr>Format</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
 						<a href="interfaces/StypZero.html" class="tsd-kind-icon">Styp<wbr>Zero</a>
@@ -505,6 +523,12 @@ mySettingsRef.set({
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#produceStyle" class="tsd-kind-icon">produce<wbr>Style</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#stypDomFormat" class="tsd-kind-icon">styp<wbr>Dom<wbr>Format</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#stypObjectFormat" class="tsd-kind-icon">styp<wbr>Object<wbr>Format</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#stypQuery" class="tsd-kind-icon">styp<wbr>Query</a>
@@ -535,6 +559,9 @@ mySettingsRef.set({
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
 						<a href="globals.html#stypSplitPriority" class="tsd-kind-icon">styp<wbr>Split<wbr>Priority</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#stypTextFormat" class="tsd-kind-icon">styp<wbr>Text<wbr>Format</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#stypValuesEqual" class="tsd-kind-icon">styp<wbr>Values<wbr>Equal</a>

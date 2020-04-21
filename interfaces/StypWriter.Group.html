@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Factory | Style Producer</title>
+	<title>Group | Style Producer</title>
 	<meta name="description" content="Documentation for Style Producer">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,13 +54,13 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/StypRenderer.html">StypRenderer</a>
+					<a href="../modules/StypWriter.html">StypWriter</a>
 				</li>
 				<li>
-					<a href="StypRenderer.Factory.html">Factory</a>
+					<a href="StypWriter.Group.html">Group</a>
 				</li>
 			</ul>
-			<h1>Interface Factory</h1>
+			<h1>Interface Group</h1>
 		</div>
 	</div>
 </header>
@@ -70,15 +70,16 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>CSS stylesheet renderer factory.</p>
+						<p>Grouping CSS at-rule writer of nested CSS rules.</p>
 					</div>
+					<p>Supports at-rules like <code>@media</code>, <code>@keyframes</code>, or <code>@condition</code>.</p>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">Factory</span>
+						<span class="target">Group</span>
 					</li>
 				</ul>
 			</section>
@@ -89,14 +90,14 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="StypRenderer.Factory.html#needs" class="tsd-kind-icon">needs</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="StypRenderer.Factory.html#order" class="tsd-kind-icon">order</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="StypWriter.Group.html#isGroup" class="tsd-kind-icon">is<wbr>Group</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="StypRenderer.Factory.html#create" class="tsd-kind-icon">create</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="StypWriter.Group.html#addGroup" class="tsd-kind-icon">add<wbr>Group</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="StypWriter.Group.html#addStyle" class="tsd-kind-icon">add<wbr>Style</a></li>
 							</ul>
 						</section>
 					</div>
@@ -105,71 +106,99 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="needs" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> needs</h3>
-					<div class="tsd-signature tsd-kind-icon">needs<span class="tsd-signature-symbol">:</span> <a href="../modules/StypRenderer.html" class="tsd-signature-type">StypRenderer</a><span class="tsd-signature-symbol"> | </span><a href="../modules/StypRenderer.html" class="tsd-signature-type">StypRenderer</a><span class="tsd-signature-symbol">[]</span></div>
+					<a name="isGroup" class="tsd-anchor"></a>
+					<h3>is<wbr>Group</h3>
+					<div class="tsd-signature tsd-kind-icon">is<wbr>Group<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">true</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/5b02fc0/src/producer/renderer.ts#L111">style-producer/src/producer/renderer.ts:111</a></li>
+							<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/5b02fc0/src/producer/writer.ts#L86">style-producer/src/producer/writer.ts:86</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>A renderer or renderers this one requires.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="order" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> order</h3>
-					<div class="tsd-signature tsd-kind-icon">order<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/5b02fc0/src/producer/renderer.ts#L106">style-producer/src/producer/renderer.ts:106</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Rendering order.</p>
-						</div>
-						<p>Equals to zero when not specified, which means it will be invoked right before the basic renderer that renders
-						CSS properties.</p>
-					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
-					<a name="create" class="tsd-anchor"></a>
-					<h3>create</h3>
+					<a name="addGroup" class="tsd-anchor"></a>
+					<h3>add<wbr>Group</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">create<span class="tsd-signature-symbol">(</span>rule<span class="tsd-signature-symbol">: </span><a href="../classes/StypRule.html" class="tsd-signature-type">StypRule</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../modules/StypRenderer.html#Function" class="tsd-signature-type">Function</a><span class="tsd-signature-symbol"> | </span><a href="StypRenderer.Spec.html" class="tsd-signature-type">Spec</a></li>
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Group<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, params<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span>, index<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="StypWriter.Group.html" class="tsd-signature-type">Group</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/5b02fc0/src/producer/renderer.ts#L123">style-producer/src/producer/renderer.ts:123</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/5b02fc0/src/producer/writer.ts#L98">style-producer/src/producer/writer.ts:98</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Creates CSS stylesheet renderer function.</p>
+									<p>Inserts a nested empty grouping CSS at-rule into target one, with some restrictions.</p>
 								</div>
-								<p>This is called once per rule. The returned renderer function is used then to render and update a style for the
-								<code>rule</code>.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>rule: <a href="../classes/StypRule.html" class="tsd-signature-type">StypRule</a></h5>
+									<h5>name: <span class="tsd-signature-type">string</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>CSS rule to create renderer for.</p>
+										<p>Rule name of newly inserted at-rule. E.g. <code>@media</code>, <code>@keyframes</code>, or <code>@condition</code>.</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> params: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Verbatim parameters of newly inserted rule. E.g. media query.</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> index: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A positive integer less than or equal to the number of added rules, representing the newly inserted
+										rule&#39;s position in target grouping rule. The default is the number of added rules.</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="../modules/StypRenderer.html#Function" class="tsd-signature-type">Function</a><span class="tsd-signature-symbol"> | </span><a href="StypRenderer.Spec.html" class="tsd-signature-type">Spec</a></h4>
-							<p>A renderer function or specifier to use.</p>
+							<h4 class="tsd-returns-title">Returns <a href="StypWriter.Group.html" class="tsd-signature-type">Group</a></h4>
+							<p>Inserted CSS style declarations writer.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="addStyle" class="tsd-anchor"></a>
+					<h3>add<wbr>Style</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Style<span class="tsd-signature-symbol">(</span>selector<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, index<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="StypWriter.Style.html" class="tsd-signature-type">Style</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/5b02fc0/src/producer/writer.ts#L109">style-producer/src/producer/writer.ts:109</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Inserts a nested empty CSS style declarations rule into target grouping one, with some restrictions.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>selector: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>CSS selector of the newly inserted rule.</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> index: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A positive integer less than or equal to the number of added rules, representing the newly inserted
+										rule&#39;s position in target grouping rule. The default is the number of added rules.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="StypWriter.Style.html" class="tsd-signature-type">Style</a></h4>
+							<p>Inserted CSS style declarations writer.</p>
 						</li>
 					</ul>
 				</section>
@@ -211,7 +240,7 @@
 					<li class=" tsd-kind-namespace">
 						<a href="../modules/StypQuery.html">Styp<wbr>Query</a>
 					</li>
-					<li class="current tsd-kind-namespace">
+					<li class=" tsd-kind-namespace">
 						<a href="../modules/StypRenderer.html">Styp<wbr>Renderer</a>
 					</li>
 					<li class=" tsd-kind-namespace">
@@ -241,42 +270,36 @@
 					<li class=" tsd-kind-namespace">
 						<a href="../modules/StypValue.html">Styp<wbr>Value</a>
 					</li>
-					<li class=" tsd-kind-namespace">
+					<li class="current tsd-kind-namespace">
 						<a href="../modules/StypWriter.html">Styp<wbr>Writer</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-interface tsd-parent-kind-namespace">
-						<a href="StypRenderer.Descriptor.html" class="tsd-kind-icon">Descriptor</a>
-					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface tsd-parent-kind-namespace">
-						<a href="StypRenderer.Factory.html" class="tsd-kind-icon">Factory</a>
+						<a href="StypWriter.Group.html" class="tsd-kind-icon">Group</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="StypRenderer.Factory.html#needs" class="tsd-kind-icon">needs</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="StypRenderer.Factory.html#order" class="tsd-kind-icon">order</a>
+								<a href="StypWriter.Group.html#isGroup" class="tsd-kind-icon">is<wbr>Group</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
-								<a href="StypRenderer.Factory.html#create" class="tsd-kind-icon">create</a>
+								<a href="StypWriter.Group.html#addGroup" class="tsd-kind-icon">add<wbr>Group</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="StypWriter.Group.html#addStyle" class="tsd-kind-icon">add<wbr>Style</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
 					<li class=" tsd-kind-interface tsd-parent-kind-namespace">
-						<a href="StypRenderer.Options.html" class="tsd-kind-icon">Options</a>
+						<a href="StypWriter.Sheet.html" class="tsd-kind-icon">Sheet</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-namespace">
-						<a href="StypRenderer.Spec.html" class="tsd-kind-icon">Spec</a>
-					</li>
-					<li class=" tsd-kind-type-alias tsd-parent-kind-namespace">
-						<a href="../modules/StypRenderer.html#Function" class="tsd-kind-icon">Function</a>
+						<a href="StypWriter.Style.html" class="tsd-kind-icon">Style</a>
 					</li>
 				</ul>
 			</nav>
