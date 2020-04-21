@@ -1,8 +1,9 @@
 import { itsFirst } from '@proc7ts/a-iterable';
 import { noop } from '@proc7ts/call-thru';
+import { EventSupply, eventSupply } from '@proc7ts/fun-events';
 import { immediateRenderScheduler } from '@proc7ts/render-scheduler';
 import { stypRoot, StypRule } from '../../rule';
-import { removeStyleElements, stylesheets } from '../../spec';
+import { stylesheets } from '../../spec';
 import { produceBasicStyle } from '../produce-basic-style';
 import { produceStyle } from '../produce-style';
 import { stypObjectFormat } from './object.format';
@@ -10,13 +11,14 @@ import { stypObjectFormat } from './object.format';
 describe('stypObjectFormat', () => {
 
   let root: StypRule;
+  let done: EventSupply;
 
   beforeEach(() => {
-    root = stypRoot({ display: 'block' });
+    root = stypRoot({ fontFace: 'Arial, sans-serif' });
+    done = eventSupply();
   });
-
   afterEach(() => {
-    removeStyleElements();
+    done.off();
   });
 
   it('supplies `document.head` as `node` to scheduler', () => {
@@ -26,7 +28,7 @@ describe('stypObjectFormat', () => {
     produceBasicStyle(
         root.rules,
         stypObjectFormat({ scheduler }),
-    );
+    ).needs(done);
     expect(scheduler).toHaveBeenCalledWith({ node: document.head });
   });
   it('supplies the given `parent` as `node` to scheduler', () => {
@@ -37,7 +39,7 @@ describe('stypObjectFormat', () => {
     produceBasicStyle(
         root.rules,
         stypObjectFormat({ parent, scheduler }),
-    );
+    ).needs(done);
     expect(scheduler).toHaveBeenCalledWith({ node: parent });
   });
   it('supplies `error` option', () => {
@@ -56,7 +58,7 @@ describe('stypObjectFormat', () => {
   });
   it('renders global at-rule', () => {
     root.set({ '@import:some.css': '', '@import:screen.css': 'screen' });
-    produceStyle(root.rules, stypObjectFormat({ scheduler: immediateRenderScheduler }));
+    produceStyle(root.rules, stypObjectFormat({ scheduler: immediateRenderScheduler })).needs(done);
 
     const sheet = itsFirst(stylesheets())!;
 
@@ -82,7 +84,7 @@ describe('stypObjectFormat', () => {
       return 0;
     };
     root.rules.add({ c: 'screen-only', $: '@media=screen' }, { display: 'block' });
-    produceStyle(root.rules, stypObjectFormat({ scheduler: immediateRenderScheduler }));
+    produceStyle(root.rules, stypObjectFormat({ scheduler: immediateRenderScheduler })).needs(done);
 
     expect(setProperty).toHaveBeenCalledWith('display', 'block', null);
   });
