@@ -30,7 +30,7 @@ export interface StypFormatConfig {
    *
    * Creates a render schedule per rule.
    *
-   * Uses `newRenderSchedule` by default.
+   * `newRenderSchedule` is used when omitted.
    */
   readonly scheduler?: RenderScheduler;
 
