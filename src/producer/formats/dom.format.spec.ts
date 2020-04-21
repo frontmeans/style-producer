@@ -149,4 +149,17 @@ describe('stypObjectFormat', () => {
 
     expect(document.head.querySelectorAll('style')).toHaveLength(1);
   });
+  it('removes all styles when their supply is cut off', () => {
+    root.rules.add({ c: 'test' }, { color: 'black' });
+
+    produceBasicStyle(
+        root.rules,
+        stypDomFormat({
+          scheduler: immediateRenderScheduler,
+        }),
+    ).needs(done);
+
+    done.off();
+    expect(document.head.querySelectorAll('style')).toHaveLength(0);
+  });
 });

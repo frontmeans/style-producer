@@ -6,7 +6,7 @@ import { RenderScheduler } from '@proc7ts/render-scheduler';
 import { StypPriority } from '../../value';
 import { StypFormat, StypFormatConfig } from '../format';
 import { StypWriter } from '../writer';
-import { stypRenderScheduler } from './format.impl';
+import { removeStyleElement, stypRenderScheduler } from './format.impl';
 
 /**
  * @internal
@@ -90,7 +90,7 @@ class StypSheetObjectWriter extends StypGroupObjectWriter implements StypWriter.
   }
 
   remove(): void {
-    this._element.parentNode!.removeChild(this._element);
+    removeStyleElement(this._element);
   }
 
   done(): void {

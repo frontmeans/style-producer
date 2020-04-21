@@ -4,7 +4,14 @@
  */
 import { itsReduction, mapIt } from '@proc7ts/a-iterable';
 import { noop } from '@proc7ts/call-thru';
-import { AfterEvent, afterSupplied, eventSupply, EventSupply, onSupplied } from '@proc7ts/fun-events';
+import {
+  AfterEvent,
+  afterSupplied,
+  eventSupply,
+  EventSupply,
+  EventSupply__symbol,
+  onSupplied,
+} from '@proc7ts/fun-events';
 import { NamespaceDef, newNamespaceAliaser } from '@proc7ts/namespace-aliaser';
 import { newRenderSchedule } from '@proc7ts/render-scheduler';
 import { StypProperties, StypRule, StypRules } from '../rule';
@@ -36,13 +43,13 @@ export function produceBasicStyle(rules: StypRules, format: StypFormat): EventSu
     scheduler = newRenderSchedule,
     nsAlias = newNamespaceAliaser(),
   } = format;
+  const supply = eventSupply();
   const selectorFormat: StypSelectorFormat = { nsAlias };
   const factories = stypRenderFactories(format);
   const renderSupply = renderRules(rules);
   const trackSupply = trackRules();
 
-  return eventSupply()
-      .needs(renderSupply)
+  return supply.needs(renderSupply)
       .needs(trackSupply)
       .cuts(renderSupply)
       .cuts(trackSupply);
@@ -58,6 +65,10 @@ export function produceBasicStyle(rules: StypRules, format: StypFormat): EventSu
   ): StyleProducer {
 
     class StyleProducer$ implements StyleProducer {
+
+      get [EventSupply__symbol](): EventSupply {
+        return supply;
+      }
 
       get rule(): StypRule {
         return rule;

@@ -1,6 +1,6 @@
 import { RenderScheduler } from '@proc7ts/render-scheduler';
 import { StypFormat } from '../format';
-import { stypRenderScheduler } from './format.impl';
+import { removeStyleElement, stypRenderScheduler } from './format.impl';
 /**
  * @packageDocumentation
  * @module @proc7ts/style-producer
@@ -65,20 +65,20 @@ export function stypDomFormat(
   } = config;
   const textFormat = stypTextFormat(config);
   const elements = new Map<string, HTMLStyleElement>();
-
-  textFormat.onSheet(({ id, css }) => {
+  const supply = textFormat.onSheet(({ id, css }) => {
 
     let element = elements.get(id);
 
     if (css == null) { // Element always exists here
       elements.delete(id);
-      element!.parentNode!.removeChild(element!);
+      removeStyleElement(element!);
     } else if (!element) {
       element = document.createElement('style');
       element.setAttribute('type', 'text/css');
       element.textContent = css;
       parent.appendChild(element);
       elements.set(id, element);
+      supply.whenOff(() => removeStyleElement(element!));
     } else {
       element.textContent = css;
     }
@@ -87,6 +87,10 @@ export function stypDomFormat(
   return {
     ...config,
     scheduler: stypRenderScheduler(parent, config.scheduler),
-    addSheet: textFormat.addSheet.bind(textFormat),
+    addSheet(producer) {
+      supply.needs(producer);
+      this.addSheet = textFormat.addSheet.bind(textFormat);
+      return this.addSheet(producer);
+    },
   };
 }

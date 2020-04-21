@@ -109,3 +109,10 @@ export function stypRenderScheduler(
     });
   };
 }
+
+/**
+ * @internal
+ */
+export function removeStyleElement(element: HTMLStyleElement): void {
+  element.parentNode?.removeChild(element);
+}

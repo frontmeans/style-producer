@@ -2,6 +2,7 @@
  * @packageDocumentation
  * @module @proc7ts/style-producer
  */
+import { EventSupplyPeer } from '@proc7ts/fun-events';
 import { NamespaceDef } from '@proc7ts/namespace-aliaser';
 import { StypProperties, StypRule } from '../rule';
 import { StypSelector } from '../selector';
@@ -13,9 +14,11 @@ import { StypWriter } from './writer';
  *
  * It is constructed by [[produceStyle]] function for each processed CSS rule.
  *
+ * Implements `EventSupplyPeer` by cutting off the styles supply returned by {@link produceStyle}.
+ *
  * @category Rendering
  */
-export interface StyleProducer {
+export interface StyleProducer extends EventSupplyPeer {
 
   /**
    * CSS rule to produce styles for.
