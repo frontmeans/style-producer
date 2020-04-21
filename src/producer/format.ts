@@ -56,6 +56,8 @@ export interface StypFormatConfig {
  * The following formats supported by `style-producer`:
  * - {@link stypObjectFormat} - creates a `<style>` element per CSS rule and utilizes CSS object model to build its
  *   style sheet.
+ * - {@link stypDomFormat} - the same as above, but fills created `<style>` element with CSS text content generated
+ *   by {@link stypTextFormat}. This is slower, but allows to generate styles _before_ adding them to document.
  * - {@link stypTextFormat} - reports style sheets as formatted CSS text.
  *
  * @category Rendering
