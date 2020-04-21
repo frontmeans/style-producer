@@ -2,10 +2,11 @@
  * @packageDocumentation
  * @module @proc7ts/style-producer
  */
-import { newRenderSchedule, RenderScheduler } from '@proc7ts/render-scheduler';
+import { RenderScheduler } from '@proc7ts/render-scheduler';
 import { StypPriority } from '../../value';
 import { StypFormat, StypFormatConfig } from '../format';
 import { StypWriter } from '../writer';
+import { stypRenderScheduler } from './format.impl';
 
 /**
  * @internal
@@ -109,8 +110,10 @@ export interface StypObjectFormatConfig extends StypFormatConfig {
    * Parent DOM node to add stylesheets to.
    *
    * `document.head` by default.
+   *
+   * This node has to be attached to document.
    */
-  readonly parent?: Node & ParentNode;
+  readonly parent?: Node;
 
   /**
    * DOM rendering operations scheduler.
@@ -124,28 +127,10 @@ export interface StypObjectFormatConfig extends StypFormatConfig {
 }
 
 /**
- * @internal
- */
-function stypObjectScheduler(
-    parent: Node,
-    scheduler: RenderScheduler = newRenderSchedule,
-): RenderScheduler {
-  return (options = {}) => {
-
-    const { node = parent, error } = options;
-
-    return scheduler({
-      ...options,
-      node,
-      error: error && error.bind(options),
-    });
-  };
-}
-
-/**
  * Builds CSS object model production format.
  *
- * The sheet writer creates a `<style>` element inside the `parent` node per CSS rule.
+ * The sheet writer creates a `<style>` element inside the `parent` node per CSS rule and builds its style sheet
+ * with CSS object model methods.
  *
  * @category Rendering
  * @param config  Object format configuration.
@@ -160,7 +145,7 @@ export function stypObjectFormat(
 
   return {
     ...config,
-    scheduler: stypObjectScheduler(parent, config.scheduler),
+    scheduler: stypRenderScheduler(parent, config.scheduler),
     addSheet() {
 
       const element = document.createElement('style');

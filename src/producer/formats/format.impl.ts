@@ -1,3 +1,4 @@
+import { newRenderSchedule, RenderScheduler } from '@proc7ts/render-scheduler';
 import { isReadonlyArray } from '../../internal';
 import { StypRule } from '../../rule';
 import { StypFormat } from '../format';
@@ -88,4 +89,23 @@ function compareRenderers(first: StypRenderer.Factory, second: StypRenderer.Fact
 
 function rendererSpec(renderer: ReturnType<StypRenderer.Factory['create']>): StypRenderer.Spec {
   return typeof renderer === 'function' ? { render: renderer } : renderer;
+}
+
+/**
+ * @internal
+ */
+export function stypRenderScheduler(
+    parent: Node,
+    scheduler: RenderScheduler = newRenderSchedule,
+): RenderScheduler {
+  return (options = {}) => {
+
+    const { node = parent, error } = options;
+
+    return scheduler({
+      ...options,
+      node,
+      error: error && error.bind(options),
+    });
+  };
 }
