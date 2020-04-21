@@ -4,7 +4,6 @@ import { cssStyle, removeStyleElements } from '../spec';
 import { stypObjectFormat } from './formats';
 import { produceStyle } from './produce-style';
 import { StypRenderer } from './renderer';
-import SpyInstance = jest.SpyInstance;
 
 describe('produceStyle', () => {
 
@@ -16,26 +15,6 @@ describe('produceStyle', () => {
 
   afterEach(() => {
     removeStyleElements();
-  });
-
-  describe('default scheduler', () => {
-
-    let rafSpy: SpyInstance<number, [FrameRequestCallback]>;
-    let operations: ((time: number) => void)[];
-
-    beforeEach(() => {
-      operations = [];
-      rafSpy = jest.spyOn(window, 'requestAnimationFrame');
-      rafSpy.mockImplementation(callback => {
-        operations.push(callback);
-        return 0;
-      });
-    });
-
-    it('schedules in animation frame', () => {
-      produceStyle(root.rules, stypObjectFormat());
-      expect(rafSpy).toHaveBeenCalledWith(operations[0]);
-    });
   });
 
   it('uses the given renderer', () => {

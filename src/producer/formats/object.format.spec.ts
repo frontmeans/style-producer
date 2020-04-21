@@ -21,6 +21,26 @@ describe('stypObjectFormat', () => {
     done.off();
   });
 
+  describe('scheduler', () => {
+
+    let rafSpy: jest.SpyInstance<number, [FrameRequestCallback]>;
+    let operations: ((time: number) => void)[];
+
+    beforeEach(() => {
+      operations = [];
+      rafSpy = jest.spyOn(window, 'requestAnimationFrame');
+      rafSpy.mockImplementation(callback => {
+        operations.push(callback);
+        return 0;
+      });
+    });
+
+    it('schedules in animation frame', () => {
+      produceStyle(root.rules, stypObjectFormat());
+      expect(rafSpy).toHaveBeenCalledWith(operations[0]);
+    });
+  });
+
   it('supplies `document.head` as `node` to scheduler', () => {
 
     const scheduler = jest.fn(() => noop);
