@@ -43,7 +43,7 @@ export interface StyleProducer extends EventSupplyPeer {
   /**
    * Maps namespace to its unique alias.
    *
-   * This is based on [[StypOptions.nsAlias]] option.
+   * This is based on {@link StypFormatConfig.nsAlias production configuration option}.
    *
    * @param ns  A definition of namespace to find alias for.
    *
@@ -62,14 +62,14 @@ export interface StyleProducer extends EventSupplyPeer {
   render(properties: StypProperties, options?: StypRenderer.Options): void;
 
   /**
-   * Tries to append CSS style declarations writer {@link writer target} CSS style sheet or rule.
+   * Tries to append CSS style declarations to {@link writer target} CSS style sheet or rule.
    *
-   * If {@link writer target} target is style sheet or grouping rule, then inserts the last style rule.
-   * Otherwise just returns `target`.
+   * If {@link writer target} is style sheet or grouping rule, then inserts the last style rule.
+   * Otherwise just returns `writer`.
    *
    * @param selector  Appended CSS rule selector. Equals to the one from this producer when omitted.
    *
-   * @returns Either appended empty CSS rule, or `target`.
+   * @returns Either style writer to appended empty CSS rule, or `writer`.
    */
   addStyle(selector?: StypSelector.Normalized): StypWriter.Style;
 
