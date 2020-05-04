@@ -64,29 +64,35 @@ export function stypDomFormat(
     parent = document.head,
   } = config;
   const textFormat = stypTextFormat(config);
+  const scheduler = stypRenderScheduler(parent, config.scheduler);
+  const schedule = scheduler();
   const elements = new Map<string, HTMLStyleElement>();
   const supply = textFormat.onSheet(({ id, css }) => {
+    // CSS text is reported within schedule. No need to re-schedule DOM manipulations here.
 
     let element = elements.get(id);
 
-    if (css == null) { // Element always exists here
+    if (css == null) { // element exists here
       elements.delete(id);
       removeStyleElement(element!);
-    } else if (!element) {
+    } else if (element) {
+      element.textContent = css;
+    } else {
       element = document.createElement('style');
       element.setAttribute('type', 'text/css');
       element.textContent = css;
       parent.appendChild(element);
       elements.set(id, element);
-      supply.whenOff(() => removeStyleElement(element!));
-    } else {
-      element.textContent = css;
+      supply.whenOff(
+          // Schedule element removal on style sheet removal instead of removing it right away.
+          () => schedule(() => removeStyleElement(element!)),
+      );
     }
   });
 
   return {
     ...config,
-    scheduler: stypRenderScheduler(parent, config.scheduler),
+    scheduler,
     addSheet(producer) {
       supply.needs(producer);
       this.addSheet = textFormat.addSheet.bind(textFormat);

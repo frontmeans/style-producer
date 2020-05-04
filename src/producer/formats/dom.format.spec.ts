@@ -1,9 +1,8 @@
 import { itsEmpty } from '@proc7ts/a-iterable';
-import { noop } from '@proc7ts/call-thru';
 import { EventSupply, eventSupply } from '@proc7ts/fun-events';
-import { immediateRenderScheduler } from '@proc7ts/render-scheduler';
+import { immediateRenderScheduler, newManualRenderScheduler, noopRenderScheduler } from '@proc7ts/render-scheduler';
 import { stypRoot, StypRule } from '../../rule';
-import { cssStyle, stylesheets } from '../../spec';
+import { cssStyle, removeStyleElements, stylesheets } from '../../spec';
 import { produceBasicStyle } from '../produce-basic-style';
 import { produceStyle } from '../produce-style';
 import { stypDomFormat } from './dom.format';
@@ -19,6 +18,7 @@ describe('stypObjectFormat', () => {
   });
   afterEach(() => {
     done.off();
+    removeStyleElements();
   });
 
   describe('scheduler', () => {
@@ -43,7 +43,7 @@ describe('stypObjectFormat', () => {
 
   it('supplies `document.head` as `node` to scheduler', () => {
 
-    const scheduler = jest.fn(() => noop);
+    const scheduler = jest.fn(noopRenderScheduler);
 
     produceBasicStyle(
         root.rules,
@@ -55,7 +55,7 @@ describe('stypObjectFormat', () => {
     root.set({ fontFace: 'Arial, sans-serif' });
 
     const doc = document.implementation.createHTMLDocument('test');
-    const scheduler = jest.fn(() => noop);
+    const scheduler = jest.fn(noopRenderScheduler);
 
     produceBasicStyle(
         root.rules,
@@ -66,7 +66,7 @@ describe('stypObjectFormat', () => {
   it('supplies the given `parent` as `node` to scheduler', () => {
 
     const parent = document.createElement('div');
-    const scheduler = jest.fn(() => noop);
+    const scheduler = jest.fn(noopRenderScheduler);
 
     produceBasicStyle(
         root.rules,
@@ -148,6 +148,24 @@ describe('stypObjectFormat', () => {
     rule.remove();
 
     expect(document.head.querySelectorAll('style')).toHaveLength(1);
+  });
+  it('does not add style when rule removed before rendered', () => {
+
+    const scheduler = newManualRenderScheduler();
+    const rule = root.rules.add({ c: 'test' }, { color: 'black' });
+
+    produceBasicStyle(
+        root.rules,
+        stypDomFormat({ scheduler }),
+    ).needs(done);
+
+    rule.remove();
+    scheduler.render();
+
+    expect(document.head.querySelectorAll('style')).toHaveLength(1);
+
+    done.off();
+    scheduler.render();
   });
   it('removes all styles when their supply is cut off', () => {
     root.rules.add({ c: 'test' }, { color: 'black' });
