@@ -98,8 +98,8 @@ class ZeroByPriority<Unit extends string> {
 
   get(priority: number): Zero<Unit> {
     switch (priority) {
-      case StypPriority.Usual: return this.usual;
-      case StypPriority.Important: return this.important;
+    case StypPriority.Usual: return this.usual;
+    case StypPriority.Important: return this.important;
     }
     return new Zero(this, { dim: this.dim, priority });
   }

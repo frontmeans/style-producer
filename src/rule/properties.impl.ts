@@ -145,11 +145,11 @@ function addValue(
 
 function priorityOf(value: StypValue): number {
   switch (typeof value) {
-    case 'string':
-      return value.endsWith(IMPORTANT_CSS_SUFFIX) ? 1 : 0;
-    case 'object':
-      return value.priority;
-    default:
-      return 0;
+  case 'string':
+    return value.endsWith(IMPORTANT_CSS_SUFFIX) ? 1 : 0;
+  case 'object':
+    return value.priority;
+  default:
+    return 0;
   }
 }

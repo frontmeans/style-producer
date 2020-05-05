@@ -129,15 +129,15 @@ export class StypRGB extends StypColorStruct<StypRGB, StypRGB.Coords> implements
     let h: number;
 
     switch (max) {
-      case r:
-        h = ((g - b) / d) + (g < b ? 6 : 0);
-        break;
-      case g:
-        h = ((b - r) / d) + 2;
-        break;
-      default:
-        h = ((r - g) / d) + 4;
-        break;
+    case r:
+      h = ((g - b) / d) + (g < b ? 6 : 0);
+      break;
+    case g:
+      h = ((b - r) / d) + 2;
+      break;
+    default:
+      h = ((r - g) / d) + 4;
+      break;
     }
     h *= 60;
     h = Math.round(h);

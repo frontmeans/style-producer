@@ -269,14 +269,14 @@ export function stypOuterSelector(
   do {
     --i;
     switch (selector[i]) {
-      case '>':
-        return selector.slice(0, i);
-      case '+':
-      case '~':
-        --i;
-        continue;
-      default:
-        return selector.slice(0, i + 1);
+    case '>':
+      return selector.slice(0, i);
+    case '+':
+    case '~':
+      --i;
+      continue;
+    default:
+      return selector.slice(0, i + 1);
     }
   } while (i > 0);
 
