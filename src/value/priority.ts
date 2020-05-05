@@ -85,7 +85,10 @@ export function stypSplitPriority<T extends StypValue>(value: T): [T, number] {
       return [value, value.priority];
     case 'string':
       if (value.endsWith(IMPORTANT_CSS_SUFFIX)) {
-        return[value.substring(0, value.length - IMPORTANT_CSS_SUFFIX.length).trim() as T, StypPriority.Important];
+        return [
+          value.substring(0, value.length - IMPORTANT_CSS_SUFFIX.length).trim() as T,
+          StypPriority.Important,
+        ];
       }
   }
 
