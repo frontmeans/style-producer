@@ -177,6 +177,7 @@ function mappingBy<R, K extends keyof R>(
     return mapping as StypMapper.MappingFunction<R, K>;
   case 'object':
     return (mapping as StypMapper.MappingObject<R, K>).by.bind(mapping);
+  default:
   }
 
   const type = typeof mapping;

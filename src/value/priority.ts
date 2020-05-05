@@ -90,6 +90,8 @@ export function stypSplitPriority<T extends StypValue>(value: T): [T, number] {
           StypPriority.Important,
         ];
       }
+      break;
+    default:
   }
 
   return [value, StypPriority.Default];

@@ -149,6 +149,7 @@ function priorityOf(value: StypValue): number {
       return value.endsWith(IMPORTANT_CSS_SUFFIX) ? 1 : 0;
     case 'object':
       return value.priority;
+    default:
+      return 0;
   }
-  return 0;
 }
