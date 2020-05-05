@@ -218,22 +218,26 @@ function asyncRules(source: Promise<StypRule | StypRules>): StypRules {
     supply.cuts(sourceSupply)
         .whenOff(() => ruleSet.clear());
 
-    source.then(resolution => {
-      if (!supply.isOff) {
+    source.then(
+        resolution => {
+          if (!supply.isOff) {
 
-        const rules = resolution instanceof StypRule ? resolution.rules : resolution;
+            const rules = resolution instanceof StypRule ? resolution.rules : resolution;
 
-        reportExistingRules(rules, ruleSet, receiver);
+            reportExistingRules(rules, ruleSet, receiver);
 
-        sourceSupply = onSupplied(rules).to({
-          receive(context, added, removed) {
-            removed.forEach(rule => ruleSet.delete(rule));
-            added.forEach(rule => ruleSet.add(rule));
-            receiver.receive(context, added, removed);
-          },
-        }).needs(supply);
-      }
-    });
+            sourceSupply = onSupplied(rules).to({
+              receive(context, added, removed) {
+                removed.forEach(rule => ruleSet.delete(rule));
+                added.forEach(rule => ruleSet.add(rule));
+                receiver.receive(context, added, removed);
+              },
+            }).needs(supply);
+          }
+        },
+    ).catch(
+        error => supply.off(error),
+    );
   }).share();
 
   return {

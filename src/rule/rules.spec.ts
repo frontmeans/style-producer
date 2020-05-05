@@ -75,6 +75,20 @@ describe('stypRules', () => {
       expect(receiver).toHaveBeenCalledWith([...root.rules], []);
       expect([...rules]).toEqual([...root.rules]);
     });
+    it('cuts off rules supply when promise rejected', async () => {
+      expect(itsEmpty(stypRules(Promise.reject('test')))).toBe(true);
+
+      const error = new Error('test');
+      const rules = stypRules(() => Promise.reject(error));
+      const whenOff = jest.fn();
+
+      await new Promise<any>(resolve => {
+        whenOff.mockImplementation(resolve);
+        onSupplied(rules).to(noop).whenOff(whenOff);
+      });
+
+      expect(whenOff).toHaveBeenCalledWith(error);
+    });
     it('sends rule addition', async () => {
 
       const rules = stypRules(Promise.resolve(root.rules));
