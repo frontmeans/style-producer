@@ -76,7 +76,6 @@ describe('stypRules', () => {
       expect([...rules]).toEqual([...root.rules]);
     });
     it('cuts off rules supply when promise rejected', async () => {
-      expect(itsEmpty(stypRules(Promise.reject('test')))).toBe(true);
 
       const error = new Error('test');
       const rules = stypRules(() => Promise.reject(error));
