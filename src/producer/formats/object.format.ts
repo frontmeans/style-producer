@@ -21,7 +21,7 @@ class StypStyleObjectWriter implements StypWriter.Style {
   }
 
   set(name: string, value: string, priority: number): void {
-    this._target.style.setProperty(name, value, priority >= StypPriority.Important ? 'important' : null);
+    this._target.style.setProperty(name, value, priority >= StypPriority.Important ? 'important' : undefined);
   }
 
   replace(css: string): void {

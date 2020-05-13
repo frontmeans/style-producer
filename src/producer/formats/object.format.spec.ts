@@ -106,6 +106,6 @@ describe('stypObjectFormat', () => {
     root.rules.add({ c: 'screen-only', $: '@media=screen' }, { display: 'block' });
     produceStyle(root.rules, stypObjectFormat({ scheduler: immediateRenderScheduler })).needs(done);
 
-    expect(setProperty).toHaveBeenCalledWith('display', 'block', null);
+    expect(setProperty).toHaveBeenCalledWith('display', 'block', undefined);
   });
 });
