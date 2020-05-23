@@ -16,7 +16,6 @@ export class StypDimension<Unit extends string>
     extends StypNumericStruct<StypDimension<Unit>, Unit>
     implements StypDimension_<Unit> {
 
-  // noinspection JSMethodCanBeStatic
   get type(): 'dimension' {
     return 'dimension';
   }
@@ -120,7 +119,7 @@ export class StypDimension<Unit extends string>
    * @returns `<value><unit>` or just `0`.
    */
   toFormula(): string {
-    return this.val + this.unit;
+    return `${this.val}${this.unit}`;
   }
 
 }

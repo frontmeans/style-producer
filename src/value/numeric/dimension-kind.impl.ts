@@ -41,10 +41,7 @@ export function unitlessZeroDimensionKind<Unit extends string>(
       if (!isStypNumeric(source)) {
         return;
       }
-
-      const numeric: StypNumeric<any, any> = source;
-
-      return numeric.toDim(this);
+      return (source as StypNumeric<Unit>).toDim(this);
     },
 
   };
@@ -91,10 +88,7 @@ export function unitZeroDimensionKind<Unit extends string>(
       if (!isStypNumeric(source)) {
         return;
       }
-
-      const numeric: StypNumeric<any, any> = source;
-
-      return numeric.toDim(this);
+      return (source as StypNumeric<Unit>).toDim(this) as StypNumeric<Unit, StypDimension<Unit>>;
     },
 
   };

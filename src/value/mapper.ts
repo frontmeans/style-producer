@@ -130,7 +130,7 @@ export const StypMapper = {
    */
   map<R>(mappings: StypMapper.Mappings<R>, from: StypProperties): R {
 
-    const result: { [key in keyof R]: R[key] } = {} as any;
+    const result = {} as { [key in keyof R]: R[key] };
     const mapped = {
       from,
       get<K extends keyof R>(key: K): R[K] {
@@ -182,5 +182,7 @@ function mappingBy<R, K extends keyof R>(
 
   const type = typeof mapping;
 
-  return (from: StypValue): R[K] => typeof from === type ? from as any : mapping;
+  return (from: StypValue): R[K] => typeof from === type
+      ? from as unknown as R[K]
+      : mapping as R[K];
 }

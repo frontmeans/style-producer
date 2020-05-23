@@ -150,20 +150,17 @@ function rulesByList(sources: StypRules[]): StypRuleList {
  */
 function evalRules(source: (this: void) => StypRule | StypRules | Promise<StypRule | StypRules>): StypRules {
 
-  let _rules: StypRules | undefined;
+  let rules: StypRules | undefined;
+  const getRules = (): StypRules => rules || (rules = rulesByValue(source()));
 
   return {
     [Symbol.iterator](): IterableIterator<StypRule> {
-      return rules()[Symbol.iterator]();
+      return getRules()[Symbol.iterator]();
     },
     [OnEvent__symbol]() {
-      return rules()[OnEvent__symbol]();
+      return getRules()[OnEvent__symbol]();
     },
   };
-
-  function rules(): StypRules {
-    return _rules || (_rules = rulesByValue(source()));
-  }
 }
 
 /**

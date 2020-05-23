@@ -166,13 +166,13 @@ export function produceBasicStyle(rules: StypRules, format: StypFormat): EventSu
             rule,
             renderer,
             {
-              get sheet() {
+              get sheet(): StypWriter.Sheet {
                 if (!sheet) {
                   sheet = format.addSheet(producer);
                 }
                 return sheet;
               },
-              get writer() {
+              get writer(): StypWriter.Sheet {
                 return this.sheet;
               },
               selector,

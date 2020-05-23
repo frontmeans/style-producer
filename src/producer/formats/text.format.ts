@@ -159,7 +159,7 @@ class StypTextFormatter$ implements StypTextFormatter {
   }
 
   indent(): StypTextFormatter$ {
-    return new StypTextFormatter$(this._config, this.pre + this._config.indent);
+    return new StypTextFormatter$(this._config, this.pre + this._config.indent!);
   }
 
 }

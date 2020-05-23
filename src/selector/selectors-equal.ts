@@ -41,8 +41,8 @@ function stypSelectorPartsEqual(
     return false;
   }
   return namespacesEqual(first.ns, second.ns)
-      && _namesEqual(first.e, second.e)
-      && _namesEqual(first.i, second.i)
+      && namesEqualOrAbsent(first.e, second.e)
+      && namesEqualOrAbsent(first.i, second.i)
       && classesEqual(first.c, second.c)
       && subSelectorListEqual(first.u, second.u)
       && qualifiersEqual(first.$, second.$);
@@ -64,7 +64,7 @@ function namespacesEqual(first: string | NamespaceDef | undefined, second: strin
 /**
  * @internal
  */
-function _namesEqual(first: QualifiedName | undefined, second: QualifiedName | undefined): boolean {
+function namesEqualOrAbsent(first: QualifiedName | undefined, second: QualifiedName | undefined): boolean {
   return first == null ? second == null : second != null && namesEqual(first, second);
 }
 

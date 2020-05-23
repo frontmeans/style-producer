@@ -120,7 +120,7 @@ export namespace StypRenderer {
      *
      * @returns A renderer function or specifier to use.
      */
-    create(rule: StypRule): Function | Spec;
+    create(rule: StypRule): StypRenderer.Function | StypRenderer.Spec;
 
   }
 

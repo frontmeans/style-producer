@@ -119,7 +119,7 @@ function renderImport(
   let css = String(url);
 
   if (value) {
-    css += ' ' + value;
+    css += ` ${value}`;
   }
 
   sheet.addGlobal('@import', css, index);

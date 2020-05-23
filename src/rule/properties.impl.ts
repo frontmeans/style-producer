@@ -95,7 +95,7 @@ function propertiesEqual(first: StypProperties, second: StypProperties): boolean
 
   for (const [key, value] of propertyEntries(first)) {
 
-    const { value: sentry } = s.next();
+    const { value: sentry } = s.next() as IteratorResult<[keyof StypProperties, StypValue], undefined>;
 
     if (!sentry || key !== sentry[0] || !stypValuesEqual(value, sentry[1])) {
       return false;
