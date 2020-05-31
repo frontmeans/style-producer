@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>StypDimension | Style Producer</title>
+	<title>numeric | Style Producer</title>
 	<meta name="description" content="Documentation for Style Producer">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,10 +54,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="StypDimension.html">StypDimension</a>
+					<a href="numeric.html">numeric</a>
 				</li>
 			</ul>
-			<h1>Namespace StypDimension&lt;Unit&gt;</h1>
+			<h1>Namespace numeric&lt;Unit&gt;</h1>
 		</div>
 	</div>
 </header>
@@ -67,8 +67,9 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Structured <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/dimension">dimension</a> value with unit.</p>
+						<p>A kind of dimensions. E.g. angle, length, percentage, etc.</p>
 					</div>
+					<p>It is perfectly fine to use dimensions interchangeably as long as dimension units are compatible.</p>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-type-parameters">
@@ -84,54 +85,79 @@
 					</li>
 				</ul>
 			</section>
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<a href="../classes/StypValueStruct.html" class="tsd-signature-type">StypValueStruct</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">StypDimension</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Unit</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span>
+					</li>
+					<li>
+						<a href="../classes/StypNumericStruct.html" class="tsd-signature-type">StypNumericStruct</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">StypDimension</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Unit</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Unit</span><span class="tsd-signature-symbol">&gt;</span>
+						<ul class="tsd-hierarchy">
+							<li>
+								<span class="target">numeric</span>
+								<ul class="tsd-hierarchy">
+									<li>
+										<a href="../interfaces/numeric.UnitlessZero.html" class="tsd-signature-type">UnitlessZero</a>
+									</li>
+									<li>
+										<a href="../interfaces/numeric.UnitZero.html" class="tsd-signature-type">UnitZero</a>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Namespaces</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-namespace tsd-parent-kind-namespace tsd-has-type-parameter"><a href="StypDimension.Kind.html" class="tsd-kind-icon">Kind</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
 							<h3>Interfaces</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-interface tsd-parent-kind-namespace tsd-has-type-parameter"><a href="../interfaces/StypDimension.Opts.html" class="tsd-kind-icon">Opts</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-namespace tsd-has-type-parameter"><a href="../interfaces/numeric.Opts.html" class="tsd-kind-icon">Opts</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-namespace tsd-has-type-parameter"><a href="../interfaces/numeric.UnitZero.html" class="tsd-kind-icon">Unit<wbr>Zero</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-namespace tsd-has-type-parameter"><a href="../interfaces/numeric.UnitlessZero.html" class="tsd-kind-icon">Unitless<wbr>Zero</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section tsd-is-inherited tsd-is-private-protected">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-namespace tsd-is-overwrite tsd-is-inherited tsd-is-protected"><a href="StypDimension.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-namespace tsd-is-overwrite tsd-is-inherited tsd-is-protected"><a href="numeric.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-namespace tsd-is-overwrite"><a href="StypDimension.html#dim" class="tsd-kind-icon">dim</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-namespace tsd-is-overwrite tsd-is-inherited"><a href="StypDimension.html#priority" class="tsd-kind-icon">priority</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-namespace tsd-is-overwrite"><a href="StypDimension.html#type" class="tsd-kind-icon">type</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-namespace"><a href="StypDimension.html#unit" class="tsd-kind-icon">unit</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-namespace"><a href="StypDimension.html#val" class="tsd-kind-icon">val</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-namespace tsd-is-overwrite"><a href="numeric.html#dim" class="tsd-kind-icon">dim</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-namespace"><a href="numeric.html#noPt" class="tsd-kind-icon">no<wbr>Pt</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-namespace tsd-is-overwrite tsd-is-inherited"><a href="numeric.html#priority" class="tsd-kind-icon">priority</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-namespace"><a href="numeric.html#pt" class="tsd-kind-icon">pt</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-namespace tsd-is-overwrite"><a href="numeric.html#type" class="tsd-kind-icon">type</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-namespace"><a href="numeric.html#unit" class="tsd-kind-icon">unit</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-namespace"><a href="numeric.html#val" class="tsd-kind-icon">val</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-namespace"><a href="numeric.html#zero" class="tsd-kind-icon">zero</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-namespace tsd-is-overwrite"><a href="StypDimension.html#add" class="tsd-kind-icon">add</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-namespace tsd-is-overwrite"><a href="StypDimension.html#by" class="tsd-kind-icon">by</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-namespace tsd-is-inherited"><a href="StypDimension.html#div" class="tsd-kind-icon">div</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-namespace tsd-is-overwrite tsd-is-inherited"><a href="StypDimension.html#important" class="tsd-kind-icon">important</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-namespace tsd-is-overwrite tsd-is-inherited"><a href="StypDimension.html#is" class="tsd-kind-icon">is</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-namespace tsd-is-inherited"><a href="StypDimension.html#mul" class="tsd-kind-icon">mul</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-namespace tsd-is-inherited"><a href="StypDimension.html#negate" class="tsd-kind-icon">negate</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-namespace tsd-is-overwrite tsd-is-inherited"><a href="StypDimension.html#prioritize" class="tsd-kind-icon">prioritize</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-namespace tsd-is-overwrite"><a href="StypDimension.html#sub" class="tsd-kind-icon">sub</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-namespace tsd-has-type-parameter tsd-is-inherited"><a href="StypDimension.html#toDim" class="tsd-kind-icon">to<wbr>Dim</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-namespace tsd-is-inherited"><a href="StypDimension.html#toFormula" class="tsd-kind-icon">to<wbr>Formula</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-namespace tsd-is-overwrite tsd-is-inherited"><a href="StypDimension.html#toString" class="tsd-kind-icon">to<wbr>String</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-namespace tsd-is-overwrite tsd-is-inherited"><a href="StypDimension.html#usual" class="tsd-kind-icon">usual</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-namespace tsd-is-overwrite"><a href="numeric.html#add" class="tsd-kind-icon">add</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-namespace tsd-is-overwrite"><a href="numeric.html#by" class="tsd-kind-icon">by</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-namespace"><a href="numeric.html#by-1" class="tsd-kind-icon">by</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-namespace tsd-is-inherited"><a href="numeric.html#div" class="tsd-kind-icon">div</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-namespace tsd-is-overwrite tsd-is-inherited"><a href="numeric.html#important" class="tsd-kind-icon">important</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-namespace tsd-is-overwrite tsd-is-inherited"><a href="numeric.html#is" class="tsd-kind-icon">is</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-namespace tsd-is-inherited"><a href="numeric.html#mul" class="tsd-kind-icon">mul</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-namespace tsd-is-inherited"><a href="numeric.html#negate" class="tsd-kind-icon">negate</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-namespace"><a href="numeric.html#of" class="tsd-kind-icon">of</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-namespace tsd-is-overwrite tsd-is-inherited"><a href="numeric.html#prioritize" class="tsd-kind-icon">prioritize</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-namespace tsd-is-overwrite"><a href="numeric.html#sub" class="tsd-kind-icon">sub</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-namespace tsd-has-type-parameter tsd-is-inherited"><a href="numeric.html#toDim" class="tsd-kind-icon">to<wbr>Dim</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-namespace tsd-is-inherited"><a href="numeric.html#toFormula" class="tsd-kind-icon">to<wbr>Formula</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-namespace tsd-is-overwrite tsd-is-inherited"><a href="numeric.html#toString" class="tsd-kind-icon">to<wbr>String</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-namespace tsd-is-overwrite tsd-is-inherited"><a href="numeric.html#usual" class="tsd-kind-icon">usual</a></li>
 							</ul>
 						</section>
 					</div>
@@ -143,15 +169,15 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-namespace tsd-is-overwrite tsd-is-inherited tsd-is-protected">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Styp<wbr>Dimension<span class="tsd-signature-symbol">(</span>opts<span class="tsd-signature-symbol">?: </span><a href="../interfaces/StypValue.Opts.html" class="tsd-signature-type">Opts</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="StypDimension.html" class="tsd-signature-type">StypDimension</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Styp<wbr>Dimension<span class="tsd-signature-symbol">(</span>opts<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">StypValue.Opts</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="numeric.html" class="tsd-signature-type">numeric</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="StypDimension.html">StypDimension</a>.<a href="StypDimension.html#constructor">constructor</a></p>
+								<p>Inherited from <a href="numeric.html">numeric</a>.<a href="numeric.html#constructor">constructor</a></p>
 								<p>Overrides <a href="../interfaces/StypZero.html">StypZero</a>.<a href="../interfaces/StypZero.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/a028b0b/src/value/value.ts#L44">style-producer/src/value/value.ts:44</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/64e4dee/src/value/value.ts#L44">style-producer/src/value/value.ts:44</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -162,7 +188,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> opts: <a href="../interfaces/StypValue.Opts.html" class="tsd-signature-type">Opts</a></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> opts: <span class="tsd-signature-type">StypValue.Opts</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<div class="lead">
 											<p>Construction options.</p>
@@ -170,7 +196,7 @@
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="StypDimension.html" class="tsd-signature-type">StypDimension</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="numeric.html" class="tsd-signature-type">numeric</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -180,13 +206,29 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-namespace tsd-is-overwrite">
 					<a name="dim" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> dim</h3>
-					<div class="tsd-signature tsd-kind-icon">dim<span class="tsd-signature-symbol">:</span> <a href="StypDimension.Kind.html" class="tsd-signature-type">Kind</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Unit</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<div class="tsd-signature tsd-kind-icon">dim<span class="tsd-signature-symbol">:</span> <a href="numeric.html" class="tsd-signature-type">numeric</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Unit</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<p>Overrides <a href="../interfaces/StypZero.html">StypZero</a>.<a href="../interfaces/StypZero.html#dim">dim</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/a028b0b/src/value/numeric/numeric.ts#L99">style-producer/src/value/numeric/numeric.ts:99</a></li>
+							<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/64e4dee/src/value/numeric/numeric.ts#L99">style-producer/src/value/numeric/numeric.ts:99</a></li>
 						</ul>
 					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-namespace">
+					<a name="noPt" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> no<wbr>Pt</h3>
+					<div class="tsd-signature tsd-kind-icon">no<wbr>Pt<span class="tsd-signature-symbol">:</span> <a href="numeric.html" class="tsd-signature-type">numeric</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Exclude</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Unit</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">"%"</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/64e4dee/src/value/numeric/numeric.ts#L146">style-producer/src/value/numeric/numeric.ts:146</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A similar kind of dimensions supporting all units this one supports, except percents (<code>%</code>).</p>
+						</div>
+						<p><code>undefined</code> if there is no such dimension kind. Refers itself if does not support percents.</p>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-namespace tsd-is-overwrite tsd-is-inherited">
 					<a name="priority" class="tsd-anchor"></a>
@@ -196,7 +238,7 @@
 						<p>Inherited from <a href="../interfaces/StypZero.html">StypZero</a>.<a href="../interfaces/StypZero.html#priority">priority</a></p>
 						<p>Overrides <a href="../interfaces/StypZero.html">StypZero</a>.<a href="../interfaces/StypZero.html#priority">priority</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/a028b0b/src/value/value.ts#L44">style-producer/src/value/value.ts:44</a></li>
+							<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/64e4dee/src/value/value.ts#L44">style-producer/src/value/value.ts:44</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -208,6 +250,22 @@
 						<p>The property value with higher priority number takes precedence over the one with lower one.</p>
 					</div>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-namespace">
+					<a name="pt" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> pt</h3>
+					<div class="tsd-signature tsd-kind-icon">pt<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Kind</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Unit</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"%"</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/64e4dee/src/value/numeric/numeric.ts#L139">style-producer/src/value/numeric/numeric.ts:139</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A similar kind of dimensions supporting all units this one supports and, in addition, supporting percents (<code>%</code>).</p>
+						</div>
+						<p><code>undefined</code> if there is no such dimension kind. Refers itself if supports percents.</p>
+					</div>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-namespace tsd-is-overwrite">
 					<a name="type" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> type</h3>
@@ -215,7 +273,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides <a href="../classes/StypNumericStruct.html">StypNumericStruct</a>.<a href="../classes/StypNumericStruct.html#type">type</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/a028b0b/src/value/numeric/numeric.ts#L97">style-producer/src/value/numeric/numeric.ts:97</a></li>
+							<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/64e4dee/src/value/numeric/numeric.ts#L97">style-producer/src/value/numeric/numeric.ts:97</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -225,7 +283,7 @@
 					<div class="tsd-signature tsd-kind-icon">unit<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Unit</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/a028b0b/src/value/numeric/numeric.ts#L109">style-producer/src/value/numeric/numeric.ts:109</a></li>
+							<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/64e4dee/src/value/numeric/numeric.ts#L109">style-producer/src/value/numeric/numeric.ts:109</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -240,13 +298,29 @@
 					<div class="tsd-signature tsd-kind-icon">val<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/a028b0b/src/value/numeric/numeric.ts#L104">style-producer/src/value/numeric/numeric.ts:104</a></li>
+							<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/64e4dee/src/value/numeric/numeric.ts#L104">style-producer/src/value/numeric/numeric.ts:104</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>Dimension value.</p>
 						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-namespace">
+					<a name="zero" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> zero</h3>
+					<div class="tsd-signature tsd-kind-icon">zero<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">StypDimension</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Unit</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/StypZero.html" class="tsd-signature-type">StypZero</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Unit</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/64e4dee/src/value/numeric/numeric.ts#L153">style-producer/src/value/numeric/numeric.ts:153</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Zero value of this kind.</p>
+						</div>
+						<p>Typically, this is unit-less <a href="../interfaces/StypZero.html">StypZero</a>. But some dimensions require units.</p>
 					</div>
 				</section>
 			</section>
@@ -264,7 +338,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="../interfaces/StypZero.html">StypZero</a>.<a href="../interfaces/StypZero.html#add">add</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/a028b0b/src/value/numeric/numeric.ts#L111">style-producer/src/value/numeric/numeric.ts:111</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/64e4dee/src/value/numeric/numeric.ts#L111">style-producer/src/value/numeric/numeric.ts:111</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -279,7 +353,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="../interfaces/StypZero.html">StypZero</a>.<a href="../interfaces/StypZero.html#add">add</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/a028b0b/src/value/numeric/numeric.ts#L113">style-producer/src/value/numeric/numeric.ts:113</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/64e4dee/src/value/numeric/numeric.ts#L113">style-producer/src/value/numeric/numeric.ts:113</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -299,23 +373,59 @@
 					<a name="by" class="tsd-anchor"></a>
 					<h3>by</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-namespace tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">by<span class="tsd-signature-symbol">(</span>source<span class="tsd-signature-symbol">: </span><a href="StypValue.html" class="tsd-signature-type">StypValue</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../globals.html#StypNumeric" class="tsd-signature-type">StypNumeric</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Unit</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">by<span class="tsd-signature-symbol">(</span>source<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">StypValue</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../globals.html#StypNumeric" class="tsd-signature-type">StypNumeric</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Unit</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Overrides <a href="../classes/StypValueStruct.html">StypValueStruct</a>.<a href="../classes/StypValueStruct.html#by">by</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/a028b0b/src/value/numeric/numeric.ts#L119">style-producer/src/value/numeric/numeric.ts:119</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/64e4dee/src/value/numeric/numeric.ts#L119">style-producer/src/value/numeric/numeric.ts:119</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>source: <a href="StypValue.html" class="tsd-signature-type">StypValue</a></h5>
+									<h5>source: <span class="tsd-signature-type">StypValue</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="../globals.html#StypNumeric" class="tsd-signature-type">StypNumeric</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Unit</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-namespace">
+					<a name="by-1" class="tsd-anchor"></a>
+					<h3>by</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-namespace">
+						<li class="tsd-signature tsd-kind-icon">by<span class="tsd-signature-symbol">(</span>source<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">StypValue</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../globals.html#StypNumeric" class="tsd-signature-type">StypNumeric</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Unit</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">StypDimension</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Unit</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/StypZero.html" class="tsd-signature-type">StypZero</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Unit</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/64e4dee/src/value/numeric/numeric.ts#L179">style-producer/src/value/numeric/numeric.ts:179</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Maps the given CSS property value to the one compatible with this dimension kind. Defaults to <code>undefined</code>
+									if mapping is not possible.</p>
+								</div>
+								<p>This method allows to use a dimension kind as {@link StypMapper.Mapping CSS property mapping}.</p>
+								<p>Any scalar or non-numeric value is mapped to <code>undefined</code>. A numeric value is converted to this dimension by
+								<a href="../classes/StypNumericStruct.html#toDim">StypNumericStruct.toDim</a> method.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>source: <span class="tsd-signature-type">StypValue</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A raw property value that should be converted.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../globals.html#StypNumeric" class="tsd-signature-type">StypNumeric</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Unit</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">StypDimension</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Unit</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/StypZero.html" class="tsd-signature-type">StypZero</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Unit</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></h4>
+							<p>Mapped property value or <code>undefined</code>.</p>
 						</li>
 					</ul>
 				</section>
@@ -330,7 +440,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/StypNumericStruct.html">StypNumericStruct</a>.<a href="../classes/StypNumericStruct.html#div">div</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/a028b0b/src/value/numeric/numeric.ts#L67">style-producer/src/value/numeric/numeric.ts:67</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/64e4dee/src/value/numeric/numeric.ts#L67">style-producer/src/value/numeric/numeric.ts:67</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -347,7 +457,7 @@
 					<a name="important" class="tsd-anchor"></a>
 					<h3>important</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-namespace tsd-is-overwrite tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">important<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="StypDimension.html" class="tsd-signature-type">StypDimension</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Unit</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">important<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">StypDimension</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Unit</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -355,7 +465,7 @@
 								<p>Inherited from <a href="../interfaces/StypZero.html">StypZero</a>.<a href="../interfaces/StypZero.html#important">important</a></p>
 								<p>Overrides <a href="../interfaces/StypZero.html">StypZero</a>.<a href="../interfaces/StypZero.html#important">important</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/a028b0b/src/value/value.ts#L78">style-producer/src/value/value.ts:78</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/64e4dee/src/value/value.ts#L78">style-producer/src/value/value.ts:78</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -363,7 +473,7 @@
 									<p>Creates <code>!important</code> variant of this value.</p>
 								</div>
 							</div>
-							<h4 class="tsd-returns-title">Returns <a href="StypDimension.html" class="tsd-signature-type">StypDimension</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Unit</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">StypDimension</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Unit</span><span class="tsd-signature-symbol">&gt;</span></h4>
 							<p>Either a new value equal to this one but having <code>priority</code> equal to <a href="../enums/StypPriority.html#Important">StypPriority.Important</a>,
 							or this one if already the case.</p>
 						</li>
@@ -373,7 +483,7 @@
 					<a name="is" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagAbstract">Abstract</span> is</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-namespace tsd-is-overwrite tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">is<span class="tsd-signature-symbol">(</span>other<span class="tsd-signature-symbol">: </span><a href="StypValue.html" class="tsd-signature-type">StypValue</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						<li class="tsd-signature tsd-kind-icon">is<span class="tsd-signature-symbol">(</span>other<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">StypValue</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -381,7 +491,7 @@
 								<p>Inherited from <a href="../interfaces/StypZero.html">StypZero</a>.<a href="../interfaces/StypZero.html#is">is</a></p>
 								<p>Overrides <a href="../interfaces/StypZero.html">StypZero</a>.<a href="../interfaces/StypZero.html#is">is</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/a028b0b/src/value/value.ts#L60">style-producer/src/value/value.ts:60</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/64e4dee/src/value/value.ts#L60">style-producer/src/value/value.ts:60</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -392,7 +502,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>other: <a href="StypValue.html" class="tsd-signature-type">StypValue</a></h5>
+									<h5>other: <span class="tsd-signature-type">StypValue</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>CSS property value to compare with.</p>
 									</div>
@@ -413,7 +523,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/StypNumericStruct.html">StypNumericStruct</a>.<a href="../classes/StypNumericStruct.html#mul">mul</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/a028b0b/src/value/numeric/numeric.ts#L65">style-producer/src/value/numeric/numeric.ts:65</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/64e4dee/src/value/numeric/numeric.ts#L65">style-producer/src/value/numeric/numeric.ts:65</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -437,10 +547,49 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/StypNumericStruct.html">StypNumericStruct</a>.<a href="../classes/StypNumericStruct.html#negate">negate</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/a028b0b/src/value/numeric/numeric.ts#L69">style-producer/src/value/numeric/numeric.ts:69</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/64e4dee/src/value/numeric/numeric.ts#L69">style-producer/src/value/numeric/numeric.ts:69</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="../globals.html#StypNumeric" class="tsd-signature-type">StypNumeric</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Unit</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-namespace">
+					<a name="of" class="tsd-anchor"></a>
+					<h3>of</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-namespace">
+						<li class="tsd-signature tsd-kind-icon">of<span class="tsd-signature-symbol">(</span>val<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, unit<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Unit</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">StypDimension</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Unit</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/StypZero.html" class="tsd-signature-type">StypZero</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Unit</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/64e4dee/src/value/numeric/numeric.ts#L164">style-producer/src/value/numeric/numeric.ts:164</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Constructs dimension value.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>val: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Numeric dimension value.</p>
+									</div>
+								</li>
+								<li>
+									<h5>unit: <span class="tsd-signature-type">Unit</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Dimension unit.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">StypDimension</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Unit</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/StypZero.html" class="tsd-signature-type">StypZero</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Unit</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>Constructed dimension value. Either [[StypDimension]] instance, or <a href="../interfaces/StypZero.html">StypZero</a> if <code>val</code> is <code>0</code> and
+							this dimension kind supports unitless zero.</p>
 						</li>
 					</ul>
 				</section>
@@ -448,7 +597,7 @@
 					<a name="prioritize" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagAbstract">Abstract</span> prioritize</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-namespace tsd-is-overwrite tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">prioritize<span class="tsd-signature-symbol">(</span>priority<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="StypDimension.html" class="tsd-signature-type">StypDimension</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Unit</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">prioritize<span class="tsd-signature-symbol">(</span>priority<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">StypDimension</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Unit</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -456,7 +605,7 @@
 								<p>Inherited from <a href="../interfaces/StypZero.html">StypZero</a>.<a href="../interfaces/StypZero.html#prioritize">prioritize</a></p>
 								<p>Overrides <a href="../interfaces/StypZero.html">StypZero</a>.<a href="../interfaces/StypZero.html#prioritize">prioritize</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/a028b0b/src/value/value.ts#L70">style-producer/src/value/value.ts:70</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/64e4dee/src/value/value.ts#L70">style-producer/src/value/value.ts:70</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -473,7 +622,7 @@
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="StypDimension.html" class="tsd-signature-type">StypDimension</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Unit</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">StypDimension</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Unit</span><span class="tsd-signature-symbol">&gt;</span></h4>
 							<p>Either a new value equal to this one but having the given <code>priority</code>, or this one if <code>priority</code> did
 							not change.</p>
 						</li>
@@ -491,7 +640,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="../interfaces/StypZero.html">StypZero</a>.<a href="../interfaces/StypZero.html#sub">sub</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/a028b0b/src/value/numeric/numeric.ts#L115">style-producer/src/value/numeric/numeric.ts:115</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/64e4dee/src/value/numeric/numeric.ts#L115">style-producer/src/value/numeric/numeric.ts:115</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -506,7 +655,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="../interfaces/StypZero.html">StypZero</a>.<a href="../interfaces/StypZero.html#sub">sub</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/a028b0b/src/value/numeric/numeric.ts#L117">style-producer/src/value/numeric/numeric.ts:117</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/64e4dee/src/value/numeric/numeric.ts#L117">style-producer/src/value/numeric/numeric.ts:117</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -526,14 +675,14 @@
 					<a name="toDim" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagAbstract">Abstract</span> to<wbr>Dim</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-namespace tsd-has-type-parameter tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">to<wbr>Dim&lt;U&gt;<span class="tsd-signature-symbol">(</span>dim<span class="tsd-signature-symbol">: </span><a href="StypDimension.Kind.html" class="tsd-signature-type">Kind</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">U</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../globals.html#StypNumeric" class="tsd-signature-type">StypNumeric</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">U</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></li>
+						<li class="tsd-signature tsd-kind-icon">to<wbr>Dim&lt;U&gt;<span class="tsd-signature-symbol">(</span>dim<span class="tsd-signature-symbol">: </span><a href="numeric.html" class="tsd-signature-type">numeric</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">U</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../globals.html#StypNumeric" class="tsd-signature-type">StypNumeric</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">U</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../interfaces/StypZero.html">StypZero</a>.<a href="../interfaces/StypZero.html#toDim">toDim</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/a028b0b/src/value/numeric/numeric.ts#L55">style-producer/src/value/numeric/numeric.ts:55</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/64e4dee/src/value/numeric/numeric.ts#L55">style-producer/src/value/numeric/numeric.ts:55</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -554,7 +703,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>dim: <a href="StypDimension.Kind.html" class="tsd-signature-type">Kind</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">U</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>dim: <a href="numeric.html" class="tsd-signature-type">numeric</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">U</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Target dimension.</p>
 									</div>
@@ -577,7 +726,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/StypNumericStruct.html">StypNumericStruct</a>.<a href="../classes/StypNumericStruct.html#toFormula">toFormula</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/a028b0b/src/value/numeric/numeric.ts#L80">style-producer/src/value/numeric/numeric.ts:80</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/64e4dee/src/value/numeric/numeric.ts#L80">style-producer/src/value/numeric/numeric.ts:80</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -599,10 +748,10 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="StypDimension.html">StypDimension</a>.<a href="StypDimension.html#toString">toString</a></p>
+								<p>Inherited from <a href="numeric.html">numeric</a>.<a href="numeric.html#toString">toString</a></p>
 								<p>Overrides <a href="../interfaces/StypZero.html">StypZero</a>.<a href="../interfaces/StypZero.html#toString">toString</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/a028b0b/src/value/value.ts#L111">style-producer/src/value/value.ts:111</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/64e4dee/src/value/value.ts#L111">style-producer/src/value/value.ts:111</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -620,7 +769,7 @@
 					<a name="usual" class="tsd-anchor"></a>
 					<h3>usual</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-namespace tsd-is-overwrite tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">usual<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="StypDimension.html" class="tsd-signature-type">StypDimension</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Unit</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">usual<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">StypDimension</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Unit</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -628,7 +777,7 @@
 								<p>Inherited from <a href="../interfaces/StypZero.html">StypZero</a>.<a href="../interfaces/StypZero.html#usual">usual</a></p>
 								<p>Overrides <a href="../interfaces/StypZero.html">StypZero</a>.<a href="../interfaces/StypZero.html#usual">usual</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/a028b0b/src/value/value.ts#L88">style-producer/src/value/value.ts:88</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/64e4dee/src/value/value.ts#L88">style-producer/src/value/value.ts:88</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -636,7 +785,7 @@
 									<p>Creates usual (not <code>!important</code>) variant of this value.</p>
 								</div>
 							</div>
-							<h4 class="tsd-returns-title">Returns <a href="StypDimension.html" class="tsd-signature-type">StypDimension</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Unit</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">StypDimension</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Unit</span><span class="tsd-signature-symbol">&gt;</span></h4>
 							<p>Either a new value equal to this one but having <code>priority</code> equal to <a href="../enums/StypPriority.html#Usual">StypPriority.Usual</a>,
 							or this one if already the case.</p>
 						</li>
@@ -650,137 +799,99 @@
 					<li class="globals  ">
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="StypAngle.html">Styp<wbr>Angle</a>
+					<li class=" tsd-kind-module tsd-is-not-exported">
+						<a href="reflection-1411.html">&lt;em&gt;<wbr>Module&lt;/em&gt;</a>
 					</li>
 					<li class=" tsd-kind-namespace">
-						<a href="StypAnglePt.html">Styp<wbr>Angle<wbr>Pt</a>
+						<a href="formats.html">formats</a>
 					</li>
 					<li class="current tsd-kind-namespace tsd-has-type-parameter">
-						<a href="StypDimension.html">Styp<wbr>Dimension</a>
-						<ul>
-							<li class=" tsd-kind-namespace tsd-parent-kind-namespace tsd-has-type-parameter">
-								<a href="StypDimension.Kind.html">Kind</a>
-							</li>
-						</ul>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="StypFrequency.html">Styp<wbr>Frequency</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="StypFrequencyPt.html">Styp<wbr>Frequency<wbr>Pt</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="StypLength.html">Styp<wbr>Length</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="StypLengthPt.html">Styp<wbr>Length<wbr>Pt</a>
-					</li>
-					<li class=" tsd-kind-namespace tsd-has-type-parameter">
-						<a href="StypProperties.html">Styp<wbr>Properties</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="StypPureSelector.html">Styp<wbr>Pure<wbr>Selector</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="StypQuery.html">Styp<wbr>Query</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="StypRenderer.html">Styp<wbr>Renderer</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="StypResolution.html">Styp<wbr>Resolution</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="StypRuleKey.html">Styp<wbr>Rule<wbr>Key</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="StypRules.html">Styp<wbr>Rules</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="StypSelector.html">Styp<wbr>Selector</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="StypSubSelector.html">Styp<wbr>Sub<wbr>Selector</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="StypTextFormatConfig.html">Styp<wbr>Text<wbr>Format<wbr>Config</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="StypTime.html">Styp<wbr>Time</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="StypTimePt.html">Styp<wbr>Time<wbr>Pt</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="StypValue.html">Styp<wbr>Value</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="StypWriter.html">Styp<wbr>Writer</a>
+						<a href="numeric.html">numeric</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<li class=" tsd-kind-interface tsd-parent-kind-namespace tsd-has-type-parameter">
-						<a href="../interfaces/StypDimension.Opts.html" class="tsd-kind-icon">Opts</a>
+						<a href="../interfaces/numeric.Opts.html" class="tsd-kind-icon">Opts</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-namespace tsd-has-type-parameter">
+						<a href="../interfaces/numeric.UnitZero.html" class="tsd-kind-icon">Unit<wbr>Zero</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-namespace tsd-has-type-parameter">
+						<a href="../interfaces/numeric.UnitlessZero.html" class="tsd-kind-icon">Unitless<wbr>Zero</a>
 					</li>
 					<li class=" tsd-kind-constructor tsd-parent-kind-namespace tsd-is-overwrite tsd-is-inherited tsd-is-protected">
-						<a href="StypDimension.html#constructor" class="tsd-kind-icon">constructor</a>
+						<a href="numeric.html#constructor" class="tsd-kind-icon">constructor</a>
 					</li>
 					<li class=" tsd-kind-property tsd-parent-kind-namespace tsd-is-overwrite">
-						<a href="StypDimension.html#dim" class="tsd-kind-icon">dim</a>
+						<a href="numeric.html#dim" class="tsd-kind-icon">dim</a>
+					</li>
+					<li class=" tsd-kind-property tsd-parent-kind-namespace">
+						<a href="numeric.html#noPt" class="tsd-kind-icon">no<wbr>Pt</a>
 					</li>
 					<li class=" tsd-kind-property tsd-parent-kind-namespace tsd-is-overwrite tsd-is-inherited">
-						<a href="StypDimension.html#priority" class="tsd-kind-icon">priority</a>
+						<a href="numeric.html#priority" class="tsd-kind-icon">priority</a>
+					</li>
+					<li class=" tsd-kind-property tsd-parent-kind-namespace">
+						<a href="numeric.html#pt" class="tsd-kind-icon">pt</a>
 					</li>
 					<li class=" tsd-kind-property tsd-parent-kind-namespace tsd-is-overwrite">
-						<a href="StypDimension.html#type" class="tsd-kind-icon">type</a>
+						<a href="numeric.html#type" class="tsd-kind-icon">type</a>
 					</li>
 					<li class=" tsd-kind-property tsd-parent-kind-namespace">
-						<a href="StypDimension.html#unit" class="tsd-kind-icon">unit</a>
+						<a href="numeric.html#unit" class="tsd-kind-icon">unit</a>
 					</li>
 					<li class=" tsd-kind-property tsd-parent-kind-namespace">
-						<a href="StypDimension.html#val" class="tsd-kind-icon">val</a>
+						<a href="numeric.html#val" class="tsd-kind-icon">val</a>
+					</li>
+					<li class=" tsd-kind-property tsd-parent-kind-namespace">
+						<a href="numeric.html#zero" class="tsd-kind-icon">zero</a>
 					</li>
 					<li class=" tsd-kind-method tsd-parent-kind-namespace tsd-is-overwrite">
-						<a href="StypDimension.html#add" class="tsd-kind-icon">add</a>
+						<a href="numeric.html#add" class="tsd-kind-icon">add</a>
 					</li>
 					<li class=" tsd-kind-method tsd-parent-kind-namespace tsd-is-overwrite">
-						<a href="StypDimension.html#by" class="tsd-kind-icon">by</a>
+						<a href="numeric.html#by" class="tsd-kind-icon">by</a>
+					</li>
+					<li class=" tsd-kind-method tsd-parent-kind-namespace">
+						<a href="numeric.html#by-1" class="tsd-kind-icon">by</a>
 					</li>
 					<li class=" tsd-kind-method tsd-parent-kind-namespace tsd-is-inherited">
-						<a href="StypDimension.html#div" class="tsd-kind-icon">div</a>
+						<a href="numeric.html#div" class="tsd-kind-icon">div</a>
 					</li>
 					<li class=" tsd-kind-method tsd-parent-kind-namespace tsd-is-overwrite tsd-is-inherited">
-						<a href="StypDimension.html#important" class="tsd-kind-icon">important</a>
+						<a href="numeric.html#important" class="tsd-kind-icon">important</a>
 					</li>
 					<li class=" tsd-kind-method tsd-parent-kind-namespace tsd-is-overwrite tsd-is-inherited">
-						<a href="StypDimension.html#is" class="tsd-kind-icon">is</a>
+						<a href="numeric.html#is" class="tsd-kind-icon">is</a>
 					</li>
 					<li class=" tsd-kind-method tsd-parent-kind-namespace tsd-is-inherited">
-						<a href="StypDimension.html#mul" class="tsd-kind-icon">mul</a>
+						<a href="numeric.html#mul" class="tsd-kind-icon">mul</a>
 					</li>
 					<li class=" tsd-kind-method tsd-parent-kind-namespace tsd-is-inherited">
-						<a href="StypDimension.html#negate" class="tsd-kind-icon">negate</a>
+						<a href="numeric.html#negate" class="tsd-kind-icon">negate</a>
+					</li>
+					<li class=" tsd-kind-method tsd-parent-kind-namespace">
+						<a href="numeric.html#of" class="tsd-kind-icon">of</a>
 					</li>
 					<li class=" tsd-kind-method tsd-parent-kind-namespace tsd-is-overwrite tsd-is-inherited">
-						<a href="StypDimension.html#prioritize" class="tsd-kind-icon">prioritize</a>
+						<a href="numeric.html#prioritize" class="tsd-kind-icon">prioritize</a>
 					</li>
 					<li class=" tsd-kind-method tsd-parent-kind-namespace tsd-is-overwrite">
-						<a href="StypDimension.html#sub" class="tsd-kind-icon">sub</a>
+						<a href="numeric.html#sub" class="tsd-kind-icon">sub</a>
 					</li>
 					<li class=" tsd-kind-method tsd-parent-kind-namespace tsd-has-type-parameter tsd-is-inherited">
-						<a href="StypDimension.html#toDim" class="tsd-kind-icon">to<wbr>Dim</a>
+						<a href="numeric.html#toDim" class="tsd-kind-icon">to<wbr>Dim</a>
 					</li>
 					<li class=" tsd-kind-method tsd-parent-kind-namespace tsd-is-inherited">
-						<a href="StypDimension.html#toFormula" class="tsd-kind-icon">to<wbr>Formula</a>
+						<a href="numeric.html#toFormula" class="tsd-kind-icon">to<wbr>Formula</a>
 					</li>
 					<li class=" tsd-kind-method tsd-parent-kind-namespace tsd-is-overwrite tsd-is-inherited">
-						<a href="StypDimension.html#toString" class="tsd-kind-icon">to<wbr>String</a>
+						<a href="numeric.html#toString" class="tsd-kind-icon">to<wbr>String</a>
 					</li>
 					<li class=" tsd-kind-method tsd-parent-kind-namespace tsd-is-overwrite tsd-is-inherited">
-						<a href="StypDimension.html#usual" class="tsd-kind-icon">usual</a>
+						<a href="numeric.html#usual" class="tsd-kind-icon">usual</a>
 					</li>
 				</ul>
 			</nav>
@@ -803,6 +914,9 @@
 			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-namespace"><span class="tsd-kind-icon">Namespace</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
