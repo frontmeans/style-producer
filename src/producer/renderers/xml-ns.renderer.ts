@@ -3,8 +3,8 @@
  * @module @proc7ts/style-producer
  */
 import { filterIt, itsEmpty, itsReduction, mapIt, overArray } from '@proc7ts/a-iterable';
-import { isPresent } from '@proc7ts/call-thru';
 import { NamespaceDef } from '@proc7ts/namespace-aliaser';
+import { isPresent } from '@proc7ts/primitives';
 import { StypProperties } from '../../rule';
 import { StypSelector } from '../../selector';
 import { isCombinator } from '../../selector/selector.impl';

@@ -1,5 +1,5 @@
 import { filterIt, itsIterator, itsReduction, overEntries } from '@proc7ts/a-iterable';
-import { asis, isPresent, nextSkip, NextSkip, valuesProvider } from '@proc7ts/call-thru';
+import { nextSkip, NextSkip } from '@proc7ts/call-thru';
 import {
   afterAll,
   AfterEvent,
@@ -10,6 +10,7 @@ import {
   isEventKeeper,
   isEventSender,
 } from '@proc7ts/fun-events';
+import { asis, isPresent, valuesProvider } from '@proc7ts/primitives';
 import { IMPORTANT_CSS_SUFFIX } from '../internal';
 import { StypValue, stypValuesEqual } from '../value';
 import { StypProperties } from './properties';
@@ -69,7 +70,7 @@ function preventDuplicates(properties: EventKeeper<[string | StypProperties]>): 
   return afterSupplied(properties).keepThru(
       propertiesMap,
       passNonDuplicate(),
-      asis as (props: StypProperties) => StypProperties, // Needed to satisfy signature
+      asis,
   );
 }
 

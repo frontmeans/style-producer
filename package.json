@@ -19,21 +19,22 @@
   "main": "dist/style-producer.js",
   "module": "dist/style-producer.mjs",
   "typings": "index.d.ts",
-  "dependencies": {
-    "@proc7ts/a-iterable": "^2.5.2",
-    "cssesc": "^3.0.0",
-    "hyphenate-style-name": "^1.0.3"
-  },
   "peerDependencies": {
-    "@proc7ts/call-thru": "^3.0.2",
-    "@proc7ts/fun-events": "^9.1.1",
+    "@proc7ts/call-thru": "^4.0.0",
+    "@proc7ts/fun-events": "^9.2.0",
     "@proc7ts/namespace-aliaser": "^2.0.3",
     "@proc7ts/render-scheduler": "^1.2.0"
   },
+  "dependencies": {
+    "@proc7ts/a-iterable": "^2.6.1",
+    "@proc7ts/primitives": "^1.0.0",
+    "cssesc": "^3.0.0",
+    "hyphenate-style-name": "^1.0.3"
+  },
   "devDependencies": {
-    "@proc7ts/call-thru": "^3.0.2",
+    "@proc7ts/call-thru": "^4.0.0",
     "@proc7ts/eslint-config": "^2.0.0",
-    "@proc7ts/fun-events": "^9.1.1",
+    "@proc7ts/fun-events": "^9.2.0",
     "@proc7ts/namespace-aliaser": "^2.0.3",
     "@proc7ts/render-scheduler": "^1.2.0",
     "@rollup/plugin-commonjs": "^12.0.0",

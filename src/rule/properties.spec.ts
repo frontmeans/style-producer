@@ -1,5 +1,5 @@
-import { noop, valuesProvider } from '@proc7ts/call-thru';
 import { AfterEvent, afterSupplied, EventEmitter, EventSupply, trackValue, ValueTracker } from '@proc7ts/fun-events';
+import { noop, valuesProvider } from '@proc7ts/primitives';
 import { readProperties } from '../spec';
 import { StypLengthPt } from '../value';
 import { StypProperties } from './properties';

@@ -1,6 +1,6 @@
 import { filterIt, itsIterable } from '@proc7ts/a-iterable';
-import { asis, valueProvider, valuesProvider } from '@proc7ts/call-thru';
 import { AfterEvent, afterSent, EventReceiver, EventSupply, OnEvent, onEventBy, onSupplied } from '@proc7ts/fun-events';
+import { asis, valueProvider, valuesProvider } from '@proc7ts/primitives';
 import { stypQuery, StypQuery, stypSelectorMatches } from '../selector';
 import { StypRule, StypRuleList } from './rule';
 import { StypRules } from './rules';

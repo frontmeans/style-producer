@@ -1,6 +1,6 @@
 import { itsEmpty } from '@proc7ts/a-iterable';
-import { noop } from '@proc7ts/call-thru';
 import { onSupplied } from '@proc7ts/fun-events';
+import { noop } from '@proc7ts/primitives';
 import { stypRoot } from './root';
 import { StypRule } from './rule';
 import { lazyStypRules, StypRules, stypRules } from './rules';

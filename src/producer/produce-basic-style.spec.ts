@@ -1,7 +1,7 @@
 import { itsEmpty } from '@proc7ts/a-iterable';
-import { noop } from '@proc7ts/call-thru';
 import { afterNever, trackValue } from '@proc7ts/fun-events';
 import { NamespaceDef } from '@proc7ts/namespace-aliaser';
+import { noop } from '@proc7ts/primitives';
 import {
   immediateRenderScheduler,
   newManualRenderScheduler,
