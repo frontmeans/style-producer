@@ -2,7 +2,7 @@ Style Producer
 ==============
 
 [![NPM][npm-image]][npm-url]
-[![CircleCI][ci-image]][ci-url]
+[![Build Status][build-status-img]][build-status-link]
 [![codecov][codecov-image]][codecov-url]
 [![GitHub Project][github-image]][github-url]
 [![API Documentation][api-docs-image]][api-docs-url]
@@ -37,8 +37,8 @@ supply.off(); // Remove produced stylesheets
 
 [npm-image]: https://img.shields.io/npm/v/@proc7ts/style-producer.svg?logo=npm
 [npm-url]: https://www.npmjs.com/package/@proc7ts/style-producer
-[ci-image]: https://img.shields.io/circleci/build/github/proc7ts/style-producer?logo=circleci
-[ci-url]: https://circleci.com/gh/proc7ts/style-producer
+[build-status-img]: https://github.com/proc7ts/style-producer/workflows/Build/badge.svg
+[build-status-link]: https://github.com/proc7ts/style-producer/actions?query=workflow%3ABuild
 [codecov-image]: https://codecov.io/gh/proc7ts/style-producer/branch/master/graph/badge.svg
 [codecov-url]: https://codecov.io/gh/proc7ts/style-producer
 [github-image]: https://img.shields.io/static/v1?logo=github&label=GitHub&message=project&color=informational
