@@ -1,6 +1,7 @@
 {
   "categorizeByGroup": true,
   "categoryOrder": ["CSS Rule", "CSS Value", "Rendering", "*"],
+  "disableAutoModuleName": true,
   "exclude": [
     "**/index.ts",
     "**/spec/**/*.ts",
