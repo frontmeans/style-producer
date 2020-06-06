@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>StypPriority | Style Producer</title>
+	<title>StypResolution | Style Producer</title>
 	<meta name="description" content="Documentation for Style Producer">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,10 +54,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="StypPriority.html">StypPriority</a>
+					<a href="StypResolution.html">StypResolution</a>
 				</li>
 			</ul>
-			<h1>Enumeration StypPriority</h1>
+			<h1>Namespace StypResolution</h1>
 		</div>
 	</div>
 </header>
@@ -67,8 +67,9 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Predefined CSS property value priorities.</p>
+						<p>Structured <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/resolution">resolution</a> property value.</p>
 					</div>
+					<p>Can be constructed using <code>StypResolution.of()</code> function.</p>
 				</div>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -76,66 +77,29 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Enumeration members</h3>
+							<h3>Type aliases</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="StypPriority.html#Default" class="tsd-kind-icon">Default</a></li>
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="StypPriority.html#Important" class="tsd-kind-icon">Important</a></li>
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="StypPriority.html#Usual" class="tsd-kind-icon">Usual</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-namespace"><a href="StypResolution.html#Unit" class="tsd-kind-icon">Unit</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Enumeration members</h2>
-				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="Default" class="tsd-anchor"></a>
-					<h3>Default</h3>
-					<div class="tsd-signature tsd-kind-icon">Default<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = Usual</span></div>
+				<h2>Type aliases</h2>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-namespace">
+					<a name="Unit" class="tsd-anchor"></a>
+					<h3>Unit</h3>
+					<div class="tsd-signature tsd-kind-icon">Unit<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"dpi"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"dpcm"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"dppx"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"x"</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/1c5ae6e/src/value/priority.ts#L27">style-producer/src/value/priority.ts:27</a></li>
+							<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/1c5ae6e/src/value/unit/resolution.ts#L22">style-producer/src/value/unit/resolution.ts:22</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Default priority.</p>
+							<p>Supported resolution units, excluding percent.</p>
 						</div>
-						<p>The same as <code>Usual</code>. This priority is assigned to values by default.</p>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="Important" class="tsd-anchor"></a>
-					<h3>Important</h3>
-					<div class="tsd-signature tsd-kind-icon">Important<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = 1</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/1c5ae6e/src/value/priority.ts#L37">style-producer/src/value/priority.ts:37</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Important priority.</p>
-						</div>
-						<p>This priority corresponds to values with <code>!important</code> suffix. It is applied to string values with <code>!important</code>
-						suffix, and can be assigned to structured values using <a href="../classes/StypValueStruct.html#important">StypValueStruct.important</a> method.</p>
-						<p>All numeric priorities with higher values are rendered as <code>!important</code> ones.</p>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="Usual" class="tsd-anchor"></a>
-					<h3>Usual</h3>
-					<div class="tsd-signature tsd-kind-icon">Usual<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = 0</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/1c5ae6e/src/value/priority.ts#L20">style-producer/src/value/priority.ts:20</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Usual, non-important priority.</p>
-						</div>
-						<p>This priority is assigned to values by <a href="../classes/StypValueStruct.html#usual">StypValueStruct.usual</a> method.</p>
 					</div>
 				</section>
 			</section>
@@ -146,28 +110,76 @@
 					<li class="globals  ">
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="StypAngle.html">Styp<wbr>Angle</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="StypAnglePt.html">Styp<wbr>Angle<wbr>Pt</a>
+					</li>
+					<li class=" tsd-kind-namespace tsd-has-type-parameter">
+						<a href="StypDimension.html">Styp<wbr>Dimension</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="StypFrequency.html">Styp<wbr>Frequency</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="StypFrequencyPt.html">Styp<wbr>Frequency<wbr>Pt</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="StypLength.html">Styp<wbr>Length</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="StypLengthPt.html">Styp<wbr>Length<wbr>Pt</a>
+					</li>
+					<li class=" tsd-kind-namespace tsd-has-type-parameter">
+						<a href="StypProperties.html">Styp<wbr>Properties</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="StypPureSelector.html">Styp<wbr>Pure<wbr>Selector</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="StypQuery.html">Styp<wbr>Query</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="StypRenderer.html">Styp<wbr>Renderer</a>
+					</li>
+					<li class="current tsd-kind-namespace">
+						<a href="StypResolution.html">Styp<wbr>Resolution</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="StypRuleKey.html">Styp<wbr>Rule<wbr>Key</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="StypRules.html">Styp<wbr>Rules</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="StypSelector.html">Styp<wbr>Selector</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="StypSubSelector.html">Styp<wbr>Sub<wbr>Selector</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="StypTextFormatConfig.html">Styp<wbr>Text<wbr>Format<wbr>Config</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="StypTime.html">Styp<wbr>Time</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="StypTimePt.html">Styp<wbr>Time<wbr>Pt</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="StypValue.html">Styp<wbr>Value</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="StypWriter.html">Styp<wbr>Writer</a>
+					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-				</ul>
-				<ul class="current">
-					<li class="current tsd-kind-enum">
-						<a href="StypPriority.html" class="tsd-kind-icon">Styp<wbr>Priority</a>
-						<ul>
-							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="StypPriority.html#Default" class="tsd-kind-icon">Default</a>
-							</li>
-							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="StypPriority.html#Important" class="tsd-kind-icon">Important</a>
-							</li>
-							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="StypPriority.html#Usual" class="tsd-kind-icon">Usual</a>
-							</li>
-						</ul>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-namespace">
+						<a href="StypResolution.html#Unit" class="tsd-kind-icon">Unit</a>
 					</li>
-				</ul>
-				<ul class="after-current">
 				</ul>
 			</nav>
 		</div>
