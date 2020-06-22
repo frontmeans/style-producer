@@ -18,7 +18,7 @@
   },
   "main": "dist/style-producer.js",
   "module": "dist/style-producer.mjs",
-  "typings": "index.d.ts",
+  "types": "index.d.ts",
   "peerDependencies": {
     "@proc7ts/call-thru": "^4.0.0",
     "@proc7ts/fun-events": "^9.2.0",
