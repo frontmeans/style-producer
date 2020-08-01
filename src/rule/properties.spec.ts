@@ -263,7 +263,7 @@ describe('mergeStypProperties', () => {
         fontSize: StypLengthPt.of(13, 'px').important(),
       };
       expect(mockReceiver).toHaveBeenCalledWith(expect.objectContaining({
-        fontSize:  StypLengthPt.of(13, 'px').important(),
+        fontSize: StypLengthPt.of(13, 'px').important(),
       }));
     });
     it('prefers important property added later', () => {
