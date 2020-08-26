@@ -19,24 +19,30 @@
   "main": "dist/style-producer.js",
   "module": "dist/style-producer.mjs",
   "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/style-producer.mjs",
+      "require": "./dist/style-producer.js"
+    }
+  },
   "peerDependencies": {
-    "@proc7ts/call-thru": "^4.0.0",
-    "@proc7ts/fun-events": "^9.2.0",
-    "@proc7ts/namespace-aliaser": "^2.0.3",
-    "@proc7ts/render-scheduler": "^1.2.0"
+    "@proc7ts/call-thru": "^4.1.0",
+    "@proc7ts/fun-events": "^9.3.0",
+    "@proc7ts/namespace-aliaser": "^2.1.0",
+    "@proc7ts/render-scheduler": "^1.3.0"
   },
   "dependencies": {
-    "@proc7ts/a-iterable": "^2.7.0",
-    "@proc7ts/primitives": "^1.1.0",
+    "@proc7ts/a-iterable": "^2.8.0",
+    "@proc7ts/primitives": "^1.2.0",
     "cssesc": "^3.0.0",
     "hyphenate-style-name": "^1.0.4"
   },
   "devDependencies": {
-    "@proc7ts/call-thru": "^4.0.0",
+    "@proc7ts/call-thru": "^4.1.0",
     "@proc7ts/eslint-config": "^2.0.4",
-    "@proc7ts/fun-events": "^9.2.0",
-    "@proc7ts/namespace-aliaser": "^2.0.3",
-    "@proc7ts/render-scheduler": "^1.2.0",
+    "@proc7ts/fun-events": "^9.3.0",
+    "@proc7ts/namespace-aliaser": "^2.1.0",
+    "@proc7ts/render-scheduler": "^1.3.0",
     "@proc7ts/rollup-helpers": "^1.0.0",
     "@rollup/plugin-commonjs": "^15.0.0",
     "@rollup/plugin-node-resolve": "^9.0.0",
