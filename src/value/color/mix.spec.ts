@@ -3,7 +3,7 @@ import { StypRGB } from './color';
 import { mixStypColors } from './mix';
 
 describe('mixStypColors', () => {
-  it('produces the second color when mixes two colors with 0 weight ', () => {
+  it('produces the second color when mixes two colors with 0 weight', () => {
 
     const mix = mixStypColors(rgbWhite(), rgbGray(), 0);
 
@@ -15,7 +15,7 @@ describe('mixStypColors', () => {
 
     expect(`${mix}`).toBe(`${rgbGray(0)}`);
   });
-  it('produces the first color when mixes two colors with 1 weight ', () => {
+  it('produces the first color when mixes two colors with 1 weight', () => {
 
     const mix = mixStypColors(rgbBlack(), rgbGray(), 1);
 
