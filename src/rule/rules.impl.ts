@@ -1,6 +1,6 @@
-import { filterIt, itsIterable } from '@proc7ts/a-iterable';
 import { AfterEvent, afterSent, EventReceiver, EventSupply, OnEvent, onEventBy, onSupplied } from '@proc7ts/fun-events';
 import { asis, valueProvider, valuesProvider } from '@proc7ts/primitives';
+import { filterIt, itsIterator } from '@proc7ts/push-iterator';
 import { stypQuery, StypQuery, stypSelectorMatches } from '../selector';
 import { StypRule, StypRuleList } from './rule';
 import { StypRules } from './rules';
@@ -64,7 +64,7 @@ export class Rules extends StypRuleList {
     }
     // List changes are not currently tracked.
     // Request the rules explicitly.
-    return itsIterable(this._buildList());
+    return itsIterator(this._buildList());
   }
 
   grab(query: StypQuery): StypRuleList {

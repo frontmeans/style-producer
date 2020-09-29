@@ -2,7 +2,7 @@
  * @packageDocumentation
  * @module @proc7ts/style-producer
  */
-import { filterIt, itsEach, ObjectEntry, overEntries } from '@proc7ts/a-iterable';
+import { filterIt, itsEach, ObjectEntry, overEntries } from '@proc7ts/push-iterator';
 import hyphenateStyleName from 'hyphenate-style-name';
 import { StypProperties } from '../../rule';
 import { stypSplitPriority } from '../../value';

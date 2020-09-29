@@ -1,5 +1,5 @@
-import { itsEmpty } from '@proc7ts/a-iterable';
 import { EventSupply, eventSupply } from '@proc7ts/fun-events';
+import { itsEmpty } from '@proc7ts/push-iterator';
 import { immediateRenderScheduler, newManualRenderScheduler, noopRenderScheduler } from '@proc7ts/render-scheduler';
 import { stypRoot, StypRule } from '../../rule';
 import { cssStyle, removeStyleElements, stylesheets } from '../../spec';
