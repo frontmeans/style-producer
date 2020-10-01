@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "@proc7ts/primitives": "^1.2.0",
-    "@proc7ts/push-iterator": "^1.0.0-dev.1",
+    "@proc7ts/push-iterator": "^1.0.0",
     "cssesc": "^3.0.0",
     "hyphenate-style-name": "^1.0.4"
   },
