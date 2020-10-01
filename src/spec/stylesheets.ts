@@ -1,5 +1,4 @@
-import { itsEach } from '@proc7ts/a-iterable';
-import { filterIt, flatMapIt, itsFirst, mapIt, overArray } from '@proc7ts/push-iterator';
+import { filterIt, flatMapIt, itsEach, itsFirst, mapIt, overArray } from '@proc7ts/push-iterator';
 
 export function cssStyle(selector?: string): CSSStyleDeclaration {
 
