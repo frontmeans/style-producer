@@ -1,6 +1,6 @@
 import Mocked = jest.Mocked;
-import { flatMapIt } from '@proc7ts/a-iterable';
 import { EventSupply, eventSupply } from '@proc7ts/fun-events';
+import { flatMapIt } from '@proc7ts/push-iterator';
 import { stypRoot, StypRule } from '../../rule';
 import { StypLength, StypURL } from '../../value';
 import { stypTextFormat, StypTextFormatConfig } from '../formats';

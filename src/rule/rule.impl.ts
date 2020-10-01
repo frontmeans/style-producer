@@ -1,4 +1,3 @@
-import { itsIterable } from '@proc7ts/a-iterable';
 import {
   AfterEvent,
   afterEventBy,
@@ -13,6 +12,7 @@ import {
   ValueTracker,
 } from '@proc7ts/fun-events';
 import { valueProvider, valuesProvider } from '@proc7ts/primitives';
+import { itsIterator } from '@proc7ts/push-iterator';
 import { StypQuery, StypRuleKey, stypSelector, StypSelector } from '../selector';
 import { stypRuleKeyText } from '../selector/selector-text.impl';
 import { stypOuterSelector, stypRuleKeyAndTail } from '../selector/selector.impl';
@@ -139,7 +139,7 @@ function selfRuleList(rule: StypRule$, all: AllRules): StypRuleList {
     }
 
     [Symbol.iterator](): IterableIterator<StypRule$> {
-      return itsIterable(rules);
+      return itsIterator(rules);
     }
 
   }

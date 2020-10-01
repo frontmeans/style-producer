@@ -1,6 +1,6 @@
-import { itsFirst } from '@proc7ts/a-iterable';
 import { EventSupply, eventSupply } from '@proc7ts/fun-events';
 import { noop } from '@proc7ts/primitives';
+import { itsFirst } from '@proc7ts/push-iterator';
 import { immediateRenderScheduler } from '@proc7ts/render-scheduler';
 import { stypRoot, StypRule } from '../../rule';
 import { stylesheets } from '../../spec';

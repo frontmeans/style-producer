@@ -1,4 +1,3 @@
-import { filterIt, itsIterator, itsReduction, overEntries } from '@proc7ts/a-iterable';
 import { nextSkip, NextSkip } from '@proc7ts/call-thru';
 import {
   afterAll,
@@ -11,6 +10,7 @@ import {
   isEventSender,
 } from '@proc7ts/fun-events';
 import { asis, isPresent, valuesProvider } from '@proc7ts/primitives';
+import { filterIt, itsIterator, itsReduction, overEntries } from '@proc7ts/push-iterator';
 import { IMPORTANT_CSS_SUFFIX } from '../internal';
 import { StypValue, stypValuesEqual } from '../value';
 import { StypProperties } from './properties';
@@ -106,8 +106,11 @@ function propertiesEqual(first: StypProperties, second: StypProperties): boolean
   return !s.next().value;
 }
 
-function propertyEntries(properties: StypProperties): Iterable<[keyof StypProperties, StypValue]> {
-  return filterIt(overEntries(properties), isPresent);
+function propertyEntries(properties: StypProperties): Iterable<readonly [keyof StypProperties, StypValue]> {
+  return filterIt(
+      overEntries(properties),
+      ([, value]) => isPresent(value),
+  );
 }
 
 /**

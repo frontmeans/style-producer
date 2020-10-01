@@ -1,4 +1,4 @@
-import { AIterable, itsFirst, overArray } from '@proc7ts/a-iterable';
+import { filterIt, flatMapIt, itsEach, itsFirst, mapIt, overArray } from '@proc7ts/push-iterator';
 
 export function cssStyle(selector?: string): CSSStyleDeclaration {
 
@@ -11,35 +11,49 @@ export function cssStyle(selector?: string): CSSStyleDeclaration {
   return style;
 }
 
-export function stylesheets(): AIterable<CSSStyleSheet> {
-  return AIterable.from(overArray(document.styleSheets))
-      .filter<CSSStyleSheet>(isCSSStyleSheet);
+export function stylesheets(): Iterable<CSSStyleSheet> {
+  return filterIt(
+      overArray(document.styleSheets),
+      isCSSStyleSheet,
+  );
 }
 
 function isCSSStyleSheet(sheet: StyleSheet): sheet is CSSStyleSheet {
   return 'cssRules' in sheet;
 }
 
-export function cssRules(): AIterable<CSSRule> {
-  return stylesheets()
-      .flatMap(sheet => overArray(sheet.cssRules));
+export function cssRules(): Iterable<CSSRule> {
+  return flatMapIt(
+      stylesheets(),
+      sheet => overArray(sheet.cssRules),
+  );
 }
 
-export function cssStyles(selector?: string): AIterable<CSSStyleDeclaration> {
-  return cssRules()
-      .filter<CSSStyleRule>(isCSSStyleRule)
-      .filter(r => !selector || r.selectorText === selector)
-      .map(r => r.style);
+export function cssStyles(selector?: string): Iterable<CSSStyleDeclaration> {
+  return mapIt(
+      filterIt(
+          filterIt<CSSRule, CSSStyleRule>(
+              cssRules(),
+              isCSSStyleRule,
+          ),
+          r => !selector || r.selectorText === selector,
+      ),
+      r => r.style,
+  );
 }
 
 function isCSSStyleRule(rule: CSSRule): rule is CSSStyleRule {
   return rule.type === CSSRule.STYLE_RULE;
 }
 
-export function mediaRules(query?: string): AIterable<CSSMediaRule> {
-  return cssRules()
-      .filter<CSSMediaRule>(isCSSMediaRule)
-      .filter(rule => !query || rule.media.mediaText === query);
+export function mediaRules(query?: string): Iterable<CSSMediaRule> {
+  return filterIt(
+      filterIt<CSSRule, CSSMediaRule>(
+          cssRules(),
+          isCSSMediaRule,
+      ),
+      rule => !query || rule.media.mediaText === query,
+  );
 }
 
 function isCSSMediaRule(rule: CSSRule): rule is CSSMediaRule {
@@ -47,5 +61,8 @@ function isCSSMediaRule(rule: CSSRule): rule is CSSMediaRule {
 }
 
 export function removeStyleElements(): void {
-  AIterable.from(overArray(document.head.querySelectorAll('style'))).forEach(e => e.remove());
+  itsEach(
+      overArray(document.head.querySelectorAll('style')),
+      e => e.remove(),
+  );
 }

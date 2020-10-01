@@ -2,7 +2,7 @@
  * @packageDocumentation
  * @module @proc7ts/style-producer
  */
-import { itsEach, overKeys } from '@proc7ts/a-iterable';
+import { itsEach, overKeys } from '@proc7ts/push-iterator';
 import { StypProperties } from '../rule';
 import { StypValue } from './value';
 

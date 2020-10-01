@@ -1,5 +1,5 @@
-import { flatMapIt } from '@proc7ts/a-iterable';
 import { compareNames, isQualifiedName, QualifiedName } from '@proc7ts/namespace-aliaser';
+import { flatMapIt } from '@proc7ts/push-iterator';
 import { isNotEmptyArray, isReadonlyArray } from '../internal';
 import { StypPureSelector } from './pure-selector';
 import { StypRuleKey } from './rule-key';

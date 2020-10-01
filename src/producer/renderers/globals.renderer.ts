@@ -2,7 +2,7 @@
  * @packageDocumentation
  * @module @proc7ts/style-producer
  */
-import { overEntries } from '@proc7ts/a-iterable';
+import { overEntries } from '@proc7ts/push-iterator';
 import { StypProperties } from '../../rule';
 import { stypSplitPriority, StypURL, StypValue } from '../../value';
 import { StypRenderer } from '../renderer';

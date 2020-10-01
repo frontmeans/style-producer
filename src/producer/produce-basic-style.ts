@@ -2,7 +2,6 @@
  * @packageDocumentation
  * @module @proc7ts/style-producer
  */
-import { itsReduction, mapIt } from '@proc7ts/a-iterable';
 import {
   AfterEvent,
   afterSupplied,
@@ -13,6 +12,7 @@ import {
 } from '@proc7ts/fun-events';
 import { NamespaceDef, newNamespaceAliaser } from '@proc7ts/namespace-aliaser';
 import { noop } from '@proc7ts/primitives';
+import { itsReduction, mapIt } from '@proc7ts/push-iterator';
 import { newRenderSchedule } from '@proc7ts/render-scheduler';
 import { StypProperties, StypRule, StypRules } from '../rule';
 import { StypSelector, stypSelector, StypSelectorFormat, stypSelectorText } from '../selector';
