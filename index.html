@@ -72,13 +72,13 @@
 				<a href="https://proc7ts.github.io/style-producer/"><img src="https://img.shields.io/static/v1?logo=typescript&label=API&message=docs&color=informational" alt="API Documentation"></a></p>
 				<p>Produces and dynamically updates stylesheets right in the browser.</p>
 				<p>Usage example:</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { produceStyle, stypObjectFormat, stypRoot } <span class="hljs-keyword">from</span> <span class="hljs-string">'@proc7ts/style-producer'</span>;
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { produceStyle, stypObjectFormat, stypRoot } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@proc7ts/style-producer&#x27;</span>;
 
 <span class="hljs-keyword">const</span> root = stypRoot(); <span class="hljs-comment">// Create root CSS rule</span>
 <span class="hljs-keyword">const</span> h1 = root.rules.add(
-    { e: <span class="hljs-string">'h1'</span> }, <span class="hljs-comment">// Define CSS rule for `h1` element</span>
+    { e: <span class="hljs-string">&#x27;h1&#x27;</span> }, <span class="hljs-comment">// Define CSS rule for `h1` element</span>
     {
-      fontSize: <span class="hljs-string">'24px'</span>,
+      fontSize: <span class="hljs-string">&#x27;24px&#x27;</span>,
     },
 );
 
@@ -88,8 +88,8 @@
 
 <span class="hljs-comment">// Update CSS rule. Stylesheet will be updated automatically</span>
 h1.add({
-  fontWeight: <span class="hljs-string">'bold'</span>,
-  fontSize: <span class="hljs-string">'22px'</span>,
+  fontWeight: <span class="hljs-string">&#x27;bold&#x27;</span>,
+  fontSize: <span class="hljs-string">&#x27;22px&#x27;</span>,
 });
 
 supply.off(); <span class="hljs-comment">// Remove produced stylesheets  </span></code></pre>
@@ -165,18 +165,18 @@ supply.off(); <span class="hljs-comment">// Remove produced stylesheets  </span>
 				<p><code>StypRule.rules</code> property contains a dynamically updated CSS rule list including all rules in hierarchy starting from
 				current one. To obtain only rules directly nested within current one use a <code>StypRule.rules.nested</code> property. </p>
 				<p>It is possible to grab a subset of matching rules using a <code>StypRule.rules.grab()</code> method:</p>
-				<pre><code class="language-typescript">rule.rules.grab({ e: <span class="hljs-string">'button'</span> }); <span class="hljs-comment">// Grab all CSS rules for the `button` element.</span></code></pre>
+				<pre><code class="language-typescript">rule.rules.grab({ e: <span class="hljs-string">&#x27;button&#x27;</span> }); <span class="hljs-comment">// Grab all CSS rules for the `button` element.</span></code></pre>
 				<a href="#css-properties" id="css-properties" style="color: inherit; text-decoration: none;">
 					<h3>CSS Properties</h3>
 				</a>
 				<p>CSS properties are represented by object with camel-cased property names and their corresponding string, scalar,
 				or structured values:</p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> cssProperties = {
-  position: <span class="hljs-string">'fixed'</span>,
-  display: <span class="hljs-string">'block'</span>,
-  width: <span class="hljs-string">'100%'</span>,
-  height: <span class="hljs-string">'120px'</span>,
-  borderBottom: <span class="hljs-string">'1px solid black'</span>,
+  position: <span class="hljs-string">&#x27;fixed&#x27;</span>,
+  display: <span class="hljs-string">&#x27;block&#x27;</span>,
+  width: <span class="hljs-string">&#x27;100%&#x27;</span>,
+  height: <span class="hljs-string">&#x27;120px&#x27;</span>,
+  borderBottom: <span class="hljs-string">&#x27;1px solid black&#x27;</span>,
 }</code></pre>
 				<p>CSS rule may be constructed with initial properties. Properties may be appended using <code>StypRule.add()</code> method,
 				replaced using <code>StypRule.set()</code> method, or removed all together using <code>StypRule.clear()</code> method.</p>
@@ -211,7 +211,7 @@ supply.off(); <span class="hljs-comment">// Remove produced stylesheets  </span>
 				<p>It is possible to declare CSS properties structure to work with them in type safe manner. For that declare properties
 					interface and use <code>StypMapper</code> to map arbitrary CSS properties to that interface, or <code>StypRuleRef</code> to access CSS rule
 				in type safe manner:</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { RefStypRule, StypColor, StypLengthPt, StypRGB, stypRoot } <span class="hljs-keyword">from</span> <span class="hljs-string">'@proc7ts/style-producer'</span>;
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { RefStypRule, StypColor, StypLengthPt, StypRGB, stypRoot } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@proc7ts/style-producer&#x27;</span>;
 
 <span class="hljs-comment">// Type-safe CSS properties representing custom settings</span>
 <span class="hljs-keyword">interface</span> MySettings {
@@ -222,11 +222,11 @@ supply.off(); <span class="hljs-comment">// Remove produced stylesheets  </span>
 
 <span class="hljs-comment">// Construct a mapping function for custom settings</span>
 <span class="hljs-keyword">const</span> MySettings = RefStypRule.by&lt;MySettings&gt;(
-    { $: <span class="hljs-string">'.my-settings'</span> }, <span class="hljs-comment">// Selector of CSS rule containing settings</span>
+    { $: <span class="hljs-string">&#x27;.my-settings&#x27;</span> }, <span class="hljs-comment">// Selector of CSS rule containing settings</span>
     { <span class="hljs-comment">// Mappings for settings</span>
       $color: <span class="hljs-keyword">new</span> StypRGB({ r: <span class="hljs-number">0</span>, g: <span class="hljs-number">0</span>, b: <span class="hljs-number">0</span> }), <span class="hljs-comment">// Text is black by default</span>
       $bgColor: <span class="hljs-keyword">new</span> StypRGB({ r: <span class="hljs-number">255</span>, g: <span class="hljs-number">255</span>, b: <span class="hljs-number">255</span> }), <span class="hljs-comment">// Background is white by default</span>
-      $gap: StypLengthPt.of(<span class="hljs-number">4</span>, <span class="hljs-string">'px'</span>), <span class="hljs-comment">// Gaps are 4 pixels by default </span>
+      $gap: StypLengthPt.of(<span class="hljs-number">4</span>, <span class="hljs-string">&#x27;px&#x27;</span>), <span class="hljs-comment">// Gaps are 4 pixels by default </span>
     },
 );
 
@@ -248,7 +248,7 @@ root.add(mySettingsRef.read.thru(
 
 <span class="hljs-comment">// Define `&lt;input&gt;` element style based on default settings.</span>
 root.rules.add(
-    { e: <span class="hljs-string">'input'</span> },
+    { e: <span class="hljs-string">&#x27;input&#x27;</span> },
     mySettingsRef.read.thru(
         <span class="hljs-function">(<span class="hljs-params">{ $color, $bgColor, $gap }</span>) =&gt;</span> ({
           color: $color,
@@ -310,19 +310,19 @@ mySettingsRef.set({
 				renders corresponding CSS rules. </p>
 				<p><strong><code>@import:url</code></strong> property value is treated as media query and appended after stylesheet URL. I.e.</p>
 				<pre><code class="language-json">{
-     <span class="hljs-attr">"@import:path/to/included.css"</span>: <span class="hljs-string">"screen"</span>
+     <span class="hljs-attr">&quot;@import:path/to/included.css&quot;</span>: <span class="hljs-string">&quot;screen&quot;</span>
 }</code></pre>
 				<p>becomes</p>
 				<pre><code class="language-css"><span class="hljs-keyword">@import</span> url(path/to/included.css) screen;</code></pre>
 				<p><strong><code>@namespace</code></strong> property value is treated as default namespace URL. I.e.</p>
 				<pre><code class="language-json">{
-    <span class="hljs-attr">"@namespace"</span>: <span class="hljs-string">"http://www.w3.org/1999/xhtml"</span>
+    <span class="hljs-attr">&quot;@namespace&quot;</span>: <span class="hljs-string">&quot;http://www.w3.org/1999/xhtml&quot;</span>
 }</code></pre>
 				<p>becomes</p>
 				<pre><code class="language-css"><span class="hljs-keyword">@namespace</span> url(<span class="hljs-attribute">http:</span>//www.w3.org/<span class="hljs-number">1999</span>/xhtml);</code></pre>
 				<p><strong><code>@namespace:prefix</code></strong> property value is treated as namespace URL with the given prefix. I.e</p>
 				<pre><code class="language-json">{
-    <span class="hljs-attr">"@namespace:svg"</span>: <span class="hljs-string">"http://www.w3.org/2000/svg"</span>
+    <span class="hljs-attr">&quot;@namespace:svg&quot;</span>: <span class="hljs-string">&quot;http://www.w3.org/2000/svg&quot;</span>
 }</code></pre>
 				<p>becomes</p>
 				<pre><code class="language-css"><span class="hljs-keyword">@namespace</span> svg url(<span class="hljs-attribute">http:</span>//www.w3.org/<span class="hljs-number">2000</span>/svg);</code></pre>
@@ -334,22 +334,22 @@ mySettingsRef.set({
 				<p>Then the unique namespace alias will be applied to original name or identifier. This can be used to avoid naming
 				conflicts.</p>
 				<p>Example:</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { NamespaceDef } <span class="hljs-keyword">from</span> <span class="hljs-string">'@proc7ts/namespace-aliaser'</span>;
-<span class="hljs-keyword">import</span> { stypRoot } <span class="hljs-keyword">from</span> <span class="hljs-string">'@proc7ts/style-producer'</span>;
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { NamespaceDef } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@proc7ts/namespace-aliaser&#x27;</span>;
+<span class="hljs-keyword">import</span> { stypRoot } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@proc7ts/style-producer&#x27;</span>;
 
 <span class="hljs-comment">// Declare custom namespace</span>
 <span class="hljs-keyword">const</span> customNs = <span class="hljs-keyword">new</span> NamespaceDef(
-    <span class="hljs-string">'https://wesib.github.io/elements'</span>, <span class="hljs-comment">// Unique namespace URL</span>
-    <span class="hljs-string">'b'</span>,                                <span class="hljs-comment">// Preferred namespace aliases, from most wanted to less wanted</span>
-    <span class="hljs-string">'wesib'</span>,
+    <span class="hljs-string">&#x27;https://wesib.github.io/elements&#x27;</span>, <span class="hljs-comment">// Unique namespace URL</span>
+    <span class="hljs-string">&#x27;b&#x27;</span>,                                <span class="hljs-comment">// Preferred namespace aliases, from most wanted to less wanted</span>
+    <span class="hljs-string">&#x27;wesib&#x27;</span>,
 );
 
 <span class="hljs-keyword">const</span> root = stypRoot(); <span class="hljs-comment">// Root CSS rule</span>
 <span class="hljs-comment">// Declare styles for custom element</span>
 <span class="hljs-keyword">const</span> rule = root.rules.add(
-    { e: [<span class="hljs-string">'button'</span>, customNs] },
+    { e: [<span class="hljs-string">&#x27;button&#x27;</span>, customNs] },
     { 
-      background: <span class="hljs-string">'gray'</span>,
+      background: <span class="hljs-string">&#x27;gray&#x27;</span>,
     },
 );</code></pre>
 				<p>The code above would add a unique prefix to the <code>button</code> element. E.g. by making it <code>b-button</code>.</p>
@@ -617,6 +617,5 @@ mySettingsRef.set({
 </div>
 <div class="overlay"></div>
 <script src="assets/js/main.js"></script>
-<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
 </body>
 </html>
