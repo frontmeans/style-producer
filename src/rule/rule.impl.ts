@@ -11,8 +11,17 @@ import {
   trackValue,
   ValueTracker,
 } from '@proc7ts/fun-events';
-import { valueProvider, valuesProvider } from '@proc7ts/primitives';
-import { itsIterator } from '@proc7ts/push-iterator';
+import { lazyValue, valueProvider, valuesProvider } from '@proc7ts/primitives';
+import {
+  flatMapIt,
+  itsElements,
+  itsIterator,
+  overElementsOf,
+  overOne,
+  PushIterable,
+  PushIterator,
+  PushIterator__symbol,
+} from '@proc7ts/push-iterator';
 import { StypQuery, StypRuleKey, stypSelector, StypSelector } from '../selector';
 import { stypRuleKeyText } from '../selector/selector-text.impl';
 import { stypOuterSelector, stypRuleKeyAndTail } from '../selector/selector.impl';
@@ -22,14 +31,16 @@ import { StypRule, StypRuleHierarchy, StypRuleList } from './rule';
 import { StypRules } from './rules';
 import { grabRules, Rules } from './rules.impl';
 
-class AllRules extends StypRuleHierarchy {
+class AllRules extends StypRuleHierarchy implements PushIterable<StypRule$> {
 
   private readonly _updates = new EventEmitter<[StypRule$[], StypRule$[]]>();
   readonly self: StypRuleList;
+  private readonly _it: () => PushIterable<StypRule$>;
 
   constructor(private readonly _root: StypRule$, readonly nested: NestedRules) {
     super();
     this.self = selfRuleList(_root, this);
+    this._it = lazyValue(() => iterateAllRules(_root));
   }
 
   read(): AfterEvent<[AllRules]>;
@@ -47,8 +58,12 @@ class AllRules extends StypRuleHierarchy {
     return (this.onUpdate = this._updates.on().F)(receiver);
   }
 
-  [Symbol.iterator](): IterableIterator<StypRule$> {
-    return iterateAllRules(this._root);
+  [Symbol.iterator](): PushIterator<StypRule$> {
+    return this[PushIterator__symbol]();
+  }
+
+  [PushIterator__symbol](accept?: PushIterator.Acceptor<StypRule$>): PushIterator<StypRule$> {
+    return this._it()[PushIterator__symbol](accept);
   }
 
   grab(query: StypQuery): StypRuleList {
@@ -103,13 +118,13 @@ class AllRules extends StypRuleHierarchy {
   _add(rule: StypRule$, sendUpdate: boolean): void {
     rule.rules.onUpdate((added, removed) => this._updates.send(added, removed));
     if (sendUpdate) {
-      this._updates.send(allRules(rule), []);
+      this._updates.send(itsElements(rule.rules), []);
     }
   }
 
   _remove(reason?: any): void {
 
-    const removed = allRules(this._root);
+    const removed = itsElements(this);
 
     this._updates.send([], removed);
     removed.forEach(rule => {
@@ -147,15 +162,14 @@ function selfRuleList(rule: StypRule$, all: AllRules): StypRuleList {
   return new Rules(new Self());
 }
 
-function allRules(rule: StypRule$): StypRule$[] {
-  return Array.from(iterateAllRules(rule));
-}
-
-function *iterateAllRules(rule: StypRule$): IterableIterator<StypRule$> {
-  yield rule;
-  for (const nested of rule.rules.nested) {
-    yield* allRules(nested);
-  }
+function iterateAllRules(rule: StypRule$): PushIterable<StypRule$> {
+  return overElementsOf(
+      overOne(rule),
+      flatMapIt(
+          rule.rules.nested,
+          nested => iterateAllRules(nested),
+      ),
+  );
 }
 
 class NestedRules extends StypRuleList {

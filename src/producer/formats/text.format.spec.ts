@@ -126,7 +126,7 @@ describe('stypTextFormat', () => {
     }).needs(done);
     produceStyle(root.rules, format).needs(done);
 
-    return Array.from(sheets.values());
+    return [...sheets.values()];
   }
 
 });

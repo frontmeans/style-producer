@@ -186,17 +186,17 @@ function normalizeQualifiers(
   }
 
   if (!isReadonlyArray(qualifiers)) {
-    qualifiers = Array.from(exposeQualifier(qualifiers));
+    qualifiers = [...exposeQualifier(qualifiers)];
   } else {
-    qualifiers = Array.from(new Set(flatMapIt(qualifiers, exposeQualifier))).sort();
+    qualifiers = [...new Set(flatMapIt(qualifiers, exposeQualifier))].sort();
   }
 
   return isNotEmptyArray(qualifiers) ? qualifiers : undefined;
 }
 
-const noQualifiers: Set<string> = new Set();
+const noQualifiers: ReadonlySet<string> = new Set();
 
-function exposeQualifier(qualifier: string): Set<string> {
+function exposeQualifier(qualifier: string): ReadonlySet<string> {
   if (!qualifier) {
     return noQualifiers;
   }
