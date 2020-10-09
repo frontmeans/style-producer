@@ -131,6 +131,6 @@ describe('stypRenderAtRules', () => {
 
     produceStyle(root.rules, format).needs(done);
 
-    return Array.from(sheets.values()).join('\n').split('\n');
+    return [...sheets.values()].join('\n').split('\n');
   }
 });

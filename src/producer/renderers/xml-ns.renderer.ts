@@ -4,7 +4,6 @@
  */
 import { NamespaceDef } from '@proc7ts/namespace-aliaser';
 import { isPresent } from '@proc7ts/primitives';
-import { filterIt, itsEmpty, itsReduction, mapIt, overArray } from '@proc7ts/push-iterator';
 import { StypProperties } from '../../rule';
 import { StypSelector } from '../../selector';
 import { isCombinator } from '../../selector/selector.impl';
@@ -33,19 +32,20 @@ export const stypRenderXmlNs: StypRenderer = {
 
     const xmlNsDefs = extractXmlNsDefs(producer.selector);
 
-    producer.render(itsEmpty(xmlNsDefs) ? properties : declareNss());
+    if (xmlNsDefs.length) {
 
-    function declareNss(): StypProperties {
-      return itsReduction(xmlNsDefs, declareNs, { ...properties });
-    }
+      const declareNs = (result: StypProperties.Mutable, ns: NamespaceDef): StypProperties.Mutable => {
 
-    function declareNs(result: StypProperties.Mutable, ns: NamespaceDef): StypProperties.Mutable {
+        const alias = producer.nsAlias(ns);
 
-      const alias = producer.nsAlias(ns);
+        result[`@namespace:${alias}`] = new StypURL(ns.url);
 
-      result[`@namespace:${alias}`] = new StypURL(ns.url);
+        return result;
+      };
 
-      return result;
+      producer.render(xmlNsDefs.reduce(declareNs, { ...properties }));
+    } else {
+      producer.render(properties);
     }
   },
 
@@ -54,12 +54,8 @@ export const stypRenderXmlNs: StypRenderer = {
 /**
  * @internal
  */
-function extractXmlNsDefs(selector: StypSelector.Normalized): Iterable<NamespaceDef> {
-  return filterIt<NamespaceDef | null, NamespaceDef>(
-      mapIt(
-          overArray(selector),
-          part => !isCombinator(part) && part.ns && typeof part.ns !== 'string' ? part.ns : null,
-      ),
-      isPresent,
-  );
+function extractXmlNsDefs(selector: StypSelector.Normalized): readonly NamespaceDef[] {
+  return selector
+      .map(part => !isCombinator(part) && part.ns && typeof part.ns !== 'string' ? part.ns : null)
+      .filter(isPresent);
 }

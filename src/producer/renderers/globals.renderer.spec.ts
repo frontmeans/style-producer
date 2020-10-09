@@ -133,6 +133,6 @@ describe('stypRenderGlobals', () => {
 
     produceStyle(root.rules, format).needs(done);
 
-    return Array.from(flatMapIt(sheets.values(), css => ['/***/', ...css.split('\n')]));
+    return [...flatMapIt(sheets.values(), css => ['/***/', ...css.split('\n')])];
   }
 });

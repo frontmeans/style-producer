@@ -1,4 +1,4 @@
-import { filterIt, flatMapIt, itsEach, itsFirst, mapIt, overArray } from '@proc7ts/push-iterator';
+import { filterArray, filterIt, flatMapIt, itsEach, itsFirst, mapIt, overArray } from '@proc7ts/push-iterator';
 
 export function cssStyle(selector?: string): CSSStyleDeclaration {
 
@@ -12,10 +12,7 @@ export function cssStyle(selector?: string): CSSStyleDeclaration {
 }
 
 export function stylesheets(): Iterable<CSSStyleSheet> {
-  return filterIt(
-      overArray(document.styleSheets),
-      isCSSStyleSheet,
-  );
+  return filterArray(document.styleSheets, isCSSStyleSheet);
 }
 
 function isCSSStyleSheet(sheet: StyleSheet): sheet is CSSStyleSheet {
