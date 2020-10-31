@@ -258,13 +258,11 @@ describe('mergeStypProperties', () => {
       }));
     });
     it('prefers important property with structured structured value over usual one added later', () => {
-      base.it = {
-        ...baseProperties,
-        fontSize: StypLengthPt.of(13, 'px').important(),
-      };
-      expect(mockReceiver).toHaveBeenCalledWith(expect.objectContaining({
-        fontSize: StypLengthPt.of(13, 'px').important(),
-      }));
+
+      const fontSize = StypLengthPt.of(13, 'px').important();
+
+      base.it = { ...baseProperties, fontSize };
+      expect(mockReceiver.mock.calls[0][0].fontSize).toEqual(fontSize);
     });
     it('prefers important property added later', () => {
       base.it = {
