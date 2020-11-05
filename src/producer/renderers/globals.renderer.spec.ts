@@ -39,7 +39,7 @@ describe('stypRenderGlobals', () => {
 
   it('renders default namespace', () => {
     renderer(producer, { '@namespace': new StypURL('http://www.w3.org/1999/xhtml') });
-    expect(sheet.addGlobal).toHaveBeenCalledWith('@namespace', 'url(\'http://www.w3.org/1999/xhtml\')', 0);
+    expect(sheet.addGlobal).toHaveBeenCalledWith('@namespace', 'url("http://www.w3.org/1999/xhtml")', 0);
   });
   it('does not render incompatible default namespace', () => {
     renderer(producer, { '@namespace': 123 });
@@ -47,7 +47,7 @@ describe('stypRenderGlobals', () => {
   });
   it('renders namespace prefix', () => {
     renderer(producer, { '@namespace:svg': 'http://www.w3.org/2000/svg' });
-    expect(sheet.addGlobal).toHaveBeenCalledWith('@namespace', 'svg url(\'http://www.w3.org/2000/svg\')', 0);
+    expect(sheet.addGlobal).toHaveBeenCalledWith('@namespace', 'svg url("http://www.w3.org/2000/svg")', 0);
   });
   it('does not render incompatible namespace', () => {
     renderer(producer, { '@namespace:svg': StypLength.of(16, 'px') });
@@ -58,8 +58,8 @@ describe('stypRenderGlobals', () => {
       '@namespace:svg': 'http://www.w3.org/2000/svg',
       '@namespace:math': 'http://www.w3.org/1998/Math/MathML',
     });
-    expect(sheet.addGlobal).toHaveBeenCalledWith('@namespace', 'svg url(\'http://www.w3.org/2000/svg\')', 0);
-    expect(sheet.addGlobal).toHaveBeenCalledWith('@namespace', 'math url(\'http://www.w3.org/1998/Math/MathML\')', 1);
+    expect(sheet.addGlobal).toHaveBeenCalledWith('@namespace', 'svg url("http://www.w3.org/2000/svg")', 0);
+    expect(sheet.addGlobal).toHaveBeenCalledWith('@namespace', 'math url("http://www.w3.org/1998/Math/MathML")', 1);
   });
   it('renders namespaces after imports', () => {
     renderer(producer, {
@@ -67,9 +67,9 @@ describe('stypRenderGlobals', () => {
       '@import:some.css': '',
       '@namespace:svg': 'http://www.w3.org/2000/svg',
     });
-    expect(sheet.addGlobal).toHaveBeenCalledWith('@namespace', 'math url(\'http://www.w3.org/1998/Math/MathML\')', 0);
-    expect(sheet.addGlobal).toHaveBeenCalledWith('@import', 'url(\'some.css\')', 0);
-    expect(sheet.addGlobal).toHaveBeenCalledWith('@namespace', 'svg url(\'http://www.w3.org/2000/svg\')', 2);
+    expect(sheet.addGlobal).toHaveBeenCalledWith('@namespace', 'math url("http://www.w3.org/1998/Math/MathML")', 0);
+    expect(sheet.addGlobal).toHaveBeenCalledWith('@import', 'url("some.css")', 0);
+    expect(sheet.addGlobal).toHaveBeenCalledWith('@namespace', 'svg url("http://www.w3.org/2000/svg")', 2);
   });
 
   let root: StypRule;
@@ -91,8 +91,8 @@ describe('stypRenderGlobals', () => {
     root.rules.add({ c: 'custom' }, { color: 'black' });
     expect(printCSS()).toEqual([
       '/***/',
-      '@import url(\'some.css\');',
-      '@import url(\'other.css\') screen;',
+      '@import url("some.css");',
+      '@import url("other.css") screen;',
       '/***/',
       '.custom {',
       '  color: black;',
@@ -107,11 +107,11 @@ describe('stypRenderGlobals', () => {
     root.rules.add({ c: 'custom' }, { color: 'black' });
     expect(printCSS()).toEqual([
       '/***/',
-      '@namespace ns1 url(\'http://localhost/test/ns1\');',
-      '@namespace ns2 url(\'http://localhost/test/ns2\');',
+      '@namespace ns1 url("http://localhost/test/ns1");',
+      '@namespace ns2 url("http://localhost/test/ns2");',
       '/***/',
-      '@namespace ns1 url(\'http://localhost/test/ns1\');',
-      '@namespace ns2 url(\'http://localhost/test/ns2\');',
+      '@namespace ns1 url("http://localhost/test/ns1");',
+      '@namespace ns2 url("http://localhost/test/ns2");',
       '.custom {',
       '  color: black;',
       '}',

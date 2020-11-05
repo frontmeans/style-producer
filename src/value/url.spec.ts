@@ -80,7 +80,7 @@ describe('StypURL', () => {
 
   describe('toString', () => {
     it('escapes CSS string', () => {
-      expect(new StypURL('http://some.host/(abc)\u042a').toString()).toBe('url(\'http://some.host/(abc)\\42A\')');
+      expect(new StypURL('http://some.host/(abc)\u042a').toString()).toBe('url("http://some.host/(abc)\u042A")');
     });
   });
 });

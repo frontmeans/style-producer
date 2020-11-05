@@ -2,7 +2,7 @@
  * @packageDocumentation
  * @module @proc7ts/style-producer
  */
-import cssesc from 'cssesc';
+import { escapeCSSVal } from '@hatsy/hten';
 import { stypSplitPriority } from './priority';
 import { StypValue, StypValueStruct } from './value';
 
@@ -81,7 +81,7 @@ export class StypURL extends StypValueStruct<StypURL> {
   }
 
   toString(): string {
-    return `url('${cssesc(this.url)}')`;
+    return `url("${escapeCSSVal(this.url)}")`;
   }
 
 }

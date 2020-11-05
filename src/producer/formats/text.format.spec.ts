@@ -43,13 +43,13 @@ describe('stypTextFormat', () => {
   it('renders global at-rules', () => {
     root.set({ '@import:path/to/included.css': '' });
     expect(printCSS()).toEqual([
-      '@import url(\'path/to/included.css\');',
+      '@import url("path/to/included.css");',
     ]);
   });
   it('renders global at-rules before others', () => {
     root.set({ '@import:path/to/included.css': '', margin: '10px' });
     expect(printCSS()).toEqual([
-      '@import url(\'path/to/included.css\');\n'
+      '@import url("path/to/included.css");\n'
       + 'body {\n'
       + '  margin: 10px;\n'
       + '}',

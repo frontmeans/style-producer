@@ -1,3 +1,4 @@
+import { escapeCSS, escapeCSSVal } from '@hatsy/hten';
 import {
   css__naming,
   html__naming,
@@ -6,8 +7,6 @@ import {
   NamespaceDef,
   newNamespaceAliaser,
 } from '@proc7ts/namespace-aliaser';
-import cssesc from 'cssesc';
-import { cssescId } from '../internal';
 import { StypRuleKey } from './rule-key';
 import { StypSelector } from './selector';
 import { StypSelectorFormat } from './selector-text';
@@ -16,7 +15,7 @@ import { StypSubSelector } from './sub-selector';
 
 const ruleKeyTextOpts: StypSelectorFormat = {
   qualify(qualifier: string) {
-    return `@${cssescId(qualifier)}`;
+    return `@${escapeCSS(qualifier)}`;
   },
 };
 
@@ -87,12 +86,12 @@ function formatItem(
 
   if (i) {
     hasProperties = true;
-    out += `#${cssescId(id__naming.name(i, nsAlias))}`;
+    out += `#${escapeCSS(id__naming.name(i, nsAlias))}`;
   }
   if (c) {
     hasProperties = true;
     out = c.reduce<string>(
-        (result, className) => `${result}.${cssescId(css__naming.name(className, nsAlias))}`,
+        (result, className) => `${result}.${escapeCSS(css__naming.name(className, nsAlias))}`,
         out,
     );
   }
@@ -159,9 +158,9 @@ function formatSubSelector(
 
   const [attrName, attrOp, attrVal, attrFlag] = sub;
 
-  out += '[' + cssescId(attrName);
+  out += '[' + escapeCSS(attrName);
   if (attrOp) {
-    out += attrOp + cssesc(attrVal!, { quotes: 'double', wrap: true });
+    out += `${attrOp}"${escapeCSSVal(attrVal!)}"`;
   }
   if (attrFlag) {
     out += ' ' + attrFlag;
