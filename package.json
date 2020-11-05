@@ -1,6 +1,6 @@
 {
   "name": "@proc7ts/style-producer",
-  "version": "5.4.1",
+  "version": "5.4.2",
   "description": "Produces and dynamically updates stylesheets",
   "keywords": [
     "css-in-js",
