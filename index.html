@@ -76,9 +76,9 @@
 
 <span class="hljs-keyword">const</span> root = stypRoot(); <span class="hljs-comment">// Create root CSS rule</span>
 <span class="hljs-keyword">const</span> h1 = root.rules.add(
-    { e: <span class="hljs-string">&#x27;h1&#x27;</span> }, <span class="hljs-comment">// Define CSS rule for `h1` element</span>
+    { <span class="hljs-attr">e</span>: <span class="hljs-string">&#x27;h1&#x27;</span> }, <span class="hljs-comment">// Define CSS rule for `h1` element</span>
     {
-      fontSize: <span class="hljs-string">&#x27;24px&#x27;</span>,
+      <span class="hljs-attr">fontSize</span>: <span class="hljs-string">&#x27;24px&#x27;</span>,
     },
 );
 
@@ -88,8 +88,8 @@
 
 <span class="hljs-comment">// Update CSS rule. Stylesheet will be updated automatically</span>
 h1.add({
-  fontWeight: <span class="hljs-string">&#x27;bold&#x27;</span>,
-  fontSize: <span class="hljs-string">&#x27;22px&#x27;</span>,
+  <span class="hljs-attr">fontWeight</span>: <span class="hljs-string">&#x27;bold&#x27;</span>,
+  <span class="hljs-attr">fontSize</span>: <span class="hljs-string">&#x27;22px&#x27;</span>,
 });
 
 supply.off(); <span class="hljs-comment">// Remove produced stylesheets  </span></code></pre>
@@ -165,18 +165,18 @@ supply.off(); <span class="hljs-comment">// Remove produced stylesheets  </span>
 				<p><code>StypRule.rules</code> property contains a dynamically updated CSS rule list including all rules in hierarchy starting from
 				current one. To obtain only rules directly nested within current one use a <code>StypRule.rules.nested</code> property. </p>
 				<p>It is possible to grab a subset of matching rules using a <code>StypRule.rules.grab()</code> method:</p>
-				<pre><code class="language-typescript">rule.rules.grab({ e: <span class="hljs-string">&#x27;button&#x27;</span> }); <span class="hljs-comment">// Grab all CSS rules for the `button` element.</span></code></pre>
+				<pre><code class="language-typescript">rule.rules.grab({ <span class="hljs-attr">e</span>: <span class="hljs-string">&#x27;button&#x27;</span> }); <span class="hljs-comment">// Grab all CSS rules for the `button` element.</span></code></pre>
 				<a href="#css-properties" id="css-properties" style="color: inherit; text-decoration: none;">
 					<h3>CSS Properties</h3>
 				</a>
 				<p>CSS properties are represented by object with camel-cased property names and their corresponding string, scalar,
 				or structured values:</p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> cssProperties = {
-  position: <span class="hljs-string">&#x27;fixed&#x27;</span>,
-  display: <span class="hljs-string">&#x27;block&#x27;</span>,
-  width: <span class="hljs-string">&#x27;100%&#x27;</span>,
-  height: <span class="hljs-string">&#x27;120px&#x27;</span>,
-  borderBottom: <span class="hljs-string">&#x27;1px solid black&#x27;</span>,
+  <span class="hljs-attr">position</span>: <span class="hljs-string">&#x27;fixed&#x27;</span>,
+  <span class="hljs-attr">display</span>: <span class="hljs-string">&#x27;block&#x27;</span>,
+  <span class="hljs-attr">width</span>: <span class="hljs-string">&#x27;100%&#x27;</span>,
+  <span class="hljs-attr">height</span>: <span class="hljs-string">&#x27;120px&#x27;</span>,
+  <span class="hljs-attr">borderBottom</span>: <span class="hljs-string">&#x27;1px solid black&#x27;</span>,
 }</code></pre>
 				<p>CSS rule may be constructed with initial properties. Properties may be appended using <code>StypRule.add()</code> method,
 				replaced using <code>StypRule.set()</code> method, or removed all together using <code>StypRule.clear()</code> method.</p>
@@ -215,18 +215,18 @@ supply.off(); <span class="hljs-comment">// Remove produced stylesheets  </span>
 
 <span class="hljs-comment">// Type-safe CSS properties representing custom settings</span>
 <span class="hljs-keyword">interface</span> MySettings {
-  $color: StypColor;
+  <span class="hljs-attr">$color</span>: StypColor;
   $bgColor: StypColor;
   $gap: StypLengthPt;
 }
 
 <span class="hljs-comment">// Construct a mapping function for custom settings</span>
 <span class="hljs-keyword">const</span> MySettings = RefStypRule.by&lt;MySettings&gt;(
-    { $: <span class="hljs-string">&#x27;.my-settings&#x27;</span> }, <span class="hljs-comment">// Selector of CSS rule containing settings</span>
+    { <span class="hljs-attr">$</span>: <span class="hljs-string">&#x27;.my-settings&#x27;</span> }, <span class="hljs-comment">// Selector of CSS rule containing settings</span>
     { <span class="hljs-comment">// Mappings for settings</span>
-      $color: <span class="hljs-keyword">new</span> StypRGB({ r: <span class="hljs-number">0</span>, g: <span class="hljs-number">0</span>, b: <span class="hljs-number">0</span> }), <span class="hljs-comment">// Text is black by default</span>
-      $bgColor: <span class="hljs-keyword">new</span> StypRGB({ r: <span class="hljs-number">255</span>, g: <span class="hljs-number">255</span>, b: <span class="hljs-number">255</span> }), <span class="hljs-comment">// Background is white by default</span>
-      $gap: StypLengthPt.of(<span class="hljs-number">4</span>, <span class="hljs-string">&#x27;px&#x27;</span>), <span class="hljs-comment">// Gaps are 4 pixels by default </span>
+      <span class="hljs-attr">$color</span>: <span class="hljs-keyword">new</span> StypRGB({ <span class="hljs-attr">r</span>: <span class="hljs-number">0</span>, <span class="hljs-attr">g</span>: <span class="hljs-number">0</span>, <span class="hljs-attr">b</span>: <span class="hljs-number">0</span> }), <span class="hljs-comment">// Text is black by default</span>
+      <span class="hljs-attr">$bgColor</span>: <span class="hljs-keyword">new</span> StypRGB({ <span class="hljs-attr">r</span>: <span class="hljs-number">255</span>, <span class="hljs-attr">g</span>: <span class="hljs-number">255</span>, <span class="hljs-attr">b</span>: <span class="hljs-number">255</span> }), <span class="hljs-comment">// Background is white by default</span>
+      <span class="hljs-attr">$gap</span>: StypLengthPt.of(<span class="hljs-number">4</span>, <span class="hljs-string">&#x27;px&#x27;</span>), <span class="hljs-comment">// Gaps are 4 pixels by default </span>
     },
 );
 
@@ -239,29 +239,29 @@ supply.off(); <span class="hljs-comment">// Remove produced stylesheets  </span>
 <span class="hljs-comment">// Define `&lt;body&gt;` style</span>
 root.add(mySettingsRef.read.thru(
     <span class="hljs-function">(<span class="hljs-params">{ $color, $bgColor, $gap }</span>) =&gt;</span> ({
-      color: $color, <span class="hljs-comment">// Apply default text color</span>
-      backgroundColor: $bgColor, <span class="hljs-comment">// Apply default background color</span>
-      padding: $gap, <span class="hljs-comment">// Padding is based on default gap</span>
+      <span class="hljs-attr">color</span>: $color, <span class="hljs-comment">// Apply default text color</span>
+      <span class="hljs-attr">backgroundColor</span>: $bgColor, <span class="hljs-comment">// Apply default background color</span>
+      <span class="hljs-attr">padding</span>: $gap, <span class="hljs-comment">// Padding is based on default gap</span>
     }),
 ));
 
 
 <span class="hljs-comment">// Define `&lt;input&gt;` element style based on default settings.</span>
 root.rules.add(
-    { e: <span class="hljs-string">&#x27;input&#x27;</span> },
+    { <span class="hljs-attr">e</span>: <span class="hljs-string">&#x27;input&#x27;</span> },
     mySettingsRef.read.thru(
         <span class="hljs-function">(<span class="hljs-params">{ $color, $bgColor, $gap }</span>) =&gt;</span> ({
-          color: $color,
-          backgroundColor: $bgColor.hsl.set(<span class="hljs-function"><span class="hljs-params">hsl</span> =&gt;</span> ({ l: hsl.l * <span class="hljs-number">0.85</span> })), <span class="hljs-comment">// Convert to HSL and darken input background</span>
-          padding: <span class="hljs-string">`<span class="hljs-subst">${$gap}</span> <span class="hljs-subst">${$gap.mul(<span class="hljs-number">1.5</span>)}</span>`</span>, <span class="hljs-comment">// Padding is based on default gap</span>
-          border: <span class="hljs-string">`1px solid <span class="hljs-subst">${$color}</span>`</span>,          
+          <span class="hljs-attr">color</span>: $color,
+          <span class="hljs-attr">backgroundColor</span>: $bgColor.hsl.set(<span class="hljs-function"><span class="hljs-params">hsl</span> =&gt;</span> ({ <span class="hljs-attr">l</span>: hsl.l * <span class="hljs-number">0.85</span> })), <span class="hljs-comment">// Convert to HSL and darken input background</span>
+          <span class="hljs-attr">padding</span>: <span class="hljs-string">`<span class="hljs-subst">${$gap}</span> <span class="hljs-subst">${$gap.mul(<span class="hljs-number">1.5</span>)}</span>`</span>, <span class="hljs-comment">// Padding is based on default gap</span>
+          <span class="hljs-attr">border</span>: <span class="hljs-string">`1px solid <span class="hljs-subst">${$color}</span>`</span>,          
         }),
     ),
 );
 
 <span class="hljs-comment">// Make text dark grey</span>
 mySettingsRef.set({
-  $color: <span class="hljs-keyword">new</span> StypRGB({ r: <span class="hljs-number">192</span>, g: <span class="hljs-number">192</span>, b: <span class="hljs-number">192</span> }), <span class="hljs-comment">// Override default value</span>
+  <span class="hljs-attr">$color</span>: <span class="hljs-keyword">new</span> StypRGB({ <span class="hljs-attr">r</span>: <span class="hljs-number">192</span>, <span class="hljs-attr">g</span>: <span class="hljs-number">192</span>, <span class="hljs-attr">b</span>: <span class="hljs-number">192</span> }), <span class="hljs-comment">// Override default value</span>
 });</code></pre>
 				<a href="#producing-css" id="producing-css" style="color: inherit; text-decoration: none;">
 					<h2>Producing CSS</h2>
@@ -347,9 +347,9 @@ mySettingsRef.set({
 <span class="hljs-keyword">const</span> root = stypRoot(); <span class="hljs-comment">// Root CSS rule</span>
 <span class="hljs-comment">// Declare styles for custom element</span>
 <span class="hljs-keyword">const</span> rule = root.rules.add(
-    { e: [<span class="hljs-string">&#x27;button&#x27;</span>, customNs] },
+    { <span class="hljs-attr">e</span>: [<span class="hljs-string">&#x27;button&#x27;</span>, customNs] },
     { 
-      background: <span class="hljs-string">&#x27;gray&#x27;</span>,
+      <span class="hljs-attr">background</span>: <span class="hljs-string">&#x27;gray&#x27;</span>,
     },
 );</code></pre>
 				<p>The code above would add a unique prefix to the <code>button</code> element. E.g. by making it <code>b-button</code>.</p>
