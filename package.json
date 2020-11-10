@@ -28,7 +28,7 @@
   "peerDependencies": {
     "@proc7ts/call-thru": "^4.2.0",
     "@proc7ts/fun-events": "^9.4.0",
-    "@proc7ts/namespace-aliaser": "^2.1.0",
+    "@proc7ts/namespace-aliaser": "^2.2.0",
     "@proc7ts/render-scheduler": "^1.3.0"
   },
   "dependencies": {
@@ -41,7 +41,7 @@
     "@proc7ts/call-thru": "^4.2.0",
     "@proc7ts/eslint-config": "^2.0.5",
     "@proc7ts/fun-events": "^9.4.0",
-    "@proc7ts/namespace-aliaser": "^2.1.0",
+    "@proc7ts/namespace-aliaser": "^2.2.0",
     "@proc7ts/render-scheduler": "^1.3.0",
     "@proc7ts/rollup-helpers": "^1.0.0",
     "@rollup/plugin-commonjs": "^16.0.0",
