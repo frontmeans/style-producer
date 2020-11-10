@@ -34,7 +34,7 @@
   "dependencies": {
     "@hatsy/hten": "^1.1.0",
     "@proc7ts/primitives": "^1.4.0",
-    "@proc7ts/push-iterator": "^2.2.0",
+    "@proc7ts/push-iterator": "^2.3.0",
     "hyphenate-style-name": "^1.0.4"
   },
   "devDependencies": {
