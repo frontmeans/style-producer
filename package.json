@@ -16,13 +16,14 @@
   "bugs": {
     "url": "https://github.com/proc7ts/style-producer/issues"
   },
-  "main": "dist/style-producer.js",
-  "module": "dist/style-producer.mjs",
+  "type": "module",
+  "main": "dist/style-producer.cjs",
+  "module": "dist/style-producer.js",
   "types": "index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/style-producer.mjs",
-      "require": "./dist/style-producer.js"
+      "import": "./dist/style-producer.js",
+      "require": "./dist/style-producer.cjs"
     }
   },
   "peerDependencies": {

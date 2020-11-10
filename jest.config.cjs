@@ -23,7 +23,7 @@ module.exports = {
     [
       'jest-junit',
       {
-        suiteName: 'style-producer',
+        suiteName: '@proc7ts/style-producer',
         outputDirectory: './target/test-results',
         classNameTemplate: '{classname}: {title}',
         titleTemplate: '{classname}: {title}',
