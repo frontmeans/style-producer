@@ -33,7 +33,7 @@
     "@proc7ts/render-scheduler": "^1.4.0"
   },
   "dependencies": {
-    "@hatsy/hten": "^1.1.0",
+    "@hatsy/hten": "^1.1.1",
     "@proc7ts/primitives": "^1.4.0",
     "@proc7ts/push-iterator": "^2.3.0",
     "hyphenate-style-name": "^1.0.4"
