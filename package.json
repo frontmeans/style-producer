@@ -26,7 +26,7 @@
     }
   },
   "peerDependencies": {
-    "@proc7ts/call-thru": "^4.1.0",
+    "@proc7ts/call-thru": "^4.2.0",
     "@proc7ts/fun-events": "^9.3.0",
     "@proc7ts/namespace-aliaser": "^2.1.0",
     "@proc7ts/render-scheduler": "^1.3.0"
@@ -38,7 +38,7 @@
     "hyphenate-style-name": "^1.0.4"
   },
   "devDependencies": {
-    "@proc7ts/call-thru": "^4.1.0",
+    "@proc7ts/call-thru": "^4.2.0",
     "@proc7ts/eslint-config": "^2.0.5",
     "@proc7ts/fun-events": "^9.3.0",
     "@proc7ts/namespace-aliaser": "^2.1.0",
