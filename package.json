@@ -27,23 +27,23 @@
     }
   },
   "peerDependencies": {
-    "@proc7ts/call-thru": "^4.2.0",
+    "@proc7ts/call-thru": "^4.3.0",
     "@proc7ts/fun-events": "^9.4.0",
-    "@proc7ts/namespace-aliaser": "^2.2.0",
-    "@proc7ts/render-scheduler": "^1.4.0"
+    "@proc7ts/namespace-aliaser": "^2.2.1",
+    "@proc7ts/render-scheduler": "^1.4.1"
   },
   "dependencies": {
     "@hatsy/hten": "^1.1.1",
-    "@proc7ts/primitives": "^1.4.0",
-    "@proc7ts/push-iterator": "^2.3.0",
+    "@proc7ts/primitives": "^1.5.0",
+    "@proc7ts/push-iterator": "^2.4.0",
     "hyphenate-style-name": "^1.0.4"
   },
   "devDependencies": {
-    "@proc7ts/call-thru": "^4.2.0",
+    "@proc7ts/call-thru": "^4.3.0",
     "@proc7ts/eslint-config": "^2.0.5",
     "@proc7ts/fun-events": "^9.4.0",
-    "@proc7ts/namespace-aliaser": "^2.2.0",
-    "@proc7ts/render-scheduler": "^1.4.0",
+    "@proc7ts/namespace-aliaser": "^2.2.1",
+    "@proc7ts/render-scheduler": "^1.4.1",
     "@proc7ts/rollup-helpers": "^1.1.0",
     "@rollup/plugin-commonjs": "^16.0.0",
     "@rollup/plugin-node-resolve": "^10.0.0",
@@ -65,7 +65,7 @@
     "tslib": "^2.0.3",
     "typedoc": "^0.19.0",
     "typedoc-plugin-external-module-name": "^4.0.3",
-    "typescript": "^4.0.5"
+    "typescript": "^4.1.2"
   },
   "scripts": {
     "all": "run-z build,lint,test",
