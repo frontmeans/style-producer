@@ -33,7 +33,5 @@ node_modules
 !/dist
 
 # Include type definitions
-!/d.ts
-# ...but exclude internals
-/d.ts/internal
-/d.ts/**/*.impl.*
+!*.d.ts
+!*.d.ts.map
