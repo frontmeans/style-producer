@@ -4,6 +4,7 @@
   "description": "Produces and dynamically updates stylesheets",
   "keywords": [
     "css-in-js",
+    "css-in-ts",
     "typescript"
   ],
   "homepage": "https://github.com/proc7ts/style-producer",
@@ -19,32 +20,31 @@
   "type": "module",
   "main": "dist/style-producer.cjs",
   "module": "dist/style-producer.js",
-  "types": "index.d.ts",
+  "types": "./index.d.ts",
   "exports": {
-    ".": {
-      "import": "./dist/style-producer.js",
-      "require": "./dist/style-producer.cjs"
-    }
+    "import": "./dist/style-producer.js",
+    "require": "./dist/style-producer.cjs"
   },
   "peerDependencies": {
-    "@proc7ts/call-thru": "^4.3.0",
-    "@proc7ts/fun-events": "^9.4.0",
-    "@proc7ts/namespace-aliaser": "^2.2.1",
-    "@proc7ts/render-scheduler": "^1.4.1"
+    "@proc7ts/call-thru": "^4.3.1",
+    "@proc7ts/fun-events": "^9.4.2",
+    "@proc7ts/namespace-aliaser": "^2.2.2",
+    "@proc7ts/render-scheduler": "^1.4.2"
   },
   "dependencies": {
     "@hatsy/hten": "^1.1.1",
-    "@proc7ts/primitives": "^1.5.0",
-    "@proc7ts/push-iterator": "^2.4.0",
+    "@proc7ts/primitives": "^1.5.1",
+    "@proc7ts/push-iterator": "^2.4.1",
     "hyphenate-style-name": "^1.0.4"
   },
   "devDependencies": {
-    "@proc7ts/call-thru": "^4.3.0",
+    "@proc7ts/call-thru": "^4.3.1",
     "@proc7ts/eslint-config": "^2.0.5",
-    "@proc7ts/fun-events": "^9.4.0",
-    "@proc7ts/namespace-aliaser": "^2.2.1",
-    "@proc7ts/render-scheduler": "^1.4.1",
+    "@proc7ts/fun-events": "^9.4.2",
+    "@proc7ts/namespace-aliaser": "^2.2.2",
+    "@proc7ts/render-scheduler": "^1.4.2",
     "@proc7ts/rollup-helpers": "^1.1.0",
+    "@proc7ts/rollup-plugin-flat-dts": "^1.0.0",
     "@rollup/plugin-commonjs": "^16.0.0",
     "@rollup/plugin-node-resolve": "^10.0.0",
     "@types/jest": "^26.0.15",
@@ -71,7 +71,7 @@
     "all": "run-z build,lint,test",
     "build": "run-z +z --then rollup --config ./rollup.config.js",
     "ci:all": "run-z all +test/--ci/--runInBand",
-    "clean": "run-z +z --then shx rm -rf d.ts dist target",
+    "clean": "run-z +z --then shx rm -rf index.d.ts dist target",
     "doc": "run-z +z --then typedoc",
     "doc:publish": "run-z doc --then gh-pages --dist target/typedoc --dotfiles",
     "lint": "run-z +z --then eslint . --ext .js,.ts",
