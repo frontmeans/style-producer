@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Style | Style Producer</title>
+	<title>StypStyleObjectWriter | Style Producer</title>
 	<meta name="description" content="Documentation for Style Producer">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,13 +54,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/StypWriter.html">StypWriter</a>
-				</li>
-				<li>
-					<a href="StypWriter.Style.html">Style</a>
+					<a href="StypStyleObjectWriter.html">StypStyleObjectWriter</a>
 				</li>
 			</ul>
-			<h1>Interface Style</h1>
+			<h1>Class StypStyleObjectWriter</h1>
 		</div>
 	</div>
 </header>
@@ -69,24 +66,24 @@
 		<div class="col-8 col-content">
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>CSS style declarations writer.</p>
-					</div>
+					<dl class="tsd-comment-tags">
+						<dt>internal</dt>
+						<dd></dd>
+					</dl>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">Style</span>
+						<span class="target">StypStyleObjectWriter</span>
 					</li>
 				</ul>
 			</section>
 			<section class="tsd-panel">
-				<h3>Implemented by</h3>
+				<h3>Implements</h3>
 				<ul class="tsd-hierarchy">
-					<li><a href="../classes/StypStyleObjectWriter.html" class="tsd-signature-type">StypStyleObjectWriter</a></li>
-					<li><a href="../classes/StypStyleTextWriter.html" class="tsd-signature-type">StypStyleTextWriter</a></li>
+					<li><a href="../interfaces/StypWriter.Style.html" class="tsd-signature-type">Style</a></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -94,105 +91,142 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
+							<h3>Constructors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="StypStyleObjectWriter.html#constructor" class="tsd-kind-icon">constructor</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section tsd-is-private tsd-is-private-protected">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="StypWriter.Style.html#isGroup" class="tsd-kind-icon">is<wbr>Group</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="StypStyleObjectWriter.html#_target" class="tsd-kind-icon">_target</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Accessors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="StypStyleObjectWriter.html#isGroup" class="tsd-kind-icon">is<wbr>Group</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="StypWriter.Style.html#replace" class="tsd-kind-icon">replace</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="StypWriter.Style.html#set" class="tsd-kind-icon">set</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="StypStyleObjectWriter.html#replace" class="tsd-kind-icon">replace</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="StypStyleObjectWriter.html#set" class="tsd-kind-icon">set</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="isGroup" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> is<wbr>Group</h3>
-					<div class="tsd-signature tsd-kind-icon">is<wbr>Group<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">false</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/d049fa0/src/producer/writer.ts#L118">style-producer/src/producer/writer.ts:118</a></li>
-						</ul>
-					</aside>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
-					<a name="replace" class="tsd-anchor"></a>
-					<h3>replace</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">replace<span class="tsd-signature-symbol">(</span>css<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+				<h2>Constructors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
+					<a name="constructor" class="tsd-anchor"></a>
+					<h3>constructor</h3>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Styp<wbr>Style<wbr>Object<wbr>Writer<span class="tsd-signature-symbol">(</span>_target<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">CSSStyleRule</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="StypStyleObjectWriter.html" class="tsd-signature-type">StypStyleObjectWriter</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/d049fa0/src/producer/writer.ts#L135">style-producer/src/producer/writer.ts:135</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/d049fa0/src/producer/formats/object.format.ts#L14">style-producer/src/producer/formats/object.format.ts:14</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Replaces CSS style declarations with the given CSS text.</p>
-								</div>
-							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>_target: <span class="tsd-signature-type">CSSStyleRule</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="StypStyleObjectWriter.html" class="tsd-signature-type">StypStyleObjectWriter</a></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group tsd-is-private tsd-is-private-protected">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="_target" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> _target</h3>
+					<div class="tsd-signature tsd-kind-icon">_target<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">CSSStyleRule</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/d049fa0/src/producer/formats/object.format.ts#L16">style-producer/src/producer/formats/object.format.ts:16</a></li>
+						</ul>
+					</aside>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Accessors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="isGroup" class="tsd-anchor"></a>
+					<h3>is<wbr>Group</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> isGroup<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">false</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/d049fa0/src/producer/formats/object.format.ts#L19">style-producer/src/producer/formats/object.format.ts:19</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">false</span></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="replace" class="tsd-anchor"></a>
+					<h3>replace</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">replace<span class="tsd-signature-symbol">(</span>css<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/StypWriter.Style.html">Style</a>.<a href="../interfaces/StypWriter.Style.html#replace">replace</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/d049fa0/src/producer/formats/object.format.ts#L27">style-producer/src/producer/formats/object.format.ts:27</a></li>
+								</ul>
+							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>css: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>CSS text containing CSS style declarations.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="set" class="tsd-anchor"></a>
 					<h3>set</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 						<li class="tsd-signature tsd-kind-icon">set<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, priority<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/StypWriter.Style.html">Style</a>.<a href="../interfaces/StypWriter.Style.html#set">set</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/d049fa0/src/producer/writer.ts#L128">style-producer/src/producer/writer.ts:128</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/style-producer/blob/d049fa0/src/producer/formats/object.format.ts#L23">style-producer/src/producer/formats/object.format.ts:23</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Sets CSS property value.</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>name: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Property name (hyphen case) to be modified.</p>
-									</div>
 								</li>
 								<li>
 									<h5>value: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>New property value.</p>
-									</div>
 								</li>
 								<li>
 									<h5>priority: <span class="tsd-signature-type">number</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>New property value priority. The value <a href="../enums/StypPriority.html#Important">StypPriority.Important</a> and above means the property
-										is <code>!important</code>.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -207,92 +241,29 @@
 					<li class="globals  ">
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="../modules/StypAngle.html">Styp<wbr>Angle</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="../modules/StypAnglePt.html">Styp<wbr>Angle<wbr>Pt</a>
-					</li>
-					<li class=" tsd-kind-namespace tsd-has-type-parameter">
-						<a href="../modules/StypDimension.html">Styp<wbr>Dimension</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="../modules/StypFrequency.html">Styp<wbr>Frequency</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="../modules/StypFrequencyPt.html">Styp<wbr>Frequency<wbr>Pt</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="../modules/StypLength.html">Styp<wbr>Length</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="../modules/StypLengthPt.html">Styp<wbr>Length<wbr>Pt</a>
-					</li>
-					<li class=" tsd-kind-namespace tsd-has-type-parameter">
-						<a href="../modules/StypProperties.html">Styp<wbr>Properties</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="../modules/StypPureSelector.html">Styp<wbr>Pure<wbr>Selector</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="../modules/StypQuery.html">Styp<wbr>Query</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="../modules/StypRenderer.html">Styp<wbr>Renderer</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="../modules/StypResolution.html">Styp<wbr>Resolution</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="../modules/StypRuleKey.html">Styp<wbr>Rule<wbr>Key</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="../modules/StypRules.html">Styp<wbr>Rules</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="../modules/StypSelector.html">Styp<wbr>Selector</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="../modules/StypSubSelector.html">Styp<wbr>Sub<wbr>Selector</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="../modules/StypTextFormatConfig.html">Styp<wbr>Text<wbr>Format<wbr>Config</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="../modules/StypTime.html">Styp<wbr>Time</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="../modules/StypTimePt.html">Styp<wbr>Time<wbr>Pt</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="../modules/StypValue.html">Styp<wbr>Value</a>
-					</li>
-					<li class="current tsd-kind-namespace">
-						<a href="../modules/StypWriter.html">Styp<wbr>Writer</a>
-					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-interface tsd-parent-kind-namespace">
-						<a href="StypWriter.Group.html" class="tsd-kind-icon">Group</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-namespace">
-						<a href="StypWriter.Sheet.html" class="tsd-kind-icon">Sheet</a>
-					</li>
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-interface tsd-parent-kind-namespace">
-						<a href="StypWriter.Style.html" class="tsd-kind-icon">Style</a>
+					<li class="current tsd-kind-class">
+						<a href="StypStyleObjectWriter.html" class="tsd-kind-icon">Styp<wbr>Style<wbr>Object<wbr>Writer</a>
 						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="StypWriter.Style.html#isGroup" class="tsd-kind-icon">is<wbr>Group</a>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class">
+								<a href="StypStyleObjectWriter.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-interface">
-								<a href="StypWriter.Style.html#replace" class="tsd-kind-icon">replace</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="StypStyleObjectWriter.html#_target" class="tsd-kind-icon">_target</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-interface">
-								<a href="StypWriter.Style.html#set" class="tsd-kind-icon">set</a>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="StypStyleObjectWriter.html#isGroup" class="tsd-kind-icon">is<wbr>Group</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="StypStyleObjectWriter.html#replace" class="tsd-kind-icon">replace</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="StypStyleObjectWriter.html#set" class="tsd-kind-icon">set</a>
 							</li>
 						</ul>
 					</li>
