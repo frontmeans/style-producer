@@ -36,6 +36,7 @@ export default {
       plugins: [
         flatDts({
           tsconfig: 'tsconfig.main.json',
+          lib: true,
         }),
       ],
     },
