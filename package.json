@@ -32,7 +32,7 @@
     "@proc7ts/render-scheduler": "^1.4.2"
   },
   "dependencies": {
-    "@hatsy/hten": "^1.1.1",
+    "@hatsy/hten": "^1.1.2",
     "@proc7ts/primitives": "^1.5.1",
     "@proc7ts/push-iterator": "^2.4.1",
     "hyphenate-style-name": "^1.0.4"
@@ -44,7 +44,7 @@
     "@proc7ts/namespace-aliaser": "^2.2.2",
     "@proc7ts/render-scheduler": "^1.4.2",
     "@proc7ts/rollup-helpers": "^1.1.1",
-    "@proc7ts/rollup-plugin-flat-dts": "^1.0.0",
+    "@proc7ts/rollup-plugin-flat-dts": "^1.1.0",
     "@rollup/plugin-commonjs": "^16.0.0",
     "@rollup/plugin-node-resolve": "^10.0.0",
     "@types/jest": "^26.0.15",
