@@ -1,7 +1,7 @@
 import { EventSupply, eventSupply } from '@proc7ts/fun-events';
 import { noop } from '@proc7ts/primitives';
 import { itsFirst } from '@proc7ts/push-iterator';
-import { immediateRenderScheduler } from '@proc7ts/render-scheduler';
+import { immediateRenderScheduler, RenderScheduler } from '@proc7ts/render-scheduler';
 import { stypRoot, StypRule } from '../../rule';
 import { stylesheets } from '../../spec';
 import { produceBasicStyle } from '../produce-basic-style';
@@ -43,7 +43,7 @@ describe('stypObjectFormat', () => {
 
   it('supplies `document.head` as `node` to scheduler', () => {
 
-    const scheduler = jest.fn(() => noop);
+    const scheduler = jest.fn<ReturnType<RenderScheduler>, Parameters<RenderScheduler>>(() => noop);
 
     produceBasicStyle(
         root.rules,
@@ -54,7 +54,7 @@ describe('stypObjectFormat', () => {
   it('supplies the given `parent` as `node` to scheduler', () => {
 
     const parent = document.createElement('div');
-    const scheduler = jest.fn(() => noop);
+    const scheduler = jest.fn<ReturnType<RenderScheduler>, Parameters<RenderScheduler>>(() => noop);
 
     produceBasicStyle(
         root.rules,

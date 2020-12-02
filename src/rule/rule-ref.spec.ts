@@ -80,7 +80,7 @@ describe('RefStypRule', () => {
     });
     it('replaces properties', () => {
 
-      const update: Partial<RuleProperties> = { $length: StypLength.of(12, 'px') };
+      const update: RuleProperties = { $length: StypLength.of(12, 'px') };
 
       ref.set(update);
       expect(mockReceiver).toHaveBeenCalledWith(update);
@@ -99,14 +99,14 @@ describe('RefStypRule', () => {
 
     it('appends properties', () => {
 
-      const update: Partial<RuleProperties> = { $length: StypLength.of(1, 'rem').important() };
+      const update: RuleProperties = { $length: StypLength.of(1, 'rem').important() };
 
       ref.add(update);
       expect(mockReceiver).toHaveBeenCalledWith(update);
     });
     it('respects property importance', () => {
 
-      const update: Partial<RuleProperties> = { $length: StypLength.of(1, 'rem') };
+      const update: RuleProperties = { $length: StypLength.of(1, 'rem') };
 
       ref.add(update);
       expect(mockReceiver).not.toHaveBeenCalledWith(update);
