@@ -1,4 +1,4 @@
-import { escapeCSS, escapeCSSVal } from '@hatsy/hten';
+import { escapeCSS, escapeCSSVal } from '@frontmeans/httongue';
 import {
   css__naming,
   html__naming,

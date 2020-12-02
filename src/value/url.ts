@@ -2,7 +2,7 @@
  * @packageDocumentation
  * @module @proc7ts/style-producer
  */
-import { escapeCSSVal } from '@hatsy/hten';
+import { escapeCSSVal } from '@frontmeans/httongue';
 import { stypSplitPriority } from './priority';
 import { StypValue, StypValueStruct } from './value';
 
