@@ -1,14 +1,14 @@
-import { afterNever, trackValue } from '@proc7ts/fun-events';
-import { NamespaceDef } from '@proc7ts/namespace-aliaser';
-import { noop } from '@proc7ts/primitives';
-import { itsEmpty } from '@proc7ts/push-iterator';
+import { NamespaceDef } from '@frontmeans/namespace-aliaser';
 import {
   immediateRenderScheduler,
   newManualRenderScheduler,
   noopRenderScheduler,
   RenderShot,
   setRenderScheduler,
-} from '@proc7ts/render-scheduler';
+} from '@frontmeans/render-scheduler';
+import { afterNever, trackValue } from '@proc7ts/fun-events';
+import { noop } from '@proc7ts/primitives';
+import { itsEmpty } from '@proc7ts/push-iterator';
 import { StypProperties, stypRoot, StypRule } from '../rule';
 import { stypSelector } from '../selector';
 import { cssStyle, cssStyles, removeStyleElements, stylesheets } from '../spec';

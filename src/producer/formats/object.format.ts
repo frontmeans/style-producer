@@ -1,8 +1,8 @@
 /**
  * @packageDocumentation
- * @module @proc7ts/style-producer
+ * @module @frontmeans/style-producer
  */
-import { RenderScheduler } from '@proc7ts/render-scheduler';
+import { RenderScheduler } from '@frontmeans/render-scheduler';
 import { StypPriority } from '../../value';
 import { StypFormat, StypFormatConfig } from '../format';
 import { StypWriter } from '../writer';

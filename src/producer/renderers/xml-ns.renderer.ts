@@ -1,8 +1,8 @@
 /**
  * @packageDocumentation
- * @module @proc7ts/style-producer
+ * @module @frontmeans/style-producer
  */
-import { NamespaceDef } from '@proc7ts/namespace-aliaser';
+import { NamespaceDef } from '@frontmeans/namespace-aliaser';
 import { isPresent } from '@proc7ts/primitives';
 import { StypProperties } from '../../rule';
 import { StypSelector } from '../../selector';

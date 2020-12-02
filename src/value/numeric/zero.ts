@@ -1,8 +1,8 @@
 /**
  * @packageDocumentation
- * @module @proc7ts/style-producer
+ * @module @frontmeans/style-producer
  */
-import { StypNumericStruct } from './';
+import { StypNumericStruct } from './index';
 
 /**
  * Structured unit-less zero value.

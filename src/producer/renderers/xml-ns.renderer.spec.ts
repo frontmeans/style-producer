@@ -1,4 +1,4 @@
-import { NamespaceAliaser, NamespaceDef, newNamespaceAliaser } from '@proc7ts/namespace-aliaser';
+import { NamespaceAliaser, NamespaceDef, newNamespaceAliaser } from '@frontmeans/namespace-aliaser';
 import { StypSelector } from '../../selector';
 import { StypURL } from '../../value';
 import { StypRenderer } from '../renderer';

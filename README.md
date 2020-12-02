@@ -11,7 +11,7 @@ Produces and dynamically updates stylesheets right in the browser.
 
 Usage example:
 ```typescript
-import { produceStyle, stypObjectFormat, stypRoot } from '@proc7ts/style-producer';
+import { produceStyle, stypObjectFormat, stypRoot } from '@frontmeans/style-producer';
 
 const root = stypRoot(); // Create root CSS rule
 const h1 = root.rules.add(
@@ -35,16 +35,16 @@ supply.off(); // Remove produced stylesheets
 ```
 
 
-[npm-image]: https://img.shields.io/npm/v/@proc7ts/style-producer.svg?logo=npm
-[npm-url]: https://www.npmjs.com/package/@proc7ts/style-producer
-[build-status-img]: https://github.com/proc7ts/style-producer/workflows/Build/badge.svg
-[build-status-link]: https://github.com/proc7ts/style-producer/actions?query=workflow%3ABuild
-[codecov-image]: https://codecov.io/gh/proc7ts/style-producer/branch/master/graph/badge.svg
-[codecov-url]: https://codecov.io/gh/proc7ts/style-producer
+[npm-image]: https://img.shields.io/npm/v/@frontmeans/style-producer.svg?logo=npm
+[npm-url]: https://www.npmjs.com/package/@frontmeans/style-producer
+[build-status-img]: https://github.com/frontmeans/style-producer/workflows/Build/badge.svg
+[build-status-link]: https://github.com/frontmeans/style-producer/actions?query=workflow%3ABuild
+[codecov-image]: https://codecov.io/gh/frontmeans/style-producer/branch/master/graph/badge.svg
+[codecov-url]: https://codecov.io/gh/frontmeans/style-producer
 [github-image]: https://img.shields.io/static/v1?logo=github&label=GitHub&message=project&color=informational
-[github-url]: https://github.com/proc7ts/style-producer
+[github-url]: https://github.com/frontmeans/style-producer
 [api-docs-image]: https://img.shields.io/static/v1?logo=typescript&label=API&message=docs&color=informational
-[api-docs-url]: https://proc7ts.github.io/style-producer/
+[api-docs-url]: https://frontmeans.github.io/style-producer/
 
 
 Structured CSS Selectors
@@ -192,7 +192,7 @@ interface and use `StypMapper` to map arbitrary CSS properties to that interface
 in type safe manner:
 
 ```typescript
-import { RefStypRule, StypColor, StypLengthPt, StypRGB, stypRoot } from '@proc7ts/style-producer';
+import { RefStypRule, StypColor, StypLengthPt, StypRGB, stypRoot } from '@frontmeans/style-producer';
 
 // Type-safe CSS properties representing custom settings
 interface MySettings {
@@ -374,8 +374,8 @@ conflicts.
 
 Example:
 ```typescript
-import { NamespaceDef } from '@proc7ts/namespace-aliaser';
-import { stypRoot } from '@proc7ts/style-producer';
+import { NamespaceDef } from '@frontmeans/namespace-aliaser';
+import { stypRoot } from '@frontmeans/style-producer';
 
 // Declare custom namespace
 const customNs = new NamespaceDef(

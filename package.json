@@ -1,5 +1,5 @@
 {
-  "name": "@proc7ts/style-producer",
+  "name": "@frontmeans/style-producer",
   "version": "5.5.1",
   "description": "Produces and dynamically updates stylesheets",
   "keywords": [
@@ -7,15 +7,15 @@
     "css-in-ts",
     "typescript"
   ],
-  "homepage": "https://github.com/proc7ts/style-producer",
+  "homepage": "https://github.com/frontmeans/style-producer",
   "repository": {
     "type": "git",
-    "url": "ssh://git@github.com:proc7ts/style-producer.git"
+    "url": "ssh://git@github.com:frontmeans/style-producer.git"
   },
   "license": "MIT",
   "author": "Ruslan Lopatin <ruslan.lopatin@gmail.com>",
   "bugs": {
-    "url": "https://github.com/proc7ts/style-producer/issues"
+    "url": "https://github.com/frontmeans/style-producer/issues"
   },
   "type": "module",
   "main": "dist/style-producer.cjs",
@@ -26,10 +26,10 @@
     "require": "./dist/style-producer.cjs"
   },
   "peerDependencies": {
+    "@frontmeans/namespace-aliaser": "^2.2.2",
+    "@frontmeans/render-scheduler": "^1.4.2",
     "@proc7ts/call-thru": "^4.3.1",
-    "@proc7ts/fun-events": "^9.4.2",
-    "@proc7ts/namespace-aliaser": "^2.2.2",
-    "@proc7ts/render-scheduler": "^1.4.2"
+    "@proc7ts/fun-events": "^9.4.2"
   },
   "dependencies": {
     "@frontmeans/httongue": "^2.0.0",
@@ -38,10 +38,10 @@
     "hyphenate-style-name": "^1.0.4"
   },
   "devDependencies": {
+    "@frontmeans/namespace-aliaser": "^2.3.0",
+    "@frontmeans/render-scheduler": "^1.5.0",
     "@proc7ts/call-thru": "^4.3.1",
     "@proc7ts/fun-events": "^9.4.2",
-    "@proc7ts/namespace-aliaser": "^2.2.2",
-    "@proc7ts/render-scheduler": "^1.4.2",
     "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-node-resolve": "^11.0.0",
     "@run-z/eslint-config": "^1.1.0",

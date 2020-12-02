@@ -1,8 +1,8 @@
 /**
  * @packageDocumentation
- * @module @proc7ts/style-producer
+ * @module @frontmeans/style-producer
  */
-import { NamespaceDef, QualifiedName } from '@proc7ts/namespace-aliaser';
+import { NamespaceDef, QualifiedName } from '@frontmeans/namespace-aliaser';
 import { StypSelector } from './selector';
 import { StypSubSelector } from './sub-selector';
 

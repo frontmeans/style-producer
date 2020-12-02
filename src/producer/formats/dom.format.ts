@@ -1,9 +1,9 @@
-import { RenderScheduler } from '@proc7ts/render-scheduler';
+import { RenderScheduler } from '@frontmeans/render-scheduler';
 import { StypFormat } from '../format';
 import { removeStyleElement, stypRenderScheduler } from './format.impl';
 /**
  * @packageDocumentation
- * @module @proc7ts/style-producer
+ * @module @frontmeans/style-producer
  */
 import { stypTextFormat, StypTextFormatConfig } from './text.format';
 

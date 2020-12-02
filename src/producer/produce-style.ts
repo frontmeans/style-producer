@@ -1,6 +1,6 @@
 /**
  * @packageDocumentation
- * @module @proc7ts/style-producer
+ * @module @frontmeans/style-producer
  */
 import { EventSupply } from '@proc7ts/fun-events';
 import { StypRules } from '../rule';

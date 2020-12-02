@@ -1,9 +1,9 @@
 /**
  * @packageDocumentation
- * @module @proc7ts/style-producer
+ * @module @frontmeans/style-producer
  */
+import { NamespaceDef } from '@frontmeans/namespace-aliaser';
 import { EventSupplyPeer } from '@proc7ts/fun-events';
-import { NamespaceDef } from '@proc7ts/namespace-aliaser';
 import { StypProperties, StypRule } from '../rule';
 import { StypSelector } from '../selector';
 import { StypRenderer } from './renderer';

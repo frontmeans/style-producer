@@ -1,7 +1,9 @@
 /**
  * @packageDocumentation
- * @module @proc7ts/style-producer
+ * @module @frontmeans/style-producer
  */
+import { NamespaceDef, newNamespaceAliaser } from '@frontmeans/namespace-aliaser';
+import { newRenderSchedule } from '@frontmeans/render-scheduler';
 import {
   AfterEvent,
   afterSupplied,
@@ -10,10 +12,8 @@ import {
   EventSupply__symbol,
   onSupplied,
 } from '@proc7ts/fun-events';
-import { NamespaceDef, newNamespaceAliaser } from '@proc7ts/namespace-aliaser';
 import { noop } from '@proc7ts/primitives';
 import { itsReduction, mapIt } from '@proc7ts/push-iterator';
-import { newRenderSchedule } from '@proc7ts/render-scheduler';
 import { StypProperties, StypRule, StypRules } from '../rule';
 import { StypSelector, stypSelector, StypSelectorFormat, stypSelectorText } from '../selector';
 import { isCombinator } from '../selector/selector.impl';

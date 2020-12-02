@@ -1,6 +1,6 @@
 import { StypPriority } from '../priority';
 import { StypValue } from '../value';
-import { StypDimension, StypNumeric, StypNumericStruct } from './';
+import { StypDimension, StypNumeric, StypNumericStruct } from './index';
 import { stypDimension } from './numeric.impl';
 import { StypZero } from './zero';
 

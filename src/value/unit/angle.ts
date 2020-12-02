@@ -1,6 +1,6 @@
 /**
  * @packageDocumentation
- * @module @proc7ts/style-producer
+ * @module @frontmeans/style-producer
  */
 import { StypDimension, StypNumeric } from '../numeric';
 import { unitlessZeroDimensionKind } from '../numeric/dimension-kind.impl';

@@ -1,9 +1,9 @@
 /**
  * @packageDocumentation
- * @module @proc7ts/style-producer
+ * @module @frontmeans/style-producer
  */
-import { NamespaceAliaser } from '@proc7ts/namespace-aliaser';
-import { RenderScheduler } from '@proc7ts/render-scheduler';
+import { NamespaceAliaser } from '@frontmeans/namespace-aliaser';
+import { RenderScheduler } from '@frontmeans/render-scheduler';
 import { StypSelector } from '../selector';
 import { StypRenderer } from './renderer';
 import { StyleProducer } from './style-producer';

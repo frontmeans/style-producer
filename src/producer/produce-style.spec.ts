@@ -1,4 +1,4 @@
-import { immediateRenderScheduler } from '@proc7ts/render-scheduler';
+import { immediateRenderScheduler } from '@frontmeans/render-scheduler';
 import { stypRoot, StypRule } from '../rule';
 import { cssStyle, removeStyleElements } from '../spec';
 import { stypObjectFormat } from './formats';

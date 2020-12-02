@@ -1,6 +1,6 @@
 /**
  * @packageDocumentation
- * @module @proc7ts/style-producer
+ * @module @frontmeans/style-producer
  */
 import { escapeCSSVal } from '@frontmeans/httongue';
 import { stypSplitPriority } from './priority';

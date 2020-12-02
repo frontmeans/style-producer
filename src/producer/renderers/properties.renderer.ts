@@ -1,6 +1,6 @@
 /**
  * @packageDocumentation
- * @module @proc7ts/style-producer
+ * @module @frontmeans/style-producer
  */
 import { filterIt, itsEach, ObjectEntry, overEntries } from '@proc7ts/push-iterator';
 import hyphenateStyleName from 'hyphenate-style-name';

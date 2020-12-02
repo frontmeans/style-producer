@@ -1,4 +1,4 @@
-import { compareNames, isQualifiedName, QualifiedName } from '@proc7ts/namespace-aliaser';
+import { compareNames, isQualifiedName, QualifiedName } from '@frontmeans/namespace-aliaser';
 import { flatMapIt } from '@proc7ts/push-iterator';
 import { isNotEmptyArray, isReadonlyArray } from '../internal';
 import { StypPureSelector } from './pure-selector';

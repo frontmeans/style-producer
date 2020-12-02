@@ -1,6 +1,6 @@
+import { immediateRenderScheduler, newManualRenderScheduler, noopRenderScheduler } from '@frontmeans/render-scheduler';
 import { EventSupply, eventSupply } from '@proc7ts/fun-events';
 import { itsEmpty } from '@proc7ts/push-iterator';
-import { immediateRenderScheduler, newManualRenderScheduler, noopRenderScheduler } from '@proc7ts/render-scheduler';
 import { stypRoot, StypRule } from '../../rule';
 import { cssStyle, removeStyleElements, stylesheets } from '../../spec';
 import { produceBasicStyle } from '../produce-basic-style';

@@ -1,6 +1,6 @@
 /**
  * @packageDocumentation
- * @module @proc7ts/style-producer
+ * @module @frontmeans/style-producer
  */
 import { afterAll, AfterEvent, AfterEvent__symbol, EventKeeper, EventReceiver, EventSupply } from '@proc7ts/fun-events';
 import { StypProperties } from './properties';

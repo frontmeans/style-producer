@@ -1,8 +1,8 @@
 /**
  * @packageDocumentation
- * @module @proc7ts/style-producer
+ * @module @frontmeans/style-producer
  */
-import { namesEqual, NamespaceDef, QualifiedName } from '@proc7ts/namespace-aliaser';
+import { namesEqual, NamespaceDef, QualifiedName } from '@frontmeans/namespace-aliaser';
 import { StypPureSelector } from './pure-selector';
 import { StypSelector } from './selector';
 import { normalizeStypSelectorPart } from './selector.impl';

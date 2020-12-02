@@ -1,5 +1,5 @@
+import { NamespaceDef } from '@frontmeans/namespace-aliaser';
 import { AfterEvent, afterSupplied, afterThe, onSupplied, trackValue, ValueTracker } from '@proc7ts/fun-events';
-import { NamespaceDef } from '@proc7ts/namespace-aliaser';
 import { noop } from '@proc7ts/primitives';
 import { itsEmpty } from '@proc7ts/push-iterator';
 import { StypSelector, stypSelector } from '../selector';

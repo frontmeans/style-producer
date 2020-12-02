@@ -1,8 +1,8 @@
 /**
  * @packageDocumentation
- * @module @proc7ts/style-producer
+ * @module @frontmeans/style-producer
  */
-import { NamespaceAliaser } from '@proc7ts/namespace-aliaser';
+import { NamespaceAliaser } from '@frontmeans/namespace-aliaser';
 import { StypPureSelector } from './pure-selector';
 import { StypSelector } from './selector';
 import { stypSelector } from './selector-constructor';

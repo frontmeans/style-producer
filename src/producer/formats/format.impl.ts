@@ -1,4 +1,4 @@
-import { newRenderSchedule, RenderScheduler } from '@proc7ts/render-scheduler';
+import { newRenderSchedule, RenderScheduler } from '@frontmeans/render-scheduler';
 import { isReadonlyArray } from '../../internal';
 import { StypRule } from '../../rule';
 import { StypFormat } from '../format';

@@ -6,7 +6,7 @@ import {
   NamespaceAliaser,
   NamespaceDef,
   newNamespaceAliaser,
-} from '@proc7ts/namespace-aliaser';
+} from '@frontmeans/namespace-aliaser';
 import { StypRuleKey } from './rule-key';
 import { StypSelector } from './selector';
 import { StypSelectorFormat } from './selector-text';
