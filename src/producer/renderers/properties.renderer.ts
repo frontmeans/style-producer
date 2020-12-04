@@ -2,7 +2,7 @@
  * @packageDocumentation
  * @module @frontmeans/style-producer
  */
-import { hyphenateName } from '@frontmeans/httongue';
+import { hyphenateCSSName } from '@frontmeans/httongue';
 import { filterIt, itsEach, ObjectEntry, overEntries } from '@proc7ts/push-iterator';
 import { StypProperties } from '../../rule';
 import { stypSplitPriority } from '../../value';
@@ -28,7 +28,7 @@ export function stypRenderProperties(producer: StyleProducer, properties: StypPr
 
         const [value, priority] = stypSplitPriority(v);
 
-        style.set(hyphenateName(k), `${value}`, priority);
+        style.set(hyphenateCSSName(k), `${value}`, priority);
       },
   );
 

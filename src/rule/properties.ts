@@ -11,7 +11,7 @@ import { StypRule } from './rule';
  *
  * Contains named CSS properties.
  *
- * Property keys expected to be camelCased. When applied to CSS they hyphenated by [hyphenateName] function.
+ * Property keys expected to be camelCased. When applied to CSS they hyphenated by [hyphenateCSSName] function.
  *
  * Custom properties have keys starting with anything but ASCII letter. The properties with keys starting with `$$`
  * and `@` are reserved.
@@ -22,7 +22,7 @@ import { StypRule } from './rule';
  * May be parameterized with properties structure. In that case the properties map contains only properties from
  * the given structure.
  *
- * [hyphenateName]: https://frontmeans.github.io/httongue/globals.html#hyphenateName
+ * [hyphenateCSSName]: https://frontmeans.github.io/httongue/globals.html#hyphenateCSSName
  *
  * @category CSS Rule
  * @typeparam T  CSS properties structure. Each property in this structure is expected to be compatible with
