@@ -1,6 +1,5 @@
-import { AfterEvent, afterSupplied, EventEmitter, EventSupply, trackValue, ValueTracker } from '@proc7ts/fun-events';
-import { noop, valuesProvider } from '@proc7ts/primitives';
-import { readProperties } from '../spec';
+import { AfterEvent, afterSupplied, EventEmitter, onceAfter, trackValue, ValueTracker } from '@proc7ts/fun-events';
+import { noop, Supply, valuesProvider } from '@proc7ts/primitives';
 import { StypLengthPt } from '../value';
 import { StypProperties } from './properties';
 import { mergeStypProperties, stypPropertiesBySpec } from './properties.impl';
@@ -19,33 +18,33 @@ describe('stypPropertiesBySpec', () => {
 
     const spec = stypPropertiesBySpec(rule);
 
-    expect(await readProperties(spec)).toEqual({});
+    expect(await spec).toEqual({});
   });
   it('sends provided CSS text', async () => {
 
     const css = 'font-size: 12px';
     const spec = stypPropertiesBySpec(rule, css);
 
-    expect(await readProperties(spec)).toEqual({ $$css: css });
+    expect(await spec).toEqual({ $$css: css });
   });
   it('sends provided properties', async () => {
 
     const initial = { fontSize: '12px' };
     const spec = stypPropertiesBySpec(rule, initial);
 
-    expect(await readProperties(spec)).toEqual(initial);
+    expect(await spec).toEqual(initial);
   });
   it('sends emitted properties', async () => {
 
     const emitter = new EventEmitter<[StypProperties]>();
     const spec = trackSpec(stypPropertiesBySpec(rule, emitter));
 
-    expect(await readProperties(spec)).toEqual({});
+    expect(await spec).toEqual({});
 
     const updated = { fontSize: '13px' };
 
     emitter.send(updated);
-    expect(await readProperties(spec)).toEqual(updated);
+    expect(await spec).toEqual(updated);
   });
   it('sends tracked properties', async () => {
 
@@ -53,12 +52,12 @@ describe('stypPropertiesBySpec', () => {
     const tracker = trackValue(initial);
     const spec = trackSpec(stypPropertiesBySpec(rule, tracker));
 
-    expect(await readProperties(spec)).toEqual(initial);
+    expect(await spec).toEqual(initial);
 
     const updated = { fontSize: '13px' };
 
     tracker.it = updated;
-    expect(await readProperties(spec)).toEqual(updated);
+    expect(await spec).toEqual(updated);
   });
   it('prevents tracked properties duplicates', () => {
 
@@ -67,7 +66,7 @@ describe('stypPropertiesBySpec', () => {
     const spec = trackSpec(stypPropertiesBySpec(rule, tracker));
     const receiver = jest.fn();
 
-    spec.to(receiver);
+    spec(receiver);
     expect(receiver).toHaveBeenCalledWith(initial);
 
     const updated = { fontSize: '13px' };
@@ -85,7 +84,7 @@ describe('stypPropertiesBySpec', () => {
     const spec = trackSpec(stypPropertiesBySpec(rule, tracker));
     const receiver = jest.fn();
 
-    spec.to(receiver);
+    spec(receiver);
     expect(receiver).toHaveBeenCalledWith(initial);
 
     const updated = { borderWidth: '2px', border: '1px solid white' };
@@ -101,7 +100,7 @@ describe('stypPropertiesBySpec', () => {
     const spec = trackSpec(stypPropertiesBySpec(rule, tracker));
     const receiver = jest.fn();
 
-    spec.to(receiver);
+    spec(receiver);
     expect(receiver).toHaveBeenCalledWith(initial);
 
     const raw = 'font-size: 13px';
@@ -119,26 +118,26 @@ describe('stypPropertiesBySpec', () => {
     const initial = { fontSize: '12px' };
     const spec = stypPropertiesBySpec(rule, () => initial);
 
-    expect(await readProperties(spec)).toEqual(initial);
+    expect(await spec).toEqual(initial);
   });
   it('sends constructed CSS text', async () => {
 
     const css = 'font-size: 12px';
     const spec = stypPropertiesBySpec(rule, () => css);
 
-    expect(await readProperties(spec)).toEqual({ $$css: css });
+    expect(await spec).toEqual({ $$css: css });
   });
   it('sends constructed emitted properties', async () => {
 
     const emitter = new EventEmitter<[StypProperties]>();
     const spec = trackSpec(stypPropertiesBySpec(rule, () => emitter));
 
-    expect(await readProperties(spec)).toEqual({});
+    expect(await spec).toEqual({});
 
     const updated = { fontSize: '13px' };
 
     emitter.send(updated);
-    expect(await readProperties(spec)).toEqual(updated);
+    expect(await spec).toEqual(updated);
   });
   it('sends constructed tracked properties', async () => {
 
@@ -146,12 +145,12 @@ describe('stypPropertiesBySpec', () => {
     const tracker = trackValue(initial);
     const spec = trackSpec(stypPropertiesBySpec(rule, () => tracker));
 
-    expect(await readProperties(spec)).toEqual(initial);
+    expect(await spec).toEqual(initial);
 
     const updated = { fontSize: '13px' };
 
     tracker.it = updated;
-    expect(await readProperties(spec)).toEqual(updated);
+    expect(await spec).toEqual(updated);
   });
   it('prevents constructed tracked properties duplicates', () => {
 
@@ -163,7 +162,7 @@ describe('stypPropertiesBySpec', () => {
     const spec = trackSpec(stypPropertiesBySpec(rule, () => tracker));
     const receiver = jest.fn();
 
-    spec.to(receiver);
+    spec(receiver);
 
     properties.fontSize = updated.fontSize;
     emitter.send(properties);
@@ -173,7 +172,7 @@ describe('stypPropertiesBySpec', () => {
 });
 
 function trackSpec(spec: AfterEvent<[StypProperties]>): AfterEvent<[StypProperties]> {
-  spec.to(noop); // Need this to keep updating properties
+  spec(noop); // Need this to keep updating properties
   return spec;
 }
 
@@ -200,29 +199,29 @@ describe('mergeStypProperties', () => {
   let merged: AfterEvent<[StypProperties]>;
 
   beforeEach(() => {
-    merged = mergeStypProperties(base.read(), addendum.read());
+    merged = mergeStypProperties(base.read, addendum.read);
   });
 
   it('keeps initial properties', () => {
 
     const receiver = jest.fn();
 
-    merged.once(receiver);
+    merged.do(onceAfter)(receiver);
 
     expect(receiver).toHaveBeenCalledWith({ ...baseProperties, ...addendumProperties });
   });
   it('merges initial properties', async () => {
-    expect(await readProperties(merged)).toEqual({ ...baseProperties, ...addendumProperties });
+    expect(await merged).toEqual({ ...baseProperties, ...addendumProperties });
   });
 
   describe('merging', () => {
 
     let mockReceiver: Mock<void, [StypProperties]>;
-    let supply: EventSupply;
+    let supply: Supply;
 
     beforeEach(() => {
       mockReceiver = jest.fn();
-      supply = merged.to(mockReceiver);
+      supply = merged(mockReceiver);
       mockReceiver.mockClear();
     });
 

@@ -1,4 +1,3 @@
-import { nextSkip, NextSkip } from '@proc7ts/call-thru';
 import {
   afterAll,
   AfterEvent,
@@ -8,8 +7,11 @@ import {
   EventSender,
   isEventKeeper,
   isEventSender,
+  mapAfter,
+  mapAfter_,
+  translateAfter,
 } from '@proc7ts/fun-events';
-import { asis, isPresent, valuesProvider } from '@proc7ts/primitives';
+import { isPresent, valuesProvider } from '@proc7ts/primitives';
 import { filterIt, itsIterator, itsReduction, overEntries } from '@proc7ts/push-iterator';
 import { IMPORTANT_CSS_SUFFIX } from '../internal';
 import { StypValue, stypValuesEqual } from '../value';
@@ -67,22 +69,20 @@ function propertiesKeeper(sender: EventSender<[string | StypProperties]>): After
 }
 
 function preventDuplicates(properties: EventKeeper<[string | StypProperties]>): AfterEvent<[StypProperties]> {
-  return afterSupplied(properties).keepThru(
-      propertiesMap,
-      passNonDuplicate(),
-      asis,
+  return afterSupplied(properties).do(
+      mapAfter_(propertiesMap),
+      translateAfter(passNonDuplicate()),
   );
 }
 
-function passNonDuplicate(): (update: StypProperties) => StypProperties | NextSkip {
+function passNonDuplicate(): (send: (properties: StypProperties) => void, update: StypProperties) => void {
 
   let stored: StypProperties | undefined;
 
-  return update => {
-    if (stored && propertiesEqual(update, stored)) {
-      return nextSkip();
+  return (send, update) => {
+    if (!stored || !propertiesEqual(update, stored)) {
+      send(stored = { ...update });
     }
-    return stored = { ...update };
   };
 }
 
@@ -121,8 +121,13 @@ export function mergeStypProperties(
     addendum: AfterEvent<[StypProperties]>,
 ): AfterEvent<[StypProperties]> {
   return preventDuplicates(
-      afterAll({ base, addendum }).keepThru(
-          ({ base: [baseProperties], addendum: [addendumProperties] }) => addValues(baseProperties, addendumProperties),
+      afterAll({ base, addendum }).do(
+          mapAfter(
+              ({
+                base: [baseProperties],
+                addendum: [addendumProperties],
+              }) => addValues(baseProperties, addendumProperties),
+          ),
       ),
   );
 }

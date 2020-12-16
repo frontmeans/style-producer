@@ -3,7 +3,6 @@ import { AfterEvent, afterSupplied, afterThe, onSupplied, trackValue, ValueTrack
 import { noop } from '@proc7ts/primitives';
 import { itsEmpty } from '@proc7ts/push-iterator';
 import { StypSelector, stypSelector } from '../selector';
-import { readProperties, ruleProperties } from '../spec';
 import { StypProperties } from './properties';
 import { stypRoot } from './root';
 import { StypRule } from './rule';
@@ -124,13 +123,13 @@ describe('StypRule', () => {
 
       tracker.it = { $rev: 2 };
 
-      expect(await ruleProperties(rule)).toEqual({ $rev: 2 });
+      expect(await rule.read).toEqual({ $rev: 2 });
     });
   });
 
   describe('[AfterEvent__symbol]', () => {
     it('is the same as `read`', () => {
-      expect(afterSupplied(rule)).toBe(rule.read());
+      expect(afterSupplied(rule)).toBe(rule.read);
     });
   });
 
@@ -145,7 +144,7 @@ describe('StypRule', () => {
       const replacement = { visibility: 'hidden' };
 
       rule.set(replacement);
-      expect(await ruleProperties(rule)).toEqual(replacement);
+      expect(await rule.read).toEqual(replacement);
     });
   });
 
@@ -167,7 +166,7 @@ describe('StypRule', () => {
     });
 
     it('applies update', async () => {
-      expect(await ruleProperties(rule)).toEqual(update.it);
+      expect(await rule.read).toEqual(update.it);
     });
     it('merges updated properties', async () => {
 
@@ -175,7 +174,7 @@ describe('StypRule', () => {
 
       rule.add(update2);
 
-      expect(await ruleProperties(rule)).toEqual({ ...update.it, ...update2 });
+      expect(await rule.read).toEqual({ ...update.it, ...update2 });
     });
     it('sends updated properties', () => {
 
@@ -199,7 +198,7 @@ describe('StypRule', () => {
     });
 
     it('removes properties', async () => {
-      expect(await ruleProperties(rule)).toEqual({});
+      expect(await rule.read).toEqual({});
     });
     it('makes rule empty', () => {
       expect(rule.empty).toBe(true);
@@ -252,13 +251,13 @@ describe('StypRule', () => {
 
         const initial = { $init: 'abstract-value.ts' };
 
-        mockSpec.mockImplementation(() => trackValue(initial).read());
+        mockSpec.mockImplementation(() => trackValue(initial).read);
 
         const update: StypProperties = { width: '100%' };
 
         root.rules.add(rule.selector, update);
 
-        expect(await ruleProperties(rule)).toEqual({ ...initial, ...update });
+        expect(await rule.read).toEqual({ ...initial, ...update });
       });
       it('adds nested rule', async () => {
 
@@ -266,7 +265,7 @@ describe('StypRule', () => {
         const updated2 = rule.rules.add({ e: 'element-1-2' }, update2);
 
         expect(root.rules.get(updated2.selector)).toBe(updated2);
-        expect(await ruleProperties(updated2)).toEqual(update2);
+        expect(await updated2.read).toEqual(update2);
       });
       it('sends rule list update', () => {
 
@@ -466,7 +465,7 @@ describe('StypRule', () => {
 
         const sel: StypSelector = { c: 'watched' };
 
-        expect(await readProperties(rule.rules.watch(sel))).toEqual({});
+        expect(await rule.rules.watch(sel)).toEqual({});
       });
       it('receives existing rule properties', async () => {
 
@@ -474,7 +473,7 @@ describe('StypRule', () => {
 
         rule.rules.add(sel, { $name: 'watched' });
 
-        expect(await readProperties(rule.rules.watch(sel))).toEqual({ $name: 'watched' });
+        expect(await rule.rules.watch(sel)).toEqual({ $name: 'watched' });
       });
       it('receives added rule properties', async () => {
 
@@ -483,7 +482,7 @@ describe('StypRule', () => {
 
         rule.rules.add(sel, { $name: 'watched' });
 
-        expect(await readProperties(watch)).toEqual({ $name: 'watched' });
+        expect(await watch).toEqual({ $name: 'watched' });
       });
       it('handles rule removal', async () => {
 
@@ -492,11 +491,11 @@ describe('StypRule', () => {
         const watch = rule.rules.watch(sel);
         const receiver = jest.fn();
 
-        watch.to(receiver);
+        watch(receiver);
         watched.remove();
 
         expect(receiver).toHaveBeenCalledWith({});
-        expect(await readProperties(watch)).toEqual({});
+        expect(await watch).toEqual({});
       });
       it('can be tracked when supply is cut off', async () => {
 
@@ -506,12 +505,12 @@ describe('StypRule', () => {
 
         const watch = rule.rules.watch(sel);
         const receiver = jest.fn();
-        const supply = watch.to(receiver);
+        const supply = watch(receiver);
 
         expect(receiver).toHaveBeenCalledWith({ $name: 'watched' });
 
         supply.off();
-        expect(await readProperties(watch)).toEqual({ $name: 'watched' });
+        expect(await watch).toEqual({ $name: 'watched' });
       });
     });
   });
@@ -531,8 +530,8 @@ describe('StypRule', () => {
       const updateReceiver = jest.fn();
       const rootUpdateReceiver = jest.fn();
 
-      onSupplied(rule.rules).to(updateReceiver);
-      onSupplied(root.rules).to(rootUpdateReceiver);
+      onSupplied(rule.rules)(updateReceiver);
+      onSupplied(root.rules)(rootUpdateReceiver);
 
       rule.rules.get(subSelector[0])!.remove();
 
@@ -552,8 +551,8 @@ describe('StypRule', () => {
       const updateReceiver = jest.fn();
       const rootUpdateReceiver = jest.fn();
 
-      onSupplied(rule.rules.nested).to(updateReceiver);
-      onSupplied(root.rules.nested).to(rootUpdateReceiver);
+      onSupplied(rule.rules.nested)(updateReceiver);
+      onSupplied(root.rules.nested)(rootUpdateReceiver);
 
       rule.rules.get(subSelector[0])!.remove();
 
@@ -571,7 +570,7 @@ describe('StypRule', () => {
       const rootUpdateReceiver = jest.fn();
 
       rule.rules.self.onUpdate(updateReceiver);
-      onSupplied(root.rules.self).to(rootUpdateReceiver);
+      onSupplied(root.rules.self)(rootUpdateReceiver);
 
       rule.remove();
 
@@ -589,9 +588,9 @@ describe('StypRule', () => {
       const listReceiver = jest.fn();
       const rootListReceiver = jest.fn();
 
-      afterSupplied(rule.rules).to(listReceiver);
+      afterSupplied(rule.rules)(listReceiver);
       listReceiver.mockClear();
-      afterSupplied(root.rules).to(rootListReceiver);
+      afterSupplied(root.rules)(rootListReceiver);
       rootListReceiver.mockClear();
 
       rule.rules.get(subSelector[0])!.remove();
@@ -605,9 +604,9 @@ describe('StypRule', () => {
       const listReceiver = jest.fn();
       const rootListReceiver = jest.fn();
 
-      afterSupplied(rule.rules.nested).to(listReceiver);
+      afterSupplied(rule.rules.nested)(listReceiver);
       listReceiver.mockClear();
-      afterSupplied(root.rules.nested).to(rootListReceiver);
+      afterSupplied(root.rules.nested)(rootListReceiver);
       rootListReceiver.mockClear();
 
       rule.rules.get(subSelector[0])!.remove();
@@ -657,7 +656,7 @@ describe('empty rule', () => {
 
   describe('read', () => {
     it('sends empty properties', async () => {
-      expect(await ruleProperties(rule)).toEqual({});
+      expect(await rule.read).toEqual({});
     });
   });
 

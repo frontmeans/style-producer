@@ -1,6 +1,6 @@
 {
   "name": "@frontmeans/style-producer",
-  "version": "5.6.2",
+  "version": "6.0.0-dev.0",
   "description": "Produces and dynamically updates stylesheets",
   "keywords": [
     "css-in-js",
@@ -18,8 +18,8 @@
     "url": "https://github.com/frontmeans/style-producer/issues"
   },
   "type": "module",
-  "main": "dist/style-producer.cjs",
-  "module": "dist/style-producer.js",
+  "main": "./dist/style-producer.cjs",
+  "module": "./dist/style-producer.js",
   "types": "./index.d.ts",
   "exports": {
     "import": "./dist/style-producer.js",
@@ -29,7 +29,7 @@
     "@frontmeans/namespace-aliaser": "^2.2.2",
     "@frontmeans/render-scheduler": "^1.4.2",
     "@proc7ts/call-thru": "^4.3.1",
-    "@proc7ts/fun-events": "^9.4.2"
+    "@proc7ts/fun-events": "^10.0.0-dev.5"
   },
   "dependencies": {
     "@frontmeans/httongue": "^2.2.0",
@@ -40,7 +40,7 @@
     "@frontmeans/namespace-aliaser": "^2.3.0",
     "@frontmeans/render-scheduler": "^1.5.0",
     "@proc7ts/call-thru": "^4.3.1",
-    "@proc7ts/fun-events": "^9.4.2",
+    "@proc7ts/fun-events": "^10.0.0-dev.5",
     "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-node-resolve": "^11.0.0",
     "@run-z/eslint-config": "^1.1.0",

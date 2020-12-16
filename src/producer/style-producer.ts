@@ -3,7 +3,7 @@
  * @module @frontmeans/style-producer
  */
 import { NamespaceDef } from '@frontmeans/namespace-aliaser';
-import { EventSupplyPeer } from '@proc7ts/fun-events';
+import { SupplyPeer } from '@proc7ts/primitives';
 import { StypProperties, StypRule } from '../rule';
 import { StypSelector } from '../selector';
 import { StypRenderer } from './renderer';
@@ -12,13 +12,13 @@ import { StypWriter } from './writer';
 /**
  * CSS styles producer.
  *
- * It is constructed by [[produceStyle]] function for each processed CSS rule.
+ * It is constructed by {@link produceStyle} function for each processed CSS rule.
  *
- * Implements `EventSupplyPeer` by cutting off the styles supply returned by {@link produceStyle}.
+ * Implements `SupplyPeer` by cutting off the styles supply returned by {@link produceStyle}.
  *
  * @category Rendering
  */
-export interface StyleProducer extends EventSupplyPeer {
+export interface StyleProducer extends SupplyPeer {
 
   /**
    * CSS rule to produce styles for.

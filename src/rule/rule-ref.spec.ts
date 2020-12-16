@@ -127,7 +127,7 @@ describe('RefStypRule', () => {
 
   describe('[AfterEvent__symbol]', () => {
     it('is an alias of `read`', () => {
-      expect(afterSupplied(ref)).toBe(ref.read());
+      expect(afterSupplied(ref)).toBe(ref.read);
     });
   });
 

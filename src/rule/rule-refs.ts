@@ -2,7 +2,7 @@
  * @packageDocumentation
  * @module @frontmeans/style-producer
  */
-import { afterAll, AfterEvent, AfterEvent__symbol, EventKeeper, EventReceiver, EventSupply } from '@proc7ts/fun-events';
+import { afterAll, AfterEvent, AfterEvent__symbol, EventKeeper, mapAfter } from '@proc7ts/fun-events';
 import { StypProperties } from './properties';
 import { StypRule } from './rule';
 import { RefStypRule, StypRuleRef } from './rule-ref';
@@ -16,14 +16,6 @@ import { RefStypRule, StypRuleRef } from './rule-ref';
  * @typeparam R  A type of target map of named CSS properties structures.
  */
 export class StypRuleRefs<R extends StypRuleRefs.Struct<R>> implements EventKeeper<[R]> {
-
-  /**
-   * CSS rule references by name.
-   *
-   * Each property in this map is a CSS rule reference corresponding to the same named property in properties structure.
-   * I.e. it has the same name and the same properties structure of referenced rule.
-   */
-  readonly refs: { readonly [K in keyof R]: StypRuleRef<R[K]> };
 
   /**
    * Constructs named CSS rules by resolving CSS rule referrers.
@@ -54,40 +46,35 @@ export class StypRuleRefs<R extends StypRuleRefs.Struct<R>> implements EventKeep
   }
 
   /**
+   * CSS rule references by name.
+   *
+   * Each property in this map is a CSS rule reference corresponding to the same named property in properties structure.
+   * I.e. it has the same name and the same properties structure of referenced rule.
+   */
+  readonly refs: { readonly [K in keyof R]: StypRuleRef<R[K]> };
+
+  /**
+   * An `AfterEvent` keeper of named CSS properties structures for each CSS rule reference.
+   *
+   * The `[AfterEvent__symbol]` property is an alias of this one.
+   */
+  readonly read: AfterEvent<[R]>;
+
+  /**
    * Constructs named CSS rules.
    *
    * @param refs  A map of named CSS rule references.
    */
   constructor(refs: { readonly [K in keyof R]: StypRuleRef<R[K]> }) {
     this.refs = refs;
-  }
-
-  /**
-   * Builds an `AfterEvent` keeper of named CSS properties structures for each CSS rule reference.
-   *
-   * The `[AfterEvent__symbol]` property is an alias of this one.
-   *
-   * @returns `AfterEvent` keeper of map of named CSS properties structures.
-   */
-  read(): AfterEvent<[R]>;
-
-  /**
-   * Starts sending named CSS properties structures for each CSS rule reference and updates to the given `receiver`.
-   *
-   * @param receiver Target receiver of map of named CSS properties structures.
-   *
-   * @returns Supply of maps of named CSS properties structures.
-   */
-  read(receiver: EventReceiver<[R]>): EventSupply;
-  read(receiver?: EventReceiver<[R]>): AfterEvent<[R]> | EventSupply {
 
     const fromAll: AfterEvent<[{ [K in keyof R]: [StypProperties<any>] }]> = afterAll(this.refs);
 
-    return (this.read = (fromAll.keepThru(flattenProperties) as AfterEvent<[R]>).F)(receiver);
+    this.read = fromAll.do(mapAfter(flattenProperties)) as AfterEvent<[R]>;
   }
 
   [AfterEvent__symbol](): AfterEvent<[R]> {
-    return this.read();
+    return this.read;
   }
 
 }

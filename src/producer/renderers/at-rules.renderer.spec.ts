@@ -1,4 +1,4 @@
-import { EventSupply, eventSupply } from '@proc7ts/fun-events';
+import { Supply } from '@proc7ts/primitives';
 import { stypRoot, StypRule } from '../../rule';
 import { stypTextFormat, StypTextFormatConfig } from '../formats';
 import { produceStyle } from '../produce-style';
@@ -7,11 +7,11 @@ import { StypRenderer } from '../renderer';
 describe('stypRenderAtRules', () => {
 
   let root: StypRule;
-  let done: EventSupply;
+  let done: Supply;
 
   beforeEach(() => {
     root = stypRoot();
-    done = eventSupply();
+    done = new Supply();
   });
   afterEach(() => {
     done.off();

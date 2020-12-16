@@ -2,7 +2,7 @@
  * @packageDocumentation
  * @module @frontmeans/style-producer
  */
-import { EventSupply } from '@proc7ts/fun-events';
+import { Supply } from '@proc7ts/primitives';
 import { StypRules } from '../rule';
 import { StypFormat } from './format';
 import { produceBasicStyle } from './produce-basic-style';
@@ -24,7 +24,7 @@ import { defaultStypRenderers } from './renderers/default-renderers.impl';
  *
  * @returns Styles supply. Once cut off (i.e. its `off()` method is called) the produced stylesheets are removed.
  */
-export function produceStyle(rules: StypRules, format: StypFormat): EventSupply {
+export function produceStyle(rules: StypRules, format: StypFormat): Supply {
   return produceBasicStyle(rules, { ...format, renderer: defaultStypRenderers(format.renderer) });
 }
 
