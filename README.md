@@ -193,6 +193,7 @@ in type safe manner:
 
 ```typescript
 import { RefStypRule, StypColor, StypLengthPt, StypRGB, stypRoot } from '@frontmeans/style-producer';
+import { mapAfter } from '@proc7ts/fun-events';
 
 // Type-safe CSS properties representing custom settings
 interface MySettings {
@@ -218,25 +219,25 @@ const root = stypRoot();
 const mySettingsRef = MySettings(root);
 
 // Define `<body>` style
-root.add(mySettingsRef.read.thru(
-    ({ $color, $bgColor, $gap }) => ({
+root.add(mySettingsRef.read.do(
+    mapAfter(({ $color, $bgColor, $gap }) => ({
       color: $color, // Apply default text color
       backgroundColor: $bgColor, // Apply default background color
       padding: $gap, // Padding is based on default gap
-    }),
+    })),
 ));
  
 
 // Define `<input>` element style based on default settings.
 root.rules.add(
     { e: 'input' },
-    mySettingsRef.read.thru(
-        ({ $color, $bgColor, $gap }) => ({
+    mySettingsRef.read.do(
+        mapAfter(({ $color, $bgColor, $gap }) => ({
           color: $color,
           backgroundColor: $bgColor.hsl.set(hsl => ({ l: hsl.l * 0.85 })), // Convert to HSL and darken input background
           padding: `${$gap} ${$gap.mul(1.5)}`, // Padding is based on default gap
           border: `1px solid ${$color}`,          
-        }),
+        })),
     ),
 );
 
