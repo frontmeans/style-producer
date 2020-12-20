@@ -86,7 +86,7 @@ export namespace StypProperties {
    */
   export type Builder =
   /**
-   * @param rule  A style rule the properties generated for.
+   * @param rule - A style rule the properties generated for.
    *
    * @return An `AfterEvent` registrar of CSS properties receivers.
    */

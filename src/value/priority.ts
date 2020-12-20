@@ -42,7 +42,7 @@ export const enum StypPriority {
  * Splits undefined CSS property value onto non-prioritized value and priority.
  *
  * @category CSS Value
- * @param value  Undefined CSS property value to split.
+ * @param value - Undefined CSS property value to split.
  *
  * @returns An `[undefined, 0]` tuple.
  */
@@ -51,7 +51,7 @@ export function stypSplitPriority<T extends StypValue>(value: undefined): [undef
 /**
  * Splits string CSS property value onto non-prioritized value and priority.
  *
- * @param value  CSS property value to split.
+ * @param value - CSS property value to split.
  *
  * @returns A tuple containing the value without `!priority` suffix, and numeric priority (0 or 1).
  */
@@ -60,7 +60,7 @@ export function stypSplitPriority(value: string): [string, 0 | 1];
 /**
  * Splits scalar CSS property value onto non-prioritized value and priority.
  *
- * @param value  CSS property value to split.
+ * @param value - CSS property value to split.
  *
  * @returns A tuple containing the value and `0` priority.
  */
@@ -69,7 +69,7 @@ export function stypSplitPriority<T extends number | boolean>(value: T): [T, 0];
 /**
  * Splits arbitrary CSS property value onto value non-prioritized value and priority.
  *
- * @param value  CSS property value to split.
+ * @param value - CSS property value to split.
  *
  * @returns A tuple containing the value and numeric priority.
  */

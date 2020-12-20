@@ -69,7 +69,7 @@ export abstract class StypRule implements EventKeeper<[StypProperties]> {
   /**
    * Sets CSS properties of this rule.
    *
-   * @param properties  CSS properties specifier. Or nothing to clear them.
+   * @param properties - CSS properties specifier. Or nothing to clear them.
    *
    * @returns `this` rule instance.
    */
@@ -78,7 +78,7 @@ export abstract class StypRule implements EventKeeper<[StypProperties]> {
   /**
    * Appends CSS properties to this rule.
    *
-   * @param properties  CSS properties specifier.
+   * @param properties - CSS properties specifier.
    *
    * @returns `this` rule instance.
    */
@@ -100,7 +100,7 @@ export abstract class StypRule implements EventKeeper<[StypProperties]> {
   /**
    * Removes this rule from hierarchy along with all nested rules.
    *
-   * @param reason  Optional removal reason.
+   * @param reason - Optional removal reason.
    *
    * @returns `this` (just removed) rule instance.
    */
@@ -150,7 +150,7 @@ export abstract class StypRuleList implements StypRules, EventKeeper<[StypRuleLi
   /**
    * Grabs rules from this list matching the given `query`.
    *
-   * @param query  CSS rule query to match.
+   * @param query - CSS rule query to match.
    *
    * @returns Dynamic list of rules in this list matching the given query.
    */
@@ -182,8 +182,8 @@ export abstract class StypRuleHierarchy extends StypRuleList {
    *
    * Creates target rule if necessary.
    *
-   * @param selector  Target rule selector.
-   * @param properties  Optional CSS properties specifier.
+   * @param selector - Target rule selector.
+   * @param properties - Optional CSS properties specifier.
    *
    * @returns Modified CSS rule.
    */
@@ -192,7 +192,7 @@ export abstract class StypRuleHierarchy extends StypRuleList {
   /**
    * Returns nested CSS rule matching the given `selector`.
    *
-   * @param selector  Target rule selector.
+   * @param selector - Target rule selector.
    *
    * @returns Either matching CSS rule, or `undefined` if not found.
    */
@@ -203,7 +203,7 @@ export abstract class StypRuleHierarchy extends StypRuleList {
    *
    * The properties are empty when the watched rule does not exist.
    *
-   * @param selector  CSS selector of watched rule.
+   * @param selector - CSS selector of watched rule.
    *
    * @returns An `AfterEvent` registrar of CSS properties receiver.
    */

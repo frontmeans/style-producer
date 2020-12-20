@@ -76,7 +76,7 @@ const noStypRules: StypRuleList = (/*#__PURE__*/ new Rules({
  * Constructs dynamically updated CSS rule list out of rule sources.
  *
  * @category CSS Rule
- * @param sources  CSS rule sources.
+ * @param sources - CSS rule sources.
  *
  * @returns Dynamic CSS rule list.
  */
@@ -101,7 +101,7 @@ function rulesFromSource(source: StypRules.Source): StypRules {
  * report them as updates instead.
  *
  * @category CSS Rule
- * @param sources  CSS rule sources.
+ * @param sources - CSS rule sources.
  *
  * @returns Dynamic CSS rule list.
  */

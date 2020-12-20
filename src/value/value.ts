@@ -29,14 +29,14 @@ export type StypValue =
  * [color](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value), etc.
  *
  * @category CSS Value
- * @typeparam Self  A type of itself.
+ * @typeParam TSelf - A type of itself.
  */
-export abstract class StypValueStruct<Self extends StypValueStruct<Self>> {
+export abstract class StypValueStruct<TSelf extends StypValueStruct<TSelf>> {
 
   /**
    * CSS property value priority.
    *
-   * The value [[StypPriority.Important]] and above means the property is `!important`. Everything else means normal
+   * The value {@link StypPriority.Important} and above means the property is `!important`. Everything else means normal
    * priority.
    *
    * The property value with higher priority number takes precedence over the one with lower one.
@@ -46,7 +46,7 @@ export abstract class StypValueStruct<Self extends StypValueStruct<Self>> {
   /**
    * Constructs structured CSS property value.
    *
-   * @param opts  Construction options.
+   * @param opts - Construction options.
    */
   protected constructor(opts?: StypValue.Opts) {
     this.priority = opts && opts.priority || StypPriority.Default;
@@ -55,19 +55,19 @@ export abstract class StypValueStruct<Self extends StypValueStruct<Self>> {
   /**
    * Checks whether this value equals to CSS property value.
    *
-   * @param other  CSS property value to compare with.
+   * @param other - CSS property value to compare with.
    */
   abstract is(other: StypValue): boolean;
 
   /**
    * Creates structured CSS value with the given `priority`.
    *
-   * @param priority  New priority.
+   * @param priority - New priority.
    *
    * @returns Either a new value equal to this one but having the given `priority`, or this one if `priority` did
    * not change.
    */
-  abstract prioritize(priority: number): Self;
+  abstract prioritize(priority: number): TSelf;
 
   /**
    * Creates `!important` variant of this value.
@@ -75,7 +75,7 @@ export abstract class StypValueStruct<Self extends StypValueStruct<Self>> {
    * @returns Either a new value equal to this one but having `priority` equal to [[StypPriority.Important]],
    * or this one if already the case.
    */
-  important(): Self {
+  important(): TSelf {
     return this.prioritize(StypPriority.Important);
   }
 
@@ -85,7 +85,7 @@ export abstract class StypValueStruct<Self extends StypValueStruct<Self>> {
    * @returns Either a new value equal to this one but having `priority` equal to [[StypPriority.Usual]],
    * or this one if already the case.
    */
-  usual(): Self {
+  usual(): TSelf {
     return this.prioritize(StypPriority.Usual);
   }
 
@@ -95,7 +95,7 @@ export abstract class StypValueStruct<Self extends StypValueStruct<Self>> {
    *
    * This method allows to use an structured value instance as {@link StypMapper.Mapping CSS property mapping}.
    *
-   * @param source  A raw property value that should be converted.
+   * @param source - A raw property value that should be converted.
    *
    * @returns Mapped property value.
    */
@@ -138,8 +138,8 @@ export namespace StypValue {
  * method is applied when at least one of the values is structured.
  *
  * @category CSS Value
- * @param first  The first CSS property value to compare.
- * @param second  The second CSS property value to compare.
+ * @param first - The first CSS property value to compare.
+ * @param second - The second CSS property value to compare.
  *
  * @returns `true` if `first` equals to `second`, or `false otherwise.
  */

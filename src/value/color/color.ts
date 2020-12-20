@@ -39,7 +39,7 @@ export abstract class StypColorStruct<Self extends StypColorStruct<Self, Coords>
   /**
    * Constructs another color value with updated coordinates.
    *
-   * @param coords  Either partial color coordinates to apply or a function returning them and accepting this color
+   * @param coords - Either partial color coordinates to apply or a function returning them and accepting this color
    * instance as its only argument. Missing values are taken from this color.
    *
    * @returns Updated color value.
@@ -87,8 +87,8 @@ export class StypRGB extends StypColorStruct<StypRGB, StypRGB.Coords> implements
   /**
    * Constructs RGB color value.
    *
-   * @param coords  Color coordinates.
-   * @param opts  Construction options.
+   * @param coords - Color coordinates.
+   * @param opts - Construction options.
    */
   constructor(coords: StypRGB.Coords, opts?: StypValue.Opts) {
     super(opts);
@@ -250,8 +250,8 @@ export class StypHSL extends StypColorStruct<StypHSL, StypHSL.Coords> implements
   /**
    * Constructs HSL color value.
    *
-   * @param coords  Color coordinates.
-   * @param opts  Construction options.
+   * @param coords - Color coordinates.
+   * @param opts - Construction options.
    */
   constructor(coords: StypHSL.Coords, opts?: StypValue.Opts) {
     super(opts);
@@ -379,7 +379,7 @@ export const StypColor = {
    *
    * This method allows to use a [[StypColor]] object as {@link StypMapper.Mapping CSS property mapping}.
    *
-   * @param source  A raw property value that should be converted.
+   * @param source - A raw property value that should be converted.
    *
    * @returns Mapped property value or `undefined`.
    */

@@ -56,8 +56,8 @@ export namespace StypRenderer {
    */
   export type Function =
   /**
-   * @param producer  Style producer instance.
-   * @param properties  CSS properties to render.
+   * @param producer - Style producer instance.
+   * @param properties - CSS properties to render.
    */
       (this: void, producer: StyleProducer, properties: StypProperties) => void;
 
@@ -85,8 +85,8 @@ export namespace StypRenderer {
      * It should normally call a [[StyleProducer.render]] method as the last operation to allow other renderers in chain
      * to do their job.
      *
-     * @param producer  Style producer instance.
-     * @param properties  CSS properties to render.
+     * @param producer - Style producer instance.
+     * @param properties - CSS properties to render.
      */
     render(producer: StyleProducer, properties: StypProperties): void;
 
@@ -116,7 +116,7 @@ export namespace StypRenderer {
      * This is called once per rule. The returned renderer function is used then to render and update a style for the
      * `rule`.
      *
-     * @param rule  CSS rule to create renderer for.
+     * @param rule - CSS rule to create renderer for.
      *
      * @returns A renderer function or specifier to use.
      */
@@ -135,8 +135,8 @@ export namespace StypRenderer {
      * It should normally call a [[StyleProducer.render]] method as the last operation to allow other renderers in chain
      * to do their job.
      *
-     * @param producer  Style producer instance.
-     * @param properties  CSS properties to render.
+     * @param producer - Style producer instance.
+     * @param properties - CSS properties to render.
      */
     render(producer: StyleProducer, properties: StypProperties): void;
 
@@ -147,7 +147,7 @@ export namespace StypRenderer {
      *
      * When omitted the original properties will be used instead.
      *
-     * @param properties  `AfterEvent` keeper of CSS rule properties. This is either the one from CSS rule,
+     * @param properties - `AfterEvent` keeper of CSS rule properties. This is either the one from CSS rule,
      * or the one returned from previous renderer specifier in renderers chain.
      *
      * @returns CSS properties event keeper.

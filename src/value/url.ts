@@ -32,7 +32,7 @@ export class StypURL extends StypValueStruct<StypURL> {
    *
    * Strings are treated as URLs (without `url()` functional syntax). `!important` suffix is respected.
    *
-   * @param source  A raw property value that should be converted.
+   * @param source - A raw property value that should be converted.
    *
    * @returns Mapped property value or `undefined`.
    */
@@ -57,8 +57,8 @@ export class StypURL extends StypValueStruct<StypURL> {
   /**
    * Constructs URL value.
    *
-   * @param url  Target URL.
-   * @param opts  Construction options.
+   * @param url - Target URL.
+   * @param opts - Construction options.
    */
   constructor(url: string, opts?: StypValue.Opts) {
     super(opts);

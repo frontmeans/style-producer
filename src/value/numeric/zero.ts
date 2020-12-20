@@ -13,9 +13,9 @@ import { StypNumericStruct } from './index';
  * them.
  *
  * @category CSS Value
- * @typeparam Unit  Allowed unit type.
+ * @typeParam TUnit - Allowed unit type.
  */
-export interface StypZero<Unit extends string> extends StypNumericStruct<StypZero<Unit>, Unit> {
+export interface StypZero<TUnit extends string> extends StypNumericStruct<StypZero<TUnit>, TUnit> {
 
   readonly type: 0;
 

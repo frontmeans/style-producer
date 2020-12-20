@@ -69,7 +69,7 @@ export interface StypFormat extends StypFormatConfig {
    *
    * This method is called once per each CSS rule.
    *
-   * @param producer  Style producer instance.
+   * @param producer - Style producer instance.
    *
    * @returns CSS style sheet writer.
    */

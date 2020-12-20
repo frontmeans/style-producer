@@ -323,7 +323,7 @@ class StypSheetTextWriter extends AbstractStypGroupTextWriter implements StypWri
  * style production} in order to receive CSS text for style sheets.
  *
  * @category Rendering
- * @param config  Textual format config.
+ * @param config - Textual format config.
  *
  * @returns Textual CSS production format.
  */

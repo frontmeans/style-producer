@@ -29,9 +29,9 @@ export namespace StypWriter {
     /**
      * Inserts a new global CSS at-rule into target style sheet, with some restrictions.
      *
-     * @param name  Rule name of newly inserted at-rule. E.g. `@namespace` or `@import`.
-     * @param value  Verbatim value of newly inserted at-rule.
-     * @param index  A positive integer less than or equal to the number of added rules, representing the newly inserted
+     * @param name - Rule name of newly inserted at-rule. E.g. `@namespace` or `@import`.
+     * @param value - Verbatim value of newly inserted at-rule.
+     * @param index - A positive integer less than or equal to the number of added rules, representing the newly inserted
      * rule's position in target style sheet. The default is the number of added rules.
      */
     addGlobal(name: string, value: string, index?: number): void;
@@ -39,9 +39,9 @@ export namespace StypWriter {
     /**
      * Inserts a new grouping CSS at-rule into target style sheet, with some restrictions.
      *
-     * @param name  Rule name of newly inserted at-rule. E.g. `@media`, `@keyframes`, or `@condition`.
-     * @param params  Verbatim parameters of newly inserted rule. E.g. media query.
-     * @param index  A positive integer less than or equal to the number of added rules, representing the newly inserted
+     * @param name - Rule name of newly inserted at-rule. E.g. `@media`, `@keyframes`, or `@condition`.
+     * @param params - Verbatim parameters of newly inserted rule. E.g. media query.
+     * @param index - A positive integer less than or equal to the number of added rules, representing the newly inserted
      * rule's position in target style sheet. The default is the number of added rules.
      *
      * @returns  Inserted CSS style declarations writer.
@@ -51,8 +51,8 @@ export namespace StypWriter {
     /**
      * Inserts a new empty CSS style declarations rule into target style sheet, with some restrictions.
      *
-     * @param selector  CSS selector of the newly inserted rule.
-     * @param index  A positive integer less than or equal to the number of added rules, representing the newly inserted
+     * @param selector - CSS selector of the newly inserted rule.
+     * @param index - A positive integer less than or equal to the number of added rules, representing the newly inserted
      * rule's position in target style sheet. The default is the number of added rules.
      *
      * @returns  Inserted CSS style declarations writer.
@@ -88,9 +88,9 @@ export namespace StypWriter {
     /**
      * Inserts a nested empty grouping CSS at-rule into target one, with some restrictions.
      *
-     * @param name  Rule name of newly inserted at-rule. E.g. `@media`, `@keyframes`, or `@condition`.
-     * @param params  Verbatim parameters of newly inserted rule. E.g. media query.
-     * @param index  A positive integer less than or equal to the number of added rules, representing the newly inserted
+     * @param name - Rule name of newly inserted at-rule. E.g. `@media`, `@keyframes`, or `@condition`.
+     * @param params - Verbatim parameters of newly inserted rule. E.g. media query.
+     * @param index - A positive integer less than or equal to the number of added rules, representing the newly inserted
      * rule's position in target grouping rule. The default is the number of added rules.
      *
      * @returns  Inserted CSS style declarations writer.
@@ -100,8 +100,8 @@ export namespace StypWriter {
     /**
      * Inserts a nested empty CSS style declarations rule into target grouping one, with some restrictions.
      *
-     * @param selector  CSS selector of the newly inserted rule.
-     * @param index  A positive integer less than or equal to the number of added rules, representing the newly inserted
+     * @param selector - CSS selector of the newly inserted rule.
+     * @param index - A positive integer less than or equal to the number of added rules, representing the newly inserted
      * rule's position in target grouping rule. The default is the number of added rules.
      *
      * @returns  Inserted CSS style declarations writer.
@@ -120,9 +120,9 @@ export namespace StypWriter {
     /**
      * Sets CSS property value.
      *
-     * @param name  Property name (hyphen case) to be modified.
-     * @param value  New property value.
-     * @param priority  New property value priority. The value [[StypPriority.Important]] and above means the property
+     * @param name - Property name (hyphen case) to be modified.
+     * @param value - New property value.
+     * @param priority - New property value priority. The value [[StypPriority.Important]] and above means the property
      * is `!important`.
      */
     set(name: string, value: string, priority: number): void;
@@ -130,7 +130,7 @@ export namespace StypWriter {
     /**
      * Replaces CSS style declarations with the given CSS text.
      *
-     * @param css  CSS text containing CSS style declarations.
+     * @param css - CSS text containing CSS style declarations.
      */
     replace(css: string): void;
 

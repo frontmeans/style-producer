@@ -18,7 +18,7 @@ describe('StypTime', () => {
   describe('of', () => {
     it('constructs `StypTime` instance', () => {
 
-      const time = StypTime.of(13, 'ms') as StypDimension<StypTime.Unit>;
+      const time = StypTime.of(13, 'ms') as StypDimension<StypTime.TUnit>;
 
       expect(time.type).toBe('dimension');
       expect(time.dim).toBe(StypTime);
@@ -48,7 +48,7 @@ describe('StypTimePt', () => {
   describe('of', () => {
     it('constructs `StypTimePt` instance', () => {
 
-      const time = StypTimePt.of(13, '%') as StypDimension<StypTimePt.Unit>;
+      const time = StypTimePt.of(13, '%') as StypDimension<StypTimePt.TUnit>;
 
       expect(time.type).toBe('dimension');
       expect(time.dim).toBe(StypTimePt);

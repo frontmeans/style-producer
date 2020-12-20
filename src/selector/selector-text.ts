@@ -19,7 +19,7 @@ export interface StypSelectorFormat {
    * Qualifier formatting function. When present, it is called for each qualifier to build its
    * textual representation. When unspecified, the qualifiers won't be attached to resulting CSS selector text.
    *
-   * @param qualifier  Qualifier to format.
+   * @param qualifier - Qualifier to format.
    *
    * @returns Textual representation of `qualifier`.
    */
@@ -38,8 +38,8 @@ export interface StypSelectorFormat {
  * Converts structured CSS selector to its textual representation.
  *
  * @category CSS Rule
- * @param selector  Target CSS selector.
- * @param format  CSS selector format.
+ * @param selector - Target CSS selector.
+ * @param format - CSS selector format.
  *
  * @returns CSS selector string.
  */

@@ -45,7 +45,7 @@ export interface StyleProducer extends SupplyPeer {
    *
    * This is based on {@link StypFormatConfig.nsAlias production configuration option}.
    *
-   * @param ns  A definition of namespace to find alias for.
+   * @param ns - A definition of namespace to find alias for.
    *
    * @returns Namespace alias.
    */
@@ -56,8 +56,8 @@ export interface StyleProducer extends SupplyPeer {
    *
    * This method relies on renderers chain. For each renderer in chain this method calls the next one.
    *
-   * @param properties  CSS properties to render.
-   * @param options  Rendering options.
+   * @param properties - CSS properties to render.
+   * @param options - Rendering options.
    */
   render(properties: StypProperties, options?: StypRenderer.Options): void;
 
@@ -67,7 +67,7 @@ export interface StyleProducer extends SupplyPeer {
    * If {@link writer target} is style sheet or grouping rule, then inserts the last style rule.
    * Otherwise just returns `writer`.
    *
-   * @param selector  Appended CSS rule selector. Equals to the one from this producer when omitted.
+   * @param selector - Appended CSS rule selector. Equals to the one from this producer when omitted.
    *
    * @returns Either style writer to appended empty CSS rule, or `writer`.
    */

@@ -10,9 +10,9 @@ import { StypColor, StypRGB } from './color';
  * Both the `weight` and the relative opacity of each color determines how much of each color is in the result.
  *
  * @category CSS Value
- * @param color1  First color to mix
- * @param color2  Second color to mix.
- * @param weight  A number between `0` and `1`. A larger weight indicates that more of `color1` should be used, and a
+ * @param color1 - First color to mix
+ * @param color2 - Second color to mix.
+ * @param weight - A number between `0` and `1`. A larger weight indicates that more of `color1` should be used, and a
  * smaller weight indicates that more of `color2` should be used.
  *
  * @returns Mixed color.

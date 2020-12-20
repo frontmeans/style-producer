@@ -13,36 +13,36 @@ import { RefStypRule, StypRuleRef } from './rule-ref';
  * Implements an event keeper interface by sending named CSS properties structures for each CSS rule reference.
  *
  * @category CSS Rule
- * @typeparam R  A type of target map of named CSS properties structures.
+ * @typeParam TRefMap - A type of target map of named CSS properties structures.
  */
-export class StypRuleRefs<R extends StypRuleRefs.Struct<R>> implements EventKeeper<[R]> {
+export class StypRuleRefs<TRefMap extends StypRuleRefs.Struct<TRefMap>> implements EventKeeper<[TRefMap]> {
 
   /**
    * Constructs named CSS rules by resolving CSS rule referrers.
    *
-   * @typeparam R  A type of target map of named CSS properties structures.
-   * @param referrers  Named CSS rule referrers to resolve.
-   * @param root  A root CSS rule the references will be relative to.
+   * @typeParam TRefMap - A type of target map of named CSS properties structures.
+   * @param referrers - Named CSS rule referrers to resolve.
+   * @param root - A root CSS rule the references will be relative to.
    *
    * @returns New names CSS rules instance.
    */
-  static by<R extends StypRuleRefs.Struct<R>>(
-      referrers: { readonly [K in keyof R]: RefStypRule<R[K]> },
+  static by<TRefMap extends StypRuleRefs.Struct<TRefMap>>(
+      referrers: { readonly [K in keyof TRefMap]: RefStypRule<TRefMap[K]> },
       root: StypRule,
-  ): StypRuleRefs<R>;
+  ): StypRuleRefs<TRefMap>;
 
-  static by<R extends StypRuleRefs.Struct<R>>(
+  static by<TRefMap extends StypRuleRefs.Struct<TRefMap>>(
       referrers: { readonly [name: string]: RefStypRule<any> },
       root: StypRule,
-  ): StypRuleRefs<R> {
+  ): StypRuleRefs<TRefMap> {
 
-    const refs: { [K in keyof R]?: StypRuleRef<any> } = {};
+    const refs: { [K in keyof TRefMap]?: StypRuleRef<any> } = {};
 
     for (const key of Object.keys(referrers)) {
-      refs[key as keyof R] = referrers[key](root);
+      refs[key as keyof TRefMap] = referrers[key](root);
     }
 
-    return new StypRuleRefs<R>(refs as { [K in keyof R]: StypRuleRef<R[K]> });
+    return new StypRuleRefs<TRefMap>(refs as { [K in keyof TRefMap]: StypRuleRef<TRefMap[K]> });
   }
 
   /**
@@ -51,29 +51,29 @@ export class StypRuleRefs<R extends StypRuleRefs.Struct<R>> implements EventKeep
    * Each property in this map is a CSS rule reference corresponding to the same named property in properties structure.
    * I.e. it has the same name and the same properties structure of referenced rule.
    */
-  readonly refs: { readonly [K in keyof R]: StypRuleRef<R[K]> };
+  readonly refs: { readonly [K in keyof TRefMap]: StypRuleRef<TRefMap[K]> };
 
   /**
    * An `AfterEvent` keeper of named CSS properties structures for each CSS rule reference.
    *
    * The `[AfterEvent__symbol]` property is an alias of this one.
    */
-  readonly read: AfterEvent<[R]>;
+  readonly read: AfterEvent<[TRefMap]>;
 
   /**
    * Constructs named CSS rules.
    *
-   * @param refs  A map of named CSS rule references.
+   * @param refs - A map of named CSS rule references.
    */
-  constructor(refs: { readonly [K in keyof R]: StypRuleRef<R[K]> }) {
+  constructor(refs: { readonly [K in keyof TRefMap]: StypRuleRef<TRefMap[K]> }) {
     this.refs = refs;
 
-    const fromAll: AfterEvent<[{ [K in keyof R]: [StypProperties<any>] }]> = afterAll(this.refs);
+    const fromAll: AfterEvent<[{ [K in keyof TRefMap]: [StypProperties<any>] }]> = afterAll(this.refs);
 
-    this.read = fromAll.do(mapAfter(flattenProperties)) as AfterEvent<[R]>;
+    this.read = fromAll.do(mapAfter(flattenProperties)) as AfterEvent<[TRefMap]>;
   }
 
-  [AfterEvent__symbol](): AfterEvent<[R]> {
+  [AfterEvent__symbol](): AfterEvent<[TRefMap]> {
     return this.read;
   }
 
@@ -82,9 +82,9 @@ export class StypRuleRefs<R extends StypRuleRefs.Struct<R>> implements EventKeep
 /**
  * @internal
  */
-function flattenProperties<R extends StypRuleRefs.Struct<R>>(
+function flattenProperties<TRefMap extends StypRuleRefs.Struct<TRefMap>>(
     propertiesMap: { readonly [name: string]: [StypProperties<any>] },
-): R {
+): TRefMap {
 
   const result: { [name: string]: StypProperties<any> } = {};
 
@@ -92,7 +92,7 @@ function flattenProperties<R extends StypRuleRefs.Struct<R>>(
     result[name] = propertiesMap[name][0];
   }
 
-  return result as R;
+  return result as TRefMap;
 }
 
 export namespace StypRuleRefs {
@@ -101,9 +101,11 @@ export namespace StypRuleRefs {
    * A map of named CSS properties structures.
    *
    * Each property in this map corresponds to CSS rule reference with the same CSS properties structure.
+   *
+   * @typeParam TRefMap - A type of target map of named CSS properties structures.
    */
-  export type Struct<R = { readonly [name: string]: StypProperties<any> }> = {
-    readonly [K in keyof R]: StypProperties<any>;
+  export type Struct<TRefMap = { readonly [name: string]: StypProperties<any> }> = {
+    readonly [K in keyof TRefMap]: StypProperties<any>;
   };
 
   /**
@@ -111,10 +113,10 @@ export namespace StypRuleRefs {
    *
    * These referrers then resolved to the same named CSS rule references.
    *
-   * @typeparam R  A type of target map of named CSS properties structures.
+   * @typeParam TRefMap - A type of target map of named CSS properties structures.
    */
-  export type Referrers<R extends Struct<R>> = {
-    readonly [K in keyof R]: RefStypRule<R[K]>;
+  export type Referrers<TRefMap extends Struct<TRefMap>> = {
+    readonly [K in keyof TRefMap]: RefStypRule<TRefMap[K]>;
   };
 
 }

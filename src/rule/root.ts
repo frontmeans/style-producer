@@ -21,7 +21,7 @@ const rootSelector: StypSelector.Normalized = [];
  * The root CSS rule selector is empty.
  *
  * @category CSS Rule
- * @param properties  Initial CSS rule properties specifier.
+ * @param properties - Initial CSS rule properties specifier.
  *
  * @returns New root CSS rule.
  */

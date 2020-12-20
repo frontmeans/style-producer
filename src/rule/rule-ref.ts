@@ -41,7 +41,7 @@ export abstract class StypRuleRef<T extends StypProperties<T>> implements EventK
   /**
    * Sets CSS properties of the referenced rule.
    *
-   * @param properties  CSS properties specifier. Or nothing to clear them.
+   * @param properties - CSS properties specifier. Or nothing to clear them.
    *
    * @returns `this` rule instance.
    */
@@ -50,7 +50,7 @@ export abstract class StypRuleRef<T extends StypProperties<T>> implements EventK
   /**
    * Appends CSS properties to the references CSS rule.
    *
-   * @param properties  CSS properties specifier.
+   * @param properties - CSS properties specifier.
    *
    * @returns `this` rule instance.
    */
@@ -79,7 +79,7 @@ export abstract class StypRuleRef<T extends StypProperties<T>> implements EventK
  */
 export type RefStypRule<T extends StypProperties<T>> =
 /**
- * @param root  Root CSS rule the constructed reference will be relative to.
+ * @param root - Root CSS rule the constructed reference will be relative to.
  *
  * @returns CSS rule reference.
  */
@@ -131,8 +131,8 @@ export const RefStypRule = {
    * Constructs a CSS rule referrer that maps original CSS properties accordingly to the given `mappings`.
    *
    * @typeparam T  CSS properties structure of referenced rule.
-   * @param selector  CSS selector of target rule.
-   * @param mappings  Either a mappings of CSS properties, an event keeper sending such mappings, or a function
+   * @param selector - CSS selector of target rule.
+   * @param mappings - Either a mappings of CSS properties, an event keeper sending such mappings, or a function
    * returning one of them and accepting a root CSS rule as its only argument.
    * The constructed reference will be relative to as its only parameter.
    *

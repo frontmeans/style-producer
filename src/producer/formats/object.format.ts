@@ -133,7 +133,7 @@ export interface StypObjectFormatConfig extends StypFormatConfig {
  * with CSS object model methods.
  *
  * @category Rendering
- * @param config  Object format configuration.
+ * @param config - Object format configuration.
  *
  * @returns CSS production format.
  */
