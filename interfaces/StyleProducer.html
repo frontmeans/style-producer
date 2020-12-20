@@ -70,14 +70,14 @@
 						<p>CSS styles producer.</p>
 					</div>
 					<p>It is constructed by <a href="../globals.html#produceStyle">produceStyle</a> function for each processed CSS rule.</p>
-					<p>Implements <code>EventSupplyPeer</code> by cutting off the styles supply returned by <a href="../globals.html#produceStyle">produceStyle</a>.</p>
+					<p>Implements <code>SupplyPeer</code> by cutting off the styles supply returned by <a href="../globals.html#produceStyle">produceStyle</a>.</p>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="tsd-signature-type">EventSupplyPeer</span>
+						<span class="tsd-signature-type">SupplyPeer</span>
 						<ul class="tsd-hierarchy">
 							<li>
 								<span class="target">StyleProducer</span>
@@ -93,10 +93,10 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="StyleProducer.html#_EventSupply__symbol_" class="tsd-kind-icon">[<wbr>Event<wbr>Supply__symbol]</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="StyleProducer.html#rule" class="tsd-kind-icon">rule</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="StyleProducer.html#selector" class="tsd-kind-icon">selector</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="StyleProducer.html#sheet" class="tsd-kind-icon">sheet</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="StyleProducer.html#supply" class="tsd-kind-icon">supply</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="StyleProducer.html#writer" class="tsd-kind-icon">writer</a></li>
 							</ul>
 						</section>
@@ -113,29 +113,13 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-					<a name="_EventSupply__symbol_" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> [<wbr>Event<wbr>Supply__symbol]</h3>
-					<div class="tsd-signature tsd-kind-icon">[<wbr>Event<wbr>Supply__symbol]<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">EventSupply</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="StyleProducer.html">StyleProducer</a>.<a href="StyleProducer.html#_EventSupply__symbol_">[EventSupply__symbol]</a></p>
-						<ul>
-							<li>Defined in proc7ts/fun-events/index.d.ts:141</li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>An event supply of this peer.</p>
-						</div>
-					</div>
-				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="rule" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> rule</h3>
 					<div class="tsd-signature tsd-kind-icon">rule<span class="tsd-signature-symbol">:</span> <a href="../classes/StypRule.html" class="tsd-signature-type">StypRule</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/producer/style-producer.ts#L26">frontmeans/style-producer/src/producer/style-producer.ts:26</a></li>
+							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/producer/style-producer.ts#L26">frontmeans/style-producer/src/producer/style-producer.ts:26</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -150,7 +134,7 @@
 					<div class="tsd-signature tsd-kind-icon">selector<span class="tsd-signature-symbol">:</span> <a href="../modules/StypSelector.html#Normalized" class="tsd-signature-type">Normalized</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/producer/style-producer.ts#L41">frontmeans/style-producer/src/producer/style-producer.ts:41</a></li>
+							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/producer/style-producer.ts#L41">frontmeans/style-producer/src/producer/style-producer.ts:41</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -165,12 +149,28 @@
 					<div class="tsd-signature tsd-kind-icon">sheet<span class="tsd-signature-symbol">:</span> <a href="StypWriter.Sheet.html" class="tsd-signature-type">Sheet</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/producer/style-producer.ts#L31">frontmeans/style-producer/src/producer/style-producer.ts:31</a></li>
+							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/producer/style-producer.ts#L31">frontmeans/style-producer/src/producer/style-producer.ts:31</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>CSS style sheet writer to add CSS rules to.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="supply" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> supply</h3>
+					<div class="tsd-signature tsd-kind-icon">supply<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Supply</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="StyleProducer.html">StyleProducer</a>.<a href="StyleProducer.html#supply">supply</a></p>
+						<ul>
+							<li>Defined in proc7ts/primitives/index.d.ts:442</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A supply this peer takes part in.</p>
 						</div>
 					</div>
 				</section>
@@ -180,7 +180,7 @@
 					<div class="tsd-signature tsd-kind-icon">writer<span class="tsd-signature-symbol">:</span> <a href="../modules/StypWriter.html" class="tsd-signature-type">StypWriter</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/producer/style-producer.ts#L36">frontmeans/style-producer/src/producer/style-producer.ts:36</a></li>
+							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/producer/style-producer.ts#L36">frontmeans/style-producer/src/producer/style-producer.ts:36</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -202,7 +202,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/producer/style-producer.ts#L74">frontmeans/style-producer/src/producer/style-producer.ts:74</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/producer/style-producer.ts#L74">frontmeans/style-producer/src/producer/style-producer.ts:74</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -236,7 +236,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/producer/style-producer.ts#L52">frontmeans/style-producer/src/producer/style-producer.ts:52</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/producer/style-producer.ts#L52">frontmeans/style-producer/src/producer/style-producer.ts:52</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -269,7 +269,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/producer/style-producer.ts#L62">frontmeans/style-producer/src/producer/style-producer.ts:62</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/producer/style-producer.ts#L62">frontmeans/style-producer/src/producer/style-producer.ts:62</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -314,9 +314,6 @@
 					<li class="current tsd-kind-interface">
 						<a href="StyleProducer.html" class="tsd-kind-icon">Style<wbr>Producer</a>
 						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="StyleProducer.html#_EventSupply__symbol_" class="tsd-kind-icon">[<wbr>Event<wbr>Supply__symbol]</a>
-							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="StyleProducer.html#rule" class="tsd-kind-icon">rule</a>
 							</li>
@@ -325,6 +322,9 @@
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="StyleProducer.html#sheet" class="tsd-kind-icon">sheet</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="StyleProducer.html#supply" class="tsd-kind-icon">supply</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="StyleProducer.html#writer" class="tsd-kind-icon">writer</a>

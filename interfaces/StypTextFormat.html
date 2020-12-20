@@ -103,17 +103,17 @@
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited"><a href="StypTextFormat.html#nsAlias" class="tsd-kind-icon">ns<wbr>Alias</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="StypTextFormat.html#onSheet" class="tsd-kind-icon">on<wbr>Sheet</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite"><a href="StypTextFormat.html#pretty" class="tsd-kind-icon">pretty</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited"><a href="StypTextFormat.html#renderer" class="tsd-kind-icon">renderer</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited"><a href="StypTextFormat.html#rootSelector" class="tsd-kind-icon">root<wbr>Selector</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited"><a href="StypTextFormat.html#scheduler" class="tsd-kind-icon">scheduler</a></li>
 							</ul>
 						</section>
-						<section class="tsd-index-section ">
+						<section class="tsd-index-section tsd-is-inherited">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="StypTextFormat.html#addSheet" class="tsd-kind-icon">add<wbr>Sheet</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="StypTextFormat.html#onSheet" class="tsd-kind-icon">on<wbr>Sheet</a></li>
 							</ul>
 						</section>
 					</div>
@@ -129,7 +129,7 @@
 						<p>Inherited from <a href="StypFormatConfig.html">StypFormatConfig</a>.<a href="StypFormatConfig.html#nsAlias">nsAlias</a></p>
 						<p>Overrides <a href="StypFormatConfig.html">StypFormatConfig</a>.<a href="StypFormatConfig.html#nsAlias">nsAlias</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/producer/format.ts#L47">frontmeans/style-producer/src/producer/format.ts:47</a></li>
+							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/producer/format.ts#L47">frontmeans/style-producer/src/producer/format.ts:47</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -139,6 +139,22 @@
 						<p>New instance will be created if not specified.</p>
 					</div>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="onSheet" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> on<wbr>Sheet</h3>
+					<div class="tsd-signature tsd-kind-icon">on<wbr>Sheet<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">OnEvent</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><a href="StypSheetText.html" class="tsd-signature-type">StypSheetText</a><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/producer/formats/text.format.ts#L31">frontmeans/style-producer/src/producer/formats/text.format.ts:31</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>An <code>OnEvent</code> sender of style sheet textual representation.</p>
+						</div>
+						<p>Sends textual representation of each rendered style sheet on each update.</p>
+					</div>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
 					<a name="pretty" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> pretty</h3>
@@ -146,7 +162,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides <a href="../modules/StypTextFormatConfig.html">StypTextFormatConfig</a>.<a href="../modules/StypTextFormatConfig.html#pretty">pretty</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/producer/formats/text.format.ts#L24">frontmeans/style-producer/src/producer/formats/text.format.ts:24</a></li>
+							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/producer/formats/text.format.ts#L24">frontmeans/style-producer/src/producer/formats/text.format.ts:24</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -163,7 +179,7 @@
 						<p>Inherited from <a href="StypFormatConfig.html">StypFormatConfig</a>.<a href="StypFormatConfig.html#renderer">renderer</a></p>
 						<p>Overrides <a href="StypFormatConfig.html">StypFormatConfig</a>.<a href="StypFormatConfig.html#renderer">renderer</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/producer/format.ts#L40">frontmeans/style-producer/src/producer/format.ts:40</a></li>
+							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/producer/format.ts#L40">frontmeans/style-producer/src/producer/format.ts:40</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -180,7 +196,7 @@
 						<p>Inherited from <a href="StypFormatConfig.html">StypFormatConfig</a>.<a href="StypFormatConfig.html#rootSelector">rootSelector</a></p>
 						<p>Overrides <a href="StypFormatConfig.html">StypFormatConfig</a>.<a href="StypFormatConfig.html#rootSelector">rootSelector</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/producer/format.ts#L26">frontmeans/style-producer/src/producer/format.ts:26</a></li>
+							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/producer/format.ts#L26">frontmeans/style-producer/src/producer/format.ts:26</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -199,7 +215,7 @@
 						<p>Inherited from <a href="StypFormatConfig.html">StypFormatConfig</a>.<a href="StypFormatConfig.html#scheduler">scheduler</a></p>
 						<p>Overrides <a href="../modules/StypTextFormatConfig.html">StypTextFormatConfig</a>.<a href="../modules/StypTextFormatConfig.html#scheduler">scheduler</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/producer/format.ts#L35">frontmeans/style-producer/src/producer/format.ts:35</a></li>
+							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/producer/format.ts#L35">frontmeans/style-producer/src/producer/format.ts:35</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -211,7 +227,7 @@
 					</div>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group ">
+			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
 				<h2>Methods</h2>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
 					<a name="addSheet" class="tsd-anchor"></a>
@@ -224,7 +240,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="StypFormat.html">StypFormat</a>.<a href="StypFormat.html#addSheet">addSheet</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/producer/format.ts#L76">frontmeans/style-producer/src/producer/format.ts:76</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/producer/format.ts#L76">frontmeans/style-producer/src/producer/format.ts:76</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -244,53 +260,6 @@
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="StypWriter.Sheet.html" class="tsd-signature-type">Sheet</a></h4>
 							<p>CSS style sheet writer.</p>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
-					<a name="onSheet" class="tsd-anchor"></a>
-					<h3>on<wbr>Sheet</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">on<wbr>Sheet<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">OnEvent</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><a href="StypSheetText.html" class="tsd-signature-type">StypSheetText</a><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></li>
-						<li class="tsd-signature tsd-kind-icon">on<wbr>Sheet<span class="tsd-signature-symbol">(</span>receiver<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">EventReceiver</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><a href="StypSheetText.html" class="tsd-signature-type">StypSheetText</a><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">EventSupply</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/producer/formats/text.format.ts#L33">frontmeans/style-producer/src/producer/formats/text.format.ts:33</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Builds an <code>OnEvent</code> sender of style sheet textual representation.</p>
-								</div>
-								<p>Sends textual representation of each rendered style sheet on each update.</p>
-							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">OnEvent</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><a href="StypSheetText.html" class="tsd-signature-type">StypSheetText</a><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p><code>OnEvent</code> sender of <a href="StypSheetText.html">StypSheetText</a> objects.</p>
-						</li>
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/producer/formats/text.format.ts#L40">frontmeans/style-producer/src/producer/formats/text.format.ts:40</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Starts sending textual representations of style sheets to the given <code>receiver</code>.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>receiver: <span class="tsd-signature-type">EventReceiver</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><a href="StypSheetText.html" class="tsd-signature-type">StypSheetText</a><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Target receiver of style sheet text.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">EventSupply</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -317,6 +286,9 @@
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited">
 								<a href="StypTextFormat.html#nsAlias" class="tsd-kind-icon">ns<wbr>Alias</a>
 							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="StypTextFormat.html#onSheet" class="tsd-kind-icon">on<wbr>Sheet</a>
+							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
 								<a href="StypTextFormat.html#pretty" class="tsd-kind-icon">pretty</a>
 							</li>
@@ -331,9 +303,6 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
 								<a href="StypTextFormat.html#addSheet" class="tsd-kind-icon">add<wbr>Sheet</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-interface">
-								<a href="StypTextFormat.html#onSheet" class="tsd-kind-icon">on<wbr>Sheet</a>
 							</li>
 						</ul>
 					</li>

@@ -57,7 +57,7 @@
 					<a href="StypRuleRefs.html">StypRuleRefs</a>
 				</li>
 			</ul>
-			<h1>Class StypRuleRefs&lt;R&gt;</h1>
+			<h1>Class StypRuleRefs&lt;TRefMap&gt;</h1>
 		</div>
 	</div>
 </header>
@@ -76,7 +76,7 @@
 				<h3>Type parameters</h3>
 				<ul class="tsd-type-parameters">
 					<li>
-						<h4>R<span class="tsd-signature-symbol">: </span><a href="StypRuleRefs.html#Struct" class="tsd-signature-type">Struct</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						<h4>TRefMap<span class="tsd-signature-symbol">: </span><a href="StypRuleRefs.html#Struct" class="tsd-signature-type">Struct</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TRefMap</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						<div class="tsd-comment tsd-typography">
 							<div class="lead">
 								<p>A type of target map of named CSS properties structures.</p>
@@ -96,7 +96,7 @@
 			<section class="tsd-panel">
 				<h3>Implements</h3>
 				<ul class="tsd-hierarchy">
-					<li><span class="tsd-signature-type">EventKeeper</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></li>
+					<li><span class="tsd-signature-type">EventKeeper</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">TRefMap</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -119,6 +119,7 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="StypRuleRefs.html#read" class="tsd-kind-icon">read</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="StypRuleRefs.html#refs" class="tsd-kind-icon">refs</a></li>
 							</ul>
 						</section>
@@ -126,7 +127,6 @@
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="StypRuleRefs.html#_AfterEvent__symbol_" class="tsd-kind-icon">[<wbr>After<wbr>Event__symbol]</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="StypRuleRefs.html#read" class="tsd-kind-icon">read</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="StypRuleRefs.html#by" class="tsd-kind-icon">by</a></li>
 							</ul>
 						</section>
@@ -138,10 +138,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
 					<a name="Referrers" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> Referrers</h3>
-					<div class="tsd-signature tsd-kind-icon">Referrers&lt;R&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
+					<div class="tsd-signature tsd-kind-icon">Referrers&lt;TRefMap&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/rule/rule-refs.ts#L129">frontmeans/style-producer/src/rule/rule-refs.ts:129</a></li>
+							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/rule/rule-refs.ts#L118">frontmeans/style-producer/src/rule/rule-refs.ts:118</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -153,7 +153,7 @@
 					<h4 class="tsd-type-parameters-title">Type parameters</h4>
 					<ul class="tsd-type-parameters">
 						<li>
-							<h4>R<span class="tsd-signature-symbol">: </span><a href="StypRuleRefs.html#Struct" class="tsd-signature-type">Struct</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4>TRefMap<span class="tsd-signature-symbol">: </span><a href="StypRuleRefs.html#Struct" class="tsd-signature-type">Struct</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TRefMap</span><span class="tsd-signature-symbol">&gt;</span></h4>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>A type of target map of named CSS properties structures.</p>
@@ -170,10 +170,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
 					<a name="Struct" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> Struct</h3>
-					<div class="tsd-signature tsd-kind-icon">Struct&lt;R&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
+					<div class="tsd-signature tsd-kind-icon">Struct&lt;TRefMap&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/rule/rule-refs.ts#L118">frontmeans/style-producer/src/rule/rule-refs.ts:118</a></li>
+							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/rule/rule-refs.ts#L107">frontmeans/style-producer/src/rule/rule-refs.ts:107</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -185,7 +185,12 @@
 					<h4 class="tsd-type-parameters-title">Type parameters</h4>
 					<ul class="tsd-type-parameters">
 						<li>
-							<h4>R = <span class="tsd-signature-symbol">{}</span></h4>
+							<h4>TRefMap = <span class="tsd-signature-symbol">{}</span></h4>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>A type of target map of named CSS properties structures.</p>
+								</div>
+							</div>
 						</li>
 					</ul>
 					<div class="tsd-type-declaration">
@@ -207,7 +212,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/rule/rule-refs.ts#L54">frontmeans/style-producer/src/rule/rule-refs.ts:54</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/rule/rule-refs.ts#L61">frontmeans/style-producer/src/rule/rule-refs.ts:61</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -236,12 +241,28 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="read" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> read</h3>
+					<div class="tsd-signature tsd-kind-icon">read<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">AfterEvent</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">TRefMap</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/rule/rule-refs.ts#L61">frontmeans/style-producer/src/rule/rule-refs.ts:61</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>An <code>AfterEvent</code> keeper of named CSS properties structures for each CSS rule reference.</p>
+						</div>
+						<p>The <code>[AfterEvent__symbol]</code> property is an alias of this one.</p>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="refs" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> refs</h3>
 					<div class="tsd-signature tsd-kind-icon">refs<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/rule/rule-refs.ts#L26">frontmeans/style-producer/src/rule/rule-refs.ts:26</a></li>
+							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/rule/rule-refs.ts#L54">frontmeans/style-producer/src/rule/rule-refs.ts:54</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -264,64 +285,16 @@
 					<a name="_AfterEvent__symbol_" class="tsd-anchor"></a>
 					<h3>[<wbr>After<wbr>Event__symbol]</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">[<wbr>After<wbr>Event__symbol]<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">AfterEvent</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">[<wbr>After<wbr>Event__symbol]<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">AfterEvent</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">TRefMap</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/rule/rule-refs.ts#L89">frontmeans/style-producer/src/rule/rule-refs.ts:89</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/rule/rule-refs.ts#L76">frontmeans/style-producer/src/rule/rule-refs.ts:76</a></li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">AfterEvent</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="read" class="tsd-anchor"></a>
-					<h3>read</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">read<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">AfterEvent</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></li>
-						<li class="tsd-signature tsd-kind-icon">read<span class="tsd-signature-symbol">(</span>receiver<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">EventReceiver</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">EventSupply</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/rule/rule-refs.ts#L72">frontmeans/style-producer/src/rule/rule-refs.ts:72</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Builds an <code>AfterEvent</code> keeper of named CSS properties structures for each CSS rule reference.</p>
-								</div>
-								<p>The <code>[AfterEvent__symbol]</code> property is an alias of this one.</p>
-							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">AfterEvent</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p><code>AfterEvent</code> keeper of map of named CSS properties structures.</p>
-						</li>
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/rule/rule-refs.ts#L81">frontmeans/style-producer/src/rule/rule-refs.ts:81</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Starts sending named CSS properties structures for each CSS rule reference and updates to the given <code>receiver</code>.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>receiver: <span class="tsd-signature-type">EventReceiver</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Target receiver of map of named CSS properties structures.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">EventSupply</span></h4>
-							<p>Supply of maps of named CSS properties structures.</p>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">AfterEvent</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">TRefMap</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -329,13 +302,13 @@
 					<a name="by" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> by</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">by&lt;R&gt;<span class="tsd-signature-symbol">(</span>referrers<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{}</span>, root<span class="tsd-signature-symbol">: </span><a href="StypRule.html" class="tsd-signature-type">StypRule</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="StypRuleRefs.html" class="tsd-signature-type">StypRuleRefs</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">by&lt;TRefMap&gt;<span class="tsd-signature-symbol">(</span>referrers<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{}</span>, root<span class="tsd-signature-symbol">: </span><a href="StypRule.html" class="tsd-signature-type">StypRule</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="StypRuleRefs.html" class="tsd-signature-type">StypRuleRefs</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TRefMap</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/rule/rule-refs.ts#L37">frontmeans/style-producer/src/rule/rule-refs.ts:37</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/rule/rule-refs.ts#L29">frontmeans/style-producer/src/rule/rule-refs.ts:29</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -346,7 +319,7 @@
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
 								<li>
-									<h4>R<span class="tsd-signature-symbol">: </span><a href="StypRuleRefs.html#Struct" class="tsd-signature-type">Struct</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">&gt;</span></h4>
+									<h4>TRefMap<span class="tsd-signature-symbol">: </span><a href="StypRuleRefs.html#Struct" class="tsd-signature-type">Struct</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TRefMap</span><span class="tsd-signature-symbol">&gt;</span></h4>
 									<div class="tsd-comment tsd-typography">
 										<p>A type of target map of named CSS properties structures.</p>
 									</div>
@@ -369,7 +342,7 @@
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="StypRuleRefs.html" class="tsd-signature-type">StypRuleRefs</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="StypRuleRefs.html" class="tsd-signature-type">StypRuleRefs</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TRefMap</span><span class="tsd-signature-symbol">&gt;</span></h4>
 							<p>New names CSS rules instance.</p>
 						</li>
 					</ul>
@@ -401,13 +374,13 @@
 								<a href="StypRuleRefs.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="StypRuleRefs.html#read" class="tsd-kind-icon">read</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="StypRuleRefs.html#refs" class="tsd-kind-icon">refs</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="StypRuleRefs.html#_AfterEvent__symbol_" class="tsd-kind-icon">[<wbr>After<wbr>Event__symbol]</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="StypRuleRefs.html#read" class="tsd-kind-icon">read</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
 								<a href="StypRuleRefs.html#by" class="tsd-kind-icon">by</a>

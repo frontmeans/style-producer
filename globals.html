@@ -281,7 +281,7 @@
 					<div class="tsd-signature tsd-kind-icon">Ref<wbr>Styp<wbr>Rule&lt;T&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, root<span class="tsd-signature-symbol">: </span><a href="classes/StypRule.html" class="tsd-signature-type">StypRule</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="classes/StypRuleRef.html" class="tsd-signature-type">StypRuleRef</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/rule/rule-ref.ts#L93">frontmeans/style-producer/src/rule/rule-ref.ts:93</a></li>
+							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/rule/rule-ref.ts#L80">frontmeans/style-producer/src/rule/rule-ref.ts:80</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -340,10 +340,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-has-type-parameter">
 					<a name="StypCalc" class="tsd-anchor"></a>
 					<h3>Styp<wbr>Calc</h3>
-					<div class="tsd-signature tsd-kind-icon">Styp<wbr>Calc&lt;Unit&gt;<span class="tsd-signature-symbol">:</span> <a href="interfaces/StypAddSub.html" class="tsd-signature-type">StypAddSub</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Unit</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/StypMulDiv.html" class="tsd-signature-type">StypMulDiv</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Unit</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<div class="tsd-signature tsd-kind-icon">Styp<wbr>Calc&lt;TUnit&gt;<span class="tsd-signature-symbol">:</span> <a href="interfaces/StypAddSub.html" class="tsd-signature-type">StypAddSub</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TUnit</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/StypMulDiv.html" class="tsd-signature-type">StypMulDiv</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TUnit</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/value/numeric/numeric.ts#L271">frontmeans/style-producer/src/value/numeric/numeric.ts:271</a></li>
+							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/value/numeric/numeric.ts#L272">frontmeans/style-producer/src/value/numeric/numeric.ts:272</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -355,7 +355,7 @@
 					<h4 class="tsd-type-parameters-title">Type parameters</h4>
 					<ul class="tsd-type-parameters">
 						<li>
-							<h4>Unit<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h4>
+							<h4>TUnit<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h4>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Allowed unit type.</p>
@@ -370,7 +370,7 @@
 					<div class="tsd-signature tsd-kind-icon">Styp<wbr>Color<span class="tsd-signature-symbol">:</span> <a href="classes/StypRGB.html" class="tsd-signature-type">StypRGB</a><span class="tsd-signature-symbol"> | </span><a href="classes/StypHSL.html" class="tsd-signature-type">StypHSL</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/value/color/color.ts#L14">frontmeans/style-producer/src/value/color/color.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/value/color/color.ts#L14">frontmeans/style-producer/src/value/color/color.ts:14</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -383,10 +383,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-has-type-parameter">
 					<a name="StypNumeric" class="tsd-anchor"></a>
 					<h3>Styp<wbr>Numeric</h3>
-					<div class="tsd-signature tsd-kind-icon">Styp<wbr>Numeric&lt;Unit, Zero&gt;<span class="tsd-signature-symbol">:</span> <a href="modules/StypDimension.html" class="tsd-signature-type">StypDimension</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Unit</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="globals.html#StypCalc" class="tsd-signature-type">StypCalc</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Unit</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Zero</span></div>
+					<div class="tsd-signature tsd-kind-icon">Styp<wbr>Numeric&lt;TUnit, TZero&gt;<span class="tsd-signature-symbol">:</span> <a href="modules/StypDimension.html" class="tsd-signature-type">StypDimension</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TUnit</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="globals.html#StypCalc" class="tsd-signature-type">StypCalc</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TUnit</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">TZero</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/value/numeric/numeric.ts#L17">frontmeans/style-producer/src/value/numeric/numeric.ts:17</a></li>
+							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/value/numeric/numeric.ts#L17">frontmeans/style-producer/src/value/numeric/numeric.ts:17</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -398,7 +398,7 @@
 					<h4 class="tsd-type-parameters-title">Type parameters</h4>
 					<ul class="tsd-type-parameters">
 						<li>
-							<h4>Unit<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h4>
+							<h4>TUnit<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h4>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Allowed unit type.</p>
@@ -406,7 +406,7 @@
 							</div>
 						</li>
 						<li>
-							<h4>Zero<span class="tsd-signature-symbol">: </span><a href="interfaces/StypZero.html" class="tsd-signature-type">StypZero</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Unit</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="modules/StypDimension.html" class="tsd-signature-type">StypDimension</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Unit</span><span class="tsd-signature-symbol">&gt;</span> = <span class="tsd-signature-type">StypZero</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Unit</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4>TZero<span class="tsd-signature-symbol">: </span><a href="interfaces/StypZero.html" class="tsd-signature-type">StypZero</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TUnit</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="modules/StypDimension.html" class="tsd-signature-type">StypDimension</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TUnit</span><span class="tsd-signature-symbol">&gt;</span> = <span class="tsd-signature-type">StypZero</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TUnit</span><span class="tsd-signature-symbol">&gt;</span></h4>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>A type of zero value. <a href="interfaces/StypZero.html">StypZero</a> by default.</p>
@@ -424,7 +424,7 @@
 					<div class="tsd-signature tsd-kind-icon">IMPORT_<wbr>PREFIX<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"@import:"</span><span class="tsd-signature-symbol"> = &quot;@import:&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/producer/renderers/globals.renderer.ts#L103">frontmeans/style-producer/src/producer/renderers/globals.renderer.ts:103</a></li>
+							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/producer/renderers/globals.renderer.ts#L103">frontmeans/style-producer/src/producer/renderers/globals.renderer.ts:103</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -440,7 +440,7 @@
 					<div class="tsd-signature tsd-kind-icon">NS_<wbr>PREFIX<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"@namespace:"</span><span class="tsd-signature-symbol"> = &quot;@namespace:&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/producer/renderers/globals.renderer.ts#L151">frontmeans/style-producer/src/producer/renderers/globals.renderer.ts:151</a></li>
+							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/producer/renderers/globals.renderer.ts#L151">frontmeans/style-producer/src/producer/renderers/globals.renderer.ts:151</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -456,7 +456,7 @@
 					<div class="tsd-signature tsd-kind-icon">no<wbr>Styp<wbr>Rules<span class="tsd-signature-symbol">:</span> <a href="classes/StypRuleList.html" class="tsd-signature-type">StypRuleList</a><span class="tsd-signature-symbol"> = (/*#__PURE__*/ new Rules({[OnEvent__symbol]() {return onNever;},[Symbol.iterator](): IterableIterator&lt;StypRule&gt; {return [][Symbol.iterator]();},}))</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/rule/rules.ts#L66">frontmeans/style-producer/src/rule/rules.ts:66</a></li>
+							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/rule/rules.ts#L66">frontmeans/style-producer/src/rule/rules.ts:66</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -472,7 +472,7 @@
 					<div class="tsd-signature tsd-kind-icon">root<wbr>Selector<span class="tsd-signature-symbol">:</span> <a href="modules/StypSelector.html#Normalized" class="tsd-signature-type">Normalized</a><span class="tsd-signature-symbol"> = []</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/rule/root.ts#L14">frontmeans/style-producer/src/rule/root.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/rule/root.ts#L14">frontmeans/style-producer/src/rule/root.ts:14</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -495,7 +495,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/rule/rules.ts#L108">frontmeans/style-producer/src/rule/rules.ts:108</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/rule/rules.ts#L108">frontmeans/style-producer/src/rule/rules.ts:108</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -531,7 +531,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/selector/query.ts#L69">frontmeans/style-producer/src/selector/query.ts:69</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/selector/query.ts#L69">frontmeans/style-producer/src/selector/query.ts:69</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -563,7 +563,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/rule/root.ts#L28">frontmeans/style-producer/src/rule/root.ts:28</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/rule/root.ts#L28">frontmeans/style-producer/src/rule/root.ts:28</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -597,7 +597,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/rule/rules.ts#L83">frontmeans/style-producer/src/rule/rules.ts:83</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/rule/rules.ts#L83">frontmeans/style-producer/src/rule/rules.ts:83</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -632,7 +632,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/selector/selector-constructor.ts#L13">frontmeans/style-producer/src/selector/selector-constructor.ts:13</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/selector/selector-constructor.ts#L13">frontmeans/style-producer/src/selector/selector-constructor.ts:13</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -655,7 +655,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/selector/selector-constructor.ts#L23">frontmeans/style-producer/src/selector/selector-constructor.ts:23</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/selector/selector-constructor.ts#L23">frontmeans/style-producer/src/selector/selector-constructor.ts:23</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -683,7 +683,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/selector/selector-constructor.ts#L32">frontmeans/style-producer/src/selector/selector-constructor.ts:32</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/selector/selector-constructor.ts#L32">frontmeans/style-producer/src/selector/selector-constructor.ts:32</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -706,7 +706,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/selector/selector-constructor.ts#L41">frontmeans/style-producer/src/selector/selector-constructor.ts:41</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/selector/selector-constructor.ts#L41">frontmeans/style-producer/src/selector/selector-constructor.ts:41</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -738,7 +738,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/selector/query.ts#L82">frontmeans/style-producer/src/selector/query.ts:82</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/selector/query.ts#L82">frontmeans/style-producer/src/selector/query.ts:82</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -776,7 +776,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/selector/selector-text.ts#L46">frontmeans/style-producer/src/selector/selector-text.ts:46</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/selector/selector-text.ts#L46">frontmeans/style-producer/src/selector/selector-text.ts:46</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -814,7 +814,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/selector/selectors-equal.ts#L20">frontmeans/style-producer/src/selector/selectors-equal.ts:20</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/selector/selectors-equal.ts#L20">frontmeans/style-producer/src/selector/selectors-equal.ts:20</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -855,7 +855,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/value/color/mix.ts#L20">frontmeans/style-producer/src/value/color/mix.ts:20</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/value/color/mix.ts#L20">frontmeans/style-producer/src/value/color/mix.ts:20</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -904,7 +904,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/value/priority.ts#L49">frontmeans/style-producer/src/value/priority.ts:49</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/value/priority.ts#L49">frontmeans/style-producer/src/value/priority.ts:49</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -933,7 +933,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/value/priority.ts#L58">frontmeans/style-producer/src/value/priority.ts:58</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/value/priority.ts#L58">frontmeans/style-producer/src/value/priority.ts:58</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -956,7 +956,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/value/priority.ts#L67">frontmeans/style-producer/src/value/priority.ts:67</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/value/priority.ts#L67">frontmeans/style-producer/src/value/priority.ts:67</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -985,7 +985,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/value/priority.ts#L76">frontmeans/style-producer/src/value/priority.ts:76</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/value/priority.ts#L76">frontmeans/style-producer/src/value/priority.ts:76</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1023,7 +1023,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/value/value.ts#L146">frontmeans/style-producer/src/value/value.ts:146</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/value/value.ts#L146">frontmeans/style-producer/src/value/value.ts:146</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1060,21 +1060,21 @@
 					<a name="produceBasicStyle" class="tsd-anchor"></a>
 					<h3>produce<wbr>Basic<wbr>Style</h3>
 					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">produce<wbr>Basic<wbr>Style<span class="tsd-signature-symbol">(</span>rules<span class="tsd-signature-symbol">: </span><a href="modules/StypRules.html" class="tsd-signature-type">StypRules</a>, format<span class="tsd-signature-symbol">: </span><a href="interfaces/StypFormat.html" class="tsd-signature-type">StypFormat</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">EventSupply</span></li>
+						<li class="tsd-signature tsd-kind-icon">produce<wbr>Basic<wbr>Style<span class="tsd-signature-symbol">(</span>rules<span class="tsd-signature-symbol">: </span><a href="modules/StypRules.html" class="tsd-signature-type">StypRules</a>, format<span class="tsd-signature-symbol">: </span><a href="interfaces/StypFormat.html" class="tsd-signature-type">StypFormat</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Supply</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/producer/produce-basic-style.ts#L39">frontmeans/style-producer/src/producer/produce-basic-style.ts:39</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/producer/produce-basic-style.ts#L32">frontmeans/style-producer/src/producer/produce-basic-style.ts:32</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Produces and dynamically updates basic CSS stylesheets based on the given CSS rules.</p>
 								</div>
-								<p>Unlike <a href="globals.html#produceStyle">produceStyle</a>, this function does not enable renderers but the basic one which just renders CSS properties.
-								Only select renderers can be enabled. This can be used to save a bundle size.</p>
+								<p>Unlike <a href="globals.html#produceStyle">produceStyle</a>, this function does not enable renderers but the basic one which just renders CSS
+								properties. This can be used to save the bundle size by enabling only select renderers.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -1092,7 +1092,7 @@
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">EventSupply</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Supply</span></h4>
 							<p>Styles supply. Once cut off (i.e. its <code>off()</code> method is called) the produced stylesheets are removed.</p>
 						</li>
 					</ul>
@@ -1101,13 +1101,13 @@
 					<a name="produceStyle" class="tsd-anchor"></a>
 					<h3>produce<wbr>Style</h3>
 					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">produce<wbr>Style<span class="tsd-signature-symbol">(</span>rules<span class="tsd-signature-symbol">: </span><a href="modules/StypRules.html" class="tsd-signature-type">StypRules</a>, format<span class="tsd-signature-symbol">: </span><a href="interfaces/StypFormat.html" class="tsd-signature-type">StypFormat</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">EventSupply</span></li>
+						<li class="tsd-signature tsd-kind-icon">produce<wbr>Style<span class="tsd-signature-symbol">(</span>rules<span class="tsd-signature-symbol">: </span><a href="modules/StypRules.html" class="tsd-signature-type">StypRules</a>, format<span class="tsd-signature-symbol">: </span><a href="interfaces/StypFormat.html" class="tsd-signature-type">StypFormat</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Supply</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/producer/produce-style.ts#L27">frontmeans/style-producer/src/producer/produce-style.ts:27</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/producer/produce-style.ts#L27">frontmeans/style-producer/src/producer/produce-style.ts:27</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1135,7 +1135,7 @@
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">EventSupply</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Supply</span></h4>
 							<p>Styles supply. Once cut off (i.e. its <code>off()</code> method is called) the produced stylesheets are removed.</p>
 						</li>
 					</ul>
@@ -1150,7 +1150,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/producer/formats/dom.format.ts#L58">frontmeans/style-producer/src/producer/formats/dom.format.ts:58</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/producer/formats/dom.format.ts#L58">frontmeans/style-producer/src/producer/formats/dom.format.ts:58</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1186,7 +1186,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/producer/formats/object.format.ts#L140">frontmeans/style-producer/src/producer/formats/object.format.ts:140</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/producer/formats/object.format.ts#L140">frontmeans/style-producer/src/producer/formats/object.format.ts:140</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1220,7 +1220,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/producer/renderers/properties.renderer.ts#L18">frontmeans/style-producer/src/producer/renderers/properties.renderer.ts:18</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/producer/renderers/properties.renderer.ts#L18">frontmeans/style-producer/src/producer/renderers/properties.renderer.ts:18</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1252,7 +1252,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/producer/renderers/text.renderer.ts#L17">frontmeans/style-producer/src/producer/renderers/text.renderer.ts:17</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/producer/renderers/text.renderer.ts#L17">frontmeans/style-producer/src/producer/renderers/text.renderer.ts:17</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1285,7 +1285,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/producer/formats/text.format.ts#L339">frontmeans/style-producer/src/producer/formats/text.format.ts:339</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/producer/formats/text.format.ts#L330">frontmeans/style-producer/src/producer/formats/text.format.ts:330</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1321,7 +1321,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/producer/renderers/at-rules.renderer.ts#L226">frontmeans/style-producer/src/producer/renderers/at-rules.renderer.ts:226</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/producer/renderers/at-rules.renderer.ts#L226">frontmeans/style-producer/src/producer/renderers/at-rules.renderer.ts:226</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1353,7 +1353,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/value/color/color.ts#L398">frontmeans/style-producer/src/value/color/color.ts:398</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/value/color/color.ts#L398">frontmeans/style-producer/src/value/color/color.ts:398</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1382,7 +1382,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/rule/rules.ts#L207">frontmeans/style-producer/src/rule/rules.ts:207</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/rule/rules.ts#L207">frontmeans/style-producer/src/rule/rules.ts:207</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1411,7 +1411,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/producer/renderers/at-rules.renderer.ts#L77">frontmeans/style-producer/src/producer/renderers/at-rules.renderer.ts:77</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/producer/renderers/at-rules.renderer.ts#L77">frontmeans/style-producer/src/producer/renderers/at-rules.renderer.ts:77</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1443,7 +1443,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/selector/selectors-equal.ts#L74">frontmeans/style-producer/src/selector/selectors-equal.ts:74</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/selector/selectors-equal.ts#L74">frontmeans/style-producer/src/selector/selectors-equal.ts:74</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1475,7 +1475,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/selector/query.ts#L115">frontmeans/style-producer/src/selector/query.ts:115</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/selector/query.ts#L115">frontmeans/style-producer/src/selector/query.ts:115</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1507,7 +1507,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/value/color/color.ts#L413">frontmeans/style-producer/src/value/color/color.ts:413</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/value/color/color.ts#L413">frontmeans/style-producer/src/value/color/color.ts:413</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1539,7 +1539,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/rule/rules.ts#L151">frontmeans/style-producer/src/rule/rules.ts:151</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/rule/rules.ts#L151">frontmeans/style-producer/src/rule/rules.ts:151</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1586,7 +1586,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/producer/renderers/at-rules.renderer.ts#L167">frontmeans/style-producer/src/producer/renderers/at-rules.renderer.ts:167</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/producer/renderers/at-rules.renderer.ts#L167">frontmeans/style-producer/src/producer/renderers/at-rules.renderer.ts:167</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1615,7 +1615,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/producer/renderers/at-rules.renderer.ts#L192">frontmeans/style-producer/src/producer/renderers/at-rules.renderer.ts:192</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/producer/renderers/at-rules.renderer.ts#L192">frontmeans/style-producer/src/producer/renderers/at-rules.renderer.ts:192</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1647,7 +1647,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/producer/renderers/xml-ns.renderer.ts#L57">frontmeans/style-producer/src/producer/renderers/xml-ns.renderer.ts:57</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/producer/renderers/xml-ns.renderer.ts#L57">frontmeans/style-producer/src/producer/renderers/xml-ns.renderer.ts:57</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1670,13 +1670,13 @@
 					<a name="flattenProperties" class="tsd-anchor"></a>
 					<h3>flatten<wbr>Properties</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-has-type-parameter">
-						<li class="tsd-signature tsd-kind-icon">flatten<wbr>Properties&lt;R&gt;<span class="tsd-signature-symbol">(</span>propertiesMap<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">R</span></li>
+						<li class="tsd-signature tsd-kind-icon">flatten<wbr>Properties&lt;TRefMap&gt;<span class="tsd-signature-symbol">(</span>propertiesMap<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TRefMap</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/rule/rule-refs.ts#L98">frontmeans/style-producer/src/rule/rule-refs.ts:98</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/rule/rule-refs.ts#L85">frontmeans/style-producer/src/rule/rule-refs.ts:85</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1688,7 +1688,7 @@
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
 								<li>
-									<h4>R<span class="tsd-signature-symbol">: </span><a href="classes/StypRuleRefs.html#Struct" class="tsd-signature-type">Struct</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">&gt;</span></h4>
+									<h4>TRefMap<span class="tsd-signature-symbol">: </span><a href="classes/StypRuleRefs.html#Struct" class="tsd-signature-type">Struct</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TRefMap</span><span class="tsd-signature-symbol">&gt;</span></h4>
 								</li>
 							</ul>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1702,7 +1702,7 @@
 									</ul>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">R</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TRefMap</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -1716,7 +1716,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/value/color/color.ts#L420">frontmeans/style-producer/src/value/color/color.ts:420</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/value/color/color.ts#L420">frontmeans/style-producer/src/value/color/color.ts:420</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1751,7 +1751,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/value/color/color.ts#L406">frontmeans/style-producer/src/value/color/color.ts:406</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/value/color/color.ts#L406">frontmeans/style-producer/src/value/color/color.ts:406</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1783,7 +1783,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/producer/renderers/at-rules.renderer.ts#L160">frontmeans/style-producer/src/producer/renderers/at-rules.renderer.ts:160</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/producer/renderers/at-rules.renderer.ts#L160">frontmeans/style-producer/src/producer/renderers/at-rules.renderer.ts:160</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1812,7 +1812,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/rule/rules.ts#L169">frontmeans/style-producer/src/rule/rules.ts:169</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/rule/rules.ts#L169">frontmeans/style-producer/src/rule/rules.ts:169</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1859,7 +1859,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/rule/rules.ts#L115">frontmeans/style-producer/src/rule/rules.ts:115</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/rule/rules.ts#L115">frontmeans/style-producer/src/rule/rules.ts:115</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1882,13 +1882,13 @@
 					<a name="mappingBy" class="tsd-anchor"></a>
 					<h3>mapping<wbr>By</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-has-type-parameter">
-						<li class="tsd-signature tsd-kind-icon">mapping<wbr>By&lt;R, K&gt;<span class="tsd-signature-symbol">(</span>mapping<span class="tsd-signature-symbol">: </span><a href="globals.html#StypMapper.Mapping" class="tsd-signature-type">Mapping</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="globals.html#StypMapper.MappingFunction" class="tsd-signature-type">MappingFunction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">mapping<wbr>By&lt;TResult, TResultKey&gt;<span class="tsd-signature-symbol">(</span>mapping<span class="tsd-signature-symbol">: </span><a href="globals.html#StypMapper.Mapping" class="tsd-signature-type">Mapping</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TResultKey</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="globals.html#StypMapper.MappingFunction" class="tsd-signature-type">MappingFunction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TResultKey</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/value/mapper.ts#L172">frontmeans/style-producer/src/value/mapper.ts:172</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/value/mapper.ts#L171">frontmeans/style-producer/src/value/mapper.ts:171</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1900,19 +1900,19 @@
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
 								<li>
-									<h4>R</h4>
+									<h4>TResult</h4>
 								</li>
 								<li>
-									<h4>K<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">R</span></h4>
+									<h4>TResultKey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">TResult</span></h4>
 								</li>
 							</ul>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>mapping: <a href="globals.html#StypMapper.Mapping" class="tsd-signature-type">Mapping</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></h5>
+									<h5>mapping: <a href="globals.html#StypMapper.Mapping" class="tsd-signature-type">Mapping</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TResultKey</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="globals.html#StypMapper.MappingFunction" class="tsd-signature-type">MappingFunction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="globals.html#StypMapper.MappingFunction" class="tsd-signature-type">MappingFunction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TResultKey</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -1926,7 +1926,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/rule/rule-ref.ts#L181">frontmeans/style-producer/src/rule/rule-ref.ts:181</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/rule/rule-ref.ts#L165">frontmeans/style-producer/src/rule/rule-ref.ts:165</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1961,7 +1961,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/selector/selectors-equal.ts#L67">frontmeans/style-producer/src/selector/selectors-equal.ts:67</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/selector/selectors-equal.ts#L67">frontmeans/style-producer/src/selector/selectors-equal.ts:67</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1993,7 +1993,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/selector/selectors-equal.ts#L54">frontmeans/style-producer/src/selector/selectors-equal.ts:54</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/selector/selectors-equal.ts#L54">frontmeans/style-producer/src/selector/selectors-equal.ts:54</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2025,7 +2025,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/producer/renderers/properties.renderer.ts#L41">frontmeans/style-producer/src/producer/renderers/properties.renderer.ts:41</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/producer/renderers/properties.renderer.ts#L41">frontmeans/style-producer/src/producer/renderers/properties.renderer.ts:41</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2054,7 +2054,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/producer/renderers/at-rules.renderer.ts#L143">frontmeans/style-producer/src/producer/renderers/at-rules.renderer.ts:143</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/producer/renderers/at-rules.renderer.ts#L143">frontmeans/style-producer/src/producer/renderers/at-rules.renderer.ts:143</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2083,7 +2083,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/selector/selectors-equal.ts#L129">frontmeans/style-producer/src/selector/selectors-equal.ts:129</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/selector/selectors-equal.ts#L129">frontmeans/style-producer/src/selector/selectors-equal.ts:129</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2115,7 +2115,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/producer/renderers/globals.renderer.ts#L133">frontmeans/style-producer/src/producer/renderers/globals.renderer.ts:133</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/producer/renderers/globals.renderer.ts#L133">frontmeans/style-producer/src/producer/renderers/globals.renderer.ts:133</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2153,7 +2153,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/producer/renderers/globals.renderer.ts#L108">frontmeans/style-producer/src/producer/renderers/globals.renderer.ts:108</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/producer/renderers/globals.renderer.ts#L108">frontmeans/style-producer/src/producer/renderers/globals.renderer.ts:108</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2191,7 +2191,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/producer/renderers/globals.renderer.ts#L156">frontmeans/style-producer/src/producer/renderers/globals.renderer.ts:156</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/producer/renderers/globals.renderer.ts#L156">frontmeans/style-producer/src/producer/renderers/globals.renderer.ts:156</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2229,7 +2229,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/rule/rules.ts#L253">frontmeans/style-producer/src/rule/rules.ts:253</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/rule/rules.ts#L253">frontmeans/style-producer/src/rule/rules.ts:253</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2264,7 +2264,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/rule/rules.ts#L122">frontmeans/style-producer/src/rule/rules.ts:122</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/rule/rules.ts#L122">frontmeans/style-producer/src/rule/rules.ts:122</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2293,7 +2293,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/rule/rules.ts#L200">frontmeans/style-producer/src/rule/rules.ts:200</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/rule/rules.ts#L200">frontmeans/style-producer/src/rule/rules.ts:200</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2322,7 +2322,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/rule/rules.ts#L90">frontmeans/style-producer/src/rule/rules.ts:90</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/rule/rules.ts#L90">frontmeans/style-producer/src/rule/rules.ts:90</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2351,7 +2351,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/selector/selectors-equal.ts#L33">frontmeans/style-producer/src/selector/selectors-equal.ts:33</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/selector/selectors-equal.ts#L33">frontmeans/style-producer/src/selector/selectors-equal.ts:33</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2383,7 +2383,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/selector/selectors-equal.ts#L90">frontmeans/style-producer/src/selector/selectors-equal.ts:90</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/selector/selectors-equal.ts#L90">frontmeans/style-producer/src/selector/selectors-equal.ts:90</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2415,7 +2415,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/selector/selectors-equal.ts#L106">frontmeans/style-producer/src/selector/selectors-equal.ts:106</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/selector/selectors-equal.ts#L106">frontmeans/style-producer/src/selector/selectors-equal.ts:106</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2446,7 +2446,7 @@
 					<div class="tsd-signature tsd-kind-icon">Ref<wbr>Styp<wbr>Rule<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/rule/rule-ref.ts#L144">frontmeans/style-producer/src/rule/rule-ref.ts:144</a></li>
+							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/rule/rule-ref.ts#L128">frontmeans/style-producer/src/rule/rule-ref.ts:128</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -2461,7 +2461,7 @@
 							<li class="tsd-description">
 								<aside class="tsd-sources">
 									<ul>
-										<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/rule/rule-ref.ts#L157">frontmeans/style-producer/src/rule/rule-ref.ts:157</a></li>
+										<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/rule/rule-ref.ts#L141">frontmeans/style-producer/src/rule/rule-ref.ts:141</a></li>
 									</ul>
 								</aside>
 								<div class="tsd-comment tsd-typography">
@@ -2510,7 +2510,7 @@
 					<div class="tsd-signature tsd-kind-icon">Styp<wbr>Color<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/value/color/color.ts#L375">frontmeans/style-producer/src/value/color/color.ts:375</a></li>
+							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/value/color/color.ts#L375">frontmeans/style-producer/src/value/color/color.ts:375</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -2525,7 +2525,7 @@
 							<li class="tsd-description">
 								<aside class="tsd-sources">
 									<ul>
-										<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/value/color/color.ts#L386">frontmeans/style-producer/src/value/color/color.ts:386</a></li>
+										<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/value/color/color.ts#L386">frontmeans/style-producer/src/value/color/color.ts:386</a></li>
 									</ul>
 								</aside>
 								<div class="tsd-comment tsd-typography">
@@ -2552,12 +2552,12 @@
 				<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-has-type-parameter">
 					<a name="StypMapper" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> Styp<wbr>Mapper</h3>
-					<div class="tsd-signature tsd-kind-icon">Styp<wbr>Mapper&lt;R&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+					<div class="tsd-signature tsd-kind-icon">Styp<wbr>Mapper&lt;TResult&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/value/mapper.ts#L15">frontmeans/style-producer/src/value/mapper.ts:15</a></li>
-							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/value/mapper.ts#L23">frontmeans/style-producer/src/value/mapper.ts:23</a></li>
-							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/value/mapper.ts#L119">frontmeans/style-producer/src/value/mapper.ts:119</a></li>
+							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/value/mapper.ts#L15">frontmeans/style-producer/src/value/mapper.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/value/mapper.ts#L23">frontmeans/style-producer/src/value/mapper.ts:23</a></li>
+							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/value/mapper.ts#L119">frontmeans/style-producer/src/value/mapper.ts:119</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -2568,7 +2568,7 @@
 					<h4 class="tsd-type-parameters-title">Type parameters</h4>
 					<ul class="tsd-type-parameters">
 						<li>
-							<h4>R</h4>
+							<h4>TResult</h4>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>A type of mapped properties. This is a mapping result type.</p>
@@ -2579,10 +2579,10 @@
 					<section class="tsd-panel tsd-member tsd-kind-interface tsd-parent-kind-object-literal tsd-has-type-parameter">
 						<a name="StypMapper.Mapped" class="tsd-anchor"></a>
 						<h3>Mapped</h3>
-						<div class="tsd-signature tsd-kind-icon">Mapped&lt;R&gt;<span class="tsd-signature-symbol">:</span></div>
+						<div class="tsd-signature tsd-kind-icon">Mapped&lt;TResultKey&gt;<span class="tsd-signature-symbol">:</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/value/mapper.ts#L88">frontmeans/style-producer/src/value/mapper.ts:88</a></li>
+								<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/value/mapper.ts#L88">frontmeans/style-producer/src/value/mapper.ts:88</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2590,16 +2590,16 @@
 								<p>Grants access to mapped values.</p>
 							</div>
 							<p>Passed as a second argument to mapping function.</p>
+							<dl class="tsd-comment-tags">
+								<dt>typeparam</dt>
+								<dd><p>A type of mapped properties. This is a mapping result type.</p>
+								</dd>
+							</dl>
 						</div>
 						<h4 class="tsd-type-parameters-title">Type parameters</h4>
 						<ul class="tsd-type-parameters">
 							<li>
-								<h4>R</h4>
-								<div class="tsd-comment tsd-typography">
-									<div class="lead">
-										<p>A type of mapped properties. This is a mapping result type.</p>
-									</div>
-								</div>
+								<h4>TResultKey</h4>
 							</li>
 						</ul>
 						<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
@@ -2608,7 +2608,7 @@
 							<div class="tsd-signature tsd-kind-icon">from<span class="tsd-signature-symbol">:</span> <a href="modules/StypProperties.html" class="tsd-signature-type">StypProperties</a></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/value/mapper.ts#L93">frontmeans/style-producer/src/value/mapper.ts:93</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/value/mapper.ts#L93">frontmeans/style-producer/src/value/mapper.ts:93</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2621,13 +2621,13 @@
 							<a name="StypMapper.Mapped.get" class="tsd-anchor"></a>
 							<h3>get</h3>
 							<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter">
-								<li class="tsd-signature tsd-kind-icon">get&lt;K&gt;<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">]</span></li>
+								<li class="tsd-signature tsd-kind-icon">get&lt;TKey&gt;<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TKey</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResultKey</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">TKey</span><span class="tsd-signature-symbol">]</span></li>
 							</ul>
 							<ul class="tsd-descriptions">
 								<li class="tsd-description">
 									<aside class="tsd-sources">
 										<ul>
-											<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/value/mapper.ts#L104">frontmeans/style-producer/src/value/mapper.ts:104</a></li>
+											<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/value/mapper.ts#L104">frontmeans/style-producer/src/value/mapper.ts:104</a></li>
 										</ul>
 									</aside>
 									<div class="tsd-comment tsd-typography">
@@ -2639,19 +2639,19 @@
 									<h4 class="tsd-type-parameters-title">Type parameters</h4>
 									<ul class="tsd-type-parameters">
 										<li>
-											<h4>K<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">R</span></h4>
+											<h4>TKey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">TResultKey</span></h4>
 										</li>
 									</ul>
 									<h4 class="tsd-parameters-title">Parameters</h4>
 									<ul class="tsd-parameters">
 										<li>
-											<h5>key: <span class="tsd-signature-type">K</span></h5>
+											<h5>key: <span class="tsd-signature-type">TKey</span></h5>
 											<div class="tsd-comment tsd-typography">
 												<p>Mapped property key.</p>
 											</div>
 										</li>
 									</ul>
-									<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">]</span></h4>
+									<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TResultKey</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">TKey</span><span class="tsd-signature-symbol">]</span></h4>
 									<p>Mapped property value.</p>
 								</li>
 							</ul>
@@ -2660,21 +2660,26 @@
 					<section class="tsd-panel tsd-member tsd-kind-interface tsd-parent-kind-object-literal tsd-has-type-parameter">
 						<a name="StypMapper.MappingObject" class="tsd-anchor"></a>
 						<h3>Mapping<wbr>Object</h3>
-						<div class="tsd-signature tsd-kind-icon">Mapping<wbr>Object&lt;R, K&gt;<span class="tsd-signature-symbol">:</span></div>
+						<div class="tsd-signature tsd-kind-icon">Mapping<wbr>Object&lt;TResult, TResutKey&gt;<span class="tsd-signature-symbol">:</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/value/mapper.ts#L66">frontmeans/style-producer/src/value/mapper.ts:66</a></li>
+								<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/value/mapper.ts#L66">frontmeans/style-producer/src/value/mapper.ts:66</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
 							<div class="lead">
 								<p>CSS property mapping object.</p>
 							</div>
+							<dl class="tsd-comment-tags">
+								<dt>typeparam</dt>
+								<dd><p>Type of mapped properties keys.</p>
+								</dd>
+							</dl>
 						</div>
 						<h4 class="tsd-type-parameters-title">Type parameters</h4>
 						<ul class="tsd-type-parameters">
 							<li>
-								<h4>R</h4>
+								<h4>TResult</h4>
 								<div class="tsd-comment tsd-typography">
 									<div class="lead">
 										<p>A type of mapped properties. This is a mapping result type.</p>
@@ -2682,25 +2687,20 @@
 								</div>
 							</li>
 							<li>
-								<h4>K<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">R</span></h4>
-								<div class="tsd-comment tsd-typography">
-									<div class="lead">
-										<p>Type of mapped properties keys.</p>
-									</div>
-								</div>
+								<h4>TResutKey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">TResult</span></h4>
 							</li>
 						</ul>
 						<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
 							<a name="StypMapper.MappingObject.by" class="tsd-anchor"></a>
 							<h3>by</h3>
 							<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-								<li class="tsd-signature tsd-kind-icon">by<span class="tsd-signature-symbol">(</span>source<span class="tsd-signature-symbol">: </span><a href="modules/StypValue.html" class="tsd-signature-type">StypValue</a>, mapped<span class="tsd-signature-symbol">: </span><a href="globals.html#StypMapper.Mapped" class="tsd-signature-type">Mapped</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">&gt;</span>, key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">]</span></li>
+								<li class="tsd-signature tsd-kind-icon">by<span class="tsd-signature-symbol">(</span>source<span class="tsd-signature-symbol">: </span><a href="modules/StypValue.html" class="tsd-signature-type">StypValue</a>, mapped<span class="tsd-signature-symbol">: </span><a href="globals.html#StypMapper.Mapped" class="tsd-signature-type">Mapped</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">&gt;</span>, key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResutKey</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">TResutKey</span><span class="tsd-signature-symbol">]</span></li>
 							</ul>
 							<ul class="tsd-descriptions">
 								<li class="tsd-description">
 									<aside class="tsd-sources">
 										<ul>
-											<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/value/mapper.ts#L77">frontmeans/style-producer/src/value/mapper.ts:77</a></li>
+											<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/value/mapper.ts#L77">frontmeans/style-producer/src/value/mapper.ts:77</a></li>
 										</ul>
 									</aside>
 									<div class="tsd-comment tsd-typography">
@@ -2717,19 +2717,19 @@
 											</div>
 										</li>
 										<li>
-											<h5>mapped: <a href="globals.html#StypMapper.Mapped" class="tsd-signature-type">Mapped</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">&gt;</span></h5>
+											<h5>mapped: <a href="globals.html#StypMapper.Mapped" class="tsd-signature-type">Mapped</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">&gt;</span></h5>
 											<div class="tsd-comment tsd-typography">
 												<p>An object granting access to other mapped properties.</p>
 											</div>
 										</li>
 										<li>
-											<h5>key: <span class="tsd-signature-type">K</span></h5>
+											<h5>key: <span class="tsd-signature-type">TResutKey</span></h5>
 											<div class="tsd-comment tsd-typography">
 												<p>A key of converted property.</p>
 											</div>
 										</li>
 									</ul>
-									<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">]</span></h4>
+									<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">TResutKey</span><span class="tsd-signature-symbol">]</span></h4>
 									<p>Mapped property value.</p>
 								</li>
 							</ul>
@@ -2738,10 +2738,10 @@
 					<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-object-literal tsd-has-type-parameter">
 						<a name="StypMapper.Mapping" class="tsd-anchor"></a>
 						<h3>Mapping</h3>
-						<div class="tsd-signature tsd-kind-icon">Mapping&lt;R, K&gt;<span class="tsd-signature-symbol">:</span> <a href="globals.html#StypMapper.MappingFunction" class="tsd-signature-type">MappingFunction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="globals.html#StypMapper.MappingObject" class="tsd-signature-type">MappingObject</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">]</span></div>
+						<div class="tsd-signature tsd-kind-icon">Mapping&lt;TResult, TResultKey&gt;<span class="tsd-signature-symbol">:</span> <a href="globals.html#StypMapper.MappingFunction" class="tsd-signature-type">MappingFunction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TResultKey</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="globals.html#StypMapper.MappingObject" class="tsd-signature-type">MappingObject</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TResultKey</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">TResultKey</span><span class="tsd-signature-symbol">]</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/value/mapper.ts#L39">frontmeans/style-producer/src/value/mapper.ts:39</a></li>
+								<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/value/mapper.ts#L39">frontmeans/style-producer/src/value/mapper.ts:39</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2760,7 +2760,7 @@
 						<h4 class="tsd-type-parameters-title">Type parameters</h4>
 						<ul class="tsd-type-parameters">
 							<li>
-								<h4>R</h4>
+								<h4>TResult</h4>
 								<div class="tsd-comment tsd-typography">
 									<div class="lead">
 										<p>A type of mapped properties. This is an object containing mapped properties.</p>
@@ -2768,7 +2768,7 @@
 								</div>
 							</li>
 							<li>
-								<h4>K<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">R</span></h4>
+								<h4>TResultKey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">TResult</span></h4>
 								<div class="tsd-comment tsd-typography">
 									<div class="lead">
 										<p>Type of mapped properties keys.</p>
@@ -2780,10 +2780,10 @@
 					<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-object-literal tsd-has-type-parameter">
 						<a name="StypMapper.MappingFunction" class="tsd-anchor"></a>
 						<h3>Mapping<wbr>Function</h3>
-						<div class="tsd-signature tsd-kind-icon">Mapping<wbr>Function&lt;R, K&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, source<span class="tsd-signature-symbol">: </span><a href="modules/StypValue.html" class="tsd-signature-type">StypValue</a>, mapped<span class="tsd-signature-symbol">: </span><a href="globals.html#StypMapper.Mapped" class="tsd-signature-type">Mapped</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">&gt;</span>, key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">]</span></div>
+						<div class="tsd-signature tsd-kind-icon">Mapping<wbr>Function&lt;TResult, TResultKey&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, source<span class="tsd-signature-symbol">: </span><a href="modules/StypValue.html" class="tsd-signature-type">StypValue</a>, mapped<span class="tsd-signature-symbol">: </span><a href="globals.html#StypMapper.Mapped" class="tsd-signature-type">Mapped</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">&gt;</span>, key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResultKey</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">TResultKey</span><span class="tsd-signature-symbol">]</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/value/mapper.ts#L50">frontmeans/style-producer/src/value/mapper.ts:50</a></li>
+								<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/value/mapper.ts#L50">frontmeans/style-producer/src/value/mapper.ts:50</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2794,7 +2794,7 @@
 						<h4 class="tsd-type-parameters-title">Type parameters</h4>
 						<ul class="tsd-type-parameters">
 							<li>
-								<h4>R</h4>
+								<h4>TResult</h4>
 								<div class="tsd-comment tsd-typography">
 									<div class="lead">
 										<p>A type of mapped properties. This is a mapping result type.</p>
@@ -2802,7 +2802,7 @@
 								</div>
 							</li>
 							<li>
-								<h4>K<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">R</span></h4>
+								<h4>TResultKey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">TResult</span></h4>
 								<div class="tsd-comment tsd-typography">
 									<div class="lead">
 										<p>Type of mapped properties keys.</p>
@@ -2815,7 +2815,7 @@
 							<ul class="tsd-parameters">
 								<li class="tsd-parameter-signature">
 									<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-alias">
-										<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, source<span class="tsd-signature-symbol">: </span><a href="modules/StypValue.html" class="tsd-signature-type">StypValue</a>, mapped<span class="tsd-signature-symbol">: </span><a href="globals.html#StypMapper.Mapped" class="tsd-signature-type">Mapped</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">&gt;</span>, key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">]</span></li>
+										<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, source<span class="tsd-signature-symbol">: </span><a href="modules/StypValue.html" class="tsd-signature-type">StypValue</a>, mapped<span class="tsd-signature-symbol">: </span><a href="globals.html#StypMapper.Mapped" class="tsd-signature-type">Mapped</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">&gt;</span>, key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResultKey</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">TResultKey</span><span class="tsd-signature-symbol">]</span></li>
 									</ul>
 									<ul class="tsd-descriptions">
 										<li class="tsd-description">
@@ -2835,7 +2835,7 @@
 													</div>
 												</li>
 												<li>
-													<h5>mapped: <a href="globals.html#StypMapper.Mapped" class="tsd-signature-type">Mapped</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">&gt;</span></h5>
+													<h5>mapped: <a href="globals.html#StypMapper.Mapped" class="tsd-signature-type">Mapped</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">&gt;</span></h5>
 													<div class="tsd-comment tsd-typography">
 														<div class="lead">
 															<p>An object granting access to other mapped properties.</p>
@@ -2843,7 +2843,7 @@
 													</div>
 												</li>
 												<li>
-													<h5>key: <span class="tsd-signature-type">K</span></h5>
+													<h5>key: <span class="tsd-signature-type">TResultKey</span></h5>
 													<div class="tsd-comment tsd-typography">
 														<div class="lead">
 															<p>A key of converted property.</p>
@@ -2851,7 +2851,7 @@
 													</div>
 												</li>
 											</ul>
-											<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">]</span></h4>
+											<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">TResultKey</span><span class="tsd-signature-symbol">]</span></h4>
 											<p>Mapped property value.</p>
 										</li>
 									</ul>
@@ -2862,10 +2862,10 @@
 					<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-object-literal tsd-has-type-parameter">
 						<a name="StypMapper.Mappings" class="tsd-anchor"></a>
 						<h3>Mappings</h3>
-						<div class="tsd-signature tsd-kind-icon">Mappings&lt;R&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
+						<div class="tsd-signature tsd-kind-icon">Mappings&lt;TResult&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/value/mapper.ts#L115">frontmeans/style-producer/src/value/mapper.ts:115</a></li>
+								<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/value/mapper.ts#L115">frontmeans/style-producer/src/value/mapper.ts:115</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2877,7 +2877,7 @@
 						<h4 class="tsd-type-parameters-title">Type parameters</h4>
 						<ul class="tsd-type-parameters">
 							<li>
-								<h4>R</h4>
+								<h4>TResult</h4>
 								<div class="tsd-comment tsd-typography">
 									<div class="lead">
 										<p>A type of mapped properties. This is a mapping result type.</p>
@@ -2895,13 +2895,13 @@
 						<a name="StypMapper.by-1" class="tsd-anchor"></a>
 						<h3>by</h3>
 						<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-object-literal tsd-has-type-parameter">
-							<li class="tsd-signature tsd-kind-icon">by&lt;R&gt;<span class="tsd-signature-symbol">(</span>mappings<span class="tsd-signature-symbol">: </span><a href="globals.html#StypMapper.Mappings" class="tsd-signature-type">Mappings</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="globals.html#StypMapper" class="tsd-signature-type">StypMapper</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">&gt;</span></li>
+							<li class="tsd-signature tsd-kind-icon">by&lt;TResult&gt;<span class="tsd-signature-symbol">(</span>mappings<span class="tsd-signature-symbol">: </span><a href="globals.html#StypMapper.Mappings" class="tsd-signature-type">Mappings</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="globals.html#StypMapper" class="tsd-signature-type">StypMapper</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">&gt;</span></li>
 						</ul>
 						<ul class="tsd-descriptions">
 							<li class="tsd-description">
 								<aside class="tsd-sources">
 									<ul>
-										<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/value/mapper.ts#L163">frontmeans/style-producer/src/value/mapper.ts:163</a></li>
+										<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/value/mapper.ts#L162">frontmeans/style-producer/src/value/mapper.ts:162</a></li>
 									</ul>
 								</aside>
 								<div class="tsd-comment tsd-typography">
@@ -2912,7 +2912,7 @@
 								<h4 class="tsd-type-parameters-title">Type parameters</h4>
 								<ul class="tsd-type-parameters">
 									<li>
-										<h4>R</h4>
+										<h4>TResult</h4>
 										<div class="tsd-comment tsd-typography">
 											<p>A type of mapped properties. This is a mapping result type.</p>
 										</div>
@@ -2921,13 +2921,13 @@
 								<h4 class="tsd-parameters-title">Parameters</h4>
 								<ul class="tsd-parameters">
 									<li>
-										<h5>mappings: <a href="globals.html#StypMapper.Mappings" class="tsd-signature-type">Mappings</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">&gt;</span></h5>
+										<h5>mappings: <a href="globals.html#StypMapper.Mappings" class="tsd-signature-type">Mappings</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">&gt;</span></h5>
 										<div class="tsd-comment tsd-typography">
 											<p>Mappings of CSS properties.</p>
 										</div>
 									</li>
 								</ul>
-								<h4 class="tsd-returns-title">Returns <a href="globals.html#StypMapper" class="tsd-signature-type">StypMapper</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">&gt;</span></h4>
+								<h4 class="tsd-returns-title">Returns <a href="globals.html#StypMapper" class="tsd-signature-type">StypMapper</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">&gt;</span></h4>
 								<p>A function that maps CSS properties accordingly to the given <code>mappings</code>.</p>
 							</li>
 						</ul>
@@ -2936,13 +2936,13 @@
 						<a name="StypMapper.map" class="tsd-anchor"></a>
 						<h3>map</h3>
 						<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-object-literal tsd-has-type-parameter">
-							<li class="tsd-signature tsd-kind-icon">map&lt;R&gt;<span class="tsd-signature-symbol">(</span>mappings<span class="tsd-signature-symbol">: </span><a href="globals.html#StypMapper.Mappings" class="tsd-signature-type">Mappings</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">&gt;</span>, from<span class="tsd-signature-symbol">: </span><a href="modules/StypProperties.html" class="tsd-signature-type">StypProperties</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">R</span></li>
+							<li class="tsd-signature tsd-kind-icon">map&lt;TResult&gt;<span class="tsd-signature-symbol">(</span>mappings<span class="tsd-signature-symbol">: </span><a href="globals.html#StypMapper.Mappings" class="tsd-signature-type">Mappings</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">&gt;</span>, from<span class="tsd-signature-symbol">: </span><a href="modules/StypProperties.html" class="tsd-signature-type">StypProperties</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult</span></li>
 						</ul>
 						<ul class="tsd-descriptions">
 							<li class="tsd-description">
 								<aside class="tsd-sources">
 									<ul>
-										<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/value/mapper.ts#L131">frontmeans/style-producer/src/value/mapper.ts:131</a></li>
+										<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/value/mapper.ts#L130">frontmeans/style-producer/src/value/mapper.ts:130</a></li>
 									</ul>
 								</aside>
 								<div class="tsd-comment tsd-typography">
@@ -2953,7 +2953,7 @@
 								<h4 class="tsd-type-parameters-title">Type parameters</h4>
 								<ul class="tsd-type-parameters">
 									<li>
-										<h4>R</h4>
+										<h4>TResult</h4>
 										<div class="tsd-comment tsd-typography">
 											<p>A type of mapped properties. This is a mapping result type.</p>
 										</div>
@@ -2962,7 +2962,7 @@
 								<h4 class="tsd-parameters-title">Parameters</h4>
 								<ul class="tsd-parameters">
 									<li>
-										<h5>mappings: <a href="globals.html#StypMapper.Mappings" class="tsd-signature-type">Mappings</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">&gt;</span></h5>
+										<h5>mappings: <a href="globals.html#StypMapper.Mappings" class="tsd-signature-type">Mappings</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">&gt;</span></h5>
 										<div class="tsd-comment tsd-typography">
 											<p>Mappings of CSS properties.</p>
 										</div>
@@ -2974,7 +2974,7 @@
 										</div>
 									</li>
 								</ul>
-								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">R</span></h4>
+								<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TResult</span></h4>
 								<p>Mapped properties.</p>
 							</li>
 						</ul>
@@ -2989,7 +2989,7 @@
 					<div class="tsd-signature tsd-kind-icon">styp<wbr>Render<wbr>AtRules<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/producer/renderers/at-rules.renderer.ts#L130">frontmeans/style-producer/src/producer/renderers/at-rules.renderer.ts:130</a></li>
+							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/producer/renderers/at-rules.renderer.ts#L130">frontmeans/style-producer/src/producer/renderers/at-rules.renderer.ts:130</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -3017,7 +3017,7 @@
 						<div class="tsd-signature tsd-kind-icon">order<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = FIRST_RENDER_ORDER</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/producer/renderers/at-rules.renderer.ts#L132">frontmeans/style-producer/src/producer/renderers/at-rules.renderer.ts:132</a></li>
+								<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/producer/renderers/at-rules.renderer.ts#L132">frontmeans/style-producer/src/producer/renderers/at-rules.renderer.ts:132</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -3031,7 +3031,7 @@
 							<li class="tsd-description">
 								<aside class="tsd-sources">
 									<ul>
-										<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/producer/renderers/at-rules.renderer.ts#L134">frontmeans/style-producer/src/producer/renderers/at-rules.renderer.ts:134</a></li>
+										<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/producer/renderers/at-rules.renderer.ts#L134">frontmeans/style-producer/src/producer/renderers/at-rules.renderer.ts:134</a></li>
 									</ul>
 								</aside>
 								<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3051,7 +3051,7 @@
 					<div class="tsd-signature tsd-kind-icon">styp<wbr>Render<wbr>Globals<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/producer/renderers/globals.renderer.ts#L60">frontmeans/style-producer/src/producer/renderers/globals.renderer.ts:60</a></li>
+							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/producer/renderers/globals.renderer.ts#L60">frontmeans/style-producer/src/producer/renderers/globals.renderer.ts:60</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -3090,7 +3090,7 @@
 						<div class="tsd-signature tsd-kind-icon">needs<span class="tsd-signature-symbol">:</span> <a href="modules/StypRenderer.html" class="tsd-signature-type">StypRenderer</a><span class="tsd-signature-symbol"> = stypRenderAtRules</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/producer/renderers/globals.renderer.ts#L64">frontmeans/style-producer/src/producer/renderers/globals.renderer.ts:64</a></li>
+								<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/producer/renderers/globals.renderer.ts#L64">frontmeans/style-producer/src/producer/renderers/globals.renderer.ts:64</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -3100,7 +3100,7 @@
 						<div class="tsd-signature tsd-kind-icon">order<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = FIRST_RENDER_ORDER + 1</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/producer/renderers/globals.renderer.ts#L62">frontmeans/style-producer/src/producer/renderers/globals.renderer.ts:62</a></li>
+								<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/producer/renderers/globals.renderer.ts#L62">frontmeans/style-producer/src/producer/renderers/globals.renderer.ts:62</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -3114,7 +3114,7 @@
 							<li class="tsd-description">
 								<aside class="tsd-sources">
 									<ul>
-										<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/producer/renderers/globals.renderer.ts#L66">frontmeans/style-producer/src/producer/renderers/globals.renderer.ts:66</a></li>
+										<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/producer/renderers/globals.renderer.ts#L66">frontmeans/style-producer/src/producer/renderers/globals.renderer.ts:66</a></li>
 									</ul>
 								</aside>
 								<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3137,7 +3137,7 @@
 					<div class="tsd-signature tsd-kind-icon">styp<wbr>Render<wbr>Xml<wbr>Ns<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/producer/renderers/xml-ns.renderer.ts#L25">frontmeans/style-producer/src/producer/renderers/xml-ns.renderer.ts:25</a></li>
+							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/producer/renderers/xml-ns.renderer.ts#L25">frontmeans/style-producer/src/producer/renderers/xml-ns.renderer.ts:25</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -3153,7 +3153,7 @@
 						<div class="tsd-signature tsd-kind-icon">needs<span class="tsd-signature-symbol">:</span> <a href="modules/StypRenderer.html" class="tsd-signature-type">StypRenderer</a><span class="tsd-signature-symbol"> = stypRenderGlobals</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/producer/renderers/xml-ns.renderer.ts#L29">frontmeans/style-producer/src/producer/renderers/xml-ns.renderer.ts:29</a></li>
+								<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/producer/renderers/xml-ns.renderer.ts#L29">frontmeans/style-producer/src/producer/renderers/xml-ns.renderer.ts:29</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -3163,7 +3163,7 @@
 						<div class="tsd-signature tsd-kind-icon">order<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = FIRST_RENDER_ORDER</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/producer/renderers/xml-ns.renderer.ts#L27">frontmeans/style-producer/src/producer/renderers/xml-ns.renderer.ts:27</a></li>
+								<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/producer/renderers/xml-ns.renderer.ts#L27">frontmeans/style-producer/src/producer/renderers/xml-ns.renderer.ts:27</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -3177,7 +3177,7 @@
 							<li class="tsd-description">
 								<aside class="tsd-sources">
 									<ul>
-										<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/producer/renderers/xml-ns.renderer.ts#L31">frontmeans/style-producer/src/producer/renderers/xml-ns.renderer.ts:31</a></li>
+										<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/producer/renderers/xml-ns.renderer.ts#L31">frontmeans/style-producer/src/producer/renderers/xml-ns.renderer.ts:31</a></li>
 									</ul>
 								</aside>
 								<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3203,7 +3203,7 @@
 					<div class="tsd-signature tsd-kind-icon">compact<wbr>Styp<wbr>Text<wbr>Formatter<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/producer/formats/text.format.ts#L133">frontmeans/style-producer/src/producer/formats/text.format.ts:133</a></li>
+							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/producer/formats/text.format.ts#L124">frontmeans/style-producer/src/producer/formats/text.format.ts:124</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -3218,7 +3218,7 @@
 						<div class="tsd-signature tsd-kind-icon">eol<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;&quot;</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/producer/formats/text.format.ts#L135">frontmeans/style-producer/src/producer/formats/text.format.ts:135</a></li>
+								<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/producer/formats/text.format.ts#L126">frontmeans/style-producer/src/producer/formats/text.format.ts:126</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -3228,7 +3228,7 @@
 						<div class="tsd-signature tsd-kind-icon">nv<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;&quot;</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/producer/formats/text.format.ts#L134">frontmeans/style-producer/src/producer/formats/text.format.ts:134</a></li>
+								<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/producer/formats/text.format.ts#L125">frontmeans/style-producer/src/producer/formats/text.format.ts:125</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -3238,7 +3238,7 @@
 						<div class="tsd-signature tsd-kind-icon">pre<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;&quot;</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/producer/formats/text.format.ts#L136">frontmeans/style-producer/src/producer/formats/text.format.ts:136</a></li>
+								<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/producer/formats/text.format.ts#L127">frontmeans/style-producer/src/producer/formats/text.format.ts:127</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -3252,7 +3252,7 @@
 							<li class="tsd-description">
 								<aside class="tsd-sources">
 									<ul>
-										<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/producer/formats/text.format.ts#L137">frontmeans/style-producer/src/producer/formats/text.format.ts:137</a></li>
+										<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/producer/formats/text.format.ts#L128">frontmeans/style-producer/src/producer/formats/text.format.ts:128</a></li>
 									</ul>
 								</aside>
 								<h4 class="tsd-returns-title">Returns <a href="interfaces/StypTextFormatter.html" class="tsd-signature-type">StypTextFormatter</a></h4>
@@ -3266,7 +3266,7 @@
 					<div class="tsd-signature tsd-kind-icon">default<wbr>Pretty<wbr>Print<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/producer/formats/text.format.ts#L126">frontmeans/style-producer/src/producer/formats/text.format.ts:126</a></li>
+							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/producer/formats/text.format.ts#L117">frontmeans/style-producer/src/producer/formats/text.format.ts:117</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -3281,7 +3281,7 @@
 						<div class="tsd-signature tsd-kind-icon">indent<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;  &quot;</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/producer/formats/text.format.ts#L127">frontmeans/style-producer/src/producer/formats/text.format.ts:127</a></li>
+								<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/producer/formats/text.format.ts#L118">frontmeans/style-producer/src/producer/formats/text.format.ts:118</a></li>
 							</ul>
 						</aside>
 					</section>

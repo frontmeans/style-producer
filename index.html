@@ -212,6 +212,7 @@ supply.off(); <span class="hljs-comment">// Remove produced stylesheets  </span>
 					interface and use <code>StypMapper</code> to map arbitrary CSS properties to that interface, or <code>StypRuleRef</code> to access CSS rule
 				in type safe manner:</p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { RefStypRule, StypColor, StypLengthPt, StypRGB, stypRoot } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@frontmeans/style-producer&#x27;</span>;
+<span class="hljs-keyword">import</span> { mapAfter } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@proc7ts/fun-events&#x27;</span>;
 
 <span class="hljs-comment">// Type-safe CSS properties representing custom settings</span>
 <span class="hljs-keyword">interface</span> MySettings {
@@ -237,25 +238,25 @@ supply.off(); <span class="hljs-comment">// Remove produced stylesheets  </span>
 <span class="hljs-keyword">const</span> mySettingsRef = MySettings(root);
 
 <span class="hljs-comment">// Define `&lt;body&gt;` style</span>
-root.add(mySettingsRef.read.thru(
-    <span class="hljs-function">(<span class="hljs-params">{ $color, $bgColor, $gap }</span>) =&gt;</span> ({
+root.add(mySettingsRef.read.do(
+    mapAfter(<span class="hljs-function">(<span class="hljs-params">{ $color, $bgColor, $gap }</span>) =&gt;</span> ({
       <span class="hljs-attr">color</span>: $color, <span class="hljs-comment">// Apply default text color</span>
       <span class="hljs-attr">backgroundColor</span>: $bgColor, <span class="hljs-comment">// Apply default background color</span>
       <span class="hljs-attr">padding</span>: $gap, <span class="hljs-comment">// Padding is based on default gap</span>
-    }),
+    })),
 ));
 
 
 <span class="hljs-comment">// Define `&lt;input&gt;` element style based on default settings.</span>
 root.rules.add(
     { <span class="hljs-attr">e</span>: <span class="hljs-string">&#x27;input&#x27;</span> },
-    mySettingsRef.read.thru(
-        <span class="hljs-function">(<span class="hljs-params">{ $color, $bgColor, $gap }</span>) =&gt;</span> ({
+    mySettingsRef.read.do(
+        mapAfter(<span class="hljs-function">(<span class="hljs-params">{ $color, $bgColor, $gap }</span>) =&gt;</span> ({
           <span class="hljs-attr">color</span>: $color,
           <span class="hljs-attr">backgroundColor</span>: $bgColor.hsl.set(<span class="hljs-function"><span class="hljs-params">hsl</span> =&gt;</span> ({ <span class="hljs-attr">l</span>: hsl.l * <span class="hljs-number">0.85</span> })), <span class="hljs-comment">// Convert to HSL and darken input background</span>
           <span class="hljs-attr">padding</span>: <span class="hljs-string">`<span class="hljs-subst">${$gap}</span> <span class="hljs-subst">${$gap.mul(<span class="hljs-number">1.5</span>)}</span>`</span>, <span class="hljs-comment">// Padding is based on default gap</span>
           <span class="hljs-attr">border</span>: <span class="hljs-string">`1px solid <span class="hljs-subst">${$color}</span>`</span>,          
-        }),
+        })),
     ),
 );
 

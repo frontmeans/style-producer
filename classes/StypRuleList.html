@@ -97,16 +97,66 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
+							<h3>Properties</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="StypRuleList.html#onUpdate" class="tsd-kind-icon">on<wbr>Update</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="StypRuleList.html#read" class="tsd-kind-icon">read</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="StypRuleList.html#_AfterEvent__symbol_" class="tsd-kind-icon">[<wbr>After<wbr>Event__symbol]</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="StypRuleList.html#_OnEvent__symbol_" class="tsd-kind-icon">[<wbr>OnEvent__symbol]</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="StypRuleList.html#_Symbol_iterator_" class="tsd-kind-icon">[<wbr>Symbol.iterator]</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="StypRuleList.html#grab" class="tsd-kind-icon">grab</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="StypRuleList.html#onUpdate" class="tsd-kind-icon">on<wbr>Update</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="StypRuleList.html#read" class="tsd-kind-icon">read</a></li>
 							</ul>
 						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="onUpdate" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> <span class="tsd-flag ts-flagAbstract">Abstract</span> on<wbr>Update</h3>
+					<div class="tsd-signature tsd-kind-icon">on<wbr>Update<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">OnEvent</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><a href="StypRule.html" class="tsd-signature-type">StypRule</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">, </span><a href="StypRule.html" class="tsd-signature-type">StypRule</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/rule/rule.ts#L138">frontmeans/style-producer/src/rule/rule.ts:138</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>An <code>OnEvent</code> sender of this rule list updates.</p>
+						</div>
+						<p>The list updates receiver accepts two arguments:</p>
+						<ul>
+							<li>An array of added rules</li>
+							<li>An array of removed rules.</li>
+						</ul>
+						<p>The <code>[OnEvent__symbol]</code> property is an alias of this one.</p>
+						<dl class="tsd-comment-tags">
+							<dt>returns</dt>
+							<dd><p><code>OnEvent</code> sender of rule list updates.</p>
+							</dd>
+						</dl>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="read" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> <span class="tsd-flag ts-flagAbstract">Abstract</span> read</h3>
+					<div class="tsd-signature tsd-kind-icon">read<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">AfterEvent</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><a href="StypRuleList.html" class="tsd-signature-type">StypRuleList</a><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/rule/rule.ts#L125">frontmeans/style-producer/src/rule/rule.ts:125</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>An <code>AfterEvent</code> keeper of rule list.</p>
+						</div>
+						<p>The <code>[AfterEvent__symbol]</code> property is an alias of this one.</p>
 					</div>
 				</section>
 			</section>
@@ -122,7 +172,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/rule/rule.ts#L157">frontmeans/style-producer/src/rule/rule.ts:157</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/rule/rule.ts#L140">frontmeans/style-producer/src/rule/rule.ts:140</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">AfterEvent</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><a href="StypRuleList.html" class="tsd-signature-type">StypRuleList</a><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -139,7 +189,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/rule/rule.ts#L183">frontmeans/style-producer/src/rule/rule.ts:183</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/rule/rule.ts#L144">frontmeans/style-producer/src/rule/rule.ts:144</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">OnEvent</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><a href="StypRule.html" class="tsd-signature-type">StypRule</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">, </span><a href="StypRule.html" class="tsd-signature-type">StypRule</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -156,7 +206,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/rule/rule.ts#L187">frontmeans/style-producer/src/rule/rule.ts:187</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/rule/rule.ts#L148">frontmeans/style-producer/src/rule/rule.ts:148</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">IterableIterator</span><span class="tsd-signature-symbol">&lt;</span><a href="StypRule.html" class="tsd-signature-type">StypRule</a><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -173,7 +223,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/rule/rule.ts#L196">frontmeans/style-producer/src/rule/rule.ts:196</a></li>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/71b43a7/src/rule/rule.ts#L157">frontmeans/style-producer/src/rule/rule.ts:157</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -195,107 +245,6 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="onUpdate" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagAbstract">Abstract</span> on<wbr>Update</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">on<wbr>Update<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">OnEvent</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><a href="StypRule.html" class="tsd-signature-type">StypRule</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">, </span><a href="StypRule.html" class="tsd-signature-type">StypRule</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></li>
-						<li class="tsd-signature tsd-kind-icon">on<wbr>Update<span class="tsd-signature-symbol">(</span>receiver<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">EventReceiver</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><a href="StypRule.html" class="tsd-signature-type">StypRule</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">, </span><a href="StypRule.html" class="tsd-signature-type">StypRule</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">EventSupply</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/rule/rule.ts#L172">frontmeans/style-producer/src/rule/rule.ts:172</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Builds an <code>OnEvent</code> sender of this rule list updates.</p>
-								</div>
-								<p>The list updates receiver accepts two arguments:</p>
-								<ul>
-									<li>An array of added rules</li>
-									<li>An array of removed rules.</li>
-								</ul>
-								<p>The <code>[OnEvent__symbol]</code> property is an alias of this one.</p>
-							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">OnEvent</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><a href="StypRule.html" class="tsd-signature-type">StypRule</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">, </span><a href="StypRule.html" class="tsd-signature-type">StypRule</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p><code>OnEvent</code> sender of rule list updates.</p>
-						</li>
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/rule/rule.ts#L181">frontmeans/style-producer/src/rule/rule.ts:181</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Starts sending updates to this rule list to the given <code>receiver</code>.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>receiver: <span class="tsd-signature-type">EventReceiver</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><a href="StypRule.html" class="tsd-signature-type">StypRule</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">, </span><a href="StypRule.html" class="tsd-signature-type">StypRule</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Target receiver of updates to this rule list.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">EventSupply</span></h4>
-							<p>Rule list updates supply.</p>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="read" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagAbstract">Abstract</span> read</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">read<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">AfterEvent</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><a href="StypRuleList.html" class="tsd-signature-type">StypRuleList</a><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></li>
-						<li class="tsd-signature tsd-kind-icon">read<span class="tsd-signature-symbol">(</span>receiver<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">EventReceiver</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><a href="StypRuleList.html" class="tsd-signature-type">StypRuleList</a><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">EventSupply</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/rule/rule.ts#L146">frontmeans/style-producer/src/rule/rule.ts:146</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Builds an <code>AfterEvent</code> keeper of rule list.</p>
-								</div>
-								<p>The <code>[AfterEvent__symbol]</code> property is an alias of this one.</p>
-							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">AfterEvent</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><a href="StypRuleList.html" class="tsd-signature-type">StypRuleList</a><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p><code>AfterEvent</code> keeper of this rule list.</p>
-						</li>
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/4fe9bf9/src/rule/rule.ts#L155">frontmeans/style-producer/src/rule/rule.ts:155</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Starts sending rule list and updates to the given <code>receiver</code>.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>receiver: <span class="tsd-signature-type">EventReceiver</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><a href="StypRuleList.html" class="tsd-signature-type">StypRuleList</a><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Target receiver of this rule list.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">EventSupply</span></h4>
-							<p>Rule list supply.</p>
-						</li>
-					</ul>
-				</section>
 			</section>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
@@ -313,6 +262,12 @@
 					<li class="current tsd-kind-class">
 						<a href="StypRuleList.html" class="tsd-kind-icon">Styp<wbr>Rule<wbr>List</a>
 						<ul>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="StypRuleList.html#onUpdate" class="tsd-kind-icon">on<wbr>Update</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="StypRuleList.html#read" class="tsd-kind-icon">read</a>
+							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="StypRuleList.html#_AfterEvent__symbol_" class="tsd-kind-icon">[<wbr>After<wbr>Event__symbol]</a>
 							</li>
@@ -324,12 +279,6 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="StypRuleList.html#grab" class="tsd-kind-icon">grab</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="StypRuleList.html#onUpdate" class="tsd-kind-icon">on<wbr>Update</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="StypRuleList.html#read" class="tsd-kind-icon">read</a>
 							</li>
 						</ul>
 					</li>
