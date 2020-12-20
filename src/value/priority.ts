@@ -15,7 +15,7 @@ export const enum StypPriority {
   /**
    * Usual, non-important priority.
    *
-   * This priority is assigned to values by [[StypValueStruct.usual]] method.
+   * This priority is assigned to values by {@link StypValueStruct.usual} method.
    */
   Usual = 0,
 
@@ -30,7 +30,7 @@ export const enum StypPriority {
    * Important priority.
    *
    * This priority corresponds to values with `!important` suffix. It is applied to string values with `!important`
-   * suffix, and can be assigned to structured values using [[StypValueStruct.important]] method.
+   * suffix, and can be assigned to structured values using {@link StypValueStruct.important} method.
    *
    * All numeric priorities with higher values are rendered as `!important` ones.
    */

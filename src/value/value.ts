@@ -72,7 +72,7 @@ export abstract class StypValueStruct<TSelf extends StypValueStruct<TSelf>> {
   /**
    * Creates `!important` variant of this value.
    *
-   * @returns Either a new value equal to this one but having `priority` equal to [[StypPriority.Important]],
+   * @returns Either a new value equal to this one but having `priority` equal to {@link StypPriority.Important},
    * or this one if already the case.
    */
   important(): TSelf {
@@ -82,7 +82,7 @@ export abstract class StypValueStruct<TSelf extends StypValueStruct<TSelf>> {
   /**
    * Creates usual (not `!important`) variant of this value.
    *
-   * @returns Either a new value equal to this one but having `priority` equal to [[StypPriority.Usual]],
+   * @returns Either a new value equal to this one but having `priority` equal to {@link StypPriority.Usual},
    * or this one if already the case.
    */
   usual(): TSelf {
@@ -122,7 +122,7 @@ export namespace StypValue {
     /**
      * Constructed value priority.
      *
-     * The value [[StypPriority.Important]] and above means the property is `!important`. Everything else means normal
+     * The value {@link StypPriority.Important} and above means the property is `!important`. Everything else means normal
      * priority.
      */
     readonly priority?: number;
@@ -134,7 +134,7 @@ export namespace StypValue {
 /**
  * Checks whether two CSS property values are equal.
  *
- * Compares scalar values verbatim. Compares structured values using their [[StypValueStruct.is]] method. The latter
+ * Compares scalar values verbatim. Compares structured values using their {@link StypValueStruct.is} method. The latter
  * method is applied when at least one of the values is structured.
  *
  * @category CSS Value

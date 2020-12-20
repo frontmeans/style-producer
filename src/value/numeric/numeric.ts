@@ -148,7 +148,7 @@ export namespace StypDimension {
     /**
      * Zero value of this kind.
      *
-     * Typically, this is unit-less [[StypZero]]. But some dimensions require units.
+     * Typically, this is unit-less {@link StypZero}. But some dimensions require units.
      */
     readonly zero: StypDimension<TUnit> | StypZero<TUnit>;
 
@@ -158,7 +158,7 @@ export namespace StypDimension {
      * @param val - Numeric dimension value.
      * @param unit - Dimension unit.
      *
-     * @returns Constructed dimension value. Either [[StypDimension]] instance, or [[StypZero]] if `val` is `0` and
+     * @returns Constructed dimension value. Either {@link StypDimension} instance, or {@link StypZero} if `val` is `0` and
      * this dimension kind supports unitless zero.
      */
     of(val: number, unit: TUnit): StypDimension<TUnit> | StypZero<TUnit>;
@@ -170,7 +170,7 @@ export namespace StypDimension {
      * This method allows to use a dimension kind as {@link StypMapper.Mapping CSS property mapping}.
      *
      * Any scalar or non-numeric value is mapped to `undefined`. A numeric value is converted to this dimension by
-     * [[StypNumericStruct.toDim]] method.
+     * {@link StypNumericStruct.toDim} method.
      *
      * @param source - A raw property value that should be converted.
      *
@@ -204,7 +204,7 @@ export namespace StypDimension {
        * @param val - Numeric dimension value.
        * @param unit - Dimension unit.
        *
-       * @returns Constructed dimension value. Either [[StypDimension]] instance, or [[StypZero]] if `val` is `0`.
+       * @returns Constructed dimension value. Either {@link StypDimension} instance, or {@link StypZero} if `val` is `0`.
        */
       of(val: number, unit: TUnit): StypDimension<TUnit> | StypZero<TUnit>;
 
@@ -234,7 +234,7 @@ export namespace StypDimension {
        * @param val - Numeric dimension value.
        * @param unit - Dimension unit.
        *
-       * @returns Constructed dimension value as a [[StypDimension]] instance.
+       * @returns Constructed dimension value as a {@link StypDimension} instance.
        */
       of(val: number, unit: TUnit): StypDimension<TUnit>;
 

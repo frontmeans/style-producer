@@ -122,7 +122,7 @@ export namespace StypWriter {
      *
      * @param name - Property name (hyphen case) to be modified.
      * @param value - New property value.
-     * @param priority - New property value priority. The value [[StypPriority.Important]] and above means the property
+     * @param priority - New property value priority. The value {@link StypPriority.Important} and above means the property
      * is `!important`.
      */
     set(name: string, value: string, priority: number): void;

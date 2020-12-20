@@ -53,7 +53,7 @@ import { FIRST_RENDER_ORDER } from './renderer.impl';
  * @namespace svg url(http://www.w3.org/2000/svg);
  * ```
  *
- * Enabled by default in [[produceStyle]] function.
+ * Enabled by default in {@link produceStyle} function.
  *
  * @category Rendering
  */

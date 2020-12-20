@@ -37,8 +37,8 @@ export namespace StypRules {
   /**
    * A source of CSS rules.
    *
-   * A dynamically updated CSS rule set can be constructed out of one or more sources by [[stypRules]] and
-   * [[lazyStypRules]] functions.
+   * A dynamically updated CSS rule set can be constructed out of one or more sources by {@link stypRules} and
+   * {@link lazyStypRules} functions.
    *
    * This can be one of:
    * - Single `StypRule` instance.
@@ -94,7 +94,7 @@ function rulesFromSource(source: StypRules.Source): StypRules {
 /**
  * Constructs lazily updated CSS rule list out of rule sources.
  *
- * In contrast to [[stypRules]] this one does not evaluate sources (e.g. does not call source functions) until there
+ * In contrast to {@link stypRules} this one does not evaluate sources (e.g. does not call source functions) until there
  * is an updates receiver registered.
  *
  * This means that the constructed rule set won't necessary contain the rules from all sources originally. It will

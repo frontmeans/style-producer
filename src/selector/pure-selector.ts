@@ -14,7 +14,7 @@ import { StypSubSelector } from './sub-selector';
  * - CSS selector part, or
  * - an array consisting of strings, parts, and their combinators.
  *
- * A normalized pure CSS selector can be constructed using [[stypSelector]] function.
+ * A normalized pure CSS selector can be constructed using {@link stypSelector} function.
  *
  * This is the base of {@link StypSelector structured CSS selector}. In contrast to the latter it does not support
  * qualifiers.

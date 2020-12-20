@@ -18,7 +18,7 @@ import { FIRST_RENDER_ORDER } from './renderer.impl';
  *
  * Renders `@namespace` declarations for CSS selectors containing namespace definitions.
  *
- * Enabled by default in [[produceStyle]] function.
+ * Enabled by default in {@link produceStyle} function.
  *
  * @category Rendering
  */

@@ -131,7 +131,7 @@ export class StypDimension<TUnit extends string>
  * @param unit - Value unit.
  * @param opts - Construction options.
  *
- * @returns Either [[StypDimension]], or [[StypZero]] if `val === 0`.
+ * @returns Either {@link StypDimension}, or {@link StypZero} if `val === 0`.
  *
  * [dimension]: https://developer.mozilla.org/en-US/docs/Web/CSS/dimension
  *

@@ -377,7 +377,7 @@ export const StypColor = {
   /**
    * Maps the given CSS property value to color. Defaults to `undefined` if mapping is not possible.
    *
-   * This method allows to use a [[StypColor]] object as {@link StypMapper.Mapping CSS property mapping}.
+   * This method allows to use a {@link StypColor} object as {@link StypMapper.Mapping CSS property mapping}.
    *
    * @param source - A raw property value that should be converted.
    *

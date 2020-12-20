@@ -52,7 +52,7 @@ export namespace StypProperties {
      *
      * Note that it is rendered before the rest of the properties in the map. So the latter take precedence.
      *
-     * A [[stypRenderText]] renderer is responsible for raw CSS text rendering.
+     * A {@link stypRenderText} renderer is responsible for raw CSS text rendering.
      */
     readonly $$css?: string;
 
