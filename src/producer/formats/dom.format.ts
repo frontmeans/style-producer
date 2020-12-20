@@ -35,7 +35,7 @@ export interface StypDomFormatConfig extends StypTextFormatConfig {
    *
    * Creates a render schedule per rule.
    *
-   * Uses `newRenderSchedule` for [[parent]] node by default.
+   * Uses `newRenderSchedule` for {@link parent} node by default.
    */
   readonly scheduler?: RenderScheduler;
 
@@ -51,7 +51,7 @@ export interface StypDomFormatConfig extends StypTextFormatConfig {
  * `<style>` elements to DOM node outside document. E.g. to `DocumentFragment`.
  *
  * @category Rendering
- * @param config  DOM style format configuration.
+ * @param config - DOM style format configuration.
  *
  * @returns CSS production format.
  */

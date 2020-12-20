@@ -1,4 +1,3 @@
-import { ruleProperties } from '../spec';
 import { stypRoot } from './root';
 
 describe('stypRoot', () => {
@@ -39,13 +38,13 @@ describe('stypRoot', () => {
       const initial = { fontSize: '12px' };
       const root = stypRoot(initial);
 
-      expect(await ruleProperties(root)).toEqual(initial);
+      expect(await root.read).toEqual(initial);
     });
     it('sends empty properties by default', async () => {
 
       const root = stypRoot();
 
-      expect(await ruleProperties(root)).toEqual({});
+      expect(await root.read).toEqual({});
     });
   });
 });

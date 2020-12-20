@@ -3,7 +3,7 @@
  * @module @frontmeans/style-producer
  */
 import { immediateRenderScheduler, RenderScheduler } from '@frontmeans/render-scheduler';
-import { EventEmitter, EventReceiver, EventSupply, OnEvent } from '@proc7ts/fun-events';
+import { EventEmitter, OnEvent } from '@proc7ts/fun-events';
 import { StypPriority } from '../../value';
 import { StypFormat, StypFormatConfig } from '../format';
 import { StypWriter } from '../writer';
@@ -24,20 +24,11 @@ export interface StypTextFormat extends StypFormat, StypTextFormatConfig {
   readonly pretty: StypTextFormatConfig.PrettyPrint | false;
 
   /**
-   * Builds an `OnEvent` sender of style sheet textual representation.
+   * An `OnEvent` sender of style sheet textual representation.
    *
    * Sends textual representation of each rendered style sheet on each update.
-   *
-   * @returns `OnEvent` sender of {@link StypSheetText} objects.
    */
-  onSheet(): OnEvent<[StypSheetText]>;
-
-  /**
-   * Starts sending textual representations of style sheets to the given `receiver`.
-   *
-   * @param receiver  Target receiver of style sheet text.
-   */
-  onSheet(receiver: EventReceiver<[StypSheetText]>): EventSupply;
+  readonly onSheet: OnEvent<[StypSheetText]>;
 
 }
 
@@ -259,7 +250,7 @@ abstract class AbstractStypGroupTextWriter implements StypWriter.Group {
     return out;
   }
 
-  protected _add<N>(nested: N, index = this._nested.length): N {
+  protected _add<TNested>(nested: TNested, index = this._nested.length): TNested {
     this._nested.splice(index, 0, nested);
     return nested;
   }
@@ -332,7 +323,7 @@ class StypSheetTextWriter extends AbstractStypGroupTextWriter implements StypWri
  * style production} in order to receive CSS text for style sheets.
  *
  * @category Rendering
- * @param config  Textual format config.
+ * @param config - Textual format config.
  *
  * @returns Textual CSS production format.
  */
@@ -343,9 +334,6 @@ export function stypTextFormat(config: StypTextFormatConfig = {}): StypTextForma
       : (config.pretty || false);
   const { scheduler = immediateRenderScheduler } = config;
   const sender = new EventEmitter<[StypSheetText]>();
-  let onSheet = ((receiver?: EventReceiver<[StypSheetText]>): OnEvent<[StypSheetText]> | EventSupply => (
-      onSheet = sender.on().F
-  )(receiver)) as StypTextFormat['onSheet'];
   const formatter: StypTextFormatter = pretty ? new StypTextFormatter$(pretty) : compactStypTextFormatter;
   let idSeq = 0;
 
@@ -353,7 +341,7 @@ export function stypTextFormat(config: StypTextFormatConfig = {}): StypTextForma
     ...config,
     pretty,
     scheduler,
-    onSheet,
+    onSheet: sender.on,
     addSheet() {
       return new StypSheetTextWriter(String(++idSeq), formatter, sender);
     },

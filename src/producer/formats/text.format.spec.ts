@@ -1,17 +1,17 @@
-import { EventSupply, eventSupply } from '@proc7ts/fun-events';
+import { Supply } from '@proc7ts/primitives';
 import { stypRoot, StypRule } from '../../rule';
-import { StypRGB } from '../../value/color';
+import { StypRGB } from '../../value';
 import { produceStyle } from '../produce-style';
 import { stypTextFormat, StypTextFormatConfig } from './text.format';
 
 describe('stypTextFormat', () => {
 
   let root: StypRule;
-  let done: EventSupply;
+  let done: Supply;
 
   beforeEach(() => {
     root = stypRoot();
-    done = eventSupply();
+    done = new Supply();
   });
   afterEach(() => {
     done.off();

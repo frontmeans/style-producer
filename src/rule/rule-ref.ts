@@ -2,16 +2,14 @@
  * @packageDocumentation
  * @module @frontmeans/style-producer
  */
-import { nextArg } from '@proc7ts/call-thru';
 import {
   afterAll,
   AfterEvent,
   AfterEvent__symbol,
   afterThe,
   EventKeeper,
-  EventReceiver,
-  EventSupply,
   isEventKeeper,
+  mapAfter,
 } from '@proc7ts/fun-events';
 import { valueProvider } from '@proc7ts/primitives';
 import { StypSelector } from '../selector';
@@ -30,31 +28,20 @@ import { StypRule } from './rule';
 export abstract class StypRuleRef<T extends StypProperties<T>> implements EventKeeper<[T]> {
 
   /**
-   * Builds an `AfterEvent` keeper of CSS properties.
+   * An `AfterEvent` keeper of CSS properties.
    *
    * The `[AfterEvent__symbol]` property is an alias of this one.
-   *
-   * @returns `AfterEvent` keeper of typed CSS properties map.
    */
-  abstract read(): AfterEvent<[T]>;
-
-  /**
-   * Starts sending CSS properties and updates to the given `receiver`.
-   *
-   * @param receiver  Target receiver of types CSS properties map.
-   *
-   * @returns CSS properties supply.
-   */
-  abstract read(receiver: EventReceiver<[T]>): EventSupply;
+  abstract readonly read: AfterEvent<[T]>;
 
   [AfterEvent__symbol](): AfterEvent<[T]> {
-    return this.read();
+    return this.read;
   }
 
   /**
    * Sets CSS properties of the referenced rule.
    *
-   * @param properties  CSS properties specifier. Or nothing to clear them.
+   * @param properties - CSS properties specifier. Or nothing to clear them.
    *
    * @returns `this` rule instance.
    */
@@ -63,7 +50,7 @@ export abstract class StypRuleRef<T extends StypProperties<T>> implements EventK
   /**
    * Appends CSS properties to the references CSS rule.
    *
-   * @param properties  CSS properties specifier.
+   * @param properties - CSS properties specifier.
    *
    * @returns `this` rule instance.
    */
@@ -92,7 +79,7 @@ export abstract class StypRuleRef<T extends StypProperties<T>> implements EventK
  */
 export type RefStypRule<T extends StypProperties<T>> =
 /**
- * @param root  Root CSS rule the constructed reference will be relative to.
+ * @param root - Root CSS rule the constructed reference will be relative to.
  *
  * @returns CSS rule reference.
  */
@@ -104,26 +91,23 @@ export type RefStypRule<T extends StypProperties<T>> =
  */
 class StypRuleRef$<T extends StypProperties<T>> extends StypRuleRef<T> {
 
+  readonly read: AfterEvent<[T]>;
+
   constructor(
       private readonly _root: StypRule,
       private readonly _selector: StypSelector,
       private readonly _map: (root: StypRule) => EventKeeper<[StypMapper.Mappings<T>]>,
   ) {
     super();
-  }
-
-  read(): AfterEvent<[T]>;
-  read(receiver: EventReceiver<[T]>): EventSupply;
-  read(receiver?: EventReceiver<[T]>): AfterEvent<[T]> | EventSupply {
-    return (this.read = afterAll({
+    this.read = afterAll({
       ms: this._map(this._root),
       ps: this._root.rules.watch(this._selector),
-    }).keepThru(
+    }).do(mapAfter(
         ({
           ms: [_mappings],
           ps: [_properties],
-        }) => nextArg<T>(StypMapper.map<T>(_mappings, _properties)),
-    ).F)(receiver);
+        }) => StypMapper.map<T>(_mappings, _properties),
+    ));
   }
 
   add(properties: EventKeeper<[Partial<StypProperties<T>>]> | Partial<StypProperties<T>>): this {
@@ -147,8 +131,8 @@ export const RefStypRule = {
    * Constructs a CSS rule referrer that maps original CSS properties accordingly to the given `mappings`.
    *
    * @typeparam T  CSS properties structure of referenced rule.
-   * @param selector  CSS selector of target rule.
-   * @param mappings  Either a mappings of CSS properties, an event keeper sending such mappings, or a function
+   * @param selector - CSS selector of target rule.
+   * @param mappings - Either a mappings of CSS properties, an event keeper sending such mappings, or a function
    * returning one of them and accepting a root CSS rule as its only argument.
    * The constructed reference will be relative to as its only parameter.
    *

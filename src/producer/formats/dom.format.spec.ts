@@ -1,5 +1,5 @@
 import { immediateRenderScheduler, newManualRenderScheduler, noopRenderScheduler } from '@frontmeans/render-scheduler';
-import { EventSupply, eventSupply } from '@proc7ts/fun-events';
+import { Supply } from '@proc7ts/primitives';
 import { itsEmpty } from '@proc7ts/push-iterator';
 import { stypRoot, StypRule } from '../../rule';
 import { cssStyle, removeStyleElements, stylesheets } from '../../spec';
@@ -10,11 +10,11 @@ import { stypDomFormat } from './dom.format';
 describe('stypObjectFormat', () => {
 
   let root: StypRule;
-  let done: EventSupply;
+  let done: Supply;
 
   beforeEach(() => {
     root = stypRoot();
-    done = eventSupply();
+    done = new Supply();
   });
   afterEach(() => {
     done.off();

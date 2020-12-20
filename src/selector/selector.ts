@@ -12,7 +12,7 @@ import { StypPureSelector } from './pure-selector';
  * - CSS selector part, or
  * - an array consisting of strings, parts, and their combinators.
  *
- * A normalized structured CSS selector can be constructed using [[stypSelector]] function.
+ * A normalized structured CSS selector can be constructed using {@link stypSelector} function.
  *
  * @category CSS Rule
  */

@@ -62,7 +62,7 @@ export namespace StypQuery {
  * Normalizes arbitrary CSS rule query.
  *
  * @category CSS Rule
- * @param query  CSS rule query to normalize.
+ * @param query - CSS rule query to normalize.
  *
  * @returns Normalized CSS rule query.
  */
@@ -74,8 +74,8 @@ export function stypQuery(query: StypQuery): StypQuery.Normalized {
  * Checks whether the given structured CSS `selector` matches target `query`.
  *
  * @category CSS Rule
- * @param selector  Normalized structured CSS selector.
- * @param query  Normalized CSS rule query.
+ * @param selector - Normalized structured CSS selector.
+ * @param query - Normalized CSS rule query.
  *
  * @returns `true` if `selector` matches the `query`, or `false` otherwise.
  */

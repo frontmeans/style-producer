@@ -120,7 +120,7 @@ export interface StypObjectFormatConfig extends StypFormatConfig {
    *
    * Creates a render schedule per rule.
    *
-   * Uses `newRenderSchedule` for [[parent]] node by default.
+   * Uses `newRenderSchedule` for {@link parent} node by default.
    */
   readonly scheduler?: RenderScheduler;
 
@@ -133,7 +133,7 @@ export interface StypObjectFormatConfig extends StypFormatConfig {
  * with CSS object model methods.
  *
  * @category Rendering
- * @param config  Object format configuration.
+ * @param config - Object format configuration.
  *
  * @returns CSS production format.
  */

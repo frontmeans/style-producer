@@ -4,15 +4,8 @@
  */
 import { NamespaceDef, newNamespaceAliaser } from '@frontmeans/namespace-aliaser';
 import { newRenderSchedule } from '@frontmeans/render-scheduler';
-import {
-  AfterEvent,
-  afterSupplied,
-  eventSupply,
-  EventSupply,
-  EventSupply__symbol,
-  onSupplied,
-} from '@proc7ts/fun-events';
-import { noop } from '@proc7ts/primitives';
+import { AfterEvent, afterSupplied, onSupplied } from '@proc7ts/fun-events';
+import { noop, Supply } from '@proc7ts/primitives';
 import { itsReduction, mapIt } from '@proc7ts/push-iterator';
 import { StypProperties, StypRule, StypRules } from '../rule';
 import { StypSelector, stypSelector, StypSelectorFormat, stypSelectorText } from '../selector';
@@ -26,24 +19,24 @@ import { StypWriter } from './writer';
 /**
  * Produces and dynamically updates basic CSS stylesheets based on the given CSS rules.
  *
- * Unlike [[produceStyle]], this function does not enable renderers but the basic one which just renders CSS properties.
- * Only select renderers can be enabled. This can be used to save a bundle size.
+ * Unlike {@link produceStyle}, this function does not enable renderers but the basic one which just renders CSS
+ * properties. This can be used to save the bundle size by enabling only select renderers.
  *
  * @category Rendering
- * @param rules  CSS rules to produce stylesheets for. This can be e.g. a [[StypRule.rules]] to render all rules,
- * or a result of [[StypRuleList.grab]] method call to render only matching ones.
- * @param format  Production options.
+ * @param rules - CSS rules to produce stylesheets for. This can be e.g. a {@link StypRule.rules} to render all rules,
+ * or a result of {@link StypRuleList.grab} method call to render only matching ones.
+ * @param format - Production options.
  *
  * @returns Styles supply. Once cut off (i.e. its `off()` method is called) the produced stylesheets are removed.
  */
-export function produceBasicStyle(rules: StypRules, format: StypFormat): EventSupply {
+export function produceBasicStyle(rules: StypRules, format: StypFormat): Supply {
 
   const {
     rootSelector = { e: 'body' },
     scheduler = newRenderSchedule,
     nsAlias = newNamespaceAliaser(),
   } = format;
-  const supply = eventSupply();
+  const supply = new Supply();
   const selectorFormat: StypSelectorFormat = { nsAlias };
   const factories = stypRenderFactories(format);
   const renderSupply = renderRules(rules);
@@ -66,7 +59,7 @@ export function produceBasicStyle(rules: StypRules, format: StypFormat): EventSu
 
     class StyleProducer$ implements StyleProducer {
 
-      get [EventSupply__symbol](): EventSupply {
+      get supply(): Supply {
         return supply;
       }
 
@@ -129,19 +122,19 @@ export function produceBasicStyle(rules: StypRules, format: StypFormat): EventSu
     return stypSelectorText(selector, selectorFormat);
   }
 
-  function renderRules(rulesToRender: Iterable<StypRule>): EventSupply {
-    return itsReduction<EventSupply, EventSupply>(
+  function renderRules(rulesToRender: Iterable<StypRule>): Supply {
+    return itsReduction<Supply, Supply>(
         mapIt(rulesToRender, renderRule),
-        (prev, supply) => eventSupply().cuts(supply).cuts(prev),
-        eventSupply(),
+        (prev, supply) => new Supply().cuts(supply).cuts(prev),
+        new Supply(),
     );
   }
 
-  function trackRules(): EventSupply {
+  function trackRules(): Supply {
 
-    const supply = eventSupply();
+    const supply = new Supply();
 
-    return onSupplied(rules).to({
+    return onSupplied(rules)({
       supply,
       receive: (_ctx, added) => {
         added.forEach(r => renderRule(r).needs(supply));
@@ -149,14 +142,14 @@ export function produceBasicStyle(rules: StypRules, format: StypFormat): EventSu
     });
   }
 
-  function renderRule(rule: StypRule): EventSupply {
+  function renderRule(rule: StypRule): Supply {
 
     const [reader, renderer] = rendererForRule(rule);
     let sheet: StypWriter.Sheet | undefined;
     const selector = ruleSelector(rule);
     const schedule = scheduler();
 
-    return reader.to(renderProperties).whenOff(removeStyle);
+    return reader(renderProperties).whenOff(removeStyle);
 
     function renderProperties(properties: StypProperties): void {
       schedule(() => {
@@ -220,7 +213,7 @@ export function produceBasicStyle(rules: StypRules, format: StypFormat): EventSu
     const specs = factories.map(factory => factory.create(rule));
     const reader = specs.reduce(
         (read, spec) => spec.read ? afterSupplied(spec.read(read)) : read,
-        rule.read(),
+        rule.read,
     );
 
     return [reader, renderAt(0)];

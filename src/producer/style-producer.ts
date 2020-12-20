@@ -3,7 +3,7 @@
  * @module @frontmeans/style-producer
  */
 import { NamespaceDef } from '@frontmeans/namespace-aliaser';
-import { EventSupplyPeer } from '@proc7ts/fun-events';
+import { SupplyPeer } from '@proc7ts/primitives';
 import { StypProperties, StypRule } from '../rule';
 import { StypSelector } from '../selector';
 import { StypRenderer } from './renderer';
@@ -12,13 +12,13 @@ import { StypWriter } from './writer';
 /**
  * CSS styles producer.
  *
- * It is constructed by [[produceStyle]] function for each processed CSS rule.
+ * It is constructed by {@link produceStyle} function for each processed CSS rule.
  *
- * Implements `EventSupplyPeer` by cutting off the styles supply returned by {@link produceStyle}.
+ * Implements `SupplyPeer` by cutting off the styles supply returned by {@link produceStyle}.
  *
  * @category Rendering
  */
-export interface StyleProducer extends EventSupplyPeer {
+export interface StyleProducer extends SupplyPeer {
 
   /**
    * CSS rule to produce styles for.
@@ -45,7 +45,7 @@ export interface StyleProducer extends EventSupplyPeer {
    *
    * This is based on {@link StypFormatConfig.nsAlias production configuration option}.
    *
-   * @param ns  A definition of namespace to find alias for.
+   * @param ns - A definition of namespace to find alias for.
    *
    * @returns Namespace alias.
    */
@@ -56,8 +56,8 @@ export interface StyleProducer extends EventSupplyPeer {
    *
    * This method relies on renderers chain. For each renderer in chain this method calls the next one.
    *
-   * @param properties  CSS properties to render.
-   * @param options  Rendering options.
+   * @param properties - CSS properties to render.
+   * @param options - Rendering options.
    */
   render(properties: StypProperties, options?: StypRenderer.Options): void;
 
@@ -67,7 +67,7 @@ export interface StyleProducer extends EventSupplyPeer {
    * If {@link writer target} is style sheet or grouping rule, then inserts the last style rule.
    * Otherwise just returns `writer`.
    *
-   * @param selector  Appended CSS rule selector. Equals to the one from this producer when omitted.
+   * @param selector - Appended CSS rule selector. Equals to the one from this producer when omitted.
    *
    * @returns Either style writer to appended empty CSS rule, or `writer`.
    */

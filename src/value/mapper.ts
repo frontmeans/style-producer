@@ -10,15 +10,15 @@ import { StypValue } from './value';
  * A type of function that maps CSS properties to something else.
  *
  * @category CSS Value
- * @typeparam R  A type of mapped properties. This is a mapping result type.
+ * @typeParam TResult - A type of mapped properties. This is a mapping result type.
  */
-export type StypMapper<R> =
+export type StypMapper<TResult> =
 /**
- * @param from  CSS properties to map.
+ * @param from - CSS properties to map.
  *
  * @returns Mapping result.
  */
-    (this: void, from: StypProperties) => R;
+    (this: void, from: StypProperties) => TResult;
 
 export namespace StypMapper {
 
@@ -33,48 +33,48 @@ export namespace StypMapper {
    * - An object containing mapping method called `by()`. Replaces the source property value with the result of this
    *   method call.
    *
-   * @typeparam R  A type of mapped properties. This is an object containing mapped properties.
-   * @typeparam K  Type of mapped properties keys.
+   * @typeParam TResult - A type of mapped properties. This is an object containing mapped properties.
+   * @typeParam TResultKey - Type of mapped properties keys.
    */
-  export type Mapping<R, K extends keyof R> =
-      | MappingFunction<R, K>
-      | MappingObject<R, K>
-      | R[K];
+  export type Mapping<TResult, TResultKey extends keyof TResult> =
+      | MappingFunction<TResult, TResultKey>
+      | MappingObject<TResult, TResultKey>
+      | TResult[TResultKey];
 
   /**
    * CSS property mapping function.
    *
-   * @typeparam R  A type of mapped properties. This is a mapping result type.
-   * @typeparam K  Type of mapped properties keys.
+   * @typeParam TResult - A type of mapped properties. This is a mapping result type.
+   * @typeParam TResultKey - Type of mapped properties keys.
    */
-  export type MappingFunction<R, K extends keyof R> =
+  export type MappingFunction<TResult, TResultKey extends keyof TResult> =
   /**
-   * @param source  A raw property value that should be converted.
-   * @param mapped  An object granting access to other mapped properties.
-   * @param key  A key of converted property.
+   * @param source - A raw property value that should be converted.
+   * @param mapped - An object granting access to other mapped properties.
+   * @param key - A key of converted property.
    *
    * @returns Mapped property value.
    */
-      (this: void, source: StypValue, mapped: Mapped<R>, key: K) => R[K];
+      (this: void, source: StypValue, mapped: Mapped<TResult>, key: TResultKey) => TResult[TResultKey];
 
   /**
    * CSS property mapping object.
    *
-   * @typeparam R  A type of mapped properties. This is a mapping result type.
-   * @typeparam K  Type of mapped properties keys.
+   * @typeParam TResult - A type of mapped properties. This is a mapping result type.
+   * @typeParam TResultKey - Type of mapped properties keys.
    */
-  export interface MappingObject<R, K extends keyof R> {
+  export interface MappingObject<TResult, TResutKey extends keyof TResult> {
 
     /**
      * Maps CSS property value.
      *
-     * @param source  A raw property value that should be converted.
-     * @param mapped  An object granting access to other mapped properties.
-     * @param key  A key of converted property.
+     * @param source - A raw property value that should be converted.
+     * @param mapped - An object granting access to other mapped properties.
+     * @param key - A key of converted property.
      *
      * @returns Mapped property value.
      */
-    by(source: StypValue, mapped: Mapped<R>, key: K): R[K];
+    by(source: StypValue, mapped: Mapped<TResult>, key: TResutKey): TResult[TResutKey];
 
   }
 
@@ -83,9 +83,9 @@ export namespace StypMapper {
    *
    * Passed as a second argument to mapping function.
    *
-   * @typeparam R  A type of mapped properties. This is a mapping result type.
+   * @typeParam TResult - A type of mapped properties. This is a mapping result type.
    */
-  export interface Mapped<R> {
+  export interface Mapped<TResultKey> {
 
     /**
      * Original properties to convert.
@@ -97,11 +97,11 @@ export namespace StypMapper {
      *
      * The mapping is performed at most once per property.
      *
-     * @param key  Mapped property key.
+     * @param key - Mapped property key.
      *
      * @returns Mapped property value.
      */
-    get<K extends keyof R>(key: K): R[K];
+    get<TKey extends keyof TResultKey>(key: TKey): TResultKey[TKey];
 
   }
 
@@ -110,9 +110,9 @@ export namespace StypMapper {
    *
    * Contains mappings for each mapped CSS property with that property name as a key.
    *
-   * @typeparam R  A type of mapped properties. This is a mapping result type.
+   * @typeParam TResult - A type of mapped properties. This is a mapping result type.
    */
-  export type Mappings<R> = { readonly [key in keyof R]: Mapping<R, key>; };
+  export type Mappings<TResult> = { readonly [key in keyof TResult]: Mapping<TResult, key>; };
 
 }
 
@@ -121,24 +121,23 @@ export const StypMapper = {
   /**
    * Maps CSS properties accordingly to the given `mappings`.
    *
-   * @typeparam R  A type of mapped properties. This is a mapping result type.
-   *
-   * @param mappings  Mappings of CSS properties.
-   * @param from  Raw CSS properties to map.
+   * @typeParam TResult - A type of mapped properties. This is a mapping result type.
+   * @param mappings - Mappings of CSS properties.
+   * @param from - Raw CSS properties to map.
    *
    * @returns Mapped properties.
    */
-  map<R>(mappings: StypMapper.Mappings<R>, from: StypProperties): R {
+  map<TResult>(mappings: StypMapper.Mappings<TResult>, from: StypProperties): TResult {
 
-    const result = {} as { [key in keyof R]: R[key] };
+    const result = {} as { [key in keyof TResult]: TResult[key] };
     const mapped = {
       from,
-      get<K extends keyof R>(key: K): R[K] {
+      get<TKey extends keyof TResult>(key: TKey): TResult[TKey] {
         if (key in result) {
           return result[key];
         }
 
-        const mapper = mappingBy<R, K>(mappings[key]);
+        const mapper = mappingBy<TResult, TKey>(mappings[key]);
         const mappedValue = mapper(from[key as string], this, key);
 
         result[key] = mappedValue;
@@ -155,13 +154,13 @@ export const StypMapper = {
   /**
    * Creates CSS properties mapper function.
    *
-   * @typeparam R  A type of mapped properties. This is a mapping result type.
-   * @param mappings  Mappings of CSS properties.
+   * @typeParam TResult - A type of mapped properties. This is a mapping result type.
+   * @param mappings - Mappings of CSS properties.
    *
    * @returns A function that maps CSS properties accordingly to the given `mappings`.
    */
-  by<R>(mappings: StypMapper.Mappings<R>): StypMapper<R> {
-    return StypMapper.map.bind<void, StypMapper.Mappings<R>, [StypProperties], R>(undefined, mappings);
+  by<TResult>(mappings: StypMapper.Mappings<TResult>): StypMapper<TResult> {
+    return StypMapper.map.bind<void, StypMapper.Mappings<TResult>, [StypProperties], TResult>(undefined, mappings);
   },
 
 };
@@ -169,20 +168,20 @@ export const StypMapper = {
 /**
  * @internal
  */
-function mappingBy<R, K extends keyof R>(
-    mapping: StypMapper.Mapping<R, K> | undefined,
-): StypMapper.MappingFunction<R, K> {
+function mappingBy<TResult, TResultKey extends keyof TResult>(
+    mapping: StypMapper.Mapping<TResult, TResultKey> | undefined,
+): StypMapper.MappingFunction<TResult, TResultKey> {
   switch (typeof mapping) {
   case 'function':
-    return mapping as StypMapper.MappingFunction<R, K>;
+    return mapping as StypMapper.MappingFunction<TResult, TResultKey>;
   case 'object':
-    return (mapping as StypMapper.MappingObject<R, K>).by.bind(mapping);
+    return (mapping as StypMapper.MappingObject<TResult, TResultKey>).by.bind(mapping);
   default:
   }
 
   const type = typeof mapping;
 
-  return (from: StypValue): R[K] => typeof from === type
-      ? from as unknown as R[K]
-      : mapping as R[K];
+  return (from: StypValue): TResult[TResultKey] => typeof from === type
+      ? from as unknown as TResult[TResultKey]
+      : mapping as TResult[TResultKey];
 }

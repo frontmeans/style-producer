@@ -12,8 +12,8 @@ import { StypSubSelector } from './sub-selector';
  * Tests whether two normalized structured CSS selectors equal.
  *
  * @category CSS Rule
- * @param first  First selector.
- * @param second  Second selector.
+ * @param first - First selector.
+ * @param second - Second selector.
  *
  * @returns `true` if selectors are equal, `false` otherwise.
  */

@@ -18,8 +18,8 @@ export type StypColor = StypRGB | StypHSL;
  *
  * @category CSS Value
  */
-export abstract class StypColorStruct<Self extends StypColorStruct<Self, Coords>, Coords>
-    extends StypValueStruct<Self> {
+export abstract class StypColorStruct<TSelf extends StypColorStruct<TSelf, TCoords>, TCoords>
+    extends StypValueStruct<TSelf> {
 
   /**
    * Color value type corresponding to color coordinates. Either `rgb` or `hsl`
@@ -39,12 +39,12 @@ export abstract class StypColorStruct<Self extends StypColorStruct<Self, Coords>
   /**
    * Constructs another color value with updated coordinates.
    *
-   * @param coords  Either partial color coordinates to apply or a function returning them and accepting this color
+   * @param coords - Either partial color coordinates to apply or a function returning them and accepting this color
    * instance as its only argument. Missing values are taken from this color.
    *
    * @returns Updated color value.
    */
-  abstract set(coords: Partial<Coords> | ((this: void, color: this) => Partial<Coords>)): Self;
+  abstract set(coords: Partial<TCoords> | ((this: void, color: this) => Partial<TCoords>)): TSelf;
 
 }
 
@@ -87,8 +87,8 @@ export class StypRGB extends StypColorStruct<StypRGB, StypRGB.Coords> implements
   /**
    * Constructs RGB color value.
    *
-   * @param coords  Color coordinates.
-   * @param opts  Construction options.
+   * @param coords - Color coordinates.
+   * @param opts - Construction options.
    */
   constructor(coords: StypRGB.Coords, opts?: StypValue.Opts) {
     super(opts);
@@ -250,8 +250,8 @@ export class StypHSL extends StypColorStruct<StypHSL, StypHSL.Coords> implements
   /**
    * Constructs HSL color value.
    *
-   * @param coords  Color coordinates.
-   * @param opts  Construction options.
+   * @param coords - Color coordinates.
+   * @param opts - Construction options.
    */
   constructor(coords: StypHSL.Coords, opts?: StypValue.Opts) {
     super(opts);
@@ -377,9 +377,9 @@ export const StypColor = {
   /**
    * Maps the given CSS property value to color. Defaults to `undefined` if mapping is not possible.
    *
-   * This method allows to use a [[StypColor]] object as {@link StypMapper.Mapping CSS property mapping}.
+   * This method allows to use a {@link StypColor} object as {@link StypMapper.Mapping CSS property mapping}.
    *
-   * @param source  A raw property value that should be converted.
+   * @param source - A raw property value that should be converted.
    *
    * @returns Mapped property value or `undefined`.
    */

@@ -1,5 +1,4 @@
-import { afterSupplied } from '@proc7ts/fun-events';
-import { readProperties } from '../spec';
+import { afterSupplied, onceAfter } from '@proc7ts/fun-events';
 import { StypAngle, StypLength } from '../value';
 import { stypRoot } from './root';
 import { StypRule } from './rule';
@@ -32,8 +31,8 @@ describe('StypRuleRefs', () => {
   });
 
   it('resolves rule references', async () => {
-    expect(await readProperties(refs.refs.first)).toEqual({ $length: StypLength.zero });
-    expect(await readProperties(refs.refs.second)).toEqual({ $angle: StypAngle.zero });
+    expect(await afterSupplied(refs.refs.first)).toEqual({ $length: StypLength.zero });
+    expect(await afterSupplied(refs.refs.second)).toEqual({ $angle: StypAngle.zero });
   });
 
   describe('read', () => {
@@ -41,7 +40,7 @@ describe('StypRuleRefs', () => {
 
       const mockMapReceiver = jest.fn<void, [Props]>();
 
-      refs.read().once(mockMapReceiver);
+      refs.read.do(onceAfter)(mockMapReceiver);
 
       expect(mockMapReceiver).toHaveBeenCalledWith({
         first: { $length: StypLength.zero },
@@ -52,7 +51,7 @@ describe('StypRuleRefs', () => {
 
   describe('[AfterEvent__symbol]', () => {
     it('is the same as `read`', () => {
-      expect(afterSupplied(refs)).toBe(refs.read());
+      expect(afterSupplied(refs)).toBe(refs.read);
     });
   });
 });

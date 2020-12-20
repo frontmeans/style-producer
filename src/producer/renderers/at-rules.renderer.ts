@@ -2,7 +2,7 @@
  * @packageDocumentation
  * @module @frontmeans/style-producer
  */
-import { AfterEvent } from '@proc7ts/fun-events';
+import { AfterEvent, mapAfter } from '@proc7ts/fun-events';
 import { filterIt, itsReduction, ObjectEntry, overEntries } from '@proc7ts/push-iterator';
 import { isNotEmptyArray } from '../../internal';
 import { StypProperties, StypRule } from '../../rule';
@@ -27,7 +27,7 @@ class AtRulesRenderer implements StypRenderer.Spec {
     let outer = this._rule.outer;
 
     while (outer) {
-      properties = mergeStypProperties(outer.read().keepThru(onlyAtProperties), properties);
+      properties = mergeStypProperties(outer.read.do(mapAfter(onlyAtProperties)), properties);
       outer = outer.outer;
     }
 
@@ -123,7 +123,7 @@ function buildAtSelector(
  * So the above example could be written as: `{ c: 'screen-only', $: '@media:screen' }` if CSS rule (or its outer
  * one) contains property `@media:screen` with value `screen`.
  *
- * Enabled by default in [[produceStyle]] function.
+ * Enabled by default in {@link produceStyle} function.
  *
  * @category Rendering
  */
