@@ -250,7 +250,7 @@ abstract class AbstractStypGroupTextWriter implements StypWriter.Group {
     return out;
   }
 
-  protected _add<N>(nested: N, index = this._nested.length): N {
+  protected _add<TNested>(nested: TNested, index = this._nested.length): TNested {
     this._nested.splice(index, 0, nested);
     return nested;
   }

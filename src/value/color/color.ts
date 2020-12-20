@@ -18,8 +18,8 @@ export type StypColor = StypRGB | StypHSL;
  *
  * @category CSS Value
  */
-export abstract class StypColorStruct<Self extends StypColorStruct<Self, Coords>, Coords>
-    extends StypValueStruct<Self> {
+export abstract class StypColorStruct<TSelf extends StypColorStruct<TSelf, TCoords>, TCoords>
+    extends StypValueStruct<TSelf> {
 
   /**
    * Color value type corresponding to color coordinates. Either `rgb` or `hsl`
@@ -44,7 +44,7 @@ export abstract class StypColorStruct<Self extends StypColorStruct<Self, Coords>
    *
    * @returns Updated color value.
    */
-  abstract set(coords: Partial<Coords> | ((this: void, color: this) => Partial<Coords>)): Self;
+  abstract set(coords: Partial<TCoords> | ((this: void, color: this) => Partial<TCoords>)): TSelf;
 
 }
 

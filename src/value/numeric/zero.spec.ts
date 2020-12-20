@@ -4,8 +4,8 @@ import { StypZero } from './zero';
 
 describe('StypZero', () => {
 
-  let zero: StypZero<StypLengthPt.TUnit>;
-  let important: StypZero<StypLengthPt.TUnit>;
+  let zero: StypZero<StypLengthPt.Unit>;
+  let important: StypZero<StypLengthPt.Unit>;
 
   beforeEach(() => {
     zero = StypLengthPt.zero;

@@ -158,8 +158,8 @@ export namespace StypDimension {
      * @param val - Numeric dimension value.
      * @param unit - Dimension unit.
      *
-     * @returns Constructed dimension value. Either {@link StypDimension} instance, or {@link StypZero} if `val` is `0` and
-     * this dimension kind supports unitless zero.
+     * @returns Constructed dimension value. Either {@link StypDimension} instance, or {@link StypZero} if `val` is `0`
+     * and this dimension kind supports unitless zero.
      */
     of(val: number, unit: TUnit): StypDimension<TUnit> | StypZero<TUnit>;
 
@@ -204,7 +204,8 @@ export namespace StypDimension {
        * @param val - Numeric dimension value.
        * @param unit - Dimension unit.
        *
-       * @returns Constructed dimension value. Either {@link StypDimension} instance, or {@link StypZero} if `val` is `0`.
+       * @returns Constructed dimension value. Either {@link StypDimension} instance, or {@link StypZero} if `val` is
+       * `0`.
        */
       of(val: number, unit: TUnit): StypDimension<TUnit> | StypZero<TUnit>;
 

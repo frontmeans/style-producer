@@ -7,10 +7,10 @@ import { StypAddSub, StypMulDiv } from './numeric.impl';
 
 describe('StypDimension', () => {
 
-  let value: StypDimension<StypLengthPt.TUnit>;
+  let value: StypDimension<StypLengthPt.Unit>;
 
   beforeEach(() => {
-    value = StypLengthPt.of(16, 'px') as StypDimension<StypLengthPt.TUnit>;
+    value = StypLengthPt.of(16, 'px') as StypDimension<StypLengthPt.Unit>;
   });
 
   describe('is', () => {
@@ -61,7 +61,7 @@ describe('StypDimension', () => {
     it('is `StypCalc` when addendum has different unit', () => {
 
       const right = StypLengthPt.of(1, '%');
-      const sum = value.add(right) as StypCalc<StypLengthPt.TUnit>;
+      const sum = value.add(right) as StypCalc<StypLengthPt.Unit>;
 
       expect(sum.type).toBe('calc');
       expect(sum.dim).toBe(value.dim);
@@ -72,7 +72,7 @@ describe('StypDimension', () => {
     it('is `StypCalc` when addendum is number with different unit', () => {
 
       const right = 1;
-      const sum = value.add(right, '%') as StypCalc<StypLengthPt.TUnit>;
+      const sum = value.add(right, '%') as StypCalc<StypLengthPt.Unit>;
 
       expect(sum.type).toBe('calc');
       expect(sum.dim).toBe(value.dim);
@@ -103,7 +103,7 @@ describe('StypDimension', () => {
     it('is `StypCalc` when addendum has different unit', () => {
 
       const right = StypLengthPt.of(1, '%');
-      const diff = value.sub(right) as StypCalc<StypLengthPt.TUnit>;
+      const diff = value.sub(right) as StypCalc<StypLengthPt.Unit>;
 
       expect(diff.type).toBe('calc');
       expect(diff.dim).toBe(value.dim);
@@ -114,7 +114,7 @@ describe('StypDimension', () => {
     it('is `StypCalc` when addendum is number with different unit', () => {
 
       const right = 1;
-      const diff = value.sub(right, '%') as StypCalc<StypLengthPt.TUnit>;
+      const diff = value.sub(right, '%') as StypCalc<StypLengthPt.Unit>;
 
       expect(diff.type).toBe('calc');
       expect(diff.dim).toBe(value.dim);
@@ -130,7 +130,7 @@ describe('StypDimension', () => {
   describe('mul', () => {
     it('is `StypDimension` by default', () => {
 
-      const product = value.mul(2) as StypDimension<StypLengthPt.TUnit>;
+      const product = value.mul(2) as StypDimension<StypLengthPt.Unit>;
 
       expect(product.type).toBe('dimension');
       expect(product.dim).toBe(value.dim);
@@ -194,13 +194,13 @@ describe('StypCalc', () => {
 
   let left: StypLengthPt;
   let right: StypLengthPt;
-  let calc: StypCalc<StypLengthPt.TUnit>;
-  let important: StypCalc<StypLengthPt.TUnit>;
+  let calc: StypCalc<StypLengthPt.Unit>;
+  let important: StypCalc<StypLengthPt.Unit>;
 
   beforeEach(() => {
     left = StypLengthPt.of(12, 'px');
     right = StypLengthPt.of(100, '%');
-    calc = left.add(right) as StypCalc<StypLengthPt.TUnit>;
+    calc = left.add(right) as StypCalc<StypLengthPt.Unit>;
     important = calc.important();
   });
 
@@ -335,7 +335,7 @@ describe('StypCalc', () => {
           .toEqual(['calc(-12px - 100%)', StypPriority.Important]);
     });
     it('reverts operands of the diff', () => {
-      calc = left.sub(right) as StypCalc<StypLengthPt.TUnit>;
+      calc = left.sub(right) as StypCalc<StypLengthPt.Unit>;
       important = calc.important();
       expect(textAndPriority(calc.negate()))
           .toEqual(['calc(100% - 12px)', StypPriority.Usual]);

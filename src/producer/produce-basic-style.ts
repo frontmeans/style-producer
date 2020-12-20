@@ -19,8 +19,8 @@ import { StypWriter } from './writer';
 /**
  * Produces and dynamically updates basic CSS stylesheets based on the given CSS rules.
  *
- * Unlike {@link produceStyle}, this function does not enable renderers but the basic one which just renders CSS properties.
- * Only select renderers can be enabled. This can be used to save a bundle size.
+ * Unlike {@link produceStyle}, this function does not enable renderers but the basic one which just renders CSS
+ * properties. This can be used to save the bundle size by enabling only select renderers.
  *
  * @category Rendering
  * @param rules - CSS rules to produce stylesheets for. This can be e.g. a {@link StypRule.rules} to render all rules,

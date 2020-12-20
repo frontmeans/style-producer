@@ -51,8 +51,8 @@ export namespace StypRenderer {
   /**
    * CSS stylesheet renderer function signature.
    *
-   * It should normally call a {@link StyleProducer.render} method as the last operation to allow other renderers in chain
-   * to do their job.
+   * It should normally call a {@link StyleProducer.render} method as the last operation to allow other renderers in
+   * chain to do their job.
    */
   export type Function =
   /**
@@ -82,8 +82,8 @@ export namespace StypRenderer {
     /**
      * Renders CSS stylesheet.
      *
-     * It should normally call a {@link StyleProducer.render} method as the last operation to allow other renderers in chain
-     * to do their job.
+     * It should normally call a {@link StyleProducer.render} method as the last operation to allow other renderers in
+     * chain to do their job.
      *
      * @param producer - Style producer instance.
      * @param properties - CSS properties to render.
@@ -132,8 +132,8 @@ export namespace StypRenderer {
     /**
      * Renders CSS stylesheet.
      *
-     * It should normally call a {@link StyleProducer.render} method as the last operation to allow other renderers in chain
-     * to do their job.
+     * It should normally call a {@link StyleProducer.render} method as the last operation to allow other renderers in
+     * chain to do their job.
      *
      * @param producer - Style producer instance.
      * @param properties - CSS properties to render.

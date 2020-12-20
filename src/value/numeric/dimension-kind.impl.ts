@@ -7,19 +7,19 @@ import { newStypZero } from './zero.impl';
 /**
  * @internal
  */
-export function unitlessZeroDimensionKind<Unit extends string>(
+export function unitlessZeroDimensionKind<TUnit extends string>(
     {
       pt,
       noPt,
     }: {
-      pt: () => StypDimension.Kind.UnitlessZero<Unit | '%'>;
-      noPt: () => StypDimension.Kind.UnitlessZero<Exclude<Unit, '%'>>;
+      pt: () => StypDimension.Kind.UnitlessZero<TUnit | '%'>;
+      noPt: () => StypDimension.Kind.UnitlessZero<Exclude<TUnit, '%'>>;
     },
-): StypDimension.Kind.UnitlessZero<Unit> {
+): StypDimension.Kind.UnitlessZero<TUnit> {
 
-  const dimension: StypDimension.Kind.UnitlessZero<Unit> = {
+  const dimension: StypDimension.Kind.UnitlessZero<TUnit> = {
 
-    get zero(): StypZero<Unit> {
+    get zero(): StypZero<TUnit> {
       // eslint-disable-next-line @typescript-eslint/no-use-before-define
       return zero;
     },
@@ -32,21 +32,21 @@ export function unitlessZeroDimensionKind<Unit extends string>(
       return noPt();
     },
 
-    of(val: number, unit: Unit): StypDimension<Unit> | StypZero<Unit> {
+    of(val: number, unit: TUnit): StypDimension<TUnit> | StypZero<TUnit> {
       // eslint-disable-next-line @typescript-eslint/no-use-before-define
       return val ? new StypDimension_(val, unit, { dim: this }) : zero;
     },
 
-    by(source: StypValue): StypNumeric<Unit> | undefined {
+    by(source: StypValue): StypNumeric<TUnit> | undefined {
       if (!isStypNumeric(source)) {
         return;
       }
-      return (source as StypNumeric<Unit>).toDim(this);
+      return (source as StypNumeric<TUnit>).toDim(this);
     },
 
   };
 
-  const zero = newStypZero<Unit>(dimension);
+  const zero = newStypZero<TUnit>(dimension);
 
   return dimension;
 }
@@ -54,41 +54,41 @@ export function unitlessZeroDimensionKind<Unit extends string>(
 /**
  * @internal
  */
-export function unitZeroDimensionKind<Unit extends string>(
+export function unitZeroDimensionKind<TUnit extends string>(
     {
       zeroUnit,
       withPercent,
       noPercent,
     }: {
-      zeroUnit: Unit;
-      withPercent?: () => StypDimension.Kind.UnitZero<Unit | '%'>;
-      noPercent?: () => StypDimension.Kind.UnitZero<Exclude<Unit, '%'>>;
+      zeroUnit: TUnit;
+      withPercent?: () => StypDimension.Kind.UnitZero<TUnit | '%'>;
+      noPercent?: () => StypDimension.Kind.UnitZero<Exclude<TUnit, '%'>>;
     },
-): StypDimension.Kind.UnitZero<Unit> {
+): StypDimension.Kind.UnitZero<TUnit> {
 
-  const dim: StypDimension.Kind.UnitZero<Unit> = {
+  const dim: StypDimension.Kind.UnitZero<TUnit> = {
 
     get pt() {
       return withPercent && withPercent();
     },
 
     get noPt() {
-      return noPercent ? noPercent() : this as StypDimension.Kind.UnitZero<Exclude<Unit, '%'>>;
+      return noPercent ? noPercent() : this as StypDimension.Kind.UnitZero<Exclude<TUnit, '%'>>;
     },
 
-    get zero(): StypDimension<Unit> {
+    get zero(): StypDimension<TUnit> {
       return zero;// eslint-disable-line @typescript-eslint/no-use-before-define
     },
 
-    of(val: number, unit: Unit): StypDimension<Unit> {
+    of(val: number, unit: TUnit): StypDimension<TUnit> {
       return new StypDimension_(val, unit, { dim: this });
     },
 
-    by(source: StypValue): StypNumeric<Unit, StypDimension<Unit>> | undefined {
+    by(source: StypValue): StypNumeric<TUnit, StypDimension<TUnit>> | undefined {
       if (!isStypNumeric(source)) {
         return;
       }
-      return (source as StypNumeric<Unit>).toDim(this) as StypNumeric<Unit, StypDimension<Unit>>;
+      return (source as StypNumeric<TUnit>).toDim(this) as StypNumeric<TUnit, StypDimension<TUnit>>;
     },
 
   };

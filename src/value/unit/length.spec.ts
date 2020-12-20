@@ -18,7 +18,7 @@ describe('StypLength', () => {
   describe('of', () => {
     it('constructs `StypLength` instance', () => {
 
-      const length = StypLength.of(13, 'px') as StypDimension<StypLength.TUnit>;
+      const length = StypLength.of(13, 'px') as StypDimension<StypLength.Unit>;
 
       expect(length.type).toBe('dimension');
       expect(length.dim).toBe(StypLength);
@@ -48,7 +48,7 @@ describe('StypLengthPt', () => {
   describe('of', () => {
     it('constructs `StypLengthPt` instance', () => {
 
-      const length = StypLengthPt.of(13, '%') as StypDimension<StypLengthPt.TUnit>;
+      const length = StypLengthPt.of(13, '%') as StypDimension<StypLengthPt.Unit>;
 
       expect(length.type).toBe('dimension');
       expect(length.dim).toBe(StypLengthPt);
