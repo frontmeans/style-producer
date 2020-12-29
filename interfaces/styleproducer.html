@@ -1,0 +1,380 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>StyleProducer | Style Producer</title>
+	<meta name="description" content="Documentation for Style Producer">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+	<script async src="../assets/js/search.js" id="search-script"></script>
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">Style Producer</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../modules.html">Style Producer</a>
+				</li>
+				<li>
+					<a href="styleproducer.html">StyleProducer</a>
+				</li>
+			</ul>
+			<h1>Interface StyleProducer</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>CSS styles producer.</p>
+					</div>
+					<p>It is constructed by <a href="../modules.html#producestyle">produceStyle</a> function for each processed CSS rule.</p>
+					<p>Implements <code>SupplyPeer</code> by cutting off the styles supply returned by <a href="../modules.html#producestyle">produceStyle</a>.</p>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<span class="tsd-signature-type">SupplyPeer</span>
+						<ul class="tsd-hierarchy">
+							<li>
+								<span class="target">StyleProducer</span>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Properties</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="styleproducer.html#rule" class="tsd-kind-icon">rule</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="styleproducer.html#selector" class="tsd-kind-icon">selector</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="styleproducer.html#sheet" class="tsd-kind-icon">sheet</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="styleproducer.html#supply" class="tsd-kind-icon">supply</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="styleproducer.html#writer" class="tsd-kind-icon">writer</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Methods</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="styleproducer.html#addstyle" class="tsd-kind-icon">add<wbr>Style</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="styleproducer.html#nsalias" class="tsd-kind-icon">ns<wbr>Alias</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="styleproducer.html#render" class="tsd-kind-icon">render</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="rule" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> rule</h3>
+					<div class="tsd-signature tsd-kind-icon">rule<span class="tsd-signature-symbol">:</span> <a href="../classes/styprule.html" class="tsd-signature-type" data-tsd-kind="Class">StypRule</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/42758c4/src/producer/style-producer.ts#L26">frontmeans/style-producer/src/producer/style-producer.ts:26</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>CSS rule to produce styles for.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="selector" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> selector</h3>
+					<div class="tsd-signature tsd-kind-icon">selector<span class="tsd-signature-symbol">:</span> <a href="../modules/stypselector.html#normalized" class="tsd-signature-type" data-tsd-kind="Type alias">Normalized</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/42758c4/src/producer/style-producer.ts#L41">frontmeans/style-producer/src/producer/style-producer.ts:41</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Rendered CSS rule selector.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="sheet" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> sheet</h3>
+					<div class="tsd-signature tsd-kind-icon">sheet<span class="tsd-signature-symbol">:</span> <a href="stypwriter.sheet.html" class="tsd-signature-type" data-tsd-kind="Interface">Sheet</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/42758c4/src/producer/style-producer.ts#L31">frontmeans/style-producer/src/producer/style-producer.ts:31</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>CSS style sheet writer to add CSS rules to.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="supply" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> supply</h3>
+					<div class="tsd-signature tsd-kind-icon">supply<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Supply</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in proc7ts/primitives/index.d.ts:442</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A supply this peer takes part in.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="writer" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> writer</h3>
+					<div class="tsd-signature tsd-kind-icon">writer<span class="tsd-signature-symbol">:</span> <a href="../modules/stypwriter.html" class="tsd-signature-type" data-tsd-kind="Namespace">StypWriter</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/42758c4/src/producer/style-producer.ts#L36">frontmeans/style-producer/src/producer/style-producer.ts:36</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>CSS style sheet or rule writer to add declarations to.</p>
+						</div>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="addstyle" class="tsd-anchor"></a>
+					<h3>add<wbr>Style</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Style<span class="tsd-signature-symbol">(</span>selector<span class="tsd-signature-symbol">?: </span><a href="../modules/stypselector.html#normalized" class="tsd-signature-type" data-tsd-kind="Type alias">Normalized</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="stypwriter.style.html" class="tsd-signature-type" data-tsd-kind="Interface">Style</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/42758c4/src/producer/style-producer.ts#L74">frontmeans/style-producer/src/producer/style-producer.ts:74</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Tries to append CSS style declarations to <a href="styleproducer.html#writer">target</a> CSS style sheet or rule.</p>
+								</div>
+								<p>If <a href="styleproducer.html#writer">target</a> is style sheet or grouping rule, then inserts the last style rule.
+								Otherwise just returns <code>writer</code>.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> selector: <a href="../modules/stypselector.html#normalized" class="tsd-signature-type" data-tsd-kind="Type alias">Normalized</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Appended CSS rule selector. Equals to the one from this producer when omitted.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="stypwriter.style.html" class="tsd-signature-type" data-tsd-kind="Interface">Style</a></h4>
+							<p>Either style writer to appended empty CSS rule, or <code>writer</code>.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="nsalias" class="tsd-anchor"></a>
+					<h3>ns<wbr>Alias</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">ns<wbr>Alias<span class="tsd-signature-symbol">(</span>ns<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">NamespaceDef</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/42758c4/src/producer/style-producer.ts#L52">frontmeans/style-producer/src/producer/style-producer.ts:52</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Maps namespace to its unique alias.</p>
+								</div>
+								<p>This is based on <a href="stypformatconfig.html#nsalias">production configuration option</a>.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>ns: <span class="tsd-signature-type">NamespaceDef</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A definition of namespace to find alias for.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+							<p>Namespace alias.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="render" class="tsd-anchor"></a>
+					<h3>render</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">render<span class="tsd-signature-symbol">(</span>properties<span class="tsd-signature-symbol">: </span><a href="../modules/stypproperties.html" class="tsd-signature-type" data-tsd-kind="Namespace">StypProperties</a><span class="tsd-signature-symbol">&lt;</span><a href="stypproperties.generic.html" class="tsd-signature-type" data-tsd-kind="Interface">Generic</a><span class="tsd-signature-symbol">&gt;</span>, options<span class="tsd-signature-symbol">?: </span><a href="styprenderer.options.html" class="tsd-signature-type" data-tsd-kind="Interface">Options</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/42758c4/src/producer/style-producer.ts#L62">frontmeans/style-producer/src/producer/style-producer.ts:62</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Appends CSS rule to stylesheet.</p>
+								</div>
+								<p>This method relies on renderers chain. For each renderer in chain this method calls the next one.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>properties: <a href="../modules/stypproperties.html" class="tsd-signature-type" data-tsd-kind="Namespace">StypProperties</a><span class="tsd-signature-symbol">&lt;</span><a href="stypproperties.generic.html" class="tsd-signature-type" data-tsd-kind="Interface">Generic</a><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>CSS properties to render.</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="styprenderer.options.html" class="tsd-signature-type" data-tsd-kind="Interface">Options</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Rendering options.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class=" ">
+						<a href="../modules.html">Exports</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-interface">
+						<a href="styleproducer.html" class="tsd-kind-icon">Style<wbr>Producer</a>
+						<ul>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="styleproducer.html#rule" class="tsd-kind-icon">rule</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="styleproducer.html#selector" class="tsd-kind-icon">selector</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="styleproducer.html#sheet" class="tsd-kind-icon">sheet</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="styleproducer.html#supply" class="tsd-kind-icon">supply</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="styleproducer.html#writer" class="tsd-kind-icon">writer</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="styleproducer.html#addstyle" class="tsd-kind-icon">add<wbr>Style</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="styleproducer.html#nsalias" class="tsd-kind-icon">ns<wbr>Alias</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="styleproducer.html#render" class="tsd-kind-icon">render</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>
