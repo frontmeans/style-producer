@@ -34,6 +34,9 @@ export type StypProperties<T extends StypProperties<T> = StypProperties.Generic>
 
 };
 
+/**
+ * @category CSS Rule
+ */
 export namespace StypProperties {
 
   /**

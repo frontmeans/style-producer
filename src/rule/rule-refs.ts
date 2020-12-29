@@ -95,6 +95,9 @@ function flattenProperties<TRefMap extends StypRuleRefs.Struct<TRefMap>>(
   return result as TRefMap;
 }
 
+/**
+ * @category CSS Rule
+ */
 export namespace StypRuleRefs {
 
   /**

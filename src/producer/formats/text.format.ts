@@ -59,6 +59,9 @@ export interface StypTextFormatConfig extends StypFormatConfig {
 
 }
 
+/**
+ * @category Rendering
+ */
 export namespace StypTextFormatConfig {
 
   /**

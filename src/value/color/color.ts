@@ -184,6 +184,9 @@ export class StypRGB extends StypColorStruct<StypRGB, StypRGB.Coords> implements
 
 }
 
+/**
+ * @category CSS Value
+ */
 export namespace StypRGB {
 
   /**
@@ -339,6 +342,9 @@ export class StypHSL extends StypColorStruct<StypHSL, StypHSL.Coords> implements
 
 }
 
+/**
+ * @category CSS Value
+ */
 export namespace StypHSL {
 
   /**

@@ -49,6 +49,9 @@ export interface StypQuery {
 
 }
 
+/**
+ * @category CSS Rule
+ */
 export namespace StypQuery {
 
   /**

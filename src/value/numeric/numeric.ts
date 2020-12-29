@@ -120,6 +120,9 @@ export interface StypDimension<TUnit extends string>
 
 }
 
+/**
+ * @category CSS Value
+ */
 export namespace StypDimension {
 
   /**

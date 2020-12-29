@@ -15,6 +15,9 @@ export type StypWriter =
     | StypWriter.Group
     | StypWriter.Style;
 
+/**
+ * @category Rendering
+ */
 export namespace StypWriter {
 
   /**

@@ -14,6 +14,9 @@ import { unitlessZeroDimensionKind } from '../numeric/dimension-kind.impl';
  */
 export type StypAngle = StypNumeric<StypAngle.Unit>;
 
+/**
+ * @category CSS Value
+ */
 export namespace StypAngle {
 
   /**
@@ -23,6 +26,9 @@ export namespace StypAngle {
 
 }
 
+/**
+ * @category CSS Value
+ */
 export const StypAngle: StypDimension.Kind.UnitlessZero<StypAngle.Unit> = (/*#__PURE__*/ unitlessZeroDimensionKind({
   pt() {
     return StypAnglePt;// eslint-disable-line @typescript-eslint/no-use-before-define
@@ -41,6 +47,9 @@ export const StypAngle: StypDimension.Kind.UnitlessZero<StypAngle.Unit> = (/*#__
  */
 export type StypAnglePt = StypNumeric<StypAnglePt.Unit>;
 
+/**
+ * @category CSS Value
+ */
 export namespace StypAnglePt {
 
   /**
@@ -50,6 +59,9 @@ export namespace StypAnglePt {
 
 }
 
+/**
+ * @category CSS Value
+ */
 export const StypAnglePt: StypDimension.Kind.UnitlessZero<StypAnglePt.Unit> = (
     /*#__PURE__*/ unitlessZeroDimensionKind({
       pt() {

@@ -21,6 +21,9 @@ export type StypSelector =
     | StypSelector.Part
     | readonly (string | StypSelector.Part | StypSelector.Combinator)[];
 
+/**
+ * @category CSS Rule
+ */
 export namespace StypSelector {
 
   /**

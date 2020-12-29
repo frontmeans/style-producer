@@ -26,6 +26,9 @@ export type StypPureSelector =
     | StypPureSelector.Part
     | readonly (string | StypPureSelector.Part | StypSelector.Combinator)[];
 
+/**
+ * @category CSS Rule
+ */
 export namespace StypPureSelector {
 
   /**

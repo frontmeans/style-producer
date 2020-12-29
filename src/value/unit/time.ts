@@ -14,6 +14,9 @@ import { unitlessZeroDimensionKind } from '../numeric/dimension-kind.impl';
  */
 export type StypTime = StypNumeric<StypTime.Unit>;
 
+/**
+ * @category CSS Value
+ */
 export namespace StypTime {
 
   /**
@@ -23,6 +26,9 @@ export namespace StypTime {
 
 }
 
+/**
+ * @category CSS Value
+ */
 export const StypTime: StypDimension.Kind.UnitlessZero<StypTime.Unit> = (/*#__PURE__*/ unitlessZeroDimensionKind({
   pt() {
     return StypTimePt;// eslint-disable-line @typescript-eslint/no-use-before-define
@@ -41,6 +47,9 @@ export const StypTime: StypDimension.Kind.UnitlessZero<StypTime.Unit> = (/*#__PU
  */
 export type StypTimePt = StypNumeric<StypTimePt.Unit>;
 
+/**
+ * @category CSS Value
+ */
 export namespace StypTimePt {
 
   /**
@@ -50,6 +59,9 @@ export namespace StypTimePt {
 
 }
 
+/**
+ * @category CSS Value
+ */
 export const StypTimePt: StypDimension.Kind.UnitlessZero<StypTimePt.Unit> = (/*#__PURE__*/ unitlessZeroDimensionKind({
   pt() {
     return StypTimePt;

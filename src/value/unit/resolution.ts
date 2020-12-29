@@ -14,6 +14,9 @@ import { unitZeroDimensionKind } from '../numeric/dimension-kind.impl';
  */
 export type StypResolution = StypNumeric<StypResolution.Unit, StypDimension<StypResolution.Unit>>;
 
+/**
+ * @category CSS Value
+ */
 export namespace StypResolution {
 
   /**
@@ -23,6 +26,9 @@ export namespace StypResolution {
 
 }
 
+/**
+ * @category CSS Value
+ */
 export const StypResolution: StypDimension.Kind.UnitZero<StypResolution.Unit> = (
     /*#__PURE__*/ unitZeroDimensionKind({ zeroUnit: 'dpi' })
 );

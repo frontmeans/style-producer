@@ -32,6 +32,9 @@ export interface StypRules extends Iterable<StypRule>, EventSender<[StypRule[], 
 
 }
 
+/**
+ * @category CSS Rule
+ */
 export namespace StypRules {
 
   /**

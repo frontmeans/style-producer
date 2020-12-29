@@ -23,6 +23,9 @@ import { StypWriter } from './writer';
  */
 export type StypRenderer = StypRenderer.Function | StypRenderer.Descriptor | StypRenderer.Factory;
 
+/**
+ * @category Rendering
+ */
 export namespace StypRenderer {
 
   /**

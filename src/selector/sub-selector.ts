@@ -23,6 +23,9 @@ export type StypSubSelector =
     | StypSubSelector.Attribute
     | StypSubSelector.Pseudo;
 
+/**
+ * @category CSS Rule
+ */
 export namespace StypSubSelector {
 
   /**

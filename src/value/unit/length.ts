@@ -14,6 +14,9 @@ import { unitlessZeroDimensionKind } from '../numeric/dimension-kind.impl';
  */
 export type StypLength = StypNumeric<StypLength.Unit>;
 
+/**
+ * @category CSS Value
+ */
 export namespace StypLength {
 
   /**
@@ -25,6 +28,9 @@ export namespace StypLength {
 
 }
 
+/**
+ * @category CSS Value
+ */
 export const StypLength: StypDimension.Kind.UnitlessZero<StypLength.Unit> = (/*#__PURE__*/ unitlessZeroDimensionKind({
   pt() {
     return StypLengthPt;// eslint-disable-line @typescript-eslint/no-use-before-define
@@ -44,6 +50,9 @@ export const StypLength: StypDimension.Kind.UnitlessZero<StypLength.Unit> = (/*#
  */
 export type StypLengthPt = StypNumeric<StypLengthPt.Unit>;
 
+/**
+ * @category CSS Value
+ */
 export namespace StypLengthPt {
 
   /**
@@ -53,6 +62,9 @@ export namespace StypLengthPt {
 
 }
 
+/**
+ * @category CSS Value
+ */
 export const StypLengthPt: StypDimension.Kind.UnitlessZero<StypLengthPt.Unit> = (
     /*#__PURE__*/ unitlessZeroDimensionKind({
       pt() {

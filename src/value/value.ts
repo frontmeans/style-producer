@@ -112,6 +112,9 @@ export abstract class StypValueStruct<TSelf extends StypValueStruct<TSelf>> {
 
 }
 
+/**
+ * @category CSS Value
+ */
 export namespace StypValue {
 
   /**

@@ -14,6 +14,9 @@ import { StypSelector } from './selector';
  */
 export type StypRuleKey = [] | StypRuleKey.Nested;
 
+/**
+ * @category CSS Rule
+ */
 export namespace StypRuleKey {
 
   /**

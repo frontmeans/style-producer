@@ -20,6 +20,9 @@ export type StypMapper<TResult> =
  */
     (this: void, from: StypProperties) => TResult;
 
+/**
+ * @category CSS Value
+ */
 export namespace StypMapper {
 
   /**
@@ -116,6 +119,9 @@ export namespace StypMapper {
 
 }
 
+/**
+ * @category CSS Value
+ */
 export const StypMapper = {
 
   /**

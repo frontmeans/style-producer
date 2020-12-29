@@ -14,6 +14,9 @@ import { unitZeroDimensionKind } from '../numeric/dimension-kind.impl';
  */
 export type StypFrequency = StypNumeric<StypFrequency.Unit, StypDimension<StypFrequency.Unit>>;
 
+/**
+ * @category CSS Value
+ */
 export namespace StypFrequency {
 
   /**
@@ -23,6 +26,9 @@ export namespace StypFrequency {
 
 }
 
+/**
+ * @category CSS Value
+ */
 export const StypFrequency: StypDimension.Kind.UnitZero<StypFrequency.Unit> = (/*#__PURE__*/ unitZeroDimensionKind({
   zeroUnit: 'kHz',
   withPercent() {
@@ -43,6 +49,9 @@ export const StypFrequency: StypDimension.Kind.UnitZero<StypFrequency.Unit> = (/
  */
 export type StypFrequencyPt = StypNumeric<StypFrequencyPt.Unit, StypDimension<StypFrequencyPt.Unit>>;
 
+/**
+ * @category CSS Value
+ */
 export namespace StypFrequencyPt {
 
   /**
@@ -52,6 +61,9 @@ export namespace StypFrequencyPt {
 
 }
 
+/**
+ * @category CSS Value
+ */
 export const StypFrequencyPt: StypDimension.Kind.UnitZero<StypFrequencyPt.Unit> = (/*#__PURE__*/ unitZeroDimensionKind({
   zeroUnit: 'kHz',
   withPercent() {
