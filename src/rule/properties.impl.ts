@@ -3,13 +3,13 @@ import {
   AfterEvent,
   afterSupplied,
   afterThe,
+  deduplicateAfter,
   EventKeeper,
   EventSender,
   isEventKeeper,
   isEventSender,
   mapAfter,
   mapAfter_,
-  translateAfter,
 } from '@proc7ts/fun-events';
 import { isPresent, valuesProvider } from '@proc7ts/primitives';
 import { filterIt, itsIterator, itsReduction, overEntries } from '@proc7ts/push-iterator';
@@ -71,26 +71,15 @@ function propertiesKeeper(sender: EventSender<[string | StypProperties]>): After
 function preventDuplicates(properties: EventKeeper<[string | StypProperties]>): AfterEvent<[StypProperties]> {
   return afterSupplied(properties).do(
       mapAfter_(propertiesMap),
-      translateAfter(passNonDuplicate()),
+      deduplicateAfter(isDuplicateProperties, cloneProperties),
   );
-}
-
-function passNonDuplicate(): (send: (properties: StypProperties) => void, update: StypProperties) => void {
-
-  let stored: StypProperties | undefined;
-
-  return (send, update) => {
-    if (!stored || !propertiesEqual(update, stored)) {
-      send(stored = { ...update });
-    }
-  };
 }
 
 function propertiesMap(properties: string | StypProperties): StypProperties {
   return typeof properties === 'string' ? { $$css: properties } : properties;
 }
 
-function propertiesEqual(first: StypProperties, second: StypProperties): boolean {
+function isDuplicateProperties([first]: [StypProperties], [second]: [StypProperties]): boolean {
 
   const s = itsIterator(propertyEntries(second));
 
@@ -104,6 +93,10 @@ function propertiesEqual(first: StypProperties, second: StypProperties): boolean
   }
 
   return !s.next().value;
+}
+
+function cloneProperties([properties]: [StypProperties]): [StypProperties] {
+  return [{ ...properties }];
 }
 
 function propertyEntries(properties: StypProperties): Iterable<readonly [keyof StypProperties, StypValue]> {
