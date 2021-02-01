@@ -42,10 +42,7 @@ export function produceBasicStyle(rules: StypRules, format: StypFormat): Supply 
   const renderSupply = renderRules(rules);
   const trackSupply = trackRules();
 
-  return supply.needs(renderSupply)
-      .needs(trackSupply)
-      .cuts(renderSupply)
-      .cuts(trackSupply);
+  return supply.as(renderSupply).as(trackSupply);
 
   function styleProducer(
       rule: StypRule,
