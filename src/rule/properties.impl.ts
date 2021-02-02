@@ -79,7 +79,7 @@ function propertiesMap(properties: string | StypProperties): StypProperties {
   return typeof properties === 'string' ? { $$css: properties } : properties;
 }
 
-function isDuplicateProperties([first]: [StypProperties], [second]: [StypProperties]): boolean {
+function isDuplicateProperties(first: StypProperties, second: StypProperties): boolean {
 
   const s = itsIterator(propertyEntries(second));
 
@@ -95,8 +95,8 @@ function isDuplicateProperties([first]: [StypProperties], [second]: [StypPropert
   return !s.next().value;
 }
 
-function cloneProperties([properties]: [StypProperties]): [StypProperties] {
-  return [{ ...properties }];
+function cloneProperties([properties]: [StypProperties]): StypProperties {
+  return { ...properties };
 }
 
 function propertyEntries(properties: StypProperties): Iterable<readonly [keyof StypProperties, StypValue]> {
