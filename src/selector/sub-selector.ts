@@ -1,7 +1,3 @@
-/**
- * @packageDocumentation
- * @module @frontmeans/style-producer
- */
 import { StypPureSelector } from './pure-selector';
 import { StypSelector } from './selector';
 

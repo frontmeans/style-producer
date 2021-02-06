@@ -1,7 +1,3 @@
-/**
- * @packageDocumentation
- * @module @frontmeans/style-producer
- */
 import { StypProperties } from '../../rule';
 import { StyleProducer } from '../style-producer';
 

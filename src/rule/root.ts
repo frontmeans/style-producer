@@ -1,7 +1,3 @@
-/**
- * @packageDocumentation
- * @module @frontmeans/style-producer
- */
 import { StypSelector } from '../selector';
 import { StypProperties } from './properties';
 import { stypPropertiesBySpec } from './properties.impl';

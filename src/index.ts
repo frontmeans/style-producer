@@ -1,6 +1,6 @@
 /**
  * @packageDocumentation
- * @module @frontmeans/style-producer
+ * @module Module @frontmeans/style-producer
  */
 export * from './producer';
 export * from './rule';

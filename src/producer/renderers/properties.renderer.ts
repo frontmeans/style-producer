@@ -1,7 +1,3 @@
-/**
- * @packageDocumentation
- * @module @frontmeans/style-producer
- */
 import { hyphenateCSSName } from '@frontmeans/httongue';
 import { filterIt, itsEach, ObjectEntry, overEntries } from '@proc7ts/push-iterator';
 import { StypProperties } from '../../rule';

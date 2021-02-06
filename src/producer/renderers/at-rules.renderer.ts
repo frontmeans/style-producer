@@ -1,7 +1,3 @@
-/**
- * @packageDocumentation
- * @module @frontmeans/style-producer
- */
 import { AfterEvent, mapAfter } from '@proc7ts/fun-events';
 import { filterIt, itsReduction, ObjectEntry, overEntries } from '@proc7ts/push-iterator';
 import { isNotEmptyArray } from '../../internal';

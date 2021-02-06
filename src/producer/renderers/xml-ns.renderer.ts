@@ -1,7 +1,3 @@
-/**
- * @packageDocumentation
- * @module @frontmeans/style-producer
- */
 import { NamespaceDef } from '@frontmeans/namespace-aliaser';
 import { isPresent } from '@proc7ts/primitives';
 import { StypProperties } from '../../rule';

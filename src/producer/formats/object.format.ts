@@ -1,7 +1,3 @@
-/**
- * @packageDocumentation
- * @module @frontmeans/style-producer
- */
 import { RenderScheduler } from '@frontmeans/render-scheduler';
 import { StypPriority } from '../../value';
 import { StypFormat, StypFormatConfig } from '../format';

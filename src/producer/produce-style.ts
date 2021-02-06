@@ -1,7 +1,3 @@
-/**
- * @packageDocumentation
- * @module @frontmeans/style-producer
- */
 import { Supply } from '@proc7ts/primitives';
 import { StypRules } from '../rule';
 import { StypFormat } from './format';

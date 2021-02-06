@@ -1,7 +1,3 @@
-/**
- * @packageDocumentation
- * @module @frontmeans/style-producer
- */
 import { afterAll, AfterEvent, AfterEvent__symbol, EventKeeper, mapAfter } from '@proc7ts/fun-events';
 import { StypProperties } from './properties';
 import { StypRule } from './rule';

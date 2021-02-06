@@ -1,7 +1,3 @@
-/**
- * @packageDocumentation
- * @module @frontmeans/style-producer
- */
 import { escapeCSSVal } from '@frontmeans/httongue';
 import { stypSplitPriority } from './priority';
 import { StypValue, StypValueStruct } from './value';

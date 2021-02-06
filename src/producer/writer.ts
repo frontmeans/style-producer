@@ -1,9 +1,4 @@
 /**
- * @packageDocumentation
- * @module @frontmeans/style-producer
- */
-
-/**
  * CSS writer.
  *
  * Either style sheet writer, grouping at-rule writer, or CSS style declarations writer.

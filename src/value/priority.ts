@@ -1,7 +1,3 @@
-/**
- * @packageDocumentation
- * @module @frontmeans/style-producer
- */
 import { IMPORTANT_CSS_SUFFIX } from '../internal';
 import { StypValue } from './value';
 

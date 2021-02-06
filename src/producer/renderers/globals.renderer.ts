@@ -1,7 +1,3 @@
-/**
- * @packageDocumentation
- * @module @frontmeans/style-producer
- */
 import { overEntries } from '@proc7ts/push-iterator';
 import { StypProperties } from '../../rule';
 import { stypSplitPriority, StypURL, StypValue } from '../../value';

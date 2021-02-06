@@ -1,7 +1,3 @@
-/**
- * @packageDocumentation
- * @module @frontmeans/style-producer
- */
 import { StypColor } from './color';
 import { StypNumeric } from './numeric';
 import { StypPriority } from './priority';

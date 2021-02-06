@@ -1,7 +1,3 @@
-/**
- * @packageDocumentation
- * @module @frontmeans/style-producer
- */
 import { StypValue, StypValueStruct } from '../value';
 import { StypZero } from './zero';
 

@@ -1,7 +1,3 @@
-/**
- * @packageDocumentation
- * @module @frontmeans/style-producer
- */
 import { StypDimension, StypNumeric } from '../numeric';
 import { unitZeroDimensionKind } from '../numeric/dimension-kind.impl';
 

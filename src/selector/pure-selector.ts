@@ -1,7 +1,3 @@
-/**
- * @packageDocumentation
- * @module @frontmeans/style-producer
- */
 import { NamespaceDef, QualifiedName } from '@frontmeans/namespace-aliaser';
 import { StypSelector } from './selector';
 import { StypSubSelector } from './sub-selector';

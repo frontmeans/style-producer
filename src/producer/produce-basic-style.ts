@@ -1,7 +1,3 @@
-/**
- * @packageDocumentation
- * @module @frontmeans/style-producer
- */
 import { NamespaceDef, newNamespaceAliaser } from '@frontmeans/namespace-aliaser';
 import { newRenderSchedule } from '@frontmeans/render-scheduler';
 import { AfterEvent, afterSupplied, onSupplied } from '@proc7ts/fun-events';

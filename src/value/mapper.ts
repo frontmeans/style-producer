@@ -1,7 +1,3 @@
-/**
- * @packageDocumentation
- * @module @frontmeans/style-producer
- */
 import { itsEach, overKeys } from '@proc7ts/push-iterator';
 import { StypProperties } from '../rule';
 import { StypValue } from './value';

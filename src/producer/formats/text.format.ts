@@ -1,7 +1,3 @@
-/**
- * @packageDocumentation
- * @module @frontmeans/style-producer
- */
 import { immediateRenderScheduler, RenderScheduler } from '@frontmeans/render-scheduler';
 import { EventEmitter, OnEvent } from '@proc7ts/fun-events';
 import { StypPriority } from '../../value';

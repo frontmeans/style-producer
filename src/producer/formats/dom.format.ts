@@ -1,10 +1,6 @@
 import { RenderScheduler } from '@frontmeans/render-scheduler';
 import { StypFormat } from '../format';
 import { removeStyleElement, stypRenderScheduler } from './format.impl';
-/**
- * @packageDocumentation
- * @module @frontmeans/style-producer
- */
 import { stypTextFormat, StypTextFormatConfig } from './text.format';
 
 /**
