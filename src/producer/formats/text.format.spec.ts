@@ -1,4 +1,4 @@
-import { Supply } from '@proc7ts/primitives';
+import { Supply } from '@proc7ts/supply';
 import { stypRoot, StypRule } from '../../rule';
 import { StypRGB } from '../../value';
 import { produceStyle } from '../produce-style';

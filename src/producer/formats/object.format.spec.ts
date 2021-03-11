@@ -1,6 +1,7 @@
 import { immediateRenderScheduler, RenderScheduler } from '@frontmeans/render-scheduler';
-import { noop, Supply } from '@proc7ts/primitives';
+import { noop } from '@proc7ts/primitives';
 import { itsFirst } from '@proc7ts/push-iterator';
+import { Supply } from '@proc7ts/supply';
 import { stypRoot, StypRule } from '../../rule';
 import { stylesheets } from '../../spec';
 import { produceBasicStyle } from '../produce-basic-style';

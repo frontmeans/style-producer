@@ -1,5 +1,5 @@
 import { NamespaceDef } from '@frontmeans/namespace-aliaser';
-import { SupplyPeer } from '@proc7ts/primitives';
+import { SupplyPeer } from '@proc7ts/supply';
 import { StypProperties, StypRule } from '../rule';
 import { StypSelector } from '../selector';
 import { StypRenderer } from './renderer';

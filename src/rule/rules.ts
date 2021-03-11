@@ -10,8 +10,8 @@ import {
   onSupplied,
   shareOn,
 } from '@proc7ts/fun-events';
-import { neverSupply, Supply } from '@proc7ts/primitives';
 import { itsEach } from '@proc7ts/push-iterator';
+import { neverSupply, Supply } from '@proc7ts/supply';
 import { StypRule, StypRuleList } from './rule';
 import { Rules } from './rules.impl';
 
