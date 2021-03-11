@@ -1,5 +1,6 @@
 import { AfterEvent, afterSupplied, EventEmitter, onceAfter, trackValue, ValueTracker } from '@proc7ts/fun-events';
-import { noop, Supply, valuesProvider } from '@proc7ts/primitives';
+import { noop, valuesProvider } from '@proc7ts/primitives';
+import { Supply } from '@proc7ts/supply';
 import { StypLengthPt } from '../value';
 import { StypProperties } from './properties';
 import { mergeStypProperties, stypPropertiesBySpec } from './properties.impl';

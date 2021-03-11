@@ -1,8 +1,9 @@
 import { NamespaceDef, newNamespaceAliaser } from '@frontmeans/namespace-aliaser';
 import { newRenderSchedule } from '@frontmeans/render-scheduler';
 import { AfterEvent, afterSupplied, onSupplied } from '@proc7ts/fun-events';
-import { noop, Supply } from '@proc7ts/primitives';
+import { noop } from '@proc7ts/primitives';
 import { itsReduction, mapIt } from '@proc7ts/push-iterator';
+import { Supply } from '@proc7ts/supply';
 import { StypProperties, StypRule, StypRules } from '../rule';
 import { StypSelector, stypSelector, StypSelectorFormat, stypSelectorText } from '../selector';
 import { isCombinator } from '../selector/selector.impl';

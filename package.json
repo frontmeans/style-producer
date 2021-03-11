@@ -33,7 +33,8 @@
     "@frontmeans/httongue": "^2.2.0",
     "@frontmeans/render-scheduler": "^1.5.0",
     "@proc7ts/primitives": "^1.8.1",
-    "@proc7ts/push-iterator": "^2.5.0"
+    "@proc7ts/push-iterator": "^2.5.0",
+    "@proc7ts/supply": "^1.0.0-dev.0"
   },
   "devDependencies": {
     "@frontmeans/namespace-aliaser": "^2.3.0",
