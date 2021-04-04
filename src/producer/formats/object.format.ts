@@ -137,17 +137,18 @@ export function stypObjectFormat(
     config: StypObjectFormatConfig = {},
 ): StypFormat {
 
-  const { parent = document.head } = config;
+  const { parent = document.head }: { parent?: Node } = config;
+  const doc = parent.ownerDocument!;
 
   return {
     ...config,
     scheduler: stypRenderScheduler(parent, config.scheduler),
     addSheet() {
 
-      const element = document.createElement('style');
+      const element = doc.createElement('style');
 
       element.setAttribute('type', 'text/css');
-      element.append(document.createTextNode(''));
+      element.append(doc.createTextNode(''));
 
       parent.appendChild(element);
 
