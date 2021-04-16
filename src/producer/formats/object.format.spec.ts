@@ -74,7 +74,6 @@ describe('stypObjectFormat', () => {
     schedule(() => { throw error; });
 
     expect(scheduleOpts.error).toHaveBeenCalledWith(error);
-    expect(scheduleOpts.error.mock.instances[0]).toBe(scheduleOpts);
   });
   it('renders global at-rule', () => {
     root.set({ '@import:some.css': '', '@import:screen.css': 'screen' });

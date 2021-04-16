@@ -100,12 +100,11 @@ export function stypRenderScheduler(
 ): RenderScheduler {
   return (options = {}) => {
 
-    const { node = parent, error } = options;
+    const { node = parent } = options;
 
     return scheduler({
       ...options,
       node,
-      error: error && error.bind(options),
     });
   };
 }
