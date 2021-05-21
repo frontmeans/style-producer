@@ -4,8 +4,7 @@
   "description": "Produces and dynamically updates stylesheets",
   "keywords": [
     "css-in-js",
-    "css-in-ts",
-    "typescript"
+    "css-in-ts"
   ],
   "homepage": "https://github.com/frontmeans/style-producer",
   "repository": {
