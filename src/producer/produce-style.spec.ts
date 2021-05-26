@@ -1,3 +1,4 @@
+import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { immediateRenderScheduler } from '@frontmeans/render-scheduler';
 import { stypRoot, StypRule } from '../rule';
 import { cssStyle, removeStyleElements } from '../spec';

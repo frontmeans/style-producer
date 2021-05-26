@@ -1,11 +1,12 @@
+import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { AfterEvent, afterSupplied, EventEmitter, onceAfter, trackValue, ValueTracker } from '@proc7ts/fun-events';
 import { noop, valuesProvider } from '@proc7ts/primitives';
 import { Supply } from '@proc7ts/supply';
+import { Mock } from 'jest-mock';
 import { StypLengthPt } from '../value';
 import { StypProperties } from './properties';
 import { mergeStypProperties, stypPropertiesBySpec } from './properties.impl';
 import { StypRule } from './rule';
-import Mock = jest.Mock;
 
 describe('stypPropertiesBySpec', () => {
 

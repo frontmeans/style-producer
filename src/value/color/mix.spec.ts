@@ -1,3 +1,4 @@
+import { describe, expect, it } from '@jest/globals';
 import { rgbBlack, rgbDarkGreen, rgbGray, rgbLighterGreen, rgbWhite } from '../../spec';
 import { StypRGB } from './color';
 import { mixStypColors } from './mix';

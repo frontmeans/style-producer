@@ -1,4 +1,5 @@
 import { DEFAULT__NS, NamespaceDef } from '@frontmeans/namespace-aliaser';
+import { beforeEach, describe, expect, it } from '@jest/globals';
 import { stypSelectorsEqual } from './selectors-equal';
 
 describe('stypSelectorsEqual', () => {

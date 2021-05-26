@@ -1,3 +1,4 @@
+import { beforeEach, describe, expect, it } from '@jest/globals';
 import { StypDimension } from '../numeric';
 import { StypAngle, StypAnglePt } from './angle';
 import { StypLength, StypLengthPt } from './length';

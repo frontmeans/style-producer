@@ -1,15 +1,15 @@
 import { NamespaceAliaser, NamespaceDef, newNamespaceAliaser } from '@frontmeans/namespace-aliaser';
+import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { StypSelector } from '../../selector';
 import { StypURL } from '../../value';
 import { StypRenderer } from '../renderer';
 import { StyleProducer } from '../style-producer';
 import { stypRenderXmlNs } from './xml-ns.renderer';
-import Mocked = jest.Mocked;
 
 describe('stypRenderXmlNs', () => {
 
-  let sheet: Mocked<CSSStyleSheet>;
-  let producer: Mocked<StyleProducer>;
+  let sheet: CSSStyleSheet;
+  let producer: StyleProducer;
   let nsAlias: NamespaceAliaser;
   let selector: StypSelector.Normalized;
 

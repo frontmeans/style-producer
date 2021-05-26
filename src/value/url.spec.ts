@@ -1,3 +1,4 @@
+import { beforeEach, describe, expect, it } from '@jest/globals';
 import { StypPriority } from './priority';
 import { StypLength } from './unit';
 import { StypURL } from './url';

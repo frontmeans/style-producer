@@ -1,6 +1,8 @@
 import { immediateRenderScheduler, newManualRenderScheduler, noopRenderScheduler } from '@frontmeans/render-scheduler';
+import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { itsEmpty } from '@proc7ts/push-iterator';
 import { Supply } from '@proc7ts/supply';
+import { SpyInstance } from 'jest-mock';
 import { stypRoot, StypRule } from '../../rule';
 import { cssStyle, removeStyleElements, stylesheets } from '../../spec';
 import { produceBasicStyle } from '../produce-basic-style';
@@ -23,7 +25,7 @@ describe('stypObjectFormat', () => {
 
   describe('scheduler', () => {
 
-    let rafSpy: jest.SpyInstance<number, [FrameRequestCallback]>;
+    let rafSpy: SpyInstance<number, [FrameRequestCallback]>;
     let operations: ((time: number) => void)[];
 
     beforeEach(() => {
