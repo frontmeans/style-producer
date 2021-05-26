@@ -1,4 +1,4 @@
-import Mocked = jest.Mocked;
+import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { flatMapIt } from '@proc7ts/push-iterator';
 import { Supply } from '@proc7ts/supply';
 import { stypRoot, StypRule } from '../../rule';
@@ -12,8 +12,8 @@ import { stypRenderGlobals } from './globals.renderer';
 
 describe('stypRenderGlobals', () => {
 
-  let sheet: Mocked<StypWriter.Sheet>;
-  let producer: Mocked<StyleProducer>;
+  let sheet: StypWriter.Sheet;
+  let producer: StyleProducer;
 
   beforeEach(() => {
     sheet = {

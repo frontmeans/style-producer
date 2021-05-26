@@ -1,3 +1,4 @@
+import { afterEach, beforeEach, describe, expect, it } from '@jest/globals';
 import { Supply } from '@proc7ts/supply';
 import { stypRoot, StypRule } from '../../rule';
 import { StypRGB } from '../../value';

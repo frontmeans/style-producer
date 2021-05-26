@@ -1,3 +1,5 @@
+import { beforeEach, describe, expect, it, jest } from '@jest/globals';
+
 import { afterSupplied, onceAfter } from '@proc7ts/fun-events';
 import { StypAngle, StypLength } from '../value';
 import { stypRoot } from './root';
@@ -51,7 +53,7 @@ describe('StypRuleRefs', () => {
 
   describe('[AfterEvent__symbol]', () => {
     it('is the same as `read`', () => {
-      expect(afterSupplied(refs)).toBe(refs.read);
+      void expect(afterSupplied(refs)).toBe(refs.read);
     });
   });
 });

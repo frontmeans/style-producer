@@ -1,4 +1,4 @@
-import { NamespaceDef } from '@frontmeans/namespace-aliaser';
+import { NamespaceDef, newNamespaceAliaser } from '@frontmeans/namespace-aliaser';
 import {
   immediateRenderScheduler,
   newManualRenderScheduler,
@@ -6,20 +6,20 @@ import {
   RenderShot,
   setRenderScheduler,
 } from '@frontmeans/render-scheduler';
+import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { afterNever, trackValue } from '@proc7ts/fun-events';
 import { noop } from '@proc7ts/primitives';
 import { itsEmpty } from '@proc7ts/push-iterator';
+import { Mock, SpyInstance } from 'jest-mock';
 import { StypProperties, stypRoot, StypRule } from '../rule';
 import { stypSelector } from '../selector';
 import { cssStyle, cssStyles, removeStyleElements, stylesheets } from '../spec';
-import { StypLength } from '../value/unit';
+import { StypLength } from '../value';
 import { stypObjectFormat } from './formats';
 import { produceBasicStyle } from './produce-basic-style';
 import { StypRenderer } from './renderer';
 import { StyleProducer } from './style-producer';
 import { StypWriter } from './writer';
-import Mock = jest.Mock;
-import SpyInstance = jest.SpyInstance;
 
 describe('produceBasicStyle', () => {
 
@@ -36,7 +36,7 @@ describe('produceBasicStyle', () => {
   describe('nsAlias', () => {
     it('is `nsAlias` option', () => {
 
-      const mockNsAlias = jest.fn();
+      const mockNsAlias = jest.fn(newNamespaceAliaser());
       let producer: StyleProducer = null!;
 
       produceBasicStyle(

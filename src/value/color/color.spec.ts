@@ -1,3 +1,4 @@
+import { beforeEach, describe, expect, it } from '@jest/globals';
 import {
   hslBlue,
   hslCrimson,
@@ -58,7 +59,7 @@ describe('StypRGB', () => {
 
       expect(important).not.toBe(value);
       expect(important.priority).toBe(1);
-      expect(important).toMatchObject(coords);
+      expect(important).toMatchObject(coords as Record<keyof StypRGB.Coords, unknown>);
       expect(important).toEqual(value.important());
     });
   });
@@ -192,7 +193,7 @@ describe('StypHSL', () => {
 
       expect(important).not.toBe(value);
       expect(important.priority).toBe(StypPriority.Important);
-      expect(important).toMatchObject(coords);
+      expect(important).toMatchObject(coords as Record<keyof StypHSL.Coords, unknown>);
       expect(important).toEqual(value.important());
     });
   });

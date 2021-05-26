@@ -1,11 +1,12 @@
+import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { afterSupplied, trackValue } from '@proc7ts/fun-events';
 import { valueProvider } from '@proc7ts/primitives';
+import { Mock } from 'jest-mock';
 import { StypSelector } from '../selector';
 import { StypAnglePt, StypLength, StypMapper } from '../value';
 import { stypRoot } from './root';
 import { StypRule } from './rule';
 import { RefStypRule, StypRuleRef } from './rule-ref';
-import Mock = jest.Mock;
 
 describe('RefStypRule', () => {
 
@@ -127,7 +128,7 @@ describe('RefStypRule', () => {
 
   describe('[AfterEvent__symbol]', () => {
     it('is an alias of `read`', () => {
-      expect(afterSupplied(ref)).toBe(ref.read);
+      void expect(afterSupplied(ref)).toBe(ref.read);
     });
   });
 

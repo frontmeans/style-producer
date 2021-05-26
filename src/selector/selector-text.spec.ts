@@ -1,4 +1,5 @@
 import { DEFAULT__NS, NamespaceDef } from '@frontmeans/namespace-aliaser';
+import { beforeEach, describe, expect, it } from '@jest/globals';
 import { stypSelectorText } from './selector-text';
 import { stypRuleKeyText, stypSelectorDisplayText } from './selector-text.impl';
 

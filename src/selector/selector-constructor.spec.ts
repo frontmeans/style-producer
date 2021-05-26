@@ -1,4 +1,5 @@
 import { NamespaceDef } from '@frontmeans/namespace-aliaser';
+import { beforeEach, describe, expect, it } from '@jest/globals';
 import { stypSelector } from './selector-constructor';
 
 describe('stypSelector', () => {

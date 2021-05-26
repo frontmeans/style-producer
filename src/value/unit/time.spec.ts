@@ -1,3 +1,4 @@
+import { describe, expect, it } from '@jest/globals';
 import { StypDimension } from '../numeric';
 import { StypTime, StypTimePt } from './time';
 

@@ -1,3 +1,4 @@
+import { describe, expect, it } from '@jest/globals';
 import { StypQuery, stypQuery, stypSelectorMatches } from './query';
 
 describe('stypQuery', () => {

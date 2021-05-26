@@ -1,7 +1,8 @@
+import { beforeEach, describe, expect, it, jest } from '@jest/globals';
+import { Mock } from 'jest-mock';
 import { StypMapper } from './mapper';
 import { StypFrequency, StypFrequencyPt, StypLength, StypLengthPt, StypTime, StypTimePt } from './unit';
 import { StypValue } from './value';
-import Mock = jest.Mock;
 
 describe('StypMapper', () => {
   describe('scalar mapping', () => {
@@ -183,7 +184,7 @@ describe('StypMapper', () => {
 
     beforeEach(() => {
       mockMapper1 = jest.fn();
-      mockMapper2 = jest.fn().mockImplementation(() => StypLength.zero);
+      mockMapper2 = jest.fn((_value, _mapped, _key) => StypLength.zero);
       mappings = {
         $value1: mockMapper1,
         $value2: mockMapper2,

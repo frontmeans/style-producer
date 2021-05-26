@@ -5,7 +5,7 @@ export function cssStyle(selector?: string): CSSStyleDeclaration {
   const style = itsFirst(cssStyles(selector));
 
   if (!style) {
-    return fail(`Rule not found: ${selector}`);
+    throw new Error(`Rule not found: ${selector}`);
   }
 
   return style;
