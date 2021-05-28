@@ -1,4 +1,3 @@
-import commonjs from '@rollup/plugin-commonjs';
 import nodeResolve from '@rollup/plugin-node-resolve';
 import { externalModules } from '@run-z/rollup-helpers';
 import flatDts from 'rollup-plugin-flat-dts';
@@ -11,7 +10,6 @@ export default {
     'style-producer': './src/index.ts',
   },
   plugins: [
-    commonjs(),
     ts({
       typescript,
       tsconfig: 'tsconfig.main.json',
