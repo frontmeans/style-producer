@@ -1,14 +1,14 @@
 import { AfterEvent, mapAfter, OnEvent, onEventBy, onSupplied, shareOn } from '@proc7ts/fun-events';
 import { asis, valueProvider } from '@proc7ts/primitives';
 import { filterIt, itsIterator } from '@proc7ts/push-iterator';
-import { stypQuery, StypQuery, stypSelectorMatches } from '../selector';
+import { stypQuery, StypQuery, stypQueryMatch } from '../query';
 import { StypRule, StypRuleList } from './rule';
 import { StypRules } from './rules';
 
 /**
  * @internal
  */
-export class Rules extends StypRuleList {
+export class StypRuleList$ extends StypRuleList {
 
   readonly read: AfterEvent<[StypRuleList]>;
   readonly onUpdate: OnEvent<[StypRule[], StypRule[]]>;
@@ -63,7 +63,7 @@ export class Rules extends StypRuleList {
   }
 
   grab(query: StypQuery): StypRuleList {
-    return grabRules(this, query);
+    return StypRuleList$grab(this, query);
   }
 
 }
@@ -71,9 +71,9 @@ export class Rules extends StypRuleList {
 /**
  * @internal
  */
-export function grabRules(list: StypRuleList, query: StypQuery): StypRuleList {
+export function StypRuleList$grab(list: StypRuleList, query: StypQuery): StypRuleList {
 
   const q = stypQuery(query);
 
-  return new Rules(list, rule => stypSelectorMatches(rule.selector, q));
+  return new StypRuleList$(list, rule => stypQueryMatch(rule.selector, q));
 }

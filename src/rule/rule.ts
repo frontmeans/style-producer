@@ -1,5 +1,6 @@
+import { DoqryPicker, DoqrySelector } from '@frontmeans/doqry';
 import { AfterEvent, AfterEvent__symbol, EventKeeper, OnEvent, OnEvent__symbol } from '@proc7ts/fun-events';
-import { StypQuery, StypRuleKey, StypSelector } from '../selector';
+import { StypQuery, StypRuleKey } from '../query';
 import { StypProperties } from './properties';
 import { StypRules } from './rules';
 
@@ -30,7 +31,7 @@ export abstract class StypRule implements EventKeeper<[StypProperties]> {
   /**
    * CSS selector of this rule.
    */
-  abstract readonly selector: StypSelector.Normalized;
+  abstract readonly selector: DoqryPicker;
 
   /**
    * A key of this rule in the enclosing one.
@@ -183,7 +184,7 @@ export abstract class StypRuleHierarchy extends StypRuleList {
    *
    * @returns Modified CSS rule.
    */
-  abstract add(selector: StypSelector, properties?: StypProperties.Spec): StypRule;
+  abstract add(selector: DoqrySelector, properties?: StypProperties.Spec): StypRule;
 
   /**
    * Returns nested CSS rule matching the given `selector`.
@@ -192,7 +193,7 @@ export abstract class StypRuleHierarchy extends StypRuleList {
    *
    * @returns Either matching CSS rule, or `undefined` if not found.
    */
-  abstract get(selector: StypSelector): StypRule | undefined;
+  abstract get(selector: DoqrySelector): StypRule | undefined;
 
   /**
    * Watches for CSS rule properties.
@@ -203,6 +204,6 @@ export abstract class StypRuleHierarchy extends StypRuleList {
    *
    * @returns An `AfterEvent` registrar of CSS properties receiver.
    */
-  abstract watch(selector: StypSelector): AfterEvent<[StypProperties]>;
+  abstract watch(selector: DoqrySelector): AfterEvent<[StypProperties]>;
 
 }

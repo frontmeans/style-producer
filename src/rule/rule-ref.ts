@@ -1,3 +1,4 @@
+import { DoqrySelector } from '@frontmeans/doqry';
 import {
   afterAll,
   AfterEvent,
@@ -8,7 +9,6 @@ import {
   mapAfter,
 } from '@proc7ts/fun-events';
 import { valueProvider } from '@proc7ts/primitives';
-import { StypSelector } from '../selector';
 import { StypMapper } from '../value';
 import { StypProperties } from './properties';
 import { StypRule } from './rule';
@@ -91,7 +91,7 @@ class StypRuleRef$<T extends StypProperties<T>> extends StypRuleRef<T> {
 
   constructor(
       private readonly _root: StypRule,
-      private readonly _selector: StypSelector,
+      private readonly _selector: DoqrySelector,
       private readonly _map: (root: StypRule) => EventKeeper<[StypMapper.Mappings<T>]>,
   ) {
     super();
@@ -135,7 +135,7 @@ export const RefStypRule = {
    * @returns New CSS rule key instance.
    */
   by<T extends StypProperties<T>>(
-      selector: StypSelector,
+      selector: DoqrySelector,
       mappings:
           | StypMapper.Mappings<T>
           | EventKeeper<[StypMapper.Mappings<T>]>

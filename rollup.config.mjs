@@ -31,6 +31,7 @@ export default {
         compilerOptions: {
           declarationMap: true,
         },
+        internal: '**/*.impl.ts',
       }),
     ],
   },

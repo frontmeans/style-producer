@@ -13,7 +13,7 @@ import {
 import { itsEach } from '@proc7ts/push-iterator';
 import { neverSupply, Supply } from '@proc7ts/supply';
 import { StypRule, StypRuleList } from './rule';
-import { Rules } from './rules.impl';
+import { StypRuleList$ } from './rules.impl';
 
 /**
  * Dynamically updated CSS rule set.
@@ -62,7 +62,7 @@ export namespace StypRules {
 /**
  * @internal
  */
-const noStypRules: StypRuleList = (/*#__PURE__*/ new Rules({
+const noStypRules: StypRuleList = (/*#__PURE__*/ new StypRuleList$({
   [OnEvent__symbol]() {
     return onNever;
   },
@@ -123,9 +123,9 @@ function rulesByList(sources: StypRules[]): StypRuleList {
 
     const source = sources[0];
 
-    return source instanceof StypRuleList ? source : new Rules(source);
+    return source instanceof StypRuleList ? source : new StypRuleList$(source);
   }
-  return new Rules({
+  return new StypRuleList$({
     *[Symbol.iterator](): IterableIterator<StypRule> {
       for (const rules of sources) {
         yield* rules;

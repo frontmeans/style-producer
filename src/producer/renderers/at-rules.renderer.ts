@@ -1,10 +1,9 @@
+import { doqryPicker, DoqryPicker, isDoqryCombinator } from '@frontmeans/doqry';
 import { AfterEvent, mapAfter } from '@proc7ts/fun-events';
 import { filterIt, itsReduction, ObjectEntry, overEntries } from '@proc7ts/push-iterator';
 import { isNotEmptyArray } from '../../internal';
 import { StypProperties, StypRule } from '../../rule';
 import { mergeStypProperties } from '../../rule/properties.impl';
-import { StypSelector, stypSelector } from '../../selector';
-import { isCombinator } from '../../selector/selector.impl';
 import { stypSplitPriority, StypValue } from '../../value';
 import { StypRenderer } from '../renderer';
 import { StyleProducer } from '../style-producer';
@@ -161,14 +160,14 @@ function isAtEntry(entry: ObjectEntry<StypProperties>): entry is ObjectEntry<Sty
  * @internal
  */
 function extractAtSelectors(
-    selector: StypSelector.Normalized,
-): [Map<string, [Set<string>, string?]>, StypSelector.Normalized] | undefined {
+    selector: DoqryPicker,
+): [Map<string, [Set<string>, string?]>, DoqryPicker] | undefined {
 
   const atSelectors = new Map<string, [Set<string>, string?]>();
-  const rest: StypSelector.Mutable = [];
+  const rest: DoqryPicker.Mutable = [];
 
   for (const part of selector) {
-    if (isCombinator(part)) {
+    if (isDoqryCombinator(part)) {
       rest.push(part);
     } else {
       rest.push(extractPartAtSelectors(part, atSelectors));
@@ -179,16 +178,16 @@ function extractAtSelectors(
     return; // No at-rule qualifiers found.
   }
 
-  return [atSelectors, stypSelector(rest)];
+  return [atSelectors, doqryPicker(rest)];
 }
 
 /**
  * @internal
  */
 function extractPartAtSelectors(
-    part: StypSelector.NormalizedPart,
+    part: DoqryPicker.Part,
     atSelectors: Map<string, [Set<string>, string?]>,
-): StypSelector.NormalizedPart {
+): DoqryPicker.Part {
 
   const qualifiers = part.$;
 

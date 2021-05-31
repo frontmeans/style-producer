@@ -1,8 +1,7 @@
+import { DoqryPicker, isDoqryCombinator } from '@frontmeans/doqry';
 import { NamespaceDef } from '@frontmeans/namespace-aliaser';
 import { isPresent } from '@proc7ts/primitives';
 import { StypProperties } from '../../rule';
-import { StypSelector } from '../../selector';
-import { isCombinator } from '../../selector/selector.impl';
 import { StypURL } from '../../value';
 import { StypRenderer } from '../renderer';
 import { StyleProducer } from '../style-producer';
@@ -50,8 +49,8 @@ export const stypRenderXmlNs: StypRenderer = {
 /**
  * @internal
  */
-function extractXmlNsDefs(selector: StypSelector.Normalized): readonly NamespaceDef[] {
+function extractXmlNsDefs(selector: DoqryPicker): readonly NamespaceDef[] {
   return selector
-      .map(part => !isCombinator(part) && part.ns && typeof part.ns !== 'string' ? part.ns : null)
+      .map(part => !isDoqryCombinator(part) && part.ns && typeof part.ns !== 'string' ? part.ns : null)
       .filter(isPresent);
 }

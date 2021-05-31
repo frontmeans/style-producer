@@ -1,7 +1,7 @@
+import { DoqryPicker } from '@frontmeans/doqry';
 import { NamespaceDef } from '@frontmeans/namespace-aliaser';
 import { SupplyPeer } from '@proc7ts/supply';
 import { StypProperties, StypRule } from '../rule';
-import { StypSelector } from '../selector';
 import { StypRenderer } from './renderer';
 import { StypWriter } from './writer';
 
@@ -34,7 +34,7 @@ export interface StyleProducer extends SupplyPeer {
   /**
    * Rendered CSS rule selector.
    */
-  readonly selector: StypSelector.Normalized;
+  readonly selector: DoqryPicker;
 
   /**
    * Maps namespace to its unique alias.
@@ -67,6 +67,6 @@ export interface StyleProducer extends SupplyPeer {
    *
    * @returns Either style writer to appended empty CSS rule, or `writer`.
    */
-  addStyle(selector?: StypSelector.Normalized): StypWriter.Style;
+  addStyle(selector?: DoqryPicker): StypWriter.Style;
 
 }

@@ -1,3 +1,4 @@
+import { DoqryFormat, doqryPicker, DoqryPicker, doqryText, isDoqryCombinator } from '@frontmeans/doqry';
 import { NamespaceDef, newNamespaceAliaser } from '@frontmeans/namespace-aliaser';
 import { newRenderSchedule } from '@frontmeans/render-scheduler';
 import { AfterEvent, afterSupplied, onSupplied } from '@proc7ts/fun-events';
@@ -5,8 +6,6 @@ import { noop } from '@proc7ts/primitives';
 import { itsReduction, mapIt } from '@proc7ts/push-iterator';
 import { Supply } from '@proc7ts/supply';
 import { StypProperties, StypRule, StypRules } from '../rule';
-import { StypSelector, stypSelector, StypSelectorFormat, stypSelectorText } from '../selector';
-import { isCombinator } from '../selector/selector.impl';
 import { StypFormat } from './format';
 import { stypRenderFactories } from './formats/format.impl';
 import { StypRenderer } from './renderer';
@@ -34,7 +33,7 @@ export function produceBasicStyle(rules: StypRules, format: StypFormat): Supply 
     nsAlias = newNamespaceAliaser(),
   } = format;
   const supply = new Supply();
-  const selectorFormat: StypSelectorFormat = { nsAlias };
+  const selectorFormat: DoqryFormat = { nsAlias };
   const factories = stypRenderFactories(format);
   const renderSupply = renderRules(rules);
   const trackSupply = trackRules();
@@ -47,7 +46,7 @@ export function produceBasicStyle(rules: StypRules, format: StypFormat): Supply 
       production: {
         sheet: StypWriter.Sheet;
         writer: StypWriter;
-        selector: StypSelector.Normalized;
+        selector: DoqryPicker;
       },
   ): StyleProducer {
 
@@ -69,7 +68,7 @@ export function produceBasicStyle(rules: StypRules, format: StypFormat): Supply 
         return production.writer;
       }
 
-      get selector(): StypSelector.Normalized {
+      get selector(): DoqryPicker {
         return production.selector;
       }
 
@@ -96,7 +95,7 @@ export function produceBasicStyle(rules: StypRules, format: StypFormat): Supply 
         }
       }
 
-      addStyle(_selector: StypSelector.Normalized = production.selector): StypWriter.Style {
+      addStyle(_selector: DoqryPicker = production.selector): StypWriter.Style {
 
         const { writer } = production;
 
@@ -112,8 +111,8 @@ export function produceBasicStyle(rules: StypRules, format: StypFormat): Supply 
     return new StyleProducer$();
   }
 
-  function selectorText(selector: StypSelector.Normalized): string {
-    return stypSelectorText(selector, selectorFormat);
+  function selectorText(selector: DoqryPicker): string {
+    return doqryText(selector, selectorFormat);
   }
 
   function renderRules(rulesToRender: Iterable<StypRule>): Supply {
@@ -186,17 +185,17 @@ export function produceBasicStyle(rules: StypRules, format: StypFormat): Supply 
     }
   }
 
-  function ruleSelector(rule: StypRule): StypSelector.Normalized {
+  function ruleSelector(rule: StypRule): DoqryPicker {
 
     const selector = rule.selector;
 
     if (!selector.length) {
       // Use configured root selector
-      return stypSelector(rootSelector);
+      return doqryPicker(rootSelector);
     }
-    if (isCombinator(selector[0])) {
+    if (isDoqryCombinator(selector[0])) {
       // First combinator is relative to root selector
-      return [...stypSelector(rootSelector), ...selector];
+      return [...doqryPicker(rootSelector), ...selector];
     }
 
     return selector;

@@ -1,6 +1,6 @@
+import { DoqrySelector } from '@frontmeans/doqry';
 import { NamespaceAliaser } from '@frontmeans/namespace-aliaser';
 import { RenderScheduler } from '@frontmeans/render-scheduler';
-import { StypSelector } from '../selector';
 import { StypRenderer } from './renderer';
 import { StyleProducer } from './style-producer';
 import { StypWriter } from './writer';
@@ -19,7 +19,7 @@ export interface StypFormatConfig {
    *
    * For custom elements a `:host` selector would be more appropriate.
    */
-  readonly rootSelector?: StypSelector;
+  readonly rootSelector?: DoqrySelector;
 
   /**
    * DOM rendering operations scheduler.

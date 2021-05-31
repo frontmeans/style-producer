@@ -1,8 +1,8 @@
+import { DoqrySelector } from '@frontmeans/doqry';
 import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { afterSupplied, trackValue } from '@proc7ts/fun-events';
 import { valueProvider } from '@proc7ts/primitives';
 import { Mock } from 'jest-mock';
-import { StypSelector } from '../selector';
 import { StypAnglePt, StypLength, StypMapper } from '../value';
 import { stypRoot } from './root';
 import { StypRule } from './rule';
@@ -16,7 +16,7 @@ describe('RefStypRule', () => {
   }
 
   let root: StypRule;
-  let selector: StypSelector;
+  let selector: DoqrySelector;
   let ref: StypRuleRef<RuleProperties>;
 
   beforeEach(() => {

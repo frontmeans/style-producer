@@ -1,6 +1,6 @@
+import { DoqryPicker } from '@frontmeans/doqry';
 import { NamespaceAliaser, NamespaceDef, newNamespaceAliaser } from '@frontmeans/namespace-aliaser';
 import { beforeEach, describe, expect, it, jest } from '@jest/globals';
-import { StypSelector } from '../../selector';
 import { StypURL } from '../../value';
 import { StypRenderer } from '../renderer';
 import { StyleProducer } from '../style-producer';
@@ -11,7 +11,7 @@ describe('stypRenderXmlNs', () => {
   let sheet: CSSStyleSheet;
   let producer: StyleProducer;
   let nsAlias: NamespaceAliaser;
-  let selector: StypSelector.Normalized;
+  let selector: DoqryPicker;
 
   beforeEach(() => {
     sheet = {
