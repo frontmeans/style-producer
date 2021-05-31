@@ -1,6 +1,6 @@
 {
   "name": "@frontmeans/style-producer",
-  "version": "7.0.0-dev.0",
+  "version": "7.0.0",
   "description": "Produces and dynamically updates stylesheets",
   "keywords": [
     "css-in-js",
