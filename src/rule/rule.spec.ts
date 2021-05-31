@@ -1,10 +1,10 @@
+import { DoqryPicker, doqryPicker, DoqrySelector } from '@frontmeans/doqry';
 import { NamespaceDef } from '@frontmeans/namespace-aliaser';
 import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { AfterEvent, afterSupplied, afterThe, onSupplied, trackValue, ValueTracker } from '@proc7ts/fun-events';
 import { noop } from '@proc7ts/primitives';
 import { itsEmpty } from '@proc7ts/push-iterator';
 import { Mock } from 'jest-mock';
-import { StypSelector, stypSelector } from '../selector';
 import { StypProperties } from './properties';
 import { stypRoot } from './root';
 import { StypRule, StypRuleList } from './rule';
@@ -17,7 +17,7 @@ describe('StypRule', () => {
     root = stypRoot();
   });
 
-  let selector: StypSelector.Normalized;
+  let selector: DoqryPicker;
   let rule: StypRule;
   let mockSpec: Mock<AfterEvent<[StypProperties]>, [StypRule]>;
 
@@ -228,7 +228,7 @@ describe('StypRule', () => {
       });
       it('returns target nested rule', () => {
 
-        const nestedSelector: StypSelector = { c: 'nested' };
+        const nestedSelector: DoqrySelector = { c: 'nested' };
         const nested = rule.rules.add(nestedSelector);
 
         expect(rule.rules.get(nestedSelector)).toBe(nested);
@@ -238,7 +238,7 @@ describe('StypRule', () => {
     describe('add', () => {
       it('adds nested rule with combinator', () => {
 
-        const subSelector = stypSelector(['>', { c: 'nested' }]);
+        const subSelector = doqryPicker(['>', { c: 'nested' }]);
         const nested = rule.rules.add(subSelector);
 
         expect(ruleSelectors(rule.rules.nested)).toContain(nested.selector);
@@ -276,7 +276,7 @@ describe('StypRule', () => {
         rule.rules.onUpdate(updateReceiver);
         root.rules.onUpdate(rootUpdateReceiver);
 
-        const subSelector = stypSelector([{ c: 'nested' }, '>', { c: 'nested-deeper' }]);
+        const subSelector = doqryPicker([{ c: 'nested' }, '>', { c: 'nested-deeper' }]);
         const nested = rule.rules.add(subSelector);
 
         expect(updateReceiver).toHaveBeenCalled();
@@ -298,7 +298,7 @@ describe('StypRule', () => {
         rule.rules.nested.onUpdate(updateReceiver);
         root.rules.nested.onUpdate(rootUpdateReceiver);
 
-        const subSelector = stypSelector([{ c: 'nested' }, '>', { c: 'nested-deeper' }]);
+        const subSelector = doqryPicker([{ c: 'nested' }, '>', { c: 'nested-deeper' }]);
 
         rule.rules.add(subSelector);
 
@@ -320,7 +320,7 @@ describe('StypRule', () => {
         root.rules.read(rootListReceiver);
         rootListReceiver.mockClear();
 
-        const subSelector = stypSelector([{ c: 'nested' }, '>', { c: 'nested-deeper' }]);
+        const subSelector = doqryPicker([{ c: 'nested' }, '>', { c: 'nested-deeper' }]);
         const nested = rule.rules.add(subSelector);
 
         expect(listReceiver).toHaveBeenCalledWith(rule.rules);
@@ -337,7 +337,7 @@ describe('StypRule', () => {
         root.rules.nested.read(rootListReceiver);
         rootListReceiver.mockClear();
 
-        const subSelector = stypSelector([{ c: 'nested' }, '>', { c: 'nested-deeper' }]);
+        const subSelector = doqryPicker([{ c: 'nested' }, '>', { c: 'nested-deeper' }]);
 
         rule.rules.add(subSelector);
 
@@ -464,13 +464,13 @@ describe('StypRule', () => {
     describe('watch', () => {
       it('receives empty properties for absent rule', async () => {
 
-        const sel: StypSelector = { c: 'watched' };
+        const sel: DoqrySelector = { c: 'watched' };
 
         expect(await rule.rules.watch(sel)).toEqual({});
       });
       it('receives existing rule properties', async () => {
 
-        const sel: StypSelector = { c: 'watched' };
+        const sel: DoqrySelector = { c: 'watched' };
 
         rule.rules.add(sel, { $name: 'watched' });
 
@@ -478,7 +478,7 @@ describe('StypRule', () => {
       });
       it('receives added rule properties', async () => {
 
-        const sel: StypSelector = { c: 'watched' };
+        const sel: DoqrySelector = { c: 'watched' };
         const watch = rule.rules.watch(sel);
 
         rule.rules.add(sel, { $name: 'watched' });
@@ -487,7 +487,7 @@ describe('StypRule', () => {
       });
       it('handles rule removal', async () => {
 
-        const sel: StypSelector = { c: 'watched' };
+        const sel: DoqrySelector = { c: 'watched' };
         const watched = rule.rules.add(sel, { $name: 'watched' });
         const watch = rule.rules.watch(sel);
         const receiver = jest.fn();
@@ -500,7 +500,7 @@ describe('StypRule', () => {
       });
       it('can be tracked when supply is cut off', async () => {
 
-        const sel: StypSelector = { c: 'watched' };
+        const sel: DoqrySelector = { c: 'watched' };
 
         rule.rules.add(sel, { $name: 'watched' });
 
@@ -518,11 +518,11 @@ describe('StypRule', () => {
 
   describe('remove', () => {
 
-    let subSelector: StypSelector.Normalized;
+    let subSelector: DoqryPicker;
     let nested: StypRule;
 
     beforeEach(() => {
-      subSelector = stypSelector([{ c: 'nested' }, '>', { c: 'nested-deeper' }]);
+      subSelector = doqryPicker([{ c: 'nested' }, '>', { c: 'nested-deeper' }]);
       nested = rule.rules.add(subSelector);
     });
 
@@ -637,7 +637,7 @@ describe('empty rule', () => {
     root = stypRoot();
   });
 
-  let selector: StypSelector.Normalized;
+  let selector: DoqryPicker;
   let rule: StypRule;
 
   beforeEach(() => {
@@ -663,7 +663,7 @@ describe('empty rule', () => {
 
   describe('rule', () => {
 
-    let subSelector: StypSelector.Normalized;
+    let subSelector: DoqryPicker;
     let subNested: StypRule;
 
     beforeEach(() => {
@@ -686,6 +686,6 @@ describe('empty rule', () => {
   });
 });
 
-function ruleSelectors(rules: Iterable<StypRule>): StypSelector.Normalized[] {
+function ruleSelectors(rules: Iterable<StypRule>): DoqryPicker[] {
   return [...rules].map(r => r.selector);
 }

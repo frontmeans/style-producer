@@ -1,3 +1,4 @@
+import { DoqryPicker, doqryPicker, DoqrySelector } from '@frontmeans/doqry';
 import {
   AfterEvent,
   afterEventBy,
@@ -22,26 +23,26 @@ import {
   PushIterator,
   PushIterator__symbol,
 } from '@proc7ts/push-iterator';
-import { StypQuery, StypRuleKey, stypSelector, StypSelector } from '../selector';
-import { stypRuleKeyText } from '../selector/selector-text.impl';
-import { stypOuterSelector, stypRuleKeyAndTail } from '../selector/selector.impl';
+import { StypQuery, StypRuleKey } from '../query';
+import { stypOuterSelector, stypRuleKeyAndTail } from '../query/query.impl';
+import { stypRuleKeyText } from '../query/rule-key-text.impl';
 import { StypProperties } from './properties';
 import { mergeStypProperties, noStypPropertiesSpec, stypPropertiesBySpec } from './properties.impl';
 import { StypRule, StypRuleHierarchy, StypRuleList } from './rule';
 import { StypRules } from './rules';
-import { grabRules, Rules } from './rules.impl';
+import { StypRuleList$, StypRuleList$grab } from './rules.impl';
 
-class AllRules extends StypRuleHierarchy implements PushIterable<StypRule$> {
+class StypRule$AllRules extends StypRuleHierarchy implements PushIterable<StypRule$> {
 
   readonly self: StypRuleList;
-  readonly read: AfterEvent<[AllRules]>;
+  readonly read: AfterEvent<[StypRule$AllRules]>;
   private readonly _updates = new EventEmitter<[StypRule$[], StypRule$[]]>();
   private readonly _it: () => PushIterable<StypRule$>;
 
-  constructor(private readonly _root: StypRule$, readonly nested: NestedRules) {
+  constructor(private readonly _root: StypRule$, readonly nested: StypRule$NestedRules) {
     super();
-    this.self = selfRuleList(_root, this);
-    this._it = lazyValue(() => iterateAllRules(_root));
+    this.self = StypRuleList$self(_root, this);
+    this._it = lazyValue(() => StypRule$allRules(_root));
 
     const returnSelf = valueProvider(this);
 
@@ -61,18 +62,18 @@ class AllRules extends StypRuleHierarchy implements PushIterable<StypRule$> {
   }
 
   grab(query: StypQuery): StypRuleList {
-    return grabRules(this, query);
+    return StypRuleList$grab(this, query);
   }
 
-  add(selector: StypSelector, properties?: StypProperties.Spec): StypRule$ {
-    return extendRule(this._root, stypSelector(selector), properties, true);
+  add(selector: DoqrySelector, properties?: StypProperties.Spec): StypRule$ {
+    return StypRule$extend(this._root, doqryPicker(selector), properties, true);
   }
 
-  get(selector: StypSelector): StypRule$ | undefined {
-    return this._get(stypSelector(selector));
+  get(selector: DoqrySelector): StypRule$ | undefined {
+    return this._get(doqryPicker(selector));
   }
 
-  private _get(selector: StypSelector.Normalized): StypRule$ | undefined {
+  private _get(selector: DoqryPicker): StypRule$ | undefined {
 
     const [key, tail] = stypRuleKeyAndTail(selector);
 
@@ -89,9 +90,9 @@ class AllRules extends StypRuleHierarchy implements PushIterable<StypRule$> {
     return found.rules.get(tail);
   }
 
-  watch(selector: StypSelector): AfterEvent<[StypProperties]> {
+  watch(selector: DoqrySelector): AfterEvent<[StypProperties]> {
 
-    const request = stypSelector(selector);
+    const request = doqryPicker(selector);
 
     return afterEventBy<[StypProperties]>(receiver => {
 
@@ -129,7 +130,7 @@ class AllRules extends StypRuleHierarchy implements PushIterable<StypRule$> {
 
 }
 
-function selfRuleList(rule: StypRule$, all: AllRules): StypRuleList {
+function StypRuleList$self(rule: StypRule$, all: StypRule$AllRules): StypRuleList {
 
   const onUpdate = new EventEmitter<[StypRule$[], StypRule$[]]>();
   const rules = [rule];
@@ -153,29 +154,29 @@ function selfRuleList(rule: StypRule$, all: AllRules): StypRuleList {
 
   }
 
-  return new Rules(new Self());
+  return new StypRuleList$(new Self());
 }
 
-function iterateAllRules(rule: StypRule$): PushIterable<StypRule$> {
+function StypRule$allRules(rule: StypRule$): PushIterable<StypRule$> {
   return overElementsOf(
       overOne(rule),
       flatMapIt(
           rule.rules.nested,
-          nested => iterateAllRules(nested),
+          nested => StypRule$allRules(nested),
       ),
   );
 }
 
-class NestedRules extends StypRuleList {
+class StypRule$NestedRules extends StypRuleList {
 
-  readonly read: AfterEvent<[NestedRules]>;
-  readonly _all: AllRules;
+  readonly read: AfterEvent<[StypRule$NestedRules]>;
+  readonly _all: StypRule$AllRules;
   private readonly _updates = new EventEmitter<[StypRule$[], StypRule$[]]>();
   private readonly _byKey = new Map<string, StypRule$>();
 
   constructor(root: StypRule$) {
     super();
-    this._all = new AllRules(root, this);
+    this._all = new StypRule$AllRules(root, this);
 
     const returnSelf = valueProvider(this);
 
@@ -191,7 +192,7 @@ class NestedRules extends StypRuleList {
   }
 
   grab(query: StypQuery): StypRuleList {
-    return grabRules(this, query);
+    return StypRuleList$grab(this, query);
   }
 
   _rule(key: string): StypRule$ | undefined {
@@ -222,10 +223,10 @@ export class StypRule$ extends StypRule {
   readonly read: AfterEvent<[StypProperties]>;
   private readonly _root: StypRule$;
   private _outer?: StypRule$ | null;
-  private readonly _selector: StypSelector.Normalized;
+  private readonly _selector: DoqryPicker;
   private readonly _key: StypRuleKey;
   readonly _spec: ValueTracker<StypProperties.Builder>;
-  private readonly _nested: NestedRules;
+  private readonly _nested: StypRule$NestedRules;
 
   get root(): StypRule$ {
     return this._root;
@@ -241,7 +242,7 @@ export class StypRule$ extends StypRule {
     return this._outer = outerSelector && this.root.rules.get(outerSelector) || null;
   }
 
-  get selector(): StypSelector.Normalized {
+  get selector(): DoqryPicker {
     return this._selector;
   }
 
@@ -253,13 +254,13 @@ export class StypRule$ extends StypRule {
     return this._spec.it === noStypPropertiesSpec;
   }
 
-  get rules(): AllRules {
+  get rules(): StypRule$AllRules {
     return this._nested._all;
   }
 
   constructor(
       root: StypRule$ | undefined,
-      selector: StypSelector.Normalized,
+      selector: DoqryPicker,
       key: StypRuleKey,
       spec: StypProperties.Builder = noStypPropertiesSpec,
   ) {
@@ -269,7 +270,7 @@ export class StypRule$ extends StypRule {
     this._key = key;
     this._spec = trackValue(spec);
     this.read = this._spec.read.do(digAfter(builder => builder(this)));
-    this._nested = new NestedRules(this);
+    this._nested = new StypRule$NestedRules(this);
   }
 
   set(properties?: StypProperties.Spec): this {
@@ -284,9 +285,9 @@ export class StypRule$ extends StypRule {
 
 }
 
-function extendRule(
+function StypRule$extend(
     rule: StypRule$,
-    targetSelector: StypSelector.Normalized,
+    targetSelector: DoqryPicker,
     properties: StypProperties.Spec | undefined,
     sendUpdate: boolean,
 ): StypRule$ {
@@ -295,7 +296,7 @@ function extendRule(
 
   if (!tail) {
     // Target rule
-    rule._spec.it = extendSpec(rule, properties);
+    rule._spec.it = StypRule$extendSpec(rule, properties);
     return rule;
   }
 
@@ -303,18 +304,18 @@ function extendRule(
   const found = rule.rules.nested._rule(keyText);
 
   if (found) {
-    return extendRule(found, tail, properties, sendUpdate);
+    return StypRule$extend(found, tail, properties, sendUpdate);
   }
 
   const newNested = new StypRule$(rule.root, [...rule.selector, ...key], key);
-  const result = extendRule(newNested, tail, properties, false); // Send only a top-level update
+  const result = StypRule$extend(newNested, tail, properties, false); // Send only a top-level update
 
   rule.rules.nested._add(keyText, newNested, sendUpdate);
 
   return result;
 }
 
-function extendSpec(rule: StypRule$, properties: StypProperties.Spec | undefined): StypProperties.Builder {
+function StypRule$extendSpec(rule: StypRule$, properties: StypProperties.Spec | undefined): StypProperties.Builder {
 
   const oldSpec = rule._spec.it;
 

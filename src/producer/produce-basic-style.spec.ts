@@ -1,3 +1,4 @@
+import { doqryPicker } from '@frontmeans/doqry';
 import { NamespaceDef, newNamespaceAliaser } from '@frontmeans/namespace-aliaser';
 import {
   immediateRenderScheduler,
@@ -12,7 +13,6 @@ import { noop } from '@proc7ts/primitives';
 import { itsEmpty } from '@proc7ts/push-iterator';
 import { Mock, SpyInstance } from 'jest-mock';
 import { StypProperties, stypRoot, StypRule } from '../rule';
-import { stypSelector } from '../selector';
 import { cssStyle, cssStyles, removeStyleElements, stylesheets } from '../spec';
 import { StypLength } from '../value';
 import { stypObjectFormat } from './formats';
@@ -101,7 +101,7 @@ describe('produceBasicStyle', () => {
     });
     it('passes selector to next renderer', () => {
 
-      const selector = stypSelector('test');
+      const selector = doqryPicker('test');
       let properties: StypProperties = {};
       let producer: StyleProducer = null!;
 

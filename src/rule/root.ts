@@ -1,4 +1,4 @@
-import { StypSelector } from '../selector';
+import { DoqryPicker } from '@frontmeans/doqry';
 import { StypProperties } from './properties';
 import { stypPropertiesBySpec } from './properties.impl';
 import { StypRule } from './rule';
@@ -7,7 +7,7 @@ import { StypRule$ } from './rule.impl';
 /**
  * @internal
  */
-const rootSelector: StypSelector.Normalized = [];
+const rootSelector: DoqryPicker = [];
 
 /**
  * Constructs root CSS rule representing global CSS declarations.

@@ -1,6 +1,6 @@
+import { DoqryPicker } from '@frontmeans/doqry';
 import { AfterEvent, EventKeeper } from '@proc7ts/fun-events';
 import { StypProperties, StypRule } from '../rule';
-import { StypSelector } from '../selector';
 import { StyleProducer } from './style-producer';
 import { StypWriter } from './writer';
 
@@ -43,7 +43,7 @@ export namespace StypRenderer {
      *
      * When omitted the one from style producer is used.
      */
-    selector?: StypSelector.Normalized;
+    selector?: DoqryPicker;
 
   }
 

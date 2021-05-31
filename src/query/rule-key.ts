@@ -1,4 +1,4 @@
-import { StypSelector } from './selector';
+import { DoqryCombinator, DoqryPicker } from '@frontmeans/doqry';
 
 /**
  * A key of CSS rule.
@@ -19,7 +19,7 @@ export namespace StypRuleKey {
    * A key of nested CSS rule within its parent.
    */
   export type Nested =
-      | [StypSelector.NormalizedPart]
-      | [StypSelector.Combinator, StypSelector.NormalizedPart];
+      | [DoqryPicker.Part]
+      | [DoqryCombinator, DoqryPicker.Part];
 
 }

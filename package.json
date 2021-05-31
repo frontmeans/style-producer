@@ -1,6 +1,6 @@
 {
   "name": "@frontmeans/style-producer",
-  "version": "6.2.0",
+  "version": "7.0.0-dev.0",
   "description": "Produces and dynamically updates stylesheets",
   "keywords": [
     "css-in-js",
@@ -24,6 +24,7 @@
     "@proc7ts/fun-events": "^10.5.0"
   },
   "dependencies": {
+    "@frontmeans/doqry": "^1.0.0-dev.1",
     "@frontmeans/httongue": "^2.3.0",
     "@frontmeans/namespace-aliaser": "^2.5.0",
     "@frontmeans/render-scheduler": "^1.7.0",
