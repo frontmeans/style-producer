@@ -53,71 +53,9 @@ supply.off(); // Remove produced stylesheets
 Structured CSS Selectors
 ------------------------
 
-Style Producer is designed to never parse any CSS. Thus it operates with structured CSS selectors rather than trying
-to parse selectors text.
+Style Producer utilizes structured CSS selectors implemented by [Doqry].
 
-Structured CSS selector is one of:
-- raw CSS selector text,
-- CSS selector part, or
-- an array consisting of strings, parts, and their combinators.
-
-Raw CSS selector text is never interpreted and is used verbatim.
-
-CSS combinator is one of: `>`, `+`, or `~`.
-
-CSS selector part is a structure representing selectors like
-`element-name#id.class1.classN[attr1][attr2]:pseudo-class::pseudo-element`.
-Each selector part is represented by corresponding property.:
-- Element selector:
-  `{ e: 'element-name' }` for `element-name`.
-- Element selector in XML namespace:
-  `{ ns: 'ns-prefix', e: 'element-name' }` for `ns-prefix | element-name`.
-- Universal element selector:
-  `{ e: '*' }`, which is the same as `{}` for `*`.
-- Universal element selector in XML namespace:
-  `{ ns: 'ns-prefix', e: '*' }`, which is the same as `{ ns: 'ns-prefix' }` for `ns-prefix | *`.  
-- Element identifier:
-  `{ i: 'element-id' }` for `#element-id`.
-- Element class:
-  `{ c: 'class-name' }` for `.class-name`.
-- Multiple element classes:
-  `{ c: ['class-1', 'class-2'] }` for `.class-1.class-2`.
-- Attribute selector:
-  `{ u: ['disabled'] }` for `[disabled]`,
-  `{ u: ['lang', '|=', 'en'] }` for `[lang |= "en"]`.
-- Pseudo-element:
-  `{ e: 'li', u: ['::', 'after'] }` for `li::after`.
-- Pseudo-class:
-  `{ u: [':', 'host', { c: 'active' }] }` for `:host(.active)`,
-  `{ u: [':', 'is', [{ e: 'ul' }, '>', { e: 'li' }], [{ c: 'menu'}, { c: 'menu-item'}]] }`
-   for `:is(ul > li, .menu > .menu-item)`       
-- Additional selectors:
-  `{ e: 'a', s: '[href^=https://]:visited' }` for `a[href^=https://]:visited`.
-- Raw CSS selector:
-  `{ s: '.my-selector' }` for `.my-selector`.  
-
-Selector part may combine multiple properties. Parts may be combined too.
-E.g. `[{ e: 'ul', c: 'unstyled' }, '>', { e: 'li' }]` corresponds to `ul.unstyled > li` CSS selector.
-
-
-### Qualifiers
-
-CSS selector may include qualifiers. Qualifiers do not correspond to CSS selectors directly. Instead they are used
-internally to classify selectors. E.g. they are used to render [at-rule] selectors.
-
-Qualifiers are represented by `$` property of structured CSS selector part, tha may contain either one qualifier, or an
-array of qualifiers:
-`{ c: 'sr-only', $: '@media=screen' }`. 
-
-Each qualifier is a string in the following format:
-`<name>[=<value>]`, where `<name>` may be qualified and consist of multiple colon-separated parts like
-`block:visibility:hidden`.
-
-The presence of `q1:q2:q3=v` qualifier means the same as presence of `q1`, `q1:q2`, `q1:q2:q3`, and `q1:q2:q3=v`
-qualifiers.
-
-
-[at-rule]: https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule
+[Doqry]: https://www.npmjs.com/package/@frontmeans/doqry
 
 
 CSS Rules
@@ -303,6 +241,7 @@ so the latter take precedence.
 There is no dedicated `@media` properties in structured CSS selector. However, a `stypRenderAtRules` renderer recognizes
 selector qualifiers as [at-rules] and renders corresponding rules. So, CSS rule with selector like this:
 `{ c: 'screen-only', $: '@media=screen' }` would be rendered as
+
 ```css
 @media screen {
   .screen-only {
@@ -318,7 +257,6 @@ It is also possible to specify at-rule query as CSS property. For that the prope
 one. E.g. if CSS rule selector is `{ c: 'screen-only', $: '@media:sr' }` and CSS rule properties contain
 `{ '@media:sr': 'screen' }`, the rendered CSS would be the same as above. This technique makes it possible to
 dynamically update the at-rule queries.
-
 
 [at-rules]: https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule
 [@media]: https://developer.mozilla.org/en-US/docs/Web/CSS/@media
