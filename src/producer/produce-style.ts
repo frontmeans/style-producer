@@ -23,5 +23,3 @@ import { defaultStypRenderers } from './renderers/default-renderers.impl';
 export function produceStyle(rules: StypRules, format: StypFormat): Supply {
   return produceBasicStyle(rules, { ...format, renderer: defaultStypRenderers(format.renderer) });
 }
-
-
