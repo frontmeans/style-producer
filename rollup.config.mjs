@@ -1,11 +1,12 @@
 import nodeResolve from '@rollup/plugin-node-resolve';
 import { externalModules } from '@run-z/rollup-helpers';
+import { defineConfig } from 'rollup';
 import flatDts from 'rollup-plugin-flat-dts';
 import sourcemaps from 'rollup-plugin-sourcemaps';
 import ts from 'rollup-plugin-typescript2';
 import typescript from 'typescript';
 
-export default {
+export default defineConfig({
   input: {
     'style-producer': './src/index.ts',
   },
@@ -35,4 +36,4 @@ export default {
       }),
     ],
   },
-};
+});
