@@ -63,6 +63,8 @@
 				</a>
 				<p><a href="https://www.npmjs.com/package/@frontmeans/style-producer"><img src="https://img.shields.io/npm/v/@frontmeans/style-producer.svg?logo=npm" alt="NPM"></a>
 					<a href="https://github.com/frontmeans/style-producer/actions?query=workflow%3ABuild"><img src="https://github.com/frontmeans/style-producer/workflows/Build/badge.svg" alt="Build Status"></a>
+					<a href="https://www.codacy.com/gh/frontmeans/style-producer/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=frontmeans/style-producer&amp;utm_campaign=Badge_Grade"><img src="https://app.codacy.com/project/badge/Grade/34e46f8191ec486bb9d45dd64d539c86" alt="Code Quality"></a>
+					<a href="https://www.codacy.com/gh/frontmeans/style-producer/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=frontmeans/style-producer&amp;utm_campaign=Badge_Coverage"><img src="https://app.codacy.com/project/badge/Coverage/34e46f8191ec486bb9d45dd64d539c86" alt="Coverage"></a>
 					<a href="https://github.com/frontmeans/style-producer"><img src="https://img.shields.io/static/v1?logo=github&label=GitHub&message=project&color=informational" alt="GitHub Project"></a>
 				<a href="https://frontmeans.github.io/style-producer/"><img src="https://img.shields.io/static/v1?logo=typescript&label=API&message=docs&color=informational" alt="API Documentation"></a></p>
 				<p>Produces and dynamically updates stylesheets right in the browser.</p>
@@ -92,63 +94,7 @@
 				<a href="#structured-css-selectors" id="structured-css-selectors" style="color: inherit; text-decoration: none;">
 					<h2>Structured CSS Selectors</h2>
 				</a>
-				<p>Style Producer is designed to never parse any CSS. Thus it operates with structured CSS selectors rather than trying
-				to parse selectors text.</p>
-				<p>Structured CSS selector is one of:</p>
-				<ul>
-					<li>raw CSS selector text,</li>
-					<li>CSS selector part, or</li>
-					<li>an array consisting of strings, parts, and their combinators.</li>
-				</ul>
-				<p>Raw CSS selector text is never interpreted and is used verbatim.</p>
-				<p>CSS combinator is one of: <code>&gt;</code>, <code>+</code>, or <code>~</code>.</p>
-				<p>CSS selector part is a structure representing selectors like
-					<code>element-name#id.class1.classN[attr1][attr2]:pseudo-class::pseudo-element</code>.
-				Each selector part is represented by corresponding property.:</p>
-				<ul>
-					<li>Element selector:
-					<code>{ e: &#39;element-name&#39; }</code> for <code>element-name</code>.</li>
-					<li>Element selector in XML namespace:
-					<code>{ ns: &#39;ns-prefix&#39;, e: &#39;element-name&#39; }</code> for <code>ns-prefix | element-name</code>.</li>
-					<li>Universal element selector:
-					<code>{ e: &#39;*&#39; }</code>, which is the same as <code>{}</code> for <code>*</code>.</li>
-					<li>Universal element selector in XML namespace:
-					<code>{ ns: &#39;ns-prefix&#39;, e: &#39;*&#39; }</code>, which is the same as <code>{ ns: &#39;ns-prefix&#39; }</code> for <code>ns-prefix | *</code>.  </li>
-					<li>Element identifier:
-					<code>{ i: &#39;element-id&#39; }</code> for <code>#element-id</code>.</li>
-					<li>Element class:
-					<code>{ c: &#39;class-name&#39; }</code> for <code>.class-name</code>.</li>
-					<li>Multiple element classes:
-					<code>{ c: [&#39;class-1&#39;, &#39;class-2&#39;] }</code> for <code>.class-1.class-2</code>.</li>
-					<li>Attribute selector:
-						<code>{ u: [&#39;disabled&#39;] }</code> for <code>[disabled]</code>,
-					<code>{ u: [&#39;lang&#39;, &#39;|=&#39;, &#39;en&#39;] }</code> for <code>[lang |= &quot;en&quot;]</code>.</li>
-					<li>Pseudo-element:
-					<code>{ e: &#39;li&#39;, u: [&#39;::&#39;, &#39;after&#39;] }</code> for <code>li::after</code>.</li>
-					<li>Pseudo-class:
-						<code>{ u: [&#39;:&#39;, &#39;host&#39;, { c: &#39;active&#39; }] }</code> for <code>:host(.active)</code>,
-						<code>{ u: [&#39;:&#39;, &#39;is&#39;, [{ e: &#39;ul&#39; }, &#39;&gt;&#39;, { e: &#39;li&#39; }], [{ c: &#39;menu&#39;}, { c: &#39;menu-item&#39;}]] }</code>
-					for <code>:is(ul &gt; li, .menu &gt; .menu-item)</code>       </li>
-					<li>Additional selectors:
-					<code>{ e: &#39;a&#39;, s: &#39;[href^=https://]:visited&#39; }</code> for <code>a[href^=https://]:visited</code>.</li>
-					<li>Raw CSS selector:
-					<code>{ s: &#39;.my-selector&#39; }</code> for <code>.my-selector</code>.  </li>
-				</ul>
-				<p>Selector part may combine multiple properties. Parts may be combined too.
-				E.g. <code>[{ e: &#39;ul&#39;, c: &#39;unstyled&#39; }, &#39;&gt;&#39;, { e: &#39;li&#39; }]</code> corresponds to <code>ul.unstyled &gt; li</code> CSS selector.</p>
-				<a href="#qualifiers" id="qualifiers" style="color: inherit; text-decoration: none;">
-					<h3>Qualifiers</h3>
-				</a>
-				<p>CSS selector may include qualifiers. Qualifiers do not correspond to CSS selectors directly. Instead they are used
-				internally to classify selectors. E.g. they are used to render <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule">at-rule</a> selectors.</p>
-				<p>Qualifiers are represented by <code>$</code> property of structured CSS selector part, tha may contain either one qualifier, or an
-					array of qualifiers:
-				<code>{ c: &#39;sr-only&#39;, $: &#39;@media=screen&#39; }</code>. </p>
-				<p>Each qualifier is a string in the following format:
-					<code>&lt;name&gt;[=&lt;value&gt;]</code>, where <code>&lt;name&gt;</code> may be qualified and consist of multiple colon-separated parts like
-				<code>block:visibility:hidden</code>.</p>
-				<p>The presence of <code>q1:q2:q3=v</code> qualifier means the same as presence of <code>q1</code>, <code>q1:q2</code>, <code>q1:q2:q3</code>, and <code>q1:q2:q3=v</code>
-				qualifiers.</p>
+				<p>Style Producer utilizes structured CSS selectors implemented by <a href="https://www.npmjs.com/package/@frontmeans/doqry">Doqry</a>.</p>
 				<a href="#css-rules" id="css-rules" style="color: inherit; text-decoration: none;">
 					<h2>CSS Rules</h2>
 				</a>
@@ -404,9 +350,6 @@
 						<a href="modules/stypproperties.html">Styp<wbr>Properties</a>
 					</li>
 					<li class=" tsd-kind-namespace">
-						<a href="modules/styppureselector.html">Styp<wbr>Pure<wbr>Selector</a>
-					</li>
-					<li class=" tsd-kind-namespace">
 						<a href="modules/stypquery.html">Styp<wbr>Query</a>
 					</li>
 					<li class=" tsd-kind-namespace">
@@ -426,12 +369,6 @@
 					</li>
 					<li class=" tsd-kind-namespace">
 						<a href="modules/styprules.html">Styp<wbr>Rules</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/stypselector.html">Styp<wbr>Selector</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/stypsubselector.html">Styp<wbr>Sub<wbr>Selector</a>
 					</li>
 					<li class=" tsd-kind-namespace">
 						<a href="modules/styptextformatconfig.html">Styp<wbr>Text<wbr>Format<wbr>Config</a>
@@ -519,9 +456,6 @@
 						<a href="interfaces/styprules.html" class="tsd-kind-icon">Styp<wbr>Rules</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="interfaces/stypselectorformat.html" class="tsd-kind-icon">Styp<wbr>Selector<wbr>Format</a>
-					</li>
-					<li class=" tsd-kind-interface">
 						<a href="interfaces/stypsheettext.html" class="tsd-kind-icon">Styp<wbr>Sheet<wbr>Text</a>
 					</li>
 					<li class=" tsd-kind-interface">
@@ -570,9 +504,6 @@
 						<a href="modules.html#stypproperties" class="tsd-kind-icon">Styp<wbr>Properties</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
-						<a href="modules.html#styppureselector" class="tsd-kind-icon">Styp<wbr>Pure<wbr>Selector</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
 						<a href="modules.html#styprenderer" class="tsd-kind-icon">Styp<wbr>Renderer</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
@@ -580,12 +511,6 @@
 					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="modules.html#styprulekey" class="tsd-kind-icon">Styp<wbr>Rule<wbr>Key</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="modules.html#stypselector" class="tsd-kind-icon">Styp<wbr>Selector</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="modules.html#stypsubselector" class="tsd-kind-icon">Styp<wbr>Sub<wbr>Selector</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="modules.html#styptime" class="tsd-kind-icon">Styp<wbr>Time</a>
@@ -666,6 +591,9 @@
 						<a href="modules.html#stypquery" class="tsd-kind-icon">styp<wbr>Query</a>
 					</li>
 					<li class=" tsd-kind-function">
+						<a href="modules.html#stypquerymatch" class="tsd-kind-icon">styp<wbr>Query<wbr>Match</a>
+					</li>
+					<li class=" tsd-kind-function">
 						<a href="modules.html#styprenderproperties" class="tsd-kind-icon">styp<wbr>Render<wbr>Properties</a>
 					</li>
 					<li class=" tsd-kind-function">
@@ -676,18 +604,6 @@
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="modules.html#styprules" class="tsd-kind-icon">styp<wbr>Rules</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="modules.html#stypselector" class="tsd-kind-icon">styp<wbr>Selector</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="modules.html#stypselectormatches" class="tsd-kind-icon">styp<wbr>Selector<wbr>Matches</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="modules.html#stypselectortext" class="tsd-kind-icon">styp<wbr>Selector<wbr>Text</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="modules.html#stypselectorsequal" class="tsd-kind-icon">styp<wbr>Selectors<wbr>Equal</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
 						<a href="modules.html#stypsplitpriority" class="tsd-kind-icon">styp<wbr>Split<wbr>Priority</a>

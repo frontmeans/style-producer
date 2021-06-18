@@ -95,7 +95,7 @@
 					<div class="tsd-signature tsd-kind-icon">Mapping&lt;TResult, TResultKey&gt;<span class="tsd-signature-symbol">:</span> <a href="stypmapper.html#mappingfunction" class="tsd-signature-type" data-tsd-kind="Type alias">MappingFunction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TResultKey</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/stypmapper.mappingobject.html" class="tsd-signature-type" data-tsd-kind="Interface">MappingObject</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TResultKey</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">TResultKey</span><span class="tsd-signature-symbol">]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/5a88e6d/src/value/mapper.ts#L38">frontmeans/style-producer/src/value/mapper.ts:38</a></li>
+							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/cf2f5e3/src/value/mapper.ts#L38">frontmeans/style-producer/src/value/mapper.ts:38</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -116,17 +116,13 @@
 						<li>
 							<h4>TResult</h4>
 							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>A type of mapped properties. This is an object containing mapped properties.</p>
-								</div>
+								<p>A type of mapped properties. This is an object containing mapped properties.</p>
 							</div>
 						</li>
 						<li>
 							<h4>TResultKey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">TResult</span></h4>
 							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Type of mapped properties keys.</p>
-								</div>
+								<p>Type of mapped properties keys.</p>
 							</div>
 						</li>
 					</ul>
@@ -137,30 +133,21 @@
 					<div class="tsd-signature tsd-kind-icon">Mapping<wbr>Function&lt;TResult, TResultKey&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, source<span class="tsd-signature-symbol">: </span><a href="stypvalue.html" class="tsd-signature-type" data-tsd-kind="Namespace">StypValue</a>, mapped<span class="tsd-signature-symbol">: </span><a href="../interfaces/stypmapper.mapped.html" class="tsd-signature-type" data-tsd-kind="Interface">Mapped</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">&gt;</span>, key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResultKey</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">TResultKey</span><span class="tsd-signature-symbol">]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/5a88e6d/src/value/mapper.ts#L49">frontmeans/style-producer/src/value/mapper.ts:49</a></li>
+							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/cf2f5e3/src/value/mapper.ts#L49">frontmeans/style-producer/src/value/mapper.ts:49</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>CSS property mapping function.</p>
-						</div>
-					</div>
 					<h4 class="tsd-type-parameters-title">Type parameters</h4>
 					<ul class="tsd-type-parameters">
 						<li>
 							<h4>TResult</h4>
 							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>A type of mapped properties. This is a mapping result type.</p>
-								</div>
+								<p>A type of mapped properties. This is a mapping result type.</p>
 							</div>
 						</li>
 						<li>
 							<h4>TResultKey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">TResult</span></h4>
 							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Type of mapped properties keys.</p>
-								</div>
+								<p>Type of mapped properties keys.</p>
 							</div>
 						</li>
 					</ul>
@@ -173,6 +160,11 @@
 								</ul>
 								<ul class="tsd-descriptions">
 									<li class="tsd-description">
+										<div class="tsd-comment tsd-typography">
+											<div class="lead">
+												<p>CSS property mapping function.</p>
+											</div>
+										</div>
 										<h4 class="tsd-parameters-title">Parameters</h4>
 										<ul class="tsd-parameters">
 											<li>
@@ -211,7 +203,7 @@
 					<div class="tsd-signature tsd-kind-icon">Mappings&lt;TResult&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{</span><span class="tsd-signature-symbol">readonly </span><span class="tsd-signature-symbol">[ </span><span class="tsd-signature-type">key</span><span class="tsd-signature-symbol"> in </span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">?: </span><a href="stypmapper.html#mapping" class="tsd-signature-type" data-tsd-kind="Type alias">Mapping</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">key</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/5a88e6d/src/value/mapper.ts#L114">frontmeans/style-producer/src/value/mapper.ts:114</a></li>
+							<li>Defined in <a href="https://github.com/frontmeans/style-producer/blob/cf2f5e3/src/value/mapper.ts#L114">frontmeans/style-producer/src/value/mapper.ts:114</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -225,9 +217,7 @@
 						<li>
 							<h4>TResult</h4>
 							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>A type of mapped properties. This is a mapping result type.</p>
-								</div>
+								<p>A type of mapped properties. This is a mapping result type.</p>
 							</div>
 						</li>
 					</ul>
@@ -271,9 +261,6 @@
 						<a href="stypproperties.html">Styp<wbr>Properties</a>
 					</li>
 					<li class=" tsd-kind-namespace">
-						<a href="styppureselector.html">Styp<wbr>Pure<wbr>Selector</a>
-					</li>
-					<li class=" tsd-kind-namespace">
 						<a href="stypquery.html">Styp<wbr>Query</a>
 					</li>
 					<li class=" tsd-kind-namespace">
@@ -293,12 +280,6 @@
 					</li>
 					<li class=" tsd-kind-namespace">
 						<a href="styprules.html">Styp<wbr>Rules</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="stypselector.html">Styp<wbr>Selector</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="stypsubselector.html">Styp<wbr>Sub<wbr>Selector</a>
 					</li>
 					<li class=" tsd-kind-namespace">
 						<a href="styptextformatconfig.html">Styp<wbr>Text<wbr>Format<wbr>Config</a>
