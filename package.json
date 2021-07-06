@@ -30,7 +30,7 @@
     "@frontmeans/render-scheduler": "^1.7.0",
     "@proc7ts/primitives": "^3.0.2",
     "@proc7ts/push-iterator": "^2.6.0",
-    "@proc7ts/supply": "^1.1.0"
+    "@proc7ts/supply": "^1.2.0"
   },
   "devDependencies": {
     "@jest/globals": "^27.0.6",
