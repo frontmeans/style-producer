@@ -29,7 +29,7 @@
     "@frontmeans/namespace-aliaser": "^2.6.2",
     "@frontmeans/render-scheduler": "^1.8.1",
     "@proc7ts/primitives": "^3.0.2",
-    "@proc7ts/push-iterator": "^2.6.0",
+    "@proc7ts/push-iterator": "^3.0.0",
     "@proc7ts/supply": "^1.2.3"
   },
   "devDependencies": {
