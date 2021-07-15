@@ -24,7 +24,7 @@
     "@proc7ts/fun-events": "^10.5.0"
   },
   "dependencies": {
-    "@frontmeans/doqry": "^1.0.0",
+    "@frontmeans/doqry": "^1.0.1",
     "@frontmeans/httongue": "^2.3.0",
     "@frontmeans/namespace-aliaser": "^2.6.2",
     "@frontmeans/render-scheduler": "^1.8.1",
