@@ -15,7 +15,7 @@ export interface StypDomFormatConfig extends StypTextFormatConfig {
    *
    * `parent.ownerDocument` or `window.document` by default.
    */
-  readonly document?: Document;
+  readonly document?: Document | undefined;
 
   /**
    * Parent DOM node to add stylesheets to.
@@ -24,7 +24,7 @@ export interface StypDomFormatConfig extends StypTextFormatConfig {
    *
    * This node don't have to be attached to document.
    */
-  readonly parent?: Node;
+  readonly parent?: Node | undefined;
 
   /**
    * DOM rendering operations scheduler.
@@ -33,7 +33,7 @@ export interface StypDomFormatConfig extends StypTextFormatConfig {
    *
    * Uses `newRenderSchedule` for {@link parent} node by default.
    */
-  readonly scheduler?: RenderScheduler;
+  readonly scheduler?: RenderScheduler | undefined;
 
 }
 

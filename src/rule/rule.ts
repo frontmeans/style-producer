@@ -101,7 +101,7 @@ export abstract class StypRule implements EventKeeper<[StypProperties]> {
    *
    * @returns `this` (just removed) rule instance.
    */
-  abstract remove(reason?: any): this;
+  abstract remove(reason?: unknown): this;
 
 }
 

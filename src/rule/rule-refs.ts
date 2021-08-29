@@ -32,7 +32,7 @@ export class StypRuleRefs<TRefMap extends StypRuleRefs.Struct<TRefMap>> implemen
       root: StypRule,
   ): StypRuleRefs<TRefMap> {
 
-    const refs: { [K in keyof TRefMap]?: StypRuleRef<any> } = {};
+    const refs: { [K in keyof TRefMap]?: StypRuleRef<any> | undefined } = {};
 
     for (const key of Object.keys(referrers)) {
       refs[key as keyof TRefMap] = referrers[key](root);

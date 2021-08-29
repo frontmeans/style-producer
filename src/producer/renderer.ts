@@ -36,14 +36,14 @@ export namespace StypRenderer {
      *
      * When omitted the one from style producer is used.
      */
-    writer?: StypWriter;
+    writer?: StypWriter | undefined;
 
     /**
      * Normalized CSS selector of the rule to render.
      *
      * When omitted the one from style producer is used.
      */
-    selector?: DoqryPicker;
+    selector?: DoqryPicker | undefined;
 
   }
 
@@ -71,12 +71,12 @@ export namespace StypRenderer {
      * Equals to zero when not specified, which means it will be invoked right before the basic renderer that renders
      * CSS properties.
      */
-    readonly order?: number;
+    readonly order?: number | undefined;
 
     /**
      * A renderer or renderers this one requires.
      */
-    readonly needs?: StypRenderer | StypRenderer[];
+    readonly needs?: StypRenderer | StypRenderer[] | undefined;
 
     /**
      * Renders CSS stylesheet.
@@ -102,12 +102,12 @@ export namespace StypRenderer {
      * Equals to zero when not specified, which means it will be invoked right before the basic renderer that renders
      * CSS properties.
      */
-    readonly order?: number;
+    readonly order?: number | undefined;
 
     /**
      * A renderer or renderers this one requires.
      */
-    readonly needs?: StypRenderer | StypRenderer[];
+    readonly needs?: StypRenderer | readonly StypRenderer[] | undefined;
 
     /**
      * Creates CSS stylesheet renderer function.

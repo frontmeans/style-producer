@@ -14,7 +14,7 @@ export class StypRuleList$ extends StypRuleList {
   readonly onUpdate: OnEvent<[StypRule[], StypRule[]]>;
   private readonly _buildList: () => Iterable<StypRule>;
   // noinspection JSMismatchedCollectionQueryUpdate
-  private _ruleSet?: Set<StypRule>; // `undefined` updates are not tracked
+  private _ruleSet?: Set<StypRule> | undefined; // `undefined` updates are not tracked
 
   constructor(private readonly _list: StypRules, ruleMatches?: (rule: StypRule) => boolean) {
     super();

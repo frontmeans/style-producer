@@ -37,7 +37,7 @@ describe('StypMapper', () => {
   describe('unitless zero dimension kind mapping', () => {
 
     interface Result {
-      $value?: StypLength;
+      $value?: StypLength | undefined;
     }
 
     let mappings: StypMapper.Mappings<Result>;
@@ -73,7 +73,7 @@ describe('StypMapper', () => {
     it('retains compatible percent value', () => {
 
       interface ResultPt {
-        $value?: StypLengthPt;
+        $value?: StypLengthPt | undefined;
       }
 
       const initial = { $value: StypTimePt.of(10, '%') };
@@ -91,7 +91,7 @@ describe('StypMapper', () => {
   describe('unit zero dimension kind mapping', () => {
 
     interface Result {
-      $value?: StypFrequency;
+      $value?: StypFrequency | undefined;
     }
 
     let mappings: StypMapper.Mappings<Result>;
@@ -127,7 +127,7 @@ describe('StypMapper', () => {
     it('retains compatible percent value', () => {
 
       interface ResultPt {
-        $value?: StypFrequencyPt;
+        $value?: StypFrequencyPt | undefined;
       }
 
       const initial = { $value: StypTimePt.of(10, '%') };
@@ -174,7 +174,7 @@ describe('StypMapper', () => {
   describe('mapping function', () => {
 
     interface Result {
-      $value1?: StypLength;
+      $value1?: StypLength | undefined;
       $value2: StypLength;
     }
 

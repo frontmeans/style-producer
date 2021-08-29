@@ -12,7 +12,7 @@ describe('RefStypRule', () => {
 
   interface RuleProperties {
     $length: StypLength;
-    $angle?: StypAnglePt;
+    $angle?: StypAnglePt | undefined;
   }
 
   let root: StypRule;

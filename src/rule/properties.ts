@@ -53,7 +53,7 @@ export namespace StypProperties {
      *
      * A {@link stypRenderText} renderer is responsible for raw CSS text rendering.
      */
-    readonly $$css?: string;
+    readonly $$css?: string | undefined;
 
   }
 

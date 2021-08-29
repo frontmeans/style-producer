@@ -135,7 +135,7 @@ export namespace StypDimension {
      *
      * `undefined` if there is no such dimension kind. Refers itself if supports percents.
      */
-    readonly pt?: Kind<TUnit | '%'>;
+    readonly pt?: Kind<TUnit | '%'> | undefined;
 
     /**
      * A similar kind of dimensions supporting all units this one supports, except percents (`%`).
@@ -188,7 +188,7 @@ export namespace StypDimension {
      */
     export interface UnitlessZero<TUnit extends string> extends Kind<TUnit> {
 
-      readonly pt?: UnitlessZero<TUnit | '%'>;
+      readonly pt?: UnitlessZero<TUnit | '%'> | undefined;
 
       readonly noPt: UnitlessZero<Exclude<TUnit, '%'>>;
 
@@ -219,7 +219,7 @@ export namespace StypDimension {
      */
     export interface UnitZero<TUnit extends string> extends Kind<TUnit> {
 
-      readonly pt?: UnitZero<TUnit | '%'>;
+      readonly pt?: UnitZero<TUnit | '%'> | undefined;
 
       readonly noPt: UnitZero<Exclude<TUnit, '%'>>;
 

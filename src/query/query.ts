@@ -17,29 +17,29 @@ export interface StypQuery {
   /**
    * Element namespace.
    */
-  readonly ns?: string | NamespaceDef;
+  readonly ns?: string | NamespaceDef | undefined;
 
   /**
    * Element name.
    *
    * This is the same as `*` when absent.
    */
-  readonly e?: QualifiedName;
+  readonly e?: QualifiedName | undefined;
 
   /**
    * Element identifier.
    */
-  readonly i?: QualifiedName;
+  readonly i?: QualifiedName | undefined;
 
   /**
    * Element class name or names.
    */
-  readonly c?: QualifiedName | readonly QualifiedName[];
+  readonly c?: QualifiedName | readonly QualifiedName[] | undefined;
 
   /**
    * Qualifier or qualifiers.
    */
-  readonly $?: string | readonly string[];
+  readonly $?: string | readonly string[] | undefined;
 
 }
 
@@ -59,7 +59,7 @@ const StypQuery__symbol = (/*#__PURE__*/ Symbol('StypQuery'));
 
 interface StypQuery$Normalizable extends StypQuery {
 
-  [StypQuery__symbol]?: StypQuery & DoqryPicker.Part;
+  [StypQuery__symbol]?: (StypQuery & DoqryPicker.Part) | undefined;
 
 }
 

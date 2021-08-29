@@ -222,7 +222,7 @@ export class StypRule$ extends StypRule {
 
   readonly read: AfterEvent<[StypProperties]>;
   private readonly _root: StypRule$;
-  private _outer?: StypRule$ | null;
+  private _outer?: StypRule$ | null | undefined;
   private readonly _selector: DoqryPicker;
   private readonly _key: StypRuleKey;
   readonly _spec: ValueTracker<StypProperties.Builder>;

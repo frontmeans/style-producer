@@ -208,7 +208,7 @@ export namespace StypRGB {
     /**
      * Alpha value between `0` and `1`. `1` (full opacity) by default.
      */
-    a?: number;
+    a?: number | undefined;
   }
 
 }
@@ -366,7 +366,7 @@ export namespace StypHSL {
     /**
      * Alpha value between `0` and `1`. `1` (full opacity) by default.
      */
-    a?: number;
+    a?: number | undefined;
   }
 
 }

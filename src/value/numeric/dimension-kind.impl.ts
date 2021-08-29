@@ -61,8 +61,8 @@ export function unitZeroDimensionKind<TUnit extends string>(
       noPercent,
     }: {
       zeroUnit: TUnit;
-      withPercent?: () => StypDimension.Kind.UnitZero<TUnit | '%'>;
-      noPercent?: () => StypDimension.Kind.UnitZero<Exclude<TUnit, '%'>>;
+      withPercent?: ((this: void) => StypDimension.Kind.UnitZero<TUnit | '%'>) | undefined;
+      noPercent?: ((this: void) => StypDimension.Kind.UnitZero<Exclude<TUnit, '%'>>) | undefined;
     },
 ): StypDimension.Kind.UnitZero<TUnit> {
 

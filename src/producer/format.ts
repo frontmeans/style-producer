@@ -19,7 +19,7 @@ export interface StypFormatConfig {
    *
    * For custom elements a `:host` selector would be more appropriate.
    */
-  readonly rootSelector?: DoqrySelector;
+  readonly rootSelector?: DoqrySelector | undefined;
 
   /**
    * DOM rendering operations scheduler.
@@ -28,19 +28,19 @@ export interface StypFormatConfig {
    *
    * `newRenderSchedule` is used when omitted.
    */
-  readonly scheduler?: RenderScheduler;
+  readonly scheduler?: RenderScheduler | undefined;
 
   /**
    * Renderer or renderer chain to use.
    */
-  readonly renderer?: StypRenderer | readonly StypRenderer[];
+  readonly renderer?: StypRenderer | readonly StypRenderer[] | undefined;
 
   /**
    * Namespace aliaser to use.
    *
    * New instance will be created if not specified.
    */
-  readonly nsAlias?: NamespaceAliaser;
+  readonly nsAlias?: NamespaceAliaser | undefined;
 
 }
 

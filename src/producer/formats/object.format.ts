@@ -109,7 +109,7 @@ export interface StypObjectFormatConfig extends StypFormatConfig {
    *
    * This node has to be attached to document.
    */
-  readonly parent?: Node;
+  readonly parent?: Node | undefined;
 
   /**
    * DOM rendering operations scheduler.
@@ -118,7 +118,7 @@ export interface StypObjectFormatConfig extends StypFormatConfig {
    *
    * Uses `newRenderSchedule` for {@link parent} node by default.
    */
-  readonly scheduler?: RenderScheduler;
+  readonly scheduler?: RenderScheduler | undefined;
 
 }
 
@@ -137,7 +137,7 @@ export function stypObjectFormat(
     config: StypObjectFormatConfig = {},
 ): StypFormat {
 
-  const { parent = document.head }: { parent?: Node } = config;
+  const { parent = document.head }: { parent?: Node | undefined } = config;
   const doc = parent.ownerDocument!;
 
   return {

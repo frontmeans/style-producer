@@ -124,7 +124,7 @@ export namespace StypValue {
      * The value {@link StypPriority.Important} and above means the property is `!important`. Everything else means
      * normal priority.
      */
-    readonly priority?: number;
+    readonly priority?: number | undefined;
 
   }
 

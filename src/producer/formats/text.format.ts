@@ -42,7 +42,7 @@ export interface StypTextFormatConfig extends StypFormatConfig {
    *
    * Uses `immediateRenderScheduler` by default.
    */
-  readonly scheduler?: RenderScheduler;
+  readonly scheduler?: RenderScheduler | undefined;
 
   /**
    * How to pretty-print generated CSS text.
@@ -51,7 +51,7 @@ export interface StypTextFormatConfig extends StypFormatConfig {
    * - `true` (default value) for default pretty print,
    * - {@link StypTextFormatConfig.PrettyPrint detailed configuration object}.
    */
-  readonly pretty?: boolean | StypTextFormatConfig.PrettyPrint;
+  readonly pretty?: boolean | StypTextFormatConfig.PrettyPrint | undefined;
 
 }
 
@@ -70,7 +70,7 @@ export namespace StypTextFormatConfig {
      *
      * Two spaces by default.
      */
-    indent?: string;
+    indent?: string | undefined;
 
   }
 
@@ -96,7 +96,7 @@ export interface StypSheetText {
    * The textual representation of style sheet formatted accordingly to {@link StypTextFormatConfig options},
    * or `undefined` to inform that corresponding style sheet have been removed.
    */
-  readonly css?: string;
+  readonly css?: string | undefined;
 
 }
 
