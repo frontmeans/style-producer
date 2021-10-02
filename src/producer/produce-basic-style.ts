@@ -156,6 +156,7 @@ export function produceBasicStyle(rules: StypRules, format: StypFormat): Supply 
                 if (!sheet) {
                   sheet = format.addSheet(producer);
                 }
+
                 return sheet;
               },
               get writer(): StypWriter.Sheet {
@@ -177,6 +178,7 @@ export function produceBasicStyle(rules: StypRules, format: StypFormat): Supply 
 
         if (lastSheet) {
           sheet = undefined;
+
           return lastSheet.remove();
         }
         // Otherwise element is removed before anything rendered.

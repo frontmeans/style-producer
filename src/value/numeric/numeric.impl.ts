@@ -60,6 +60,7 @@ export class StypDimension<TUnit extends string>
     if (other === this) {
       return true;
     }
+
     return typeof other === 'object'
         && other.type === this.type
         && this.unit === other.unit
@@ -84,6 +85,7 @@ export class StypDimension<TUnit extends string>
     if (addendum.type === 'dimension' && this.unit === addendum.unit) {
       return stypDimension(this.val + addendum.val, this.unit, this);
     }
+
     return stypAddSub(this, '+', addendum);
   }
 
@@ -98,6 +100,7 @@ export class StypDimension<TUnit extends string>
     if (subtrahend.type === 'dimension' && this.unit === subtrahend.unit) {
       return stypDimension(this.val - subtrahend.val, this.unit, this);
     }
+
     return stypAddSub(this, '-', subtrahend);
   }
 
@@ -189,6 +192,7 @@ export abstract class StypCalcBase<
           && stypValuesEqual(this.right, other.right)
           && this.priority === other.priority;
     }
+
     return false;
   }
 
@@ -200,6 +204,7 @@ export abstract class StypCalcBase<
     if (typeof addendum === 'number') {
       addendum = stypDimension(addendum, unit as TUnit, this);
     }
+
     return stypAddSub(this as StypNumeric<TUnit>, '+', addendum);
   }
 
@@ -211,6 +216,7 @@ export abstract class StypCalcBase<
     if (typeof subtrahend === 'number') {
       subtrahend = stypDimension(subtrahend, unit as TUnit, this);
     }
+
     return stypAddSub(this as StypNumeric<TUnit>, '-', subtrahend);
   }
 

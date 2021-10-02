@@ -107,5 +107,6 @@ export function stypQuery(query: StypQuery$Normalizable): StypQuery.Normalized {
   if (query[StypQuery__symbol]) {
     return query as StypQuery.Normalized;
   }
+
   return new StypQuery$Normalized(doqryPickerPart(query));
 }

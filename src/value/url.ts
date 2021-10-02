@@ -44,9 +44,11 @@ export class StypURL extends StypValueStruct<StypURL> {
       if (source.type === 'url') {
         return source;
       }
+
       break;
     default:
     }
+
     return;
   }
 

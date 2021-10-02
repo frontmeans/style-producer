@@ -57,6 +57,7 @@ export class StypRuleList$ extends StypRuleList {
       // List changes are tracked.
       return this._ruleSet.values();
     }
+
     // List changes are not currently tracked.
     // Request the rules explicitly.
     return itsIterator(this._buildList());

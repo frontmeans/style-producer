@@ -275,11 +275,13 @@ export class StypRule$ extends StypRule {
 
   set(properties?: StypProperties.Spec): this {
     this._spec.it = properties ? r => stypPropertiesBySpec(r, properties) : noStypPropertiesSpec;
+
     return this;
   }
 
   remove(reason?: any): this {
     this.rules._remove(reason);
+
     return this;
   }
 
@@ -297,6 +299,7 @@ function StypRule$extend(
   if (!tail) {
     // Target rule
     rule._spec.it = StypRule$extendSpec(rule, properties);
+
     return rule;
   }
 

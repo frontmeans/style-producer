@@ -31,6 +31,7 @@ class Zero<TUnit extends string> extends StypNumericStruct<Zero<TUnit>, TUnit> i
     if (other === '0 !important') {
       return this.priority === StypPriority.Important;
     }
+
     return false;
   }
 
@@ -42,6 +43,7 @@ class Zero<TUnit extends string> extends StypNumericStruct<Zero<TUnit>, TUnit> i
     if (typeof addendum === 'number') {
       addendum = stypDimension(addendum, unit as TUnit, this);
     }
+
     return addendum.prioritize(this.priority);
   }
 
@@ -53,6 +55,7 @@ class Zero<TUnit extends string> extends StypNumericStruct<Zero<TUnit>, TUnit> i
     if (typeof subtrahend === 'number') {
       subtrahend = stypDimension(subtrahend, unit as TUnit, this);
     }
+
     return subtrahend.negate().prioritize(this.priority);
   }
 
@@ -101,6 +104,7 @@ class ZeroByPriority<TUnit extends string> {
     case StypPriority.Usual: return this.usual;
     case StypPriority.Important: return this.important;
     }
+
     return new Zero(this, { dim: this.dim, priority });
   }
 

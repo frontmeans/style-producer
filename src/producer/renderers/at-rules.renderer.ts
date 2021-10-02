@@ -36,6 +36,7 @@ class AtRulesRenderer implements StypRenderer.Spec {
 
     if (!writer.isGroup) {
       producer.render(properties);
+
       return;
     }
 
@@ -44,6 +45,7 @@ class AtRulesRenderer implements StypRenderer.Spec {
 
     if (!extracted) {
       producer.render(properties);
+
       return;
     }
 
@@ -57,6 +59,7 @@ class AtRulesRenderer implements StypRenderer.Spec {
         writer = sheet = sheet.addGroup(name, params);
       } else {
         writer = sheet.addStyle(name);
+
         break;
       }
     }
@@ -143,6 +146,7 @@ function onlyAtProperties(properties: StypProperties): StypProperties {
       ),
       (result: StypProperties.Mutable, [key, value]: ObjectEntry<StypProperties, string>) => {
         result[key] = value;
+
         return result;
       },
       {},

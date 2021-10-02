@@ -175,6 +175,7 @@ describe('stypPropertiesBySpec', () => {
 
 function trackSpec(spec: AfterEvent<[StypProperties]>): AfterEvent<[StypProperties]> {
   spec(noop); // Need this to keep updating properties
+
   return spec;
 }
 

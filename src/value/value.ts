@@ -152,5 +152,6 @@ export function stypValuesEqual(first: StypValue, second: StypValue): boolean {
   if (typeof second === 'object') {
     return second.is(first);
   }
+
   return false;
 }

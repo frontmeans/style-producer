@@ -22,6 +22,7 @@ export function stypRuleKeyAndTail(
 
     if (isDoqryCombinator(part)) {
       combinator = part;
+
       continue;
     }
 
@@ -54,6 +55,7 @@ export function stypOuterSelector(
     case '+':
     case '~':
       --i;
+
       continue;
     default:
       return selector.slice(0, i + 1);

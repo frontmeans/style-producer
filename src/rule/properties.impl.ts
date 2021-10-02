@@ -142,6 +142,7 @@ function addValue(
     delete properties[key];
     properties[key] = value;
   }
+
   return properties;
 }
 

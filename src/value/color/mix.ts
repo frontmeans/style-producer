@@ -21,6 +21,7 @@ export function mixStypColors(color1: StypColor, color2: StypColor, weight: numb
   const aDiff = rgba1.a - rgba2.a;
   const w1 = (((w * aDiff === -1) ? w : (w + aDiff) / (1 + w * aDiff)) + 1) / 2.0;
   const w2 = 1 - w1;
+
   return new StypRGB(
       {
         r: rgba1.r * w1 + rgba2.r * w2,

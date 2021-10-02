@@ -41,6 +41,7 @@ export function unitlessZeroDimensionKind<TUnit extends string>(
       if (!isStypNumeric(source)) {
         return;
       }
+
       return (source as StypNumeric<TUnit>).toDim(this);
     },
 
@@ -88,6 +89,7 @@ export function unitZeroDimensionKind<TUnit extends string>(
       if (!isStypNumeric(source)) {
         return;
       }
+
       return (source as StypNumeric<TUnit>).toDim(this) as StypNumeric<TUnit, StypDimension<TUnit>>;
     },
 

@@ -1,5 +1,5 @@
-import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { immediateRenderScheduler, RenderScheduler } from '@frontmeans/render-scheduler';
+import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { noop } from '@proc7ts/primitives';
 import { itsFirst } from '@proc7ts/push-iterator';
 import { Supply } from '@proc7ts/supply';
@@ -33,6 +33,7 @@ describe('stypObjectFormat', () => {
       rafSpy = jest.spyOn(window, 'requestAnimationFrame');
       rafSpy.mockImplementation(callback => {
         operations.push(callback);
+
         return 0;
       });
     });
@@ -102,6 +103,7 @@ describe('stypObjectFormat', () => {
 
     CSSMediaRule.prototype.insertRule = function (this: any) {
       this.cssRules = [{ style: { setProperty } }];
+
       return 0;
     };
     root.rules.add({ c: 'screen-only', $: '@media=screen' }, { display: 'block' });

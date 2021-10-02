@@ -422,6 +422,7 @@ describe('StypRule', () => {
         supply.off();
 
         const nested4 = rule.rules.add({ c: ['nested', 'nested-4'] });
+
         expect(onUpdate).not.toHaveBeenCalled();
 
         expect(ruleSelectors(list)).toEqual([nested1.selector, nested2.selector, nested3.selector, nested4.selector]);

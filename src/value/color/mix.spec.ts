@@ -30,6 +30,7 @@ describe('mixStypColors', () => {
   });
   it('mixes colors with alpha', () => {
     const mix = mixStypColors(new StypRGB({ r: 0x36, g: 0xdd, b: 0x66 }), rgbGray(0.5), 0.5);
+
     expect(`${mix}`).toBe(`${rgbLighterGreen(0.75)}`);
   });
 });

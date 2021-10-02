@@ -231,6 +231,7 @@ describe('produceBasicStyle', () => {
       rafSpy = jest.spyOn(window, 'requestAnimationFrame');
       rafSpy.mockImplementation(callback => {
         operations.push(callback);
+
         return 0;
       });
     });

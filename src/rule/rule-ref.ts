@@ -108,11 +108,13 @@ class StypRuleRef$<T extends StypProperties<T>> extends StypRuleRef<T> {
 
   add(properties: EventKeeper<[Partial<StypProperties<T>>]> | Partial<StypProperties<T>>): this {
     this._root.rules.add(this._selector, properties);
+
     return this;
   }
 
   set(properties?: EventKeeper<[Partial<StypProperties<T>>]> | Partial<StypProperties<T>>): this {
     this._root.rules.add(this._selector).set(properties);
+
     return this;
   }
 

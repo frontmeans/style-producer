@@ -127,12 +127,15 @@ export class StypRGB extends StypColorStruct<StypRGB, StypRGB.Coords> implements
     switch (max) {
     case r:
       h = ((g - b) / d) + (g < b ? 6 : 0);
+
       break;
     case g:
       h = ((b - r) / d) + 2;
+
       break;
     default:
       h = ((r - g) / d) + 4;
+
       break;
     }
     h *= 60;
@@ -389,6 +392,7 @@ export const StypColor = {
     if (typeof source === 'object' && (source.type === 'rgb' || source.type === 'hsl')) {
       return source;
     }
+
     return;
   },
 
@@ -399,6 +403,7 @@ export const StypColor = {
  */
 function angleCoord(value: number): number {
   value = value % 360;
+
   return value < 0 ? 360 + value : value;
 }
 

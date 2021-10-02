@@ -92,6 +92,7 @@ export function stypDomFormat(
     addSheet(producer) {
       supply.needs(producer);
       this.addSheet = textFormat.addSheet.bind(textFormat);
+
       return this.addSheet(producer);
     },
   };
