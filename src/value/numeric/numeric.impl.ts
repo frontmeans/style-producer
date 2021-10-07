@@ -157,7 +157,7 @@ export abstract class StypCalcBase<
     TSelf extends StypCalcBase<TSelf, TOp, TRight, TUnit>,
     TOp extends '+' | '-' | '*' | '/',
     TRight extends number | StypNumeric<TUnit>,
-    TUnit extends string
+    TUnit extends string,
     > extends StypNumericStruct<TSelf, TUnit> {
 
   // noinspection JSMethodCanBeStatic
