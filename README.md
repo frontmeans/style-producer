@@ -1,5 +1,4 @@
-Style Producer
-==============
+# Style Producer
 
 [![NPM][npm-image]][npm-url]
 [![Build Status][build-status-img]][build-status-link]
@@ -11,15 +10,16 @@ Style Producer
 Produces and dynamically updates stylesheets right in the browser.
 
 Usage example:
+
 ```typescript
 import { produceStyle, stypObjectFormat, stypRoot } from '@frontmeans/style-producer';
 
 const root = stypRoot(); // Create root CSS rule
 const h1 = root.rules.add(
-    { e: 'h1' }, // Define CSS rule for `h1` element
-    {
-      fontSize: '24px',
-    },
+  { e: 'h1' }, // Define CSS rule for `h1` element
+  {
+    fontSize: '24px',
+  },
 );
 
 // ...add more CSS rules
@@ -32,9 +32,8 @@ h1.add({
   fontSize: '22px',
 });
 
-supply.off(); // Remove produced stylesheets  
+supply.off(); // Remove produced stylesheets
 ```
-
 
 [npm-image]: https://img.shields.io/npm/v/@frontmeans/style-producer.svg?logo=npm
 [npm-url]: https://www.npmjs.com/package/@frontmeans/style-producer
@@ -49,43 +48,42 @@ supply.off(); // Remove produced stylesheets
 [api-docs-image]: https://img.shields.io/static/v1?logo=typescript&label=API&message=docs&color=informational
 [api-docs-url]: https://frontmeans.github.io/style-producer/
 
-
-Structured CSS Selectors
-------------------------
+## Structured CSS Selectors
 
 Style Producer utilizes structured CSS selectors implemented by [Doqry].
 
-[Doqry]: https://www.npmjs.com/package/@frontmeans/doqry
+[doqry]: https://www.npmjs.com/package/@frontmeans/doqry
 
-
-CSS Rules
----------
+## CSS Rules
 
 CSS rules are represented by `StypRule` class and organized in hierarchy.
 
 The top of the hierarchy is root CSS rule. It may be constructed by `stypRoot()` function.
 
 Rules are added to the hierarchy using `StypRule.rules.add()` method like this:
+
 ```typescript
 const nested = rule.rules.add(selector, properties);
-``` 
+```
+
 where `selector` is structured CSS selector, and `properties` is CSS properties map.
 
 CSS rule may be removed from hierarchy with `StypRule.remove()` method.
 
 `StypRule.rules` property contains a dynamically updated CSS rule list including all rules in hierarchy starting from
-current one. To obtain only rules directly nested within current one use a `StypRule.rules.nested` property. 
+current one. To obtain only rules directly nested within current one use a `StypRule.rules.nested` property.
 
 It is possible to grab a subset of matching rules using a `StypRule.rules.grab()` method:
+
 ```typescript
 rule.rules.grab({ e: 'button' }); // Grab all CSS rules for the `button` element.
 ```
-
 
 ### CSS Properties
 
 CSS properties are represented by object with camel-cased property names and their corresponding string, scalar,
 or structured values:
+
 ```typescript
 const cssProperties = {
   position: 'fixed',
@@ -93,7 +91,7 @@ const cssProperties = {
   width: '100%',
   height: '120px',
   borderBottom: '1px solid black',
-}
+};
 ```
 
 CSS rule may be constructed with initial properties. Properties may be appended using `StypRule.add()` method,
@@ -103,10 +101,9 @@ CSS properties with names started with anything but ASCII letter are not rendere
 and used internally.
 
 CSS property string values ending with `!important` suffix are recognized as having `!important` priority. Note that the
-order of properties is meaningful. But important property values are always take precedence over non-important ones.   
+order of properties is meaningful. But important property values are always take precedence over non-important ones.
 
 CSS rule properties may be defined by `EventKeeper` instance that may update properties dynamically.
-
 
 ### Type-Safe CSS Properties
 
@@ -120,13 +117,13 @@ There are several implementations of structured values available:
   - `StypFrequency`/`StypFrequencyPt` - for [frequency]/[frequency-percentage] values,
   - `StypLength`/`StypLengthPt` - for [length]/[length-percentage] values,
   - `StypResolution` - for [resolution] values, and
-  - `StypTime`/`StypTimePt` - for [time]/[time-percentage] values.   
+  - `StypTime`/`StypTimePt` - for [time]/[time-percentage] values.
 - Color values supporting [color] manipulations (`StypColor`):
   - `StypRGB` - for [RGB colors], and
   - `StypHSL` for [HSL colors].
 - `StypURL` representing [url] values.
 
-Any custom implementation can be added.  
+Any custom implementation can be added.
 
 It is possible to declare CSS properties structure to work with them in type safe manner. For that declare properties
 interface and use `StypMapper` to map arbitrary CSS properties to that interface, or `StypRuleRef` to access CSS rule
@@ -145,12 +142,13 @@ interface MySettings {
 
 // Construct a mapping function for custom settings
 const MySettings = RefStypRule.by<MySettings>(
-    { $: '.my-settings' }, // Selector of CSS rule containing settings
-    { // Mappings for settings
-      $color: new StypRGB({ r: 0, g: 0, b: 0 }), // Text is black by default
-      $bgColor: new StypRGB({ r: 255, g: 255, b: 255 }), // Background is white by default
-      $gap: StypLengthPt.of(4, 'px'), // Gaps are 4 pixels by default 
-    },
+  { $: '.my-settings' }, // Selector of CSS rule containing settings
+  {
+    // Mappings for settings
+    $color: new StypRGB({ r: 0, g: 0, b: 0 }), // Text is black by default
+    $bgColor: new StypRGB({ r: 255, g: 255, b: 255 }), // Background is white by default
+    $gap: StypLengthPt.of(4, 'px'), // Gaps are 4 pixels by default
+  },
 );
 
 // CSS rules root
@@ -160,26 +158,27 @@ const root = stypRoot();
 const mySettingsRef = MySettings(root);
 
 // Define `<body>` style
-root.add(mySettingsRef.read.do(
+root.add(
+  mySettingsRef.read.do(
     mapAfter(({ $color, $bgColor, $gap }) => ({
       color: $color, // Apply default text color
       backgroundColor: $bgColor, // Apply default background color
       padding: $gap, // Padding is based on default gap
     })),
-));
- 
+  ),
+);
 
 // Define `<input>` element style based on default settings.
 root.rules.add(
-    { e: 'input' },
-    mySettingsRef.read.do(
-        mapAfter(({ $color, $bgColor, $gap }) => ({
-          color: $color,
-          backgroundColor: $bgColor.hsl.set(hsl => ({ l: hsl.l * 0.85 })), // Convert to HSL and darken input background
-          padding: `${$gap} ${$gap.mul(1.5)}`, // Padding is based on default gap
-          border: `1px solid ${$color}`,          
-        })),
-    ),
+  { e: 'input' },
+  mySettingsRef.read.do(
+    mapAfter(({ $color, $bgColor, $gap }) => ({
+      color: $color,
+      backgroundColor: $bgColor.hsl.set(hsl => ({ l: hsl.l * 0.85 })), // Convert to HSL and darken input background
+      padding: `${$gap} ${$gap.mul(1.5)}`, // Padding is based on default gap
+      border: `1px solid ${$color}`,
+    })),
+  ),
 );
 
 // Make text dark grey
@@ -197,16 +196,12 @@ mySettingsRef.set({
 [resolution]: https://developer.mozilla.org/en-US/docs/Web/CSS/resolution
 [time]: https://developer.mozilla.org/en-US/docs/Web/CSS/time
 [time-percentage]: https://developer.mozilla.org/en-US/docs/Web/CSS/time-percentage
-
 [color]: https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
-[RGB colors]: https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#RGB_colors
-[HSL colors]: https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#HSL_colors
+[rgb colors]: https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#RGB_colors
+[hsl colors]: https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#HSL_colors
+[url]: https://developer.mozilla.org/en-US/docs/Web/CSS/url
 
-[url]: https://developer.mozilla.org/en-US/docs/Web/CSS/url 
-
-
-Producing CSS
--------------
+## Producing CSS
 
 Stylesheets can be produced by `produceStyle()` function. It accepts a dynamically updated list of CSS rules
 (e.g. `StypRules.rules`) and production format.
@@ -218,15 +213,13 @@ is removed too.
 When CSS is no longer needed an `off()` method of the `EventSupply` instance returned from `produceStyle()` function
 may be called. That would remove all `<style>` elements.
 
-
 ### CSS Renderers
 
 Style production is performed by CSS renderers that may be specified as `renderer` production format option.
 
 By default, all renderers are enabled. This may be not what is needed. In that case a `produceBasicStyle()` function
 can be called instead. The latter enables CSS properties rendering only. The rest of the necessary renderers may be
-specified with the `renderer` production format option. This may reduce the final bundle size a bit. 
-
+specified with the `renderer` production format option. This may reduce the final bundle size a bit.
 
 ### Raw CSS Text
 
@@ -234,7 +227,6 @@ CSS rule properties may be specified as raw text. This is the same as specifying
 
 The `stypRenderText` renderer treats this text as plain CSS. This text is rendered before the rest of the properties,
 so the latter take precedence.
-
 
 ### [@media] and other [at-rules]
 
@@ -248,7 +240,7 @@ selector qualifiers as [at-rules] and renders corresponding rules. So, CSS rule 
     /* CSS properties */
   }
 }
-``` 
+```
 
 `stypRenderAtRules` renderer treats all qualifiers starting with `@` as at-rule qualifiers. So the qualifier name may
 be e.g. [@keyframes]. The value of qualifier (if present) is used as at-rule query.
@@ -262,49 +254,55 @@ dynamically update the at-rule queries.
 [@media]: https://developer.mozilla.org/en-US/docs/Web/CSS/@media
 [@keyframes]: https://developer.mozilla.org/en-US/docs/Web/CSS/@keyframes
 
-
 ### [@import] and [@namespace] rules
 
 These rules are rendered by `stypRenderGlobals` renderer. This renderer interprets properly named CSS properties and
-renders corresponding CSS rules. 
+renders corresponding CSS rules.
 
 **`@import:url`** property value is treated as media query and appended after stylesheet URL. I.e.
+
 ```json
 {
-     "@import:path/to/included.css": "screen"
+  "@import:path/to/included.css": "screen"
 }
 ```
+
 becomes
+
 ```css
 @import url(path/to/included.css) screen;
 ```
 
 **`@namespace`** property value is treated as default namespace URL. I.e.
+
 ```json
 {
-    "@namespace": "http://www.w3.org/1999/xhtml"
+  "@namespace": "http://www.w3.org/1999/xhtml"
 }
 ```
+
 becomes
+
 ```css
 @namespace url(http://www.w3.org/1999/xhtml);
 ```
 
 **`@namespace:prefix`** property value is treated as namespace URL with the given prefix. I.e
+
 ```json
 {
-    "@namespace:svg": "http://www.w3.org/2000/svg"
+  "@namespace:svg": "http://www.w3.org/2000/svg"
 }
 ```
+
 becomes
+
 ```css
 @namespace svg url(http://www.w3.org/2000/svg);
 ```
 
-
 [@import]: https://developer.mozilla.org/en-US/docs/Web/CSS/@import
 [@namespace]: https://developer.mozilla.org/en-US/docs/Web/CSS/@namespace
-
 
 ### Namespaces
 
@@ -315,24 +313,25 @@ Then the unique namespace alias will be applied to original name or identifier. 
 conflicts.
 
 Example:
+
 ```typescript
 import { NamespaceDef } from '@frontmeans/namespace-aliaser';
 import { stypRoot } from '@frontmeans/style-producer';
 
 // Declare custom namespace
 const customNs = new NamespaceDef(
-    'https://wesib.github.io/elements', // Unique namespace URL
-    'b',                                // Preferred namespace aliases, from most wanted to less wanted
-    'wesib',
+  'https://wesib.github.io/elements', // Unique namespace URL
+  'b', // Preferred namespace aliases, from most wanted to less wanted
+  'wesib',
 );
 
 const root = stypRoot(); // Root CSS rule
 // Declare styles for custom element
 const rule = root.rules.add(
-    { e: ['button', customNs] },
-    { 
-      background: 'gray',
-    },
+  { e: ['button', customNs] },
+  {
+    background: 'gray',
+  },
 );
 ```
 

@@ -11,16 +11,11 @@
     "forceConsistentCasingInFileNames": true,
     "importHelpers": true,
     "noEmitHelpers": true,
-    "lib": [
-      "DOM",
-      "ES2019"
-    ],
+    "lib": ["DOM", "ES2019"],
     "types": [],
     "outDir": "target/js",
     "sourceMap": true,
     "newLine": "LF"
   },
-  "include": [
-    "src/**/*"
-  ]
+  "include": ["src/**/*"]
 }
