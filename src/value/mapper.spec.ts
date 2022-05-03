@@ -179,8 +179,16 @@ describe('StypMapper', () => {
     }
 
     let mappings: StypMapper.Mappings<Result>;
-    let mockMapper1: Mock<StypLength | undefined, [StypValue, StypMapper.Mapped<Result>, keyof Result]>;
-    let mockMapper2: Mock<StypLength, [StypValue, StypMapper.Mapped<Result>, keyof Result]>;
+    let mockMapper1: Mock<(
+        source: StypValue,
+        mapped: StypMapper.Mapped<Result>,
+        key: keyof Result,
+    ) => StypLength | undefined>;
+    let mockMapper2: Mock<(
+        source: StypValue,
+        mapped: StypMapper.Mapped<Result>,
+        key: keyof Result,
+    ) => StypLength>;
 
     beforeEach(() => {
       mockMapper1 = jest.fn();

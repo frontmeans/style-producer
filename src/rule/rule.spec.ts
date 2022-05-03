@@ -19,7 +19,7 @@ describe('StypRule', () => {
 
   let selector: DoqryPicker;
   let rule: StypRule;
-  let mockSpec: Mock<AfterEvent<[StypProperties]>, [StypRule]>;
+  let mockSpec: Mock<(rule: StypRule) => AfterEvent<[StypProperties]>>;
 
   beforeEach(() => {
     selector = [{ e: 'test-element' }];
@@ -270,8 +270,8 @@ describe('StypRule', () => {
       });
       it('sends rule list update', () => {
 
-        const updateReceiver = jest.fn<void, [StypRule[], StypRule[]]>();
-        const rootUpdateReceiver = jest.fn<void, [StypRule[], StypRule[]]>();
+        const updateReceiver = jest.fn<(added: StypRule[], removed: StypRule[]) => void>();
+        const rootUpdateReceiver = jest.fn<(added: StypRule[], removed: StypRule[]) => void>();
 
         rule.rules.onUpdate(updateReceiver);
         root.rules.onUpdate(rootUpdateReceiver);
@@ -292,8 +292,8 @@ describe('StypRule', () => {
       });
       it('sends nested list update', () => {
 
-        const updateReceiver = jest.fn<void, [StypRule[], StypRule[]]>();
-        const rootUpdateReceiver = jest.fn<void, [StypRule[], StypRule[]]>();
+        const updateReceiver = jest.fn<(added: StypRule[], removed: StypRule[]) => void>();
+        const rootUpdateReceiver = jest.fn<(added: StypRule[], removed: StypRule[]) => void>();
 
         rule.rules.nested.onUpdate(updateReceiver);
         root.rules.nested.onUpdate(rootUpdateReceiver);
@@ -368,8 +368,8 @@ describe('StypRule', () => {
       it('tracks matching rule addition', () => {
 
         const list = rule.rules.grab({ c: 'nested' });
-        const onUpdate = jest.fn<void, [StypRule[], StypRule[]]>();
-        const receiver = jest.fn<void, [StypRuleList]>();
+        const onUpdate = jest.fn<(added: StypRule[], removed: StypRule[]) => void>();
+        const receiver = jest.fn<(rules: StypRuleList) => void>();
 
         list.onUpdate(onUpdate);
         list.read(receiver);
@@ -389,8 +389,8 @@ describe('StypRule', () => {
       it('tracks matching rule removal', () => {
 
         const list = rule.rules.grab({ c: 'nested' });
-        const onUpdate = jest.fn<void, [StypRule[], StypRule[]]>();
-        const receiver = jest.fn<void, [StypRuleList]>();
+        const onUpdate = jest.fn<(added: StypRule[], removed: StypRule[]) => void>();
+        const receiver = jest.fn<(rules: StypRuleList) => void>();
 
         list.onUpdate(onUpdate);
         list.read(receiver);
@@ -529,8 +529,8 @@ describe('StypRule', () => {
 
     it('sends rule list update', () => {
 
-      const updateReceiver = jest.fn<void, [StypRule[], StypRule[]]>();
-      const rootUpdateReceiver = jest.fn<void, [StypRule[], StypRule[]]>();
+      const updateReceiver = jest.fn<(added: StypRule[], removed: StypRule[]) => void>();
+      const rootUpdateReceiver = jest.fn<(added: StypRule[], removed: StypRule[]) => void>();
 
       onSupplied(rule.rules)(updateReceiver);
       onSupplied(root.rules)(rootUpdateReceiver);
@@ -550,8 +550,8 @@ describe('StypRule', () => {
     });
     it('sends nested list update', () => {
 
-      const updateReceiver = jest.fn<void, [StypRule[], StypRule[]]>();
-      const rootUpdateReceiver = jest.fn<void, [StypRule[], StypRule[]]>();
+      const updateReceiver = jest.fn<(added: StypRule[], removed: StypRule[]) => void>();
+      const rootUpdateReceiver = jest.fn<(added: StypRule[], removed: StypRule[]) => void>();
 
       onSupplied(rule.rules.nested)(updateReceiver);
       onSupplied(root.rules.nested)(rootUpdateReceiver);
@@ -568,8 +568,8 @@ describe('StypRule', () => {
     });
     it('sends self list update', () => {
 
-      const updateReceiver = jest.fn<void, [StypRule[], StypRule[]]>();
-      const rootUpdateReceiver = jest.fn<void, [StypRule[], StypRule[]]>();
+      const updateReceiver = jest.fn<(added: StypRule[], removed: StypRule[]) => void>();
+      const rootUpdateReceiver = jest.fn<(added: StypRule[], removed: StypRule[]) => void>();
 
       rule.rules.self.onUpdate(updateReceiver);
       onSupplied(root.rules.self)(rootUpdateReceiver);

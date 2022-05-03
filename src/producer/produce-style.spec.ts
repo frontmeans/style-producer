@@ -1,5 +1,5 @@
-import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { immediateRenderScheduler } from '@frontmeans/render-scheduler';
+import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { stypRoot, StypRule } from '../rule';
 import { cssStyle, removeStyleElements } from '../spec';
 import { stypObjectFormat } from './formats';
@@ -20,7 +20,7 @@ describe('produceStyle', () => {
 
   it('uses the given renderer', () => {
 
-    const mockRenderer = jest.fn<void, Parameters<StypRenderer.Function>>();
+    const mockRenderer = jest.fn<StypRenderer.Function>();
 
     produceStyle(
         root.rules,
@@ -33,8 +33,8 @@ describe('produceStyle', () => {
   });
   it('uses the given renderer factory', () => {
 
-    const mockRenderer = jest.fn<void, Parameters<StypRenderer.Function>>();
-    const mockCreate = jest.fn<StypRenderer.Function, [StypRule]>(() => mockRenderer);
+    const mockRenderer = jest.fn<StypRenderer.Function>();
+    const mockCreate = jest.fn<(rule: StypRule) => StypRenderer.Function>(() => mockRenderer);
 
     produceStyle(
         root.rules,
@@ -49,10 +49,10 @@ describe('produceStyle', () => {
   });
   it('uses the given renderers', () => {
 
-    const mockRender1 = jest.fn<void, Parameters<StypRenderer.Function>>(
+    const mockRender1 = jest.fn<StypRenderer.Function>(
         (producer, properties) => producer.render(properties),
     );
-    const mockRender2 = jest.fn<void, Parameters<StypRenderer.Function>>();
+    const mockRender2 = jest.fn<StypRenderer.Function>();
 
     produceStyle(
         root.rules,
@@ -67,13 +67,13 @@ describe('produceStyle', () => {
   it('orders renderers', () => {
 
     const calls: number[] = [];
-    const mockRender1 = jest.fn<void, Parameters<StypRenderer.Function>>(
+    const mockRender1 = jest.fn<StypRenderer.Function>(
         (producer, properties) => {
           calls.push(1);
           producer.render(properties);
         },
     );
-    const mockRender2 = jest.fn<void, Parameters<StypRenderer.Function>>(
+    const mockRender2 = jest.fn<StypRenderer.Function>(
         (producer, properties) => {
           calls.push(2);
           producer.render(properties);

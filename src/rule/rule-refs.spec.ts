@@ -40,7 +40,7 @@ describe('StypRuleRefs', () => {
   describe('read', () => {
     it('reads properties', () => {
 
-      const mockMapReceiver = jest.fn<void, [Props]>();
+      const mockMapReceiver = jest.fn<(props: Props) => void>();
 
       refs.read.do(onceAfter)(mockMapReceiver);
 

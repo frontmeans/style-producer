@@ -25,7 +25,7 @@ describe('stypObjectFormat', () => {
 
   describe('scheduler', () => {
 
-    let rafSpy: SpyInstance<number, [FrameRequestCallback]>;
+    let rafSpy: SpyInstance<Window['requestAnimationFrame']>;
     let operations: ((time: number) => void)[];
 
     beforeEach(() => {
@@ -46,7 +46,7 @@ describe('stypObjectFormat', () => {
 
   it('supplies `document.head` as `node` to scheduler', () => {
 
-    const scheduler = jest.fn<ReturnType<RenderScheduler>, Parameters<RenderScheduler>>(() => noop);
+    const scheduler = jest.fn<RenderScheduler>(() => noop);
 
     produceBasicStyle(
         root.rules,
@@ -57,7 +57,7 @@ describe('stypObjectFormat', () => {
   it('supplies the given `parent` as `node` to scheduler', () => {
 
     const parent = document.createElement('div');
-    const scheduler = jest.fn<ReturnType<RenderScheduler>, Parameters<RenderScheduler>>(() => noop);
+    const scheduler = jest.fn<RenderScheduler>(() => noop);
 
     produceBasicStyle(
         root.rules,

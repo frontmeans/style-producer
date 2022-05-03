@@ -219,7 +219,7 @@ describe('mergeStypProperties', () => {
 
   describe('merging', () => {
 
-    let mockReceiver: Mock<void, [StypProperties]>;
+    let mockReceiver: Mock<(properties: StypProperties) => void>;
     let supply: Supply;
 
     beforeEach(() => {

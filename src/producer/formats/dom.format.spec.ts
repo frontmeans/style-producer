@@ -25,7 +25,7 @@ describe('stypObjectFormat', () => {
 
   describe('scheduler', () => {
 
-    let rafSpy: SpyInstance<number, [FrameRequestCallback]>;
+    let rafSpy: SpyInstance<Window['requestAnimationFrame']>;
     let operations: ((time: number) => void)[];
 
     beforeEach(() => {

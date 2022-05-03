@@ -77,8 +77,8 @@ describe('produceBasicStyle', () => {
 
   describe('renderer', () => {
 
-    let mockRenderer1: Mock<void, Parameters<StypRenderer.Function>>;
-    let mockRenderer2: Mock<void, Parameters<StypRenderer.Function>>;
+    let mockRenderer1: Mock<StypRenderer.Function>;
+    let mockRenderer2: Mock<StypRenderer.Function>;
 
     beforeEach(() => {
       mockRenderer1 = jest.fn();
@@ -223,7 +223,7 @@ describe('produceBasicStyle', () => {
 
   describe('scheduler', () => {
 
-    let rafSpy: SpyInstance<number, [FrameRequestCallback]>;
+    let rafSpy: SpyInstance<Window['requestAnimationFrame']>;
     let operations: ((time: number) => void)[];
 
     beforeEach(() => {
@@ -424,10 +424,6 @@ describe('produceBasicStyle', () => {
   it('does not re-render too often', () => {
 
     const operations: RenderShot[] = [];
-    const mockScheduler = jest.fn<void, [RenderShot]>();
-
-    mockScheduler.mockImplementation(operation => operations.push(operation));
-
     const mockRenderer = jest.fn();
     const scheduler = newManualRenderScheduler();
     const schedule = scheduler();
@@ -437,10 +433,10 @@ describe('produceBasicStyle', () => {
     produceBasicStyle(
         rule.rules,
         stypObjectFormat({
-          scheduler: () => jest.fn(shot => {
+          scheduler: () => (shot: RenderShot): void => {
             operations.push(shot);
             schedule(shot);
-          }),
+          },
           renderer: mockRenderer,
         }),
     );
