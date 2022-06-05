@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { AfterEvent, afterSupplied, EventEmitter, onceAfter, trackValue, ValueTracker } from '@proc7ts/fun-events';
-import { noop, valuesProvider } from '@proc7ts/primitives';
+import { noop } from '@proc7ts/primitives';
 import { Supply } from '@proc7ts/supply';
 import { Mock } from 'jest-mock';
 import { StypLengthPt } from '../value';
@@ -160,7 +160,7 @@ describe('stypPropertiesBySpec', () => {
     const updated = { fontSize: '13px' };
     const properties = { ...initial };
     const emitter = new EventEmitter<[StypProperties]>();
-    const tracker = afterSupplied(emitter, valuesProvider(properties));
+    const tracker = afterSupplied<[StypProperties]>(emitter, () => [properties]);
     const spec = trackSpec(stypPropertiesBySpec(rule, () => tracker));
     const receiver = jest.fn();
 

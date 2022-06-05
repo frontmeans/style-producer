@@ -11,7 +11,7 @@ import {
   mapAfter,
   mapAfter_,
 } from '@proc7ts/fun-events';
-import { isPresent, valuesProvider } from '@proc7ts/primitives';
+import { isPresent } from '@proc7ts/primitives';
 import { filterIt, itsIterator, itsReduction, overEntries } from '@proc7ts/push-iterator';
 import { IMPORTANT_CSS_SUFFIX } from '../internal';
 import { StypValue, stypValuesEqual } from '../value';
@@ -65,7 +65,7 @@ export function stypPropertiesBySpec(rule: StypRule, spec?: StypProperties.Spec)
 }
 
 function propertiesKeeper(sender: EventSender<[string | StypProperties]>): AfterEvent<[string | StypProperties]> {
-  return afterSupplied(sender, valuesProvider({}));
+  return afterSupplied(sender, () => [{}]);
 }
 
 function preventDuplicates(properties: EventKeeper<[string | StypProperties]>): AfterEvent<[StypProperties]> {
