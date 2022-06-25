@@ -99,9 +99,9 @@ describe('stypObjectFormat', () => {
   it('renders at-rule', () => {
 
     // Media rules are not fully implemented in CSSOM
-    const setProperty = jest.fn();
+    const setProperty = jest.fn<(property: string, value: string | null, priority?: string) => void>();
 
-    CSSMediaRule.prototype.insertRule = function (this: any) {
+    CSSMediaRule.prototype.insertRule = function (this: { cssRules: { style: Partial<CSSStyleDeclaration> }[] }) {
       this.cssRules = [{ style: { setProperty } }];
 
       return 0;

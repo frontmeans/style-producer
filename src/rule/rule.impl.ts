@@ -117,7 +117,7 @@ class StypRule$AllRules extends StypRuleHierarchy implements PushIterable<StypRu
     }
   }
 
-  _remove(reason?: any): void {
+  _remove(reason?: unknown): void {
 
     const removed = itsElements(this);
 
@@ -279,7 +279,7 @@ export class StypRule$ extends StypRule {
     return this;
   }
 
-  remove(reason?: any): this {
+  remove(reason?: unknown): this {
     this.rules._remove(reason);
 
     return this;
