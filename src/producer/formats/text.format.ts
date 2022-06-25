@@ -213,7 +213,7 @@ class StypStyleTextWriter implements StypWriter.Style {
  */
 abstract class AbstractStypGroupTextWriter implements StypWriter.Group {
 
-  readonly _nested: any[] = [];
+  readonly _nested: unknown[] = [];
 
   protected constructor(readonly nf: StypTextFormatter) {
   }
