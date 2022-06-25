@@ -27,7 +27,7 @@ export namespace StypTime {
  */
 export const StypTime: StypDimension.Kind.UnitlessZero<StypTime.Unit> = (/*#__PURE__*/ unitlessZeroDimensionKind({
   pt() {
-    return StypTimePt;// eslint-disable-line @typescript-eslint/no-use-before-define
+    return StypTimePt;
   },
   noPt() {
     return StypTime;

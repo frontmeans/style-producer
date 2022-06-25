@@ -145,7 +145,6 @@ export class StypRGB extends StypColorStruct<StypRGB, StypRGB.Coords> implements
   }
 
   by(source: StypValue): StypColor {
-    // eslint-disable-next-line @typescript-eslint/no-use-before-define
     return StypColor.by(source) || this;
   }
 
@@ -304,7 +303,6 @@ export class StypHSL extends StypColorStruct<StypHSL, StypHSL.Coords> implements
   }
 
   by(source: StypValue): StypColor {
-    // eslint-disable-next-line @typescript-eslint/no-use-before-define
     return StypColor.by(source) || this;
   }
 

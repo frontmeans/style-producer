@@ -29,7 +29,7 @@ export namespace StypLength {
  */
 export const StypLength: StypDimension.Kind.UnitlessZero<StypLength.Unit> = (/*#__PURE__*/ unitlessZeroDimensionKind({
   pt() {
-    return StypLengthPt;// eslint-disable-line @typescript-eslint/no-use-before-define
+    return StypLengthPt;
   },
   noPt() {
     return StypLength;

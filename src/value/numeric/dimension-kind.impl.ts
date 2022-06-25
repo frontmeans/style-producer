@@ -20,7 +20,6 @@ export function unitlessZeroDimensionKind<TUnit extends string>(
   const dimension: StypDimension.Kind.UnitlessZero<TUnit> = {
 
     get zero(): StypZero<TUnit> {
-      // eslint-disable-next-line @typescript-eslint/no-use-before-define
       return zero;
     },
 
@@ -33,7 +32,6 @@ export function unitlessZeroDimensionKind<TUnit extends string>(
     },
 
     of(val: number, unit: TUnit): StypDimension<TUnit> | StypZero<TUnit> {
-      // eslint-disable-next-line @typescript-eslint/no-use-before-define
       return val ? new StypDimension_(val, unit, { dim: this }) : zero;
     },
 
@@ -78,7 +76,7 @@ export function unitZeroDimensionKind<TUnit extends string>(
     },
 
     get zero(): StypDimension<TUnit> {
-      return zero;// eslint-disable-line @typescript-eslint/no-use-before-define
+      return zero;
     },
 
     of(val: number, unit: TUnit): StypDimension<TUnit> {
