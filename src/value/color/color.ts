@@ -14,8 +14,10 @@ export type StypColor = StypRGB | StypHSL;
  *
  * @category CSS Value
  */
-export abstract class StypColorStruct<TSelf extends StypColorStruct<TSelf, TCoords>, TCoords>
-    extends StypValueStruct<TSelf> {
+export abstract class StypColorStruct<
+  TSelf extends StypColorStruct<TSelf, TCoords>,
+  TCoords,
+> extends StypValueStruct<TSelf> {
 
   /**
    * Color value type corresponding to color coordinates. Either `rgb` or `hsl`
@@ -107,11 +109,10 @@ export class StypRGB extends StypColorStruct<StypRGB, StypRGB.Coords> implements
    * This color in HSL coordinates.
    */
   get hsl(): StypHSL {
-
     const { a } = this;
-    const r = this.r * 100 / 255;
-    const g = this.g * 100 / 255;
-    const b = this.b * 100 / 255;
+    const r = (this.r * 100) / 255;
+    const g = (this.g * 100) / 255;
+    const b = (this.b * 100) / 255;
     const max = Math.max(r, g, b);
     const min = Math.min(r, g, b);
     const l = Math.round((max + min) / 2);
@@ -121,22 +122,22 @@ export class StypRGB extends StypColorStruct<StypRGB, StypRGB.Coords> implements
     }
 
     const d = max - min;
-    const s = Math.round(l > 50 ? d * 100 / (200 - max - min) : d * 100 / (max + min));
+    const s = Math.round(l > 50 ? (d * 100) / (200 - max - min) : (d * 100) / (max + min));
     let h: number;
 
     switch (max) {
-    case r:
-      h = ((g - b) / d) + (g < b ? 6 : 0);
+      case r:
+        h = (g - b) / d + (g < b ? 6 : 0);
 
-      break;
-    case g:
-      h = ((b - r) / d) + 2;
+        break;
+      case g:
+        h = (b - r) / d + 2;
 
-      break;
-    default:
-      h = ((r - g) / d) + 4;
+        break;
+      default:
+        h = (r - g) / d + 4;
 
-      break;
+        break;
     }
     h *= 60;
     h = Math.round(h);
@@ -149,20 +150,24 @@ export class StypRGB extends StypColorStruct<StypRGB, StypRGB.Coords> implements
   }
 
   is(other: StypValue): boolean {
-    return typeof other === 'object'
-        && other.type === this.type
-        && other.r === this.r
-        && other.g === this.g
-        && other.b === this.b
-        && other.a === this.a
-        && other.priority === this.priority;
+    return (
+      typeof other === 'object'
+      && other.type === this.type
+      && other.r === this.r
+      && other.g === this.g
+      && other.b === this.b
+      && other.a === this.a
+      && other.priority === this.priority
+    );
   }
 
   prioritize(priority: number): StypRGB {
     return this.priority === priority ? this : new StypRGB(this, { priority });
   }
 
-  set(coords: Partial<StypRGB.Coords> | ((this: void, color: this) => Partial<StypRGB.Coords>)): StypRGB {
+  set(
+    coords: Partial<StypRGB.Coords> | ((this: void, color: this) => Partial<StypRGB.Coords>),
+  ): StypRGB {
     if (typeof coords === 'function') {
       coords = coords(this);
     }
@@ -173,11 +178,9 @@ export class StypRGB extends StypColorStruct<StypRGB, StypRGB.Coords> implements
   }
 
   toString(): string {
-
     const rgb = `${this.r}, ${this.g}, ${this.b}`;
 
     return this.a === 1 ? `rgb(${rgb})` : `rgba(${rgb}, ${this.a})`;
-
   }
 
 }
@@ -186,12 +189,10 @@ export class StypRGB extends StypColorStruct<StypRGB, StypRGB.Coords> implements
  * @category CSS Value
  */
 export namespace StypRGB {
-
   /**
    * [RGB color](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#RGB_colors) coordinates.
    */
   export interface Coords {
-
     /**
      * Red color value between `0` and `255`.
      */
@@ -212,7 +213,6 @@ export namespace StypRGB {
      */
     a?: number | undefined;
   }
-
 }
 
 /**
@@ -266,30 +266,28 @@ export class StypHSL extends StypColorStruct<StypHSL, StypHSL.Coords> implements
    * This color in RGB coordinates.
    */
   get rgb(): StypRGB {
-
     const { a } = this;
     const s = this.s / 100;
     const l = this.l / 100;
 
     if (!s) {
-
       const c = l * 255;
 
       return new StypRGB({ r: c, g: c, b: c, a }, this);
     }
 
-    const q = l < 0.5 ? l * (1 + s) : (l + s) - (l * s);
-    const p = (2 * l) - q;
+    const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+    const p = 2 * l - q;
     const hueAsFraction = this.h / 360;
 
     return new StypRGB(
-        {
-          r: hueToRgb(p, q, hueAsFraction + (1.0 / 3.0)),
-          g: hueToRgb(p, q, hueAsFraction),
-          b: hueToRgb(p, q, hueAsFraction - (1.0 / 3.0)),
-          a,
-        },
-        this,
+      {
+        r: hueToRgb(p, q, hueAsFraction + 1.0 / 3.0),
+        g: hueToRgb(p, q, hueAsFraction),
+        b: hueToRgb(p, q, hueAsFraction - 1.0 / 3.0),
+        a,
+      },
+      this,
     );
   }
 
@@ -307,20 +305,24 @@ export class StypHSL extends StypColorStruct<StypHSL, StypHSL.Coords> implements
   }
 
   is(other: StypValue): boolean {
-    return typeof other === 'object'
-        && other.type === this.type
-        && other.h === this.h
-        && other.s === this.s
-        && other.l === this.l
-        && other.a === this.a
-        && other.priority === this.priority;
+    return (
+      typeof other === 'object'
+      && other.type === this.type
+      && other.h === this.h
+      && other.s === this.s
+      && other.l === this.l
+      && other.a === this.a
+      && other.priority === this.priority
+    );
   }
 
   prioritize(priority: number): StypHSL {
     return this.priority === priority ? this : new StypHSL(this, { priority });
   }
 
-  set(coords: Partial<StypHSL.Coords> | ((this: void, color: this) => Partial<StypHSL.Coords>)): StypHSL {
+  set(
+    coords: Partial<StypHSL.Coords> | ((this: void, color: this) => Partial<StypHSL.Coords>),
+  ): StypHSL {
     if (typeof coords === 'function') {
       coords = coords(this);
     }
@@ -331,7 +333,6 @@ export class StypHSL extends StypColorStruct<StypHSL, StypHSL.Coords> implements
   }
 
   toString(): string {
-
     const hsl = `${this.h}, ${this.s}%, ${this.l}%`;
 
     return this.a === 1 ? `hsl(${hsl})` : `hsla(${hsl}, ${this.a})`;
@@ -343,12 +344,10 @@ export class StypHSL extends StypColorStruct<StypHSL, StypHSL.Coords> implements
  * @category CSS Value
  */
 export namespace StypHSL {
-
   /**
    * [HSL color](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#HSL_colors) coordinates.
    */
   export interface Coords {
-
     /**
      * Hue angle value in degrees.
      */
@@ -369,14 +368,12 @@ export namespace StypHSL {
      */
     a?: number | undefined;
   }
-
 }
 
 /**
  * @category CSS Value
  */
 export const StypColor = {
-
   /**
    * Maps the given CSS property value to color. Defaults to `undefined` if mapping is not possible.
    *
@@ -393,7 +390,6 @@ export const StypColor = {
 
     return;
   },
-
 };
 
 /**
@@ -423,7 +419,6 @@ function coord(value: number, max: number): number {
  * @internal
  */
 function hueToRgb(p: number, q: number, t: number): number {
-
   let newT = t;
 
   if (newT < 0) {
@@ -435,11 +430,11 @@ function hueToRgb(p: number, q: number, t: number): number {
   let result;
 
   if (newT < 1.0 / 6.0) {
-    result = p + ((q - p) * (6 * newT));
+    result = p + (q - p) * (6 * newT);
   } else if (newT < 1.0 / 2.0) {
     result = q;
   } else if (newT < 2.0 / 3.0) {
-    result = p + (((q - p) * ((2.0 / 3.0) - newT)) * 6);
+    result = p + (q - p) * (2.0 / 3.0 - newT) * 6;
   } else {
     result = p;
   }

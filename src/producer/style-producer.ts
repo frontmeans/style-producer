@@ -15,7 +15,6 @@ import { StypWriter } from './writer';
  * @category Rendering
  */
 export interface StyleProducer extends SupplyPeer {
-
   /**
    * CSS rule to produce styles for.
    */
@@ -68,5 +67,4 @@ export interface StyleProducer extends SupplyPeer {
    * @returns Either style writer to appended empty CSS rule, or `writer`.
    */
   addStyle(selector?: DoqryPicker): StypWriter.Style;
-
 }

@@ -8,7 +8,6 @@ describe('stypRoot', () => {
 
   describe('root', () => {
     it('points to itself', () => {
-
       const root = stypRoot();
 
       expect(root.root).toBe(root);
@@ -35,14 +34,12 @@ describe('stypRoot', () => {
 
   describe('read', () => {
     it('sends initial properties', async () => {
-
       const initial = { fontSize: '12px' };
       const root = stypRoot(initial);
 
       expect(await root.read).toEqual(initial);
     });
     it('sends empty properties by default', async () => {
-
       const root = stypRoot();
 
       expect(await root.read).toEqual({});

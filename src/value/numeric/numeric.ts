@@ -10,10 +10,10 @@ import { StypZero } from './zero';
  * @typeParam TUnit - Allowed unit type.
  * @typeParam TZero - A type of zero value. {@link StypZero} by default.
  */
-export type StypNumeric<TUnit extends string, TZero extends StypZero<TUnit> | StypDimension<TUnit> = StypZero<TUnit>> =
-    | StypDimension<TUnit>
-    | StypCalc<TUnit>
-    | TZero;
+export type StypNumeric<
+  TUnit extends string,
+  TZero extends StypZero<TUnit> | StypDimension<TUnit> = StypZero<TUnit>,
+> = StypDimension<TUnit> | StypCalc<TUnit> | TZero;
 
 /**
  * Base implementation of structured numeric CSS property value.
@@ -22,8 +22,10 @@ export type StypNumeric<TUnit extends string, TZero extends StypZero<TUnit> | St
  * @typeParam TSelf - A type of itself.
  * @typeParam TUnit - Allowed unit type.
  */
-export abstract class StypNumericStruct<TSelf extends StypNumericStruct<TSelf, TUnit>, TUnit extends string>
-    extends StypValueStruct<TSelf> {
+export abstract class StypNumericStruct<
+  TSelf extends StypNumericStruct<TSelf, TUnit>,
+  TUnit extends string,
+> extends StypValueStruct<TSelf> {
 
   /**
    * A type of structured numeric CSS property value.
@@ -48,7 +50,9 @@ export abstract class StypNumericStruct<TSelf extends StypNumericStruct<TSelf, T
    * @returns Either a value in dimension compatible with `dim`, or `undefined` if this value's unit is not supported
    * by `dim`.
    */
-  abstract toDim<TDimUnit extends string>(dim: StypDimension.Kind<TDimUnit>): StypNumeric<TDimUnit> | undefined;
+  abstract toDim<TDimUnit extends string>(
+    dim: StypDimension.Kind<TDimUnit>,
+  ): StypNumeric<TDimUnit> | undefined;
 
   abstract add(addendum: StypNumeric<TUnit>): StypNumeric<TUnit>;
 
@@ -65,7 +69,7 @@ export abstract class StypNumericStruct<TSelf extends StypNumericStruct<TSelf, T
   abstract negate(): StypNumeric<TUnit>;
 
   by(source: StypValue): StypNumeric<TUnit> {
-    return this.dim.by(source) || this as StypNumeric<TUnit>;
+    return this.dim.by(source) || (this as StypNumeric<TUnit>);
   }
 
   /**
@@ -88,8 +92,8 @@ export abstract class StypNumericStruct<TSelf extends StypNumericStruct<TSelf, T
  * @typeParam TUnit - Allowed units type.
  */
 export interface StypDimension<TUnit extends string>
-    extends StypValueStruct<StypDimension<TUnit>>, StypNumericStruct<StypDimension<TUnit>, TUnit> {
-
+  extends StypValueStruct<StypDimension<TUnit>>,
+    StypNumericStruct<StypDimension<TUnit>, TUnit> {
   readonly type: 'dimension';
 
   readonly dim: StypDimension.Kind<TUnit>;
@@ -113,14 +117,12 @@ export interface StypDimension<TUnit extends string>
   sub(subtrahend: number, unit?: TUnit): StypNumeric<TUnit>;
 
   by(source: StypValue): StypNumeric<TUnit>;
-
 }
 
 /**
  * @category CSS Value
  */
 export namespace StypDimension {
-
   /**
    * A kind of dimensions. E.g. angle, length, percentage, etc.
    *
@@ -129,7 +131,6 @@ export namespace StypDimension {
    * @typeParam TUnit - Allowed units type.
    */
   export interface Kind<TUnit extends string> {
-
     /**
      * A similar kind of dimensions supporting all units this one supports and, in addition, supporting percents (`%`).
      *
@@ -176,18 +177,15 @@ export namespace StypDimension {
      * @returns Mapped property value or `undefined`.
      */
     by(source: StypValue): StypNumeric<TUnit, StypDimension<TUnit> | StypZero<TUnit>> | undefined;
-
   }
 
   export namespace Kind {
-
     /**
      * A kind of dimension with unit-less zero. E.g. angle or length.
      *
      * @typeParam TUnit - Allowed units type.
      */
     export interface UnitlessZero<TUnit extends string> extends Kind<TUnit> {
-
       readonly pt?: UnitlessZero<TUnit | '%'> | undefined;
 
       readonly noPt: UnitlessZero<Exclude<TUnit, '%'>>;
@@ -209,7 +207,6 @@ export namespace StypDimension {
       of(val: number, unit: TUnit): StypDimension<TUnit> | StypZero<TUnit>;
 
       by(source: StypValue): StypNumeric<TUnit> | undefined;
-
     }
 
     /**
@@ -218,7 +215,6 @@ export namespace StypDimension {
      * @typeParam TUnit - Allowed units type.
      */
     export interface UnitZero<TUnit extends string> extends Kind<TUnit> {
-
       readonly pt?: UnitZero<TUnit | '%'> | undefined;
 
       readonly noPt: UnitZero<Exclude<TUnit, '%'>>;
@@ -239,9 +235,7 @@ export namespace StypDimension {
       of(val: number, unit: TUnit): StypDimension<TUnit>;
 
       by(source: StypValue): StypNumeric<TUnit, StypDimension<TUnit>> | undefined;
-
     }
-
   }
 
   /**
@@ -250,14 +244,11 @@ export namespace StypDimension {
    * @typeParam TUnit - Allowed units type.
    */
   export interface Opts<TUnit extends string> extends StypValue.Opts {
-
     /**
      * A kind of dimension.
      */
     dim: Kind<TUnit>;
-
   }
-
 }
 
 /**
@@ -276,8 +267,8 @@ export type StypCalc<TUnit extends string> = StypAddSub<TUnit> | StypMulDiv<TUni
  * @category CSS Value
  * @typeParam TUnit - Allowed unit type.
  */
-export interface StypAddSub<TUnit extends string> extends StypNumericStruct<StypAddSub<TUnit>, TUnit> {
-
+export interface StypAddSub<TUnit extends string>
+  extends StypNumericStruct<StypAddSub<TUnit>, TUnit> {
   readonly type: 'calc';
 
   /**
@@ -294,7 +285,6 @@ export interface StypAddSub<TUnit extends string> extends StypNumericStruct<Styp
    * Right operand.
    */
   readonly right: StypNumeric<TUnit>;
-
 }
 
 /**
@@ -303,8 +293,8 @@ export interface StypAddSub<TUnit extends string> extends StypNumericStruct<Styp
  * @category CSS Value
  * @typeParam TUnit - Allowed unit type.
  */
-export interface StypMulDiv<TUnit extends string> extends StypNumericStruct<StypMulDiv<TUnit>, TUnit> {
-
+export interface StypMulDiv<TUnit extends string>
+  extends StypNumericStruct<StypMulDiv<TUnit>, TUnit> {
   readonly type: 'calc';
 
   /**
@@ -321,5 +311,4 @@ export interface StypMulDiv<TUnit extends string> extends StypNumericStruct<Styp
    * Right operand.
    */
   readonly right: number;
-
 }

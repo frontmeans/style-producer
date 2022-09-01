@@ -34,19 +34,18 @@ export class StypURL extends StypValueStruct<StypURL> {
    */
   static by(source: StypValue): StypURL | undefined {
     switch (typeof source) {
-    case 'string': {
+      case 'string': {
+        const [url, priority] = stypSplitPriority(source);
 
-      const [url, priority] = stypSplitPriority(source);
-
-      return new StypURL(url, { priority });
-    }
-    case 'object':
-      if (source.type === 'url') {
-        return source;
+        return new StypURL(url, { priority });
       }
+      case 'object':
+        if (source.type === 'url') {
+          return source;
+        }
 
-      break;
-    default:
+        break;
+      default:
     }
 
     return;
@@ -72,10 +71,12 @@ export class StypURL extends StypValueStruct<StypURL> {
   }
 
   is(other: StypValue): boolean {
-    return typeof other === 'object'
-        && other.type === 'url'
-        && other.url === this.url
-        && other.priority === this.priority;
+    return (
+      typeof other === 'object'
+      && other.type === 'url'
+      && other.url === this.url
+      && other.priority === this.priority
+    );
   }
 
   toString(): string {

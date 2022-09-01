@@ -11,13 +11,13 @@ import { StypURL } from './url';
  * @category CSS Value
  */
 export type StypValue =
-    | string
-    | number
-    | boolean
-    | undefined
-    | StypNumeric<any>
-    | StypURL
-    | StypColor;
+  | string
+  | number
+  | boolean
+  | undefined
+  | StypNumeric<any>
+  | StypURL
+  | StypColor;
 
 /**
  * Structured property CSS value. E.g. [length](https://developer.mozilla.org/en-US/docs/Web/CSS/length),
@@ -45,7 +45,7 @@ export abstract class StypValueStruct<TSelf extends StypValueStruct<TSelf>> {
    * @param opts - Construction options.
    */
   protected constructor(opts?: StypValue.Opts) {
-    this.priority = opts && opts.priority || StypPriority.Default;
+    this.priority = (opts && opts.priority) || StypPriority.Default;
   }
 
   /**
@@ -112,12 +112,10 @@ export abstract class StypValueStruct<TSelf extends StypValueStruct<TSelf>> {
  * @category CSS Value
  */
 export namespace StypValue {
-
   /**
    * Construction options of structured property CSS value.
    */
   export interface Opts {
-
     /**
      * Constructed value priority.
      *
@@ -125,9 +123,7 @@ export namespace StypValue {
      * normal priority.
      */
     readonly priority?: number | undefined;
-
   }
-
 }
 
 /**

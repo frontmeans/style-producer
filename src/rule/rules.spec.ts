@@ -7,7 +7,6 @@ import { StypRule } from './rule';
 import { lazyStypRules, StypRules, stypRules } from './rules';
 
 describe('stypRules', () => {
-
   let root: StypRule;
   let rule: StypRule;
 
@@ -17,7 +16,6 @@ describe('stypRules', () => {
   });
 
   it('constructs empty rule set without arguments', () => {
-
     const rules = stypRules();
 
     expect(itsEmpty(rules)).toBe(true);
@@ -35,7 +33,6 @@ describe('stypRules', () => {
       expect([...stypRules(() => root)]).toEqual([...root.rules.self]);
     });
     it('sends rule addition', () => {
-
       const rules = stypRules(() => root.rules);
       const receiver = jest.fn();
 
@@ -47,7 +44,6 @@ describe('stypRules', () => {
       expect([...rules]).toHaveLength(3);
     });
     it('sends rule removal', () => {
-
       const rules = stypRules(() => root.rules);
       const receiver = jest.fn();
 
@@ -64,7 +60,6 @@ describe('stypRules', () => {
       expect(itsEmpty(stypRules(Promise.resolve(root)))).toBe(true);
     });
     it('sends existing rules as an addition', async () => {
-
       const rules = stypRules(() => Promise.resolve(root));
       const receiver = jest.fn();
 
@@ -77,7 +72,6 @@ describe('stypRules', () => {
       expect([...rules]).toEqual([...root.rules]);
     });
     it('cuts off rules supply when promise rejected', async () => {
-
       const error = new Error('test');
       const rules = stypRules(() => Promise.reject(error));
       const whenOff = jest.fn();
@@ -90,7 +84,6 @@ describe('stypRules', () => {
       expect(whenOff).toHaveBeenCalledWith(error);
     });
     it('sends rule addition', async () => {
-
       const rules = stypRules(Promise.resolve(root.rules));
       const receiver = jest.fn();
       const promise = new Promise(resolve => {
@@ -107,7 +100,6 @@ describe('stypRules', () => {
       expect([...rules]).toHaveLength(3);
     });
     it('sends rule removal', async () => {
-
       const rules = stypRules(Promise.resolve(root.rules));
       const receiver = jest.fn();
       const promise = new Promise(resolve => {
@@ -123,9 +115,8 @@ describe('stypRules', () => {
       expect([...rules]).toHaveLength(1);
     });
     it('does not send anything when supply is cut off', async () => {
-
       let resolution: (rules: StypRules) => void = noop;
-      const rules = stypRules(new Promise(resolve => resolution = resolve));
+      const rules = stypRules(new Promise(resolve => (resolution = resolve)));
       const receiver = jest.fn();
 
       onSupplied(rules)(receiver).off();
@@ -136,7 +127,6 @@ describe('stypRules', () => {
       expect(receiver).not.toHaveBeenCalled();
     });
     it('becomes empty when all supplies cut off', async () => {
-
       const rules = stypRules(Promise.resolve(root));
       const receiver1 = jest.fn();
       const receiver2 = jest.fn();
@@ -159,7 +149,6 @@ describe('stypRules', () => {
   });
 
   describe('with multiple sources', () => {
-
     let root2: StypRule;
     let rule2: StypRule;
 
@@ -169,7 +158,6 @@ describe('stypRules', () => {
     });
 
     it('returns all rules', () => {
-
       const rules = new Set(stypRules(root, root2.rules));
 
       expect(rules).toContain(root);
@@ -179,7 +167,6 @@ describe('stypRules', () => {
       expect(rules.size).toBe(3);
     });
     it('sends rule addition', () => {
-
       const rules = stypRules(root, root2.rules);
       const receiver = jest.fn();
 
@@ -191,7 +178,6 @@ describe('stypRules', () => {
       expect([...rules]).toHaveLength(4);
     });
     it('sends rule removal', () => {
-
       const rules = stypRules(root, root2.rules);
       const receiver = jest.fn();
 
@@ -202,7 +188,6 @@ describe('stypRules', () => {
       expect([...rules]).toHaveLength(2);
     });
     it('does not send updates when supply is cut off', () => {
-
       const rules = stypRules(root, root2.rules);
       const receiver = jest.fn();
 
@@ -216,7 +201,6 @@ describe('stypRules', () => {
 });
 
 describe('lazyStypRules', () => {
-
   let root: StypRule;
   let rule: StypRule;
 
@@ -226,7 +210,6 @@ describe('lazyStypRules', () => {
   });
 
   it('constructs empty rule set without arguments', () => {
-
     const rules = lazyStypRules();
 
     expect(itsEmpty(rules)).toBe(true);
@@ -244,7 +227,6 @@ describe('lazyStypRules', () => {
       expect(itsEmpty(lazyStypRules(() => root))).toBe(true);
     });
     it('sends existing rules as an addition', () => {
-
       const rules = lazyStypRules(() => root.rules);
       const receiver = jest.fn();
 
@@ -253,7 +235,6 @@ describe('lazyStypRules', () => {
       expect([...rules]).toEqual([...root.rules]);
     });
     it('does not send empty existing rules', () => {
-
       const rules = lazyStypRules(() => rule.rules.nested);
       const receiver = jest.fn();
 
@@ -262,7 +243,6 @@ describe('lazyStypRules', () => {
       expect(itsEmpty(rules)).toBe(true);
     });
     it('sends rule addition', () => {
-
       const rules = lazyStypRules(() => root.rules);
       const receiver = jest.fn();
 
@@ -274,7 +254,6 @@ describe('lazyStypRules', () => {
       expect([...rules]).toHaveLength(3);
     });
     it('sends rule removal', () => {
-
       const rules = lazyStypRules(() => root.rules);
       const receiver = jest.fn();
 
@@ -285,7 +264,6 @@ describe('lazyStypRules', () => {
       expect([...rules]).toHaveLength(1);
     });
     it('becomes empty when all supplies cut off', () => {
-
       const rules = lazyStypRules(() => root.rules);
       const receiver1 = jest.fn();
       const receiver2 = jest.fn();

@@ -21,7 +21,7 @@ import { StypRule } from './rule';
 /**
  * @internal
  */
-export const noStypProperties: AfterEvent<[StypProperties]> = (/*#__PURE__*/ afterThe({}));
+export const noStypProperties: AfterEvent<[StypProperties]> = /*#__PURE__*/ afterThe({});
 
 /**
  * @internal
@@ -33,7 +33,10 @@ export function noStypPropertiesSpec(): AfterEvent<[StypProperties]> {
 /**
  * @internal
  */
-export function stypPropertiesBySpec(rule: StypRule, spec?: StypProperties.Spec): AfterEvent<[StypProperties]> {
+export function stypPropertiesBySpec(
+  rule: StypRule,
+  spec?: StypProperties.Spec,
+): AfterEvent<[StypProperties]> {
   if (!spec) {
     return noStypProperties;
   }
@@ -45,7 +48,6 @@ export function stypPropertiesBySpec(rule: StypRule, spec?: StypProperties.Spec)
       return preventDuplicates(propertiesKeeper(spec));
     }
     if (typeof spec === 'function') {
-
       const senderOrProperties = spec(rule);
 
       if (typeof senderOrProperties !== 'string') {
@@ -64,14 +66,18 @@ export function stypPropertiesBySpec(rule: StypRule, spec?: StypProperties.Spec)
   return afterThe(propertiesMap(spec));
 }
 
-function propertiesKeeper(sender: EventSender<[string | StypProperties]>): AfterEvent<[string | StypProperties]> {
+function propertiesKeeper(
+  sender: EventSender<[string | StypProperties]>,
+): AfterEvent<[string | StypProperties]> {
   return afterSupplied(sender, () => [{}]);
 }
 
-function preventDuplicates(properties: EventKeeper<[string | StypProperties]>): AfterEvent<[StypProperties]> {
+function preventDuplicates(
+  properties: EventKeeper<[string | StypProperties]>,
+): AfterEvent<[StypProperties]> {
   return afterSupplied(properties).do(
-      mapAfter_(propertiesMap),
-      deduplicateAfter(isDuplicateProperties, cloneProperties),
+    mapAfter_(propertiesMap),
+    deduplicateAfter(isDuplicateProperties, cloneProperties),
   );
 }
 
@@ -80,12 +86,13 @@ function propertiesMap(properties: string | StypProperties): StypProperties {
 }
 
 function isDuplicateProperties(first: StypProperties, second: StypProperties): boolean {
-
   const s = itsIterator(propertyEntries(second));
 
   for (const [key, value] of propertyEntries(first)) {
-
-    const { value: sentry } = s.next() as IteratorResult<[keyof StypProperties, StypValue], undefined>;
+    const { value: sentry } = s.next() as IteratorResult<
+      [keyof StypProperties, StypValue],
+      undefined
+    >;
 
     if (!sentry || key !== sentry[0] || !stypValuesEqual(value, sentry[1])) {
       return false;
@@ -99,44 +106,36 @@ function cloneProperties([properties]: [StypProperties]): StypProperties {
   return { ...properties };
 }
 
-function propertyEntries(properties: StypProperties): Iterable<readonly [keyof StypProperties, StypValue]> {
-  return filterIt(
-      overEntries(properties),
-      ([, value]) => isPresent(value),
-  );
+function propertyEntries(
+  properties: StypProperties,
+): Iterable<readonly [keyof StypProperties, StypValue]> {
+  return filterIt(overEntries(properties), ([, value]) => isPresent(value));
 }
 
 /**
  * @internal
  */
 export function mergeStypProperties(
-    base: AfterEvent<[StypProperties]>,
-    addendum: AfterEvent<[StypProperties]>,
+  base: AfterEvent<[StypProperties]>,
+  addendum: AfterEvent<[StypProperties]>,
 ): AfterEvent<[StypProperties]> {
   return preventDuplicates(
-      afterAll({ base, addendum }).do(
-          mapAfter(
-              ({
-                base: [baseProperties],
-                addendum: [addendumProperties],
-              }) => addValues(baseProperties, addendumProperties),
-          ),
-      ),
+    afterAll({ base, addendum }).do(
+      mapAfter(({ base, addendum }) => addValues(base[0], addendum[0])),
+    ),
   );
 }
 
 function addValues(base: StypProperties, addendum: StypProperties): StypProperties {
-  return itsReduction(
-      overEntries(addendum),
-      (result, [k, v]) => addValue(result, k, v),
-      { ...base },
-  );
+  return itsReduction(overEntries(addendum), (result, [k, v]) => addValue(result, k, v), {
+    ...base,
+  });
 }
 
 function addValue(
-    properties: StypProperties.Mutable,
-    key: keyof StypProperties,
-    value: StypValue,
+  properties: StypProperties.Mutable,
+  key: keyof StypProperties,
+  value: StypValue,
 ): StypProperties.Mutable {
   if (priorityOf(properties[key]) <= priorityOf(value)) {
     delete properties[key];
@@ -148,11 +147,11 @@ function addValue(
 
 function priorityOf(value: StypValue): number {
   switch (typeof value) {
-  case 'string':
-    return value.endsWith(IMPORTANT_CSS_SUFFIX) ? 1 : 0;
-  case 'object':
-    return value.priority;
-  default:
-    return 0;
+    case 'string':
+      return value.endsWith(IMPORTANT_CSS_SUFFIX) ? 1 : 0;
+    case 'object':
+      return value.priority;
+    default:
+      return 0;
   }
 }

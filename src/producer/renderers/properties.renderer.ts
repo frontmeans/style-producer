@@ -12,20 +12,18 @@ import { StyleProducer } from '../style-producer';
  * @category Rendering
  */
 export function stypRenderProperties(producer: StyleProducer, properties: StypProperties): void {
-
   const style = producer.addStyle();
 
   itsEach(
-      filterIt<ObjectEntry<StypProperties>, ObjectEntry<StypProperties, string>>(
-          overEntries(properties),
-          notCustomProperty,
-      ),
-      ([k, v]) => {
+    filterIt<ObjectEntry<StypProperties>, ObjectEntry<StypProperties, string>>(
+      overEntries(properties),
+      notCustomProperty,
+    ),
+    ([k, v]) => {
+      const [value, priority] = stypSplitPriority(v);
 
-        const [value, priority] = stypSplitPriority(v);
-
-        style.set(hyphenateCSSName(k), `${value}`, priority);
-      },
+      style.set(hyphenateCSSName(k), `${value}`, priority);
+    },
   );
 
   producer.render(properties, { writer: style });
@@ -35,9 +33,8 @@ export function stypRenderProperties(producer: StyleProducer, properties: StypPr
  * @internal
  */
 function notCustomProperty(
-    entry: ObjectEntry<StypProperties>,
+  entry: ObjectEntry<StypProperties>,
 ): entry is ObjectEntry<Required<StypProperties>, string> {
-
   const [key, value] = entry;
 
   if (value == null) {
@@ -46,5 +43,5 @@ function notCustomProperty(
 
   const first = String(key)[0];
 
-  return first >= 'a' && first <= 'z' || first >= 'A' && first <= 'Z';
+  return (first >= 'a' && first <= 'z') || (first >= 'A' && first <= 'Z');
 }

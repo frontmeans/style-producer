@@ -20,7 +20,6 @@ import { StypLength } from '../unit';
 import { StypColor, StypHSL, StypRGB } from './color';
 
 describe('StypRGB', () => {
-
   let coords: StypRGB.Coords;
   let value: StypRGB;
 
@@ -54,7 +53,6 @@ describe('StypRGB', () => {
       expect(value.usual()).toBe(value);
     });
     it('changes priority', () => {
-
       const important = value.important();
 
       expect(important).not.toBe(value);
@@ -135,7 +133,6 @@ describe('StypRGB', () => {
       expect(value.by(123)).toBe(value);
     });
     it('does not replace recognized color', () => {
-
       const other = new StypHSL({ h: 120, s: 50, l: 50 });
 
       expect(value.by(other)).toBe(other);
@@ -154,7 +151,6 @@ describe('StypRGB', () => {
 });
 
 describe('StypHSL', () => {
-
   let coords: StypHSL.Coords;
   let value: StypHSL;
 
@@ -188,7 +184,6 @@ describe('StypHSL', () => {
       expect(value.usual()).toBe(value);
     });
     it('changes priority', () => {
-
       const important = value.important();
 
       expect(important).not.toBe(value);
@@ -269,7 +264,6 @@ describe('StypHSL', () => {
       expect(value.by(123)).toBe(value);
     });
     it('does not replace recognized color', () => {
-
       const other = new StypRGB({ r: 120, g: 50, b: 50 });
 
       expect(value.by(other)).toBe(other);
@@ -290,13 +284,11 @@ describe('StypHSL', () => {
 describe('StypColor', () => {
   describe('by', () => {
     it('recognizes RGB color', () => {
-
       const color = new StypRGB({ r: 110, g: 21, b: 44 });
 
       expect(StypColor.by(color)).toBe(color);
     });
     it('recognizes HSL color', () => {
-
       const color = new StypHSL({ h: 45, s: 90, l: 90 });
 
       expect(StypColor.by(color)).toBe(color);

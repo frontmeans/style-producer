@@ -5,23 +5,18 @@
  *
  * @category Rendering
  */
-export type StypWriter =
-    | StypWriter.Sheet
-    | StypWriter.Group
-    | StypWriter.Style;
+export type StypWriter = StypWriter.Sheet | StypWriter.Group | StypWriter.Style;
 
 /**
  * @category Rendering
  */
 export namespace StypWriter {
-
   /**
    * CSS style sheet writer to add CSS rules to.
    *
    * It is an object created by {@link StypFormat.addSheet} style production format method.
    */
   export interface Sheet {
-
     readonly isGroup: true;
 
     /**
@@ -71,7 +66,6 @@ export namespace StypWriter {
      * Called by style producer after updates done to the style sheet.
      */
     done(): void;
-
   }
 
   /**
@@ -80,7 +74,6 @@ export namespace StypWriter {
    * Supports at-rules like `@media`, `@keyframes`, or `@condition`.
    */
   export interface Group {
-
     readonly isGroup: true;
 
     /**
@@ -105,14 +98,12 @@ export namespace StypWriter {
      * @returns  Inserted CSS style declarations writer.
      */
     addStyle(selector: string, index?: number): Style;
-
   }
 
   /**
    * CSS style declarations writer.
    */
   export interface Style {
-
     readonly isGroup: false;
 
     /**
@@ -131,7 +122,5 @@ export namespace StypWriter {
      * @param css - CSS text containing CSS style declarations.
      */
     replace(css: string): void;
-
   }
-
 }

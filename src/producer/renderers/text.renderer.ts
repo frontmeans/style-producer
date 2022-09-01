@@ -11,13 +11,11 @@ import { StyleProducer } from '../style-producer';
  * @category Rendering
  */
 export function stypRenderText(producer: StyleProducer, properties: StypProperties): void {
-
   const css = properties.$$css;
 
   if (!css) {
     producer.render(properties);
   } else {
-
     const style = producer.addStyle();
 
     style.replace(css);

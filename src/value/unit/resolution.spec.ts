@@ -20,7 +20,6 @@ describe('StypResolution', () => {
   });
   describe('of', () => {
     it('constructs `StypResolution` instance', () => {
-
       const resolution = StypResolution.of(96, 'dpi');
 
       expect(resolution.type).toBe('dimension');
@@ -29,14 +28,12 @@ describe('StypResolution', () => {
       expect(resolution.unit).toBe('dpi');
     });
     it('constructs `StypResolution` instance with zero value', () => {
-
       const resolution: StypResolution = StypResolution.of(0, 'x');
 
       expect(`${resolution}`).toBe('0x');
     });
   });
   describe('toDim', () => {
-
     let resolution: StypResolution;
 
     beforeEach(() => {

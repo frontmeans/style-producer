@@ -7,7 +7,6 @@ import { StypValue } from './value';
  * @category CSS Value
  */
 export const enum StypPriority {
-
   /**
    * Usual, non-important priority.
    *
@@ -31,7 +30,6 @@ export const enum StypPriority {
    * All numeric priorities with higher values are rendered as `!important` ones.
    */
   Important = 1,
-
 }
 
 /**
@@ -77,18 +75,18 @@ export function stypSplitPriority<T extends StypValue>(value: T): [T, number] {
   }
 
   switch (typeof value) {
-  case 'object':
-    return [value, value.priority];
-  case 'string':
-    if (value.endsWith(IMPORTANT_CSS_SUFFIX)) {
-      return [
-        value.substring(0, value.length - IMPORTANT_CSS_SUFFIX.length).trim() as T,
-        StypPriority.Important,
-      ];
-    }
+    case 'object':
+      return [value, value.priority];
+    case 'string':
+      if (value.endsWith(IMPORTANT_CSS_SUFFIX)) {
+        return [
+          value.substring(0, value.length - IMPORTANT_CSS_SUFFIX.length).trim() as T,
+          StypPriority.Important,
+        ];
+      }
 
-    break;
-  default:
+      break;
+    default:
   }
 
   return [value, StypPriority.Default];

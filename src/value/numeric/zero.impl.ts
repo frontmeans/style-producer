@@ -4,9 +4,14 @@ import { StypDimension, StypNumeric, StypNumericStruct } from './index';
 import { stypDimension } from './numeric.impl';
 import { StypZero } from './zero';
 
-class Zero<TUnit extends string> extends StypNumericStruct<Zero<TUnit>, TUnit> implements StypZero<TUnit> {
+class Zero<TUnit extends string>
+  extends StypNumericStruct<Zero<TUnit>, TUnit>
+  implements StypZero<TUnit> {
 
-  constructor(private readonly _byPriority: ZeroByPriority<TUnit>, opts: StypDimension.Opts<TUnit>) {
+  constructor(
+    private readonly _byPriority: ZeroByPriority<TUnit>,
+    opts: StypDimension.Opts<TUnit>,
+  ) {
     super(opts);
   }
 
@@ -14,7 +19,9 @@ class Zero<TUnit extends string> extends StypNumericStruct<Zero<TUnit>, TUnit> i
     return 0;
   }
 
-  toDim<TDimUnit extends string>(dim: StypDimension.Kind<TDimUnit>): StypDimension<TDimUnit> | StypZero<TDimUnit> {
+  toDim<TDimUnit extends string>(
+    dim: StypDimension.Kind<TDimUnit>,
+  ): StypDimension<TDimUnit> | StypZero<TDimUnit> {
     return dim.zero.prioritize(this.priority);
   }
 
@@ -101,8 +108,10 @@ class ZeroByPriority<TUnit extends string> {
 
   get(priority: number): Zero<TUnit> {
     switch (priority) {
-    case StypPriority.Usual: return this.usual;
-    case StypPriority.Important: return this.important;
+      case StypPriority.Usual:
+        return this.usual;
+      case StypPriority.Important:
+        return this.important;
     }
 
     return new Zero(this, { dim: this.dim, priority });
@@ -113,6 +122,8 @@ class ZeroByPriority<TUnit extends string> {
 /**
  * @internal
  */
-export function newStypZero<TUnit extends string>(dim: StypDimension.Kind.UnitlessZero<TUnit>): StypZero<TUnit> {
+export function newStypZero<TUnit extends string>(
+  dim: StypDimension.Kind.UnitlessZero<TUnit>,
+): StypZero<TUnit> {
   return new ZeroByPriority<TUnit>(dim).usual;
 }

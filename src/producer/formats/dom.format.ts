@@ -9,7 +9,6 @@ import { stypTextFormat, StypTextFormatConfig } from './text.format';
  * @category Rendering
  */
 export interface StypDomFormatConfig extends StypTextFormatConfig {
-
   /**
    * Document to add style elements to.
    *
@@ -34,7 +33,6 @@ export interface StypDomFormatConfig extends StypTextFormatConfig {
    * Uses `newRenderSchedule` for {@link parent} node by default.
    */
   readonly scheduler?: RenderScheduler | undefined;
-
 }
 
 /**
@@ -51,14 +49,9 @@ export interface StypDomFormatConfig extends StypTextFormatConfig {
  *
  * @returns CSS production format.
  */
-export function stypDomFormat(
-    config: StypDomFormatConfig = {},
-): StypFormat {
-
-  const {
-    document = config.parent?.ownerDocument || window.document,
-    parent = document.head,
-  } = config;
+export function stypDomFormat(config: StypDomFormatConfig = {}): StypFormat {
+  const { document = config.parent?.ownerDocument || window.document, parent = document.head }
+    = config;
   const textFormat = stypTextFormat(config);
   const scheduler = stypRenderScheduler(parent, config.scheduler);
   const schedule = scheduler();
@@ -68,7 +61,8 @@ export function stypDomFormat(
 
     let element = elements.get(id);
 
-    if (css == null) { // element exists here
+    if (css == null) {
+      // element exists here
       elements.delete(id);
       removeStyleElement(element!);
     } else if (element) {
@@ -80,8 +74,8 @@ export function stypDomFormat(
       parent.appendChild(element);
       elements.set(id, element);
       supply.whenOff(
-          // Schedule element removal on style sheet removal instead of removing it right away.
-          () => schedule(() => removeStyleElement(element!)),
+        // Schedule element removal on style sheet removal instead of removing it right away.
+        () => schedule(() => removeStyleElement(element!)),
       );
     }
   });

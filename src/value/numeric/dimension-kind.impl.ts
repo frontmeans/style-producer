@@ -7,18 +7,14 @@ import { newStypZero } from './zero.impl';
 /**
  * @internal
  */
-export function unitlessZeroDimensionKind<TUnit extends string>(
-    {
-      pt,
-      noPt,
-    }: {
-      pt: () => StypDimension.Kind.UnitlessZero<TUnit | '%'>;
-      noPt: () => StypDimension.Kind.UnitlessZero<Exclude<TUnit, '%'>>;
-    },
-): StypDimension.Kind.UnitlessZero<TUnit> {
-
+export function unitlessZeroDimensionKind<TUnit extends string>({
+  pt,
+  noPt,
+}: {
+  pt: () => StypDimension.Kind.UnitlessZero<TUnit | '%'>;
+  noPt: () => StypDimension.Kind.UnitlessZero<Exclude<TUnit, '%'>>;
+}): StypDimension.Kind.UnitlessZero<TUnit> {
   const dimension: StypDimension.Kind.UnitlessZero<TUnit> = {
-
     get zero(): StypZero<TUnit> {
       return zero;
     },
@@ -42,7 +38,6 @@ export function unitlessZeroDimensionKind<TUnit extends string>(
 
       return (source as StypNumeric<TUnit>).toDim(this);
     },
-
   };
 
   const zero = newStypZero<TUnit>(dimension);
@@ -53,26 +48,22 @@ export function unitlessZeroDimensionKind<TUnit extends string>(
 /**
  * @internal
  */
-export function unitZeroDimensionKind<TUnit extends string>(
-    {
-      zeroUnit,
-      withPercent,
-      noPercent,
-    }: {
-      zeroUnit: TUnit;
-      withPercent?: ((this: void) => StypDimension.Kind.UnitZero<TUnit | '%'>) | undefined;
-      noPercent?: ((this: void) => StypDimension.Kind.UnitZero<Exclude<TUnit, '%'>>) | undefined;
-    },
-): StypDimension.Kind.UnitZero<TUnit> {
-
+export function unitZeroDimensionKind<TUnit extends string>({
+  zeroUnit,
+  withPercent,
+  noPercent,
+}: {
+  zeroUnit: TUnit;
+  withPercent?: ((this: void) => StypDimension.Kind.UnitZero<TUnit | '%'>) | undefined;
+  noPercent?: ((this: void) => StypDimension.Kind.UnitZero<Exclude<TUnit, '%'>>) | undefined;
+}): StypDimension.Kind.UnitZero<TUnit> {
   const dim: StypDimension.Kind.UnitZero<TUnit> = {
-
     get pt() {
       return withPercent && withPercent();
     },
 
     get noPt() {
-      return noPercent ? noPercent() : this as StypDimension.Kind.UnitZero<Exclude<TUnit, '%'>>;
+      return noPercent ? noPercent() : (this as StypDimension.Kind.UnitZero<Exclude<TUnit, '%'>>);
     },
 
     get zero(): StypDimension<TUnit> {
@@ -90,7 +81,6 @@ export function unitZeroDimensionKind<TUnit extends string>(
 
       return (source as StypNumeric<TUnit>).toDim(this) as StypNumeric<TUnit, StypDimension<TUnit>>;
     },
-
   };
 
   const zero = new StypDimension_(0, zeroUnit, { dim });

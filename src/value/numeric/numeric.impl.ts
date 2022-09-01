@@ -13,8 +13,8 @@ import { StypZero } from './zero';
  * @internal
  */
 export class StypDimension<TUnit extends string>
-    extends StypNumericStruct<StypDimension<TUnit>, TUnit>
-    implements StypDimension_<TUnit> {
+  extends StypNumericStruct<StypDimension<TUnit>, TUnit>
+  implements StypDimension_<TUnit> {
 
   get type(): 'dimension' {
     return 'dimension';
@@ -43,13 +43,17 @@ export class StypDimension<TUnit extends string>
     this.unit = unit;
   }
 
-  toDim<TDimUnit extends string>(dim: StypDimension_.Kind<TDimUnit>): StypDimension_<TDimUnit> | undefined {
-
+  toDim<TDimUnit extends string>(
+    dim: StypDimension_.Kind<TDimUnit>,
+  ): StypDimension_<TDimUnit> | undefined {
     const thisDim: StypDimension_.Kind<any> = this.dim;
 
-    if (dim === thisDim /* same dimension */
-        || dim === thisDim.pt /* !% to compatible +% */
-        || dim === (this.unit === '%' ? dim.pt /* % to any +% */ : thisDim.noPt /* !% to compatible -% */)) {
+    if (
+      dim === thisDim
+      /* same dimension */ || dim === thisDim.pt
+      /* !% to compatible +% */ || dim
+        === (this.unit === '%' ? dim.pt /* % to any +% */ : thisDim.noPt) /* !% to compatible -% */
+    ) {
       return this as StypDimension_<any>;
     }
 
@@ -61,17 +65,19 @@ export class StypDimension<TUnit extends string>
       return true;
     }
 
-    return typeof other === 'object'
-        && other.type === this.type
-        && this.unit === other.unit
-        && this.val === other.val
-        && this.priority === other.priority;
+    return (
+      typeof other === 'object'
+      && other.type === this.type
+      && this.unit === other.unit
+      && this.val === other.val
+      && this.priority === other.priority
+    );
   }
 
   prioritize(priority: number): StypDimension<TUnit> {
     return this.priority === priority
-        ? this
-        : new StypDimension(this.val, this.unit, { dim: this.dim, priority });
+      ? this
+      : new StypDimension(this.val, this.unit, { dim: this.dim, priority });
   }
 
   add(addendum: StypNumeric<TUnit>): StypNumeric<TUnit>;
@@ -141,24 +147,24 @@ export class StypDimension<TUnit extends string>
  * @internal
  */
 export function stypDimension<TUnit extends string>(
-    val: number,
-    unit: TUnit,
-    opts: StypDimension_.Opts<TUnit>,
+  val: number,
+  unit: TUnit,
+  opts: StypDimension_.Opts<TUnit>,
 ): StypDimension_<TUnit> | StypZero<TUnit> {
   return val
-      ? new StypDimension<TUnit>(val, unit, opts)
-      : opts.dim.zero.prioritize(opts.priority || StypPriority.Default);
+    ? new StypDimension<TUnit>(val, unit, opts)
+    : opts.dim.zero.prioritize(opts.priority || StypPriority.Default);
 }
 
 /**
  * @internal
  */
 export abstract class StypCalcBase<
-    TSelf extends StypCalcBase<TSelf, TOp, TRight, TUnit>,
-    TOp extends '+' | '-' | '*' | '/',
-    TRight extends number | StypNumeric<TUnit>,
-    TUnit extends string,
-    > extends StypNumericStruct<TSelf, TUnit> {
+  TSelf extends StypCalcBase<TSelf, TOp, TRight, TUnit>,
+  TOp extends '+' | '-' | '*' | '/',
+  TRight extends number | StypNumeric<TUnit>,
+  TUnit extends string,
+> extends StypNumericStruct<TSelf, TUnit> {
 
   // noinspection JSMethodCanBeStatic
   get type(): 'calc' {
@@ -170,12 +176,7 @@ export abstract class StypCalcBase<
   readonly right: TRight;
 
   // noinspection TypeScriptAbstractClassConstructorCanBeMadeProtected
-  constructor(
-      left: StypNumeric<TUnit>,
-      op: TOp,
-      right: TRight,
-      opts: StypDimension_.Opts<TUnit>,
-  ) {
+  constructor(left: StypNumeric<TUnit>, op: TOp, right: TRight, opts: StypDimension_.Opts<TUnit>) {
     super(opts);
     this.left = left.usual();
     this.op = op;
@@ -187,10 +188,12 @@ export abstract class StypCalcBase<
       return true;
     }
     if (typeof other === 'object' && other.type === this.type) {
-      return this.op === other.op
-          && this.left.is(other.left)
-          && stypValuesEqual(this.right, other.right)
-          && this.priority === other.priority;
+      return (
+        this.op === other.op
+        && this.left.is(other.left)
+        && stypValuesEqual(this.right, other.right)
+        && this.priority === other.priority
+      );
     }
 
     return false;
@@ -248,21 +251,27 @@ export abstract class StypCalcBase<
  * @internal
  */
 export class StypAddSub<TUnit extends string>
-    extends StypCalcBase<StypAddSub<TUnit>, '+' | '-', StypNumeric<TUnit>, TUnit>
-    implements StypAddSub_<TUnit> {
+  extends StypCalcBase<StypAddSub<TUnit>, '+' | '-', StypNumeric<TUnit>, TUnit>
+  implements StypAddSub_<TUnit> {
 
-  constructor(left: StypNumeric<TUnit>, op: '+' | '-', right: StypNumeric<TUnit>, opts: StypDimension_.Opts<TUnit>) {
+  constructor(
+    left: StypNumeric<TUnit>,
+    op: '+' | '-',
+    right: StypNumeric<TUnit>,
+    opts: StypDimension_.Opts<TUnit>,
+  ) {
     super(left, op, right.usual(), opts);
   }
 
   prioritize(priority: number): StypAddSub<TUnit> {
     return this.priority === priority
-        ? this
-        : new StypAddSub(this.left, this.op, this.right, { dim: this.dim, priority });
+      ? this
+      : new StypAddSub(this.left, this.op, this.right, { dim: this.dim, priority });
   }
 
-  toDim<TDimUnit extends string>(dim: StypDimension_.Kind<TDimUnit>): StypAddSub<TDimUnit> | undefined {
-
+  toDim<TDimUnit extends string>(
+    dim: StypDimension_.Kind<TDimUnit>,
+  ): StypAddSub<TDimUnit> | undefined {
     const left = this.left.toDim(dim);
 
     if (!left) {
@@ -275,7 +284,7 @@ export class StypAddSub<TUnit extends string>
       return;
     }
 
-    if (left === this.left as StypNumeric<any> && right === this.right as StypNumeric<any>) {
+    if (left === (this.left as StypNumeric<any>) && right === (this.right as StypNumeric<any>)) {
       return this as StypAddSub<any>;
     }
 
@@ -284,8 +293,8 @@ export class StypAddSub<TUnit extends string>
 
   negate(): StypNumeric<TUnit> {
     return this.op === '-'
-        ? new StypAddSub(this.right, this.op, this.left, this)
-        : new StypAddSub(this.left.negate(), '-', this.right, this);
+      ? new StypAddSub(this.right, this.op, this.left, this)
+      : new StypAddSub(this.left.negate(), '-', this.right, this);
   }
 
   /**
@@ -300,9 +309,9 @@ export class StypAddSub<TUnit extends string>
 }
 
 function stypAddSub<TUnit extends string>(
-    left: StypNumeric<TUnit>,
-    op: '+' | '-',
-    right: StypNumeric<TUnit>,
+  left: StypNumeric<TUnit>,
+  op: '+' | '-',
+  right: StypNumeric<TUnit>,
 ): StypNumeric<TUnit> {
   return !right.type ? left : new StypAddSub(left, op, right, left);
 }
@@ -315,24 +324,25 @@ function stypAddSub<TUnit extends string>(
  * @internal
  */
 export class StypMulDiv<TUnit extends string>
-    extends StypCalcBase<StypMulDiv<TUnit>, '*' | '/', number, TUnit>
-    implements StypMulDiv_<TUnit> {
+  extends StypCalcBase<StypMulDiv<TUnit>, '*' | '/', number, TUnit>
+  implements StypMulDiv_<TUnit> {
 
   prioritize(priority: number): StypMulDiv<TUnit> {
     return this.priority === priority
-        ? this
-        : new StypMulDiv(this.left, this.op, this.right, { dim: this.dim, priority });
+      ? this
+      : new StypMulDiv(this.left, this.op, this.right, { dim: this.dim, priority });
   }
 
-  toDim<TDimUnit extends string>(dim: StypDimension_.Kind<TDimUnit>): StypMulDiv<TDimUnit> | undefined {
-
+  toDim<TDimUnit extends string>(
+    dim: StypDimension_.Kind<TDimUnit>,
+  ): StypMulDiv<TDimUnit> | undefined {
     const left = this.left.toDim(dim);
 
     if (!left) {
       return;
     }
 
-    if (left === this.left as StypNumeric<any>) {
+    if (left === (this.left as StypNumeric<any>)) {
       return this as StypMulDiv<any>;
     }
 
@@ -340,17 +350,19 @@ export class StypMulDiv<TUnit extends string>
   }
 
   mul(multiplier: number): StypNumeric<TUnit> {
-    return (this.op === '*'
+    return (
+      this.op === '*'
         ? stypMul(this.left, this.right * multiplier)
-        : stypDiv(this.left, this.right / multiplier))
-        .prioritize(this.priority);
+        : stypDiv(this.left, this.right / multiplier)
+    ).prioritize(this.priority);
   }
 
   div(divisor: number): StypNumeric<TUnit> {
-    return (this.op === '/'
+    return (
+      this.op === '/'
         ? stypDiv(this.left, this.right * divisor)
-        : stypMul(this.left, this.right / divisor))
-        .prioritize(this.priority);
+        : stypMul(this.left, this.right / divisor)
+    ).prioritize(this.priority);
   }
 
   negate(): StypNumeric<TUnit> {
@@ -368,23 +380,30 @@ export class StypMulDiv<TUnit extends string>
 
 }
 
-function stypMul<TUnit extends string>(left: StypNumeric<TUnit>, right: number): StypNumeric<TUnit> {
+function stypMul<TUnit extends string>(
+  left: StypNumeric<TUnit>,
+  right: number,
+): StypNumeric<TUnit> {
   return !right
-      ? left.dim.zero.prioritize(left.priority)
-      : right === 1
-          ? left.prioritize(left.priority)
-          : new StypMulDiv(left, '*', right, left);
+    ? left.dim.zero.prioritize(left.priority)
+    : right === 1
+    ? left.prioritize(left.priority)
+    : new StypMulDiv(left, '*', right, left);
 }
 
-function stypDiv<TUnit extends string>(left: StypNumeric<TUnit>, right: number): StypNumeric<TUnit> {
-  return right === 1
-      ? left.prioritize(left.priority)
-      : new StypMulDiv(left, '/', right, left);
+function stypDiv<TUnit extends string>(
+  left: StypNumeric<TUnit>,
+  right: number,
+): StypNumeric<TUnit> {
+  return right === 1 ? left.prioritize(left.priority) : new StypMulDiv(left, '/', right, left);
 }
 
 /**
  * @internal
  */
 export function isStypNumeric(source: StypValue): source is StypNumeric<any, any> {
-  return typeof source === 'object' && (source.type === 'dimension' || source.type === 'calc' || source.type === 0);
+  return (
+    typeof source === 'object'
+    && (source.type === 'dimension' || source.type === 'calc' || source.type === 0)
+  );
 }

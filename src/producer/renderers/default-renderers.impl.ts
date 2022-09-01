@@ -9,9 +9,8 @@ import { stypRenderXmlNs } from './xml-ns.renderer';
  * @internal
  */
 export function defaultStypRenderers(
-    renderer: StypRenderer | readonly StypRenderer[] | undefined,
+  renderer: StypRenderer | readonly StypRenderer[] | undefined,
 ): readonly StypRenderer[] {
-
   const result: StypRenderer[] = [
     stypRenderAtRules,
     stypRenderXmlNs,

@@ -12,7 +12,6 @@ import { StypNumericStruct } from './index';
  * @typeParam TUnit - Allowed unit type.
  */
 export interface StypZero<TUnit extends string> extends StypNumericStruct<StypZero<TUnit>, TUnit> {
-
   readonly type: 0;
 
   mul(multiplier: number): this;
@@ -22,5 +21,4 @@ export interface StypZero<TUnit extends string> extends StypNumericStruct<StypZe
   negate(): this;
 
   toFormula(): string;
-
 }

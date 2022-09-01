@@ -19,7 +19,6 @@ describe('StypAngle', () => {
   });
   describe('of', () => {
     it('constructs `StypAngle` instance', () => {
-
       const angle = StypAngle.of(13, 'deg') as StypDimension<StypAngle.Unit>;
 
       expect(angle.type).toBe('dimension');
@@ -32,7 +31,6 @@ describe('StypAngle', () => {
     });
   });
   describe('toDim', () => {
-
     let angle: StypAngle;
 
     beforeEach(() => {
@@ -67,7 +65,6 @@ describe('StypAnglePt', () => {
   });
   describe('of', () => {
     it('constructs `StypAnglePt` instance', () => {
-
       const angle = StypAnglePt.of(13, '%') as StypDimension<StypAnglePt.Unit>;
 
       expect(angle.type).toBe('dimension');
@@ -80,7 +77,6 @@ describe('StypAnglePt', () => {
     });
   });
   describe('toDim', () => {
-
     let angle: StypAnglePt;
     let anglePt: StypAnglePt;
 

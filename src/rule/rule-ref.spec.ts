@@ -9,7 +9,6 @@ import { StypRule } from './rule';
 import { RefStypRule, StypRuleRef } from './rule-ref';
 
 describe('RefStypRule', () => {
-
   interface RuleProperties {
     $length: StypLength;
     $angle?: StypAnglePt | undefined;
@@ -40,7 +39,7 @@ describe('RefStypRule', () => {
     mockReceiver.mockClear();
 
     const mockMap = jest.fn<(rule: StypRule) => StypMapper.Mappings<RuleProperties>>(
-        valueProvider({ $length: StypLength.of(1, 'px') }));
+      valueProvider({ $length: StypLength.of(1, 'px') }));
 
     ref = RefStypRule.by(selector, mockMap)(root);
     mockReceiver = jest.fn();
@@ -53,7 +52,9 @@ describe('RefStypRule', () => {
   it('maps with received mappings', () => {
     mockReceiver.mockClear();
 
-    const mappings = trackValue<StypMapper.Mappings<RuleProperties>>({ $length: StypLength.of(1, 'px') });
+    const mappings = trackValue<StypMapper.Mappings<RuleProperties>>({
+      $length: StypLength.of(1, 'px'),
+    });
 
     ref = RefStypRule.by(selector, mappings)(root);
     mockReceiver = jest.fn();
@@ -72,14 +73,12 @@ describe('RefStypRule', () => {
     });
 
     it('sets properties', () => {
-
       const update: Partial<RuleProperties> = { $angle: StypAnglePt.of(45, 'deg') };
 
       ref.set(update);
       expect(mockReceiver).toHaveBeenCalledWith({ $length: StypLength.zero, ...update });
     });
     it('replaces properties', () => {
-
       const update: RuleProperties = { $length: StypLength.of(12, 'px') };
 
       ref.set(update);
@@ -88,7 +87,6 @@ describe('RefStypRule', () => {
   });
 
   describe('add', () => {
-
     let initial: RuleProperties;
 
     beforeEach(() => {
@@ -98,14 +96,12 @@ describe('RefStypRule', () => {
     });
 
     it('appends properties', () => {
-
       const update: RuleProperties = { $length: StypLength.of(1, 'rem').important() };
 
       ref.add(update);
       expect(mockReceiver).toHaveBeenCalledWith(update);
     });
     it('respects property importance', () => {
-
       const update: RuleProperties = { $length: StypLength.of(1, 'rem') };
 
       ref.add(update);
@@ -130,5 +126,4 @@ describe('RefStypRule', () => {
       void expect(afterSupplied(ref)).toBe(ref.read);
     });
   });
-
 });

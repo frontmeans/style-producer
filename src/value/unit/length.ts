@@ -14,27 +14,45 @@ export type StypLength = StypNumeric<StypLength.Unit>;
  * @category CSS Value
  */
 export namespace StypLength {
-
   /**
    * Supported length units, excluding percent.
    */
-  export type Unit = 'cap' | 'ch' | 'em' | 'ex' | 'ic' | 'lh' | 'rem' | 'rlh'
-      | 'vh' | 'vw' | 'vi' | 'vb' | 'vmin' | 'vmax'
-      | 'px' | 'cm' | 'mm' | 'Q' | 'in' | 'pc' | 'pt';
-
+  export type Unit =
+    | 'cap'
+    | 'ch'
+    | 'em'
+    | 'ex'
+    | 'ic'
+    | 'lh'
+    | 'rem'
+    | 'rlh'
+    | 'vh'
+    | 'vw'
+    | 'vi'
+    | 'vb'
+    | 'vmin'
+    | 'vmax'
+    | 'px'
+    | 'cm'
+    | 'mm'
+    | 'Q'
+    | 'in'
+    | 'pc'
+    | 'pt';
 }
 
 /**
  * @category CSS Value
  */
-export const StypLength: StypDimension.Kind.UnitlessZero<StypLength.Unit> = (/*#__PURE__*/ unitlessZeroDimensionKind({
-  pt() {
-    return StypLengthPt;
-  },
-  noPt() {
-    return StypLength;
-  },
-}));
+export const StypLength: StypDimension.Kind.UnitlessZero<StypLength.Unit>
+  /*#__PURE__*/ = unitlessZeroDimensionKind({
+    pt() {
+      return StypLengthPt;
+    },
+    noPt() {
+      return StypLength;
+    },
+  });
 
 /**
  * Structured [length-percentage](https://developer.mozilla.org/en-US/docs/Web/CSS/length-percentage) CSS property
@@ -50,24 +68,21 @@ export type StypLengthPt = StypNumeric<StypLengthPt.Unit>;
  * @category CSS Value
  */
 export namespace StypLengthPt {
-
   /**
    * Supported length units, including percent.
    */
   export type Unit = StypLength.Unit | '%';
-
 }
 
 /**
  * @category CSS Value
  */
-export const StypLengthPt: StypDimension.Kind.UnitlessZero<StypLengthPt.Unit> = (
-    /*#__PURE__*/ unitlessZeroDimensionKind({
-      pt() {
-        return StypLengthPt;
-      },
-      noPt() {
-        return StypLength;
-      },
-    })
-);
+export const StypLengthPt: StypDimension.Kind.UnitlessZero<StypLengthPt.Unit>
+  /*#__PURE__*/ = unitlessZeroDimensionKind({
+    pt() {
+      return StypLengthPt;
+    },
+    noPt() {
+      return StypLength;
+    },
+  });

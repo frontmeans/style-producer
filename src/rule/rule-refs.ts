@@ -1,4 +1,10 @@
-import { afterAll, AfterEvent, AfterEvent__symbol, EventKeeper, mapAfter } from '@proc7ts/fun-events';
+import {
+  afterAll,
+  AfterEvent,
+  AfterEvent__symbol,
+  EventKeeper,
+  mapAfter,
+} from '@proc7ts/fun-events';
 import { StypProperties } from './properties';
 import { StypRule } from './rule';
 import { RefStypRule, StypRuleRef } from './rule-ref';
@@ -11,7 +17,8 @@ import { RefStypRule, StypRuleRef } from './rule-ref';
  * @category CSS Rule
  * @typeParam TRefMap - A type of target map of named CSS properties structures.
  */
-export class StypRuleRefs<TRefMap extends StypRuleRefs.Struct<TRefMap>> implements EventKeeper<[TRefMap]> {
+export class StypRuleRefs<TRefMap extends StypRuleRefs.Struct<TRefMap>>
+  implements EventKeeper<[TRefMap]> {
 
   /**
    * Constructs named CSS rules by resolving CSS rule referrers.
@@ -23,15 +30,14 @@ export class StypRuleRefs<TRefMap extends StypRuleRefs.Struct<TRefMap>> implemen
    * @returns New names CSS rules instance.
    */
   static by<TRefMap extends StypRuleRefs.Struct<TRefMap>>(
-      referrers: { readonly [K in keyof TRefMap]: RefStypRule<TRefMap[K]> },
-      root: StypRule,
+    referrers: { readonly [K in keyof TRefMap]: RefStypRule<TRefMap[K]> },
+    root: StypRule,
   ): StypRuleRefs<TRefMap>;
 
   static by<TRefMap extends StypRuleRefs.Struct<TRefMap>>(
-      referrers: { readonly [name: string]: RefStypRule<any> },
-      root: StypRule,
+    referrers: { readonly [name: string]: RefStypRule<any> },
+    root: StypRule,
   ): StypRuleRefs<TRefMap> {
-
     const refs: { [K in keyof TRefMap]?: StypRuleRef<any> | undefined } = {};
 
     for (const key of Object.keys(referrers)) {
@@ -64,7 +70,9 @@ export class StypRuleRefs<TRefMap extends StypRuleRefs.Struct<TRefMap>> implemen
   constructor(refs: { readonly [K in keyof TRefMap]: StypRuleRef<TRefMap[K]> }) {
     this.refs = refs;
 
-    const fromAll: AfterEvent<[{ [K in keyof TRefMap]: [StypProperties<any>] }]> = afterAll(this.refs);
+    const fromAll: AfterEvent<[{ [K in keyof TRefMap]: [StypProperties<any>] }]> = afterAll(
+      this.refs,
+    );
 
     this.read = fromAll.do(mapAfter(flattenProperties)) as AfterEvent<[TRefMap]>;
   }
@@ -78,10 +86,9 @@ export class StypRuleRefs<TRefMap extends StypRuleRefs.Struct<TRefMap>> implemen
 /**
  * @internal
  */
-function flattenProperties<TRefMap extends StypRuleRefs.Struct<TRefMap>>(
-    propertiesMap: { readonly [name: string]: [StypProperties<any>] },
-): TRefMap {
-
+function flattenProperties<TRefMap extends StypRuleRefs.Struct<TRefMap>>(propertiesMap: {
+  readonly [name: string]: [StypProperties<any>];
+}): TRefMap {
   const result: { [name: string]: StypProperties<any> } = {};
 
   for (const name of Object.keys(propertiesMap)) {
@@ -95,7 +102,6 @@ function flattenProperties<TRefMap extends StypRuleRefs.Struct<TRefMap>>(
  * @category CSS Rule
  */
 export namespace StypRuleRefs {
-
   /**
    * A map of named CSS properties structures.
    *
@@ -117,5 +123,4 @@ export namespace StypRuleRefs {
   export type Referrers<TRefMap extends Struct<TRefMap>> = {
     readonly [K in keyof TRefMap]: RefStypRule<TRefMap[K]>;
   };
-
 }

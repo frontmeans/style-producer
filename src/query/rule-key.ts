@@ -14,12 +14,8 @@ export type StypRuleKey = [] | StypRuleKey.Nested;
  * @category CSS Rule
  */
 export namespace StypRuleKey {
-
   /**
    * A key of nested CSS rule within its parent.
    */
-  export type Nested =
-      | [DoqryPicker.Part]
-      | [DoqryCombinator, DoqryPicker.Part];
-
+  export type Nested = [DoqryPicker.Part] | [DoqryCombinator, DoqryPicker.Part];
 }

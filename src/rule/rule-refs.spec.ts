@@ -8,7 +8,6 @@ import { RefStypRule } from './rule-ref';
 import { StypRuleRefs } from './rule-refs';
 
 describe('StypRuleRefs', () => {
-
   interface Props {
     first: { $length: StypLength };
     second: { $angle: StypAngle };
@@ -24,11 +23,11 @@ describe('StypRuleRefs', () => {
 
   beforeEach(() => {
     refs = StypRuleRefs.by<Props>(
-        {
-          first: RefStypRule.by({ c: 'first' }, { $length: StypLength.zero }),
-          second: RefStypRule.by({ c: 'second' }, { $angle: StypAngle.zero }),
-        },
-        root,
+      {
+        first: RefStypRule.by({ c: 'first' }, { $length: StypLength.zero }),
+        second: RefStypRule.by({ c: 'second' }, { $angle: StypAngle.zero }),
+      },
+      root,
     );
   });
 
@@ -39,7 +38,6 @@ describe('StypRuleRefs', () => {
 
   describe('read', () => {
     it('reads properties', () => {
-
       const mockMapReceiver = jest.fn<(props: Props) => void>();
 
       refs.read.do(onceAfter)(mockMapReceiver);

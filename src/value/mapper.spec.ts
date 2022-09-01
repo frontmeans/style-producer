@@ -1,12 +1,18 @@
 import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { Mock } from 'jest-mock';
 import { StypMapper } from './mapper';
-import { StypFrequency, StypFrequencyPt, StypLength, StypLengthPt, StypTime, StypTimePt } from './unit';
+import {
+  StypFrequency,
+  StypFrequencyPt,
+  StypLength,
+  StypLengthPt,
+  StypTime,
+  StypTimePt,
+} from './unit';
 import { StypValue } from './value';
 
 describe('StypMapper', () => {
   describe('scalar mapping', () => {
-
     interface Result {
       $value: string;
     }
@@ -27,7 +33,6 @@ describe('StypMapper', () => {
       expect(StypMapper.map(mappings, { $value: StypLength.of(12, 'px') })).toEqual(mappings);
     });
     it('retains scalar value of the same type', () => {
-
       const initial = { $value: 'initial' };
 
       expect(StypMapper.map(mappings, initial)).toEqual(initial);
@@ -35,7 +40,6 @@ describe('StypMapper', () => {
   });
 
   describe('unitless zero dimension kind mapping', () => {
-
     interface Result {
       $value?: StypLength | undefined;
     }
@@ -59,19 +63,16 @@ describe('StypMapper', () => {
       expect(StypMapper.map<Result>(mappings, { $value: StypLengthPt.of(10, '%') })).toEqual({});
     });
     it('retains same-dimension value', () => {
-
       const initial = { $value: StypLength.of(10, 'px') };
 
       expect(StypMapper.map<Result>(mappings, initial)).toEqual(initial);
     });
     it('retains compatible non-percent value', () => {
-
       const initial = { $value: StypLengthPt.of(10, 'px') };
 
       expect(StypMapper.map<Result>(mappings, initial)).toEqual(initial);
     });
     it('retains compatible percent value', () => {
-
       interface ResultPt {
         $value?: StypLengthPt | undefined;
       }
@@ -81,7 +82,6 @@ describe('StypMapper', () => {
       expect(StypMapper.map<ResultPt>({ $value: StypLengthPt }, initial)).toEqual(initial);
     });
     it('retains zero value', () => {
-
       const initial = { $value: StypTime.zero };
 
       expect(StypMapper.map<Result>(mappings, initial)).toEqual({ $value: StypLength.zero });
@@ -89,7 +89,6 @@ describe('StypMapper', () => {
   });
 
   describe('unit zero dimension kind mapping', () => {
-
     interface Result {
       $value?: StypFrequency | undefined;
     }
@@ -113,19 +112,16 @@ describe('StypMapper', () => {
       expect(StypMapper.map<Result>(mappings, { $value: StypFrequencyPt.of(10, '%') })).toEqual({});
     });
     it('retains same-dimension value', () => {
-
       const initial = { $value: StypFrequency.of(10, 'kHz') };
 
       expect(StypMapper.map<Result>(mappings, initial)).toEqual(initial);
     });
     it('retains compatible non-percent value', () => {
-
       const initial = { $value: StypFrequencyPt.of(10, 'kHz') };
 
       expect(StypMapper.map<Result>(mappings, initial)).toEqual(initial);
     });
     it('retains compatible percent value', () => {
-
       interface ResultPt {
         $value?: StypFrequencyPt | undefined;
       }
@@ -135,7 +131,6 @@ describe('StypMapper', () => {
       expect(StypMapper.map<ResultPt>({ $value: StypFrequencyPt }, initial)).toEqual(initial);
     });
     it('retains zero value', () => {
-
       const initial = { $value: StypTime.zero };
 
       expect(StypMapper.map<Result>(mappings, initial)).toEqual({ $value: StypFrequency.zero });
@@ -143,7 +138,6 @@ describe('StypMapper', () => {
   });
 
   describe('dimension mapping', () => {
-
     interface Result {
       $value: StypLength;
     }
@@ -164,7 +158,6 @@ describe('StypMapper', () => {
       expect(StypMapper.map(mappings, { $value: StypTime.of(12, 'ms') })).toEqual(mappings);
     });
     it('retains structured value of the same type', () => {
-
       const initial = { $value: StypLength.of(1, 'em') };
 
       expect(StypMapper.map(mappings, initial)).toEqual(initial);
@@ -172,23 +165,22 @@ describe('StypMapper', () => {
   });
 
   describe('mapping function', () => {
-
     interface Result {
       $value1?: StypLength | undefined;
       $value2: StypLength;
     }
 
     let mappings: StypMapper.Mappings<Result>;
-    let mockMapper1: Mock<(
+    let mockMapper1: Mock<
+      (
         source: StypValue,
         mapped: StypMapper.Mapped<Result>,
         key: keyof Result,
-    ) => StypLength | undefined>;
-    let mockMapper2: Mock<(
-        source: StypValue,
-        mapped: StypMapper.Mapped<Result>,
-        key: keyof Result,
-    ) => StypLength>;
+      ) => StypLength | undefined
+    >;
+    let mockMapper2: Mock<
+      (source: StypValue, mapped: StypMapper.Mapped<Result>, key: keyof Result) => StypLength
+    >;
 
     beforeEach(() => {
       mockMapper1 = jest.fn();
@@ -201,13 +193,10 @@ describe('StypMapper', () => {
 
     it('maps value', () => {
       expect(
-          StypMapper.map<Result>(
-              mappings,
-              {
-                $value1: 'init1',
-                $value2: 'init2',
-              },
-          ),
+        StypMapper.map<Result>(mappings, {
+          $value1: 'init1',
+          $value2: 'init2',
+        }),
       ).toEqual({
         $value2: StypLength.zero,
       });
@@ -217,13 +206,10 @@ describe('StypMapper', () => {
     it('grants access to mapped values', () => {
       mockMapper1.mockImplementation((_from, mapped) => mapped.get('$value2'));
       expect(
-          StypMapper.map<Result>(
-              mappings,
-              {
-                $value1: 'init1',
-                $value2: 'init2',
-              },
-          ),
+        StypMapper.map<Result>(mappings, {
+          $value1: 'init1',
+          $value2: 'init2',
+        }),
       ).toEqual({
         $value1: StypLength.zero,
         $value2: StypLength.zero,
@@ -237,12 +223,15 @@ describe('StypMapper', () => {
 
   describe('by', () => {
     it('creates mapper function', () => {
-
       interface Result {
         $value: string;
       }
 
-      const mapping: StypMapper.Mappings<Result> = { $value(from) { return `${from}!`; } };
+      const mapping: StypMapper.Mappings<Result> = {
+        $value(from) {
+          return `${from}!`;
+        },
+      };
       const mapper = StypMapper.by(mapping);
 
       expect(mapper({ $value: 'value' })).toEqual({ $value: 'value!' });

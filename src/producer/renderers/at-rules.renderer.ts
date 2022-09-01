@@ -14,11 +14,9 @@ import { FIRST_RENDER_ORDER } from './renderer.impl';
  */
 class AtRulesRenderer implements StypRenderer.Spec {
 
-  constructor(private readonly _rule: StypRule) {
-  }
+  constructor(private readonly _rule: StypRule) {}
 
   read(properties: AfterEvent<[StypProperties]>): AfterEvent<[StypProperties]> {
-
     let outer = this._rule.outer;
 
     while (outer) {
@@ -30,7 +28,6 @@ class AtRulesRenderer implements StypRenderer.Spec {
   }
 
   render(producer: StyleProducer, properties: StypProperties): void {
-
     const { selector } = producer;
     let { writer } = producer;
 
@@ -52,7 +49,6 @@ class AtRulesRenderer implements StypRenderer.Spec {
     const [atSelectors, restSelector] = extracted;
 
     for (const atSelector of atSelectors) {
-
       const [name, params] = buildAtSelector(properties, atSelector);
 
       if (params) {
@@ -73,10 +69,9 @@ class AtRulesRenderer implements StypRenderer.Spec {
  * @internal
  */
 function buildAtSelector(
-    properties: StypProperties,
-    [key, [names, customQuery]]: [string, [Set<string>, string?]],
+  properties: StypProperties,
+  [key, [names, customQuery]]: [string, [Set<string>, string?]],
 ): [string, string?] {
-
   let query = '';
   const addQuery = (q?: StypValue): void => {
     if (q) {
@@ -88,7 +83,6 @@ function buildAtSelector(
   };
 
   for (const name of names) {
-
     const [namedQuery] = stypSplitPriority(properties[name]);
 
     addQuery(namedQuery);
@@ -126,13 +120,11 @@ function buildAtSelector(
  * @category Rendering
  */
 export const stypRenderAtRules: StypRenderer = {
-
   order: FIRST_RENDER_ORDER,
 
   create(rule) {
     return new AtRulesRenderer(rule);
   },
-
 };
 
 /**
@@ -140,23 +132,25 @@ export const stypRenderAtRules: StypRenderer = {
  */
 function onlyAtProperties(properties: StypProperties): StypProperties {
   return itsReduction(
-      filterIt<ObjectEntry<StypProperties>, ObjectEntry<StypProperties, string>>(
-          overEntries(properties),
-          isAtEntry,
-      ),
-      (result: StypProperties.Mutable, [key, value]: ObjectEntry<StypProperties, string>) => {
-        result[key] = value;
+    filterIt<ObjectEntry<StypProperties>, ObjectEntry<StypProperties, string>>(
+      overEntries(properties),
+      isAtEntry,
+    ),
+    (result: StypProperties.Mutable, [key, value]: ObjectEntry<StypProperties, string>) => {
+      result[key] = value;
 
-        return result;
-      },
-      {},
+      return result;
+    },
+    {},
   );
 }
 
 /**
  * @internal
  */
-function isAtEntry(entry: ObjectEntry<StypProperties>): entry is ObjectEntry<StypProperties, string> {
+function isAtEntry(
+  entry: ObjectEntry<StypProperties>,
+): entry is ObjectEntry<StypProperties, string> {
   return String(entry[0])[0] === '@';
 }
 
@@ -164,9 +158,8 @@ function isAtEntry(entry: ObjectEntry<StypProperties>): entry is ObjectEntry<Sty
  * @internal
  */
 function extractAtSelectors(
-    selector: DoqryPicker,
+  selector: DoqryPicker,
 ): [Map<string, [Set<string>, string?]>, DoqryPicker] | undefined {
-
   const atSelectors = new Map<string, [Set<string>, string?]>();
   const rest: DoqryPicker.Mutable = [];
 
@@ -189,10 +182,9 @@ function extractAtSelectors(
  * @internal
  */
 function extractPartAtSelectors(
-    part: DoqryPicker.Part,
-    atSelectors: Map<string, [Set<string>, string?]>,
+  part: DoqryPicker.Part,
+  atSelectors: Map<string, [Set<string>, string?]>,
 ): DoqryPicker.Part {
-
   const qualifiers = part.$;
 
   if (!qualifiers) {
@@ -223,7 +215,6 @@ function extractPartAtSelectors(
  * @internal
  */
 function addAtSelector(atSelectors: Map<string, [Set<string>, string?]>, qualifier: string): void {
-
   const eqIdx = qualifier.indexOf('=');
   let name: string;
   let query: string | undefined;
@@ -242,7 +233,6 @@ function addAtSelector(atSelectors: Map<string, [Set<string>, string?]>, qualifi
   if (!atSelector) {
     atSelectors.set(key, [new Set<string>().add(name), query]);
   } else {
-
     const [names, prevQuery] = atSelector;
 
     names.add(name);

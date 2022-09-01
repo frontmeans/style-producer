@@ -13,7 +13,6 @@ import { StypWriter } from '../writer';
  * @category Rendering
  */
 export interface StypTextFormat extends StypFormat, StypTextFormatConfig {
-
   /**
    * Detailed configuration of CSS text pretty print, or `false` for compact output.
    */
@@ -25,7 +24,6 @@ export interface StypTextFormat extends StypFormat, StypTextFormatConfig {
    * Sends textual representation of each rendered style sheet on each update.
    */
   readonly onSheet: OnEvent<[StypSheetText]>;
-
 }
 
 /**
@@ -34,7 +32,6 @@ export interface StypTextFormat extends StypFormat, StypTextFormatConfig {
  * @category Rendering
  */
 export interface StypTextFormatConfig extends StypFormatConfig {
-
   /**
    * DOM rendering operations scheduler.
    *
@@ -52,28 +49,23 @@ export interface StypTextFormatConfig extends StypFormatConfig {
    * - {@link StypTextFormatConfig.PrettyPrint detailed configuration object}.
    */
   readonly pretty?: boolean | StypTextFormatConfig.PrettyPrint | undefined;
-
 }
 
 /**
  * @category Rendering
  */
 export namespace StypTextFormatConfig {
-
   /**
    * Detailed configuration of CSS text pretty print.
    */
   export interface PrettyPrint {
-
     /**
      * Indentation string to use when formatting CSS text.
      *
      * Two spaces by default.
      */
     indent?: string | undefined;
-
   }
-
 }
 
 /**
@@ -84,7 +76,6 @@ export namespace StypTextFormatConfig {
  * @category Rendering
  */
 export interface StypSheetText {
-
   /**
    * Unique style sheet identifier.
    *
@@ -97,7 +88,6 @@ export interface StypSheetText {
    * or `undefined` to inform that corresponding style sheet have been removed.
    */
   readonly css?: string | undefined;
-
 }
 
 /**
@@ -134,11 +124,7 @@ const compactStypTextFormatter: StypTextFormatter = {
  */
 class StypTextFormatter$ implements StypTextFormatter {
 
-  constructor(
-      private readonly _config: StypTextFormatConfig.PrettyPrint,
-      readonly pre = '',
-  ) {
-  }
+  constructor(private readonly _config: StypTextFormatConfig.PrettyPrint, readonly pre = '') {}
 
   get nv(): string {
     return ' ';
@@ -162,10 +148,7 @@ class StypStyleTextWriter implements StypWriter.Style {
   private readonly nf: StypTextFormatter;
   private body = '';
 
-  constructor(
-      private readonly f: StypTextFormatter,
-      readonly selector: string,
-  ) {
+  constructor(private readonly f: StypTextFormatter, readonly selector: string) {
     this.nf = f.indent();
   }
 
@@ -174,7 +157,6 @@ class StypStyleTextWriter implements StypWriter.Style {
   }
 
   set(name: string, value: string, priority: number): void {
-
     const p = priority >= StypPriority.Important ? ' !important' : '';
     const { pre, nv, eol } = this.nf;
 
@@ -193,11 +175,9 @@ class StypStyleTextWriter implements StypWriter.Style {
   }
 
   toString(): string {
-
     const { pre, nv, eol } = this.f;
 
     if (this.body) {
-
       const afterBody = eol ? `;${eol}` : '';
 
       return `${pre}${this.selector}${nv}{${eol}${this.body}${afterBody}${pre}}`;
@@ -215,8 +195,7 @@ abstract class AbstractStypGroupTextWriter implements StypWriter.Group {
 
   readonly _nested: unknown[] = [];
 
-  protected constructor(readonly nf: StypTextFormatter) {
-  }
+  protected constructor(readonly nf: StypTextFormatter) {}
 
   get isGroup(): true {
     return true;
@@ -231,11 +210,9 @@ abstract class AbstractStypGroupTextWriter implements StypWriter.Group {
   }
 
   toString(): string {
-
     let out = '';
 
     for (const nested of this._nested) {
-
       const text = String(nested);
 
       if (text) {
@@ -267,7 +244,6 @@ class StypGroupTextWriter extends AbstractStypGroupTextWriter implements StypWri
   }
 
   toString(): string {
-
     const body = super.toString();
 
     if (!body) {
@@ -287,9 +263,9 @@ class StypGroupTextWriter extends AbstractStypGroupTextWriter implements StypWri
 class StypSheetTextWriter extends AbstractStypGroupTextWriter implements StypWriter.Sheet {
 
   constructor(
-      readonly id: string,
-      readonly f: StypTextFormatter,
-      readonly sender: EventEmitter<[StypSheetText]>,
+    readonly id: string,
+    readonly f: StypTextFormatter,
+    readonly sender: EventEmitter<[StypSheetText]>,
   ) {
     super(f);
   }
@@ -328,13 +304,13 @@ class StypSheetTextWriter extends AbstractStypGroupTextWriter implements StypWri
  * @returns Textual CSS production format.
  */
 export function stypTextFormat(config: StypTextFormatConfig = {}): StypTextFormat {
-
-  const pretty: StypTextFormatConfig.PrettyPrint | false = config.pretty === true || config.pretty == null
-      ? defaultPrettyPrint
-      : (config.pretty || false);
+  const pretty: StypTextFormatConfig.PrettyPrint | false
+    = config.pretty === true || config.pretty == null ? defaultPrettyPrint : config.pretty || false;
   const { scheduler = immediateRenderScheduler } = config;
   const sender = new EventEmitter<[StypSheetText]>();
-  const formatter: StypTextFormatter = pretty ? new StypTextFormatter$(pretty) : compactStypTextFormatter;
+  const formatter: StypTextFormatter = pretty
+    ? new StypTextFormatter$(pretty)
+    : compactStypTextFormatter;
   let idSeq = 0;
 
   return {

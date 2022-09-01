@@ -23,16 +23,13 @@ import { StypRuleList$ } from './rules.impl';
  * @category CSS Rule
  */
 export interface StypRules extends Iterable<StypRule>, EventSender<[StypRule[], StypRule[]]> {
-
   [Symbol.iterator](): IterableIterator<StypRule>;
-
 }
 
 /**
  * @category CSS Rule
  */
 export namespace StypRules {
-
   /**
    * A source of CSS rules.
    *
@@ -52,24 +49,23 @@ export namespace StypRules {
    *   The function will be called lazily upon rules access.
    */
   export type Source =
-      | StypRule
-      | StypRules
-      | Promise<StypRule | StypRules>
-      | ((this: void) => StypRule | StypRules | Promise<StypRule | StypRules>);
-
+    | StypRule
+    | StypRules
+    | Promise<StypRule | StypRules>
+    | ((this: void) => StypRule | StypRules | Promise<StypRule | StypRules>);
 }
 
 /**
  * @internal
  */
-const noStypRules: StypRuleList = (/*#__PURE__*/ new StypRuleList$({
+const noStypRules: StypRuleList = /*#__PURE__*/ new StypRuleList$({
   [OnEvent__symbol]() {
     return onNever;
   },
   [Symbol.iterator](): IterableIterator<StypRule> {
     return [][Symbol.iterator]();
   },
-}));
+});
 
 /**
  * Constructs dynamically updated CSS rule list out of rule sources.
@@ -120,7 +116,6 @@ function lazyRulesFromSource(source: StypRules.Source): StypRules {
  */
 function rulesByList(sources: StypRules[]): StypRuleList {
   if (sources.length === 1) {
-
     const source = sources[0];
 
     return source instanceof StypRuleList ? source : new StypRuleList$(source);
@@ -135,11 +130,11 @@ function rulesByList(sources: StypRules[]): StypRuleList {
     [OnEvent__symbol](): OnEvent<[StypRule[], StypRule[]]> {
       return onEventBy<[StypRule[], StypRule[]]>(receiver => {
         sources.forEach(source => onSupplied(source)({
-          supply: new Supply().needs(receiver.supply),
-          receive(context, added, removed) {
-            receiver.receive(context, added, removed);
-          },
-        }));
+            supply: new Supply().needs(receiver.supply),
+            receive(context, added, removed) {
+              receiver.receive(context, added, removed);
+            },
+          }));
       }).do(shareOn);
     },
   });
@@ -148,8 +143,9 @@ function rulesByList(sources: StypRules[]): StypRuleList {
 /**
  * @internal
  */
-function evalRules(source: (this: void) => StypRule | StypRules | Promise<StypRule | StypRules>): StypRules {
-
+function evalRules(
+  source: (this: void) => StypRule | StypRules | Promise<StypRule | StypRules>,
+): StypRules {
   let rules: StypRules | undefined;
   const getRules = (): StypRules => rules || (rules = rulesByValue(source()));
 
@@ -166,11 +162,11 @@ function evalRules(source: (this: void) => StypRule | StypRules | Promise<StypRu
 /**
  * @internal
  */
-function lazyRules(source: (this: void) => StypRule | StypRules | Promise<StypRule | StypRules>): StypRules {
-
+function lazyRules(
+  source: (this: void) => StypRule | StypRules | Promise<StypRule | StypRules>,
+): StypRules {
   const ruleSet = new Set<StypRule>();
   const onEvent = onEventBy<[StypRule[], StypRule[]]>(receiver => {
-
     const rules = rulesByValue(source());
 
     reportExistingRules(rules, ruleSet, receiver);
@@ -198,43 +194,41 @@ function lazyRules(source: (this: void) => StypRule | StypRules | Promise<StypRu
  * @internal
  */
 function rulesByValue(source: StypRule | StypRules | Promise<StypRule | StypRules>): StypRules {
-  return source instanceof StypRule ? source.rules.self : isEventSender(source) ? source : asyncRules(source);
+  return source instanceof StypRule
+    ? source.rules.self
+    : isEventSender(source)
+    ? source
+    : asyncRules(source);
 }
 
 /**
  * @internal
  */
 function asyncRules(source: Promise<StypRule | StypRules>): StypRules {
-
   const ruleSet = new Set<StypRule>();
   const onEvent = onEventBy<[StypRule[], StypRule[]]>(receiver => {
-
     let sourceSupply = neverSupply();
     const { supply } = receiver;
 
-    supply.cuts(sourceSupply)
-        .whenOff(() => ruleSet.clear());
+    supply.cuts(sourceSupply).whenOff(() => ruleSet.clear());
 
-    source.then(
-        resolution => {
-          if (!supply.isOff) {
+    source
+      .then(resolution => {
+        if (!supply.isOff) {
+          const rules = resolution instanceof StypRule ? resolution.rules : resolution;
 
-            const rules = resolution instanceof StypRule ? resolution.rules : resolution;
+          reportExistingRules(rules, ruleSet, receiver);
 
-            reportExistingRules(rules, ruleSet, receiver);
-
-            sourceSupply = onSupplied(rules)({
-              receive(context, added, removed) {
-                removed.forEach(rule => ruleSet.delete(rule));
-                added.forEach(rule => ruleSet.add(rule));
-                receiver.receive(context, added, removed);
-              },
-            }).needs(supply);
-          }
-        },
-    ).catch(
-        error => supply.off(error),
-    );
+          sourceSupply = onSupplied(rules)({
+            receive(context, added, removed) {
+              removed.forEach(rule => ruleSet.delete(rule));
+              added.forEach(rule => ruleSet.add(rule));
+              receiver.receive(context, added, removed);
+            },
+          }).needs(supply);
+        }
+      })
+      .catch(error => supply.off(error));
   }).do(shareOn);
 
   return {
@@ -251,11 +245,10 @@ function asyncRules(source: Promise<StypRule | StypRules>): StypRules {
  * @internal
  */
 function reportExistingRules(
-    rules: StypRules,
-    ruleSet: Set<StypRule>,
-    receiver: EventReceiver.Generic<[StypRule[], StypRule[]]>,
+  rules: StypRules,
+  ruleSet: Set<StypRule>,
+  receiver: EventReceiver.Generic<[StypRule[], StypRule[]]>,
 ): void {
-
   const existing: StypRule[] = [];
 
   itsEach(rules, rule => {
@@ -263,7 +256,6 @@ function reportExistingRules(
     ruleSet.add(rule);
   });
   if (existing.length) {
-
     const dispatcher = new EventNotifier<[StypRule[], StypRule[]]>();
 
     dispatcher.on(receiver);

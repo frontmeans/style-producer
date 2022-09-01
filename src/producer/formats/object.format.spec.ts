@@ -11,7 +11,6 @@ import { produceStyle } from '../produce-style';
 import { stypObjectFormat } from './object.format';
 
 describe('stypObjectFormat', () => {
-
   let root: StypRule;
   let done: Supply;
 
@@ -24,7 +23,6 @@ describe('stypObjectFormat', () => {
   });
 
   describe('scheduler', () => {
-
     let rafSpy: SpyInstance<Window['requestAnimationFrame']>;
     let operations: ((time: number) => void)[];
 
@@ -45,28 +43,19 @@ describe('stypObjectFormat', () => {
   });
 
   it('supplies `document.head` as `node` to scheduler', () => {
-
     const scheduler = jest.fn<RenderScheduler>(() => noop);
 
-    produceBasicStyle(
-        root.rules,
-        stypObjectFormat({ scheduler }),
-    ).needs(done);
+    produceBasicStyle(root.rules, stypObjectFormat({ scheduler })).needs(done);
     expect(scheduler).toHaveBeenCalledWith({ node: document.head });
   });
   it('supplies the given `parent` as `node` to scheduler', () => {
-
     const parent = document.createElement('div');
     const scheduler = jest.fn<RenderScheduler>(() => noop);
 
-    produceBasicStyle(
-        root.rules,
-        stypObjectFormat({ parent, scheduler }),
-    ).needs(done);
+    produceBasicStyle(root.rules, stypObjectFormat({ parent, scheduler })).needs(done);
     expect(scheduler).toHaveBeenCalledWith({ node: parent });
   });
   it('supplies `error` option', () => {
-
     const scheduler = jest.fn(immediateRenderScheduler);
     const format = stypObjectFormat({ scheduler });
 
@@ -74,7 +63,9 @@ describe('stypObjectFormat', () => {
     const schedule = format.scheduler!(scheduleOpts);
     const error = new Error('test');
 
-    schedule(() => { throw error; });
+    schedule(() => {
+      throw error;
+    });
 
     expect(scheduleOpts.error).toHaveBeenCalledWith(error);
   });
@@ -97,11 +88,13 @@ describe('stypObjectFormat', () => {
     expect(rule1.media.mediaText).toBe('screen');
   });
   it('renders at-rule', () => {
-
     // Media rules are not fully implemented in CSSOM
-    const setProperty = jest.fn<(property: string, value: string | null, priority?: string) => void>();
+    const setProperty
+      = jest.fn<(property: string, value: string | null, priority?: string) => void>();
 
-    CSSMediaRule.prototype.insertRule = function (this: { cssRules: { style: Partial<CSSStyleDeclaration> }[] }) {
+    CSSMediaRule.prototype.insertRule = function (this: {
+      cssRules: { style: Partial<CSSStyleDeclaration> }[];
+    }) {
       this.cssRules = [{ style: { setProperty } }];
 
       return 0;

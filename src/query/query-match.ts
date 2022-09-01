@@ -12,10 +12,9 @@ import { stypQuery, StypQuery } from './query';
  * @returns `true` if `selector` matches the `query`, or `false` otherwise.
  */
 export function stypQueryMatch(
-    selector: DoqrySelector | DoqryPureSelector,
-    query: StypQuery,
+  selector: DoqrySelector | DoqryPureSelector,
+  query: StypQuery,
 ): boolean {
-
   const picker = doqryPicker(selector);
 
   if (!picker.length) {
@@ -46,8 +45,8 @@ export function stypQueryMatch(
 }
 
 function StypQuery$classesMatch(
-    classes: readonly QualifiedName[] | undefined,
-    query: readonly QualifiedName[],
+  classes: readonly QualifiedName[] | undefined,
+  query: readonly QualifiedName[],
 ): boolean | undefined {
   return classes && query.every(qClass => classes.find(mClass => namesEqual(qClass, mClass)));
 }

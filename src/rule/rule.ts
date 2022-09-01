@@ -1,5 +1,11 @@
 import { DoqryPicker, DoqrySelector } from '@frontmeans/doqry';
-import { AfterEvent, AfterEvent__symbol, EventKeeper, OnEvent, OnEvent__symbol } from '@proc7ts/fun-events';
+import {
+  AfterEvent,
+  AfterEvent__symbol,
+  EventKeeper,
+  OnEvent,
+  OnEvent__symbol,
+} from '@proc7ts/fun-events';
 import { StypQuery, StypRuleKey } from '../query';
 import { StypProperties } from './properties';
 import { StypRules } from './rules';

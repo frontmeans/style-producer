@@ -13,7 +13,6 @@ import { NamespaceDef, QualifiedName } from '@frontmeans/namespace-aliaser';
  * @category CSS Rule
  */
 export interface StypQuery {
-
   /**
    * Element namespace.
    */
@@ -40,27 +39,22 @@ export interface StypQuery {
    * Qualifier or qualifiers.
    */
   readonly $?: string | readonly string[] | undefined;
-
 }
 
 /**
  * @category CSS Rule
  */
 export namespace StypQuery {
-
   /**
    * Normalized CSS rule query.
    */
   export type Normalized = DoqryPicker.Part;
-
 }
 
-const StypQuery__symbol = (/*#__PURE__*/ Symbol('StypQuery'));
+const StypQuery__symbol = /*#__PURE__*/ Symbol('StypQuery');
 
 interface StypQuery$Normalizable extends StypQuery {
-
   [StypQuery__symbol]?: (StypQuery & DoqryPicker.Part) | undefined;
-
 }
 
 class StypQuery$Normalized implements StypQuery.Normalized {

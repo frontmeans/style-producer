@@ -14,26 +14,25 @@ export type StypFrequency = StypNumeric<StypFrequency.Unit, StypDimension<StypFr
  * @category CSS Value
  */
 export namespace StypFrequency {
-
   /**
    * Supported frequency units, excluding percent.
    */
   export type Unit = 'Hz' | 'kHz';
-
 }
 
 /**
  * @category CSS Value
  */
-export const StypFrequency: StypDimension.Kind.UnitZero<StypFrequency.Unit> = (/*#__PURE__*/ unitZeroDimensionKind({
-  zeroUnit: 'kHz',
-  withPercent() {
-    return StypFrequencyPt;
-  },
-  noPercent() {
-    return StypFrequency;
-  },
-}));
+export const StypFrequency: StypDimension.Kind.UnitZero<StypFrequency.Unit>
+  /*#__PURE__*/ = unitZeroDimensionKind({
+    zeroUnit: 'kHz',
+    withPercent() {
+      return StypFrequencyPt;
+    },
+    noPercent() {
+      return StypFrequency;
+    },
+  });
 
 /**
  * Structured [frequency-percentage](https://developer.mozilla.org/en-US/docs/Web/CSS/frequency-percentage) CSS
@@ -43,29 +42,31 @@ export const StypFrequency: StypDimension.Kind.UnitZero<StypFrequency.Unit> = (/
  *
  * @category CSS Value
  */
-export type StypFrequencyPt = StypNumeric<StypFrequencyPt.Unit, StypDimension<StypFrequencyPt.Unit>>;
+export type StypFrequencyPt = StypNumeric<
+  StypFrequencyPt.Unit,
+  StypDimension<StypFrequencyPt.Unit>
+>;
 
 /**
  * @category CSS Value
  */
 export namespace StypFrequencyPt {
-
   /**
    * Supported frequency units, including percent.
    */
   export type Unit = StypFrequency.Unit | '%';
-
 }
 
 /**
  * @category CSS Value
  */
-export const StypFrequencyPt: StypDimension.Kind.UnitZero<StypFrequencyPt.Unit> = (/*#__PURE__*/ unitZeroDimensionKind({
-  zeroUnit: 'kHz',
-  withPercent() {
-    return StypFrequencyPt;
-  },
-  noPercent() {
-    return StypFrequency;
-  },
-}));
+export const StypFrequencyPt: StypDimension.Kind.UnitZero<StypFrequencyPt.Unit>
+  /*#__PURE__*/ = unitZeroDimensionKind({
+    zeroUnit: 'kHz',
+    withPercent() {
+      return StypFrequencyPt;
+    },
+    noPercent() {
+      return StypFrequency;
+    },
+  });

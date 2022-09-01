@@ -74,7 +74,6 @@ class StypRule$AllRules extends StypRuleHierarchy implements PushIterable<StypRu
   }
 
   private _get(selector: DoqryPicker): StypRule$ | undefined {
-
     const [key, tail] = stypRuleKeyAndTail(selector);
 
     if (!tail) {
@@ -91,20 +90,20 @@ class StypRule$AllRules extends StypRuleHierarchy implements PushIterable<StypRu
   }
 
   watch(selector: DoqrySelector): AfterEvent<[StypProperties]> {
-
     const request = doqryPicker(selector);
 
     return afterEventBy<[StypProperties]>(receiver => {
-
       const tracker = trackValue<StypProperties>({});
-      const propertiesSupply = this.read.do(consumeEvents(() => {
+      const propertiesSupply = this.read.do(
+        consumeEvents(() => {
+          const found = this._get(request);
 
-        const found = this._get(request);
-
-        return found && found
-            .read(properties => tracker.it = properties)
-            .whenOff(() => tracker.it = {});
-      }));
+          return (
+            found
+            && found.read(properties => (tracker.it = properties)).whenOff(() => (tracker.it = {}))
+          );
+        }),
+      );
 
       return tracker.read(receiver).cuts(propertiesSupply);
     }).do(shareAfter);
@@ -118,7 +117,6 @@ class StypRule$AllRules extends StypRuleHierarchy implements PushIterable<StypRu
   }
 
   _remove(reason?: unknown): void {
-
     const removed = itsElements(this);
 
     this._updates.send([], removed);
@@ -131,16 +129,17 @@ class StypRule$AllRules extends StypRuleHierarchy implements PushIterable<StypRu
 }
 
 function StypRuleList$self(rule: StypRule$, all: StypRule$AllRules): StypRuleList {
-
   const onUpdate = new EventEmitter<[StypRule$[], StypRule$[]]>();
   const rules = [rule];
 
-  all.onUpdate((_added, removed) => {
-    if (removed[0] === rule) {
-      rules.length = 0;
-      onUpdate.send([], [rule]);
-    }
-  }).cuts(onUpdate);
+  all
+    .onUpdate((_added, removed) => {
+      if (removed[0] === rule) {
+        rules.length = 0;
+        onUpdate.send([], [rule]);
+      }
+    })
+    .cuts(onUpdate);
 
   class Self implements StypRules {
 
@@ -152,18 +151,15 @@ function StypRuleList$self(rule: StypRule$, all: StypRule$AllRules): StypRuleLis
       return itsIterator(rules);
     }
 
-  }
+}
 
   return new StypRuleList$(new Self());
 }
 
 function StypRule$allRules(rule: StypRule$): PushIterable<StypRule$> {
   return overElementsOf(
-      overOne(rule),
-      flatMapIt(
-          rule.rules.nested,
-          nested => StypRule$allRules(nested),
-      ),
+    overOne(rule),
+    flatMapIt(rule.rules.nested, nested => StypRule$allRules(nested)),
   );
 }
 
@@ -239,7 +235,7 @@ export class StypRule$ extends StypRule {
 
     const outerSelector = stypOuterSelector(this.selector);
 
-    return this._outer = outerSelector && this.root.rules.get(outerSelector) || null;
+    return (this._outer = (outerSelector && this.root.rules.get(outerSelector)) || null);
   }
 
   get selector(): DoqryPicker {
@@ -259,10 +255,10 @@ export class StypRule$ extends StypRule {
   }
 
   constructor(
-      root: StypRule$ | undefined,
-      selector: DoqryPicker,
-      key: StypRuleKey,
-      spec: StypProperties.Builder = noStypPropertiesSpec,
+    root: StypRule$ | undefined,
+    selector: DoqryPicker,
+    key: StypRuleKey,
+    spec: StypProperties.Builder = noStypPropertiesSpec,
   ) {
     super();
     this._root = root || this;
@@ -288,12 +284,11 @@ export class StypRule$ extends StypRule {
 }
 
 function StypRule$extend(
-    rule: StypRule$,
-    targetSelector: DoqryPicker,
-    properties: StypProperties.Spec | undefined,
-    sendUpdate: boolean,
+  rule: StypRule$,
+  targetSelector: DoqryPicker,
+  properties: StypProperties.Spec | undefined,
+  sendUpdate: boolean,
 ): StypRule$ {
-
   const [key, tail] = stypRuleKeyAndTail(targetSelector);
 
   if (!tail) {
@@ -318,8 +313,10 @@ function StypRule$extend(
   return result;
 }
 
-function StypRule$extendSpec(rule: StypRule$, properties: StypProperties.Spec | undefined): StypProperties.Builder {
-
+function StypRule$extendSpec(
+  rule: StypRule$,
+  properties: StypProperties.Spec | undefined,
+): StypProperties.Builder {
   const oldSpec = rule._spec.it;
 
   if (!properties) {

@@ -41,7 +41,9 @@ export abstract class StypRuleRef<T extends StypProperties<T>> implements EventK
    *
    * @returns `this` rule instance.
    */
-  abstract set(properties?: Partial<StypProperties<T>> | EventKeeper<[Partial<StypProperties<T>>]>): this;
+  abstract set(
+    properties?: Partial<StypProperties<T>> | EventKeeper<[Partial<StypProperties<T>>]>,
+  ): this;
 
   /**
    * Appends CSS properties to the references CSS rule.
@@ -50,7 +52,9 @@ export abstract class StypRuleRef<T extends StypProperties<T>> implements EventK
    *
    * @returns `this` rule instance.
    */
-  abstract add(properties: Partial<StypProperties<T>> | EventKeeper<[Partial<StypProperties<T>>]>): this;
+  abstract add(
+    properties: Partial<StypProperties<T>> | EventKeeper<[Partial<StypProperties<T>>]>,
+  ): this;
 
   /**
    * Clears CSS properties of the referenced rule.
@@ -74,13 +78,12 @@ export abstract class StypRuleRef<T extends StypProperties<T>> implements EventK
  * @typeparam T  CSS properties interface of referenced rule.
  */
 export type RefStypRule<T extends StypProperties<T>> =
-/**
- * @param root - Root CSS rule the constructed reference will be relative to.
- *
- * @returns CSS rule reference.
- */
-    (this: void, root: StypRule) => StypRuleRef<T>;
-
+  /**
+   * @param root - Root CSS rule the constructed reference will be relative to.
+   *
+   * @returns CSS rule reference.
+   */
+  (this: void, root: StypRule) => StypRuleRef<T>;
 
 /**
  * @internal
@@ -90,20 +93,17 @@ class StypRuleRef$<T extends StypProperties<T>> extends StypRuleRef<T> {
   readonly read: AfterEvent<[T]>;
 
   constructor(
-      private readonly _root: StypRule,
-      private readonly _selector: DoqrySelector,
-      private readonly _map: (root: StypRule) => EventKeeper<[StypMapper.Mappings<T>]>,
+    private readonly _root: StypRule,
+    private readonly _selector: DoqrySelector,
+    private readonly _map: (root: StypRule) => EventKeeper<[StypMapper.Mappings<T>]>,
   ) {
     super();
     this.read = afterAll({
       ms: this._map(this._root),
       ps: this._root.rules.watch(this._selector),
-    }).do(mapAfter(
-        ({
-          ms: [_mappings],
-          ps: [_properties],
-        }) => StypMapper.map<T>(_mappings, _properties),
-    ));
+    }).do(
+      mapAfter(({ ms: [_mappings], ps: [_properties] }) => StypMapper.map<T>(_mappings, _properties)),
+    );
   }
 
   add(properties: EventKeeper<[Partial<StypProperties<T>>]> | Partial<StypProperties<T>>): this {
@@ -124,7 +124,6 @@ class StypRuleRef$<T extends StypProperties<T>> extends StypRuleRef<T> {
  * @category CSS Rule
  */
 export const RefStypRule = {
-
   /**
    * Constructs a CSS rule referrer that maps original CSS properties accordingly to the given `mappings`.
    *
@@ -137,13 +136,15 @@ export const RefStypRule = {
    * @returns New CSS rule key instance.
    */
   by<T extends StypProperties<T>>(
-      selector: DoqrySelector,
-      mappings:
-          | StypMapper.Mappings<T>
-          | EventKeeper<[StypMapper.Mappings<T>]>
-          | ((this: void, root: StypRule) => StypMapper.Mappings<T> | EventKeeper<[StypMapper.Mappings<T>]>),
+    selector: DoqrySelector,
+    mappings:
+      | StypMapper.Mappings<T>
+      | EventKeeper<[StypMapper.Mappings<T>]>
+      | ((
+          this: void,
+          root: StypRule,
+        ) => StypMapper.Mappings<T> | EventKeeper<[StypMapper.Mappings<T>]>),
   ): RefStypRule<T> {
-
     let map: (root: StypRule) => EventKeeper<[StypMapper.Mappings<T>]>;
 
     if (typeof mappings === 'function') {
@@ -154,14 +155,13 @@ export const RefStypRule = {
 
     return root => new StypRuleRef$(root, selector, map);
   },
-
 };
 
 /**
  * @internal
  */
 function mappingsKeeper<T extends StypProperties<T>>(
-    mappings: StypMapper.Mappings<T> | EventKeeper<[StypMapper.Mappings<T>]>,
+  mappings: StypMapper.Mappings<T> | EventKeeper<[StypMapper.Mappings<T>]>,
 ): EventKeeper<[StypMapper.Mappings<T>]> {
   return isEventKeeper(mappings) ? mappings : afterThe(mappings);
 }

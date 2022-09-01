@@ -1,7 +1,14 @@
 import { DoqryPicker, doqryPicker, DoqrySelector } from '@frontmeans/doqry';
 import { NamespaceDef } from '@frontmeans/namespace-aliaser';
 import { beforeEach, describe, expect, it, jest } from '@jest/globals';
-import { AfterEvent, afterSupplied, afterThe, onSupplied, trackValue, ValueTracker } from '@proc7ts/fun-events';
+import {
+  AfterEvent,
+  afterSupplied,
+  afterThe,
+  onSupplied,
+  trackValue,
+  ValueTracker,
+} from '@proc7ts/fun-events';
 import { noop } from '@proc7ts/primitives';
 import { itsEmpty } from '@proc7ts/push-iterator';
 import { Mock } from 'jest-mock';
@@ -10,7 +17,6 @@ import { stypRoot } from './root';
 import { StypRule, StypRuleList } from './rule';
 
 describe('StypRule', () => {
-
   let root: StypRule;
 
   beforeEach(() => {
@@ -32,52 +38,44 @@ describe('StypRule', () => {
       expect(root.outer).toBeNull();
     });
     it('is root for top-level descendant', () => {
-
       const nested = root.rules.add({ c: 'nested' });
 
       expect(nested.outer).toBe(root);
     });
     it('is root for top-level child', () => {
-
       const nested = root.rules.add(['>', { c: 'nested' }]);
 
       expect(nested.outer).toBe(root);
     });
     it('is `null` for top-level sibling', () => {
-
       const nested = root.rules.add(['+', { c: 'nested' }]);
 
       expect(nested.outer).toBeNull();
     });
     it('is parent for descendant', () => {
-
       const nested = rule.rules.add({ c: 'nested' });
 
       expect(nested.outer).toBe(rule);
       expect(rule.outer).toBe(root);
     });
     it('is parent for child', () => {
-
       const nested = rule.rules.add(['>', { c: 'nested' }]);
 
       expect(nested.outer).toBe(rule);
     });
     it('is grand parent for adjacent sibling', () => {
-
       const nested = rule.rules.add({ c: 'nested' });
       const sibling = nested.rules.add(['+', { c: 'sibling' }]);
 
       expect(sibling.outer).toBe(rule);
     });
     it('is grand parent for general sibling', () => {
-
       const nested = rule.rules.add({ c: 'nested' });
       const sibling = nested.rules.add(['~', { c: 'sibling' }]);
 
       expect(sibling.outer).toBe(rule);
     });
     it('handles multiple siblings', () => {
-
       const nested = rule.rules.add({ c: 'nested' });
       const sibling1 = nested.rules.add(['~', { c: 'sibling' }]);
       const sibling2 = sibling1.rules.add(['+', { c: 'sibling' }]);
@@ -85,7 +83,6 @@ describe('StypRule', () => {
       expect(sibling2.outer).toBe(rule);
     });
     it('caches the result', () => {
-
       const nested = rule.rules.add({ c: 'nested' });
 
       expect(nested.outer).toBe(nested.outer);
@@ -99,7 +96,6 @@ describe('StypRule', () => {
   });
 
   describe('read', () => {
-
     let properties: StypProperties;
 
     beforeEach(() => {
@@ -108,7 +104,6 @@ describe('StypRule', () => {
     });
 
     it('reads the spec', () => {
-
       const receiver = jest.fn();
 
       rule.read(receiver);
@@ -117,7 +112,6 @@ describe('StypRule', () => {
       expect(mockSpec).toHaveBeenCalledWith(rule);
     });
     it('reflects updates received while no property receivers registered', async () => {
-
       const tracker = trackValue<StypProperties>({ $rev: 1 });
 
       rule.set(tracker);
@@ -135,13 +129,11 @@ describe('StypRule', () => {
   });
 
   describe('set', () => {
-
     beforeEach(() => {
       rule = root.rules.add([{ e: 'element-1' }, '>', { e: 'element-1-1' }], { display: 'block' });
     });
 
     it('replaces properties', async () => {
-
       const replacement = { visibility: 'hidden' };
 
       rule.set(replacement);
@@ -150,7 +142,6 @@ describe('StypRule', () => {
   });
 
   describe('add', () => {
-
     beforeEach(() => {
       rule = root.rules.add([{ e: 'element-1' }, '>', { e: 'element-1-1' }]);
     });
@@ -170,7 +161,6 @@ describe('StypRule', () => {
       expect(await rule.read).toEqual(update.it);
     });
     it('merges updated properties', async () => {
-
       const update2: StypProperties = { width: '100%' };
 
       rule.add(update2);
@@ -178,7 +168,6 @@ describe('StypRule', () => {
       expect(await rule.read).toEqual({ ...update.it, ...update2 });
     });
     it('sends updated properties', () => {
-
       const receiver = jest.fn();
 
       rule.read(receiver);
@@ -227,7 +216,6 @@ describe('StypRule', () => {
         expect(rule.rules.get([])).toBe(rule);
       });
       it('returns target nested rule', () => {
-
         const nestedSelector: DoqrySelector = { c: 'nested' };
         const nested = rule.rules.add(nestedSelector);
 
@@ -237,7 +225,6 @@ describe('StypRule', () => {
 
     describe('add', () => {
       it('adds nested rule with combinator', () => {
-
         const subSelector = doqryPicker(['>', { c: 'nested' }]);
         const nested = rule.rules.add(subSelector);
 
@@ -249,7 +236,6 @@ describe('StypRule', () => {
         expect(root.rules.get(rule.selector)).toBe(rule);
       });
       it('merges updated properties', async () => {
-
         const initial = { $init: 'abstract-value.ts' };
 
         mockSpec.mockImplementation(() => trackValue(initial).read);
@@ -261,7 +247,6 @@ describe('StypRule', () => {
         expect(await rule.read).toEqual({ ...initial, ...update });
       });
       it('adds nested rule', async () => {
-
         const update2: StypProperties = { width: '100%' };
         const updated2 = rule.rules.add({ e: 'element-1-2' }, update2);
 
@@ -269,7 +254,6 @@ describe('StypRule', () => {
         expect(await updated2.read).toEqual(update2);
       });
       it('sends rule list update', () => {
-
         const updateReceiver = jest.fn<(added: StypRule[], removed: StypRule[]) => void>();
         const rootUpdateReceiver = jest.fn<(added: StypRule[], removed: StypRule[]) => void>();
 
@@ -291,7 +275,6 @@ describe('StypRule', () => {
         expect(addedToRoot).toBe(added);
       });
       it('sends nested list update', () => {
-
         const updateReceiver = jest.fn<(added: StypRule[], removed: StypRule[]) => void>();
         const rootUpdateReceiver = jest.fn<(added: StypRule[], removed: StypRule[]) => void>();
 
@@ -311,7 +294,6 @@ describe('StypRule', () => {
         expect(ruleSelectors(added)).toEqual([[...rule.selector, subSelector[0]]]);
       });
       it('updates rule list', () => {
-
         const listReceiver = jest.fn();
         const rootListReceiver = jest.fn();
 
@@ -325,10 +307,13 @@ describe('StypRule', () => {
 
         expect(listReceiver).toHaveBeenCalledWith(rule.rules);
         expect(rootListReceiver).toHaveBeenCalledWith(root.rules);
-        expect(ruleSelectors(rule.rules)).toEqual([rule.selector, [...rule.selector, subSelector[0]], nested.selector]);
+        expect(ruleSelectors(rule.rules)).toEqual([
+          rule.selector,
+          [...rule.selector, subSelector[0]],
+          nested.selector,
+        ]);
       });
       it('updates nested list', () => {
-
         const listReceiver = jest.fn();
         const rootListReceiver = jest.fn();
 
@@ -348,7 +333,6 @@ describe('StypRule', () => {
     });
 
     describe('grab', () => {
-
       let ns: NamespaceDef;
       let nested1: StypRule;
       let nested2: StypRule;
@@ -360,13 +344,11 @@ describe('StypRule', () => {
       });
 
       it('contains matching rules', () => {
-
         const list = rule.rules.grab({ c: 'nested' });
 
         expect(ruleSelectors(list)).toEqual([nested1.selector, nested2.selector]);
       });
       it('tracks matching rule addition', () => {
-
         const list = rule.rules.grab({ c: 'nested' });
         const onUpdate = jest.fn<(added: StypRule[], removed: StypRule[]) => void>();
         const receiver = jest.fn<(rules: StypRuleList) => void>();
@@ -387,7 +369,6 @@ describe('StypRule', () => {
         expect(ruleSelectors(list)).toEqual([nested1.selector, nested2.selector, nested3.selector]);
       });
       it('tracks matching rule removal', () => {
-
         const list = rule.rules.grab({ c: 'nested' });
         const onUpdate = jest.fn<(added: StypRule[], removed: StypRule[]) => void>();
         const receiver = jest.fn<(rules: StypRuleList) => void>();
@@ -408,7 +389,6 @@ describe('StypRule', () => {
         expect(ruleSelectors(list)).toEqual([nested1.selector]);
       });
       it('reflects, but does not track modification when supply is cut off', () => {
-
         const list = rule.rules.grab({ c: 'nested' });
         const onUpdate = jest.fn();
 
@@ -425,10 +405,14 @@ describe('StypRule', () => {
 
         expect(onUpdate).not.toHaveBeenCalled();
 
-        expect(ruleSelectors(list)).toEqual([nested1.selector, nested2.selector, nested3.selector, nested4.selector]);
+        expect(ruleSelectors(list)).toEqual([
+          nested1.selector,
+          nested2.selector,
+          nested3.selector,
+          nested4.selector,
+        ]);
       });
       it('ignores non-matching rule addition', () => {
-
         const list = rule.rules.grab({ c: 'nested' });
         const onUpdate = jest.fn();
         const receiver = jest.fn();
@@ -445,7 +429,6 @@ describe('StypRule', () => {
 
       describe('list grab', () => {
         it('grabs matching rules', () => {
-
           const list = rule.rules.grab({ c: 'nested' }).grab({ c: ['nested-2', ns] });
 
           expect(ruleSelectors(list)).toEqual([nested2.selector]);
@@ -454,7 +437,6 @@ describe('StypRule', () => {
 
       describe('nested grab', () => {
         it('grabs matching nested rules', () => {
-
           const list = rule.rules.nested.grab({ c: 'nested' });
 
           expect(ruleSelectors(list)).toEqual([nested1.selector]);
@@ -464,13 +446,11 @@ describe('StypRule', () => {
 
     describe('watch', () => {
       it('receives empty properties for absent rule', async () => {
-
         const sel: DoqrySelector = { c: 'watched' };
 
         expect(await rule.rules.watch(sel)).toEqual({});
       });
       it('receives existing rule properties', async () => {
-
         const sel: DoqrySelector = { c: 'watched' };
 
         rule.rules.add(sel, { $name: 'watched' });
@@ -478,7 +458,6 @@ describe('StypRule', () => {
         expect(await rule.rules.watch(sel)).toEqual({ $name: 'watched' });
       });
       it('receives added rule properties', async () => {
-
         const sel: DoqrySelector = { c: 'watched' };
         const watch = rule.rules.watch(sel);
 
@@ -487,7 +466,6 @@ describe('StypRule', () => {
         expect(await watch).toEqual({ $name: 'watched' });
       });
       it('handles rule removal', async () => {
-
         const sel: DoqrySelector = { c: 'watched' };
         const watched = rule.rules.add(sel, { $name: 'watched' });
         const watch = rule.rules.watch(sel);
@@ -500,7 +478,6 @@ describe('StypRule', () => {
         expect(await watch).toEqual({});
       });
       it('can be tracked when supply is cut off', async () => {
-
         const sel: DoqrySelector = { c: 'watched' };
 
         rule.rules.add(sel, { $name: 'watched' });
@@ -518,7 +495,6 @@ describe('StypRule', () => {
   });
 
   describe('remove', () => {
-
     let subSelector: DoqryPicker;
     let nested: StypRule;
 
@@ -528,7 +504,6 @@ describe('StypRule', () => {
     });
 
     it('sends rule list update', () => {
-
       const updateReceiver = jest.fn<(added: StypRule[], removed: StypRule[]) => void>();
       const rootUpdateReceiver = jest.fn<(added: StypRule[], removed: StypRule[]) => void>();
 
@@ -549,7 +524,6 @@ describe('StypRule', () => {
       expect(removedFromRoot).toBe(removed);
     });
     it('sends nested list update', () => {
-
       const updateReceiver = jest.fn<(added: StypRule[], removed: StypRule[]) => void>();
       const rootUpdateReceiver = jest.fn<(added: StypRule[], removed: StypRule[]) => void>();
 
@@ -567,7 +541,6 @@ describe('StypRule', () => {
       expect(ruleSelectors(removed)).toEqual([[...rule.selector, subSelector[0]]]);
     });
     it('sends self list update', () => {
-
       const updateReceiver = jest.fn<(added: StypRule[], removed: StypRule[]) => void>();
       const rootUpdateReceiver = jest.fn<(added: StypRule[], removed: StypRule[]) => void>();
 
@@ -586,7 +559,6 @@ describe('StypRule', () => {
       expect(itsEmpty(rule.rules.self)).toBe(true);
     });
     it('updates rule list', () => {
-
       const listReceiver = jest.fn();
       const rootListReceiver = jest.fn();
 
@@ -602,7 +574,6 @@ describe('StypRule', () => {
       expect(ruleSelectors(rule.rules)).toHaveLength(1);
     });
     it('updates nested list', () => {
-
       const listReceiver = jest.fn();
       const rootListReceiver = jest.fn();
 
@@ -618,7 +589,6 @@ describe('StypRule', () => {
       expect(ruleSelectors(rule.rules.nested)).toHaveLength(0);
     });
     it('cuts off events', () => {
-
       const whenDone = jest.fn();
       const reason = 'removal reason';
 
@@ -631,7 +601,6 @@ describe('StypRule', () => {
 });
 
 describe('empty rule', () => {
-
   let root: StypRule;
 
   beforeEach(() => {
@@ -663,7 +632,6 @@ describe('empty rule', () => {
   });
 
   describe('rule', () => {
-
     let subSelector: DoqryPicker;
     let subNested: StypRule;
 

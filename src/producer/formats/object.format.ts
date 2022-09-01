@@ -9,15 +9,18 @@ import { removeStyleElement, stypRenderScheduler } from './format.impl';
  */
 class StypStyleObjectWriter implements StypWriter.Style {
 
-  constructor(private readonly _target: CSSStyleRule) {
-  }
+  constructor(private readonly _target: CSSStyleRule) {}
 
   get isGroup(): false {
     return false;
   }
 
   set(name: string, value: string, priority: number): void {
-    this._target.style.setProperty(name, value, priority >= StypPriority.Important ? 'important' : undefined);
+    this._target.style.setProperty(
+      name,
+      value,
+      priority >= StypPriority.Important ? 'important' : undefined,
+    );
   }
 
   replace(css: string): void {
@@ -31,31 +34,21 @@ class StypStyleObjectWriter implements StypWriter.Style {
  */
 class StypGroupObjectWriter implements StypWriter.Group {
 
-  constructor(readonly _target: CSSStyleSheet | CSSGroupingRule) {
-  }
+  constructor(readonly _target: CSSStyleSheet | CSSGroupingRule) {}
 
   get isGroup(): true {
     return true;
   }
 
   addGroup(name: string, params: string, index?: number): StypWriter.Group {
-    return new StypGroupObjectWriter(
-        this._add(
-            `${name} ${params}{}`,
-            index,
-        ) as CSSGroupingRule,
-    );
+    return new StypGroupObjectWriter(this._add(`${name} ${params}{}`, index) as CSSGroupingRule);
   }
 
   addStyle(selector: string, index?: number): StypWriter.Style {
     return new StypStyleObjectWriter(this._add(`${selector}{}`, index) as CSSStyleRule);
   }
 
-  protected _add(
-      ruleText: string,
-      index = this._target.cssRules.length,
-  ): CSSRule {
-
+  protected _add(ruleText: string, index = this._target.cssRules.length): CSSRule {
     const idx = this._target.insertRule(ruleText, index);
 
     return this._target.cssRules[idx];
@@ -77,7 +70,6 @@ class StypSheetObjectWriter extends StypGroupObjectWriter implements StypWriter.
   }
 
   clear(): void {
-
     const { cssRules } = this._target;
 
     while (cssRules.length) {
@@ -101,7 +93,6 @@ class StypSheetObjectWriter extends StypGroupObjectWriter implements StypWriter.
  * @category Rendering
  */
 export interface StypObjectFormatConfig extends StypFormatConfig {
-
   /**
    * Parent DOM node to add stylesheets to.
    *
@@ -119,7 +110,6 @@ export interface StypObjectFormatConfig extends StypFormatConfig {
    * Uses `newRenderSchedule` for {@link parent} node by default.
    */
   readonly scheduler?: RenderScheduler | undefined;
-
 }
 
 /**
@@ -133,10 +123,7 @@ export interface StypObjectFormatConfig extends StypFormatConfig {
  *
  * @returns CSS production format.
  */
-export function stypObjectFormat(
-    config: StypObjectFormatConfig = {},
-): StypFormat {
-
+export function stypObjectFormat(config: StypObjectFormatConfig = {}): StypFormat {
   const { parent = document.head }: { parent?: Node | undefined } = config;
   const doc = parent.ownerDocument!;
 
@@ -144,7 +131,6 @@ export function stypObjectFormat(
     ...config,
     scheduler: stypRenderScheduler(parent, config.scheduler),
     addSheet() {
-
       const element = doc.createElement('style');
 
       element.setAttribute('type', 'text/css');

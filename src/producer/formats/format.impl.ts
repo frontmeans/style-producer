@@ -16,7 +16,6 @@ export interface StypRendererSpecFactory extends StypRenderer.Factory {
  * @internal
  */
 export function stypRenderFactories(format: StypFormat): readonly StypRendererSpecFactory[] {
-
   const factories = new Map<StypRenderer, StypRendererSpecFactory>();
 
   addRenderers(format.renderer);
@@ -80,7 +79,6 @@ function isRendererFactory(renderer: StypRenderer): renderer is StypRenderer.Fac
 }
 
 function compareRenderers(first: StypRenderer.Factory, second: StypRenderer.Factory): number {
-
   const firstOrder = first.order || 0;
   const secondOrder = second.order || 0;
 
@@ -95,11 +93,10 @@ function rendererSpec(renderer: ReturnType<StypRenderer.Factory['create']>): Sty
  * @internal
  */
 export function stypRenderScheduler(
-    parent: Node,
-    scheduler: RenderScheduler = newRenderSchedule,
+  parent: Node,
+  scheduler: RenderScheduler = newRenderSchedule,
 ): RenderScheduler {
   return (options = {}) => {
-
     const { node = parent } = options;
 
     return scheduler({

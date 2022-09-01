@@ -7,7 +7,7 @@ const noKeyAndTail: [[]] = [[]];
  * @internal
  */
 export function stypRuleKeyAndTail(
-    selector: DoqryPicker,
+  selector: DoqryPicker,
 ): readonly [[]] | readonly [StypRuleKey.Nested, DoqryPicker?] {
   if (!selector.length) {
     return noKeyAndTail;
@@ -17,7 +17,6 @@ export function stypRuleKeyAndTail(
   let combinator: DoqryCombinator | undefined;
 
   for (;;) {
-
     const part = selector[i++];
 
     if (isDoqryCombinator(part)) {
@@ -37,10 +36,7 @@ const rootSelector: DoqryPicker = [];
 /**
  * @internal
  */
-export function stypOuterSelector(
-    selector: DoqryPicker,
-): DoqryPicker | undefined {
-
+export function stypOuterSelector(selector: DoqryPicker): DoqryPicker | undefined {
   let i = selector.length - 1;
 
   if (i <= 0) {
@@ -50,15 +46,15 @@ export function stypOuterSelector(
   do {
     --i;
     switch (selector[i]) {
-    case '>':
-      return selector.slice(0, i);
-    case '+':
-    case '~':
-      --i;
+      case '>':
+        return selector.slice(0, i);
+      case '+':
+      case '~':
+        --i;
 
-      continue;
-    default:
-      return selector.slice(0, i + 1);
+        continue;
+      default:
+        return selector.slice(0, i + 1);
     }
   } while (i > 0);
 

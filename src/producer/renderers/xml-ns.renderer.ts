@@ -18,19 +18,18 @@ import { FIRST_RENDER_ORDER } from './renderer.impl';
  * @category Rendering
  */
 export const stypRenderXmlNs: StypRenderer = {
-
   order: FIRST_RENDER_ORDER,
 
   needs: stypRenderGlobals,
 
   render(producer: StyleProducer, properties: StypProperties) {
-
     const xmlNsDefs = extractXmlNsDefs(producer.selector);
 
     if (xmlNsDefs.length) {
-
-      const declareNs = (result: StypProperties.Mutable, ns: NamespaceDef): StypProperties.Mutable => {
-
+      const declareNs = (
+        result: StypProperties.Mutable,
+        ns: NamespaceDef,
+      ): StypProperties.Mutable => {
         const alias = producer.nsAlias(ns);
 
         result[`@namespace:${alias}`] = new StypURL(ns.url);
@@ -43,7 +42,6 @@ export const stypRenderXmlNs: StypRenderer = {
       producer.render(properties);
     }
   },
-
 };
 
 /**
@@ -51,6 +49,6 @@ export const stypRenderXmlNs: StypRenderer = {
  */
 function extractXmlNsDefs(selector: DoqryPicker): readonly NamespaceDef[] {
   return selector
-      .map(part => !isDoqryCombinator(part) && part.ns && typeof part.ns !== 'string' ? part.ns : null)
-      .filter(isPresent);
+    .map(part => !isDoqryCombinator(part) && part.ns && typeof part.ns !== 'string' ? part.ns : null)
+    .filter(isPresent);
 }

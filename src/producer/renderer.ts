@@ -23,14 +23,12 @@ export type StypRenderer = StypRenderer.Function | StypRenderer.Descriptor | Sty
  * @category Rendering
  */
 export namespace StypRenderer {
-
   /**
    * CSS rendering options.
    *
    * These are the options passed to {@link StyleProducer.render} method.
    */
   export interface Options {
-
     /**
      * CSS style sheet or rule writer to add declarations to.
      *
@@ -44,7 +42,6 @@ export namespace StypRenderer {
      * When omitted the one from style producer is used.
      */
     selector?: DoqryPicker | undefined;
-
   }
 
   /**
@@ -54,17 +51,16 @@ export namespace StypRenderer {
    * chain to do their job.
    */
   export type Function =
-  /**
-   * @param producer - Style producer instance.
-   * @param properties - CSS properties to render.
-   */
-      (this: void, producer: StyleProducer, properties: StypProperties) => void;
+    /**
+     * @param producer - Style producer instance.
+     * @param properties - CSS properties to render.
+     */
+    (this: void, producer: StyleProducer, properties: StypProperties) => void;
 
   /**
    * CSS stylesheet renderer descriptor.
    */
   export interface Descriptor {
-
     /**
      * Rendering order.
      *
@@ -88,14 +84,12 @@ export namespace StypRenderer {
      * @param properties - CSS properties to render.
      */
     render(producer: StyleProducer, properties: StypProperties): void;
-
   }
 
   /**
    * CSS stylesheet renderer factory.
    */
   export interface Factory {
-
     /**
      * Rendering order.
      *
@@ -120,14 +114,12 @@ export namespace StypRenderer {
      * @returns A renderer function or specifier to use.
      */
     create(rule: StypRule): StypRenderer.Function | StypRenderer.Spec;
-
   }
 
   /**
    * CSS stylesheet renderer specifier.
    */
   export interface Spec {
-
     /**
      * Renders CSS stylesheet.
      *
@@ -152,7 +144,5 @@ export namespace StypRenderer {
      * @returns CSS properties event keeper.
      */
     read?(properties: AfterEvent<[StypProperties]>): EventKeeper<[StypProperties]>;
-
   }
-
 }

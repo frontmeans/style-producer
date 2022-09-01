@@ -9,18 +9,17 @@ import { StypValue } from './value';
  * @typeParam TResult - A type of mapped properties. This is a mapping result type.
  */
 export type StypMapper<TResult> =
-/**
- * @param from - CSS properties to map.
- *
- * @returns Mapping result.
- */
-    (this: void, from: StypProperties) => TResult;
+  /**
+   * @param from - CSS properties to map.
+   *
+   * @returns Mapping result.
+   */
+  (this: void, from: StypProperties) => TResult;
 
 /**
  * @category CSS Value
  */
 export namespace StypMapper {
-
   /**
    * CSS property mapping.
    *
@@ -36,9 +35,9 @@ export namespace StypMapper {
    * @typeParam TResultKey - Type of mapped properties keys.
    */
   export type Mapping<TResult, TResultKey extends keyof TResult> =
-      | MappingFunction<TResult, TResultKey>
-      | MappingObject<TResult, TResultKey>
-      | TResult[TResultKey];
+    | MappingFunction<TResult, TResultKey>
+    | MappingObject<TResult, TResultKey>
+    | TResult[TResultKey];
 
   /**
    * CSS property mapping function.
@@ -47,14 +46,19 @@ export namespace StypMapper {
    * @typeParam TResultKey - Type of mapped properties keys.
    */
   export type MappingFunction<TResult, TResultKey extends keyof TResult> =
-  /**
-   * @param source - A raw property value that should be converted.
-   * @param mapped - An object granting access to other mapped properties.
-   * @param key - A key of converted property.
-   *
-   * @returns Mapped property value.
-   */
-      (this: void, source: StypValue, mapped: Mapped<TResult>, key: TResultKey) => TResult[TResultKey];
+    /**
+     * @param source - A raw property value that should be converted.
+     * @param mapped - An object granting access to other mapped properties.
+     * @param key - A key of converted property.
+     *
+     * @returns Mapped property value.
+     */
+    (
+      this: void,
+      source: StypValue,
+      mapped: Mapped<TResult>,
+      key: TResultKey,
+    ) => TResult[TResultKey];
 
   /**
    * CSS property mapping object.
@@ -63,7 +67,6 @@ export namespace StypMapper {
    * @typeParam TResultKey - Type of mapped properties keys.
    */
   export interface MappingObject<TResult, TResutKey extends keyof TResult> {
-
     /**
      * Maps CSS property value.
      *
@@ -74,7 +77,6 @@ export namespace StypMapper {
      * @returns Mapped property value.
      */
     by(source: StypValue, mapped: Mapped<TResult>, key: TResutKey): TResult[TResutKey];
-
   }
 
   /**
@@ -85,7 +87,6 @@ export namespace StypMapper {
    * @typeParam TResult - A type of mapped properties. This is a mapping result type.
    */
   export interface Mapped<TResultKey> {
-
     /**
      * Original properties to convert.
      */
@@ -101,7 +102,6 @@ export namespace StypMapper {
      * @returns Mapped property value.
      */
     get<TKey extends keyof TResultKey>(key: TKey): TResultKey[TKey];
-
   }
 
   /**
@@ -111,15 +111,13 @@ export namespace StypMapper {
    *
    * @typeParam TResult - A type of mapped properties. This is a mapping result type.
    */
-  export type Mappings<TResult> = { readonly [key in keyof TResult]: Mapping<TResult, key>; };
-
+  export type Mappings<TResult> = { readonly [key in keyof TResult]: Mapping<TResult, key> };
 }
 
 /**
  * @category CSS Value
  */
 export const StypMapper = {
-
   /**
    * Maps CSS properties accordingly to the given `mappings`.
    *
@@ -130,7 +128,6 @@ export const StypMapper = {
    * @returns Mapped properties.
    */
   map<TResult>(mappings: StypMapper.Mappings<TResult>, from: StypProperties): TResult {
-
     const result = {} as { [key in keyof TResult]: TResult[key] };
     const mapped = {
       from,
@@ -162,28 +159,30 @@ export const StypMapper = {
    * @returns A function that maps CSS properties accordingly to the given `mappings`.
    */
   by<TResult>(mappings: StypMapper.Mappings<TResult>): StypMapper<TResult> {
-    return StypMapper.map.bind<void, StypMapper.Mappings<TResult>, [StypProperties], TResult>(undefined, mappings);
+    return StypMapper.map.bind<void, StypMapper.Mappings<TResult>, [StypProperties], TResult>(
+      undefined,
+      mappings,
+    );
   },
-
 };
 
 /**
  * @internal
  */
 function mappingBy<TResult, TResultKey extends keyof TResult>(
-    mapping: StypMapper.Mapping<TResult, TResultKey> | undefined,
+  mapping: StypMapper.Mapping<TResult, TResultKey> | undefined,
 ): StypMapper.MappingFunction<TResult, TResultKey> {
   switch (typeof mapping) {
-  case 'function':
-    return mapping as StypMapper.MappingFunction<TResult, TResultKey>;
-  case 'object':
-    return (mapping as StypMapper.MappingObject<TResult, TResultKey>).by.bind(mapping);
-  default:
+    case 'function':
+      return mapping as StypMapper.MappingFunction<TResult, TResultKey>;
+    case 'object':
+      return (mapping as StypMapper.MappingObject<TResult, TResultKey>).by.bind(mapping);
+    default:
   }
 
   const type = typeof mapping;
 
   return (from: StypValue): TResult[TResultKey] => typeof from === type
-      ? from as unknown as TResult[TResultKey]
-      : mapping as TResult[TResultKey];
+      ? (from as unknown as TResult[TResultKey])
+      : (mapping as TResult[TResultKey]);
 }

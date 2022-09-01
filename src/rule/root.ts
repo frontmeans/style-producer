@@ -22,5 +22,10 @@ const rootSelector: DoqryPicker = [];
  * @returns New root CSS rule.
  */
 export function stypRoot(properties?: StypProperties.Spec): StypRule {
-  return new StypRule$(undefined, rootSelector, [], properties ? r => stypPropertiesBySpec(r, properties) : undefined);
+  return new StypRule$(
+    undefined,
+    rootSelector,
+    [],
+    properties ? r => stypPropertiesBySpec(r, properties) : undefined,
+  );
 }

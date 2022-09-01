@@ -4,7 +4,6 @@ import { StypLength } from './unit';
 import { StypURL } from './url';
 
 describe('StypURL', () => {
-
   let url: string;
   let value: StypURL;
 
@@ -18,7 +17,6 @@ describe('StypURL', () => {
       expect(value.usual()).toBe(value);
     });
     it('changes priority', () => {
-
       const important = value.important();
 
       expect(important).not.toBe(value);
@@ -72,7 +70,6 @@ describe('StypURL', () => {
       expect(value.by(123)).toBe(value);
     });
     it('does not replace recognized URL', () => {
-
       const other = new StypURL('./other');
 
       expect(value.by(other)).toBe(other);
@@ -81,7 +78,9 @@ describe('StypURL', () => {
 
   describe('toString', () => {
     it('escapes CSS string', () => {
-      expect(new StypURL('http://some.host/(abc)\u042a').toString()).toBe('url("http://some.host/(abc)\u042A")');
+      expect(new StypURL('http://some.host/(abc)\u042a').toString()).toBe(
+        'url("http://some.host/(abc)\u042A")',
+      );
     });
   });
 });

@@ -7,7 +7,6 @@ describe('stypSelectorMatches', () => {
     expect(stypQueryMatch([], { e: 'span' })).toBe(false);
   });
   it('requires the same element', () => {
-
     const query: StypQuery = { e: 'span' };
 
     expect(stypQueryMatch([{ e: 'span', c: ['some'] }], query)).toBe(true);
@@ -15,7 +14,6 @@ describe('stypSelectorMatches', () => {
     expect(stypQueryMatch([{ c: ['some'] }], query)).toBe(false);
   });
   it('requires the same namespaced element', () => {
-
     const query: StypQuery = { ns: 'some-ns', e: 'span' };
 
     expect(stypQueryMatch([{ ns: 'some-ns', e: 'span', c: ['some'] }], query)).toBe(true);
@@ -24,7 +22,6 @@ describe('stypSelectorMatches', () => {
     expect(stypQueryMatch([{ c: ['some'] }], query)).toBe(false);
   });
   it('requires the same identifier', () => {
-
     const query: StypQuery = { i: 'test' };
 
     expect(stypQueryMatch([{ i: 'test', c: ['some'] }], query)).toBe(true);
@@ -32,7 +29,6 @@ describe('stypSelectorMatches', () => {
     expect(stypQueryMatch([{ c: ['some'] }], query)).toBe(false);
   });
   it('requires matching classes', () => {
-
     const query: StypQuery = { c: ['other', 'some'] };
 
     expect(stypQueryMatch([{ e: 'span', c: ['other', 'some'] }], query)).toBe(true);
@@ -41,7 +37,6 @@ describe('stypSelectorMatches', () => {
     expect(stypQueryMatch([{ c: ['other'] }], query)).toBe(false);
   });
   it('requires matching qualifiers', () => {
-
     const query: StypQuery = { $: ['other', 'some'] };
 
     expect(stypQueryMatch([{ e: 'span', $: ['other', 'some'] }], query)).toBe(true);

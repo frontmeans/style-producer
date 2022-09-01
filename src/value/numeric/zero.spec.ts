@@ -4,7 +4,6 @@ import { stypValuesEqual } from '../value';
 import { StypZero } from './zero';
 
 describe('StypZero', () => {
-
   let zero: StypZero<StypLengthPt.Unit>;
   let important: StypZero<StypLengthPt.Unit>;
 
@@ -68,19 +67,16 @@ describe('StypZero', () => {
 
   describe('add', () => {
     it('is equal to structured addendum', () => {
-
       const right = StypLengthPt.of(12, '%');
 
       expect(zero.add(right)).toBe(right);
     });
     it('is equal to numeric addendum', () => {
-
       const right = 12;
 
       expect(zero.add(right, '%').is(StypLengthPt.of(right, '%'))).toBe(true);
     });
     it('inherits priority', () => {
-
       const right = StypLengthPt.of(12, '%');
 
       expect(important.add(right).is(right.important())).toBe(true);
@@ -89,19 +85,16 @@ describe('StypZero', () => {
 
   describe('sub', () => {
     it('is equal to structured -addendum', () => {
-
       const right = StypLengthPt.of(12, '%');
 
       expect(zero.sub(right).is(right.negate())).toBe(true);
     });
     it('is equal to numeric -addendum', () => {
-
       const right = 12;
 
       expect(zero.sub(right, '%').is(StypLengthPt.of(right, '%').negate())).toBe(true);
     });
     it('inherits priority', () => {
-
       const right = StypLengthPt.of(12, '%');
 
       expect(important.sub(right).is(right.important().negate())).toBe(true);
@@ -131,7 +124,6 @@ describe('StypZero', () => {
 
   describe('prioritize', () => {
     it('assigns priority', () => {
-
       const prioritized = zero.prioritize(2);
 
       expect(prioritized.priority).toBe(2);

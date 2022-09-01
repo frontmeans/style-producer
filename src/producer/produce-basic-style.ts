@@ -1,4 +1,10 @@
-import { DoqryFormat, doqryPicker, DoqryPicker, doqryText, isDoqryCombinator } from '@frontmeans/doqry';
+import {
+  DoqryFormat,
+  doqryPicker,
+  DoqryPicker,
+  doqryText,
+  isDoqryCombinator,
+} from '@frontmeans/doqry';
 import { NamespaceDef, newNamespaceAliaser } from '@frontmeans/namespace-aliaser';
 import { newRenderSchedule } from '@frontmeans/render-scheduler';
 import { AfterEvent, afterSupplied, onSupplied } from '@proc7ts/fun-events';
@@ -26,7 +32,6 @@ import { StypWriter } from './writer';
  * @returns Styles supply. Once cut off (i.e. its `off()` method is called) the produced stylesheets are removed.
  */
 export function produceBasicStyle(rules: StypRules, format: StypFormat): Supply {
-
   const {
     rootSelector = { e: 'body' },
     scheduler = newRenderSchedule,
@@ -41,15 +46,14 @@ export function produceBasicStyle(rules: StypRules, format: StypFormat): Supply 
   return supply.as(renderSupply).as(trackSupply);
 
   function styleProducer(
-      rule: StypRule,
-      renderer: StypRenderer.Function,
-      production: {
-        sheet: StypWriter.Sheet;
-        writer: StypWriter;
-        selector: DoqryPicker;
-      },
+    rule: StypRule,
+    renderer: StypRenderer.Function,
+    production: {
+      sheet: StypWriter.Sheet;
+      writer: StypWriter;
+      selector: DoqryPicker;
+    },
   ): StyleProducer {
-
     class StyleProducer$ implements StyleProducer {
 
       get supply(): Supply {
@@ -81,22 +85,17 @@ export function produceBasicStyle(rules: StypRules, format: StypFormat): Supply 
           renderer(this, properties);
         } else {
           renderer(
-              styleProducer(
-                  rule,
-                  renderer,
-                  {
-                    sheet: production.sheet,
-                    writer: options.writer || production.writer,
-                    selector: options.selector || production.selector,
-                  },
-              ),
-              properties,
+            styleProducer(rule, renderer, {
+              sheet: production.sheet,
+              writer: options.writer || production.writer,
+              selector: options.selector || production.selector,
+            }),
+            properties,
           );
         }
       }
 
       addStyle(_selector: DoqryPicker = production.selector): StypWriter.Style {
-
         const { writer } = production;
 
         if (!writer.isGroup) {
@@ -106,7 +105,7 @@ export function produceBasicStyle(rules: StypRules, format: StypFormat): Supply 
         return writer.addStyle(selectorText(_selector));
       }
 
-    }
+}
 
     return new StyleProducer$();
   }
@@ -117,14 +116,13 @@ export function produceBasicStyle(rules: StypRules, format: StypFormat): Supply 
 
   function renderRules(rulesToRender: Iterable<StypRule>): Supply {
     return itsReduction<Supply, Supply>(
-        mapIt(rulesToRender, renderRule),
-        (prev, supply) => new Supply().cuts(supply).cuts(prev),
-        new Supply(),
+      mapIt(rulesToRender, renderRule),
+      (prev, supply) => new Supply().cuts(supply).cuts(prev),
+      new Supply(),
     );
   }
 
   function trackRules(): Supply {
-
     const supply = new Supply();
 
     return onSupplied(rules)({
@@ -136,7 +134,6 @@ export function produceBasicStyle(rules: StypRules, format: StypFormat): Supply 
   }
 
   function renderRule(rule: StypRule): Supply {
-
     const [reader, renderer] = rendererForRule(rule);
     let sheet: StypWriter.Sheet | undefined;
     const selector = ruleSelector(rule);
@@ -148,23 +145,19 @@ export function produceBasicStyle(rules: StypRules, format: StypFormat): Supply 
       schedule(() => {
         sheet?.clear();
 
-        const producer = styleProducer(
-            rule,
-            renderer,
-            {
-              get sheet(): StypWriter.Sheet {
-                if (!sheet) {
-                  sheet = format.addSheet(producer);
-                }
+        const producer = styleProducer(rule, renderer, {
+          get sheet(): StypWriter.Sheet {
+            if (!sheet) {
+              sheet = format.addSheet(producer);
+            }
 
-                return sheet;
-              },
-              get writer(): StypWriter.Sheet {
-                return this.sheet;
-              },
-              selector,
-            },
-        );
+            return sheet;
+          },
+          get writer(): StypWriter.Sheet {
+            return this.sheet;
+          },
+          selector,
+        });
 
         producer.render(properties);
         sheet?.done();
@@ -173,7 +166,6 @@ export function produceBasicStyle(rules: StypRules, format: StypFormat): Supply 
 
     function removeStyle(): void {
       schedule(() => {
-
         const lastSheet = sheet;
 
         if (lastSheet) {
@@ -188,7 +180,6 @@ export function produceBasicStyle(rules: StypRules, format: StypFormat): Supply 
   }
 
   function ruleSelector(rule: StypRule): DoqryPicker {
-
     const selector = rule.selector;
 
     if (!selector.length) {
@@ -204,18 +195,16 @@ export function produceBasicStyle(rules: StypRules, format: StypFormat): Supply 
   }
 
   function rendererForRule(rule: StypRule): [AfterEvent<[StypProperties]>, StypRenderer.Function] {
-
     const specs = factories.map(factory => factory.create(rule));
     const reader = specs.reduce(
-        (read, spec) => spec.read ? afterSupplied(spec.read(read)) : read,
-        rule.read,
+      (read, spec) => (spec.read ? afterSupplied(spec.read(read)) : read),
+      rule.read,
     );
 
     return [reader, renderAt(0)];
 
     function renderAt(index: number): StypRenderer.Function {
       return (producer, properties) => {
-
         const nextIndex = index + 1;
         let nextRenderer: StypRenderer.Function;
 

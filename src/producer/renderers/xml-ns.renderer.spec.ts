@@ -7,7 +7,6 @@ import { StyleProducer } from '../style-producer';
 import { stypRenderXmlNs } from './xml-ns.renderer';
 
 describe('stypRenderXmlNs', () => {
-
   let sheet: CSSStyleSheet;
   let producer: StyleProducer;
   let nsAlias: NamespaceAliaser;
@@ -32,14 +31,12 @@ describe('stypRenderXmlNs', () => {
   let renderer: StypRenderer.Function;
 
   beforeEach(() => {
-
     const renderDesc = stypRenderXmlNs as StypRenderer.Descriptor;
 
     renderer = renderDesc.render.bind(renderDesc);
   });
 
   it('renders XML namespaces', () => {
-
     const ns = new NamespaceDef('test/ns', 'test');
 
     selector = [{ ns: ns, e: 'some' }];

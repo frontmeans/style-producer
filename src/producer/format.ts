@@ -11,7 +11,6 @@ import { StypWriter } from './writer';
  * @category Rendering
  */
 export interface StypFormatConfig {
-
   /**
    * A selector to use for root CSS rule.
    *
@@ -41,7 +40,6 @@ export interface StypFormatConfig {
    * New instance will be created if not specified.
    */
   readonly nsAlias?: NamespaceAliaser | undefined;
-
 }
 
 /**
@@ -59,7 +57,6 @@ export interface StypFormatConfig {
  * @category Rendering
  */
 export interface StypFormat extends StypFormatConfig {
-
   /**
    * Creates CSS style sheet writer.
    *
@@ -70,5 +67,4 @@ export interface StypFormat extends StypFormatConfig {
    * @returns CSS style sheet writer.
    */
   addSheet(producer: StyleProducer): StypWriter.Sheet;
-
 }

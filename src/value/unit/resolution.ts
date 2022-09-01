@@ -14,17 +14,14 @@ export type StypResolution = StypNumeric<StypResolution.Unit, StypDimension<Styp
  * @category CSS Value
  */
 export namespace StypResolution {
-
   /**
    * Supported resolution units, excluding percent.
    */
   export type Unit = 'dpi' | 'dpcm' | 'dppx' | 'x';
-
 }
 
 /**
  * @category CSS Value
  */
-export const StypResolution: StypDimension.Kind.UnitZero<StypResolution.Unit> = (
-    /*#__PURE__*/ unitZeroDimensionKind({ zeroUnit: 'dpi' })
-);
+export const StypResolution: StypDimension.Kind.UnitZero<StypResolution.Unit>
+  /*#__PURE__*/ = unitZeroDimensionKind({ zeroUnit: 'dpi' });

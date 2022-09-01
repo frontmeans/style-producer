@@ -30,11 +30,10 @@ export class StypRuleList$ extends StypRuleList {
     }
 
     this.onUpdate = onEventBy<[StypRule[], StypRule[]]>(receiver => {
-
       const rules = this._ruleSet || (this._ruleSet = new Set(this._buildList()));
 
       onSupplied(this._list)({
-        supply: receiver.supply.whenOff(() => this._ruleSet = undefined),
+        supply: receiver.supply.whenOff(() => (this._ruleSet = undefined)),
         receive: (context, added, removed) => {
           added = filterArray(added);
           removed = filterArray(removed);
@@ -73,7 +72,6 @@ export class StypRuleList$ extends StypRuleList {
  * @internal
  */
 export function StypRuleList$grab(list: StypRuleList, query: StypQuery): StypRuleList {
-
   const q = stypQuery(query);
 
   return new StypRuleList$(list, rule => stypQueryMatch(rule.selector, q));

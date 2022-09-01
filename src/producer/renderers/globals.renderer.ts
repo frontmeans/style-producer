@@ -54,13 +54,11 @@ import { FIRST_RENDER_ORDER } from './renderer.impl';
  * @category Rendering
  */
 export const stypRenderGlobals: StypRenderer = {
-
   order: FIRST_RENDER_ORDER + 1,
 
   needs: stypRenderAtRules,
 
   render(producer: StyleProducer, properties: StypProperties) {
-
     const rootRule = !producer.rule.selector.length;
 
     const { sheet } = producer;
@@ -68,11 +66,9 @@ export const stypRenderGlobals: StypRenderer = {
     let nsIndex = 0;
 
     for (const [k, v] of overEntries(properties)) {
-
       const key = String(k);
 
       if (key[0] === '@') {
-
         const [value] = stypSplitPriority(v);
         const importDelta = rootRule ? renderImport(sheet, importIndex, key, value) : 0;
 
@@ -90,7 +86,6 @@ export const stypRenderGlobals: StypRenderer = {
 
     producer.render(properties);
   },
-
 };
 
 /**
@@ -102,10 +97,10 @@ const IMPORT_PREFIX = '@import:';
  * @internal
  */
 function renderImport(
-    sheet: StypWriter.Sheet,
-    index: number,
-    key: string,
-    value: StypValue,
+  sheet: StypWriter.Sheet,
+  index: number,
+  key: string,
+  value: StypValue,
 ): number {
   if (!key.startsWith(IMPORT_PREFIX)) {
     return 0;
@@ -127,10 +122,10 @@ function renderImport(
  * @internal
  */
 function renderDefaultNamespace(
-    sheet: StypWriter.Sheet,
-    index: number,
-    key: string,
-    url: StypURL,
+  sheet: StypWriter.Sheet,
+  index: number,
+  key: string,
+  url: StypURL,
 ): number {
   if (key !== '@namespace') {
     return 0;
@@ -150,10 +145,10 @@ const NS_PREFIX = '@namespace:';
  * @internal
  */
 function renderNamespacePrefix(
-    sheet: StypWriter.Sheet,
-    index: number,
-    key: string,
-    url: StypURL,
+  sheet: StypWriter.Sheet,
+  index: number,
+  key: string,
+  url: StypURL,
 ): number {
   if (!key.startsWith(NS_PREFIX)) {
     return 0;

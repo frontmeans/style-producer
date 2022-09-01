@@ -25,23 +25,19 @@ import { StypRule } from './rule';
  * {@link StypValue}.
  */
 export type StypProperties<T extends StypProperties<T> = StypProperties.Generic> = {
-
   readonly [K in keyof T]: T[K] & StypValue;
-
 };
 
 /**
  * @category CSS Rule
  */
 export namespace StypProperties {
-
   /**
    * Generic CSS properties map.
    *
    * Allows any CSS properties. Requires `$$css` one, if present, to be a string.
    */
   export interface Generic {
-
     readonly [key: string]: StypValue;
 
     /**
@@ -54,7 +50,6 @@ export namespace StypProperties {
      * A {@link stypRenderText} renderer is responsible for raw CSS text rendering.
      */
     readonly $$css?: string | undefined;
-
   }
 
   /**
@@ -68,15 +63,18 @@ export namespace StypProperties {
    * - a function depending on style rule and returning one of the above.
    */
   export type Spec =
-      | string
-      | StypProperties
-      | EventKeeper<[string | StypProperties]>
-      | EventSender<[string | StypProperties]>
-      | ((this: void, rule: StypRule) =>
-      | string
-      | StypProperties
-      | EventKeeper<[string | StypProperties]>
-      | EventSender<[string | StypProperties]>);
+    | string
+    | StypProperties
+    | EventKeeper<[string | StypProperties]>
+    | EventSender<[string | StypProperties]>
+    | ((
+        this: void,
+        rule: StypRule,
+      ) =>
+        | string
+        | StypProperties
+        | EventKeeper<[string | StypProperties]>
+        | EventSender<[string | StypProperties]>);
 
   /**
    * CSS properties builder function signature.
@@ -84,16 +82,15 @@ export namespace StypProperties {
    * This is a most generic form of CSS properties specifier.
    */
   export type Builder =
-  /**
-   * @param rule - A style rule the properties generated for.
-   *
-   * @return An `AfterEvent` registrar of CSS properties receivers.
-   */
-      (this: void, rule: StypRule) => AfterEvent<[StypProperties]>;
+    /**
+     * @param rule - A style rule the properties generated for.
+     *
+     * @return An `AfterEvent` registrar of CSS properties receivers.
+     */
+    (this: void, rule: StypRule) => AfterEvent<[StypProperties]>;
 
   /**
    * Mutable CSS properties map.
    */
   export type Mutable = { [key in keyof StypProperties]: StypProperties[key] };
-
 }
