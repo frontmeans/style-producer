@@ -326,7 +326,12 @@ describe('produceBasicStyle', () => {
     expect(style.getPropertyPriority('font-size')).toBe('important');
   });
   it('renders prioritized properties', () => {
-    root.rules.add({ c: 'custom' }, { fontSize: StypLength.of(12, 'px').prioritize(0.5) });
+    root.rules.add(
+      { c: 'custom' },
+      {
+        fontSize: StypLength.of(12, 'px').prioritize(0.5),
+      },
+    );
     produceBasicStyle(
       root.rules,
       stypObjectFormat({
@@ -340,7 +345,12 @@ describe('produceBasicStyle', () => {
     expect(style.getPropertyPriority('font-size')).toBe('');
   });
   it('renders prioritized important properties', () => {
-    root.rules.add({ c: 'custom' }, { fontSize: StypLength.of(12, 'px').prioritize(1.5) });
+    root.rules.add(
+      { c: 'custom' },
+      {
+        fontSize: StypLength.of(12, 'px').prioritize(1.5),
+      },
+    );
     produceBasicStyle(
       root.rules,
       stypObjectFormat({

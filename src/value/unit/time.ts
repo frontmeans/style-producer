@@ -23,8 +23,8 @@ export namespace StypTime {
 /**
  * @category CSS Value
  */
-export const StypTime: StypDimension.Kind.UnitlessZero<StypTime.Unit>
-  /*#__PURE__*/ = unitlessZeroDimensionKind({
+export const StypTime: StypDimension.Kind.UnitlessZero<StypTime.Unit> =
+  /*#__PURE__*/ unitlessZeroDimensionKind({
     pt() {
       return StypTimePt;
     },
@@ -55,8 +55,8 @@ export namespace StypTimePt {
 /**
  * @category CSS Value
  */
-export const StypTimePt: StypDimension.Kind.UnitlessZero<StypTimePt.Unit>
-  /*#__PURE__*/ = unitlessZeroDimensionKind({
+export const StypTimePt: StypDimension.Kind.UnitlessZero<StypTimePt.Unit> =
+  /*#__PURE__*/ unitlessZeroDimensionKind({
     pt() {
       return StypTimePt;
     },

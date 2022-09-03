@@ -44,8 +44,8 @@ export namespace StypLength {
 /**
  * @category CSS Value
  */
-export const StypLength: StypDimension.Kind.UnitlessZero<StypLength.Unit>
-  /*#__PURE__*/ = unitlessZeroDimensionKind({
+export const StypLength: StypDimension.Kind.UnitlessZero<StypLength.Unit> =
+  /*#__PURE__*/ unitlessZeroDimensionKind({
     pt() {
       return StypLengthPt;
     },
@@ -77,8 +77,8 @@ export namespace StypLengthPt {
 /**
  * @category CSS Value
  */
-export const StypLengthPt: StypDimension.Kind.UnitlessZero<StypLengthPt.Unit>
-  /*#__PURE__*/ = unitlessZeroDimensionKind({
+export const StypLengthPt: StypDimension.Kind.UnitlessZero<StypLengthPt.Unit> =
+  /*#__PURE__*/ unitlessZeroDimensionKind({
     pt() {
       return StypLengthPt;
     },

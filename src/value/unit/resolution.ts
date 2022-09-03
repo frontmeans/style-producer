@@ -23,5 +23,5 @@ export namespace StypResolution {
 /**
  * @category CSS Value
  */
-export const StypResolution: StypDimension.Kind.UnitZero<StypResolution.Unit>
-  /*#__PURE__*/ = unitZeroDimensionKind({ zeroUnit: 'dpi' });
+export const StypResolution: StypDimension.Kind.UnitZero<StypResolution.Unit> =
+  /*#__PURE__*/ unitZeroDimensionKind({ zeroUnit: 'dpi' });

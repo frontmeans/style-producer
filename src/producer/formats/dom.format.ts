@@ -50,8 +50,8 @@ export interface StypDomFormatConfig extends StypTextFormatConfig {
  * @returns CSS production format.
  */
 export function stypDomFormat(config: StypDomFormatConfig = {}): StypFormat {
-  const { document = config.parent?.ownerDocument || window.document, parent = document.head }
-    = config;
+  const { document = config.parent?.ownerDocument || window.document, parent = document.head } =
+    config;
   const textFormat = stypTextFormat(config);
   const scheduler = stypRenderScheduler(parent, config.scheduler);
   const schedule = scheduler();

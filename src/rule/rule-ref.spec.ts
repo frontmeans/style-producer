@@ -90,13 +90,17 @@ describe('RefStypRule', () => {
     let initial: RuleProperties;
 
     beforeEach(() => {
-      initial = { $length: StypLength.of(16, 'px').important() };
+      initial = {
+        $length: StypLength.of(16, 'px').important(),
+      };
       ref.set(initial);
       mockReceiver.mockClear();
     });
 
     it('appends properties', () => {
-      const update: RuleProperties = { $length: StypLength.of(1, 'rem').important() };
+      const update: RuleProperties = {
+        $length: StypLength.of(1, 'rem').important(),
+      };
 
       ref.add(update);
       expect(mockReceiver).toHaveBeenCalledWith(update);

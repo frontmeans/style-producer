@@ -304,8 +304,8 @@ class StypSheetTextWriter extends AbstractStypGroupTextWriter implements StypWri
  * @returns Textual CSS production format.
  */
 export function stypTextFormat(config: StypTextFormatConfig = {}): StypTextFormat {
-  const pretty: StypTextFormatConfig.PrettyPrint | false
-    = config.pretty === true || config.pretty == null ? defaultPrettyPrint : config.pretty || false;
+  const pretty: StypTextFormatConfig.PrettyPrint | false =
+    config.pretty === true || config.pretty == null ? defaultPrettyPrint : config.pretty || false;
   const { scheduler = immediateRenderScheduler } = config;
   const sender = new EventEmitter<[StypSheetText]>();
   const formatter: StypTextFormatter = pretty

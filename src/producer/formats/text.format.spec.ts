@@ -66,7 +66,9 @@ describe('stypTextFormat', () => {
   it('renders priority', () => {
     root.rules.add(
       { c: 'test' },
-      { color: new StypRGB({ r: 0, g: 255, b: 0, a: 0.5 }).prioritize(10) },
+      {
+        color: new StypRGB({ r: 0, g: 255, b: 0, a: 0.5 }).prioritize(10),
+      },
     );
     expect(printCSS()).toEqual(['.test {\n' + '  color: rgba(0, 255, 0, 0.5) !important;\n' + '}']);
   });
