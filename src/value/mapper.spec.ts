@@ -200,8 +200,16 @@ describe('StypMapper', () => {
       ).toEqual({
         $value2: StypLength.zero,
       });
-      expect(mockMapper1).toHaveBeenCalledWith('init1', expect.anything(), '$value1');
-      expect(mockMapper2).toHaveBeenCalledWith('init2', expect.anything(), '$value2');
+      expect(mockMapper1).toHaveBeenCalledWith(
+        'init1',
+        expect.anything() as unknown as StypMapper.Mapped<Result>,
+        '$value1',
+      );
+      expect(mockMapper2).toHaveBeenCalledWith(
+        'init2',
+        expect.anything() as unknown as StypMapper.Mapped<Result>,
+        '$value2',
+      );
     });
     it('grants access to mapped values', () => {
       mockMapper1.mockImplementation((_from, mapped) => mapped.get('$value2'));
@@ -214,9 +222,17 @@ describe('StypMapper', () => {
         $value1: StypLength.zero,
         $value2: StypLength.zero,
       });
-      expect(mockMapper1).toHaveBeenCalledWith('init1', expect.anything(), '$value1');
+      expect(mockMapper1).toHaveBeenCalledWith(
+        'init1',
+        expect.anything() as unknown as StypMapper.Mapped<Result>,
+        '$value1',
+      );
       expect(mockMapper1).toHaveBeenCalledTimes(1);
-      expect(mockMapper2).toHaveBeenCalledWith('init2', expect.anything(), '$value2');
+      expect(mockMapper2).toHaveBeenCalledWith(
+        'init2',
+        expect.anything() as unknown as StypMapper.Mapped<Result>,
+        '$value2',
+      );
       expect(mockMapper2).toHaveBeenCalledTimes(1);
     });
   });

@@ -6,7 +6,7 @@ import {
 import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { itsEmpty } from '@proc7ts/push-iterator';
 import { Supply } from '@proc7ts/supply';
-import { SpyInstance } from 'jest-mock';
+import { Mock } from 'jest-mock';
 import { stypRoot, StypRule } from '../../rule';
 import { cssStyle, removeStyleElements, stylesheets } from '../../spec';
 import { produceBasicStyle } from '../produce-basic-style';
@@ -27,12 +27,12 @@ describe('stypObjectFormat', () => {
   });
 
   describe('scheduler', () => {
-    let rafSpy: SpyInstance<Window['requestAnimationFrame']>;
+    let rafSpy: Mock<Window['requestAnimationFrame']>;
     let operations: ((time: number) => void)[];
 
     beforeEach(() => {
       operations = [];
-      rafSpy = jest.spyOn(window, 'requestAnimationFrame');
+      rafSpy = jest.spyOn(window, 'requestAnimationFrame') as typeof rafSpy;
       rafSpy.mockImplementation(callback => {
         operations.push(callback);
 

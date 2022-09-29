@@ -11,7 +11,7 @@ import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals
 import { afterNever, trackValue } from '@proc7ts/fun-events';
 import { noop } from '@proc7ts/primitives';
 import { itsEmpty } from '@proc7ts/push-iterator';
-import { Mock, SpyInstance } from 'jest-mock';
+import { Mock } from 'jest-mock';
 import { StypProperties, stypRoot, StypRule } from '../rule';
 import { cssStyle, cssStyles, removeStyleElements, stylesheets } from '../spec';
 import { StypLength } from '../value';
@@ -104,7 +104,7 @@ describe('produceBasicStyle', () => {
       testProduceStyle();
       expect(mockRenderer1).toHaveBeenCalledWith(producer, {});
       expect(mockRenderer2).toHaveBeenCalledWith(
-        expect.objectContaining({ selector, writer: producer.writer }),
+        expect.objectContaining({ selector, writer: producer.writer }) as unknown as StyleProducer,
         properties,
       );
     });
@@ -121,7 +121,10 @@ describe('produceBasicStyle', () => {
       testProduceStyle();
       expect(mockRenderer1).toHaveBeenCalledWith(producer, {});
       expect(mockRenderer2).toHaveBeenCalledWith(
-        expect.objectContaining({ selector: producer.selector, writer }),
+        expect.objectContaining({
+          selector: producer.selector,
+          writer,
+        }) as unknown as StyleProducer,
         properties,
       );
     });
@@ -206,12 +209,12 @@ describe('produceBasicStyle', () => {
   });
 
   describe('scheduler', () => {
-    let rafSpy: SpyInstance<Window['requestAnimationFrame']>;
+    let rafSpy: Mock<Window['requestAnimationFrame']>;
     let operations: ((time: number) => void)[];
 
     beforeEach(() => {
       operations = [];
-      rafSpy = jest.spyOn(window, 'requestAnimationFrame');
+      rafSpy = jest.spyOn(window, 'requestAnimationFrame') as typeof rafSpy;
       rafSpy.mockImplementation(callback => {
         operations.push(callback);
 

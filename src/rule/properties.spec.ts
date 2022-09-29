@@ -248,7 +248,7 @@ describe('mergeStypProperties', () => {
       expect(mockReceiver).toHaveBeenCalledWith(
         expect.objectContaining({
           display: 'inline-block !important',
-        }),
+        }) as unknown as StypProperties,
       );
     });
     it('prefers important property with structured structured value over usual one added later', () => {
@@ -270,7 +270,7 @@ describe('mergeStypProperties', () => {
       expect(mockReceiver).toHaveBeenCalledWith(
         expect.objectContaining({
           display: 'none !important',
-        }),
+        }) as unknown as StypProperties,
       );
     });
   });
