@@ -3,6 +3,5 @@
   "categoryOrder": ["CSS Rule", "CSS Value", "Rendering", "*"],
   "entryPoints": ["src/index.ts"],
   "name": "Style Producer",
-  "out": "./target/typedoc",
-  "tsconfig": "tsconfig.main.json"
+  "out": "./target/typedoc"
 }
