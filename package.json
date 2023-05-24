@@ -22,6 +22,7 @@
     "types": "./dist/style-producer.d.ts",
     "default": "./dist/style-producer.js"
   },
+  "sideEffects": false,
   "peerDependencies": {
     "@proc7ts/fun-events": "^10.5.1"
   },
