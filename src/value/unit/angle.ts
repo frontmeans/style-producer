@@ -20,9 +20,6 @@ export namespace StypAngle {
   export type Unit = 'deg' | 'grad' | 'rad' | 'turn';
 }
 
-/**
- * @category CSS Value
- */
 export const StypAngle: StypDimension.Kind.UnitlessZero<StypAngle.Unit> =
   /*#__PURE__*/ unitlessZeroDimensionKind({
     pt() {
@@ -52,9 +49,6 @@ export namespace StypAnglePt {
   export type Unit = StypAngle.Unit | '%';
 }
 
-/**
- * @category CSS Value
- */
 export const StypAnglePt: StypDimension.Kind.UnitlessZero<StypAnglePt.Unit> =
   /*#__PURE__*/ unitlessZeroDimensionKind({
     pt() {

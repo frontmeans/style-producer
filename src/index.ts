@@ -1,5 +1,4 @@
 /**
- * @packageDocumentation
  * @module @frontmeans/style-producer
  */
 export * from './producer';

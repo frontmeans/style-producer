@@ -41,9 +41,6 @@ export namespace StypLength {
     | 'pt';
 }
 
-/**
- * @category CSS Value
- */
 export const StypLength: StypDimension.Kind.UnitlessZero<StypLength.Unit> =
   /*#__PURE__*/ unitlessZeroDimensionKind({
     pt() {
@@ -74,9 +71,6 @@ export namespace StypLengthPt {
   export type Unit = StypLength.Unit | '%';
 }
 
-/**
- * @category CSS Value
- */
 export const StypLengthPt: StypDimension.Kind.UnitlessZero<StypLengthPt.Unit> =
   /*#__PURE__*/ unitlessZeroDimensionKind({
     pt() {

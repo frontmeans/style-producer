@@ -20,9 +20,6 @@ export namespace StypTime {
   export type Unit = 's' | 'ms';
 }
 
-/**
- * @category CSS Value
- */
 export const StypTime: StypDimension.Kind.UnitlessZero<StypTime.Unit> =
   /*#__PURE__*/ unitlessZeroDimensionKind({
     pt() {
@@ -52,9 +49,6 @@ export namespace StypTimePt {
   export type Unit = StypTime.Unit | '%';
 }
 
-/**
- * @category CSS Value
- */
 export const StypTimePt: StypDimension.Kind.UnitlessZero<StypTimePt.Unit> =
   /*#__PURE__*/ unitlessZeroDimensionKind({
     pt() {

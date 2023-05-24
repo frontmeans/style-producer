@@ -20,8 +20,5 @@ export namespace StypResolution {
   export type Unit = 'dpi' | 'dpcm' | 'dppx' | 'x';
 }
 
-/**
- * @category CSS Value
- */
 export const StypResolution: StypDimension.Kind.UnitZero<StypResolution.Unit> =
   /*#__PURE__*/ unitZeroDimensionKind({ zeroUnit: 'dpi' });

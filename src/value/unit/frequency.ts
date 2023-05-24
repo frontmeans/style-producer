@@ -20,9 +20,6 @@ export namespace StypFrequency {
   export type Unit = 'Hz' | 'kHz';
 }
 
-/**
- * @category CSS Value
- */
 export const StypFrequency: StypDimension.Kind.UnitZero<StypFrequency.Unit> =
   /*#__PURE__*/ unitZeroDimensionKind({
     zeroUnit: 'kHz',
@@ -57,9 +54,6 @@ export namespace StypFrequencyPt {
   export type Unit = StypFrequency.Unit | '%';
 }
 
-/**
- * @category CSS Value
- */
 export const StypFrequencyPt: StypDimension.Kind.UnitZero<StypFrequencyPt.Unit> =
   /*#__PURE__*/ unitZeroDimensionKind({
     zeroUnit: 'kHz',

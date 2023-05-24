@@ -2,6 +2,8 @@
   "categorizeByGroup": false,
   "categoryOrder": ["CSS Rule", "CSS Value", "Rendering", "*"],
   "entryPoints": ["src/index.ts"],
+  "excludeInternal": true,
+  "excludePrivate": true,
   "name": "Style Producer",
   "out": "./target/typedoc"
 }

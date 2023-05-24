@@ -7,14 +7,11 @@ import { StypValue } from './value';
  *
  * @category CSS Value
  * @typeParam TResult - A type of mapped properties. This is a mapping result type.
+ * @param from - CSS properties to map.
+ *
+ * @returns Mapping result.
  */
-export type StypMapper<TResult> =
-  /**
-   * @param from - CSS properties to map.
-   *
-   * @returns Mapping result.
-   */
-  (this: void, from: StypProperties) => TResult;
+export type StypMapper<TResult> = (this: void, from: StypProperties) => TResult;
 
 /**
  * @category CSS Value
@@ -114,9 +111,6 @@ export namespace StypMapper {
   export type Mappings<TResult> = { readonly [key in keyof TResult]: Mapping<TResult, key> };
 }
 
-/**
- * @category CSS Value
- */
 export const StypMapper = {
   /**
    * Maps CSS properties accordingly to the given `mappings`.
