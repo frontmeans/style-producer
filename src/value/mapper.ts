@@ -63,7 +63,7 @@ export namespace StypMapper {
    * @typeParam TResult - A type of mapped properties. This is a mapping result type.
    * @typeParam TResultKey - Type of mapped properties keys.
    */
-  export interface MappingObject<TResult, TResutKey extends keyof TResult> {
+  export interface MappingObject<TResult, TResultKey extends keyof TResult> {
     /**
      * Maps CSS property value.
      *
@@ -73,7 +73,7 @@ export namespace StypMapper {
      *
      * @returns Mapped property value.
      */
-    by(source: StypValue, mapped: Mapped<TResult>, key: TResutKey): TResult[TResutKey];
+    by(source: StypValue, mapped: Mapped<TResult>, key: TResultKey): TResult[TResultKey];
   }
 
   /**
@@ -153,10 +153,7 @@ export const StypMapper = {
    * @returns A function that maps CSS properties accordingly to the given `mappings`.
    */
   by<TResult>(mappings: StypMapper.Mappings<TResult>): StypMapper<TResult> {
-    return StypMapper.map.bind<void, StypMapper.Mappings<TResult>, [StypProperties], TResult>(
-      undefined,
-      mappings,
-    );
+    return from => StypMapper.map(mappings, from);
   },
 };
 
