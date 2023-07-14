@@ -78,7 +78,7 @@ function buildAtSelector(
       if (query) {
         query += ' and ';
       }
-      query += q;
+      query += String(q);
     }
   };
 
